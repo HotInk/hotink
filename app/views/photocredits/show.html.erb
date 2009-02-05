@@ -1,0 +1,18 @@
+<p>
+  <b>Attachment:</b>
+  <%=h @photocredit.attachment_id %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%=h @photocredit.author_id %>
+</p>
+
+<p>
+  <b>Account:</b>
+  <%=h @photocredit.account_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_photocredit_path(@photocredit) %> |
+<%= link_to 'Back', photocredits_path %>

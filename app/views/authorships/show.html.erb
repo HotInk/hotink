@@ -1,0 +1,18 @@
+<p>
+  <b>Staff position:</b>
+  <%=h @authorship.staff_position %>
+</p>
+
+<p>
+  <b>Article:</b>
+  <%=h @authorship.article_id %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%=h @authorship.author_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_authorship_path(@authorship) %> |
+<%= link_to 'Back', authorships_path %>

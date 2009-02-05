@@ -1,0 +1,24 @@
+<h1>Listing waxings</h1>
+
+<table>
+  <tr>
+    <th>Attachment</th>
+    <th>Article</th>
+    <th>Account</th>
+  </tr>
+
+<% for waxing in @waxings %>
+  <tr>
+    <td><%=h waxing.attachment_id %></td>
+    <td><%=h waxing.article_id %></td>
+    <td><%=h waxing.account_id %></td>
+    <td><%= link_to 'Show', waxing %></td>
+    <td><%= link_to 'Edit', edit_waxing_path(waxing) %></td>
+    <td><%= link_to 'Destroy', waxing, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New waxing', new_waxing_path %>

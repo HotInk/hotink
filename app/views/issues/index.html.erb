@@ -1,0 +1,22 @@
+<h1>Listing issues</h1>
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Name</th>
+  </tr>
+
+<% for issue in @issues %>
+  <tr>
+    <td><%=h issue.date %></td>
+    <td><%=h issue.name %></td>
+    <td><%= link_to 'Show', [@account, issue] %></td>
+    <td><%= link_to 'Edit', edit_account_issue_path(@account, issue) %></td>
+    <td><%= link_to 'Destroy', [@account, issue], :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New issue', new_account_issue_path(@account) %>

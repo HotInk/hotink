@@ -1,0 +1,28 @@
+<p>
+  <b>Title:</b>
+  <%=h @article.title %>
+</p>
+
+<p>
+  <b>Subtitle:</b>
+  <%=h @article.subtitle %>
+</p>
+
+<p>
+  <b>Bodytext:</b>
+  <%=h @article.bodytext %>
+</p>
+
+<p>
+  <b>Summary:</b>
+  <%=h @article.summary %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%=h @article.date %>
+</p>
+
+
+<%= link_to 'Edit', edit_account_article_path(@account, @article) %> |
+<%= link_to 'Back', account_articles_path(@account) %>

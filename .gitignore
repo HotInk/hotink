@@ -1,0 +1,17 @@
+.DS_Store
+db/*.sqlite3
+doc/api
+doc/app
+log/*.log
+doc/app
+log/*.log
+tmp/*
+public/javascripts
+public/sounds
+public/images
+public/stylesheets
+app/views/view
+app/views/layouts
+backups/
+config/database.yml
+config/ultrasphinx/development.conf

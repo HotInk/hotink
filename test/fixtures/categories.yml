@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  parent_id: 1
+  account_id: 1
+  type: MyString
+
+two:
+  name: MyString
+  parent_id: 1
+  account_id: 1
+  type: MyString

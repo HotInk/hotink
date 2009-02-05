@@ -1,0 +1,24 @@
+<h1>Listing printings</h1>
+
+<table>
+  <tr>
+    <th>Article</th>
+    <th>Issue</th>
+    <th>Page number</th>
+  </tr>
+
+<% for printing in @printings %>
+  <tr>
+    <td><%=h printing.article_id %></td>
+    <td><%=h printing.issue_id %></td>
+    <td><%=h printing.page_number %></td>
+    <td><%= link_to 'Show', printing %></td>
+    <td><%= link_to 'Edit', edit_printing_path(printing) %></td>
+    <td><%= link_to 'Destroy', printing, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New printing', new_printing_path %>

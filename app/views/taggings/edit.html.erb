@@ -1,0 +1,28 @@
+<h1>Editing tagging</h1>
+
+<% form_for(@tagging) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :content_id %><br />
+    <%= f.text_field :content_id %>
+  </p>
+  <p>
+    <%= f.label :content_type %><br />
+    <%= f.text_field :content_type %>
+  </p>
+  <p>
+    <%= f.label :tag_id %><br />
+    <%= f.text_field :tag_id %>
+  </p>
+  <p>
+    <%= f.label :account_id %><br />
+    <%= f.text_field :account_id %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @tagging %> |
+<%= link_to 'Back', taggings_path %>

@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @author.name %>
+</p>
+
+<p>
+  <b>Account:</b>
+  <%=h @author.account_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_author_path(@author) %> |
+<%= link_to 'Back', authors_path %>

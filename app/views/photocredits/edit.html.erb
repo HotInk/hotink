@@ -1,0 +1,24 @@
+<h1>Editing photocredit</h1>
+
+<% form_for(@photocredit) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :attachment_id %><br />
+    <%= f.text_field :attachment_id %>
+  </p>
+  <p>
+    <%= f.label :author_id %><br />
+    <%= f.text_field :author_id %>
+  </p>
+  <p>
+    <%= f.label :account_id %><br />
+    <%= f.text_field :account_id %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @photocredit %> |
+<%= link_to 'Back', photocredits_path %>

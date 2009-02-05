@@ -1,0 +1,2 @@
+class Audiofile < Attachment
+end

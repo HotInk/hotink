@@ -1,0 +1,24 @@
+<h1>Listing authorships</h1>
+
+<table>
+  <tr>
+    <th>Staff position</th>
+    <th>Article</th>
+    <th>Author</th>
+  </tr>
+
+<% for authorship in @authorships %>
+  <tr>
+    <td><%=h authorship.staff_position %></td>
+    <td><%=h authorship.article_id %></td>
+    <td><%=h authorship.author_id %></td>
+    <td><%= link_to 'Show', authorship %></td>
+    <td><%= link_to 'Edit', edit_authorship_path(authorship) %></td>
+    <td><%= link_to 'Destroy', authorship, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New authorship', new_authorship_path %>

@@ -1,0 +1,24 @@
+<h1>Listing photocredits</h1>
+
+<table>
+  <tr>
+    <th>Attachment</th>
+    <th>Author</th>
+    <th>Account</th>
+  </tr>
+
+<% for photocredit in @photocredits %>
+  <tr>
+    <td><%=h photocredit.attachment_id %></td>
+    <td><%=h photocredit.author_id %></td>
+    <td><%=h photocredit.account_id %></td>
+    <td><%= link_to 'Show', photocredit %></td>
+    <td><%= link_to 'Edit', edit_photocredit_path(photocredit) %></td>
+    <td><%= link_to 'Destroy', photocredit, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New photocredit', new_photocredit_path %>

@@ -1,0 +1,23 @@
+<h1>New waxing</h1>
+
+<% form_for(@waxing) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :attachment_id %><br />
+    <%= f.text_field :attachment_id %>
+  </p>
+  <p>
+    <%= f.label :article_id %><br />
+    <%= f.text_field :article_id %>
+  </p>
+  <p>
+    <%= f.label :account_id %><br />
+    <%= f.text_field :account_id %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', waxings_path %>

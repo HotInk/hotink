@@ -1,0 +1,18 @@
+<p>
+  <b>Article:</b>
+  <%=h @printing.article_id %>
+</p>
+
+<p>
+  <b>Issue:</b>
+  <%=h @printing.issue_id %>
+</p>
+
+<p>
+  <b>Page number:</b>
+  <%=h @printing.page_number %>
+</p>
+
+
+<%= link_to 'Edit', edit_printing_path(@printing) %> |
+<%= link_to 'Back', printings_path %>
