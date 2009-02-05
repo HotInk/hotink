@@ -7,9 +7,9 @@ class Article < ActiveRecord::Base
   has_many :printings
   has_many :issues, :through => :printings
   
+  belongs_to :section
   has_many :sortings
   has_many :categories, :through => :sortings
-  has_many :sections, :through => :sortings, :source => :category
   
   has_many :waxings
   has_many :attachments, :through => :waxings

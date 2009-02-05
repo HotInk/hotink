@@ -16,6 +16,10 @@
 	    <%= f.date_select :date %>
 	  </p>
 	  <p>
+		<%= f.label "Primary section"%><br />
+		<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank=>true})%>
+	  </p>
+	  <p>
 		<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
 	    <%= f.label :bodytext, "Body text" %><br />
 	    <%= f.text_area :bodytext %>
