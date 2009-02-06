@@ -6,12 +6,8 @@ log/*.log
 doc/app
 log/*.log
 tmp/*
-public/javascripts
 public/sounds
 public/images
-public/stylesheets
-app/views/view
-app/views/layouts
 backups/
 config/database.yml
 config/ultrasphinx/development.conf

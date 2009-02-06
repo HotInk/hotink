@@ -34,20 +34,33 @@
 	    <%= f.label :summary %><br />
 	    <%= f.text_area :summary %>
 	  </p>
-	  <p>
-	    <%= f.submit @article.new_record? ? "Create" : "Update" %>
-	  </p>
+
 	<% end %>
 </div><!-- /article_form -->
 	<div id="sidebar">
-		
 		<div id="tools">
+			<div class="toolbox">
+				<div class="toolbox_border"></div>
+				<div class="toolbox_label_body"><h2>Article tools</h2></div>
+				<div class="toolbox_border"></div>
+				<div class="toolbox_body">	
+					<p>
+						Use these tools to save this article.
+					</p>
+					<p>
+		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').submit();", :class=>"large") %>
+		  			</p>
+				</div>
+				<div class="toolbox_border"></div>
+			</div><!-- /toolbox - article tools -->
+		<!-- 
 			<div id="account_article_sorting_list">
 				<script type="text/javascript" charset="utf-8">
-					<%= remote_function :url=>account_article_sortings_url(@account, @article, :format=>:js), :method => :get %>
+					<%= # remote_function :url=>account_article_sortings_url(@account, @article, :format=>:js), :method => :get 
+					%>
 				</script>
 			</div>
-	
+		-->
 		</div><!-- /tools -->
 	</div><!-- /siderbar -->
 </div><!-- /page_container -->
