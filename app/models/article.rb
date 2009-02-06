@@ -14,6 +14,6 @@ class Article < ActiveRecord::Base
   has_many :waxings
   has_many :attachments, :through => :waxings
   
-  has_many :taggings, :as => :taggable
-  has_many :tags, :through => :taggings
+  acts_as_taggable_on :tags
+  
 end

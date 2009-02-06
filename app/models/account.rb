@@ -9,7 +9,8 @@ class Account < ActiveRecord::Base
   has_many :photocredits, :dependent => :delete_all
   has_many :printings, :dependent => :delete_all
   has_many :sortings, :dependent => :delete_all
-  has_many :tags, :dependent => :delete_all
-  has_many :taggings, :dependent => :delete_all
   has_many :waxings, :dependent => :delete_all
+  
+  #Implement acts_as_taggable_on
+  acts_as_tagger
 end
