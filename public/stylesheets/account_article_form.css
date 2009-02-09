@@ -160,10 +160,17 @@ a:hover { color: #3399DE; }
 
 }
 
+.half_column {
+	float: left;
+	width: 50%;
+}
+
 .text_input {
 	background: none;
 	border: 1px solid #DEDEDE;	
 	background-color: #FFF;
+	
+	color: #666;
 }
 
 #article_title {
@@ -202,12 +209,16 @@ a:hover { color: #3399DE; }
 	background-color: #FFF;
 }
 
+.preview {
+	background-color: #FFF;
+	
+}
+
+
 #article_summary {
 	width: 600px;
 	height: 85px;
 }
-
-
 
 /* Issue form style */
 
@@ -260,6 +271,8 @@ a:hover { color: #3399DE; }
 
 .toolbox {
 	width: 255px;
+	
+	margin-bottom: 10px;
 }
 
 .toolbox_border {
@@ -293,10 +306,14 @@ a:hover { color: #3399DE; }
 
 .toolbox_body {
 	margin-top: -1px;
-	padding: 5px 5px;
+	padding: 5px;
     border-right: 1px solid #aaa;
 	border-left: 1px solid #bbb;
 	
 	background-color: #FFF;
 }
 
+.newtag {
+	width: 80%;
+	margin-right: 4px;
+}

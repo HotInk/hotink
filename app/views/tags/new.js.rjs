@@ -1,0 +1,1 @@
+page.replace 'tags_form', :partial => "tags_form"

@@ -11,14 +11,14 @@
 	    <%= f.label :subtitle, "Subhead"%><br />
 	    <%= f.text_field :subtitle, :class => :text_input  %>
 	  </p>
-	  <p>
-	    <%= f.label :date %><br />
-	    <%= f.date_select :date %>
-	  </p>
-	  <p>
-		<%= f.label "Primary section"%><br />
-		<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank=>true})%>
-	  </p>
+	  <div id="column_holder">
+	  	  <p class="half_column">
+		    <%= f.label :date %>&nbsp;<%= f.date_select :date %>
+		  </p>
+		  <p class="half_column">
+			<%= f.label "Primary section"%>&nbsp;<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank=>true})%>
+		  </p>
+	  </div>
 	  <p>
 		<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
 	    <%= f.label :bodytext, "Body text" %><br />
@@ -27,14 +27,18 @@
 	  <p>Rendered HTML preview<br />
 		<!-- Rendered preview window - Nested divs below hold the WMD (wmd-editor.com) preview "window" -->
 	  	<div id="article_bodytext_preview">
-			<div class="wmd-preview"></div>
+			<div class="wmd-preview preview"></div>
 		  </div>
 	  </p>
 	  <p>
 	    <%= f.label :summary %><br />
 	    <%= f.text_area :summary %>
 	  </p>
-
+	  <% if @article.new_record? %>
+		<%= hidden_field_tag 'article[tags_list]' %>
+	  <% else %>
+		<%= f.hidden_field :tag_list %>
+	  <% end %>
 	<% end %>
 </div><!-- /article_form -->
 	<div id="sidebar">
@@ -48,11 +52,21 @@
 						Use these tools to save this article.
 					</p>
 					<p>
-		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').submit();", :class=>"large") %>
+		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').submit();") %>
 		  			</p>
 				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - article tools -->
+			
+			<div class="toolbox">
+				<div class="toolbox_border"></div>
+				<div class="toolbox_label_body"><h2>Tags</h2></div>
+				<div class="toolbox_border"></div>
+				<div class="toolbox_body">	
+					
+				</div>
+				<div class="toolbox_border"></div>
+			</div><!-- /toolbox - tags -->
 		<!-- 
 			<div id="account_article_sorting_list">
 				<script type="text/javascript" charset="utf-8">

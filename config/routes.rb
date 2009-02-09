@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :accounts do |account|
     account.resources :articles do |article|
       article.resources :sortings
+      article.resources :tags
     end
     account.resources :sections
   end
