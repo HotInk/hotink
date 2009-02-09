@@ -1,0 +1,13 @@
+<% remote_form_for([@account, @category]) do |f| %>
+  <%= f.error_messages %>
+  <p><div class="toolbox_separator"></div><br />
+	<%= f.text_field :name, {:class=>"text_input", :value=>"New category name", :onclick=>"clearText(this);", :onblur => "addText(this);"} %>
+	<%= hidden_field_tag('article_id', @article.id) if @article%>
+  </p>
+  <p>
+	<select id="category_parent_id" name="category[parent_id]" style="width:200px;"><%= options_for_category_select(@account.categories, @category) %></select>
+  </p>
+  <p>
+    <%= button_link_to_function "Add category", "$('new_category').submit();" %>
+  </p>
+<% end %>

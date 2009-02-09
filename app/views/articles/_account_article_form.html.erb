@@ -60,6 +60,20 @@
 			
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
+				<div class="toolbox_label_body"><h2>Categories</h2></div>
+				<div class="toolbox_border"></div>
+				<div class="toolbox_body">	
+					<p id="account_article_sorting_list">
+						<script type="text/javascript" charset="utf-8">
+							<%= remote_function :url=>account_article_sortings_url(@account, @article, :format=>:js), :method => :get %>
+						</script>
+					</p>
+				</div>
+				<div class="toolbox_border"></div>
+			</div><!-- /toolbox - categories -->
+			
+			<div class="toolbox">
+				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2>Tags</h2></div>
 				<div class="toolbox_border"></div>
 				<div class="toolbox_body">	
@@ -68,12 +82,7 @@
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - tags -->
 		<!-- 
-			<div id="account_article_sorting_list">
-				<script type="text/javascript" charset="utf-8">
-					<%= # remote_function :url=>account_article_sortings_url(@account, @article, :format=>:js), :method => :get 
-					%>
-				</script>
-			</div>
+			
 		-->
 		</div><!-- /tools -->
 	</div><!-- /siderbar -->

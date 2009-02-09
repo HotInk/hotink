@@ -1,28 +1,7 @@
-<h1>Editing category</h1>
+<h1>Editing section</h1>
 
-<% form_for(@category) do |f| %>
-  <%= f.error_messages %>
+<%= render :partial => 'account_category_form'%>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :parent_id %><br />
-    <%= f.text_field :parent_id %>
-  </p>
-  <p>
-    <%= f.label :account_id %><br />
-    <%= f.text_field :account_id %>
-  </p>
-  <p>
-    <%= f.label :type %><br />
-    <%= f.text_field :type %>
-  </p>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
 
-<%= link_to 'Show', @category %> |
-<%= link_to 'Back', categories_path %>
+<%= link_to 'Show', [@account, @category] %> |
+<%= link_to 'Back', account_sections_path(@account) %>

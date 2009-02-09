@@ -1,23 +1,23 @@
 <div id="account_article_sorting_list">
 	<ul>
-	<% for section in @account.sections.select{ |sec| sec.parent_id.nil? } %>
-		<li id="section-<%= section.id %>" class="parent">
+	<% for category in @account.categories.select{ |sec| sec.parent_id.nil? } %>
+		<li id="category-<%= category.id %>" class="parent">
 			<label class="selectable">
-				<% if @article.sections.member?(section) %>
-					<%= check_box_tag "article_section_" + section.id.to_s, section.id.to_s, true %>
+				<% if @article.categories.member?(category) %>
+					<%= check_box_tag "article_category_" + category.id.to_s, category.id.to_s, true %>
 				<% else %>
-					<%= check_box_tag "article_section_" + section.id.to_s, section.id.to_s, false %>
+					<%= check_box_tag "article_category_" + category.id.to_s, category.id.to_s, false %>
 				<% end %>
-				<%= section.name %>
+				<%= category.name %>
 			</label>
 		</li>
-		<%= render :partial => "child", :collection=>section.children, :locals => {:indent =>"&nbsp;&nbsp;&nbsp;" }%>
+		<%= render :partial => "child", :collection=>category.children, :locals => {:indent =>"&nbsp;&nbsp;&nbsp;" }%>
 	<% end %>
 	</ul>
-	<p id="new_account_section">
+	<p id="new_account_category">
 	<%= #Be sure to include @article.id in call to Section.new to ensure that the article is available for reloading the article/sorting list
-		link_to_remote 	"New section?", 
-						:url => new_account_section_path(@account, :format=>:js, :article_id=>@article.id), 
+		link_to_remote 	"New category?", 
+						:url => new_account_category_path(@account, :format=>:js, :article_id=>@article.id), 
 						:method => :get %>
 	</p>
 	

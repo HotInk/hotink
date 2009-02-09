@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
       article.resources :tags
     end
     account.resources :sections
+    account.resources :categories
   end
   
 

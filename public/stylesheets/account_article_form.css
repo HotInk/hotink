@@ -170,7 +170,7 @@ a:hover { color: #3399DE; }
 	border: 1px solid #DEDEDE;	
 	background-color: #FFF;
 	
-	color: #666;
+	color: #555;
 }
 
 #article_title {
@@ -239,15 +239,6 @@ a:hover { color: #3399DE; }
 
 /* Sorting forms styles*/
 
-#account_article_sorting_list{
-	width: 240px;
-	padding: 5px;
-		
-	border: 2px solid #3399DE;
-	
-	overflow: auto;
-}
-
 #account_article_sorting_list ul{
 	margin: 0;
 	padding: 0;
@@ -278,6 +269,14 @@ a:hover { color: #3399DE; }
 .toolbox_border {
 	height: 1px;
 	margin:0 1px;
+	padding:0;
+	background-color: #aaa;
+	
+}
+
+.toolbox_separator {
+	height: 1px;
+	margin:0 5px;
 	padding:0;
 	background-color: #aaa;
 	

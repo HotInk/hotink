@@ -1,23 +1,8 @@
+<h1>Show category</h1>
 <p>
-  <b>Name:</b>
-  <%=h @category.name %>
+	Name: <%= @category.name %>
 </p>
 
-<p>
-  <b>Parent:</b>
-  <%=h @category.parent_id %>
-</p>
-
-<p>
-  <b>Account:</b>
-  <%=h @category.account_id %>
-</p>
-
-<p>
-  <b>Type:</b>
-  <%=h @category.type %>
-</p>
-
-
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+<%= link_to 'Delete section', [@account, @category], :confirm => 'Are you sure?', :method => :delete %>
+<%= link_to 'Edit', edit_account_section_path(@account, @category) %> |
+<%= link_to 'Back', account_sections_path(@account) %>

@@ -1,0 +1,1 @@
+page.replace 'new_account_category', :partial => 'account_category_form'
