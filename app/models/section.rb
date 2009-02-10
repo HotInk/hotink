@@ -6,4 +6,9 @@ class Section < Category
   
   has_many :sortings
   has_many :articles, :through => :sortings
+
+  validates_presence_of :account, :message => "Must have an account"
+  validates_associated :account, :message => "Account must be valid"
+  validates_presence_of :name, :message => "Section must have a name"
+  validates_uniqueness_of :name, :scope => :account_id, :message => "Section name must be unique"
 end

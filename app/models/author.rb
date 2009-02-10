@@ -6,4 +6,8 @@ class Author < ActiveRecord::Base
   
   has_many :photocredits
   has_many :attachments, :through => :photocredits
+  
+  validates_presence_of :account, :message => "Must have an account"
+  validates_associated :account, :message => "Account must be valid"
+  validates_presence_of :name, :message => "Author must have a name"
 end
