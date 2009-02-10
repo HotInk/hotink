@@ -1,10 +1,11 @@
-<li id="section-<%= child.id %>" class="parent">
-	<label class="selectable">
+<li id="section-<%= child.id %>" 
+	class="parent <%= " printsection" if child.is_a?(Section) %>">
 		<% if @article.categories.member?(child) %>
 			<%= indent + check_box_tag("article_section_" + child.id.to_s, child.id.to_s, true) %>
 		<% else %>
 			<%= indent + check_box_tag("article_section_" + child.id.to_s, child.id.to_s, false) %>
 		<% end %>
+	<label class="selectable">	
 		<%= child.name %>
 	</label>
 </li>

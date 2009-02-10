@@ -250,6 +250,17 @@ a:hover { color: #3399DE; }
 	padding: 0;
 }
 
+#account_article_sorting_list .text_input {
+  font-size: 13px;
+  width: 98%;
+  height: 15px;
+}
+
+#account_article_sorting_list .printsection label{
+  background-color: yellow;
+  padding: 0px 3px;
+}
+
 /* Tool box styles */
 
 #tools {
@@ -285,7 +296,7 @@ a:hover { color: #3399DE; }
 .toolbox_label_body {
      background:#ddd url(/bg-button.gif) repeat-x 0 0;
      margin:0;
-     padding: 7px 5px;
+     padding: 7px 5px 5px 5px;
      overflow:visible;
      font: 100%/1.2;
      text-decoration:none;
@@ -299,7 +310,6 @@ a:hover { color: #3399DE; }
 
 .toolbox_label_body h2 {
 	margin: 0;
-	
 	font-size: 16px;
 }
 

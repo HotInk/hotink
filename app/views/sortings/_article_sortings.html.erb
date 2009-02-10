@@ -1,19 +1,21 @@
 <div id="account_article_sorting_list">
 	<ul>
 	<% for category in @account.categories.select{ |sec| sec.parent_id.nil? } %>
-		<li id="category-<%= category.id %>" class="parent">
-			<label class="selectable">
+		<li id="category-<%= category.id %>" 
+			class="parent<%= " printsection" if category.is_a?(Section) %>" >
 				<% if @article.categories.member?(category) %>
 					<%= check_box_tag "article_category_" + category.id.to_s, category.id.to_s, true %>
 				<% else %>
 					<%= check_box_tag "article_category_" + category.id.to_s, category.id.to_s, false %>
 				<% end %>
+			<label class="selectable">
 				<%= category.name %>
 			</label>
 		</li>
 		<%= render :partial => "child", :collection=>category.children, :locals => {:indent =>"&nbsp;&nbsp;&nbsp;" }%>
 	<% end %>
 	</ul>
+	<p><em>Print sections are highlighted.</em></p>
 	<p id="new_account_category">
 	<%= #Be sure to include @article.id in call to Section.new to ensure that the article is available for reloading the article/sorting list
 		link_to_remote 	"New category?", 

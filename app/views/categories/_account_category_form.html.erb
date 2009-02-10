@@ -5,6 +5,8 @@
 	<%= hidden_field_tag('article_id', @article.id) if @article%>
   </p>
   <p>
+	Print section? &nbsp;<%= check_box_tag('print_section', 'print_section')%>
+  <p>
 	<select id="category_parent_id" name="category[parent_id]" style="width:200px;"><%= options_for_category_select(@account.categories, @category) %></select>
   </p>
   <p>

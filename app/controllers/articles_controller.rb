@@ -25,7 +25,9 @@ class ArticlesController < ApplicationController
   # GET /articles/new.xml
   def new
     @article = Article.new
-
+    @article.account = @account
+    @article.save
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @article }
