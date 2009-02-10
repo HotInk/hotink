@@ -16,4 +16,6 @@ class Article < ActiveRecord::Base
   
   acts_as_taggable_on :tags
   
+  accepts_nested_attributes_for :sortings, :allow_destroy => true
+  
 end

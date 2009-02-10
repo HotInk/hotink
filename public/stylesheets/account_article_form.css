@@ -202,22 +202,21 @@ a:hover { color: #3399DE; }
 	overflow: auto;
 	
 	border: 1px solid #999;
+	background-color: #FFF;
 }
 
 #article_bodytext_preview p{
 	margin: 5px 0;
-	background-color: #FFF;
-}
-
-.preview {
-	background-color: #FFF;
-	
 }
 
 
 #article_summary {
 	width: 600px;
 	height: 85px;
+}
+
+#article_form_hidden_elements{
+	display: none;
 }
 
 /* Issue form style */

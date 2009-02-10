@@ -1,5 +1,5 @@
 <p id="tags_form">
-	<% remote_form_tag :url=>account_article_tags(@aaount, @article), :method => :post do -%>
+	<% form_remote_tag :url=>account_article_tags_url(@account, @article), :method => :post do -%>
 	<input type="text" value="Add tags here" autocomplete="off" class="newtag text_input" onclick="clearText(this)"  onblur="addText(this)">
 	<%= button_link_to_function("Add", "$('').submit();") %>
 	<% end %>
