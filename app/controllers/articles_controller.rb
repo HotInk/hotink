@@ -48,7 +48,7 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       if @article.save
         flash[:notice] = 'Article was successfully created.'
-        format.html { redirect_to(account_article_path(@article)) }
+        format.html { redirect_to(account_article_path(@account, @article)) }
         format.xml  { render :xml => @article, :status => :created, :location => @article }
       else
         format.html { render :action => "new" }
@@ -65,7 +65,7 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       if @article.update_attributes(params[:article])
         flash[:notice] = 'Article was successfully updated.'
-        format.html { redirect_to([@account, @article]) }
+        format.html { redirect_to(edit_account_article_path(@account, @article)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

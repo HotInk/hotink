@@ -3,11 +3,9 @@
 	<% for category in @account.categories.select{ |sec| sec.parent_id.nil? } %>
 		<li id="category-<%= category.id %>" 
 			class="parent<%= " printsection" if category.is_a?(Section) %>" >
-				<% if @article.categories.member?(category) %>
-					<%= check_box_tag "article_category_" + category.id.to_s, category.id.to_s, true %>
-				<% else %>
-					<%= check_box_tag "article_category_" + category.id.to_s, category.id.to_s, false %>
-				<% end %>
+				<% checked = @article.categories.member?(category) ? true : false %>
+				<% onclick = @article.categories.member?(category) ? "mark_sorting_for_delete(#{@article.sortings.find_by_category_id(category.id).id}, this)" :  "new_article_sorting(#{category.id}, this)"%>
+				<%= check_box_tag"article_category_" + category.id.to_s, category.id.to_s, checked, :onclick=>onclick %>
 			<label class="selectable">
 				<%= category.name %>
 			</label>

@@ -26,8 +26,6 @@ class TagsController < ApplicationController
   # GET /tags/new
   # GET /tags/new.xml
   def new
-    @tag = Tag.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.js

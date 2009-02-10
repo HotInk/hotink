@@ -64,6 +64,7 @@ class SortingsController < ApplicationController
   # PUT /sortings/1.xml
   def update
     @sorting = @article.sortings.find(params[:id])
+    @sorting.account = @account
 
     respond_to do |format|
       if @sorting.update_attributes(params[:sorting])
