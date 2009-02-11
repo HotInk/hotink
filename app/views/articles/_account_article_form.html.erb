@@ -1,6 +1,7 @@
 <div id="page_container">
 <div id="article_form">
-	<% form_for([@account, @article]) do |f| %>
+	<%= "<p style=\"color: green\">#{ flash[:notice] }</p>" if flash[:notice] %>
+	<% remote_form_for([@account, @article]) do |f| %>
 	  <%= f.error_messages %>
 
 	  <p>
@@ -24,22 +25,19 @@
 	    <%= f.label :bodytext, "Body text" %><br />
 	    <%= f.text_area :bodytext %>
 	  </p>
+	  <p>
+	    <%= f.label :summary %><br />
+	    <%= f.text_area :summary %>
+	  </p>
 	  <p>Rendered HTML preview<br />
 		<!-- Rendered preview window - Nested divs below hold the WMD (wmd-editor.com) preview "window" -->
 	  	<div id="article_bodytext_preview">
 			<div class="wmd-preview preview"></div>
 		  </div>
 	  </p>
-	  <p>
-	    <%= f.label :summary %><br />
-	    <%= f.text_area :summary %>
-	  </p>
 	  <div id="article_form_hidden_elements">
-	  	<% if @article.new_record? %>
-			<%= hidden_field_tag 'article[tags_list]' %>
-		<% else %>
-			<%= f.hidden_field :tag_list %>
-		<% end %>
+		
+		<%= f.hidden_field :tag_list %>
 	
 		<% f.fields_for :sortings do |sorting| %>
 			<%= sorting.hidden_field '_delete' %>

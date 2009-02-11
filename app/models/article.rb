@@ -20,4 +20,9 @@ class Article < ActiveRecord::Base
   
   validates_presence_of :account, :message => "Must have an account"
   validates_associated :account, :message => "Account must be valid"
+  
+  def display_title
+    return self.title unless self.title.strip == ""
+    return "(no headline)"
+  end
 end

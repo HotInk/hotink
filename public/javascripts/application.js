@@ -42,3 +42,18 @@ function unmark_sorting_for_delete(sorting_id, caller) {
 	$("article_sortings_attributes_" + sorting_id + "__delete").value = "0";
 	$(caller).writeAttribute("onclick", "mark_sorting_for_delete(" + sorting_id + ", this)");
 }
+
+//Article form tag-management code
+
+function adjust_tag_list(new_tag_list) {
+	if (new_tag_list==""||new_tag_list=="Add tags here"){
+		return false;
+	} 
+	else if ( $F('article_tag_list')=="" ) {
+		var value = new_tag_list
+	}
+	else {
+		var value = $F('article_tag_list').split(",").concat(new_tag_list.split(",")).join(",");
+	}
+	$('article_tag_list').writeAttribute("value", value );
+}

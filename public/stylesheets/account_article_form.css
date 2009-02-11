@@ -192,12 +192,12 @@ a:hover { color: #3399DE; }
 #article_bodytext {
 	min-width: 600px;
 	max-width: 750px;
-	height: 200px;
+	height: 400px;
 }
 
 #article_bodytext_preview{
 	width: 594px;
-	height: 200px;
+	height: 300px;
 	padding: 0 3px;
 	
 	overflow: auto;
@@ -218,6 +218,10 @@ a:hover { color: #3399DE; }
 
 #article_form_hidden_elements{
 	display: none;
+}
+
+.note {
+	font-size: 11px;
 }
 
 /* Issue form style */

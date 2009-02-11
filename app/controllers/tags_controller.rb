@@ -41,17 +41,11 @@ class TagsController < ApplicationController
   # POST /tags
   # POST /tags.xml
   def create
-    @tag = Tag.new(params[:tag])
 
     respond_to do |format|
-      if @tag.save
         flash[:notice] = 'Tag was successfully created.'
-        format.html { redirect_to(@tag) }
+        format.js   { redirect_to(new_account_article_tag_url(@account, @article, :format=>:js))}
         format.xml  { render :xml => @tag, :status => :created, :location => @tag }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @tag.errors, :status => :unprocessable_entity }
-      end
     end
   end
 
@@ -76,9 +70,10 @@ class TagsController < ApplicationController
   # DELETE /tags/1.xml
   def destroy
     @tag = Tag.find(params[:id])
-    @tag.destroy
+    @article.tags.delete(@tag)
 
     respond_to do |format|
+      format.js   { redirect_to(new_account_article_tag_url(@account, @article, :format=>:js)) }
       format.html { redirect_to(tags_url) }
       format.xml  { head :ok }
     end

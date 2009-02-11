@@ -4,20 +4,16 @@
   <tr>
     <th>Title</th>
     <th>Subtitle</th>
-    <th>Bodytext</th>
     <th>Summary</th>
     <th>Date</th>
   </tr>
 
 <% for article in @articles %>
   <tr>
-    <td><%=h article.title %></td>
+    <td><%=link_to h(article.display_title), edit_account_article_url(@account, article) %></td>
     <td><%=h article.subtitle %></td>
-    <td><%=h article.bodytext %></td>
     <td><%=h article.summary %></td>
     <td><%=h article.date %></td>
-    <td><%= link_to 'Show', [@account, article] %></td>
-    <td><%= link_to 'Edit', edit_account_article_path(@account, article) %></td>
     <td><%= link_to 'Destroy', [@account, article], :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
