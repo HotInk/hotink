@@ -10,8 +10,6 @@
 	<select id="category_parent_id" name="category[parent_id]" style="width:200px;"><%= options_for_category_select(@account.categories, @category) %></select>
   </p>
   <p>
-	<%= f.submit "Add category"%>
-    <%= #button_link_to_function "Add category", "$('new_category').submit();" 
-	%>
+    <%= button_link_to_submit "Add category" %>
   </p>
 <% end %>
