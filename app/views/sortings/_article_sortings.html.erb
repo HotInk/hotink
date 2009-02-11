@@ -13,7 +13,7 @@
 		<%= render :partial => "child", :collection=>category.children, :locals => {:indent =>"&nbsp;&nbsp;&nbsp;" }%>
 	<% end %>
 	</ul>
-	<p><em>Print sections are highlighted.</em></p>
+	<p class="note"><em>Print sections are highlighted.</em></p>
 	<p id="new_account_category">
 	<%= #Be sure to include @article.id in call to Section.new to ensure that the article is available for reloading the article/sorting list
 		link_to_remote 	"New category?", 

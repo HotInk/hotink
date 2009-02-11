@@ -4,7 +4,7 @@
   <tr>
   </tr>
 
-<% for section in @sections %>
+<% for section in @categories %>
   <tr>
 	<td><%= link_to section.name, [@account, section]%></td>
     <td><%= link_to 'Edit', edit_account_section_path(@account, section) %></td>
@@ -15,4 +15,4 @@
 
 <br />
 
-<%= link_to 'New section', new_account_section_path(@account) %>
+<%= link_to 'New section', new_account_category_path(@account) %>

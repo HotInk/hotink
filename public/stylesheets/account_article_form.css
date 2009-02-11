@@ -175,7 +175,7 @@ a:hover { color: #3399DE; }
 
 #article_title {
 	width: 100%;
-	height: 17px;
+	height: 19px;
 	padding: 4px 2px;
 	
 	font-size: 16px;
@@ -184,6 +184,7 @@ a:hover { color: #3399DE; }
 #article_subtitle {
 	width: 100%;
 	padding: 4px 2px;
+	height: 16px;
 	
 	font-size: 13px;
 }
@@ -239,6 +240,8 @@ a:hover { color: #3399DE; }
 /* Sorting forms styles*/
 
 #account_article_sorting_list ul{
+	max-height: 200px;
+	overflow: auto;
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -252,11 +255,11 @@ a:hover { color: #3399DE; }
 #account_article_sorting_list .text_input {
   font-size: 13px;
   width: 98%;
-  height: 15px;
+  height: 16px;
 }
 
 #account_article_sorting_list .printsection label{
-  background-color: yellow;
+  background-color: #EDEE9F;
   padding: 0px 3px;
 }
 

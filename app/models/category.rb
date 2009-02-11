@@ -1,6 +1,9 @@
 class Category < ActiveRecord::Base
   belongs_to :account
   
+  has_many :sortings
+  has_many :articles, :through => :sortings
+  
   belongs_to :parent, :class_name => "Category"
   has_many :children, :class_name => "Category", :foreign_key=>:parent_id
   
