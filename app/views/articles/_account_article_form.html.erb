@@ -36,9 +36,7 @@
 		  </div>
 	  </p>
 	  <div id="article_form_hidden_elements">
-		
-		<%= f.hidden_field :tag_list %>
-	
+	  	
 		<% f.fields_for :sortings do |sorting| %>
 			<%= sorting.hidden_field '_delete' %>
 		<%end%>

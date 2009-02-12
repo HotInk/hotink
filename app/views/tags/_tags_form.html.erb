@@ -1,8 +1,8 @@
 <div id="tags_form">
-	<% form_remote_tag :url=>account_article_tags_url(@account, @article), :method => :post, :html=>{:id=>"new_tags_form"} do -%>
+	<% form_remote_tag :url=>account_article_tags_url(@account, @article), :method => :post do -%>
 	<p>
-		<input type="text" id="new_tag_list" name="new_tag_list" value="Add tags here" autocomplete="off" class="newtag text_input" onclick="clearText(this)"  onblur="addText(this)">
-		<%= button_link_to_function("Add", "$('new_tags_form').onsubmit();" ) %>
+		<%= text_field_tag "new_tag_list", "Add tags here", :class=>"newtag text_input", :onclick=>"clearText(this)", :onblur=>"addText(this)" %>
+		<%= button_link_to_submit("Add") %>
 	</p>
 	<% end %>
 	<p class="note"><em>Separate tags with a comma</em></p>

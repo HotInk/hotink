@@ -41,9 +41,26 @@ class TagsController < ApplicationController
   # POST /tags
   # POST /tags.xml
   def create
-
+    
+    #Only create tags if a list is sent with the request
+    if params[:new_tag_list] then 
+      
+      #Besure that this submission isn't just the default input value in from standard tag form
+      unless params[:new_tag_list] =~ /Add tags here/ then
+        
+        #Behave differently depending on whether this article has any existing tags
+        if @article.tag_list
+          @article.tag_list = @article.tag_list.to_s + ", #{params[:new_tag_list]}"
+        else
+          @article.tag_list = params[:new_tag_list]
+        end
+      end
+      
+        #Save article to commit tags
+        @article.save 
+    end
+    
     respond_to do |format|
-        flash[:notice] = 'Tag was successfully created.'
         format.js   { redirect_to(new_account_article_tag_url(@account, @article, :format=>:js))}
         format.xml  { render :xml => @tag, :status => :created, :location => @tag }
     end
