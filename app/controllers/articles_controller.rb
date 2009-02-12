@@ -67,9 +67,14 @@ class ArticlesController < ApplicationController
   # PUT /articles/1.xml
   def update
     @article = @account.articles.find(params[:id])
+  
 
     respond_to do |format|
       if @article.update_attributes(params[:article])
+        
+        #Eliminate categorization for current section, if any
+        @article.categories.delete(@article.section)
+        
         flash[:notice] = 'Article was successfully updated.'
         format.js   {redirect_to(edit_account_article_path(@account, @article, :format=>:js))}
         format.html { redirect_to(edit_account_article_path(@account, @article)) }

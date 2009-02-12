@@ -17,7 +17,7 @@
 		    <%= f.label :date %>&nbsp;<%= f.date_select :date %>
 		  </p>
 		  <p class="half_column">
-			<%= f.label "Primary section"%>&nbsp;<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank=>true})%>
+			<%= f.label "Primary section"%>&nbsp;<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => true})%>
 		  </p>
 	  </div>
 	  <p>
