@@ -22,7 +22,10 @@ class Article < ActiveRecord::Base
   validates_associated :account, :message => "Account must be valid"
   
   def display_title
-    return self.title unless self.title.strip == ""
-    return "(no headline)"
+    if self.title and self.title.strip != ""
+      return self.title
+    else 
+      return "(no headline)"
+    end
   end
 end
