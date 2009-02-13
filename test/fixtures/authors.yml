@@ -1,9 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  name: MyString
+andrew:
+  name: Andrew Louis
   account_id: 1
 
-two:
-  name: MyString
-  account_id: 1
+chris:
+  name: Chris Dinn
+  account_id: 2

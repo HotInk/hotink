@@ -1,15 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  title: MyString
+  title: Simon Fraser union battle 
   alternate_title: MyString
-  subtitle: MyString
-  bodytext: MyText
+  subtitle: Lawyers take case to Supreme Court of BC
+  bodytext: BURNABY (CUP) – Almost a year after Simon Fraser University students voted to leave the Canadian Federation of Students
   summary: MyString
   date: 2009-01-29
+  account_id: 1
 
 two:
-  title: MyString
   alternate_title: MyString
   subtitle: MyString
   bodytext: MyText

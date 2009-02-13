@@ -1,7 +1,12 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  name: MyString
+varsity:
+  id: 1
+  name: varsity
+  formal_name: The Varsity
+  
 
-two:
-  name: MyString
+mcgilldaily:
+  id: 2
+  name: mcgilldaily
+
