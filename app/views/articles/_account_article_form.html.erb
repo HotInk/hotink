@@ -12,7 +12,7 @@
 	    <%= f.label :subtitle, "Subhead"%><br />
 	    <%= f.text_field :subtitle, :class => :text_input  %>
 	  </p>
-	  <div id="column_holder">
+	  <div class="column_holder">
 	  	  <p class="half_column">
 		    <%= f.label :date %>&nbsp;<%= f.date_select :date %>
 		  </p>
@@ -20,6 +20,46 @@
 			<%= f.label "Primary section"%>&nbsp;<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => true})%>
 		  </p>
 	  </div>
+	  <div id ="author_list" class="field">
+		<%= f.label :authors %><br />
+		<div tabindex="-1" id="ids" class="clearfix tokenizer text_input" onclick="$('article_new_authors_list').focus()">
+            <span class="tokenizer_stretcher">^_^</span><span class="tab_stop"><input type="text" id="hidden_input" tabindex="-1"></span>    	    
+            <div id="autocomplete_display" class="tokenizer_input">
+				<%= f.text_field :new_authors_list, :size => 1, :tabindex=>""%>
+				<!-- <input type="text" size="1" tabindex="" id="autocomplete_input" name="new_author_list"  /> -->
+            </div>
+            <div id="autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10000; width: 358px; height: auto; overflow-y: hidden;display:none"></div>
+        	<script type="text/javascript">
+			// preload images.
+	        (new Image()).src='/token.gif';
+	        (new Image()).src='/token_selected.gif';
+	        (new Image()).src='/token_hover.gif';
+	        (new Image()).src='/token_x.gif';
+
+
+			var contacts =  [
+	        {name:"phoenix zhuang",email:"phoenix@rorcraft.com"}, 
+	        {name:"jian xie",email:"jan.xie@rorcraft.com"}, 
+	        {name:"isaiah peng",email:"isaiah.peng@rorcraft.com"}, 
+	        {name:"chris chan",email:"chris.chan@rorcraft.com"}, 
+	        {name:"rex chung",email:"rex@rorcraft.com"},
+	        {name:"chung rex",email:"chung@rorcraft.com"},
+	        {name:"chan chris",email:"chan@rorcraft.com"},
+	        {name:"peng isaiah",email:"peng@rorcraft.com"},
+			{name:"albert chang",email:"albert@yahoo.com"}]; 
+
+
+	        var typeahead = new Autocompleter.LocalAdvanced('article_new_authors_list', 'autocomplete_populate', contacts, {                                                  
+	            frequency: 0.1,
+	            updateElement: addContactToList,
+	            search_field: "name"
+	        });
+	        var hidden_input = new HiddenInput('hidden_input', typeahead);
+
+	        </script>
+		</div>
+	  </div>
+	
 	  <p>
 		<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
 	    <%= f.label :bodytext, "Body text" %><br />

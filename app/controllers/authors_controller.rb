@@ -2,11 +2,12 @@ class AuthorsController < ApplicationController
   # GET /authors
   # GET /authors.xml
   def index
-    @authors = Author.find(:all)
+    @authors = @account.authors.find(:all)
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @authors }
+      format.json { render :json => @authors }
     end
   end
 

@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  
   # GET /articles
   # GET /articles.xml
   def index
@@ -73,7 +74,7 @@ class ArticlesController < ApplicationController
       if @article.update_attributes(params[:article])
         
         #Eliminate categorization for current section, if any
-        @article.categories.delete(@article.section)
+        @article.categories << @article.section unless @article.categories.member?(@article.section)
         
         flash[:notice] = 'Article was successfully updated.'
         format.js   {redirect_to(edit_account_article_path(@account, @article, :format=>:js))}

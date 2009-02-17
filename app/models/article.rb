@@ -25,4 +25,9 @@ class Article < ActiveRecord::Base
     return self.title unless self.title.strip == ""
     return "(no headline)"
   end
+  
+  def new_authors_list
+    return ""
+  end
+  
 end
