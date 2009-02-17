@@ -20,6 +20,20 @@ class Article < ActiveRecord::Base
   
   validates_presence_of :account, :message => "Must have an account"
   validates_associated :account, :message => "Account must be valid"
+
+
+  define_index do
+    indexes title, :sortable => :true
+    indexes subtitle
+    indexes bodytext
+    indexes date, :sortable => :true
+
+    has created_at
+    has account_id
+  end
+
+
+
   
   def display_title
     if self.title and self.title.strip != ""
