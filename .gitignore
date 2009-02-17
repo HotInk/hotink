@@ -11,3 +11,5 @@ public/images
 backups/
 config/database.yml
 config/ultrasphinx/development.conf
+config/development.sphinx.conf
+db/sphinx
