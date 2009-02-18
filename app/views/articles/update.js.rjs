@@ -1,0 +1,2 @@
+page.replace_html 'last_saved', time_ago_in_words(@article.updated_at) + " ago"
+page << "new Ajax.Request('#{account_article_sortings_url(@account, @article, :format=>:js)}', {method:'get'});"
