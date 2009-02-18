@@ -37,22 +37,28 @@
 	        (new Image()).src='/token_x.gif';
 
 
-			var contacts =  [
-	        {name:"phoenix zhuang",email:"phoenix@rorcraft.com"}, 
-	        {name:"jian xie",email:"jan.xie@rorcraft.com"}, 
-	        {name:"isaiah peng",email:"isaiah.peng@rorcraft.com"}, 
-	        {name:"chris chan",email:"chris.chan@rorcraft.com"}, 
-	        {name:"rex chung",email:"rex@rorcraft.com"},
-	        {name:"chung rex",email:"chung@rorcraft.com"},
-	        {name:"chan chris",email:"chan@rorcraft.com"},
-	        {name:"peng isaiah",email:"peng@rorcraft.com"},
-			{name:"albert chang",email:"albert@yahoo.com"}]; 
+			var contacts =  <%= @account.authors.to_json(:only=>[:name, :id]) %>; 
 
 
 	        var typeahead = new Autocompleter.LocalAdvanced('article_new_authors_list', 'autocomplete_populate', contacts, {                                                  
 	            frequency: 0.1,
 	            updateElement: addContactToList,
-	            search_field: "name"
+	            search_field: "name",
+				search_model: "author",
+				onNewAuthor: function( new_author ){
+					new Ajax.Request( 	"<%= account_article_authors_url(@account, @article, :format=>:json )%>",
+									{	method: 'post',
+										parameters: "author[name]=" + new_author + "&authenticity_token=" + "<%= form_authenticity_token %>",
+										onSuccess: function(transport){
+														var json = transport.responseText.evalJSON(true);
+														addContactToList( Builder.node(	'li', 
+																						{ value: (contacts.push(json) - 1)},
+																						json.author.name
+																					  )
+																		);
+													}
+									})
+				}
 	        });
 	        var hidden_input = new HiddenInput('hidden_input', typeahead);
 
@@ -95,7 +101,7 @@
 						Use these tools to save this article.
 					</p>
 					<p>
-		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').submit();") %>
+		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();") %>
 		  			</p>
 				</div>
 				<div class="toolbox_border"></div>

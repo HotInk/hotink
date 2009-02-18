@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   # Nothing exists in the app without belonging to an account, routing reflects this fact.
   map.resources :accounts do |account|
     account.resources :articles do |article|
+      article.resources :authors
       article.resources :sortings
       article.resources :tags
     end

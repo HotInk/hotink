@@ -128,11 +128,11 @@ onKeyPress: function(event) {
         }
         else {
             if (event.keyCode == Event.KEY_TAB || event.keyCode == Event.KEY_RETURN || 
-            (Prototype.Browser.WebKit > 0 && event.keyCode == 0) || event.keyCode == 44 /* , comma  ||  event.keyCode == 188 */) {
-                var email_addr = this.element.value.strip().sub(',', '')
-                //recognise email format
-                if (validate_email(email_addr)) {
-                    addEmailToList(email_addr);
+            (Prototype.Browser.WebKit > 0 && event.keyCode == 0) || event.keyCode == 44 /*, comma  */||  event.keyCode == 188 ) {
+                new_author = this.element.value.sub(',', '').strip()
+                
+                if (new_author && new_author!="") {
+                    this.options.onNewAuthor( new_author )
                     Event.stop(event);
                 } 
                 this.element.value = "";
@@ -189,7 +189,7 @@ setOptions: function(options) {
                 ret.length < instance.options.choices; i++) {
 
                     var elem = instance.options.array[i];
-                    var elem_name = elem[instance.options.search_field];
+                    var elem_name = elem[instance.options.search_model][instance.options.search_field];
                     var foundPos = instance.options.ignoreCase ? 
                     elem_name.toLowerCase().indexOf(entry.toLowerCase()) : 
                     elem_name.indexOf(entry);
@@ -198,10 +198,7 @@ setOptions: function(options) {
 
                         if (foundPos == 0 && elem_name.length != entry.length) {
                             var value = "<strong>" + elem_name.substr(0, entry.length) + "</strong>" + elem_name.substr(entry.length);
-                            ret.push(
-                            "<li value='" + i + "'>" + "<div>" + value + "</div>"
-                            + "<div>" + elem.email + "</div>" + "</li>"
-                            );
+                            ret.push("<li value='" + i + "'>" + "<div>" + value + "</div>" + "</li>");
                             break;
 
                         } else if (entry.length >= instance.options.partialChars && instance.options.partialSearch && foundPos != -1) {
@@ -210,10 +207,7 @@ setOptions: function(options) {
                                 elem_name.substr(foundPos, entry.length) + "</strong>" + elem_name.substr(
                                 foundPos + entry.length)
 
-                                partial.push(
-                                "<li value='" + i + "'>" + "<div>" + value + "</div>"
-                                + "<div>" + elem.email + "</div>" + "</li>"
-                                );
+                                partial.push("<li value='" + i + "'>" + "<div>" + value + "</div>" + "</li>");
                                 break;
 
                             }
@@ -330,7 +324,7 @@ HiddenInput = Class.create({
 
 
 addContactToList = function(item) {
-    $('article_new_authors_list').value = "";
+   	$('article_new_authors_list').value = "";
     var token = Builder.node('a', {
         "class": 'token',
         href: "#",
@@ -340,10 +334,10 @@ addContactToList = function(item) {
     Builder.node('span', 
     Builder.node('span', 
     Builder.node('span', {},
-    [Builder.node('input', { type: "hidden", name: "ids[]",
-        value: item.lastChild.innerHTML
+    [Builder.node('input', { type: "hidden", name: "author_ids[]",
+        value: "0"
     }), 
-	contacts[Element.readAttribute(item,'value')].name,
+	contacts[Element.readAttribute(item,'value')].author.name,
         Builder.node('span',{"class":'x',onmouseout:"this.className='x'",onmouseover:"this.className='x_hover'",
         onclick:"this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true); return false;"}," ")
         ]
@@ -354,26 +348,5 @@ addContactToList = function(item) {
 	);  
 	$(token).down(4).next().innerHTML = "&nbsp;";
  	new Token(token,hidden_input);
-   $('autocomplete_display').insert({before:token});
-}
-addEmailToList = function(email) {
-/*   $('autocomplete_input').value = "";*/
-   var token = Builder.node('a',{"class":'token',href:"#",tabindex:"-1"},
-       Builder.node('span',
-       Builder.node('span',
-       Builder.node('span',
-       Builder.node('span',{},[
-           Builder.node('input',{type:"hidden",name:"emails[]",value: email} ) ,
-           email,
-           Builder.node('span',{"class":'x',onmouseout:"this.className='x'",onmouseover:"this.className='x_hover'",
-           onclick:"this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true); return false;"}," ")
-           ]
-       )
-       )
-       )   
-       )
-   );  
-	$(token).down(4).next().innerHTML = "&nbsp;";
-   new Token(token,hidden_input);
    $('autocomplete_display').insert({before:token});
 }

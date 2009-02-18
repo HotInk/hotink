@@ -22,6 +22,7 @@ a:hover { color: #3399DE; }
 .clearfix{display:inline-block;}
 html[xmlns] .clearfix{display:block;}
 * html .clearfix{height:1%;}
+.hidden { display:none;}
 
 .fieldWithErrors {
   padding: 2px;
@@ -396,5 +397,5 @@ div.tokenizer.tokenizer_locked .token span.x_hover{display:none;}
 div.autocomplete {  position:absolute;  width:355px;  background-color:white;  border:1px solid #888;  margin-top:-2px;  padding:0px;}
 div.autocomplete ul {  list-style-type:none;margin:0px; padding:0px;}
 div.autocomplete ul li.selected { background-color: #ffb;}
-div.autocomplete ul li {  list-style-type:none;  display:block;  margin:0;  padding:2px;  height:32px;cursor:pointer;}
+div.autocomplete ul li {  list-style-type:none;  display:block;  margin:0;  padding:2px;  height:16px;cursor:pointer;}
 /* end of autcompleter.advancedlocal css */

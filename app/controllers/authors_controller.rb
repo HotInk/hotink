@@ -42,10 +42,13 @@ class AuthorsController < ApplicationController
   # POST /authors.xml
   def create
     @author = Author.new(params[:author])
-
+    @author.account = @account
+    
+    @author.articles << @article if find_article
+    
     respond_to do |format|
       if @author.save
-        flash[:notice] = 'Author was successfully created.'
+        format.json { render :json => @author, :status => :created }
         format.html { redirect_to(@author) }
         format.xml  { render :xml => @author, :status => :created, :location => @author }
       else
