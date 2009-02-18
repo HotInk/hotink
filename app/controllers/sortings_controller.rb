@@ -6,7 +6,7 @@ class SortingsController < ApplicationController
   # GET /sortings.xml
   def index
     @sortings = @article.sortings.find(:all)
-
+    @article.categories << @article.section unless @article.categories.member?(@article.section)
     respond_to do |format|
       format.html # index.html.erb
       format.js

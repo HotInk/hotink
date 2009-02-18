@@ -226,10 +226,6 @@ html[xmlns] .clearfix{display:block;}
 	height: 85px;
 }
 
-#article_form_hidden_elements{
-	display: none;
-}
-
 .note {
 	font-size: 11px;
 }

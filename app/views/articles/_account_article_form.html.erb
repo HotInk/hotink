@@ -81,11 +81,15 @@
 			<div class="wmd-preview preview"></div>
 		  </div>
 	  </p>
-	  <div id="article_form_hidden_elements">
+	  <div id="article_form_hidden_elements" class="hidden">
 	  	
 		<% f.fields_for :sortings do |sorting| %>
 			<%= sorting.hidden_field '_delete' %>
 		<%end%>
+
+	  </div>
+	  <div id="category_form_hidden_elements" class="hidden">
+
 
 	  </div>
 	<% end %>
@@ -98,7 +102,7 @@
 				<div class="toolbox_border"></div>
 				<div class="toolbox_body">	
 					<p>
-						Use these tools to save this article.
+						Last saved<br /><span id="last_saved" style="color:green;"><%= time_ago_in_words(@article.updated_at) %> ago</span>
 					</p>
 					<p>
 		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();") %>

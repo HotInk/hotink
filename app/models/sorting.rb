@@ -4,4 +4,15 @@ class Sorting < ActiveRecord::Base
   belongs_to :category
   belongs_to :section, :foreign_key => :category_id, :class_name => "Section"
   belongs_to :article
+  
+  after_save :mark_article_as_updated
+  before_destroy :mark_article_as_updated
+  
+  private
+  
+  def mark_article_as_updated
+    self.article.update_attributes(:updated_at => Time.now) if self.article
+  end
+  
+  
 end

@@ -47,4 +47,7 @@ class Article < ActiveRecord::Base
     return ""
   end
   
+  def new_authors_list=(list)
+  end
+  
 end

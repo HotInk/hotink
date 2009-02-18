@@ -54,7 +54,6 @@ class ArticlesController < ApplicationController
     
     respond_to do |format|
       if @article.save
-        flash[:notice] = 'Article was successfully created.'
         format.html { redirect_to(account_article_path(@account, @article)) }
         format.xml  { render :xml => @article, :status => :created, :location => @article }
       else
@@ -72,12 +71,10 @@ class ArticlesController < ApplicationController
 
     respond_to do |format|
       if @article.update_attributes(params[:article])
-        
-        #Eliminate categorization for current section, if any
+        @article = @account.articles.find(params[:id])
+        #Create sorting for current section, if necessary
         @article.categories << @article.section unless @article.categories.member?(@article.section)
-        
-        flash[:notice] = 'Article was successfully updated.'
-        format.js   {redirect_to(edit_account_article_path(@account, @article, :format=>:js))}
+        format.js
         format.html { redirect_to(edit_account_article_path(@account, @article)) }
         format.xml  { head :ok }
       else
