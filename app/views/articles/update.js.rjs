@@ -1,5 +1,4 @@
 page.replace_html 'last_saved', time_ago_in_words(@article.updated_at) + " ago"
 page << "new Ajax.Request('#{account_article_sortings_url(@account, @article, :format=>:js)}', {method:'get'});"
-page << "$('article_form_hidden_elements').childElements().findAll( function(s) { return s.hasAttribute('value'); }).invoke('remove');"
 page << "$('category_form_hidden_elements').childElements().invoke('remove');"
 page.replace_html 'article_form_hidden_elements', :partial => 'delete_tag', :collection => @article.sortings
