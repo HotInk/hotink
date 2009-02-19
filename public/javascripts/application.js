@@ -33,14 +33,10 @@ function delete_new_article_sorting(new_sorting_id, category_id, caller)
 	$(caller).writeAttribute("onclick", "new_article_sorting(" + category_id + ", this)");
 }
 
-function mark_sorting_for_delete(sorting_id, caller) {
+function mark_sorting_for_delete(sorting_id, category_id, caller) 
+{
 	$("article_sortings_attributes_" + sorting_id + "__delete").value = "1";
-	$(caller).writeAttribute("onclick", "unmark_sorting_for_delete(" + sorting_id + ", this)");
-}
-
-function unmark_sorting_for_delete(sorting_id, caller) {
-	$("article_sortings_attributes_" + sorting_id + "__delete").value = "0";
-	$(caller).writeAttribute("onclick", "mark_sorting_for_delete(" + sorting_id + ", this)");
+	$(caller).writeAttribute("onclick", "new_article_sorting(" + category_id + ", this)");
 }
 
 //Author_list autocomplete javascript

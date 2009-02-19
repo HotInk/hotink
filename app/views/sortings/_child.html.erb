@@ -1,6 +1,6 @@
 <li id="category-<%= child.id %>" 
 	class="parent <%= " printsection" if child.is_a?(Section) %>">
-		<% options = {:onclick => (@article.categories.member?(child) ? "mark_sorting_for_delete(#{@article.sortings.find_by_category_id(child.id).id}, this)" :  "new_article_sorting(#{child.id}, this)") } -%>
+		<% options = {:onclick => (@article.categories.member?(child) ? "mark_sorting_for_delete(#{@article.sortings.find_by_category_id(child.id).id}, #{child.id}, this)" :  "new_article_sorting(#{child.id}, this)") } -%>
 		<% options = options.merge({:disabled => "true"}) if @article.section == child %>
 		<% checked = @article.categories.member?(child) ? true : false -%>
 		<%= indent + check_box_tag("article_category_" + child.id.to_s, child.id.to_s, checked, options) %>
