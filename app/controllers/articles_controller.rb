@@ -30,7 +30,7 @@ class ArticlesController < ApplicationController
     @article.save
     
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { redirect_to edit_account_article_path(@account, @article) }
       format.xml  { render :xml => @article }
     end
   end

@@ -330,8 +330,8 @@ addContactToList = function(item) {
     Builder.node('span', 
     Builder.node('span', 
     Builder.node('span', {},
-    [Builder.node('input', { type: "hidden", name: "author_ids[]",
-        value: "0"
+    [Builder.node('input', { type: "hidden", id:"article_authorships_attributes_new_" + new_sorting_count + "_author_id", name: "article[authorships_attributes][new_" + new_sorting_count + "][author_id]",
+        value: contacts[Element.readAttribute(item,'value')].author.id
     }), 
 	contacts[Element.readAttribute(item,'value')].author.name,
         Builder.node('span',{"class":'x',onmouseout:"this.className='x'",onmouseover:"this.className='x_hover'",
@@ -344,5 +344,6 @@ addContactToList = function(item) {
 	);  
 	$(token).down(4).next().innerHTML = "&nbsp;";
  	new Token(token,hidden_input);
-   $('autocomplete_display').insert({before:token});
+	new_sorting_count = new_sorting_count + 1;
+   $('authorship_form_elements').insert({bottom:token});
 }

@@ -12,4 +12,15 @@ class Authorship < ActiveRecord::Base
   belongs_to :author
   belongs_to :article
   
+  #Mark article as updated if authorship is created or destroyed
+  after_create :mark_article_as_updated
+  before_destroy :mark_article_as_updated
+  
+  private
+  
+  def mark_article_as_updated
+    self.article.update_attributes(:updated_at => Time.now) if self.article
+  end
+  
+  
 end

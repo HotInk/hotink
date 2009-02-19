@@ -1,4 +1,13 @@
+#Update the last saved note
 page.replace_html 'last_saved', time_ago_in_words(@article.updated_at) + " ago"
+
+#Reload sortings form to keep javascript calls up-to-date
 page << "new Ajax.Request('#{account_article_sortings_url(@account, @article, :format=>:js)}', {method:'get'});"
+#Remove nested form create elements for newly-created sortings
 page << "$('category_form_hidden_elements').childElements().invoke('remove');"
+#Create nestd form delete elements for newly-created sortings
 page.replace_html 'article_form_hidden_elements', :partial => 'delete_tag', :collection => @article.sortings
+
+#Remove existing authorship tokens and replace with updated tokens
+page.replace_html 'authorship_form_elements', :partial => 'authorship', :collection => @article.authorships
+

@@ -17,6 +17,8 @@ class Article < ActiveRecord::Base
   acts_as_taggable_on :tags
   
   accepts_nested_attributes_for :sortings, :allow_destroy => true
+  accepts_nested_attributes_for :authorships, :allow_destroy => true
+  
   
   validates_presence_of :account, :message => "Must have an account"
   validates_associated :account, :message => "Account must be valid"

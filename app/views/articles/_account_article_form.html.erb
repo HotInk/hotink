@@ -22,11 +22,13 @@
 	  </div>
 	  <div id ="author_list" class="field">
 		<%= f.label :authors %><br />
-		<div tabindex="-1" id="ids" class="clearfix tokenizer text_input" onclick="$('article_new_authors_list').focus()">
-            <span class="tokenizer_stretcher">^_^</span><span class="tab_stop"><input type="text" id="hidden_input" tabindex="-1"></span>    	    
+		<div tabindex="-1" id="authorships_form" class="clearfix tokenizer text_input" onclick="$('article_new_authors_list').focus()">
+            <span class="tokenizer_stretcher">^_^</span><span class="tab_stop"><input type="text" id="hidden_input" tabindex="-1"></span>
+    	    <span id="authorship_form_elements">
+				<%= render :partial=>'authorship', :collection => @article.authorships %>
+			</span>
             <div id="autocomplete_display" class="tokenizer_input">
 				<%= f.text_field :new_authors_list, :size => 1, :tabindex=>""%>
-				<!-- <input type="text" size="1" tabindex="" id="autocomplete_input" name="new_author_list"  /> -->
             </div>
             <div id="autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10000; width: 358px; height: auto; overflow-y: hidden;display:none"></div>
         	<script type="text/javascript">
@@ -88,10 +90,8 @@
 		<%end%>
 
 	  </div>
-	  <div id="category_form_hidden_elements" class="hidden">
-
-
-	  </div>
+	  <div id="category_form_hidden_elements" class="hidden"></div>
+	  <div id="authorship_form_hidden_elements" class="hidden"></div>
 	<% end %>
 </div><!-- /article_form -->
 	<div id="sidebar">
@@ -105,7 +105,7 @@
 						Last saved<br /><span id="last_saved" style="color:green;"><%= time_ago_in_words(@article.updated_at) %> ago</span>
 					</p>
 					<p>
-		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"primary large pill-l") -%><%= button_link_to 'Back', account_articles_path(@account), :class=>"pill-r" %>
+		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"primary pill-l") -%><%= button_link_to_function 'View all articles', "window.location= '#{account_articles_url(@account)}';", :href=>account_articles_url(@account), :class=>"btn pill-r" %>
 		  			</p>
 				</div>
 				<div class="toolbox_border"></div>
