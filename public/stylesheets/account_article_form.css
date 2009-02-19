@@ -15,7 +15,7 @@ pre {
 }
 
 a { text-decoration:none; color: #000; }
-a:visited { color: #666; }
+a:visited { color: #333; }
 a:hover { color: #3399DE; }
 
 .clearfix:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0;}
@@ -141,7 +141,7 @@ html[xmlns] .clearfix{display:block;}
      }
 	
   .large {
-	font-size: 15px;
+	font-size: 13px;
 	line-height: 1.2;
   }
 
@@ -158,7 +158,7 @@ html[xmlns] .clearfix{display:block;}
 	
 	float: left;
 	
-	border: 2px solid #3399DE;
+	/* border: 2px solid #3399DE; */
 }
 
 #article_form {

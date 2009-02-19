@@ -105,7 +105,7 @@
 						Last saved<br /><span id="last_saved" style="color:green;"><%= time_ago_in_words(@article.updated_at) %> ago</span>
 					</p>
 					<p>
-		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();") %>
+		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"primary large pill-l") -%><%= button_link_to 'Back', account_articles_path(@account), :class=>"pill-r" %>
 		  			</p>
 				</div>
 				<div class="toolbox_border"></div>
