@@ -154,8 +154,8 @@ onKeyPress: function(event) {
             case Event.KEY_BACKSPACE:
                 if (this.element.value == "" && typeof this.wrapper.previous().token != "undefined") {
                     this.wrapper.previous().token.select();
-					this.set_input_size ( true );
                 }
+				this.set_input_size ( true );
                 return;
                 //jump right to token
                 case Event.KEY_RIGHT:

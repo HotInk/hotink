@@ -370,7 +370,7 @@ div.tokenizer{border: 1px solid #DEDEDE;}
 .tokenizer_input_shadow{border:0px solid black;outline:0;;font-size:11px;padding:0px 5px;margin:0 0 -1px 0;white-space:pre;}
 .tokenizer_input_shadow{display:inline;left:-10000px;position:absolute;top:-10000px;}
 .tokenizer .tokenizer_input_shadow{height:0px;display:block;left:0px;overflow:hidden;position:relative;top:0px;}
-div.tokenizer .token{background-image:url('/token.gif');background-repeat:no-repeat;color:black;white-space:nowrap;}
+div.tokenizer .token{background-image:url('/token.gif');background-repeat:no-repeat;white-space:nowrap;}
 div.tokenizer .token span{background-image:url('/token.gif');background-position:top right;background-repeat:no-repeat;display:block;}
 div.tokenizer .token span span{background-position:bottom right;}
 div.tokenizer .token span span span{background-position:bottom left;}
@@ -380,6 +380,7 @@ html div.tokenizer_locked .token:hover,
 html div.tokenizer_locked .token:hover span{background-image:url('/token.gif');}
 div.tokenizer .token:hover,
 div.tokenizer .token:hover span{background-image:url('/token_hover.gif');text-decoration:none;}
+div.tokenizer a{ color: #333;}
 div.tokenizer .token_selected,
 div.tokenizer .token_selected span,
 div.tokenizer .token_selected:hover,
