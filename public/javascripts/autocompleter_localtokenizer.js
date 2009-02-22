@@ -183,6 +183,7 @@ addTokenToList: function(item, value) {
 			this.element.value = ""; 
 		    var token = Builder.node('a', {
 		        "class": 'token',
+				"onclick": "return false;",
 		        href: "#",
 		        tabindex: "-1"
 		    },
@@ -215,6 +216,7 @@ addSavedTokensToList: function(saved_tokens_join_json) {
 				var delete_tag_name = this.options.parent_model + "[" + this.options.search_join_models + "_attributes][" + tokens[i][this.options.search_join_model].id + "][_delete]";
 				var new_token = Builder.node('a', {
 			        "class": 'token',
+					"onclick": "return false;",
 			        href: "#",
 			        tabindex: "-1"
 			    },
@@ -377,7 +379,6 @@ Token = Class.create({
             this.deselect();
 
         }
-		event.stop();
     },
 	mark_for_delete: function() {
 		this.delete_tag.value = 1;

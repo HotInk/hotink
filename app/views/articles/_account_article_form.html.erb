@@ -3,7 +3,6 @@
 	<%= "<p style=\"color: green\">#{ flash[:notice] }</p>" if flash[:notice] %>
 	<% remote_form_for([@account, @article]) do |f| %>
 	  <%= f.error_messages %>
-
 	  <p>
 	    <%= f.label :title, "Headline"%><br />
 	    <%= f.text_field :title , :class => :text_input%>
@@ -86,9 +85,6 @@
 				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - tags -->
-		<!-- 
-			
-		-->
 		</div><!-- /tools -->
 	</div><!-- /siderbar -->
 </div><!-- /page_container -->
