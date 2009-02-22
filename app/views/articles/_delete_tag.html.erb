@@ -1,1 +1,2 @@
-<input type="hidden" name="article[sortings_attributes][<%= delete_tag.id %>][_delete]" id="article_sortings_attributes_<%= delete_tag.id %>__delete"/>
+<% delete_tag_type = delete_tag.class.human_name.pluralize.downcase -%>
+<input type="hidden" name="article[<%= delete_tag_type %>_attributes][<%= delete_tag.id %>][_delete]" id="article_<%= delete_tag_type %>_attributes_<%= delete_tag.id %>__delete"/>

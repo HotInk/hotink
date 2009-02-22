@@ -1,0 +1,41 @@
+<%= label_tag 'article[new_authors_list]', 'Authors' %><br />
+<div tabindex="-1" id="authorships_form" class="clearfix tokenizer text_input" onclick="$('article_new_authors_list').focus()">
+    <span class="tokenizer_stretcher">^_^</span><span class="tab_stop"><input type="text" id="hidden_input" tabindex="-1"></span>
+    <div id="autocomplete_display" class="tokenizer_input">
+		<%= text_field_tag 'article[new_authors_list]', '' %>
+    </div>
+</div>
+    <div id="autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10000; width: 450px; height: auto; overflow-y: hidden;display:none"></div>
+	<script type="text/javascript">
+	// preload images.
+    (new Image()).src='/token.gif';
+    (new Image()).src='/token_selected.gif';
+    (new Image()).src='/token_hover.gif';
+    (new Image()).src='/token_x.gif';
+
+	createNewAuthor = function( new_token_text, auto_complete ){
+		new_author_auto_complete = auto_complete;
+		new Ajax.Request( 	"<%= account_article_authors_url(@account, @article, :format=>:json )%>", 
+							{	method: 'post', parameters: "author[name]=" + new_token_text + "&authenticity_token=" + "<%= form_authenticity_token %>",
+								onSuccess: function(transport){
+												var json = transport.responseText.evalJSON(true);
+												new_author_auto_complete.addTokenToList( json.author.name, (new_author_auto_complete.options.array.push(json) - 1));
+												new_author_auto_complete.set_input_size();
+												}
+							});
+	}
+
+    var author_list = new Autocompleter.LocalTokenizer('article_new_authors_list', 'autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
+        frequency: 0.1,
+		parent_model: "article",
+        search_field: "name",
+		search_model: "author",
+		search_join_model: "authorship",
+		search_join_models: "authorships",
+		text_field_width: 575,
+		token_delimiter: /, and | and |,/,
+		saved_token_join_json: <%= @article.authorships.to_json(:include=>:author, :only=>[:name, :id]) %>,
+		hidden_input_id: 'hidden_input',
+		onNewToken: createNewAuthor
+    });
+    </script>

@@ -8,6 +8,5 @@ page << "$('category_form_hidden_elements').childElements().invoke('remove');"
 #Create nestd form delete elements for newly-created sortings
 page.replace_html 'article_form_hidden_elements', :partial => 'delete_tag', :collection => @article.sortings
 
-#Remove existing authorship tokens and replace with updated tokens
-page.replace_html 'authorship_form_elements', :partial => 'authorship', :collection => @article.authorships
-
+#Remove existing author mechanism and completely replace
+page.replace_html 'author_list', :partial => 'article_author_form'

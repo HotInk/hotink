@@ -21,52 +21,8 @@
 		  </p>
 	  </div>
 	  <div id ="author_list" class="field">
-		<%= f.label :authors %><br />
-		<div tabindex="-1" id="authorships_form" class="clearfix tokenizer text_input" onclick="$('article_new_authors_list').focus()">
-            <span class="tokenizer_stretcher">^_^</span><span class="tab_stop"><input type="text" id="hidden_input" tabindex="-1"></span>
-    	    <span id="authorship_form_elements">
-				<%= render :partial=>'authorship', :collection => @article.authorships %>
-			</span>
-            <div id="autocomplete_display" class="tokenizer_input">
-				<%= f.text_field :new_authors_list, :size => 1, :tabindex=>""%>
-            </div>
-            <div id="autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10000; width: 358px; height: auto; overflow-y: hidden;display:none"></div>
-        	<script type="text/javascript">
-			// preload images.
-	        (new Image()).src='/token.gif';
-	        (new Image()).src='/token_selected.gif';
-	        (new Image()).src='/token_hover.gif';
-	        (new Image()).src='/token_x.gif';
-
-
-			var contacts =  <%= @account.authors.to_json(:only=>[:name, :id]) %>; 
-
-
-	        var typeahead = new Autocompleter.LocalAdvanced('article_new_authors_list', 'autocomplete_populate', contacts, {                                                  
-	            frequency: 0.1,
-	            updateElement: addContactToList,
-	            search_field: "name",
-				search_model: "author",
-				onNewAuthor: function( new_author ){
-					new Ajax.Request( 	"<%= account_article_authors_url(@account, @article, :format=>:json )%>",
-									{	method: 'post',
-										parameters: "author[name]=" + new_author + "&authenticity_token=" + "<%= form_authenticity_token %>",
-										onSuccess: function(transport){
-														var json = transport.responseText.evalJSON(true);
-														addContactToList( Builder.node(	'li', 
-																						{ value: (contacts.push(json) - 1)},
-																						json.author.name
-																					  )
-																		);
-													}
-									})
-				}
-	        });
-	        var hidden_input = new HiddenInput('hidden_input', typeahead);
-
-	        </script>
-		</div>
-	  </div>
+			<%= render :partial => 'article_author_form' %>
+	  </div><!-- /author_list -->
 	
 	  <p>
 		<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->

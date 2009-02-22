@@ -41,11 +41,15 @@ function mark_sorting_for_delete(sorting_id, category_id, caller)
 
 //Author_list autocomplete javascript
 
-Autocompleter.LocalAdvanced = Class.create(Autocompleter.Base, {
+Autocompleter.LocalTokenizer = Class.create(Autocompleter.Base, {
     initialize: function(element, update, array, options) {
         this.baseInitialize(element, update, options);
         this.options.array = array;
         this.wrapper = $(this.element.parentNode);
+		this.tokens = [],
+		
+		//Load hidden input
+		this.hidden_input = new HiddenInput(this.options.hidden_input_id, this);
 
 	    if (!this.element.hacks) {
 	        this.element.should_use_borderless_hack = Prototype.Browser.WebKit;
@@ -64,14 +68,18 @@ Autocompleter.LocalAdvanced = Class.create(Autocompleter.Base, {
 			
 		}  
 		this.options.onHide = function(element, update){ update.hide() };
-	    
-
+		
+		this.addSavedTokensToList(this.options.saved_token_join_json)	    
+	    Event.observe(this.element, 'keypress', this.onKeyUp.bindAsEventListener(this));
+	   
     },
 getUpdatedChoices: function() {
         this.updateChoices(this.options.selector(this));
 
     },
-
+onKeyUp: function(event) {
+		
+	},
 onBlur: function($super, event) {
         $super();
         //move itself back to the end on blur
@@ -83,18 +91,41 @@ onBlur: function($super, event) {
         }
 
     },
-set_input_size: function(size) {
-	size = size || 20;
-	this.element.setStyle({width: size + "px"});	
+updateElement: function(selectedElement) {
+	if (this.options.updateElement) {
+      this.options.updateElement(selectedElement);
+      return;
+    }
+	this.addTokenToList(selectedElement);
+},
+onNewToken: function( new_token_text ){
+	if (this.options.onNewToken) this.options.onNewToken(new_token_text, this);
+},
+set_input_size: function( load_small ) {
+	if( load_small ) {
+		this.element.setStyle({width: "20px"});
+	} else {
+		if (this.element.value == '') {
+			var token_width = 0;
+			for (var i = 0; i<this.tokens.length;i++) {
+				var new_width = token_width + this.tokens[i].element.getWidth();
+				if (new_width > this.options.text_field_width) token_width = 0;
+				token_width = token_width + this.tokens[i].element.getWidth();
+			}
+			this.element.setStyle({width: (this.options.text_field_width - token_width - 20) + "px"});
+			return true;
+		} else {
+			var field_width = 20;
+			if (this.element.value!='undefined') field_width = field_width + (this.element.value.length * 7);
+			this.element.setStyle({width: field_width + "px"});
+			return true;
+		}
+	}		
 },
 onKeyPress: function(event) {
         //dynamically resize the input field
-		var new_size = 20 + (this.element.value.length * 7);
-        if (new_size <= 340) {
-			this.set_input_size(new_size);
-        } else {
-			this.set_input_size(340);
-        }
+		this.set_input_size();
+
         //active is when there's suggesitons found
         if (this.active)
         switch (event.keyCode) {
@@ -125,14 +156,19 @@ onKeyPress: function(event) {
         else {
             if (event.keyCode == Event.KEY_TAB || event.keyCode == Event.KEY_RETURN || 
             (Prototype.Browser.WebKit > 0 && event.keyCode == 0) || event.keyCode == 44 /*, comma  */||  event.keyCode == 188 ) {
-                new_author = this.element.value.sub(',', '').strip()
-                
-                if (new_author && new_author!="") {
-                    this.options.onNewAuthor( new_author )
+                new_token_text  = this.element.value.strip();				
+                if (new_token_text  && new_token_text !="") {
+					new_token_text = new_token_text.split(this.options.token_delimiter)
+					if (new_token_text instanceof Array) {
+						for (var b = 0;b<new_token_text.length;b++){
+							this.onNewToken( new_token_text[b].strip() );
+						}
+					} else {
+                    this.onNewToken( new_token_text );
+					}
                     Event.stop(event);
                 } 
                 this.element.value = "";
-				this.set_input_size();
                 return false;
 
             }
@@ -142,14 +178,14 @@ onKeyPress: function(event) {
             case Event.KEY_BACKSPACE:
                 if (this.element.value == "" && typeof this.wrapper.previous().token != "undefined") {
                     this.wrapper.previous().token.select();
-
+					this.set_input_size ( true );
                 }
                 return;
                 //jump right to token
                 case Event.KEY_RIGHT:
                 if (this.element.value == "" && this.wrapper.next() && typeof this.wrapper.next().token != "undefined") {
                     this.wrapper.next().token.select();
-
+					this.set_input_size ( true );
                 }
 
             }
@@ -164,7 +200,69 @@ onKeyPress: function(event) {
         setTimeout(this.onObserverEvent.bind(this), this.options.frequency * 1000);
 
     },
-
+addTokenToList: function(item, value) {
+			if (item instanceof Element) {
+				var value = Element.readAttribute(item,'value')
+			} 	
+			this.element.value = ""; 
+		    var token = Builder.node('a', {
+		        "class": 'token',
+		        href: "#",
+		        tabindex: "-1"
+		    },
+		    Builder.node('span', 
+		    Builder.node('span', 
+		    Builder.node('span', 
+		    Builder.node('span', {},
+		    [Builder.node('input', { type: "hidden", id: this.options.parent_model + "_" + this.options.search_join_models + "_attributes_new_" + this.options.new_token_count + "_" + this.options.search_model + "_id", 
+				name: this.options.parent_model + "[" + this.options.search_join_models + "_attributes][new_" + this.options.new_token_count + "][" + this.options.search_model + "_id]",
+		        value: this.options.array[value][this.options.search_model].id
+		    }), 
+			this.options.array[value][this.options.search_model][this.options.search_field],
+		        Builder.node('span',{"class":'x',onmouseout:"this.className='x'",onmouseover:"this.className='x_hover'",
+		        onclick:"this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true); return false;"}," ")
+		        ]
+		    )
+		    )
+		    )   
+		    )
+			); 
+			$(token).down(4).next().innerHTML = "&nbsp;";
+		 	this.tokens.push(new Token(token,this.hidden_input,false));
+			this.options.new_token_count = this.options.new_token_count + 1;
+		    this.wrapper.insert({before:token});
+},
+addSavedTokensToList: function(saved_tokens_join_json) {
+	    	tokens = eval(saved_tokens_join_json);
+			for (var i = 0; i < tokens.length; i++) {
+				var delete_tag_id = this.options.parent_model + "_" + this.options.search_join_models+ "_attributes_" + tokens[i][this.options.search_join_model].id + "__delete";
+				var delete_tag_name = this.options.parent_model + "[" + this.options.search_join_models + "_attributes][" + tokens[i][this.options.search_join_model].id + "][_delete]";
+				var new_token = Builder.node('a', {
+			        "class": 'token',
+			        href: "#",
+			        tabindex: "-1"
+			    },
+			    Builder.node('span', 
+			    Builder.node('span', 
+			    Builder.node('span', 
+			    Builder.node('span', {},
+			    [ tokens[i].authorship[this.options.search_model][this.options.search_field],
+			        Builder.node('span',{"class":'x',onmouseout:"this.className='x'",onmouseover:"this.className='x_hover'",
+			        onclick:"this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true);$('" + delete_tag_id + "').value=1; return false;"}," ")
+			        ]
+			    )
+			    )
+			    )   
+			    )
+				); 
+				$(new_token).select('span.x').innerHTML = "&nbsp;";
+			 	new_token = new Token(new_token,this.hidden_input,true);
+				this.tokens.push(new_token);
+				new_token.delete_tag = new Element('input', {'type':'hidden', 'name': delete_tag_name, 'id': delete_tag_id});
+				this.wrapper.insert({before:new_token.element});
+				this.update.insert({after:new_token.delete_tag});
+			} 
+	},		
 setOptions: function(options) {
         this.options = Object.extend({
             choices: 10,
@@ -172,7 +270,7 @@ setOptions: function(options) {
             partialChars: 2,
             ignoreCase: true,
             fullSearch: false,
-			tokens: ",",
+			new_token_count: 1,
             selector: function(instance) {
                 var ret = [];
                 // Beginning matches
@@ -225,10 +323,9 @@ setOptions: function(options) {
 
         },
         options || {});
+	}
+}); //End of Class Autocompleter.LocalTokenizer
 
-    }
-
-});
 HiddenInput = Class.create({
     initialize: function(element, auto_complete) {
         this.element = $(element);
@@ -244,7 +341,7 @@ HiddenInput = Class.create({
                 this.token.element.insert({
                     before:
                     this.auto_complete.wrapper
-                })
+                });
                 this.token.deselect();
                 this.auto_complete.element.focus();
                 return false;
@@ -258,33 +355,38 @@ HiddenInput = Class.create({
                 return false;
                 case Event.KEY_BACKSPACE:
             case Event.KEY_DELETE:
-                this.token.element.remove();
+				
+				//Before removing the element, mark its nested model delete tag, if necessary
+				if(this.token.saved) this.token.mark_for_delete();
+                
+				this.token.element.remove();
                 this.auto_complete.element.focus();
                 return false;
-
             }
-
         }
-
     }
 
 
-})
- Token = Class.create({
-    initialize: function(element, hidden_input) {
+});
+
+Token = Class.create({
+    initialize: function(element, hidden_input, saved) {
         this.element = $(element);
         this.hidden_input = hidden_input;
+		this.saved = saved;
         this.element.token = this;
         this.selected = false;
         Event.observe(document, 'click', this.onclick.bindAsEventListener(this));
 
     },
     select: function() {
+		//Deselect the current token, if necessary
+		if (this.hidden_input.token != undefined) this.hidden_input.token.deselect();
+		
         this.hidden_input.token = this;
         this.hidden_input.element.activate();
         this.selected = true;
         this.element.addClassName('token_selected');
-
     },
     deselect: function() {
         this.hidden_input.token = undefined;
@@ -295,13 +397,15 @@ HiddenInput = Class.create({
     onclick: function(event) {
         if (this.detect(event) && !this.selected) {
             this.select();
-
-        } else {
+        } else if(this.detect(event)) {
             this.deselect();
 
         }
-
+		event.stop();
     },
+	mark_for_delete: function() {
+		this.delete_tag.value = 1;
+	},
     detect: function(e) {
         //find the event object
         var eventTarget = e.target ? e.target: e.srcElement;
@@ -317,33 +421,3 @@ HiddenInput = Class.create({
     }
 
 });
-
-
-addContactToList = function(item) {
-   	$('article_new_authors_list').value = "";
-    var token = Builder.node('a', {
-        "class": 'token',
-        href: "#",
-        tabindex: "-1"
-    },
-    Builder.node('span', 
-    Builder.node('span', 
-    Builder.node('span', 
-    Builder.node('span', {},
-    [Builder.node('input', { type: "hidden", id:"article_authorships_attributes_new_" + new_sorting_count + "_author_id", name: "article[authorships_attributes][new_" + new_sorting_count + "][author_id]",
-        value: contacts[Element.readAttribute(item,'value')].author.id
-    }), 
-	contacts[Element.readAttribute(item,'value')].author.name,
-        Builder.node('span',{"class":'x',onmouseout:"this.className='x'",onmouseover:"this.className='x_hover'",
-        onclick:"this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true); return false;"}," ")
-        ]
-    )
-    )
-    )   
-    )
-	);  
-	$(token).down(4).next().innerHTML = "&nbsp;";
- 	new Token(token,hidden_input);
-	new_sorting_count = new_sorting_count + 1;
-   $('authorship_form_elements').insert({bottom:token});
-}
