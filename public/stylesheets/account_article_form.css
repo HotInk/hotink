@@ -176,10 +176,10 @@ html[xmlns] .clearfix{display:block;}
 
 #article_title {
 	width: 100%;
-	height: 19px;
+	height: 22px;
 	padding: 4px 2px;
 	
-	font-size: 16px;
+	font-size: 18px;
 }
 
 #article_subtitle {
@@ -200,9 +200,11 @@ html[xmlns] .clearfix{display:block;}
 }
 
 #article_bodytext {
-	min-width: 600px;
+	min-width: 590px;
 	max-width: 750px;
 	height: 400px;
+	
+	padding: 5px;
 }
 
 #article_bodytext_preview{

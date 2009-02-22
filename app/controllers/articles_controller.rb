@@ -25,7 +25,18 @@ class ArticlesController < ApplicationController
   # GET /articles/new
   # GET /articles/new.xml
   def new
-    @article = Article.new
+    #Check to see if the last article created is blank. If so,
+    #redate it and serve it up instead of a new article, to prevent
+    #the data from becoming cluttered with abandoned articles. 
+    if last_article = @account.articles.find(:first, :order=>"date ASC")
+      if last_article.created_at == last_article.updated_at
+         @article = last_article
+      else
+        @article = Article.new
+      end
+    else
+      @article = Article.new
+    end
     @article.account = @account
     @article.save
     
