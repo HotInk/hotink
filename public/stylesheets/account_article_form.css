@@ -302,6 +302,10 @@ html[xmlns] .clearfix{display:block;}
 	display: inline;
 	cursor: pointer;
 }
+.toolbox h2 span {	
+	background: url('/arrows.png') no-repeat;
+	background-position: 0px -29px;
+}
 
 .toolbox_border {
 	height: 1px;
