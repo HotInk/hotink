@@ -9,6 +9,8 @@
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'builder' %>
   <%= javascript_include_tag 'autocompleter_localtokenizer' %>
+  <%= javascript_include_tag 'overlay.js' %>
+
 
 </head>
 <body>
@@ -16,4 +18,7 @@
 <%= yield  %>
 
 </body>
+<script type="text/javascript" charset="utf-8">
+	var article_form_overlay = new Overlay ();
+</script>
 </html>

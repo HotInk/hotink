@@ -1,6 +1,6 @@
 /* Main style */
 
-body { background-color: #F9F9F9; color: #333; }
+body { background-color: #F9F9F9; color: #333; margin: 0 auto; }
 
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
@@ -17,6 +17,8 @@ pre {
 a { text-decoration:none; color: #000; }
 a:visited { color: #333; }
 a:hover { color: #3399DE; }
+
+a.weblink { text-decoration: underline;}
 
 .clearfix:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0;}
 .clearfix{display:inline-block;}
@@ -152,12 +154,13 @@ html[xmlns] .clearfix{display:block;}
 
 /* Form style */
 #page_container {
+	margin: 5px 0px;	
 	width: 885px;
 	padding: 5px;
 	padding-left: 10px;
-	
 	float: left;
 	
+	text-align: left;
 	/* border: 2px solid #3399DE; */
 }
 
@@ -285,10 +288,19 @@ html[xmlns] .clearfix{display:block;}
 	
 }
 
+#tools p{
+	margin: 0px 0px 6px 0px;
+}
+
 .toolbox {
 	width: 255px;
 	
 	margin-bottom: 10px;
+}
+
+.toolbox h2{
+	display: inline;
+	cursor: pointer;
 }
 
 .toolbox_border {
@@ -329,7 +341,7 @@ html[xmlns] .clearfix{display:block;}
 
 .toolbox_body {
 	margin-top: -1px;
-	padding: 5px;
+	padding: 8px 5px;
     border-right: 1px solid #aaa;
 	border-left: 1px solid #bbb;
 	
@@ -341,13 +353,17 @@ html[xmlns] .clearfix{display:block;}
 	margin-right: 4px;
 }
 
+/* Toolbox overlay css */
+
+#overlay{ position: absolute; top: 0; left: 0; z-index: 900; width: 100%; height: 500px; background-color: #000; }
+#overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; line-height: 0;}
+
+
+
 /* Author autocomplete css */
-
-
 .field input.inputtext,
 .field textarea,
 div.tokenizer{border: 1px solid #DEDEDE;}
-
 .tokenizer{min-height:5px;padding:0px 0px 3px 3px;width:100%;background:#fff;font-size:11px;}
 .tokenizer_locked{background:#f4f4f4;}
 .tokenizer,

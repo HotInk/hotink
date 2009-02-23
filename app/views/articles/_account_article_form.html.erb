@@ -1,4 +1,6 @@
 <div id="page_container">
+	<%= link_to "&#171; Back to articles list", account_articles_url(@account), :class=>"weblink" %>
+	<h1>Edit article</h1>
 <div id="article_form">
 	<%= "<p style=\"color: green\">#{ flash[:notice] }</p>" if flash[:notice] %>
 	<% remote_form_for([@account, @article]) do |f| %>
@@ -59,13 +61,24 @@
 					<p>
 						Last saved<br /><span id="last_saved" style="color:green;"><%= time_ago_in_words(@article.updated_at) %> ago</span>
 					</p>
-					<p>
-		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"primary pill-l") -%><%= button_link_to_function 'View all articles', "window.location= '#{account_articles_url(@account)}';", :href=>account_articles_url(@account), :class=>"btn pill-r" %>
-		  			</p>
+		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"large primary pill-l") -%>
 				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - article tools -->
 			
+			<div class="toolbox">
+				<div class="toolbox_border"></div>
+				<div class="toolbox_label_body"><h2>Media</h2></div>
+				<div class="toolbox_border"></div>
+				<div class="toolbox_body">	
+					<p>
+						No media attached.
+					</p>
+					<%= button_link_to_function("Attach media", "article_form_overlay.toggle();") -%>	
+				</div>
+				<div class="toolbox_border"></div>
+			</div><!-- /toolbox - media -->	
+					
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2>Categories</h2></div>
@@ -89,8 +102,12 @@
 	</div><!-- /siderbar -->
 </div><!-- /page_container -->
 
-<!-- WMD Editor Configuration script-->
 <script type="text/javascript">
+	//Load toolbox functionality
+	$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
+	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
+	
+ 	// WMD Editor Configuration script
     // Set this *before* you load wmd.js
     wmd_options = {
 					output: "Markdown",
