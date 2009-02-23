@@ -284,37 +284,22 @@ html[xmlns] .clearfix{display:block;}
 	width: 255px;
 	padding: 5px;
 
-	float: right;
-	
+	float: right;	
 }
 
 #tools p{
 	margin: 0px 0px 6px 0px;
 }
 
-.toolbox {
-	width: 255px;
-	
-	margin-bottom: 10px;
-}
-
-.toolbox h2{
-	display: inline;
-	cursor: pointer;
-}
-.toolbox h2 span {	
-	background: url('/arrows.png') no-repeat;
-	background-position: 0px -29px;
-}
-
-.toolbox_border {
-	height: 1px;
+.toolbox { width: 255px; margin-bottom: 10px; }
+.toolbox h2{ display: inline; cursor: pointer; }
+.toolbox h2 span { background: url('/arrows.png') no-repeat; background-position: 0px -29px;}
+.toolbox_border { height: 1px;
 	margin:0 1px;
 	padding:0;
-	background-color: #aaa;
-	
+	background-color: #aaa;	
+	color: #aaa;	
 }
-
 .toolbox_separator {
 	height: 1px;
 	margin:0 5px;
@@ -322,11 +307,10 @@ html[xmlns] .clearfix{display:block;}
 	background-color: #aaa;
 	
 }
-
 .toolbox_label_body {
      background:#ddd url(/bg-button.gif) repeat-x 0 0;
      margin:0;
-     padding: 7px 5px 5px 5px;
+     padding: 4px 5px 6px 5px;
      overflow:visible;
      font: 100%/1.2;
      text-decoration:none;
@@ -360,7 +344,9 @@ html[xmlns] .clearfix{display:block;}
 /* Toolbox overlay css */
 
 #overlay{ position: absolute; top: 0; left: 0; z-index: 900; width: 100%; height: 500px; background-color: #000; }
-#overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; line-height: 0;}
+#overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; line-height: 0; }
+#loading{ position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0;}
+#overlay_container{ position: relative; background-color: #fff; width: 250px; height: 250px; margin: 0 auto; padding-top: 5px;}
 
 
 

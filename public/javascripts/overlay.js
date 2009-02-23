@@ -4,54 +4,117 @@ Creates a class for an element that inserts itself over the page.
 
 */
 
+var test_element = Builder.node('div',{id:'test_content', href: '#' }, Builder.node('img', {src: '/obama8.jpg'})  )
+
 var Overlay = { };
 
 Overlay = Class.create({
 	initialize: function( options ) {
-		fileLoadingImage = 'images/loading.gif';
+		this.fileLoadingImage = '/loading.gif';
 		this.overlayOpacity = 0.8;
-		borderSize = 10;
+		this.borderSize = 5;		//if you adjust the padding in the CSS, you will need to update this variable
+		this.animate = true;
+		this.resizeSpeed = 9;        // controls the speed of the image resizing animations (1=slowest and 10=fastest)
 		this.started = false;
 		if (options && options['duration']){
 			this.duration = options['duration'];
 		} else {
-			this.duration = 0.2;  // shadow fade in/out duration
+			this.duration = 0.1;  	// shadow fade in/out duration
 		}
+		this.resizeDuration = this.animate ? ((11 - this.resizeSpeed) * 0.15) : 0;
+		var size = (this.animate ? 250 : 1) + 'px';
 				
 		// Code below inserts html at the bottom of the page that looks similar to this:
         //
         //  <div id="overlay"></div>
         //  <div id="overlaybox">
-        //      
+        // 	    <div id="overlaybox_container">
+        //          <div id="overlaybox_content">
+		//			</div>
+        //      	<div id="loading">
+        //          	<a href="#" id="loadingLink">
+        //              	<img src="images/loading.gif">
+        //              </a>
+        //          </div>
+		//		</div>
         //  </div>      
 		var objBody = $$('body')[0];
 
 		objBody.appendChild(Builder.node('div',{id:'overlay'}));
-	   	objBody.appendChild(Builder.node('div',{id:'overlaybox'}));
+		
+		objBody.appendChild(Builder.node('div',{id:'overlaybox'}, [
+            Builder.node('div',{id:'overlay_container'}, 
+                Builder.node('div',{id:'overlay_content'},
+                    Builder.node('div',{id:'loading'}, 
+                        Builder.node('a',{id:'loading_link', href: '#' }, 
+                            Builder.node('img', {src: this.fileLoadingImage})
+                        )
+                    )
+                )
+            ),
+        ]));
 		
 		$('overlay').hide().observe('click', (function() { this.end(); }).bind(this));
 		$('overlaybox').hide().observe('click', (function(event) { if (event.element().id == 'overlaybox') this.end(); }).bind(this));
 		
 		 var th = this;
-	     (function() {	var ids = 'overlay overlaybox';   
+	     (function() {	var ids = 'overlay overlaybox overlay_container overlay_content loading loading_link';   
 	            		$w(ids).each(function(id){ th[id] = $(id); });
 	        		 }).defer();
 	},
 	
 	start: function() {
+		if(this.started) return true;
 		$$('select', 'object', 'embed').each(function(node){ node.style.visibility = 'hidden' });
-        var arrayPageSize = this.getPageSize();
+	    var arrayPageSize = this.getPageSize();
 		$('overlay').setStyle({ width: arrayPageSize[0] + 'px', height: arrayPageSize[1] + 'px' });		
 		
 		new Effect.Appear(this.overlay, { duration: 0.2, from: 0.0, to: 0.8 });
-        this.started = true;
+	    this.started = true;
 
 		// calculate top and left offset for the overlaybox 
-        var arrayPageScroll = document.viewport.getScrollOffsets();
+	    var arrayPageScroll = document.viewport.getScrollOffsets();
 		var overlayboxTop = arrayPageScroll[1] + (document.viewport.getHeight() / 10);
-        var overlayboxLeft = arrayPageScroll[0];
-        this.overlaybox.setStyle({ top: overlayboxTop + 'px', left: overlayboxLeft + 'px' }).show();
-        
+	    var overlayboxLeft = arrayPageScroll[0];
+	    this.overlaybox.setStyle({ top: overlayboxTop + 'px', left: overlayboxLeft + 'px' }).show();
+		
+		//Hide elements during loading
+		if (this.animate) this.loading.show();
+		this.overlay_content.hide();
+		
+	    return true;
+	},
+	
+	render: function( el ){
+		
+		//Check to see whether we've been given real content
+		if ( el != 'undefined' && $(el) instanceof Element) {
+			var new_content = $(el);
+		} else {
+			return false; // If there's no/no-good content, stop and don't render
+		}
+		if (this.start()){
+			this.overlay_content.replace( new_content.hide() );
+			this.overlay_content = new_content;
+
+			var dimensions = this.overlay_content.getDimensions();
+			var timeout = this.resizeContainer(dimensions.width, dimensions.height);
+			(function(){
+	            this.showContent();
+	        }).bind(this).delay(timeout / 1000);
+			
+			return true;
+		} else {
+			return false;
+		}
+    },
+
+	showContent: function() {
+		this.loading.hide();			
+		new Effect.Appear(this.overlay_content, { 
+            duration: this.resizeDuration, 
+            queue: 'end' 
+        });
 	},
 	
 	end: function() {
@@ -71,10 +134,49 @@ Overlay = Class.create({
 	},
 	
 	//
-    //  getPageSize() - Poached from Lightbox v2.04
+    //  getPageSize() and resizeContainer() (as resizeImageContainer()) - Poached from Lightbox v2.04
 	//	by Lokesh Dhakar - http://www.lokeshdhakar.com
 	//	Licensed under the Creative Commons Attribution 2.5 License - http://creativecommons.org/licenses/by/2.5/
+    //  
+	//
+    // 
     //
+    resizeContainer: function(contentWidth, contentHeight) {
+
+        // get current width and height
+        var dimensions = this.overlay_container.getDimensions();
+        var widthCurrent  = dimensions.width;
+        var heightCurrent = dimensions.height;
+		console.log("Height = " + dimensions.height + ", width = " + dimensions.width);
+
+        // get new width and height
+        var widthNew  = (contentWidth  + this.borderSize * 2);
+        var heightNew = (contentHeight + this.borderSize * 2);
+
+        // scalars based on change from old to new
+        var xScale = (widthNew  / widthCurrent)  * 100;
+        var yScale = (heightNew / heightCurrent) * 100;
+
+        // calculate size difference between new and old image, and resize if necessary
+        var wDiff = widthCurrent - widthNew;
+        var hDiff = heightCurrent - heightNew;
+
+        if (hDiff != 0) new Effect.Scale(this.overlay_container, yScale, {scaleX: false, duration: this.resizeDuration, queue: 'front'}); 
+        if (wDiff != 0) new Effect.Scale(this.overlay_container, xScale, {scaleY: false, duration: this.resizeDuration, delay: this.resizeDuration}); 
+
+        // if new and old content are same size and no scaling transition is necessary, 
+        // do a quick pause to prevent flicker.
+        var timeout = 0;
+        if ((hDiff == 0) && (wDiff == 0)){
+            timeout = 100;
+            if (Prototype.Browser.IE) timeout = 250;   
+        }
+
+		//Return timeout delay
+		return timeout;
+    },
+    
+    // 	
     getPageSize: function() {
 	    var xScroll, yScroll;
 

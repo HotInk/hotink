@@ -14,7 +14,6 @@ Dependencies: prototype.js, controls.js, effects.js, builder.js
 Last saved: Feb 22, 2009
 Future development: 
 	- Support tokens related by has_many relationship
-	- Remove dependence on builder.js
 
 */
 Autocompleter.LocalTokenizer = Class.create(Autocompleter.Base, {
