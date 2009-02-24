@@ -293,9 +293,7 @@ html[xmlns] .clearfix{display:block;}
 
 .toolbox { width: 255px; margin-bottom: 10px; }
 #overlaybox .toolbox { width: auto; margin-bottom: 0; text-align: left;}
-#overlaybox .toolbox_label_body {
-	padding: 12px 5px 5px 5px;
-}
+#overlaybox .toolbox_label_body { padding: 12px 5px 5px 5px;}
 .toolbox h2{ display: inline; cursor: pointer; }
 .toolbox h2 span { background: url('/arrows.png') no-repeat; background-position: 0px -29px;}
 .toolbox_border { height: 1px;

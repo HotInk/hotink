@@ -93,7 +93,7 @@ var Toolbox = Class.create({
     },
 });
 
-toolbox_render = function(title, content) {
+toolbox_render_overlay = function(title, content) {
 			var element =	Builder.node('div',{class:'toolbox'},[
 								Builder.node('div', {className: 'toolbox_border'}),
 								Builder.node('div', {className: 'toolbox_label_body'},[
@@ -105,8 +105,7 @@ toolbox_render = function(title, content) {
 								Builder.node('div', {className: 'toolbox_border'}),
 								Builder.node('div', {className: 'toolbox_body'},
 									content
-								),
-								Builder.node('div', {className: 'toolbox_border'})												
+								)
 						]);
 			return element;
 };
