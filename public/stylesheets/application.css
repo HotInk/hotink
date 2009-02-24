@@ -1,0 +1,200 @@
+/* Main style */
+
+body { background-color: #F9F9F9; color: #333; margin: 0 auto; padding: 0px 5px; }
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   12px;
+  line-height: 16px;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+a { text-decoration:none; color: #000; }
+a:visited { color: #333; }
+a:hover { color: #3399DE; }
+.label { margin-bottom: 1px;}
+
+a.weblink { text-decoration: underline;}
+
+.clearfix:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0;}
+.clearfix{display:inline-block;}
+html[xmlns] .clearfix{display:block;}
+* html .clearfix{height:1%;}
+
+.hidden { display:none;}
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+/* Start table CSS here
+---------------------------------------- */
+
+table {
+	border: none;
+	min-width: 600px;
+}
+
+thead {
+	background:#ddd url(/bg-button.gif) repeat-x 0 0;
+    margin:0px;
+    padding: 4px 5px 6px 5px;
+}
+
+tfoot {
+	background:#ddd url(/bg-button.gif) repeat-x 0 0;
+    margin:0px;
+    padding: 4px 5px 6px 5px;
+}
+
+tbody {
+	vertical-align: top;
+}
+
+.even-row {
+	background-color: #FFFFFF;
+}
+
+.odd-row {
+	background-color: #F4F4F4;
+}
+
+tr {
+	height: 32px;
+	padding: 5px 0px;
+}
+
+td {
+	padding: 0px 3px;
+}
+
+/* Start custom button CSS here
+---------------------------------------- */
+.btn {
+     display:inline-block;
+     background:none;
+     margin:0;
+     padding:3px 0;
+     border-width:0;
+     overflow:visible;
+     font:100%/1.2;
+     text-decoration:none;
+     color:#333;
+     }
+   * html button.btn {
+     padding-bottom:1px;
+     }
+   /* Immediately below is a temporary hack to serve the 
+      following margin values only to Gecko browsers
+      Gecko browsers add an extra 3px of left/right 
+      padding to button elements which can't be overriden.
+      Thus, we use -3px of left/right margin to overcome this. */
+   html:not([lang*=""]) button.btn {
+     margin:0 -3px;
+     }
+   .btn span {
+     background:#ddd url(/bg-button.gif) repeat-x 0 0;
+     margin:0;
+     padding:3px 0;
+     border-left:1px solid #bbb;
+     border-right:1px solid #aaa;
+     }
+   * html .btn span {
+     padding-top:0;
+     }
+   .btn span span {
+     position:relative;
+     padding:3px .4em;
+     border-width:0;
+     border-top:1px solid #bbb;
+     border-bottom:1px solid #aaa;
+     }
+   
+   /* pill classes only needed if using pill style buttons ( LEFT | CENTER | RIGHT ) */
+   .pill-l span {
+     border-right-width:0;
+     }
+   .pill-l span span {
+     border-right:1px solid #bbb;
+     }
+   .pill-c span {
+     border-right-style:none;
+     border-left-color:#fff;
+     }
+   .pill-c span span {
+     border-right:1px solid #bbb;
+     }
+   .pill-r span {
+     border-left-color:#fff;
+     }
+   
+   /* only needed if implementing separate hover/focus/active state for buttons */
+   .btn:hover span, .btn:hover span span, .btn:focus span, .btn:focus span span {
+     cursor:pointer; /* important for any clickable/pressable element */
+     border-color:#9cf !important;
+     color:#000;
+     }
+   .btn:active span {
+     background-position:0 -400px;
+     outline:none;
+     }
+   .btn:focus, .btn:active {
+     outline:none; /* doesn't seem to be respected for <button>, only <a> */
+     }
+
+   /* use if one button should be the 'primary' button */
+   .primary {
+     font-weight:bold;
+     color:#000;
+     }
+	
+  .large {
+	font-size: 13px;
+	line-height: 1.2;
+  }
+
+  .small {
+	font-size: 11px;
+}
+
+  .large:active span{
+	 background-position:0 -390px;
+  }
+

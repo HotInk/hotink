@@ -15,10 +15,10 @@
 	  </p>
 	  <div class="column_holder">
 	  	  <p class="half_column">
-		    <%= f.label :date %>&nbsp;<%= f.date_select :date %>
+		    <%= f.label :date_1i, "Date" %>&nbsp;<%= f.date_select :date %>
 		  </p>
 		  <p class="half_column">
-			<%= f.label "Primary section"%>&nbsp;<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => true})%>
+			<%= f.label :section_id, "Primary section"%>&nbsp;<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => true})%>
 		  </p>
 	  </div>
 	  <div id ="author_list" class="field">
@@ -34,12 +34,11 @@
 	    <%= f.label :summary %><br />
 	    <%= f.text_area :summary %>
 	  </p>
-	  <p>Rendered HTML preview<br />
+	  <p class="label">Rendered HTML preview</p>
 		<!-- Rendered preview window - Nested divs below hold the WMD (wmd-editor.com) preview "window" -->
 	  	<div id="article_bodytext_preview">
 			<div class="wmd-preview preview"></div>
-		  </div>
-	  </p>
+		 </div>
 	  <div id="article_form_hidden_elements" class="hidden">
 	  	
 		<% f.fields_for :sortings do |sorting| %>
@@ -61,7 +60,7 @@
 					<p>
 						Last saved<br /><span id="last_saved" style="color:green;"><%= time_ago_in_words(@article.updated_at) %> ago</span>
 					</p>
-		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"large primary pill-l") -%>
+		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"large primary") -%>
 				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - article tools -->
@@ -74,11 +73,12 @@
 					<p>
 						No media attached.
 					</p>
-					<%= button_link_to_function("Attach media", "article_form_overlay.render( toolbox_render_overlay('Tokyo, Japan', test_element ) );") -%>	
+					<%= button_link_to_function("Attach media", "article_form_overlay.render( toolbox_render_overlay('Barack Obama', test_element ) );") -%>	
+						
 				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - media -->	
-					
+			
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Categories</h2></div>
@@ -88,16 +88,16 @@
 				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - categories -->
-			
+
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tags</h2></div>
 				<div class="toolbox_border"></div>
 				<div class="toolbox_body">	
-					<script id="tags_form" src="<%= new_account_article_tag_url(@account, @article, :format=>:js) %>"></script>
+					<script id="tags_form" type="text/javascript" src="<%= new_account_article_tag_url(@account, @article, :format=>:js) %>"></script>
 				</div>
 				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - tags -->
+			</div><!-- /toolbox - tags -->		
 		</div><!-- /tools -->
 	</div><!-- /siderbar -->
 </div><!-- /page_container -->
@@ -108,8 +108,9 @@
 	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
 	
 	//Overlay test script
-	var test_element = Builder.node('div',{id:'test_content', href: '#' }, Builder.node('img', {src: '/IMG_7106.jpg'})  );
-	
+	var article_form_overlay = new Overlay ();
+	var test_element = Builder.node('div',{id:'test_content', href: '#' }, Builder.node('img', {src: '/obama8.jpg'})  );
+	var test_element2 = Builder.node('div',{id:'test_content', href: '#' }, Builder.node('img', {src: '/hospital.jpg'})  );	
 	
  	// WMD Editor Configuration script
     // Set this *before* you load wmd.js

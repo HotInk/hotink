@@ -64,6 +64,7 @@ Overlay = Class.create({
 	start: function() {
 		if(this.started) return true;
 		$$('select', 'object', 'embed').each(function(node){ node.style.visibility = 'hidden' });
+		$$('textarea').each(function(node){ node.style.overflow = 'hidden' });
 	    var arrayPageSize = this.getPageSize();
 		$('overlay').setStyle({ width: arrayPageSize[0] + 'px', height: arrayPageSize[1] + 'px' });		
 		
@@ -120,6 +121,8 @@ Overlay = Class.create({
         this.overlaybox.hide();
         new Effect.Fade(this.overlay, { duration: this.duration });
         $$('select', 'object', 'embed').each(function(node){ node.style.visibility = 'visible' });
+		$$('textarea').each(function(node){ node.style.overflow = 'auto' });
+		
 		this.started = false;
     },
 

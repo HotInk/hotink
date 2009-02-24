@@ -42,9 +42,8 @@ module ApplicationHelper
 
        function = block_given? ? update_page(&block) : args[0] || ''
        onclick = "#{"#{html_options[:onclick]}; " if html_options[:onclick]}#{function}; return false;"
-       href = html_options[:href] || '#'
 
-       content_tag(:button,"<span><span>" + name + "</span></span>", html_options.merge(:href => href, :onclick => onclick))
+       content_tag(:button,"<span><span>" + name + "</span></span>", html_options.merge(:onclick => onclick))
    end
 
    def button_link_to_remote(name, options = {}, html_options = nil)
