@@ -74,7 +74,7 @@
 					<p>
 						No media attached.
 					</p>
-					<%= button_link_to_function("Attach media", "article_form_overlay.render( test_element );") -%>	
+					<%= button_link_to_function("Attach media", "article_form_overlay.render( toolbox_render('Tokyo, Japan', test_element ) );") -%>	
 				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - media -->	
@@ -106,6 +106,10 @@
 	//Load toolbox functionality
 	$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
 	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
+	
+	//Overlay test script
+	var test_element = Builder.node('div',{id:'test_content', href: '#' }, Builder.node('img', {src: '/IMG_7106.jpg'})  );
+	
 	
  	// WMD Editor Configuration script
     // Set this *before* you load wmd.js

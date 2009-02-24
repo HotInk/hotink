@@ -4,15 +4,13 @@ Creates a class for an element that inserts itself over the page.
 
 */
 
-var test_element = Builder.node('div',{id:'test_content', href: '#' }, Builder.node('img', {src: '/obama8.jpg'})  )
-
 var Overlay = { };
 
 Overlay = Class.create({
 	initialize: function( options ) {
 		this.fileLoadingImage = '/loading.gif';
 		this.overlayOpacity = 0.8;
-		this.borderSize = 5;		//if you adjust the padding in the CSS, you will need to update this variable
+		this.borderSize = 0;		//if you adjust the padding in the CSS, you will need to update this variable
 		this.animate = true;
 		this.resizeSpeed = 9;        // controls the speed of the image resizing animations (1=slowest and 10=fastest)
 		this.started = false;
@@ -87,15 +85,15 @@ Overlay = Class.create({
 	
 	render: function( el ){
 		
-		//Check to see whether we've been given real content
+		//Check to see whether we've been given an element
 		if ( el != 'undefined' && $(el) instanceof Element) {
 			var new_content = $(el);
 		} else {
 			return false; // If there's no/no-good content, stop and don't render
 		}
 		if (this.start()){
-			this.overlay_content.replace( new_content.hide() );
-			this.overlay_content = new_content;
+			this.overlay_content.replace( new_content );
+			this.overlay_content = this.overlay_container.down().hide();
 
 			var dimensions = this.overlay_content.getDimensions();
 			var timeout = this.resizeContainer(dimensions.width, dimensions.height);
@@ -147,7 +145,6 @@ Overlay = Class.create({
         var dimensions = this.overlay_container.getDimensions();
         var widthCurrent  = dimensions.width;
         var heightCurrent = dimensions.height;
-		console.log("Height = " + dimensions.height + ", width = " + dimensions.width);
 
         // get new width and height
         var widthNew  = (contentWidth  + this.borderSize * 2);
@@ -224,59 +221,5 @@ Overlay = Class.create({
 		
 		return [pageWidth,pageHeight];
 	}
-	
-});
-
-//Toolbox.base - base class for a toolbox.
-
-var Toolbox = Class.create({
-	initialize: function( element ) {
-		this.element = $(element);
-		this.visible = true;
-		this.element.down().next().down().toolbox = this;
-		
-	    Event.observe(this.element.down().next().down(), 'click', this.onclick.bindAsEventListener(this));
-		
-	},
-	
-	hide: function() {
-		this.element.down().next().down(1).writeAttribute('style', 'background-position: 0px 3px;');
-		new Effect.BlindUp(this.element.down().next(2), {duration: 0.2});
-		this.element.down().next(3).hide();
-		this.visible = false;		
-	},
-	
-	show: function() {
-		this.element.down().next().down(1).writeAttribute('style', 'background-position: 0px -29px;');
-		this.element.down().next(3).show();
-		new Effect.BlindDown(this.element.down().next(2), {duration: 0.2});
-		this.visible = true;
-		
-	},
-	
-	toggle: function(){
-		if (this.visible) {
-			this.hide();
-		} else {
-			this.show();
-		}
-	},
-	
-	onclick: function(event){
-		if(this.detect(event)) this.toggle();
-	},
-	
-	detect: function(e) {
-        //find the event object
-        var eventTarget = e.target ? e.target: e.srcElement;
-        var toolbox = eventTarget.toolbox;
-        var candidate = eventTarget;
-        while (toolbox == null && candidate.parentNode) {
-            candidate = candidate.parentNode;
-            toolbox = candidate.toolbox;
-        }
-        return toolbox != null && toolbox.element == this.element;
-
-    }
 	
 });
