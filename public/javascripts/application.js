@@ -94,7 +94,7 @@ var Toolbox = Class.create({
 });
 
 toolbox_render_overlay = function(title, content) {
-			var element =	Builder.node('div',{class:'toolbox'},[
+	var overlay_content = Builder.node('div',{className:'toolbox'},[
 								Builder.node('div', {className: 'toolbox_border'}),
 								Builder.node('div', {className: 'toolbox_label_body'},[
 									Builder.node('h2',[ 
@@ -106,6 +106,6 @@ toolbox_render_overlay = function(title, content) {
 								Builder.node('div', {className: 'toolbox_body'},
 									content
 								)
-						]);
-			return element;
+				   ]);
+   return overlay_content;
 };
