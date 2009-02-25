@@ -69,7 +69,9 @@ html[xmlns] .clearfix{display:block;}
 
 table {
 	border: none;
-	min-width: 600px;
+	max-width: 885px;
+	min-width: 850px;
+	width: auto;
 }
 
 thead {
@@ -97,11 +99,11 @@ tbody {
 }
 
 tr {
-	height: 32px;
 	padding: 5px 0px;
 }
 
 td {
+	height: 32px;
 	padding: 0px 3px;
 }
 

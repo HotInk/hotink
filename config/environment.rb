@@ -73,7 +73,21 @@ Rails::Initializer.run do |config|
   # Please note that observers generated using script/generate observer need to have an _observer suffix
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
   
-  #Load custom datetime formats
-  #ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(:last_saved => '%b. %d, %Y at %I:%M%p')
-  
 end
+
+#Load custom datetime formats
+ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
+  :standard => lambda { |date| Time.now.beginning_of_day <= date ? 
+    "#{date.strftime('%I').to_i}:#{date.strftime('%M')} #{date.strftime('%p').downcase}" : 
+    Time.now.beginning_of_year <= date ? "#{date.strftime('%b')} #{date.day}" :
+     "#{date.month}/#{date.day}/#{date.strftime('%y')}"
+  }
+)
+
+ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
+  :standard => lambda { |date| Time.now.beginning_of_day <= date ? 
+    "#{date.strftime('%I').to_i}:#{date.strftime('%M')} #{date.strftime('%p').downcase}" : 
+    (Time.now.beginning_of_year <= date ? "#{date.strftime('%b')} #{date.day}" : 
+    "#{date.month}/#{date.day}/#{date.strftime('%y')}") 
+  }
+)

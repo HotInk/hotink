@@ -37,6 +37,7 @@ class ArticlesController < ApplicationController
     else
       @article = Article.new
     end
+    @article.date = Time.now
     @article.account = @account
     @article.save
     

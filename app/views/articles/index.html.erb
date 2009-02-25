@@ -14,7 +14,7 @@
     <td class="headline"><%=link_to h(article.display_title), edit_account_article_url(@account, article) %></td>
     <td><%=h article.subtitle %></td>
     <td class="tags"><%=h (article.tag_list.empty? ? "No tags" : article.tag_list) %></td>
-    <td class="date"><%=h article.date %></td>
+    <td class="date"><%=h article.date.to_s(:standard) %></td>
     <td><%= button_link_to 'Destroy', [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"small" %></td>
   </tr>
 <% end %>
