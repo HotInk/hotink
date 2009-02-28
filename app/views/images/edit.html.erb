@@ -1,15 +1,6 @@
 <h1>Editing image</h1>
 
-<% form_for([@account, @image], :html =>{:multipart=>true}) do |f| %>
-  <%= f.error_messages %>
-  <p>
-	<%= image_tag(@image.file.url)%>
-  </p>
-  <p>
-	<%= f.file_field :file %>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
+<%= render :partial => 'image_form' %>
 
 <%= link_to 'Show', [@account, @image] %> |
 <%= link_to 'Back', account_images_path(@account) %>

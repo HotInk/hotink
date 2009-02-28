@@ -1,12 +1,5 @@
 <h1>New image</h1>
 
-<% form_for([@account, @image], :html =>{:multipart=>true}) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-	<%= f.file_field :file %>
-    <%= f.submit "Create" %>
-  </p>
-<% end %>
+<%= render :partial => 'image_form' %>
 
 <%= link_to 'Back', account_images_path(@account) %>

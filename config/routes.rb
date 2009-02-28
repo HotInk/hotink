@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
       article.resources :authors
       article.resources :sortings
       article.resources :tags
-      article.resources :waxings
+      article.resources :images
     end
     account.resources :authors
     account.resources :sections
