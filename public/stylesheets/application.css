@@ -80,6 +80,10 @@ thead {
     padding: 4px 5px 6px 5px;
 }
 
+th{
+	border: 1px solid #3399DE;
+}
+
 tfoot {
 	background:#ddd url(/bg-button.gif) repeat-x 0 0;
     margin:0px;

@@ -12,6 +12,10 @@
     <%= f.time_zone_select :time_zone %>
   </p>
   <p>
+	<%= f.label :settings %><br />
+	<%= f.text_area :settings %>
+  </p>
+  <p>
     <%= f.submit "Update" %>
   </p>
 <% end %>

@@ -25,21 +25,25 @@ class ArticlesController < ApplicationController
   # GET /articles/new
   # GET /articles/new.xml
   def new
-    #Check to see if the last article created is blank. If so,
-    #redate it and serve it up instead of a new article, to prevent
-    #the data from becoming cluttered with abandoned articles. 
-    if last_article = @account.articles.find(:first, :order=>"date ASC")
+    @article = @account.articles.build    
+    @article.date = Time.now
+    
+    #Check to see if the last article created is exitsts, and is blank.
+    #If so, redate it and serve it up instead of a new article, to prevent
+    #the data from becoming cluttered with abandoned articles.
+    #
+    #If the last article was a legit, save the current build, so it can have relationships 
+    if last_article = @account.articles.find(:last)
       if last_article.created_at == last_article.updated_at
          @article = last_article
+         @article.date = Time.now
       else
-        @article = Article.new
+        @article.save
       end
-    else
-      @article = Article.new
     end
-    @article.date = Time.now
-    @article.account = @account
-    @article.save
+    
+    #Update the date
+
     
     respond_to do |format|
       format.html { redirect_to edit_account_article_path(@account, @article) }
@@ -61,8 +65,7 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.xml
   def create
-    @article = Article.new(params[:article])
-    @article.account = @account
+    @article = @account.articles.build(params[:article])
     
     respond_to do |format|
       if @article.save
@@ -80,7 +83,6 @@ class ArticlesController < ApplicationController
   def update
     @article = @account.articles.find(params[:id])
   
-
     respond_to do |format|
       if @article.update_attributes(params[:article])
         @article = @account.articles.find(params[:id])

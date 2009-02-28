@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090225021340) do
+ActiveRecord::Schema.define(:version => 20090228182437) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20090225021340) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "time_zone"
+    t.text     "settings"
   end
 
   create_table "articles", :force => true do |t|
@@ -33,20 +34,17 @@ ActiveRecord::Schema.define(:version => 20090225021340) do
   end
 
   create_table "attachments", :force => true do |t|
-    t.string   "filename"
-    t.string   "file_type"
-    t.integer  "filesize"
     t.string   "title"
     t.text     "description"
-    t.integer  "width"
-    t.integer  "height"
-    t.string   "length"
     t.string   "link_alternate"
     t.date     "date"
     t.integer  "account_id"
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
   end
 
   create_table "authors", :force => true do |t|

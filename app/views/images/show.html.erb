@@ -1,3 +1,4 @@
+<%= image_tag(@image.file.url)%>
 
-<%= link_to 'Edit', edit_image_path(@image) %> |
-<%= link_to 'Back', images_path %>
+<%= link_to 'Edit', edit_account_image_path(@account, @image) %> |
+<%= link_to 'Back', account_images_path(@account) %>

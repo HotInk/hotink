@@ -1,18 +1,12 @@
 <h1>Listing images</h1>
 
-<table>
-  <tr>
-  </tr>
-
 <% for image in @images %>
-  <tr>
-    <td><%= link_to 'Show', image %></td>
-    <td><%= link_to 'Edit', edit_image_path(image) %></td>
-    <td><%= link_to 'Destroy', image, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <p>
+    <%= link_to image_tag(image.file.url(:system_thumb)), edit_account_image_path(@account, image) %>
+   	<%= button_link_to 'Delete',[@account, image], :confirm => 'Are you sure?', :method => :delete %>
+  </p>
 <% end %>
-</table>
 
 <br />
 
-<%= link_to 'New image', new_image_path %>
+<%= link_to 'New image', new_account_image_path(@account) %>

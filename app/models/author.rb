@@ -1,10 +1,10 @@
 class Author < ActiveRecord::Base
   belongs_to :account
 
-  has_many :authorships
+  has_many :authorships, :dependent => :destroy
   has_many :articles, :through => :authorships 
   
-  has_many :photocredits
+  has_many :photocredits, :dependent => :destroy
   has_many :attachments, :through => :photocredits
   
   validates_presence_of :account, :message => "Must have an account"

@@ -73,7 +73,7 @@
 					<p>
 						No media attached.
 					</p>
-					<%= button_link_to_function("Attach media", "article_form_overlay.render( toolbox_render_overlay('Barack Obama', test_element ) );") -%>	
+					<%= button_link_to_function("Attach media", "article_form_overlay.render( toolbox_render_overlay('Tokyo, Japan', test_element ) );") -%>	
 						
 				</div>
 				<div class="toolbox_border"></div>
@@ -109,8 +109,7 @@
 	
 	//Overlay test script
 	var article_form_overlay = new Overlay ();
-	var test_element = Builder.node('div',{id:'test_content', href: '#' }, Builder.node('img', {src: '/obama8.jpg'})  );
-	var test_element2 = Builder.node('div',{id:'test_content', href: '#' }, Builder.node('img', {src: '/hospital.jpg'})  );	
+	var test_element = Builder.node('div',{id:'test_content', href: '#' }, Builder.node('img', {src: '/IMG_7106.jpg'})  );
 	
  	// WMD Editor Configuration script
     // Set this *before* you load wmd.js

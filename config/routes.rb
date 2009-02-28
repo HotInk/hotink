@@ -6,10 +6,12 @@ ActionController::Routing::Routes.draw do |map|
       article.resources :authors
       article.resources :sortings
       article.resources :tags
+      article.resources :waxings
     end
     account.resources :authors
     account.resources :sections
     account.resources :categories
+    account.resources  :images
   end
   
 

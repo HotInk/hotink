@@ -91,3 +91,8 @@ ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
     "#{date.month}/#{date.day}/#{date.strftime('%y')}") 
   }
 )
+
+#Load custom Paperclip interpolation
+Paperclip::Attachment.interpolations[:account] = proc do |attachment, style|
+  attachment.instance.account.name
+end
