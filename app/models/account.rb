@@ -1,7 +1,7 @@
 class Account < ActiveRecord::Base
   
   #Main data models (and subclasses)
-  has_many :attachments, :dependent => :delete_all
+  has_many :mediafiles, :dependent => :delete_all
   has_many :images
   has_many :articles, :dependent => :delete_all  
   has_many :authors, :dependent => :delete_all
@@ -23,7 +23,12 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name, :message => "Account name must be unique"
   
   def settings
-    YAML::load( read_attribute('settings'))
+    settings_from_db = read_attribute('settings')
+    if settings_from_db
+      YAML::load( read_attribute('settings'))
+    else
+      {}
+    end
   end
   
 end

@@ -1,12 +1,12 @@
-class Image < Attachment
+class Image < Mediafile
   
   has_attached_file :file,
       :styles => {
-        :system_thumb=> ["220>", 'jpg'],
+        :system_thumb=> ["100>", 'jpg'],
         :thumb  => Proc.new { |instance| instance.settings["thumb"].to_s },
         :small => Proc.new { |instance| instance.settings["small"].to_s },
         :medium => Proc.new { |instance| instance.settings["medium"].to_s },
-        :system_default => ["600x600>", 'jpg'],
+        :system_default => ["400>", 'jpg'],
         :large => Proc.new { |instance| instance.settings["large"].to_s }
       },
       :convert_options => {
@@ -17,7 +17,7 @@ class Image < Attachment
       :url => "/system/:class/:account/:id_partition/:basename_:style.:extension"
       
   validates_attachment_presence :file
-  validates_attachment_content_type :file, :content_type => "image/jpeg"
+  validates_attachment_content_type :file, :content_type => ['image/jpeg', 'image/pjpeg', 'image/jpg', 'image/png']
   
   #Default settings
   def settings 

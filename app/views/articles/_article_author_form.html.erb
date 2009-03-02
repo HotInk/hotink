@@ -18,7 +18,7 @@
 
 	createNewAuthor = function( new_token_text, auto_complete ){
 		new_author_auto_complete = auto_complete;
-		new Ajax.Request( 	"<%= account_article_authors_url(@account, @article, :format=>:json )%>", 
+		new Ajax.Request( 	"<%= account_authors_url(@account, :format=>:json )%>", 
 							{	method: 'post', parameters: {"author[name]": new_token_text, "authenticity_token": "<%= form_authenticity_token %>"},
 								onSuccess: function(transport){
 												var json = transport.responseText.evalJSON(true);

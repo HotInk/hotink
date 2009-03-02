@@ -3,7 +3,7 @@
 body { background-color: #F9F9F9; color: #333; margin: 0 auto; }
 
 body, p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
+  font-family: "lucida grande", verdana, arial, helvetica, sans-serif;
   font-size:   12px;
   line-height: 16px;
 }
@@ -164,6 +164,13 @@ html[xmlns] .clearfix{display:block;}
 	/* border: 2px solid #3399DE; */
 }
 
+#article_form_top_links{
+	width:600px;
+	float:left;
+	margin-bottom: 5px;
+}
+
+
 #article_form {
 	float:left;
 
@@ -181,6 +188,7 @@ html[xmlns] .clearfix{display:block;}
 	width: 100%;
 	height: 22px;
 	padding: 4px 2px;
+	margin-bottom: 10px;
 	
 	font-size: 18px;
 }
@@ -188,9 +196,15 @@ html[xmlns] .clearfix{display:block;}
 #article_subtitle {
 	width: 100%;
 	padding: 4px 2px;
-	height: 16px;
+	height: 18px;
+	margin-bottom: 10px;
 	
-	font-size: 13px;
+	font-size: 16px;
+}
+
+.column_holder {
+	float: none;
+	margin-bottom: 10px;
 }
 
 .half_column {
@@ -198,8 +212,21 @@ html[xmlns] .clearfix{display:block;}
 	width: 50%;
 }
 
+#article_date {
+	height: 16px;
+	padding: 4px 2px;
+	font-size: 13px;
+}
+
+#article_section_id {
+	height: 28px;
+	padding: 4px 2px;
+	font-size: 13px;
+}
+
 #author_list {
 	width: 600px;
+	margin-bottom: 20px;
 }
 
 #article_bodytext {
@@ -233,6 +260,11 @@ html[xmlns] .clearfix{display:block;}
 
 .note {
 	font-size: 11px;
+}
+
+#upload_media_form {
+	width: 600px;
+	min-height: 400px;
 }
 
 /* Issue form style */
@@ -375,7 +407,7 @@ div.tokenizer{border: 1px solid #DEDEDE;}
 .tokenizer_input_borderless  
 #article_new_authors_list{ width: 20px; border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;}
 /*IE6-/Win only*/
-/*\*/ * html#facebook .tokenizer_input_borderless #article_new_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
+/*\*/ * html .tokenizer_input_borderless #article_new_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
 .tokenizer div:-moz-first-node{padding-top:1px!important;}
 .tokenizer_input{max-width:450px;overflow:hidden;padding:1px 0px;}
 .tokenizer_input input,
@@ -408,3 +440,43 @@ div.autocomplete ul {  list-style-type:none;margin:0px; padding:0px;}
 div.autocomplete ul li.selected { background-color: #ffb;}
 div.autocomplete ul li {  list-style-type:none;  display:block;  margin:0;  padding:2px;  height:16px;cursor:pointer;}
 /* end of autcompleter.advancedlocal css */
+
+/* Mediafiles list styles
+--------------------------------*/
+
+div.media_list .token{background-image:url('/token.gif');background-repeat:no-repeat;white-space:nowrap;float: left; width: 100%;}
+div.media_list .token div{background-image:url('/token.gif');background-position:top right;background-repeat:no-repeat;float: left; width: 100%;}
+div.media_list .token div div{background-position:bottom right;display:block;float: left;width: 100%; }
+div.media_list .token div div div{background-position:bottom left;float: left; width: 100%;}
+div.media_list .token div div div div{background-image:none;padding:2px 3px 2px 5px;float: left; width: 100%;}
+
+div.media_list .token span.x,
+div.media_list .token span.x_hover,
+div.media_list .token:hover span.x,
+div.media_list .token:hover span.x_hover{background-image:url('/token_x.gif');background-position:4px 2px;cursor:pointer;display:inline;padding:0px 6px 0px 5px;}
+
+div.media_list .token { margin-bottom: 5px;}
+
+.caption { font-size:10px;}
+
+/* Edit media form styles 
+--------------------------------*/
+
+#edit_media_form .image_matte {
+	background-color: #AAA;
+	width: 400px;
+	padding: 5px;
+	text-align: center;
+}
+
+#edit_media_form .image_matte{
+	margin: auto;
+}
+
+#mediafile_new_authors_list{ color: #555; width: 20px; border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;}
+/*IE6-/Win only*/
+/*\*/ * html .tokenizer_input_borderless #mediafile_new_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
+
+#photocredits_form {
+	width: 400px;
+}

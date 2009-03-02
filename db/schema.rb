@@ -33,20 +33,6 @@ ActiveRecord::Schema.define(:version => 20090228182437) do
     t.integer  "section_id"
   end
 
-  create_table "attachments", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
-    t.string   "link_alternate"
-    t.date     "date"
-    t.integer  "account_id"
-    t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
-  end
-
   create_table "authors", :force => true do |t|
     t.string   "name"
     t.integer  "account_id"
@@ -82,8 +68,22 @@ ActiveRecord::Schema.define(:version => 20090228182437) do
     t.datetime "updated_at"
   end
 
+  create_table "mediafiles", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "link_alternate"
+    t.date     "date"
+    t.integer  "account_id"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+  end
+
   create_table "photocredits", :force => true do |t|
-    t.integer  "attachment_id"
+    t.integer  "mediafile_id"
     t.integer  "author_id"
     t.integer  "account_id"
     t.datetime "created_at"
@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(:version => 20090228182437) do
   end
 
   create_table "waxings", :force => true do |t|
-    t.integer  "attachment_id"
+    t.integer  "mediafile_id"
     t.integer  "article_id"
     t.integer  "account_id"
     t.datetime "created_at"

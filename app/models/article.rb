@@ -12,10 +12,12 @@ class Article < ActiveRecord::Base
   has_many :categories, :through => :sortings
   
   has_many :waxings
-  has_many :attachments, :through => :waxings
+  has_many :mediafiles, :through => :waxings
+  has_many :images, :through => :waxings, :source=>'mediafile'
   
   acts_as_taggable_on :tags
   
+  accepts_nested_attributes_for :mediafiles
   accepts_nested_attributes_for :sortings, :allow_destroy => true
   accepts_nested_attributes_for :authorships, :allow_destroy => true
   

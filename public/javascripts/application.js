@@ -53,14 +53,14 @@ var Toolbox = Class.create({
 	},
 	
 	hide: function() {
-		this.element.down().next().down(1).writeAttribute('style', 'background-position: 0px 3px;');
+		this.element.down().next().down(1).writeAttribute('style', 'background-position: 0px 2px;');
 		new Effect.BlindUp(this.element.down().next(2), {duration: 0.2});
 		this.element.down().next(3).hide();
 		this.visible = false;		
 	},
 	
 	show: function() {
-		this.element.down().next().down(1).writeAttribute('style', 'background-position: 0px -29px;');
+		this.element.down().next().down(1).writeAttribute('style', 'background-position: 0px -31px;');
 		this.element.down().next(3).show();
 		new Effect.BlindDown(this.element.down().next(2), {duration: 0.2});
 		this.visible = true;
@@ -93,19 +93,11 @@ var Toolbox = Class.create({
     },
 });
 
-toolbox_render_overlay = function(title, content) {
+toolbox_render_overlay = function(content) {
 	var overlay_content = Builder.node('div',{className:'toolbox'},[
 								Builder.node('div', {className: 'toolbox_border'}),
-								Builder.node('div', {className: 'toolbox_label_body'},[
-									Builder.node('h2',[ 
-										Builder.node('span', '    '),
-										title
-									])
-								]),
-								Builder.node('div', {className: 'toolbox_border'}),
-								Builder.node('div', {className: 'toolbox_body'},
-									content
-								)
-				   ]);
+								Builder.node('div', {className: 'toolbox_body'})
+						 ]);
+   overlay_content.lastChild.insert(content);
    return overlay_content;
 };

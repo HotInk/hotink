@@ -5,7 +5,7 @@ class Author < ActiveRecord::Base
   has_many :articles, :through => :authorships 
   
   has_many :photocredits, :dependent => :destroy
-  has_many :attachments, :through => :photocredits
+  has_many :mediafiles, :through => :photocredits
   
   validates_presence_of :account, :message => "Must have an account"
   validates_associated :account, :message => "Account must be valid"

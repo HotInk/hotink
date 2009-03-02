@@ -1,7 +1,7 @@
 class CreatePhotocredits < ActiveRecord::Migration
   def self.up
     create_table :photocredits do |t|
-      t.integer :attachment_id
+      t.integer :mediafile_id
       t.integer :author_id
       t.integer :account_id
 

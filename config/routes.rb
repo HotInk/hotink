@@ -6,7 +6,10 @@ ActionController::Routing::Routes.draw do |map|
       article.resources :authors
       article.resources :sortings
       article.resources :tags
-      article.resources :images
+      article.resources :mediafiles
+    end
+    account.resources :mediafiles do |mediafile|
+      mediafile.resources :authors
     end
     account.resources :authors
     account.resources :sections

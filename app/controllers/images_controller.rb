@@ -4,10 +4,17 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.xml
   def index
-    @images = @account.images.find(:all)
-
+    if @article = find_article
+      @images = @article.mediafiles
+    else
+      @images = @account.mediafiles.find(:all)
+    end
+      
     respond_to do |format|
       format.html # index.html.erb
+      if @article = find_article
+        format.js
+      end
       format.xml  { render :xml => @images }
     end
   end
@@ -26,10 +33,18 @@ class ImagesController < ApplicationController
   # GET /images/new
   # GET /images/new.xml
   def new
-    @image = @account.images.build
+    @article = find_article
+    if @article
+      @image = @article.mediafiles.build
+    else
+      @image = @account.images.build
+    end
 
-    respond_to do |format|
+    respond_to do |format|        
       format.html # new.html.erb
+      if @article 
+        format.js
+      end
       format.xml  { render :xml => @image }
     end
   end
@@ -47,10 +62,20 @@ class ImagesController < ApplicationController
     @image = Image.new
     @image.account = @account
     @image.attributes = params[:image]
-
+    
     respond_to do |format|
       if @image.save
-        flash[:notice] = 'Image was successfully created.'
+        
+        #Special behaviour to mimic ajax-upload
+        if @article = find_article
+          @article.mediafiles << @image
+          responds_to_parent do
+          			render :update do |page|
+          				page << "reload_images();"
+          			end
+          end
+          return
+        end
         format.html { redirect_to([@account, @image]) }
         format.xml  { render :xml => @image, :status => :created, :location => @image }
       else

@@ -98,6 +98,7 @@ set_input_size: function( load_small ) {
 	}		
 },
 onKeyPress: function(event) {
+		console.log(event);
         //dynamically resize the input field
 		this.set_input_size();
 
@@ -206,6 +207,7 @@ addTokenToList: function(item, value) {
 			$(token).down(4).next().innerHTML = "&nbsp;";
 		 	this.tokens.push(new Token(token,this.hidden_input,false));
 			this.options.new_token_count = this.options.new_token_count + 1;
+			console.log("New token");
 		    this.wrapper.insert({before:token});
 },
 addSavedTokensToList: function(saved_tokens_join_json) {

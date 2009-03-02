@@ -18,12 +18,21 @@ class ApplicationController < ActionController::Base
   private
   
     def find_account
-      @account = Account.find(params[:account_id])
-      Time.zone = @account.time_zone
+      if params[:account_id]
+        @account = Account.find(params[:account_id])
+        Time.zone = @account.time_zone
+        @account
+      else
+        false
+      end
     end
     
     def find_article
-      @article = @account.articles.find(params[:article_id])
+      if params[:article_id]
+        @article = @account.articles.find(params[:article_id])
+      else
+        false
+      end
     end
   
 end

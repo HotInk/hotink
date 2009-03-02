@@ -1,35 +1,37 @@
 <div id="page_container">
+<p id="article_form_top_links">	
 	<%= link_to "&#171; Back to articles list", account_articles_url(@account), :class=>"weblink" %>
-	<h1>Edit article</h1>
+</p>	
 <div id="article_form">
+	<h1>Edit article</h1>
 	<%= "<p style=\"color: green\">#{ flash[:notice] }</p>" if flash[:notice] %>
 	<% remote_form_for([@account, @article]) do |f| %>
 	  <%= f.error_messages %>
-	  <p>
+	  <div>
 	    <%= f.label :title, "Headline"%><br />
-	    <%= f.text_field :title , :class => :text_input%>
-	  </p>
+	    <%= f.text_field :title , :class => :text_input %>
+	  </div>
 	  <p>
 	    <%= f.label :subtitle, "Subhead"%><br />
 	    <%= f.text_field :subtitle, :class => :text_input  %>
 	  </p>
-	  <div class="column_holder">
+	  <div class="column_holder clearfix">
 	  	  <p class="half_column">
-		    <%= f.label :date_1i, "Date" %>&nbsp;<%= f.date_select :date %>
+		    <%= f.label :date %>&nbsp;<%= f.unobtrusive_date_text_picker :date, {:format => "M-D-Y"}, :class => "text_input", :size => "10" %>
 		  </p>
 		  <p class="half_column">
-			<%= f.label :section_id, "Primary section"%>&nbsp;<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => true})%>
+			<%= f.label :section_id, "Primary section"%>&nbsp;<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => true},  :class => :text_input)%>
 		  </p>
 	  </div>
 	  <div id ="author_list" class="field">
 			<%= render :partial => 'article_author_form' %>
 	  </div><!-- /author_list -->
 	
-	  <p>
+	  <div id="bodytext">
 		<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
 	    <%= f.label :bodytext, "Body text" %><br />
 	    <%= f.text_area :bodytext %>
-	  </p>
+	  </div>
 	  <p>
 	    <%= f.label :summary %><br />
 	    <%= f.text_area :summary %>
@@ -70,11 +72,8 @@
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Media</h2></div>
 				<div class="toolbox_border"></div>
 				<div class="toolbox_body">	
-					<p>
-						No media attached.
-					</p>
-					<%= button_link_to_function("Attach media", "article_form_overlay.render( toolbox_render_overlay('Upload image', test_element ) );") -%>	
-						
+					<script id="account_article_mediafiles_list" type="text/javascript" src="<%= account_article_mediafiles_url(@account, @article, :format=>:js) %>" charset="utf-8"></script>
+					<iframe name="upload_frame" style="display: none"></iframe>
 				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - media -->	
@@ -94,7 +93,7 @@
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tags</h2></div>
 				<div class="toolbox_border"></div>
 				<div class="toolbox_body">	
-					<script id="tags_form" type="text/javascript" src="<%= new_account_article_tag_url(@account, @article, :format=>:js) %>"></script>
+					<script id="tags_form" type="text/javascript" src="<%= new_account_article_tag_url(@account, @article, :format=>:js ) %>"></script>
 				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - tags -->		
@@ -107,9 +106,13 @@
 	$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
 	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
 	
-	//Overlay test script
+	//Initialize Overlay
 	var article_form_overlay = new Overlay ();
-	var test_element = Builder.node('div',{id:'test_content', href: '#' }, Builder.node('img', {src: '/IMG_7106.jpg'})  );
+	
+	//Shortcut function to reload media list
+	reload_media = function() {
+		new Ajax.Request('/accounts/<%= @account.id %>/articles/<%= @article.id %>/mediafiles', {method:'get'});
+	}
 	
  	// WMD Editor Configuration script
     // Set this *before* you load wmd.js

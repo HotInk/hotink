@@ -41,8 +41,7 @@ class AuthorsController < ApplicationController
   # POST /authors
   # POST /authors.xml
   def create
-    @author = Author.find_or_initialize_by_name(params[:author])
-    @author.account = @account
+    @author = @account.authors.find_or_initialize_by_name(params[:author])
         
     respond_to do |format|
       if @author.save

@@ -1,7 +1,7 @@
 class CreateWaxings < ActiveRecord::Migration
   def self.up
     create_table :waxings do |t|
-      t.integer :attachment_id
+      t.integer :mediafile_id
       t.integer :article_id
       t.integer :account_id
 
