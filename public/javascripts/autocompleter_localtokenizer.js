@@ -98,7 +98,6 @@ set_input_size: function( load_small ) {
 	}		
 },
 onKeyPress: function(event) {
-		console.log(event);
         //dynamically resize the input field
 		this.set_input_size();
 
@@ -207,7 +206,6 @@ addTokenToList: function(item, value) {
 			$(token).down(4).next().innerHTML = "&nbsp;";
 		 	this.tokens.push(new Token(token,this.hidden_input,false));
 			this.options.new_token_count = this.options.new_token_count + 1;
-			console.log("New token");
 		    this.wrapper.insert({before:token});
 },
 addSavedTokensToList: function(saved_tokens_join_json) {
@@ -225,7 +223,7 @@ addSavedTokensToList: function(saved_tokens_join_json) {
 			    Builder.node('span', 
 			    Builder.node('span', 
 			    Builder.node('span', {},
-			    [ tokens[i].authorship[this.options.search_model][this.options.search_field],
+			    [ tokens[i][this.options.search_join_model][this.options.search_model][this.options.search_field],
 			        Builder.node('span',{"class":'x',onmouseout:"this.className='x'",onmouseover:"this.className='x_hover'",
 			        onclick:"this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true);$('" + delete_tag_id + "').value=1; return false;"}," ")
 			        ]

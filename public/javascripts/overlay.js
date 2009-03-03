@@ -27,7 +27,7 @@ Overlay = Class.create({
         //  <div id="overlay"></div>
         //  <div id="overlaybox">
         // 	    <div id="overlaybox_container">
-        //          <div id="overlaybox_content">
+        //          <div id="overlay_content">
 		//			</div>
         //      	<div id="loading">
         //          	<a href="#" id="loadingLink">
@@ -41,15 +41,12 @@ Overlay = Class.create({
 		objBody.appendChild(Builder.node('div',{id:'overlay'}));
 		
 		objBody.appendChild(Builder.node('div',{id:'overlaybox'}, [
-            Builder.node('div',{id:'overlay_container'}, 
-                Builder.node('div',{id:'overlay_content'},
-                    Builder.node('div',{id:'loading'}, 
-                        Builder.node('a',{id:'loading_link', href: '#' }, 
-                            Builder.node('img', {src: this.fileLoadingImage})
-                        )
-                    )
+            Builder.node('div',{id:'overlay_container'}, [ Builder.node('div',{id:'overlay_content'}), Builder.node('div',{id:'loading'}, 
+                   Builder.node('a',{id:'loading_link', href: '#' }, 
+                       Builder.node('img', {src: this.fileLoadingImage})
+                   )
                 )
-            ),
+            ]),
         ]));
 		
 		$('overlay').hide().observe('click', (function() { this.end(); }).bind(this));
@@ -69,7 +66,6 @@ Overlay = Class.create({
 		$('overlay').setStyle({ width: arrayPageSize[0] + 'px', height: arrayPageSize[1] + 'px' });		
 		
 		new Effect.Appear(this.overlay, { duration: 0.2, from: 0.0, to: 0.8 });
-	    this.started = true;
 
 		// calculate top and left offset for the overlaybox 
 	    var arrayPageScroll = document.viewport.getScrollOffsets();
@@ -84,24 +80,28 @@ Overlay = Class.create({
 	    return true;
 	},
 	
-	render: function( el ){
-		
-		//Check to see whether we've been given an element
-		if ( el != 'undefined' && $(el) instanceof Element) {
-			var new_content = $(el);
-		} else {
-			return false; // If there's no/no-good content, stop and don't render
-		}
+	render: function( new_content ){
 		if (this.start()){
-			this.overlay_content.replace( new_content );
-			this.overlay_content = this.overlay_container.down().hide();
-
-			var dimensions = this.overlay_content.getDimensions();
-			var timeout = this.resizeContainer(dimensions.width, dimensions.height);
-			(function(){
-	            this.showContent();
-	        }).bind(this).delay(timeout / 1000);
+			this.overlay_content.innerHTML = "";
+			this.overlay_content.insert( new_content );
+			this.overlay_content.hide();
 			
+			//Preload image and return the last one.
+			var image = this.preloadImages()
+			//If there are images, attach the animation to the loading of the last image.
+			//If there are no images, animate away.
+			if (image) {
+				image.onload = (function(){
+					var dimensions = this.overlay_content.getDimensions();
+					//showContent() is called at the end of resizeContainer()
+					this.resizeContainer(dimensions.width, dimensions.height);
+		        }).bind(this);
+			} else {
+				var dimensions = this.overlay_content.getDimensions();
+				//showContent() is called at the end of resizeContainer()
+				this.resizeContainer(dimensions.width, dimensions.height);
+			}
+				
 			return true;
 		} else {
 			return false;
@@ -131,6 +131,20 @@ Overlay = Class.create({
 			this.end();
 		} else {
 			this.start();
+		}
+	},
+	
+	preloadImages: function(){
+		var preloadImages = this.overlay_content.select('img');
+		var last_image = {};
+		if (preloadImages.length>0){
+			for (i=0;i<preloadImages.length;i++) {
+				last_image = new Image();
+				last_image.src = preloadImages[i].readAttribute('src');
+			}
+			return last_image;
+		} else {
+			return false;
 		}
 	},
 	
@@ -172,8 +186,10 @@ Overlay = Class.create({
             if (Prototype.Browser.IE) timeout = 250;   
         }
 
-		//Return timeout delay
-		return timeout;
+		(function(){
+            this.showContent();
+			this.started = true;
+        }).bind(this).delay(timeout / 1000);	
     },
     
     // 	

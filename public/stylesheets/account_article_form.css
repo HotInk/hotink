@@ -324,10 +324,6 @@ html[xmlns] .clearfix{display:block;}
 }
 
 .toolbox { width: 255px; margin-bottom: 10px; }
-#overlaybox .toolbox { width: auto; margin-bottom: 0; text-align: left;}
-#overlaybox .toolbox_label_body { padding: 12px 5px 5px 5px;}
-#overlaybox .toolbox_border { margin: 0px 0px;}
-
 .toolbox h2{ display: inline; cursor: pointer; }
 .toolbox h2 span { background: url('/arrows.png') no-repeat; background-position: 0px -29px;}
 .toolbox_border { height: 1px;
@@ -383,6 +379,8 @@ html[xmlns] .clearfix{display:block;}
 #overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; line-height: 0; }
 #loading{ position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0;}
 #overlay_container{ position: relative; background-color: #fff; width: 250px; height: 250px; margin: 0 auto;}
+#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 12px 5px 5px 5px;}
+
 
 
 

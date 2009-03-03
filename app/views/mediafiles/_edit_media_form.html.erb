@@ -1,11 +1,11 @@
 <div id="edit_media_form">
-	<p class="large">Edit image details</p>
-	<% form_for [@account, @article, @mediafile], :html=>{:multipart=>true, :target=>"upload_frame", :onsubmit => "article_form_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
-	 <%= f.error_messages %>
-	  <div class="image_matte">
-		<%= image_tag(@mediafile.file.url) %>
-	  </div>
-		<p><%= label_tag 'mediafile[new_authors_list]', 'Photocredits' %></p>
+		<p class="large">Edit image details</p>
+		<% form_for [@account, @article, @mediafile], :html=>{:multipart=>true, :target=>"upload_frame", :onsubmit => "article_form_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
+	 	<%= f.error_messages %>
+	  	<div class="image_matte">
+			<%= image_tag(@mediafile.file.url) %>
+	  	</div>
+		<p><%= label_tag 'mediafile[new_authors_list]', 'Photocredits' %></p>	
 		<div id="photocredits_form" class="clearfix tokenizer text_input" onclick="$('mediafile_new_authors_list').focus()">
 		    <span class="tokenizer_stretcher">^_^</span>
 			<span class="tab_stop">
@@ -15,8 +15,8 @@
 				<%= text_field_tag 'mediafile[new_authors_list]', '' %>
 		    </div>
 		</div>
-		 <div id="media_autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10; width: 450px; height: auto; overflow-y: hidden;display:none"> </div>
-		<script type="text/javascript">
+		<div id="media_autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10; width: 450px; height: auto; overflow-y: hidden;display:none"> </div>
+			<script type="text/javascript">
 		    var photocredit_list = new Autocompleter.LocalTokenizer('mediafile_new_authors_list', 'media_autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
 			        frequency: 0.1,
 					parent_model: "mediafile",
@@ -30,16 +30,10 @@
 					hidden_input_id: 'media_hidden_input',
 					onNewToken: createNewAuthor
 			    });
-		   </script>
-		
-	  <p><%= link_to_function "Replace this file?", "new Effect.SlideDown($('replace_file_field'));"%></p>
-	  <p id="replace_file_field" style="display:none;">
-		    	<%= f.label :file, "New file:&nbsp;" %>
-		    	<%= f.file_field :file %>
-	  </p>
+			</script>
+		<p>
+	  		<%= button_link_to_submit "Save changes" %>
+		</p>
 	</div>
-	<p>
-	  <%= button_link_to_submit "Save changes" %>
-	</p>
-	<% end %>
+<% end %>
 </div>
