@@ -4,21 +4,19 @@
 		No media attached.
 	</p>
 <% else %>
-	<% for mediafile in @mediafiles %>
-	  <div class="token" href="#" onclick="return false;">
-		<div>
-			<div>
-				<div>
-					<div>
-							Image<span class="x" onclick="this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true); return false;" onmouseover="this.className='x_hover'" onmouseout="this.className='x'">&nbsp;</span>
-						<%= link_to_remote image_tag(mediafile.file.url(:system_thumb), :align=>"left"), :url=>edit_account_article_mediafile_url(@account, @article, mediafile, :format=>:js), :method=>:get %>
-						<p class="caption"><strong>Caption:</strong> [no caption set]</p>
-					</div>
-				</div>
-			</div>
+	<% for mediafile in @mediafiles %>  
+	<div class="token" href="#" onclick="return false;">
+	  	  <span class="x" onclick="new Effect.Fade($(this.parentNode)); return false;" onmouseover="this.className='x_hover'" onmouseout="this.className='x'">&nbsp;</span>
+		  <%= link_to_remote image_tag(mediafile.file.url(:system_thumb), :align=>"right"), :url=>edit_account_article_mediafile_url(@account, @article, mediafile, :format=>:js), :method=>:get %>
+		<div id="waxing-<%= mediafile.waxings[0].id %>">
+			  <p><strong>Caption:</strong></p>
+			  <p>[Click here to add a caption]</p>
 		</div>
-	  </div>
+	</div>
 	<% end %>
 <% end %>
 <%= button_link_to_remote "Attach Media", :url=>new_account_article_mediafile_url(@account, @article, :format=>:js), :method=>:get %>
 </div>
+<script type="text/javascript" charset="utf-8">
+	$('account_article_mediafiles_list').select('textarea').each(function(ta){ new ResizingTextArea(ta); });
+</script>

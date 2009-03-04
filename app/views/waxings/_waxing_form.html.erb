@@ -1,0 +1,8 @@
+<div id="waxing-<%= @waxing.id %>">
+	<p><strong>Caption:</strong></p>
+	<% remote_form_for [@account, @article, @waxing] do |f| %>
+	<% f.text_area :caption, :onblur=>"addText(this;)", :onclick=>"clearText(this);" %>
+	<textarea onclick="clearText(this)" onblur="addText(this)" >[no caption set]</textarea>
+	<%= button_link_to_submit "Save caption", :class => "small"  %><img src="/loading_small.gif" style="display:none;" class="spinner"/>
+	<% end %>
+</div>

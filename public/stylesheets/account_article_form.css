@@ -151,6 +151,12 @@ html[xmlns] .clearfix{display:block;}
 	 background-position:0 -390px;
   }
 
+  .small {
+	font-size: 10px;
+	line-height: 1;
+  }
+
+
 
 /* Form style */
 #page_container {
@@ -443,20 +449,18 @@ div.autocomplete ul li {  list-style-type:none;  display:block;  margin:0;  padd
 /* Mediafiles list styles
 --------------------------------*/
 
-div.media_list .token{background-image:url('/token.gif');background-repeat:no-repeat;white-space:nowrap;float: left; width: 100%;}
-div.media_list .token div{background-image:url('/token.gif');background-position:top right;background-repeat:no-repeat;float: left; width: 100%;}
-div.media_list .token div div{background-position:bottom right;display:block;float: left;width: 100%; }
-div.media_list .token div div div{background-position:bottom left;float: left; width: 100%;}
-div.media_list .token div div div div{background-image:none;padding:2px 3px 2px 5px;float: left; width: 100%;}
+div.media_list .token{padding:2px 2px 5px 3px;background-repeat:no-repeat;float: left; width: 237px; background-color: #CEE4F3;border: 1px solid #B9DCF4;}
 
 div.media_list .token span.x,
 div.media_list .token span.x_hover,
 div.media_list .token:hover span.x,
-div.media_list .token:hover span.x_hover{background-image:url('/token_x.gif');background-position:4px 2px;cursor:pointer;display:inline;padding:0px 6px 0px 5px;}
+div.media_list .token:hover span.x_hover{float:right;width: 5%;background-image:url('/token_x.gif');background-position:3px 0px;background-repeat:no-repeat;cursor:pointer;display:inline;}
+/*div.media_list textarea{ width: 108px;min-height:80px;font-size: 10px;color: #333;outline:none; overflow: hidden;margin-right:5px;}*/
+div.media_list .token { margin-bottom: 5px; }
+div.media_list p { font-size:10px; line-height:12px; }
+div.media_list img { margin: 5px 5px 0px 0px; }
 
-div.media_list .token { margin-bottom: 5px;}
-
-.caption { font-size:10px;}
+/*div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 2px;margin-left: 5px;}*/
 
 /* Edit media form styles 
 --------------------------------*/

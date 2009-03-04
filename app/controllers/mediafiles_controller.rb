@@ -3,7 +3,7 @@ class MediafilesController < ApplicationController
   # GET /mediafiles.xml
   def index
     if @article = find_article
-      @mediafiles = @article.mediafiles
+      @mediafiles = @article.mediafiles.find(:all, :include => [ :waxings ], :conditions => ['waxings.article_id = ?', @article.id])
     else
       @mediafiles = @account.mediafiles
     end

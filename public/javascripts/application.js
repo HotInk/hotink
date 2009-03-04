@@ -1,7 +1,7 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-//Function below handle adding and removing default text from form text input elements
+//Function below handle adding and removing default text from form text input elements and auto-resizing textareas
 function clearText(theField)
 {
 if (theField.defaultValue == theField.value)
@@ -11,9 +11,30 @@ theField.value = '';
 function addText(theField)
 {
 if (theField.value == '')
-theField.value = theField .defaultValue;
+theField.value = theField.defaultValue;
 }
 
+function autoresize(txtbox)
+{
+    var cols = txtbox.cols ;
+    var content = txtbox.value ;
+    var lineCount = 0 ;
+
+    var lastEOL = -1 ;
+    do {
+        var begin = lastEOL+1 ;
+        lastEOL = content.indexOf("\n",lastEOL+1) ;
+        var line = "" ;
+        if(lastEOL != -1) {
+            line = content.substring(begin,lastEOL) ;
+        } else {
+            line = content.substring(begin,content.length) ;
+        }
+        var rows_in_line = Math.floor(line.length/cols)+1 ;
+        lineCount += rows_in_line
+    } while (lastEOL != -1) ;
+    txtbox.rows = lineCount ;
+}
 
 //Article form nested object creation code
 
@@ -93,11 +114,33 @@ var Toolbox = Class.create({
     },
 });
 
-toolbox_render_overlay = function(content) {
-	var overlay_content = Builder.node('div',{className:'toolbox'},[
-								Builder.node('div', {className: 'toolbox_border'}),
-								Builder.node('div', {className: 'toolbox_body'})
-						 ]);
-   overlay_content.lastChild.insert(content);
-   return overlay_content;
-};
+/* Resizing text area class */
+
+var ResizingTextArea = Class.create();
+
+ResizingTextArea.prototype = {
+    defaultRows: 1,
+
+    initialize: function(field)
+    {
+        this.defaultRows = Math.max(field.rows, 1);
+        this.resizeNeeded = this.resizeNeeded.bindAsEventListener(this);
+        Event.observe(field, "click", this.resizeNeeded);
+        Event.observe(field, "keyup", this.resizeNeeded);
+    },
+
+    resizeNeeded: function(event)
+    {
+        var t = Event.element(event);
+        var lines = t.value.split('\n');
+        var newRows = lines.length + 1;
+        var oldRows = t.rows;
+        for (var i = 0; i < lines.length; i++)
+        {
+            var line = lines[i];
+            if (line.length >= t.cols) newRows += Math.floor(line.length / t.cols);
+        }
+        if (newRows > t.rows) t.rows = newRows;
+        if (newRows < t.rows) t.rows = Math.max(this.defaultRows, newRows);
+    }
+}

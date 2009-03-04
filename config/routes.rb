@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
       article.resources :sortings
       article.resources :tags
       article.resources :mediafiles
+      article.resources :waxing
     end
     account.resources :mediafiles do |mediafile|
       mediafile.resources :authors
