@@ -62,7 +62,7 @@ class MediafilesController < ApplicationController
       if @mediafile.save
         #Special behaviour to mimic ajax file-upload
         if @article = find_article
-          @article.mediafiles << @mediafile
+          @waxing = @account.waxings.create(:article_id => @article.id, :mediafile_id=> @mediafile.id);
           responds_to_parent do
           			render :update do |page|
           				page << "reload_media();"

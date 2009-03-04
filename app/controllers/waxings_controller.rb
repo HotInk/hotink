@@ -34,7 +34,13 @@ class WaxingsController < ApplicationController
 
   # GET /waxings/1/edit
   def edit
-    @waxing = Waxing.find(params[:id])
+    @waxing = @account.waxings.find(params[:id])
+    respond_to do |format|
+      if @article = find_article
+        format.js
+      end
+      format.html
+    end
   end
 
   # POST /waxings
