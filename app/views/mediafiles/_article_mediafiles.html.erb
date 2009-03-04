@@ -10,7 +10,7 @@
 		  <%= link_to_remote image_tag(mediafile.file.url(:system_thumb), :align=>"right"), :url=>edit_account_article_mediafile_url(@account, @article, mediafile, :format=>:js), :method=>:get %>
 		<div id="waxing-<%= mediafile.waxings[0].id %>">
 			  <p><strong>Caption:</strong></p>
-			  <p><%= link_to_remote (mediafile.waxings[0].caption.nil? ? "[Click here to add a caption]" : mediafile.waxings[0].caption), :url=>edit_account_article_waxing_url(@account, @article, mediafile.waxings[0]), :method=>:get %></p>
+			  <p><%= link_to_remote ((mediafile.waxings[0].caption.nil? || mediafile.waxings[0].caption.strip =="" ) ? "[Click here to add a caption]" : mediafile.waxings[0].caption), :url=>edit_account_article_waxing_url(@account, @article, mediafile.waxings[0]), :method=>:get %></p>
 		</div>
 	</div>
 	<% end %>

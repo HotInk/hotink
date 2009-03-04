@@ -449,7 +449,7 @@ div.autocomplete ul li {  list-style-type:none;  display:block;  margin:0;  padd
 /* Mediafiles list styles
 --------------------------------*/
 
-div.media_list .token{padding:2px 2px 5px 3px;background-repeat:no-repeat;float: left; width: 237px; background-color: #CEE4F3;border: 1px solid #B9DCF4;}
+div.media_list .token{padding:2px 2px 5px 3px;background-repeat:no-repeat;float: left; width: 235px; background-color: #CEE4F3;border: 1px solid #B9DCF4;}
 
 div.media_list .token span.x,
 div.media_list .token span.x_hover,
