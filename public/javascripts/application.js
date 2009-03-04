@@ -1,7 +1,7 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-//Function below handle adding and removing default text from form text input elements and auto-resizing textareas
+//Function below handle adding and removing default text from form text input elements
 function clearText(theField)
 {
 if (theField.defaultValue == theField.value)
@@ -12,28 +12,6 @@ function addText(theField)
 {
 if (theField.value == '')
 theField.value = theField.defaultValue;
-}
-
-function autoresize(txtbox)
-{
-    var cols = txtbox.cols ;
-    var content = txtbox.value ;
-    var lineCount = 0 ;
-
-    var lastEOL = -1 ;
-    do {
-        var begin = lastEOL+1 ;
-        lastEOL = content.indexOf("\n",lastEOL+1) ;
-        var line = "" ;
-        if(lastEOL != -1) {
-            line = content.substring(begin,lastEOL) ;
-        } else {
-            line = content.substring(begin,content.length) ;
-        }
-        var rows_in_line = Math.floor(line.length/cols)+1 ;
-        lineCount += rows_in_line
-    } while (lastEOL != -1) ;
-    txtbox.rows = lineCount ;
 }
 
 //Article form nested object creation code

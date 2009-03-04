@@ -67,7 +67,9 @@ class WaxingsController < ApplicationController
 
     respond_to do |format|
       if @waxing.update_attributes(params[:waxing])
-        flash[:notice] = 'Waxing was successfully updated.'
+        if @article = find_article
+          format.js
+        end
         format.html { redirect_to(@waxing) }
         format.xml  { head :ok }
       else

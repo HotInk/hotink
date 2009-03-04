@@ -1,8 +1,7 @@
 <div id="waxing-<%= @waxing.id %>">
 	<p><strong>Caption:</strong></p>
 	<% remote_form_for [@account, @article, @waxing] do |f| %>
-	<% f.text_area :caption, :onblur=>"addText(this;)", :onclick=>"clearText(this);" %>
-	<textarea onclick="clearText(this)" onblur="addText(this)" >[no caption set]</textarea>
-	<%= button_link_to_submit "Save caption", :class => "small"  %><img src="/loading_small.gif" style="display:none;" class="spinner"/>
+	<%= text_area_tag "waxing[caption]", @waxing.caption, :id=>"waxing_caption_#{@waxing.id}" %>
+	<%= button_link_to_function "Save caption","$('edit_waxing_#{@waxing.id}').onsubmit();$(this).next().show();$('waxing_caption_#{@waxing.id}').disable();", :class => "small"  %><img src="/loading_small.gif" style="display:none;" class="spinner"/>
 	<% end %>
 </div>

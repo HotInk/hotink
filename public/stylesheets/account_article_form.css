@@ -152,7 +152,7 @@ html[xmlns] .clearfix{display:block;}
   }
 
   .small {
-	font-size: 10px;
+	font-size: 9px;
 	line-height: 1;
   }
 
@@ -455,12 +455,12 @@ div.media_list .token span.x,
 div.media_list .token span.x_hover,
 div.media_list .token:hover span.x,
 div.media_list .token:hover span.x_hover{float:right;width: 5%;background-image:url('/token_x.gif');background-position:3px 0px;background-repeat:no-repeat;cursor:pointer;display:inline;}
-div.media_list textarea{ width: 108px;min-height:80px;font-size: 10px;color: #333;outline:none; overflow: hidden;margin-right:5px;}
+div.media_list textarea{ width: 108px;height:80px;font-size: 10px;color: #333;outline:none; overflow: hidden;margin: 0px 5px 4px 0px;}
 div.media_list .token { margin-bottom: 5px; }
 div.media_list p { font-size:10px; line-height:12px; }
 div.media_list img { margin: 5px 5px 0px 0px; }
-
-/*div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 2px;margin-left: 5px;}*/
+div.media_list p a{ cursor: text; }
+div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left: 5px;}
 
 /* Edit media form styles 
 --------------------------------*/

@@ -60,8 +60,11 @@ Overlay = Class.create({
 	
 	start: function() {
 		if(this.started) return true;
+		
+		// TODO: Fix this section to hide only elements necessary by browser (ie, textareas in Firefox 2 but not 3)
 		$$('select', 'object', 'embed').each(function(node){ node.style.visibility = 'hidden' });
 		$$('textarea').each(function(node){ node.style.overflow = 'hidden' });
+		
 	    var arrayPageSize = this.getPageSize();
 		$('overlay').setStyle({ width: arrayPageSize[0] + 'px', height: arrayPageSize[1] + 'px' });		
 		
