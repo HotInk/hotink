@@ -6,4 +6,4 @@
 		<%= indent + check_box_tag("article_category_" + child.id.to_s, child.id.to_s, checked, options) %>
 		<%= label_tag "article_category_#{child.id.to_s}", child.name, :class => "selectable"  %>
 </li>
-<%= render :partial => 'child', :collection => child.children, :locals=>{:indent => indent + "&nbsp;&nbsp;&nbsp;"}%>
+<%= render :partial => 'child', :collection => child.children, :locals=>{:indent => indent + "&nbsp;&nbsp;&nbsp;&nbsp;"}%>

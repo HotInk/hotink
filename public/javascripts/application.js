@@ -38,6 +38,22 @@ function mark_sorting_for_delete(sorting_id, category_id, caller)
 	$(caller).writeAttribute("onclick", "new_article_sorting(" + category_id + ", this)");
 }
 
+// Swaping drawer button effect
+
+var swap = function(element1, element2, toggle){
+	var drawer1 = $(element1);
+	var drawer2 = $(element2);
+	var toggle = $(toggle);
+	if (!toggle.hasClassName("selected")) {
+		new Effect.SlideUp(drawer1, {duration:0.1,queue:'front'});
+		new Effect.SlideDown(drawer2, {duration:0.1,queue:'end'});
+	} else {
+		new Effect.SlideUp(drawer2, {duration:0.1,queue:'front'});
+		new Effect.SlideDown(drawer1, {duration:0.1,queue:'end'});
+	}
+}
+
+
 
 //Toolbox - base class for a toolbox.
 

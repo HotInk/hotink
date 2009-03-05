@@ -1,18 +1,12 @@
 <div id="account_article_sorting_list">
-	<ul>
-	<% for category in @account.categories.select{ |sec| sec.parent_id.nil? } %>
-		<li id="category-<%= category.id %>" 
-			class="parent<%= " printsection" if category.is_a?(Section) %>" >
-			<% options = {:onclick => (@article.categories.member?(category) ? "mark_sorting_for_delete(#{@article.sortings.find_by_category_id(category.id).id}, #{category.id}, this)" :  "new_article_sorting(#{category.id}, this)") } -%>
-			<% options = options.merge({:disabled => "true"}) if @article.section == category %>
-			<% checked = @article.categories.member?(category) ? true : false -%>
-			<%= check_box_tag"article_category_" + category.id.to_s, category.id.to_s, checked, options %>
-			<%= label_tag "article_category_#{category.id.to_s}", category.name, :class => "selectable"  %>
-		</li>
-		<%= render :partial => "child", :collection=>category.children, :locals => {:indent =>"&nbsp;&nbsp;&nbsp;" }%>
-	<% end %>
-	</ul>
+	<%= button_link_to_function "Edit", "swap($(this.parentNode).childElements()[2], $(this.parentNode).childElements()[3], this);$(this).toggleClassName('selected')", :class=>"tab-t categories_edit_tab" %>
+	<div id="categories_list">
+		<ul>
+			<%= render :partial=>"parent", :collection=>@account.categories.select{ |sec| sec.parent_id.nil? } %>
+		</ul>
+	</div>
 	<p class="note"><em>Print sections are highlighted.</em></p>
+	<p class="note" style="display:none;"><em>Print sections are stupid.</em></p>
 	<p id="new_account_category">
 	<%= #Be sure to include @article.id in call to Section.new to ensure that the article is available for reloading the article/sorting list
 		link_to_remote 	"New category?", 
