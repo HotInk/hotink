@@ -26,6 +26,13 @@ html[xmlns] .clearfix{display:block;}
 * html .clearfix{height:1%;}
 .hidden { display:none;}
 
+.translucent  {
+		filter: alpha(opacity=75); /* internet explorer */
+		-khtml-opacity: 0.75;      /* khtml, old safari */
+		-moz-opacity: 0.75;       /* mozilla, netscape */
+		opacity: 0.75;           /* fx, safari, opera */
+}
+
 .fieldWithErrors {
   padding: 2px;
   background-color: red;
@@ -134,6 +141,17 @@ html[xmlns] .clearfix{display:block;}
     border-bottom-width:0;
     padding: 1px .4em;
     }
+
+	.tab-b {
+		padding: 1px 0px;
+	}
+	.tab-b span {
+		border-top: 1px solid #DEDEDE;
+	} 
+	.tab-b span span {
+		border-top-width:0;
+	    padding: 1px .5em;
+	}
    
    /* only needed if implementing separate hover/focus/active state for buttons */
    .btn:hover span, .btn:hover span span, .btn:focus span, .btn:focus span span {
@@ -154,12 +172,17 @@ html[xmlns] .clearfix{display:block;}
      font-weight:bold;
      color:#000;
      }
+	
+	.selected span {
+		color:#FFF;
+		background-image: none;
+		background-color:  #6A6A6A;/*#75AAF1;*/
+	}
 
-  .selected  span{
-		filter: alpha(opacity=50); /* internet explorer */
-		-khtml-opacity: 0.5;      /* khtml, old safari */
-		-moz-opacity: 0.5;       /* mozilla, netscape */
-		opacity: 0.5;           /* fx, safari, opera */
+	.selected:hover span, .selected:hover span span, .selected:focus span, .selected:focus span span {
+	     cursor:pointer; /* important for any clickable/pressable element */
+	     border-color:#9cf !important;
+	     color:#FFF;
   }
 	
   .large {
@@ -172,10 +195,14 @@ html[xmlns] .clearfix{display:block;}
   }
 
   .small {
-	font-size: 9px;
+	font-size: 10px;
 	line-height: 1;
   }
 
+  .tiny {
+	font-size: 9px;
+	line-height: 1;
+  }
 
 
 
@@ -316,11 +343,15 @@ html[xmlns] .clearfix{display:block;}
 
 #account_article_sorting_list button.categories_edit_tab{margin-left:208px; }
 #account_article_sorting_list div#categories_list { border: 1px solid #AAA; width: 240px; }
-#account_article_sorting_list ul{ max-height: 180px; overflow: auto; margin: 0; padding: 0; list-style: none; font-size:12px;}
+#account_article_sorting_list #categories_controls { margin-left: 3px;  }
+#account_article_sorting_list ul { list-style: none;overflow: auto; margin: 0; padding: 0; font-size:12px;}
+#account_article_sorting_list ul#categories_sort{ max-height: 180px; }
 #account_article_sorting_list .parent{ margin: 2px; padding: 0; }
 #account_article_sorting_list li{ margin: 1px 0px;}
+#account_article_sorting_list ul ul li{ margin: 1px 0px 1px 1em;}
 #account_article_sorting_list .text_input { font-size: 13px; width: 98%; height: 16px;}
 #account_article_sorting_list .printsection label{ background-color: #EDEE9F; padding: 0px 3px; }
+
 
 /* Tool box styles */
 
@@ -373,7 +404,7 @@ html[xmlns] .clearfix{display:block;}
 
 .toolbox_body {
 	margin-top: -1px;
-	padding: 8px 5px;
+	padding: 6px 6px;
     border-right: 1px solid #aaa;
 	border-left: 1px solid #bbb;
 	
@@ -458,7 +489,7 @@ div.media_list .token span.x,
 div.media_list .token span.x_hover,
 div.media_list .token:hover span.x,
 div.media_list .token:hover span.x_hover{float:right;width: 5%;background-image:url('/token_x.gif');background-position:3px 0px;background-repeat:no-repeat;cursor:pointer;display:inline;}
-div.media_list textarea{ width: 108px;height:80px;font-size: 10px;color: #333;outline:none; overflow: hidden;margin: 0px 5px 4px 0px;}
+div.media_list textarea{ width: 107px;height:80px;font-size: 10px;color: #333;outline:none; overflow: hidden;margin: 0px 5px 4px 0px;}
 div.media_list .token { margin-bottom: 5px; }
 div.media_list p { font-size:10px;line-height:12px; }
 div.media_list img { margin: 5px 5px 0px 0px; }

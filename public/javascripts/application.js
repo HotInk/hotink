@@ -46,13 +46,30 @@ var swap = function(element1, element2, toggle){
 	var toggle = $(toggle);
 	if (!toggle.hasClassName("selected")) {
 		new Effect.SlideUp(drawer1, {duration:0.1,queue:'front'});
-		new Effect.SlideDown(drawer2, {duration:0.1,queue:'end'});
+		new Effect.SlideDown(drawer2, {duration:0.2,queue:'end'});
 	} else {
-		new Effect.SlideUp(drawer2, {duration:0.1,queue:'front'});
+		new Effect.SlideUp(drawer2, {duration:0.2,queue:'front'});
 		new Effect.SlideDown(drawer1, {duration:0.1,queue:'end'});
 	}
 }
 
+// Load category edit functionality
+// This is 100% custom functionality. It would probably be worthwhile to abstract it, though.
+
+var categories_editing = false;
+
+var load_category_edit = function(){
+	
+	if (categories_editing) {
+		Sortable.destroy('categories_sort');
+		$('categories_list').select('input').each( function (inp){ inp.setStyle({opacity:1.0}); inp.enable(); });
+		categories_editing = false;
+	} else {
+		Sortable.create('categories_sort', { tree: true });
+		$('categories_list').select('input').each( function (inp){ inp.setStyle({opacity:0.0}); inp.disable(); });
+		categories_editing = true;
+	}
+}
 
 
 //Toolbox - base class for a toolbox.

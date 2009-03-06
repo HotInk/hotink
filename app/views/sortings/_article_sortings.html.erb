@@ -1,17 +1,21 @@
 <div id="account_article_sorting_list">
-	<%= button_link_to_function "Edit", "swap($(this.parentNode).childElements()[2], $(this.parentNode).childElements()[3], this);$(this).toggleClassName('selected')", :class=>"tab-t categories_edit_tab" %>
+	<%= button_link_to_function "Edit", "swap($(this.parentNode).childElements()[2], $(this.parentNode).childElements()[3], this);$(this).toggleClassName('selected');load_category_edit();", :class=>"tab-t categories_edit_tab" %>
 	<div id="categories_list">
-		<ul>
+		<ul id="categories_sort">
 			<%= render :partial=>"parent", :collection=>@account.categories.select{ |sec| sec.parent_id.nil? } %>
 		</ul>
 	</div>
 	<p class="note"><em>Print sections are highlighted.</em></p>
-	<p class="note" style="display:none;"><em>Print sections are stupid.</em></p>
-	<p id="new_account_category">
-	<%= #Be sure to include @article.id in call to Section.new to ensure that the article is available for reloading the article/sorting list
-		link_to_remote 	"New category?", 
-						:url => new_account_category_path(@account, :format=>:js, :article_id=>@article.id), 
-						:method => :get %>
-	</p>
-	
+	<div id="categories_controls" class="clearfix" style="display:none;">
+		<p class="note">
+			<%= button_link_to_function "Reorder categories&nbsp;", "$(this).toggleClassName('selected')", :class=>"tab-b pill-l" %><%= button_link_to_function "Edit category list&nbsp;", "$(this).toggleClassName('selected')", :class=>"tab-b pill-r" %>
+		</p>
+		<p>
+		<%= #Be sure to include @article.id in call to Section.new to ensure that the article is available for reloading the article/sorting list
+			button_link_to_remote 	"New category?", 
+							:url => new_account_category_path(@account, :format=>:js, :article_id=>@article.id), 
+							:method => :get, :html=>{:class=>"small"} %>
+		</p>
+		 <div id="new_account_category" style="display:none;">&nbsp;</div>
+	</div>
 </div>
