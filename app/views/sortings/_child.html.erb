@@ -5,9 +5,7 @@
 		<% checked = @article.categories.member?(child) ? true : false -%>
 		<%= check_box_tag("article_category_" + child.id.to_s, child.id.to_s, checked, options) %>
 		<%= label_tag "article_category_#{child.id.to_s}", child.name, :class => "selectable"  %>
-		<% unless child.children.empty? %>
 			<ul>
 				<%= render :partial => 'child', :collection => child.children %>
 			</ul>
-		<% end %>
 </li>

@@ -62,7 +62,7 @@
 					<p>
 						Last saved<br /><span id="last_saved" style="color:green;"><%= time_ago_in_words(@article.updated_at) %> ago</span>
 					</p>
-		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"large primary") -%>
+		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"large save") -%>
 				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - article tools -->

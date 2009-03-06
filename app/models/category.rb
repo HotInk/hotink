@@ -7,7 +7,11 @@ class Category < ActiveRecord::Base
   belongs_to :parent, :class_name => "Category"
   has_many :children, :class_name => "Category", :foreign_key=>:parent_id
   
-  acts_as_list :scope=>:account
+  acts_as_list
+    
+  def scope_condition
+      "account_id = #{account_id} AND parent_id = #{(parent_id.nil? ? "NULL" : parent_id)}"
+  end
   
   #Callbacks
   before_destroy :orphan_child_categories  

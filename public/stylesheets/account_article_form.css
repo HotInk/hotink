@@ -72,7 +72,7 @@ html[xmlns] .clearfix{display:block;}
 /* Start custom button CSS here
 ---------------------------------------- */
 .btn {
-     display:inline-block;
+     display:inline-block !important;
      background:none;
      margin:0;
      padding:3px 0;
@@ -172,6 +172,36 @@ html[xmlns] .clearfix{display:block;}
      font-weight:bold;
      color:#000;
      }
+	
+	/* Save buttons use a blue background, as opposed to a grey one.*/
+	.save {
+		color: #FFF;
+	}
+	.save:hover span, .save:hover span span, .save:focus span, .save:focus span span  {
+		color: #CCC;
+	}
+	.save:active span {
+     background-position:0 -398px;
+     outline:none;
+     }
+	.save span{
+		background:#699DE3 url(/bg-button-blue.gif) repeat-x 0 0;
+	}
+	
+	/* Cancel buttons use a red background, as opposed to a grey one.*/
+	.cancel {
+		color: #FFF;
+	}
+	.cancel:hover span, .cancel:hover span span, .cancel:focus span, .cancel:focus span span{
+		color: #CCC;
+	}
+	.cancel:active span   {
+	 color: #FFF;
+     outline:none;
+     }
+	.cancel span{
+		background:#E62424 url(/bg-button-red.gif) repeat-x 0 -1px;
+	}
 	
 	.selected span {
 		color:#FFF;
@@ -340,18 +370,21 @@ html[xmlns] .clearfix{display:block;}
 }
 
 /* Sorting forms styles*/
-
 #account_article_sorting_list button.categories_edit_tab{margin-left:208px; }
 #account_article_sorting_list div#categories_list { border: 1px solid #AAA; width: 240px; }
+#account_article_sorting_list #hidden_categories_buttons { padding: 2px; text-align: right; background-color: #DEDEDE; border-bottom: 1px solid #9cf;}
 #account_article_sorting_list #categories_controls { margin-left: 3px;  }
-#account_article_sorting_list ul { list-style: none;overflow: auto; margin: 0; padding: 0; font-size:12px;}
 #account_article_sorting_list ul#categories_sort{ max-height: 180px; }
-#account_article_sorting_list .parent{ margin: 2px; padding: 0; }
-#account_article_sorting_list li{ margin: 1px 0px;}
-#account_article_sorting_list ul ul li{ margin: 1px 0px 1px 1em;}
 #account_article_sorting_list .text_input { font-size: 13px; width: 98%; height: 16px;}
-#account_article_sorting_list .printsection label{ background-color: #EDEE9F; padding: 0px 3px; }
-
+#account_article_sorting_list label{ color: #3399DE; padding: 0px 3px; }
+#account_article_sorting_list .printsection label { color:#333; }
+#account_article_sorting_list #categories_sort label { cursor: move;}
+#account_article_sorting_list #categories_sort { margin-top: 5px; padding-left: 0px; list-style-type: none; cursor: move; } 
+#account_article_sorting_list #categories_sort ul { padding-left: 20px; list-style-type: none; cursor: move; }
+#account_article_sorting_list #categories_sort .drop_hover { background: url('/drag.png') no-repeat bottom left; }
+#account_article_sorting_list #categories_sort .drop_top {	background-position: top left; }
+#account_article_sorting_list #categories_sort .drop_bottom { background-position: bottom left; }
+#account_article_sorting_list #categories_sort .drop_insert { background-position: 65px 100%; }
 
 /* Tool box styles */
 

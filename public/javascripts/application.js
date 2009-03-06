@@ -57,15 +57,24 @@ var swap = function(element1, element2, toggle){
 // This is 100% custom functionality. It would probably be worthwhile to abstract it, though.
 
 var categories_editing = false;
-
+var categories_tree = {};
 var load_category_edit = function(){
 	
 	if (categories_editing) {
-		Sortable.destroy('categories_sort');
+		categories_tree.setUnsortable();
+		$('account_article_sorting_list').select('ul').each( function(cl){ cl.setStyle({cursor: 'default'}) });
+		new Effect.SlideUp($('hidden_categories_buttons'), {duration:0.1});
 		$('categories_list').select('input').each( function (inp){ inp.setStyle({opacity:1.0}); inp.enable(); });
 		categories_editing = false;
 	} else {
-		Sortable.create('categories_sort', { tree: true });
+		$('account_article_sorting_list').select('ul').each( function(cl){ cl.setStyle({cursor: 'move'}) });
+		new Effect.SlideDown($('hidden_categories_buttons'), {duration:0.1});
+		categories_tree = new SortableTree('categories_sort', {
+			onDrop: function(drag, drop, event){
+	      			$('account_categories_order').value = ($('account_categories_order').value + "&" + drag.to_params());
+	    			}
+	  	});
+		categories_tree.setSortable();
 		$('categories_list').select('input').each( function (inp){ inp.setStyle({opacity:0.0}); inp.disable(); });
 		categories_editing = true;
 	}

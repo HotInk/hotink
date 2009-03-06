@@ -1,11 +1,12 @@
 <div id="account_article_sorting_list">
-	<%= button_link_to_function "Edit", "swap($(this.parentNode).childElements()[2], $(this.parentNode).childElements()[3], this);$(this).toggleClassName('selected');load_category_edit();", :class=>"tab-t categories_edit_tab" %>
+ 	<%= button_link_to_function "Edit", "swap($(this.parentNode).childElements()[2], $(this.parentNode).childElements()[3], this);$(this).toggleClassName('selected');load_category_edit();", :class=>"tab-t categories_edit_tab" %>
 	<div id="categories_list">
-		<ul id="categories_sort">
+		<div id="hidden_categories_buttons" style="display:none"><%= button_link_to_function "Save changes", "new Ajax.Request('#{edit_account_category_url(@account,@account.categories.find(:first))}', {parameters: $('account_categories_order').value})", :class=>"small save" %><span style="visbility:hidden;">&nbsp;&nbsp;</span><%= button_link_to_function "Cancel", "new Ajax.Request('#{account_article_sortings_url(@account, @article)}', {method:'get'}); categories_editing=false;", :class=>"small cancel" %></div>
+		<ul id="categories_sort" style="">
 			<%= render :partial=>"parent", :collection=>@account.categories.select{ |sec| sec.parent_id.nil? } %>
 		</ul>
 	</div>
-	<p class="note"><em>Print sections are highlighted.</em></p>
+	<p class="note"><em>Print sections shown in black.</em></p>
 	<div id="categories_controls" class="clearfix" style="display:none;">
 		<p class="note">
 			<%= button_link_to_function "Reorder categories&nbsp;", "$(this).toggleClassName('selected')", :class=>"tab-b pill-l" %><%= button_link_to_function "Edit category list&nbsp;", "$(this).toggleClassName('selected')", :class=>"tab-b pill-r" %>
@@ -18,4 +19,7 @@
 		</p>
 		 <div id="new_account_category" style="display:none;">&nbsp;</div>
 	</div>
+	<% remote_form_for (@account, :html=>{:style=>"display:none;"}) do |f| %>
+		<input type="hidden" id="account_categories_order" value="" name="account_categories_order" />
+	<% end %>
 </div>

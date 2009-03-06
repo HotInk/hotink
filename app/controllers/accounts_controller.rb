@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  skip_before_filter :find_account
+  skip_before_filter :find_accountLast year they had I heart BJs shirts
   
   # GET /accounts
   # GET /accounts.xml
