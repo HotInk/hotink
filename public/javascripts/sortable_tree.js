@@ -185,10 +185,15 @@ SortableTree.Node = Class.create({
   to_params: function(name) {
 		name = name || this.tree.element.id;
     var leftNode = this.previousSibling();
-    return name + '[' + this.id() + '][parent_id]=' + this.parent.id() + '&' + 
+	return name + '[' + this.id() + '][parent_id]=' + this.parent.id() + '&' + 
            name + '[' + this.id() + '][left_id]=' + (leftNode ? leftNode.id() : ''); // null
   },
   
+  to_nested_form_element: function(attr_name) {
+	var el_name = 'account[categories_attributes][' + this.id() + '][' + attr_name + ']';
+	return Builder.node('input', {'type': 'hidden', name: el_name, id: el_name.replace(/\]\[|\[|\]/g, "_").replace(/_$/, "" )});
+  },
+
   firstChild: function() {
     return this.children.length > 0 ? this.children[0] : null;
   },

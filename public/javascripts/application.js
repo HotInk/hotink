@@ -54,30 +54,62 @@ var swap = function(element1, element2, toggle){
 }
 
 // Load category edit functionality
-// This is 100% custom functionality. It would probably be worthwhile to abstract it, though.
+// This is 100% custom functionality and it's pretty complex. 
+// It will probably be worthwhile to abstract it as a control, but that'll be a huge job.
+// TODO: Abstract category edit functionality for general use as a list/tree-list edit control
 
 var categories_editing = false;
 var categories_tree = {};
 var load_category_edit = function(){
 	
 	if (categories_editing) {
+		// Hide edit buttons
+		$('categories_list').select('li').each(function (item){ item.childElements()[1].childElements()[1].setStyle({visibility:'hidden'})});
+		
 		categories_tree.setUnsortable();
-		$('account_article_sorting_list').select('ul').each( function(cl){ cl.setStyle({cursor: 'default'}) });
 		new Effect.SlideUp($('hidden_categories_buttons'), {duration:0.1});
 		$('categories_list').select('input').each( function (inp){ inp.setStyle({opacity:1.0}); inp.enable(); });
 		categories_editing = false;
 	} else {
-		$('account_article_sorting_list').select('ul').each( function(cl){ cl.setStyle({cursor: 'move'}) });
 		new Effect.SlideDown($('hidden_categories_buttons'), {duration:0.1});
+		
+		//Make edit buttons visible
+		$('categories_list').select('li').each(function (item){ item.childElements()[1].childElements()[1].setStyle({visibility:'visible'})});
+		
+		//  Build SortableTree from elements.
 		categories_tree = new SortableTree('categories_sort', {
 			onDrop: function(drag, drop, event){
-	      			$('account_categories_order').value = ($('account_categories_order').value + "&" + drag.to_params());
+					
+					//Count upwards looking for siblings until we hit null, that's our drop point.
+					var drop_position = 1;
+					var root_node_check = drag.previousSibling();	
+					while (root_node_check!=null){
+						root_node_check = root_node_check.previousSibling();
+						drop_position++;
+					}
+					
+					var hidden_parent_id = drag.to_nested_form_element("parent_id").writeAttribute('value', (drag.parent.id()=='null' ? "" : drag.parent.id()) );
+					var hidden_position = drag.to_nested_form_element("position").writeAttribute('value', drop_position );
+					
+					// If elements with match ids are on the page, toss em
+					if ($(hidden_parent_id.id)) $(hidden_parent_id.id).remove();
+					if ($(hidden_position.id)) $(hidden_position.id).remove();
+					
+					$('account_categories_edit_form').insert(hidden_parent_id);
+					$('account_categories_edit_form').insert(hidden_position);
+					
 	    			}
 	  	});
 		categories_tree.setSortable();
-		$('categories_list').select('input').each( function (inp){ inp.setStyle({opacity:0.0}); inp.disable(); });
+		$('categories_list').select('input[type=\'checkbox\']').each( function (inp){ inp.setStyle({opacity:0.6}); inp.disable(); });
 		categories_editing = true;
 	}
+}
+
+var create_category_name_nmfe = function(category_id, name_element) {
+	var el_name = 'account[categories_attributes][' + category_id + '][name]';
+ 	var hidden_name = Builder.node('input', {'type': 'hidden', name: el_name, id: el_name.replace(/\]\[|\[|\]/g, "_").replace(/_$/, "" )}).writeAttribute('value', $F(name_element));
+	$('account_categories_edit_form').insert(hidden_name);
 }
 
 

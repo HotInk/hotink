@@ -5,7 +5,7 @@ class Account < ActiveRecord::Base
   has_many :images
   has_many :articles, :dependent => :delete_all  
   has_many :authors, :dependent => :delete_all
-  has_many :categories, :dependent => :delete_all
+  has_many :categories, :order => "position", :dependent => :delete_all
   has_many :sections, :dependent => :delete_all
   has_many :issues, :dependent => :delete_all, :order => "date"
   
@@ -15,6 +15,8 @@ class Account < ActiveRecord::Base
   has_many :printings, :dependent => :delete_all
   has_many :sortings, :dependent => :delete_all
   has_many :waxings, :dependent => :delete_all
+  
+  accepts_nested_attributes_for :categories
   
   #Implement acts_as_taggable_on
   acts_as_tagger

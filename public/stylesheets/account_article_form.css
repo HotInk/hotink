@@ -229,11 +229,19 @@ html[xmlns] .clearfix{display:block;}
 	line-height: 1;
   }
 
+  .small span{
+	background-position: 0px -3px;
+  }
+
   .tiny {
 	font-size: 9px;
 	line-height: 1;
   }
 
+  .micro {
+	font-size: 8px;
+	line-height: 1em;
+  }
 
 
 /* Form style */
@@ -372,15 +380,17 @@ html[xmlns] .clearfix{display:block;}
 /* Sorting forms styles*/
 #account_article_sorting_list button.categories_edit_tab{margin-left:208px; }
 #account_article_sorting_list div#categories_list { border: 1px solid #AAA; width: 240px; }
-#account_article_sorting_list #hidden_categories_buttons { padding: 2px; text-align: right; background-color: #DEDEDE; border-bottom: 1px solid #9cf;}
+#account_article_sorting_list #hidden_categories_buttons { width:236px; padding: 4px 2px; text-align: right; background-color: #DEDEDE; border-bottom: 1px solid #9cf;}
 #account_article_sorting_list #categories_controls { margin-left: 3px;  }
-#account_article_sorting_list ul#categories_sort{ max-height: 180px; }
+#account_article_sorting_list ul#categories_sort{  max-height: 180px; overflow:auto; margin:0;}
 #account_article_sorting_list .text_input { font-size: 13px; width: 98%; height: 16px;}
 #account_article_sorting_list label{ color: #3399DE; padding: 0px 3px; }
 #account_article_sorting_list .printsection label { color:#333; }
-#account_article_sorting_list #categories_sort label { cursor: move;}
-#account_article_sorting_list #categories_sort { margin-top: 5px; padding-left: 0px; list-style-type: none; cursor: move; } 
-#account_article_sorting_list #categories_sort ul { padding-left: 20px; list-style-type: none; cursor: move; }
+#account_article_sorting_list #categories_sort { margin-top: 5px; padding-left: 0px; list-style-type: none; } 
+#account_article_sorting_list #categories_sort input[type='text'] { width: 100px;}
+#account_article_sorting_list #categories_sort input[type='checkbox'] { padding: 1px 0px;}
+#account_article_sorting_list #categories_sort ul { padding-left: 20px; list-style-type: none; }
+#account_article_sorting_list #categories_list ul div {display:inline-block;} 
 #account_article_sorting_list #categories_sort .drop_hover { background: url('/drag.png') no-repeat bottom left; }
 #account_article_sorting_list #categories_sort .drop_top {	background-position: top left; }
 #account_article_sorting_list #categories_sort .drop_bottom { background-position: bottom left; }

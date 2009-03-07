@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  skip_before_filter :find_accountLast year they had I heart BJs shirts
+  skip_before_filter :find_account
   
   # GET /accounts
   # GET /accounts.xml
@@ -65,6 +65,7 @@ class AccountsController < ApplicationController
       if @account.update_attributes(params[:account])
         flash[:notice] = 'Account was successfully updated.'
         format.html { redirect_to(@account) }
+        format.js { head :ok } #The categories-list on the article form posts here. This is it's js. 
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
