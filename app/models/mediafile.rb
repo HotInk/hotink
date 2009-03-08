@@ -1,3 +1,12 @@
+# Mediafile is an easy class to extend. But, if you do, rememeber to add support in:
+#  - _edit_media_form.html.erb
+#  - appropriate partial in app/views/mediafiles
+#  - appropriate display selector in _article_mediafiles.html.erb
+#  - appropriate create selector in mediafiles_controller.rb
+# 
+# If support inserted in those for places, in addition to a new model file, it should
+# work just fine.
+
 class Mediafile < ActiveRecord::Base
   belongs_to :account
   
@@ -13,41 +22,10 @@ class Mediafile < ActiveRecord::Base
   accepts_nested_attributes_for :photocredits, :allow_destroy => true
   
   has_attached_file :file,
-      :styles => {
-        :system_thumb=> ["100>", 'jpg'],
-        :thumb  => Proc.new { |instance| instance.settings["thumb"].to_s },
-        :small => Proc.new { |instance| instance.settings["small"].to_s },
-        :medium => Proc.new { |instance| instance.settings["medium"].to_s },
-        :system_default => ["400>", 'jpg'],
-        :large => Proc.new { |instance| instance.settings["large"].to_s }
-      },
-      :convert_options => {
-        :all => "-colorspace RGB -strip -quality 80"
-      },
-      :default_style => :system_default,
       :path => ":rails_root/public/system/:class/:id_partition/:basename_:style.:extension",
       :url => "/system/:class/:id_partition/:basename_:style.:extension"
+  
       
-  validates_attachment_presence :file
-  validates_attachment_content_type :file, :content_type => ['image/jpeg', 'image/pjpeg', 'image/jpg', 'image/png']
-  
-  # Default settings
-  # Currently, this needs improvement. Right now these images are processed
-  def settings
-       default_settings = {
-        "thumb" => ['100>', 'jpg'],
-        "small" => ['250>', 'jpg'],
-        "medium" => ['440>', 'jpg'],
-        "large" => ['800>', 'jpg']
-        }
-    if self.account
-      default_settings.merge!(self.account.settings["image"]) if self.account.settings["image"] if self.account.settings
-      return default_settings
-    else
-      return default_settings 
-    end
-  end
-  
   def new_authors_list
     return ""
   end

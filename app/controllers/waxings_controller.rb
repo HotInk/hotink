@@ -82,10 +82,13 @@ class WaxingsController < ApplicationController
   # DELETE /waxings/1
   # DELETE /waxings/1.xml
   def destroy
-    @waxing = Waxing.find(params[:id])
+    @waxing = @account.waxings.find(params[:id])
     @waxing.destroy
 
     respond_to do |format|
+      if @article = find_article && @article == @waxing.article
+        format.js { head :ok }
+      end
       format.html { redirect_to(waxings_url) }
       format.xml  { head :ok }
     end

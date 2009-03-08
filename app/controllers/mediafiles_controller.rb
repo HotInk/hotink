@@ -56,10 +56,19 @@ class MediafilesController < ApplicationController
   # POST /mediafiles
   # POST /mediafiles.xml
   def create
-    @mediafile = @account.mediafiles.build(params[:mediafile])
-
+    
+    # Catch various content types and build the appropriate media type
+    case params[:mediafile][:file].content_type
+    # Images
+    when %r"jpe?g", %r"tiff?", %r"png", %r"gif", %r"bmp"    then @mediafile = @account.images.build(params[:mediafile])
+    # mp3s/Audiofiles
+    when  %r"audio\/mpeg"                                   then @mediafile = @account.audiofiles.build(params[:mediafile])
+    # Catch-all for generic file attachments
+    else @mediafile = @account.mediafiles.build(params[:mediafile])
+    end
+    logger.info("[massdata] -> Before save: #{@mediafile.inspect.to_s}")
     respond_to do |format|
-      if @mediafile.save
+      if @mediafile.save!
         #Special behaviour to mimic ajax file-upload
         if @article = find_article
           @waxing = @account.waxings.create(:article_id => @article.id, :mediafile_id=> @mediafile.id);
@@ -74,7 +83,8 @@ class MediafilesController < ApplicationController
         format.html { redirect_to(@mediafile) }
         format.xml  { render :xml => @mediafile, :status => :created, :location => @mediafile }
       else
-        format.html { render :action => "new" }
+        format.html { head :bad_request }
+        format.js { head :bad_request }
         format.xml  { render :xml => @mediafile.errors, :status => :unprocessable_entity }
       end
     end

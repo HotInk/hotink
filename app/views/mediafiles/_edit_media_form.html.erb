@@ -1,9 +1,22 @@
 <div id="edit_media_form">
-		<p class="large">Edit image details</p>
-		<% form_for [@account, @article, @mediafile], :html=>{:multipart=>true, :target=>"upload_frame", :onsubmit => "article_form_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
+		<p class="large">Edit media details</p>
+		<% form_for :mediafile, :url => account_article_mediafile_url(@account, @article, @mediafile),  :html=>{:method=>:put, :multipart=>true, :target=>"upload_frame", :onsubmit => "article_form_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
 	 	<%= f.error_messages %>
-	  	<div class="image_matte">
-			<%= image_tag(@mediafile.file.url) %>
+	  	<div class="media_matte">
+			<% if @mediafile.is_a? Image %>
+				<%= image_tag(@mediafile.file.url) %>
+			<% elsif @mediafile.is_a? Audiofile %>
+				<p><strong><%= @mediafile.file_file_name %></strong></p>
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="400" height="50" id="audiofile_<%= @mediafile.id %>_edit_player" align="" class="clearfix">
+				 <param name=movie value="/niftyplayer.swf?file=<%= @mediafile.file.url %>&as=0">
+				 <param name="quality" value="high">
+				 <param name="bgcolor" value="#FFFFFF">
+				 <embed src="/niftyplayer.swf?file=<%= @mediafile.file.url %>&as=0" quality="high" bgcolor="#FFFFFF" width="400" height="50" name="audiofile_<%= @mediafile.id %>_edit_player" align="left" type="application/x-shockwave-flash" swLiveConnect="true" pluginspage="http://www.macromedia.com/go/getflashplayer">
+				</embed>
+				</object>
+			<% else %>
+				<p style="margin-left:10px;"><%= image_tag("/file.png", :align=>"left", :style=>"border:none;") %>&nbsp;&nbsp;<strong><%= @mediafile.file_content_type %></strong></p><p style="margin-left:30px;"><%= @mediafile.file_file_name %></p>
+			<% end %>
 	  	</div>
 		<p><%= label_tag 'mediafile[new_authors_list]', 'Photocredits' %></p>	
 		<div id="photocredits_form" class="clearfix tokenizer text_input" onclick="$('mediafile_new_authors_list').focus()">

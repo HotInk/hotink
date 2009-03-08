@@ -1,2 +1,4 @@
-class Audiofile < Attachment
+class Audiofile < Mediafile
+  
+  
 end

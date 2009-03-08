@@ -17,18 +17,22 @@ class Image < Mediafile
       :url => "/system/:class/:account/:id_partition/:basename_:style.:extension"
       
   validates_attachment_presence :file
-  validates_attachment_content_type :file, :content_type => ['image/jpeg', 'image/pjpeg', 'image/jpg', 'image/png']
   
-  #Default settings
-  def settings 
-    default_settings = {
-    "thumb" => ['100>', 'jpg'],
-    "small" => ['250>', 'jpg'],
-    "medium" => ['440>', 'jpg'],
-    "large" => ['800>', 'jpg']
-    }
-    default_settings.merge!(self.account.settings["image"]) if self.account.settings["image"] if self.account.settings
-    default_settings
+  # Default settings
+  # Right now these image sizes are processed automatically.
+  def settings
+       default_settings = {
+        "thumb" => ['100>', 'jpg'],
+        "small" => ['250>', 'jpg'],
+        "medium" => ['440>', 'jpg'],
+        "large" => ['800>', 'jpg']
+        }
+    if self.account
+      default_settings.merge!(self.account.settings["image"]) if self.account.settings["image"] if self.account.settings
+      return default_settings
+    else
+      return default_settings 
+    end
   end
   
   

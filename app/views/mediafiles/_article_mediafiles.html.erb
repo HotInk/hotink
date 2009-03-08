@@ -4,15 +4,14 @@
 		No media attached.
 	</p>
 <% else %>
-	<% for mediafile in @mediafiles %>  
-	<div class="token" href="#" onclick="return false;">
-	  	  <span class="x" onclick="new Effect.Fade($(this.parentNode)); return false;" onmouseover="this.className='x_hover'" onmouseout="this.className='x'">&nbsp;</span>
-		  <%= link_to_remote image_tag(mediafile.file.url(:system_thumb), :align=>"right"), :url=>edit_account_article_mediafile_url(@account, @article, mediafile, :format=>:js), :method=>:get %>
-		<div id="waxing-<%= mediafile.waxings[0].id %>">
-			  <p><strong>Caption:</strong></p>
-			  <p><%= link_to_remote ((mediafile.waxings[0].caption.nil? || mediafile.waxings[0].caption.strip =="" ) ? "[Click here to add a caption]" : mediafile.waxings[0].caption), :url=>edit_account_article_waxing_url(@account, @article, mediafile.waxings[0]), :method=>:get %></p>
-		</div>
-	</div>
+	<% for mediafile in @mediafiles %> 
+		<% if mediafile.is_a? Image %>
+			<%= render :partial=>'image', :object=> mediafile %>
+		<% elsif mediafile.is_a? Audiofile %>
+			<%= render :partial=>'audiofile', :object=> mediafile %>
+		<% else%>
+			<%= render :partial=>'mediafile', :object=> mediafile %>
+		<% end %>
 	<% end %>
 <% end %>
 <%= button_link_to_remote "Attach Media", :url=>new_account_article_mediafile_url(@account, @article, :format=>:js), :method=>:get %>

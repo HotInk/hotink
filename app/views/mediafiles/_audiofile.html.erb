@@ -1,0 +1,17 @@
+<div class="token" href="#" onclick="return false;">
+	  <span class="x" onclick="<%=remote_function(:url=>account_article_waxing_url(@account, @article, audiofile.waxings[0]), :method=>:delete, :confirm=>"Are you sure you want to detach this media?\n\nAny caption saved with this article will be lost, though you'll still be able to find the media in your archive.", :after=>"new Effect.Fade($(this.parentNode));", :complete=>"new Ajax.Request('#{ account_article_mediafiles_url(@account, @article, :format=>:js) }', {method:'get'});" ) %>; return false;" onmouseover="this.className='x_hover'" onmouseout="this.className='x'">&nbsp;</span>
+	<div style="width:210px;background-color:#FFF;border: 1px solid #AAA;padding:3px;margin-bottom:3px;">
+		<p><%= link_to_remote "<strong>#{audiofile.file_file_name}</strong>", :url=>edit_account_article_mediafile_url(@account, @article, audiofile, :format=>:js), :method=>:get, :html=>{:style=>"cursor:pointer;"} %></p>
+		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="204" height="37" id="audiofile_<%= audiofile.id %>_player" align="" class="clearfix">
+		 <param name=movie value="/niftyplayer.swf?file=<%= audiofile.file.url %>&as=0">
+		 <param name="quality" value="high">
+		 <param name="bgcolor" value="#FFFFFF">
+		 <embed src="/niftyplayer.swf?file=<%= audiofile.file.url %>&as=0" quality="high" bgcolor="#FFFFFF" width="204" height="37" name="audiofile_<%= audiofile.id %>_player" align="left" type="application/x-shockwave-flash" swLiveConnect="true" pluginspage="http://www.macromedia.com/go/getflashplayer">
+		</embed>
+		</object>
+	</div>
+	<div id="waxing-<%= audiofile.waxings[0].id %>">
+		  <p><strong>Caption:</strong></p>
+		  <p><%= link_to_remote ((audiofile.waxings[0].caption.nil? || audiofile.waxings[0].caption.strip =="" ) ? "[Click here to add a caption]" : audiofile.waxings[0].caption), :url=>edit_account_article_waxing_url(@account, @article, audiofile.waxings[0]), :method=>:get %></p>
+	</div>
+</div>
