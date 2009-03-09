@@ -94,11 +94,17 @@ Overlay = Class.create({
 			//If there are images, attach the animation to the loading of the last image.
 			//If there are no images, animate away.
 			if (image) {
-				image.onload = (function(){
-					var dimensions = this.overlay_content.getDimensions();
-					//showContent() is called at the end of resizeContainer()
-					this.resizeContainer(dimensions.width, dimensions.height);
-		        }).bind(this);
+				if(Prototype.Browser.Opera){
+						var dimensions = this.overlay_content.getDimensions();
+						//showContent() is called at the end of resizeContainer()
+						this.resizeContainer(dimensions.width, dimensions.height);
+				} else {
+					image.onload = (function(){
+						var dimensions = this.overlay_content.getDimensions();
+						//showContent() is called at the end of resizeContainer()
+						this.resizeContainer(dimensions.width, dimensions.height);
+			        }).bind(this);
+				}
 			} else {
 				var dimensions = this.overlay_content.getDimensions();
 				//showContent() is called at the end of resizeContainer()
@@ -160,7 +166,6 @@ Overlay = Class.create({
     // 
     //
     resizeContainer: function(contentWidth, contentHeight) {
-
         // get current width and height
         var dimensions = this.overlay_container.getDimensions();
         var widthCurrent  = dimensions.width;
