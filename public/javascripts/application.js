@@ -14,6 +14,16 @@ if (theField.value == '')
 theField.value = theField.defaultValue;
 }
 
+// The hack below fixs a browser incosistency with button display.
+// Firefox adds 3px margin to the left and right, we need to knock it
+// off to match other browsers' display style.
+//
+// Call this after the page loads buttons
+var load_button_fix = function () {
+	if(Prototype.Browser.Gecko) $$('button').each(function(bt){bt.setStyle({margin: "0 -3px"});});
+}
+
+
 //Article form nested object creation code
 
 var new_sorting_count = 1;

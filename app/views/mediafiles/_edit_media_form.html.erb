@@ -1,52 +1,76 @@
-<div id="edit_media_form">
-		<p class="large">Edit media details</p>
-		<% form_for :mediafile, :url => account_article_mediafile_url(@account, @article, @mediafile),  :html=>{:method=>:put, :multipart=>true, :target=>"upload_frame", :onsubmit => "article_form_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
-	 	<%= f.error_messages %>
-	  	<div class="media_matte">
-			<% if @mediafile.is_a? Image %>
-				<%= image_tag(@mediafile.file.url) %>
-			<% elsif @mediafile.is_a? Audiofile %>
-				<p><strong><%= @mediafile.file_file_name %></strong></p>
-				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="400" height="50" id="audiofile_<%= @mediafile.id %>_edit_player" align="" class="clearfix">
-				 <param name=movie value="/niftyplayer.swf?file=<%= @mediafile.file.url %>&as=0">
-				 <param name="quality" value="high">
-				 <param name="bgcolor" value="#FFFFFF">
-				 <embed src="/niftyplayer.swf?file=<%= @mediafile.file.url %>&as=0" quality="high" bgcolor="#FFFFFF" width="400" height="50" name="audiofile_<%= @mediafile.id %>_edit_player" align="left" type="application/x-shockwave-flash" swLiveConnect="true" pluginspage="http://www.macromedia.com/go/getflashplayer">
-				</embed>
-				</object>
-			<% else %>
-				<p style="margin-left:10px;"><%= image_tag("/file.png", :align=>"left", :style=>"border:none;") %>&nbsp;&nbsp;<strong><%= @mediafile.file_content_type %></strong></p><p style="margin-left:30px;"><%= @mediafile.file_file_name %></p>
-			<% end %>
-	  	</div>
-		<p><%= label_tag 'mediafile[new_authors_list]', 'Photocredits' %></p>	
-		<div id="photocredits_form" class="clearfix tokenizer text_input" onclick="$('mediafile_new_authors_list').focus()">
-		    <span class="tokenizer_stretcher">^_^</span>
-			<span class="tab_stop">
-				<input type="text" id="media_hidden_input" tabindex="-1" />
-			</span>
-		    <div id="media_autocomplete_display" class="tokenizer_input">
-				<%= text_field_tag 'mediafile[new_authors_list]', '' %>
-		    </div>
-		</div>
-		<div id="media_autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10; width: 450px; height: auto; overflow-y: hidden;display:none"> </div>
-			<script type="text/javascript">
-		    var photocredit_list = new Autocompleter.LocalTokenizer('mediafile_new_authors_list', 'media_autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
-			        frequency: 0.1,
-					parent_model: "mediafile",
-			        search_field: "name",
-					search_model: "author",
-					search_join_model: "photocredit",
-					search_join_models: "photocredits",
-					text_field_width: 375,
-					token_delimiter: /, and | and |,/,
-					saved_token_join_json: <%= @mediafile.photocredits.to_json(:include=>:author, :only=>[:name, :id]) %>,
-					hidden_input_id: 'media_hidden_input',
-					onNewToken: createNewAuthor
-			    });
-			</script>
-		<p>
-	  		<%= button_link_to_submit "Save changes" %>
-		</p>
+<div id="edit_media_container" class="clearfix">
+	<div id="edit_media_form">
+		  	<div id="media_matte" class="clearfix">
+				<% if @mediafile.is_a? Image %>
+					<% form_labels = {:form_label => "Edit image details", :credits_label => "Image credits", :title_label => "Title"} %>
+					<%= image_tag(@mediafile.file.url) %>
+				<% elsif @mediafile.is_a? Audiofile %>
+					<% form_labels = {:form_label => "Edit mp3 details", :credits_label => "Audio credits", :title_label => "mp3 title"} %>
+					<p><strong><%= @mediafile.file_file_name %></strong></p>
+					<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="400" height="50" id="audiofile_<%= @mediafile.id %>_edit_player" align="" class="clearfix">
+					 <param name=movie value="/niftyplayer.swf?file=<%= @mediafile.file.url %>&as=0">
+					 <param name="quality" value="high">
+					 <param name="bgcolor" value="#FFFFFF">
+					 <embed src="/niftyplayer.swf?file=<%= @mediafile.file.url %>&as=0" quality="high" bgcolor="#FFFFFF" width="400" height="50" name="audiofile_<%= @mediafile.id %>_edit_player" align="left" type="application/x-shockwave-flash" swLiveConnect="true" pluginspage="http://www.macromedia.com/go/getflashplayer">
+					</embed>
+					</object>
+				<% else %>
+					<% form_labels = {:form_label => "Edit attached file details", :credits_label => "Media credits", :title_label => "Media title"} %>
+					<p style="margin-left:10px;"><%= image_tag("/file.png", :align=>"left", :style=>"border:none;") %>&nbsp;&nbsp;<strong><%= @mediafile.file_content_type %></strong></p><p style="margin-left:30px;"><%= @mediafile.file_file_name %></p>
+				<% end %>
+		  	</div>
+			<div id="media_details" class="clearfix">
+				<% form_for :mediafile, :url => account_article_mediafile_url(@account, @article, @mediafile),  :html=>{:method=>:put, :multipart=>true, :target=>"upload_frame", :onsubmit => "article_form_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
+			 	<%= f.error_messages %>
+				<p style="text-align:right;margin-top:0;">
+			  		<%= button_link_to_submit "Save changes", :class=>"save pill-l", :id=>"media_save_changes" %><%= button_link_to_function "Cancel", "article_form_overlay.end();", :class=>"cancel pill-r"%>
+				</p>
+				<h4><%= form_labels[:form_label] %></h4>
+				<p><%= f.label :title, form_labels[:title_label] %><br />
+					<%= f.text_field :title, :class=>"text_input" %>
+				</p>
+				<p>
+			    	<%= f.label :date %>&nbsp;<%= f.unobtrusive_date_text_picker :date, {:format => "M-D-Y"}, :class => "text_input", :size => "10" %>
+			  	</p>
+				<p><%= f.label :description %><br />
+					<%= f.text_area :description, :class=>"text_input" %>
+				</p>
+				<p style="margin-bottom:3px;"><%= label_tag 'mediafile[new_authors_list]',  form_labels[:credits_label] %></p>
+				<div id="photocredits_form" class="clearfix tokenizer text_input" onclick="$('mediafile_new_authors_list').focus()">
+				    <span class="tokenizer_stretcher">^_^</span>
+					<span class="tab_stop">
+						<input type="text" id="media_hidden_input" tabindex="-1" />
+					</span>
+				    <div id="media_autocomplete_display" class="tokenizer_input">
+						<%= text_field_tag 'mediafile[new_authors_list]', '' %>
+				    </div>
+				</div>
+				<div id="media_autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10; width: 450px; height: auto; overflow-y: hidden;display:none"> </div>
+					<script type="text/javascript">
+				    var photocredit_list = new Autocompleter.LocalTokenizer('mediafile_new_authors_list', 'media_autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
+					        frequency: 0.1,
+							parent_model: "mediafile",
+					        search_field: "name",
+							search_model: "author",
+							search_join_model: "photocredit",
+							search_join_models: "photocredits",
+							text_field_width: 280,
+							token_delimiter: /, and | and |,/,
+							saved_token_join_json: <%= @mediafile.photocredits.to_json(:include=>:author, :only=>[:name, :id]) %>,
+							hidden_input_id: 'media_hidden_input',
+							onNewToken: createNewAuthor
+					    });
+					</script>
+				</div>
+				<% end %>
+				<div id="media_tags_form">
+					<script type="text/javascript" charset="utf-8">
+						new Ajax.Request('<%= new_account_mediafile_tag_url(@account, @mediafile, :format=>:js) %>', {method: 'get'});
+					</script>
+				</div>
+		</div>			
 	</div>
-<% end %>
 </div>
+<script type="text/javascript" charset="utf-8">
+	if(Prototype.Browser.Gecko) $$('button').each(function(bt){bt.setStyle({margin: "0 -3px"});});
+</script>

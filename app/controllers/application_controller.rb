@@ -34,5 +34,13 @@ class ApplicationController < ActionController::Base
         false
       end
     end
+    
+    def find_mediafile
+      if params[:mediafile_id]
+        @mediafile = @account.mediafiles.find(params[:mediafile_id])
+      else
+        false
+      end
+    end
   
 end

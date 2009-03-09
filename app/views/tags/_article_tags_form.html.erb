@@ -1,0 +1,14 @@
+<div id="article_tags_form">
+	<% form_remote_tag :url=>account_article_tags_url(@account, @article), :method => :post do -%>
+	<p>
+		<%= text_field_tag "new_tag_list", "Add tags here", :class=>"newtag text_input", :onclick=>"clearText(this)", :onblur=>"addText(this)" %>
+		<%= button_link_to_submit("Add") %>
+	</p>
+	<% end %>
+	<p class="note"><em>Separate tags with a comma</em></p>
+	<p>
+		<% for tag in @article.tags %>
+			<%= link_to_remote("x", :url=> account_article_tag_url(@account, @article, tag), :method => :delete) + "&nbsp;#{tag.name.sub(" ", "&nbsp;")}&nbsp;&nbsp;" %>
+		<% end %>
+	</p>
+</div>

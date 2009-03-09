@@ -1,2 +1,3 @@
 page.assign "mediafiles_overlay", render(:partial => 'edit_media_form')
 page << "article_form_overlay.render( mediafiles_overlay );"
+page.unobtrusive_date_picker_create('mediafile_date')

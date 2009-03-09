@@ -66,7 +66,7 @@ class MediafilesController < ApplicationController
     # Catch-all for generic file attachments
     else @mediafile = @account.mediafiles.build(params[:mediafile])
     end
-    logger.info("[massdata] -> Before save: #{@mediafile.inspect.to_s}")
+    @mediafile.date = Time.now
     respond_to do |format|
       if @mediafile.save!
         #Special behaviour to mimic ajax file-upload

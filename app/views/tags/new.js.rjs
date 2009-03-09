@@ -1,1 +1,5 @@
-page.replace 'tags_form', :partial => "tags_form"
+if @article
+  page.replace 'article_tags_form', :partial => "article_tags_form"
+elsif @mediafile
+  page.replace 'media_tags_form', :partial => "media_tags_form"
+end

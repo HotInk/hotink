@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-  before_filter :find_article
+  before_filter :find_article, :find_mediafile
   
   # GET /tags
   # GET /tags.xml
@@ -46,22 +46,31 @@ class TagsController < ApplicationController
     if params[:new_tag_list] then 
       
       #Besure that this submission isn't just the default input value in from standard tag form
-      unless params[:new_tag_list] =~ /Add tags here/ then
-        
+      unless params[:new_tag_list] =~ /Add tags here/ then      
+        #Check to see what sort of media we're tagging
+        if @article
+          tagged = @article
+        elsif @mediafile
+          tagged = @mediafile
+        end
+          
         #Behave differently depending on whether this article has any existing tags
-        if @article.tag_list
-          @article.tag_list = @article.tag_list.to_s + ", #{params[:new_tag_list]}"
+        if tagged.tag_list
+          tagged.tag_list = tagged.tag_list.to_s + ", #{params[:new_tag_list]}"
         else
-          @article.tag_list = params[:new_tag_list]
+          tagged.tag_list = params[:new_tag_list]
         end
       end
-      
         #Save article to commit tags
-        @article.save 
+        tagged.save 
     end
     
     respond_to do |format|
-        format.js   { redirect_to(new_account_article_tag_url(@account, @article, :format=>:js))}
+        if tagged.is_a? Article
+          format.js   { redirect_to(new_account_article_tag_url(@account, @article, :format=>:js))}
+        elsif tagged.is_a? Mediafile
+          format.js   { redirect_to(new_account_mediafile_tag_url(@account, @mediafile, :format=>:js))}
+        end
         format.xml  { render :xml => @tag, :status => :created, :location => @tag }
     end
   end

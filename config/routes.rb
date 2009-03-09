@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     account.resources :mediafiles do |mediafile|
       mediafile.resources :authors
+      mediafile.resources :tags
     end
     account.resources :authors
     account.resources :sections

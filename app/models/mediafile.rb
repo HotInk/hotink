@@ -21,6 +21,8 @@ class Mediafile < ActiveRecord::Base
   
   accepts_nested_attributes_for :photocredits, :allow_destroy => true
   
+  acts_as_taggable_on :tags
+  
   has_attached_file :file,
       :path => ":rails_root/public/system/:class/:id_partition/:basename_:style.:extension",
       :url => "/system/:class/:id_partition/:basename_:style.:extension"
