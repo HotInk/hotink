@@ -250,6 +250,16 @@ dl.faq dt {font-weight: bold;}
 	line-height: 1em;
   }
 
+/* Modal window styles */
+
+.window_label { margin: 0px -5px 10px -5px; height:30px; border-top:1px solid #699DE3; border-bottom:1px solid #699DE3; background-color: #432800; }
+.window_label div {float:left; width: 90%; font-size:16px; height:100%; padding: 0px 0px; margin: 0 0;}
+.window_label span { margin-left: 15px; height:20px; padding:7px 10px 3px 10px;font-weight: bold; display: inline-block; background-color: #FFF;}
+.window_label div a { color: #FFF; text-decoration: underline; }
+
+.close_button  { float: right; display: inline-block; margin: 5px 6px 7px 6px; padding: 0px 3px 3px 3px; text-decoration: none !important;line-height:14px; font-size: 14px; color: #FFF; background-color: #E62424; border: 1px solid #AAA;  }
+.close_button a { color: #FFF; }
+
 
 /* Form style */
 #page_container {
@@ -303,9 +313,10 @@ dl.faq dt {font-weight: bold;}
 #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
 #upload_media_form p { font-size: 13px; }
 
+
 /* Edit media styles 
 --------------------------------*/
-#edit_media_container { min-height: 50px; margin-bottom:0px; padding:5px;}
+#edit_media_container { min-height: 50px; margin-bottom:0px; padding:0px;}
 .image_container { width: 707px; }
 .mediafile_container { width: 315px;}
 #edit_media_form h4 { font-size: 18px; margin: 5px 0px; }
