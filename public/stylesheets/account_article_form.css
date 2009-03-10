@@ -306,18 +306,19 @@ dl.faq dt {font-weight: bold;}
 /* Edit media styles 
 --------------------------------*/
 #edit_media_container { min-height: 50px; margin-bottom:0px; padding:5px;}
-.image_container { width: 757px; }
+.image_container { width: 707px; }
 .mediafile_container { width: 315px;}
 #edit_media_form h4 { font-size: 18px; margin: 5px 0px; }
 #edit_media_form textarea { width:290px;height:40px;}
-#edit_media_form #media_details { width: 290px; float:left; margin: 0px 5px 0px 10px; }
+#edit_media_form #media_details { width: 290px; float:left; clear:right;margin: 0px 5px 0px 10px; }
 #edit_media_form #mediafile_title { width: 290px; font-size:14px;line-height:16px;}
-#edit_media_form #media_tags_form { float:right; width: 290px; padding: 2px 5px; margin: 5px 0px;}
+#edit_media_form #media_tags_form { float:left; width: 270px; padding: 2px 10px; margin: 5px 0px;}
 #edit_media_form #media_tags_form input { width:80%;}
 #edit_media_form #media_matte { float:left; margin: 0; padding:0; background-color: #CEE4F3; }
 #edit_media_form #media_matte img { border: 1px solid #AAA; }
 .mediafile_container #media_matte { width:100%; padding:5px;}
-#edit_media_form #media_matte div { padding:10px; margin-bottom:0;}
+.image_container #media_matte { width:402px;min-height:350px;text-align:center; padding:5px;}
+#edit_media_form #media_matte div { text-align:left; padding: 10px 10px; margin-bottom:0;}
 #edit_media_form #media_matte div p { margin: 5px 0px; font-size: 10px; }
 #mediafile_new_authors_list{ color: #555; width: 20px; border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;}
 /*IE6-/Win only*/

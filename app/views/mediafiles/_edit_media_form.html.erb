@@ -32,7 +32,7 @@
 			<div id="media_details" class="clearfix">
 				<% form_for :mediafile, :url => account_article_mediafile_url(@account, @article, @mediafile),  :html=>{:method=>:put, :multipart=>true, :target=>"upload_frame", :onsubmit => "article_form_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
 			 	<%= f.error_messages %>
-				<p style="text-align:right;margin-top:10px;">
+				<p style="text-align:right;margin-top:10px;margin-right:0;">
 			  		<%= button_link_to_submit "Save changes", :class=>"save pill-l", :id=>"media_save_changes" %><%= button_link_to_function "Cancel", "article_form_overlay.end();", :class=>"cancel pill-r"%>
 				</p>
 				<h4><%= form_labels[:form_label] %></h4>
@@ -55,7 +55,7 @@
 						<%= text_field_tag 'mediafile[new_authors_list]', '' %>
 				    </div>
 				</div>
-				<div id="media_autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10; width: 450px; height: auto; overflow-y: hidden;display:none"> </div>
+				<div id="media_autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10; width: 290px; height: auto; overflow-y: hidden;display:none"> </div>
 					<script type="text/javascript">
 				    var photocredit_list = new Autocompleter.LocalTokenizer('mediafile_new_authors_list', 'media_autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
 					        frequency: 0.1,

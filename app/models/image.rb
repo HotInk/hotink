@@ -6,7 +6,7 @@ class Image < Mediafile
         :thumb  => Proc.new { |instance| instance.settings["thumb"].to_s },
         :small => Proc.new { |instance| instance.settings["small"].to_s },
         :medium => Proc.new { |instance| instance.settings["medium"].to_s },
-        :system_default => ["450>", 'jpg'],
+        :system_default => ["400>", 'jpg'],
         :large => Proc.new { |instance| instance.settings["large"].to_s }
       },
       :convert_options => {
