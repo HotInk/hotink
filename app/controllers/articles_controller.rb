@@ -40,6 +40,8 @@ class ArticlesController < ApplicationController
       else
         @article.save
       end
+    else
+      @article.save
     end
     
     #Update the date
