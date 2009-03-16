@@ -22,6 +22,7 @@ class Account < ActiveRecord::Base
   #Implement acts_as_taggable_on
   acts_as_tagger
 
+  validates_presence_of :time_zone, :message => "Account must indicate its preferred time zone."
   validates_presence_of :name, :message => "Account must have a name"
   validates_uniqueness_of :name, :message => "Account name must be unique"
   

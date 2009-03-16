@@ -1,0 +1,12 @@
+[submodule "vendor/plugins/cucumber"]
+	path = vendor/plugins/cucumber
+	url = git://github.com/aslakhellesoy/cucumber.git
+[submodule "vendor/plugins/webrat"]
+	path = vendor/plugins/webrat
+	url = git://github.com/brynary/webrat.git
+[submodule "vendor/plugins/rspec"]
+	path = vendor/plugins/rspec
+	url = git://github.com/dchelimsky/rspec.git
+[submodule "vendor/plugins/rspec-rails"]
+	path = vendor/plugins/rspec-rails
+	url = git://github.com/dchelimsky/rspec-rails.git
