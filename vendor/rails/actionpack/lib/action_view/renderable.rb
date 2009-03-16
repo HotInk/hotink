@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module ActionView
   # NOTE: The template that this mixin is being included into is frozen
   # so you cannot set or modify any instance variables
@@ -16,7 +18,6 @@ module ActionView
     def compiled_source
       handler.call(self)
     end
-    memoize :compiled_source
 
     def method_name_without_locals
       ['_run', extension, method_segment].compact.join('_')
@@ -26,23 +27,19 @@ module ActionView
     def render(view, local_assigns = {})
       compile(local_assigns)
 
-      stack = view.instance_variable_get(:@_render_stack)
-      stack.push(self)
+      view.with_template self do
+        view.send(:_evaluate_assigns_and_ivars)
+        view.send(:_set_controller_content_type, mime_type) if respond_to?(:mime_type)
 
-      view.send(:_evaluate_assigns_and_ivars)
-      view.send(:_set_controller_content_type, mime_type) if respond_to?(:mime_type)
-
-      result = view.send(method_name(local_assigns), local_assigns) do |*names|
-        ivar = :@_proc_for_layout
-        if !view.instance_variable_defined?(:"@content_for_#{names.first}") && view.instance_variable_defined?(ivar) && (proc = view.instance_variable_get(ivar))
-          view.capture(*names, &proc)
-        elsif view.instance_variable_defined?(ivar = :"@content_for_#{names.first || :layout}")
-          view.instance_variable_get(ivar)
+        view.send(method_name(local_assigns), local_assigns) do |*names|
+          ivar = :@_proc_for_layout
+          if !view.instance_variable_defined?(:"@content_for_#{names.first}") && view.instance_variable_defined?(ivar) && (proc = view.instance_variable_get(ivar))
+            view.capture(*names, &proc)
+          elsif view.instance_variable_defined?(ivar = :"@content_for_#{names.first || :layout}")
+            view.instance_variable_get(ivar)
+          end
         end
       end
-
-      stack.pop
-      result
     end
 
     def method_name(local_assigns)
@@ -78,6 +75,8 @@ module ActionView
 
         begin
           ActionView::Base::CompiledTemplates.module_eval(source, filename, 0)
+        rescue Errno::ENOENT => e
+          raise e # Missing template file, re-raise for Base to rescue
         rescue Exception => e # errors from template code
           if logger = defined?(ActionController) && Base.logger
             logger.debug "ERROR: compiling #{render_symbol} RAISED #{e}"

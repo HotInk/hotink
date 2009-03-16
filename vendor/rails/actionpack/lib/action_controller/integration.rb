@@ -5,7 +5,7 @@ require 'active_support/test_case'
 module ActionController
   module Integration #:nodoc:
     # An integration Session instance represents a set of requests and responses
-    # performed sequentially by some virtual user. Becase you can instantiate
+    # performed sequentially by some virtual user. Because you can instantiate
     # multiple sessions and run them side-by-side, you can also mimic (to some
     # limited extent) multiple simultaneous users interacting with your system.
     #
@@ -327,7 +327,7 @@ module ActionController
 
           @headers = Rack::Utils::HeaderHash.new(headers)
 
-          (@headers['Set-Cookie'] || []).each do |cookie|
+          (@headers['Set-Cookie'] || "").split("\n").each do |cookie|
             name, value = cookie.match(/^([^=]*)=([^;]*);/)[1,2]
             @cookies[name] = value
           end
