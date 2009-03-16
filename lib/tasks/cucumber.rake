@@ -5,7 +5,6 @@ begin
 
   Cucumber::Rake::Task.new(:features) do |t|
     t.cucumber_opts = "--format pretty"
-    t.rcov = true
   end
   task :features => 'db:test:prepare'
 rescue LoadError
