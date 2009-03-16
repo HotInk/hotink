@@ -9,7 +9,8 @@ Feature: List accounts
 		Then I should see "root"
 		 
 	Scenario: List multiple accounts
-		Given accounts named "root", "boot", and "fruit" exist
+		# "root" already exists.
+		Given accounts named "boot" and "fruit" exist
 		When I am on the accounts index page
 		Then I should see "root"
 		Then I should see "boot"
