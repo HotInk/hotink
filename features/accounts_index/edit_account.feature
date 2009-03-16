@@ -1,7 +1,7 @@
 Feature: Edit an account
 	In order to keep account data up to date
 	I should should be able to
-	update the details of an account
+	edit the details of an account
 	
 	Scenario: Click account name to edit
 		Given I have created an account with the name "onlinejournal"
