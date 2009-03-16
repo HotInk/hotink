@@ -7,9 +7,7 @@
 
 <% for account in @accounts %>
   <tr>
-    <td><%=h account.name %></td>
-    <td><%= link_to 'Show', account %></td>
-    <td><%= link_to 'Edit', edit_account_path(account) %></td>
+    <td><%= link_to h(account.name), edit_account_path(account) %></td>
     <td><%= link_to 'Destroy', account, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>

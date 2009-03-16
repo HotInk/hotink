@@ -6,7 +6,7 @@ module NavigationHelpers
       root_path
     
     # Add more page name => path mappings here
-    when /the account index page/
+    when /the accounts index page/
       accounts_path
       
     else
