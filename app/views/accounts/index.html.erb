@@ -1,18 +1,17 @@
-<h1>Listing accounts</h1>
 
+<div id="accounts_index">
+<h1>All accounts</h1>
+<p class="note">Click account name to edit</p>
 <table>
-  <tr>
-    <th>Name</th>
-  </tr>
-
 <% for account in @accounts %>
-  <tr>
+  <tr class="<%= cycle("even-row", "odd-row") %>">
     <td><%= link_to h(account.name), edit_account_path(account) %></td>
-    <td><%= link_to 'Destroy', account, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td style="text-align:right;"><%= button_link_to 'Delete', account, :confirm => 'Are you sure?', :method => :delete, :class=>"tiny cancel", :style=>"color:#FFF; margin:2px;"%></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New account', new_account_path %>
+<%= button_link_to 'New account', new_account_path %>
+</div>

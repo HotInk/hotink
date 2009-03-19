@@ -16,6 +16,7 @@ module ApplicationHelper
 
            # This is the only difference in this function from link_to.
            # Add the button class to any other sent along.
+           html_options = {} unless html_options
            html_options.default = ""
            html_options[:class] = "btn " + html_options[:class]
 

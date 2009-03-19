@@ -240,15 +240,8 @@ dl.faq dt {font-weight: bold;}
 	background-position: 0px -3px;
   }
 
-  .tiny {
-	font-size: 9px;
-	line-height: 1;
-  }
-
-  .micro {
-	font-size: 8px;
-	line-height: 1em;
-  }
+.tiny { font-size: 9px; line-height: 1;  }
+.micro { font-size: 8px; line-height: 1em; }
 
 /* Modal window styles */
 
@@ -275,15 +268,11 @@ dl.faq dt {font-weight: bold;}
 
 #article_form_top_links{ width:600px; float:left; margin-bottom: 5px; }
 
-.note {
-	font-size: 11px;
-}
-
+.note {	font-size: 11px; }
 .text_input {
 	background: none;
 	border: 1px solid #DEDEDE;	
-	background-color: #FFF;
-	
+	background-color: #FFF;	
 	color: #555;
 }
 .column_holder { float: none; margin-bottom: 10px; }
@@ -335,21 +324,9 @@ dl.faq dt {font-weight: bold;}
 
 
 /* Issue form style */
-
-#issue_form {
-	width: 240px;
-	padding: 10px;
-	
-	border: 2px solid #3399DE;
-}
-
-#issue_form_name_check {
-
-}
-
-#issue_name {
-	width: auto;
-}
+#issue_form {	width: 240px; padding: 10px; border: 2px solid #3399DE; }
+#issue_form_name_check { }
+#issue_name {	width: auto; }
 
 /* Sorting forms styles*/
 #account_article_sorting_list button.categories_edit_tab{margin-left:208px; }
@@ -473,9 +450,17 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 /*			Account styles
 /*
 /*---------------------------------------*/
-			
-.new_account select, .edit_account select {	background: none; width: 400px; font-size: 16px; color: #666; height: 25px; border: 1px solid #DEDEDE;	}	
-.new_account .account_name, .edit_account .account_name { background: none; height: 32px; font-size: 24px; width: 400px; padding: 3px; }
-	
 
+#accounts_index { margin: 2px;}
+#accounts_index h1 {margin: 10px 0px;}
+#accounts_index table{ width:400px; }
+#accounts_index th{ text-align:left; }
+#accounts_index td{ font-size: 20px; color: #999; height: 20px; padding: 5px 2px;}
+
+#account_form_top_links{ width:400px; margin: 5px; }
+#account_form { padding: 5px; }
+#account_form select {	background: none; width: 400px; font-size: 16px; color: #666; height: 25px; border: 1px solid #DEDEDE;	}	
+#account_form .account_name { background: none; height: 32px; font-size: 24px; width: 400px; padding: 3px; }
+#account_form textarea { width: 400px; }
+#account_form button {  }
 	
