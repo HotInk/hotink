@@ -1,19 +1,5 @@
 <h1>New account</h1>
 
-<% form_for(@account) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :time_zone %><br />
-    <%= f.time_zone_select :time_zone %>
-  </p>
-  <p>
-    <%= f.submit "Create" %>
-  </p>
-<% end %>
+<%= render :partial => 'account_form' %>
 
 <%= link_to 'Back', accounts_path %>

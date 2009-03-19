@@ -25,9 +25,9 @@
 	<% else %>
 		<p id="new_account_category">
 		<%= #Be sure to include @article.id in call to Section.new to ensure that the article is available for reloading the article/sorting list
-			button_link_to_remote 	"New category?", 
+			button_link_to_remote 	"New category", 
 							:url => new_account_category_path(@account, :format=>:js, :article_id=>@article.id), 
-							:method => :get, :html=>{:class=>"small"} %>
+							:method => :get, :html=>{:class=>"small", :id=>"new_category_form_button"} %>
 		</p>
 	<% end %>
 </div>

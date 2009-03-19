@@ -1,0 +1,19 @@
+<% form_for(@account) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name, :class =>"text_input account_name" %>
+  </p>
+  <p>
+    <%= f.label :time_zone %><br />
+    <%= f.time_zone_select :time_zone, /Canada|Newfoundland|Saskatchewan/, :default => "Eastern Time (US & Canada)"  %>
+  </p>
+  <p>
+	<%= f.label :settings %><br />
+	<%= f.text_area :settings, :class =>"text_input"  %>
+  </p>
+  <p>
+    <%= button_link_to_submit @account.new_record? ? "Create account" : "Update account details", :class=>"large save" %>
+  </p>
+<% end %>

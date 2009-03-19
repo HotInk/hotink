@@ -46,17 +46,16 @@ class CategoriesController < ApplicationController
   # POST /categories.xml
   def create
     if params['print_section']
-      @category = Section.new(params[:category])
+      @category = @account.sections.build(params[:category])
     else
-      @category = Category.new(params[:category])
+      @category = @account.categories.build(params[:category])
     end
-    @category.account = @account
     
     # This serves to retreive any article attached to this new category so we can access that article's apge
     @article = find_article if params[:article_id]
 
     respond_to do |format|
-      if @category.save
+      if @category.save!
         flash[:notice] = 'Category was successfully created.'
         format.js { redirect_to(account_article_sortings_url(@account, @article, :format=>:js)) if @article}
         format.html { redirect_to(account_categories_url(@account)) }

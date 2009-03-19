@@ -1,11 +1,9 @@
-<h1>Listing sortings</h1>
+<h1>Article categories</h1>
 
 <h3><%= @account.name + " - " + @article.title %> </h3>
 
 <%= render :partial => 'article_sortings' %>
 
 <br />
-<%= link_to_remote 'Reload sortings', :url=>account_article_sortings_path(@account, @article, :format=>:js), :method => :get%> |
-
-<%= link_to 'New sorting', new_account_article_sorting_path(@account, @article) %>
+<%= link_to 'Reload categories', :url=>account_article_sortings_path(@account, @article, :format=>:js), :method => :get%> |
 

@@ -273,11 +273,7 @@ dl.faq dt {font-weight: bold;}
 	/* border: 2px solid #3399DE; */
 }
 
-#article_form_top_links{
-	width:600px;
-	float:left;
-	margin-bottom: 5px;
-}
+#article_form_top_links{ width:600px; float:left; margin-bottom: 5px; }
 
 .note {
 	font-size: 11px;
@@ -471,3 +467,15 @@ div.media_list p { font-size:10px;line-height:12px; }
 div.media_list img { margin: 5px 5px 0px 0px; }
 div.media_list p a{ cursor: text; }
 div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left: 5px;}
+
+/*-----------------------------------
+/*
+/*			Account styles
+/*
+/*---------------------------------------*/
+			
+.new_account select, .edit_account select {	background: none; width: 400px; font-size: 16px; color: #666; height: 25px; border: 1px solid #DEDEDE;	}	
+.new_account .account_name, .edit_account .account_name { background: none; height: 32px; font-size: 24px; width: 400px; padding: 3px; }
+	
+
+	
