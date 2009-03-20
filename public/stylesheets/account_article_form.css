@@ -427,11 +427,20 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 
 /* Articles index styles
 --------------------------------*/
+
+#articles .title_bar { margin: 15px 5px;}
+#articles .title_bar  h1 { display:inline; margin-right: 25px;}
+#articles .title_bar a { vertical-align: text-bottom;}
+#articles table {margin-top: 5px;}
+#articles .select_all { text-align: left; margin-bottom: 2px; }
+#articles table a { margin: 12px 0px;}
+#articles table a:visited { color: #666;}
+#articles table a:hover { color: #3399DE;}
+#articles table a:active { color: #333;}
 #articles .headline {  font-size: 16px; width: 680px; height: 40px; padding: 5px 7px; }
 #articles .delete { padding:0px 15px;}
-#articles a { margin: 12px 0px;}
 #articles, #articles tr, #articles td { border: none; margin: none;}
-#articles .select_all { text-align: left; margin-bottom: 2px; }
+
 
 /* Start table CSS here
 ---------------------------------------- */

@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
     #If so, redate it and serve it up instead of a new article, to prevent
     #the data from becoming cluttered with abandoned articles.
     #
-    #If the last article was a legit, save the current build, so it can have relationships 
+    #If the last article was legit, save the fresh article so it can have relationships 
     if last_article = @account.articles.find(:last)
       if last_article.created_at == last_article.updated_at
          @article = last_article

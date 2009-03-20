@@ -23,7 +23,7 @@ class Article < ActiveRecord::Base
   
   
   validates_presence_of :account, :message => "Must have an account"
-  validates_associated :account, :message => "Account must be valid"
+  #validates_associated :account, :message => "Account must be valid"
 
 
   define_index do
