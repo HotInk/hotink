@@ -1,31 +1,34 @@
-<h1>Listing articles</h1>
+<div id="articles">
+<h1>Articles</h1>
+<%= button_link_to 'New article', new_account_article_path(@account), :class=>"large" %>
 
-<table id="record_list">
+<table cellspacing="0">
 <thead>
-	<tr><th scope="col" class="select"><input id="select_all" type="checkbox" /></th><th scope="col">Title</th><th scope="col">Subtitle</th><th scope="col">Tags</th><th scope="col">Date</th></tr>
+	<tr><th colspan="2" class="select_all"><input type="checkbox" />&nbsp;Select all</th></tr>
 </thead>
 <tfoot>
-	<tr><th scope="col" class="select"><input type="checkbox" /></th><th scope="col">Title</th><th scope="col">Subtitle</th><th scope="col">Tags</th><th scope="col">Date</th></tr>
+	<tr><th colspan="2" class="select_all"><input type="checkbox" />&nbsp;Select all</th></tr>
 </tfoot>
 <tbody>
 <% for article in @articles %>
-  <tr class="<%= cycle("even-row", "odd-row") %>">
-	<td class="select"><input type="checkbox" /></td>
-    <td class="headline"><%=link_to h(article.display_title), edit_account_article_url(@account, article) %></td>
-    <td><%=h article.subtitle %></td>
-    <td class="tags"><%=h (article.tag_list.empty? ? "No tags" : article.tag_list) %></td>
-    <td class="date"><%=h article.date.to_s(:standard) %></td>
-    <td><%= button_link_to 'Delete', [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"small" %></td>
-  </tr>
+	<% unless article.created_at == article.updated_at %>
+	  <tr class="<%= cycle("even-row", "odd-row") %>">
+		<td class="select"><input type="checkbox" /></td>
+	    <td class="headline"><%=link_to h(article.display_title), edit_account_article_url(@account, article), :style => "color:#666" %></td>
+	    <td class="date"><%=h article.date.to_s(:standard) %></td>
+	    <td class="delete"><%= button_link_to 'Delete', [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"small cancel", :style=>"color:#fff" %></td>
+	  </tr>
+	<% end %>
 <% end %>
 </tbody>
 </table>
 
 <br />
 
-<%= link_to 'New article', new_account_article_path(@account) %>
 <script type="text/javascript" charset="utf-8">
 	// Activate table header checkboxes select_all functionality
 	$$('th>input[type=checkbox]').each(	function(element){ Event.observe(element, 'click', function( event ) { if (element.checked){ $$('table input[type="checkbox"]').each(function(node){ node.checked = 'checked' });} else { $$('table input[type="checkbox"]').each(function(node){ node.checked = null }); } }); });
 	
 </script>
+
+</div><!-- /articles -->

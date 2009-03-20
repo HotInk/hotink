@@ -1,6 +1,6 @@
 /* Main style */
 
-body { background-color: #F9F9F9; color: #333; margin: 0 auto; }
+body { background-color: #F9F9F9; color: #333; margin: 0 auto; padding: 0px 5px; }
 
 body, p, ol, ul, td {
   font-family: "lucida grande", verdana, arial, helvetica, sans-serif;
@@ -32,6 +32,8 @@ html[xmlns] .clearfix{display:block;}
 		-moz-opacity: 0.75;       /* mozilla, netscape */
 		opacity: 0.75;           /* fx, safari, opera */
 }
+.even-row { background-color: #FFFFFF; }
+.odd-row { background-color: #F4F4F4; }
 
 .fieldWithErrors {
   padding: 2px;
@@ -68,6 +70,7 @@ html[xmlns] .clearfix{display:block;}
   font-size: 12px;
   list-style: square;
 }
+
 
 /* faq styles */
 
@@ -120,7 +123,7 @@ dl.faq dt {font-weight: bold;}
    
    /* pill classes only needed if using pill style buttons ( LEFT | CENTER | RIGHT ) */
    .pill-l span {
-     border-right-width:0;
+   	border-right-width:0;
      }
    .pill-l span span {
      border-right:1px solid #bbb;
@@ -195,20 +198,11 @@ dl.faq dt {font-weight: bold;}
 		background:#699DE3 url(/bg-button-blue.gif) repeat-x 0 0;
 	}
 	
-	/* Cancel buttons use a red background, as opposed to a grey one.*/
-	.cancel {
-		color: #FFF;
-	}
-	.cancel:hover span, .cancel:hover span span, .cancel:focus span, .cancel:focus span span{
-		color: #CCC;
-	}
-	.cancel:active span   {
-	 color: #FFF;
-     outline:none;
-     }
-	.cancel span{
-		background:#E62424 url(/bg-button-red.gif) repeat-x 0 -1px;
-	}
+/* Cancel buttons use a red background, as opposed to a grey one.*/
+.cancel { color: #FFF; }
+.cancel:hover span, .cancel:hover span span, .cancel:focus span, .cancel:focus span span{ color: #CCC; }
+.cancel:active span { color: #FFF; outline:none; }
+.cancel span{ background:#E62424 url(/bg-button-red.gif) repeat-x 0 -1px; }
 	
 	.selected span {
 		color:#FFF;
@@ -222,24 +216,10 @@ dl.faq dt {font-weight: bold;}
 	     color:#FFF;
   }
 	
-  .large {
-	font-size: 13px;
-	line-height: 1.2;
-  }
-
-  .large:active span{
-	 background-position:0 -390px;
-  }
-
-  .small {
-	font-size: 10px;
-	line-height: 1;
-  }
-
-  .small span{
-	background-position: 0px -3px;
-  }
-
+.large { font-size: 13px; line-height: 1.2; }
+.large:active span{ background-position:0 -390px;}
+.small { font-size: 10px; line-height: 1; }
+.small span{ background-position: 0px -3px; }
 .tiny { font-size: 9px; line-height: 1;  }
 .micro { font-size: 8px; line-height: 1em; }
 
@@ -444,6 +424,56 @@ div.media_list p { font-size:10px;line-height:12px; }
 div.media_list img { margin: 5px 5px 0px 0px; }
 div.media_list p a{ cursor: text; }
 div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left: 5px;}
+
+/* Articles index styles
+--------------------------------*/
+#articles .headline {  font-size: 16px; width: 680px; height: 40px; padding: 5px 7px; }
+#articles .delete { padding:0px 15px;}
+#articles a { margin: 12px 0px;}
+#articles, #articles tr, #articles td { border: none; margin: none;}
+#articles .select_all { text-align: left; margin-bottom: 2px; }
+
+/* Start table CSS here
+---------------------------------------- */
+
+table#record_list {
+	border: none;
+	max-width: 885px;
+	min-width: 850px;
+	width: auto;
+}
+
+table#record_list thead {
+	background:#ddd url(/bg-button.gif) repeat-x 0 0;
+    margin:0px;
+    padding: 4px 5px 6px 5px;
+}
+
+table#record_list th{
+	border: 1px solid #3399DE;
+}
+
+table#record_list tfoot {
+	background:#ddd url(/bg-button.gif) repeat-x 0 0;
+    margin:0px;
+    padding: 4px 5px 6px 5px;
+}
+
+table#record_list tbody {
+	vertical-align: top;
+}
+
+
+
+table#record_list tr {
+	padding: 5px 0px;
+}
+
+table#record_list td {
+	height: 32px;
+	padding: 0px 3px;
+}
+
 
 /*-----------------------------------
 /*

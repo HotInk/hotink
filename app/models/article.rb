@@ -36,7 +36,9 @@ class Article < ActiveRecord::Base
     has account_id
   end
 
-
+  def self.per_page
+      10
+  end
 
   
   def display_title
