@@ -1,20 +1,20 @@
 <div id="articles">
-<h1>Articles</h1>
-<%= button_link_to 'New article', new_account_article_path(@account), :class=>"large" %>
+<div class="title_bar"><h1>Articles</h1><%= button_link_to 'New article', new_account_article_path(@account), :class=>"" %></div>
+
 
 <table cellspacing="0">
 <thead>
-	<tr><th colspan="2" class="select_all"><input type="checkbox" />&nbsp;Select all</th></tr>
+	<tr><th colspan="2" class="select_all"><input id="select_all_head" type="checkbox" /><label for="select_all_head">&nbsp;Select all</label></th></tr>
 </thead>
 <tfoot>
-	<tr><th colspan="2" class="select_all"><input type="checkbox" />&nbsp;Select all</th></tr>
+	<tr><th colspan="2" class="select_all"><input id="select_all_foot" type="checkbox" /><label for="select_all_foot">&nbsp;Select all</label></th></tr>
 </tfoot>
 <tbody>
 <% for article in @articles %>
 	<% unless article.created_at == article.updated_at %>
 	  <tr class="<%= cycle("even-row", "odd-row") %>">
 		<td class="select"><input type="checkbox" /></td>
-	    <td class="headline"><%=link_to h(article.display_title), edit_account_article_url(@account, article), :style => "color:#666" %></td>
+	    <td class="headline"><%=link_to h(article.display_title), edit_account_article_url(@account, article) %></td>
 	    <td class="date"><%=h article.date.to_s(:standard) %></td>
 	    <td class="delete"><%= button_link_to 'Delete', [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"small cancel", :style=>"color:#fff" %></td>
 	  </tr>
