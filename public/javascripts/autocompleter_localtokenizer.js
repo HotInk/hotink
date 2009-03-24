@@ -225,7 +225,7 @@ addSavedTokensToList: function(saved_tokens_join_json) {
 			    Builder.node('span', {},
 			    [ tokens[i][this.options.search_join_model][this.options.search_model][this.options.search_field],
 			        Builder.node('span',{"class":'x',onmouseout:"this.className='x'",onmouseover:"this.className='x_hover'",
-			        onclick:"this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true);$('" + delete_tag_id + "').value=1; return false;"}," ")
+			        onclick:"this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true);$('" + delete_tag_id + "').value=true; return false;"}," ")
 			        ]
 			    )
 			    )
@@ -380,7 +380,8 @@ Token = Class.create({
         }
     },
 	mark_for_delete: function() {
-		this.delete_tag.value = 1;
+		this.delete_tag.value = true;
+		console.log("Set to delete");
 	},
     detect: function(e) {
         //find the event object

@@ -23,7 +23,7 @@ class Article < ActiveRecord::Base
   
   
   validates_presence_of :account, :message => "Must have an account"
-  validates_associated :account, :message => "Account must be valid"
+  #validates_associated :account, :message => "Account must be valid"
 
 
   define_index do
@@ -50,10 +50,13 @@ class Article < ActiveRecord::Base
   end
   
   def new_authors_list
-    return ""
+     return ""
   end
   
   def new_authors_list=(list)
+    unless list.nil? || list==""
+      list.split(/, and | and |,/).each{ |name| self.authors.create(:name=>name, :account_id=>self.account.id) }
+    end
   end
   
 end

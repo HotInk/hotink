@@ -266,7 +266,8 @@ dl.faq dt {font-weight: bold;}
 #article_form #article_date { height: 16px; padding: 3px 2px; font-size: 13px; }
 #article_form #article_section_id { height: 26px; padding: 3px 2px; font-size: 12px; color: #333; }
 #article_form #author_list { width: 600px; margin-bottom: 20px; }
-#article_form #article_bodytext { min-width: 590px; max-width: 750px; height: 400px; padding: 5px; }
+#article_form #article_bodytext { min-width: 590px; max-width: 750px; height: 400px; padding: 5px; font-family:georgia,"times new roman",times; color:#333; font-size: 15px; line-height: 21px; }
+#article_form #article_bodytext textarea {  }
 #article_form #article_bodytext_preview { width: 594px; height: 300px; padding: 0 3px; overflow: auto; border: 1px solid #999; background-color: #FFF; }
 #article_form #article_bodytext_preview p { margin: 5px 0; }
 #article_summary { width: 600px; height: 85px; }
