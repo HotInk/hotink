@@ -18,8 +18,8 @@ class Article < ActiveRecord::Base
   acts_as_taggable_on :tags
   
   accepts_nested_attributes_for :mediafiles
-  accepts_nested_attributes_for :sortings, :allow_destroy => true
-  accepts_nested_attributes_for :authorships, :allow_destroy => true
+  accepts_nested_attributes_for :sortings, :allow_destroy => true, :reject_if => proc { |attributes| attributes['category_id'].blank? }
+  accepts_nested_attributes_for :authorships, :allow_destroy => true, :reject_if => proc { |attributes| attributes['author_id'].blank? }
   
   
   validates_presence_of :account, :message => "Must have an account"
@@ -49,12 +49,12 @@ class Article < ActiveRecord::Base
     end
   end
   
-  def new_authors_list
-     return ""
+  def authors_list
+     
   end
   
-  def new_authors_list=(list)
-    unless list.nil? || list==""
+  def authors_list=(list)
+    if list
       list.split(/, and | and |,/).each{ |name| self.authors.create(:name=>name, :account_id=>self.account.id) }
     end
   end

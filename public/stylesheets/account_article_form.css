@@ -35,42 +35,12 @@ html[xmlns] .clearfix{display:block;}
 .even-row { background-color: #FFFFFF; }
 .odd-row { background-color: #F4F4F4; }
 
-.fieldWithErrors {
-  padding: 2px;
-  background-color: red;
-  display: table;
-}
 
-#errorExplanation {
-  width: 400px;
-  border: 2px solid red;
-  padding: 7px;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-}
-
-#errorExplanation h2 {
-  text-align: left;
-  font-weight: bold;
-  padding: 5px 5px 5px 15px;
-  font-size: 12px;
-  margin: -7px;
-  background-color: #c00;
-  color: #fff;
-}
-
-#errorExplanation p {
-  color: #333;
-  margin-bottom: 0;
-  padding: 5px;
-}
-
-#errorExplanation ul li {
-  font-size: 12px;
-  list-style: square;
-}
-
+.fieldWithErrors { padding: 2px; background-color: red; display: table; }
+#errorExplanation { width: 400px; border: 2px solid red; padding: 7px; padding-bottom: 12px; margin-bottom: 20px; background-color: #f0f0f0; }
+#errorExplanation h2 { text-align: left; font-weight: bold; padding: 5px 5px 5px 15px; font-size: 12px; margin: -7px; background-color: #c00; color: #fff;}
+#errorExplanation p { color: #333; margin-bottom: 0; padding: 5px; }
+#errorExplanation ul li { font-size: 12px; list-style: square;}
 
 /* faq styles */
 
@@ -432,16 +402,18 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .title_bar { margin: 15px 5px;}
 #articles .title_bar  h1 { display:inline; margin-right: 25px;}
 #articles .title_bar a { vertical-align: text-bottom;}
-#articles table {margin-top: 5px;}
 #articles .select_all { text-align: left; margin-bottom: 2px; }
-#articles table a { margin: 12px 0px;}
-#articles table a:visited { color: #666;}
-#articles table a:hover { color: #3399DE;}
-#articles table a:active { color: #333;}
-#articles .headline {  font-size: 16px; width: 680px; height: 40px; padding: 5px 7px; }
-#articles .delete { padding:0px 15px;}
-#articles, #articles tr, #articles td { border: none; margin: none;}
-
+#articles ol {margin-top: 5px; width: 600px;}
+#articles ol li { background-color: #FFFFFF;}
+#articles ol a { margin: 12px 0px;}
+#articles ol a:visited { color: #666;}
+#articles ol a:hover { color: #3399DE;}
+#articles ol a:active { color: #333;}
+#articles .headline {  font-size: 16px; padding: 5px;}
+#articles .headline input {  margin-right: 15px; }
+#articles .headline .date { color: #AAA;}
+#articles .highlighted { background-color: #ecf7ff;}
+#articles a.delete { float: right; width: 9px; margin: 3px; background: url('/token_x.gif') no-repeat;}
 
 /* Start table CSS here
 ---------------------------------------- */

@@ -1,11 +1,11 @@
 <%= label_tag 'article[new_authors_list]', 'Authors' %><br />
-<div id="authorships_form" class="clearfix tokenizer text_input" onclick="$('article_new_authors_list').focus()">
+<div id="authorships_form" class="clearfix tokenizer text_input" onclick="$('article_authors_list').focus()">
     <span class="tokenizer_stretcher">^_^</span>
 	<span class="tab_stop">
 		<input type="text" id="hidden_input" tabindex="-1" />
 	</span>
     <div id="autocomplete_display" class="tokenizer_input">
-		<%= text_field_tag 'article[new_authors_list]', '' %>
+		<%= text_field_tag 'article[authors_list]', '' %>
     </div>
 </div>
     <div id="autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10; width: 450px; height: auto; overflow-y: hidden;display:none"></div>
@@ -28,7 +28,7 @@
 							});
 	}
 
-    var author_list = new Autocompleter.LocalTokenizer('article_new_authors_list', 'autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
+    var author_list = new Autocompleter.LocalTokenizer('article_authors_list', 'autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
         frequency: 0.1,
 		parent_model: "article",
         search_field: "name",

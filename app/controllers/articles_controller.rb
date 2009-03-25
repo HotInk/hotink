@@ -87,9 +87,10 @@ class ArticlesController < ApplicationController
   
     respond_to do |format|
       if @article.update_attributes(params[:article])
+        
         @article = @account.articles.find(params[:id])
-        #Create sorting for current section, if necessary
-        @article.categories << @article.section unless @article.categories.member?(@article.section)
+        @article.categories << @article.section unless @article.categories.member?(@article.section) #Create sorting for current section, if necessary
+        
         format.js
         format.html { redirect_to(edit_account_article_path(@account, @article)) }
         format.xml  { head :ok }
