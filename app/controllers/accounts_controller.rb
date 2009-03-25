@@ -47,7 +47,6 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save
-        flash[:notice] = 'Account was successfully created.'
         format.html { redirect_to(accounts_url) }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
       else
@@ -64,7 +63,6 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.update_attributes(params[:account])
-        flash[:notice] = 'Account was successfully updated.'
         format.html { redirect_to(accounts_url) }
         format.js { head :ok } #The categories-list on the article form posts here. This is it's js. 
         format.xml  { head :ok }

@@ -231,12 +231,12 @@ dl.faq dt {font-weight: bold;}
 .two_thirds_column { float: left; width:66%; }
 
 #article_form {	float:left; }
-#article_form #article_title {width: 100%; height: 22px; padding: 4px 2px; margin-bottom: 10px; font-size: 18px; }
+#article_form #article_title {width: 100%; height: 22px; padding: 4px 2px; margin-bottom: 10px; font-size: 18px;}
 #article_form #article_subtitle { width: 100%; padding: 4px 2px; height: 18px; margin-bottom: 10px; font-size: 16px; }
 #article_form #article_date { height: 16px; padding: 3px 2px; font-size: 13px; }
 #article_form #article_section_id { height: 26px; padding: 3px 2px; font-size: 12px; color: #333; }
 #article_form #author_list { width: 600px; margin-bottom: 20px; }
-#article_form #article_bodytext { min-width: 590px; max-width: 750px; height: 400px; padding: 5px; font-family:georgia,"times new roman",times; color:#333; font-size: 15px; line-height: 21px; }
+#article_form #article_bodytext { min-width: 590px; max-width: 750px; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
 #article_form #article_bodytext textarea {  }
 #article_form #article_bodytext_preview { width: 594px; height: 300px; padding: 0 3px; overflow: auto; border: 1px solid #999; background-color: #FFF; }
 #article_form #article_bodytext_preview p { margin: 5px 0; }
@@ -340,13 +340,13 @@ div.tokenizer{border: 1px solid #DEDEDE;}
 .tokenizer .tokenizer_stretcher{display:block;float:left;overflow:hidden;width:0px;}
 .tokenizer .tab_stop{height:0px;}
 .tokenizer .tokenizer_stretcher{padding-top:7px;}
-#article_new_authors_list{color: #555;}
+#article_authors_list{color: #555;}
 .tokenizer .tab_stop input{border:0px solid black;display:inline;position:relative;left:-500px;}
 .tokenizer .tokenizer_input_borderless {left:4px;margin-left:-1px;overflow:hidden;position:relative;}
 .tokenizer_input_borderless  
-#article_new_authors_list{ width: 20px; border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;}
+#article_authors_list{ width: 20px; border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;}
 /*IE6-/Win only*/
-/*\*/ * html .tokenizer_input_borderless #article_new_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
+/*\*/ * html .tokenizer_input_borderless #article_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
 .tokenizer div:-moz-first-node{padding-top:1px!important;}
 .tokenizer_input{max-width:450px;overflow:hidden;padding:1px 0px;}
 .tokenizer_input input,

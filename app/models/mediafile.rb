@@ -17,8 +17,7 @@ class Mediafile < ActiveRecord::Base
   has_many :authors, :through => :photocredits
   
   validates_presence_of :account, :message => "Must have an account"
-  #TODO: Find out why account validation keeps failing
-  #validates_associated :account, :message => "Account must be valid"
+  validates_associated :account, :message => "Account must be valid"
   
   accepts_nested_attributes_for :photocredits, :allow_destroy => true
   
