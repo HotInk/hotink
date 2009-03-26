@@ -411,8 +411,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles ol a:active { color: #333;}
 #articles ol div { padding: 5px 5px; display: inline-block;vertical-align: top;}
 #articles .article { width: 550px; line-height: 1.2em;}
-#articles .article h1 { font-size: 16px; margin: 5px; font-weight: normal; font-style: italic; font-family: georgia,"times new roman",times, serif;}
-#articles .article>div { visibility: hidden; }
+#articles .article h1 { font-size: 16px; margin: 5px; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #articles .date { width: 60px; color: #AAA; font-size: 16px;}
 #articles .highlighted { background-color: #CEE4F3;}
 #articles a.delete { float: right; width: 9px; margin: 3px; background: url('/token_x.gif') no-repeat;}
