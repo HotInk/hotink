@@ -25,7 +25,7 @@ a.weblink { text-decoration: underline;}
 html[xmlns] .clearfix{display:block;}
 * html .clearfix{height:1%;}
 .hidden { display:none;}
-
+.user { font-family: georgia, "Times New Roman", times, serif;}
 .translucent  {
 		filter: alpha(opacity=75); /* internet explorer */
 		-khtml-opacity: 0.75;      /* khtml, old safari */
@@ -402,17 +402,19 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .title_bar { margin: 15px 5px;}
 #articles .title_bar  h1 { display:inline; margin-right: 25px;}
 #articles .title_bar a { vertical-align: text-bottom;}
-#articles .select_all { text-align: left; margin-bottom: 2px; }
-#articles ol {margin-top: 5px; width: 600px;}
-#articles ol li { background-color: #FFFFFF;}
+#articles .select_all { margin: 0px 9px;}
+#articles ol {margin-top: 5px; width: 685px; padding-left: 0; list-style-type: none;}
+#articles ol li { background-color: #FFFFFF; }
 #articles ol a { margin: 12px 0px;}
 #articles ol a:visited { color: #666;}
 #articles ol a:hover { color: #3399DE;}
 #articles ol a:active { color: #333;}
-#articles .headline {  font-size: 16px; padding: 5px;}
-#articles .headline input {  margin-right: 15px; }
-#articles .headline .date { color: #AAA;}
-#articles .highlighted { background-color: #ecf7ff;}
+#articles ol div { padding: 5px 5px; display: inline-block;vertical-align: top;}
+#articles .article { width: 550px; line-height: 1.2em;}
+#articles .article h1 { font-size: 16px; margin: 5px; font-weight: normal; font-style: italic; font-family: georgia,"times new roman",times, serif;}
+#articles .article>div { visibility: hidden; }
+#articles .date { width: 60px; color: #AAA; font-size: 16px;}
+#articles .highlighted { background-color: #CEE4F3;}
 #articles a.delete { float: right; width: 9px; margin: 3px; background: url('/token_x.gif') no-repeat;}
 
 /* Start table CSS here
