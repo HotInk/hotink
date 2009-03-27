@@ -36,17 +36,10 @@
 	    <%= f.label :summary %><br />
 	    <%= f.text_area :summary %>
 	  </p>
-	  <p class="label">Rendered HTML preview</p>
-		<!-- Rendered preview window - Nested divs below hold the WMD (wmd-editor.com) preview "window" -->
-	  	<div id="article_bodytext_preview">
-			<div class="wmd-preview preview"></div>
-		 </div>
-	  <div id="article_form_hidden_elements" class="hidden">
-	  	
+	  <div id="article_form_hidden_elements" class="hidden">	  	
 		<% f.fields_for :sortings do |sorting| %>
 			<%= sorting.hidden_field '_delete' %>
 		<%end%>
-
 	  </div>
 	  <div id="category_form_hidden_elements" class="hidden"></div>
 	  <div id="authorship_form_hidden_elements" class="hidden"></div>

@@ -86,7 +86,7 @@ var load_category_edit = function(){
 		//Make edit buttons visible
 		$('categories_list').select('li').each(function (item){ item.childElements()[1].childElements()[1].setStyle({visibility:'visible'})});
 		
-		//  Build SortableTree from elements.
+		//  Build SortableTree from list items.
 		categories_tree = new SortableTree('categories_sort', {
 			onDrop: function(drag, drop, event){
 					
@@ -98,6 +98,7 @@ var load_category_edit = function(){
 						drop_position++;
 					}
 					
+					var hidden_category_id = drag.to_nested_form_element("id").writeAttribute('value', drag.id());
 					var hidden_parent_id = drag.to_nested_form_element("parent_id").writeAttribute('value', (drag.parent.id()=='null' ? "" : drag.parent.id()) );
 					var hidden_position = drag.to_nested_form_element("position").writeAttribute('value', drop_position );
 					
@@ -105,6 +106,7 @@ var load_category_edit = function(){
 					if ($(hidden_parent_id.id)) $(hidden_parent_id.id).remove();
 					if ($(hidden_position.id)) $(hidden_position.id).remove();
 					
+					$('account_categories_edit_form').insert(hidden_category_id);
 					$('account_categories_edit_form').insert(hidden_parent_id);
 					$('account_categories_edit_form').insert(hidden_position);
 					
@@ -117,9 +119,13 @@ var load_category_edit = function(){
 }
 
 var create_category_name_nmfe = function(category_id, name_element) {
-	var el_name = 'account[categories_attributes][' + category_id + '][name]';
- 	var hidden_name = Builder.node('input', {'type': 'hidden', name: el_name, id: el_name.replace(/\]\[|\[|\]/g, "_").replace(/_$/, "" )}).writeAttribute('value', $F(name_element));
-	$('account_categories_edit_form').insert(hidden_name);
+	var id_el_name = 'account[categories_attributes][' + category_id + '][id]';
+	var name_el_name = 'account[categories_attributes][' + category_id + '][name]';
+ 	var hidden_name_element = Builder.node('input', {'type': 'hidden', name: name_el_name, id: name_el_name.replace(/\]\[|\[|\]/g, "_").replace(/_$/, "" )}).writeAttribute('value', $F(name_element));
+	var hidden_id_element = Builder.node('input', {'type': 'hidden', name: id_el_name, id: id_el_name.replace(/\]\[|\[|\]/g, "_").replace(/_$/, "" )}).writeAttribute('value', category_id);
+ 	
+	$('account_categories_edit_form').insert(hidden_id_element);
+	$('account_categories_edit_form').insert(hidden_name_element);
 }
 
 

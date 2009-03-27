@@ -18,8 +18,8 @@ class Article < ActiveRecord::Base
   acts_as_taggable_on :tags
   
   accepts_nested_attributes_for :mediafiles
-  accepts_nested_attributes_for :sortings, :allow_destroy => true     #, :reject_if => proc { |attributes| attributes['category_id'].blank? && attributes['_delete'].blank? }
-  accepts_nested_attributes_for :authorships, :allow_destroy => true #, :reject_if => proc { |attributes| attributes['author_id'].blank? && attributes['_delete'].blank? }
+  accepts_nested_attributes_for :sortings, :allow_destroy => true     
+  accepts_nested_attributes_for :authorships, :allow_destroy => true
   
   
   validates_presence_of :account, :message => "Must have an account"
