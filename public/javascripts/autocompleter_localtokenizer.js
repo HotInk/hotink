@@ -211,8 +211,10 @@ addTokenToList: function(item, value) {
 addSavedTokensToList: function(saved_tokens_join_json) {
 	    	tokens = eval(saved_tokens_join_json);
 			for (var i = 0; i < tokens.length; i++) {
-				var delete_tag_id = this.options.parent_model + "_" + this.options.search_join_models+ "_attributes_" + tokens[i][this.options.search_join_model].id + "__delete";
-				var delete_tag_name = this.options.parent_model + "[" + this.options.search_join_models + "_attributes][" + tokens[i][this.options.search_join_model].id + "][_delete]";
+				var id_tag_id = this.options.parent_model + "_" + this.options.search_join_models+ "_attributes_" + this.options.new_token_count + " _id";
+				var id_tag_name = this.options.parent_model + "[" + this.options.search_join_models+ "_attributes][" + this.options.new_token_count + "][id]";
+				var delete_tag_id = this.options.parent_model + "_" + this.options.search_join_models+ "_attributes_" + this.options.new_token_count + " __delete";
+				var delete_tag_name = this.options.parent_model + "[" + this.options.search_join_models+ "_attributes][" + this.options.new_token_count + "][_delete]";
 				var new_token = Builder.node('a', {
 			        "class": 'token',
 					"onclick": "return false;",
@@ -225,7 +227,7 @@ addSavedTokensToList: function(saved_tokens_join_json) {
 			    Builder.node('span', {},
 			    [ tokens[i][this.options.search_join_model][this.options.search_model][this.options.search_field],
 			        Builder.node('span',{"class":'x',onmouseout:"this.className='x'",onmouseover:"this.className='x_hover'",
-			        onclick:"this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true);$('" + delete_tag_id + "').value=true; return false;"}," ")
+			        onclick:"this.parentNode.parentNode.parentNode.parentNode.parentNode.remove(true);$('" + delete_tag_id + "').value=1; return false;"}," ")
 			        ]
 			    )
 			    )
@@ -236,8 +238,11 @@ addSavedTokensToList: function(saved_tokens_join_json) {
 			 	new_token = new Token(new_token,this.hidden_input,true);
 				this.tokens.push(new_token);
 				new_token.delete_tag = new Element('input', {'type':'hidden', 'name': delete_tag_name, 'id': delete_tag_id});
+				new_token.id_tag = new Element('input', {'type':'hidden', 'name': id_tag_name, 'id': id_tag_id, 'value': tokens[i][this.options.search_join_model].id});
+				this.options.new_token_count = this.options.new_token_count + 1;
 				this.wrapper.insert({before:new_token.element});
 				this.update.insert({after:new_token.delete_tag});
+				this.update.insert({after:new_token.id_tag});
 			} 
 	},		
 setOptions: function(options) {
@@ -247,7 +252,7 @@ setOptions: function(options) {
             partialChars: 2,
             ignoreCase: true,
             fullSearch: false,
-			new_token_count: 1,
+			new_token_count: 0,
             selector: function(instance) {
                 var ret = [];
                 // Beginning matches
@@ -380,7 +385,7 @@ Token = Class.create({
         }
     },
 	mark_for_delete: function() {
-		this.delete_tag.value = true;
+		this.delete_tag.value = 1;
 		console.log("Set to delete");
 	},
     detect: function(e) {
