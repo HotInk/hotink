@@ -1,6 +1,6 @@
 #Update the last saved note
-page.replace_html 'last_saved', time_ago_in_words(@article.updated_at) + " ago"
-
+page.replace 'last_saved', :text =>"<span id=\"last_saved\" class=\"green\">#{time_ago_in_words(@article.updated_at)} ago</span>"
+ 
 #Reload sortings form to keep javascript calls up-to-date
 page << "new Ajax.Request('#{account_article_sortings_url(@account, @article, :format=>:js)}', {method:'get'});"
 #Remove nested form create elements for newly-created sortings

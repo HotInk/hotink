@@ -34,7 +34,8 @@ html[xmlns] .clearfix{display:block;}
 }
 .even-row { background-color: #FFFFFF; }
 .odd-row { background-color: #F4F4F4; }
-
+.red { color: #E62424; }
+.green { color: green; }
 
 .fieldWithErrors { padding: 2px; background-color: red; display: table; }
 #errorExplanation { width: 400px; border: 2px solid red; padding: 7px; padding-bottom: 12px; margin-bottom: 20px; background-color: #f0f0f0; }
@@ -49,89 +50,31 @@ html[xmlns] .clearfix{display:block;}
 dl.faq {  }
 dl.faq dt {font-weight: bold;}
 
-/* Start custom button CSS here
+/* Start of custom button CSS
 ---------------------------------------- */
-.btn {
-     display:inline-block !important;
-     background:none;
-     margin:0;
-     padding:3px 0;
-     border-width:0;
-     overflow:visible;
-     font:100%/1.2;
-     text-decoration:none;
-     color:#333;
-     }
-   * html button.btn {
-     padding-bottom:1px;
-     }
-   /* Immediately below is a temporary hack to serve the 
-      following margin values only to Gecko browsers
-      Gecko browsers add an extra 3px of left/right 
-      padding to button elements which can't be overriden.
-      Thus, we use -3px of left/right margin to overcome this. */
-   html:not([lang*=""]) button.btn {
-     	margin:0px 0px;
-     }
-   .btn span {
-     background:#ddd url(/bg-button.gif) repeat-x 0 0;
-     margin:0;
-     padding:3px 0;
-     border-left:1px solid #bbb;
-     border-right:1px solid #aaa;
-     }
-   * html .btn span {
-     padding-top:0;
-     }
-   .btn span span {
-     position:relative;
-     padding:3px .4em;
-     border-width:0;
-     border-top:1px solid #bbb;
-     border-bottom:1px solid #aaa;
-     }
+.btn { display:inline-block !important; background:none; margin:0; padding:3px 0; border-width:0; overflow:visible; font:100%/1.2; text-decoration:none; color:#333; }
+* html button.btn { padding-bottom:1px; }
+.btn span { background:#ddd url(/bg-button.gif) repeat-x 0 0; margin:0; padding:3px 0; border-left:1px solid #bbb; border-right:1px solid #aaa; }
+* html .btn span {  padding-top:0; }
+.btn span span { position:relative; padding:3px .4em; border-width:0; border-top:1px solid #bbb; border-bottom:1px solid #aaa; }
    
-   /* pill classes only needed if using pill style buttons ( LEFT | CENTER | RIGHT ) */
-   .pill-l span {
-   	border-right-width:0;
-     }
-   .pill-l span span {
-     border-right:1px solid #bbb;
-     }
-   .pill-c span {
-     border-right-style:none;
-     border-left-color:#fff;
-     }
-   .pill-c span span {
-     border-right:1px solid #bbb;
-     }
-   .pill-r span {
-     border-left-color:#fff;
-     }
+/* pill classes only needed if using pill style buttons ( LEFT | CENTER | RIGHT ) */
+.pill-l span { border-right-width:0; }
+.pill-l span span { border-right:1px solid #bbb; }
+	
+.pill-c span { border-right-style:none; border-left-color:#fff; }
+.pill-c span span { border-right:1px solid #bbb; }
+	
+.pill-r span { border-left-color:#fff; }
 
-   /* tab classes only needed if using tab style buttons ( LEFT | TOP | RIGHT | BOTTOM ) */
+/* tab classes only needed if using tab style buttons ( TOP | BOTTOM ) */
+.tab-t { padding: 1px 0px; }
+.tab-t span { border-bottom: 1px solid #DEDEDE; }
+.tab-t span span { border-bottom-width:0; padding: 1px .4em; }
 
-   .tab-t {
-	padding: 1px 0px;
-	}
-   .tab-t span {
-  	border-bottom: 1px solid #DEDEDE;
-    }
-   .tab-t span span {
-    border-bottom-width:0;
-    padding: 1px .4em;
-    }
-
-	.tab-b {
-		padding: 1px 0px;
-	}
-	.tab-b span {
-		border-top: 1px solid #DEDEDE;
-	} 
-	.tab-b span span {
-		border-top-width:0;
-	    padding: 1px .5em;
-	}
+.tab-b { padding: 1px 0px; }
+.tab-b span { border-top: 1px solid #DEDEDE; } 
+.tab-b span span { border-top-width:0; padding: 1px .5em; }
    
    /* only needed if implementing separate hover/focus/active state for buttons */
    .btn:hover span, .btn:hover span span, .btn:focus span, .btn:focus span span {
@@ -147,26 +90,14 @@ dl.faq dt {font-weight: bold;}
      outline:none; /* doesn't seem to be respected for <button>, only <a> */
      }
 
-   /* use if one button should be the 'primary' button */
-   .primary {
-     font-weight:bold;
-     color:#000;
-     }
+/* use if one button should be the 'primary' button */
+.primary { font-weight:bold; color:#000; }
 	
-	/* Save buttons use a blue background, as opposed to a grey one.*/
-	.save {
-		color: #FFF;
-	}
-	.save:hover span, .save:hover span span, .save:focus span, .save:focus span span  {
-		color: #CCC;
-	}
-	.save:active span {
-     background-position:0 -398px;
-     outline:none;
-     }
-	.save span{
-		background:#699DE3 url(/bg-button-blue.gif) repeat-x 0 0;
-	}
+/* Save buttons use a blue background, as opposed to a grey one.*/
+.save { color: #FFF; }
+.save:hover span, .save:hover span span, .save:focus span, .save:focus span span  { color: #CCC; }
+.save:active span { background-position:0 -398px; outline:none; }
+.save span{ background:#699DE3 url(/bg-button-blue.gif) repeat-x 0 0; }
 	
 /* Cancel buttons use a red background, as opposed to a grey one.*/
 .cancel { color: #FFF; }
@@ -174,24 +105,19 @@ dl.faq dt {font-weight: bold;}
 .cancel:active span { color: #FFF; outline:none; }
 .cancel span{ background:#E62424 url(/bg-button-red.gif) repeat-x 0 -1px; }
 	
-	.selected span {
-		color:#FFF;
-		background-image: none;
-		background-color:  #6A6A6A;/*#75AAF1;*/
-	}
-
-	.selected:hover span, .selected:hover span span, .selected:focus span, .selected:focus span span {
-	     cursor:pointer; /* important for any clickable/pressable element */
-	     border-color:#9cf !important;
-	     color:#FFF;
-  }
+.selected span { color:#FFF; background-image: none; background-color:  #6A6A6A;/*#75AAF1;*/ }
+.selected:hover span, .selected:hover span span, .selected:focus span, .selected:focus span span { cursor:pointer; border-color:#9cf !important; color:#FFF; }
 	
+/* Button size classes */
 .large { font-size: 13px; line-height: 1.2; }
 .large:active span{ background-position:0 -390px;}
 .small { font-size: 10px; line-height: 1; }
 .small span{ background-position: 0px -3px; }
 .tiny { font-size: 9px; line-height: 1;  }
 .micro { font-size: 8px; line-height: 1em; }
+	
+/* End of custom button CSS
+---------------------------------------- */
 
 /* Modal window styles */
 
@@ -403,16 +329,17 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .title_bar  h1 { display:inline; margin-right: 25px;}
 #articles .title_bar a { vertical-align: text-bottom;}
 #articles .select_all { margin: 0px 9px;}
-#articles ol {margin-top: 5px; width: 685px; padding-left: 0; list-style-type: none;}
+#articles ol {margin-top: 5px; width: 700px; padding-left: 0; list-style-type: none;}
 #articles ol li { background-color: #FFFFFF; }
 #articles ol a { margin: 12px 0px;}
 #articles ol a:visited { color: #555;}
 #articles ol a:hover { color: #3399DE;}
 #articles ol a:active { color: #333;}
 #articles ol div { padding: 5px 5px; display: inline-block;vertical-align: top;}
-#articles .article { width: 550px; line-height: 1.2em;}
-#articles .article h1 { font-size: 16px; margin: 5px; color: #666; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
-#articles .date { width: 60px; color: #AAA; font-size: 16px;}
+#articles .article { width: 555px; line-height: 1.2em;}
+#articles .article h1 { font-size: 16px; margin: 0px 5px; color: #666; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
+#articles .date { width: 70px; color: #AAA; font-size: 16px;}
+#articles .date p { font-size: 11px; color: #666; margin: 5px 0px; font-style:italic;}
 #articles .highlighted { background-color: #CEE4F3;}
 #articles a.delete { float: right; width: 9px; margin: 3px; background: url('/token_x.gif') no-repeat;}
 

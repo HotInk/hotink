@@ -60,7 +60,12 @@
 				<div class="toolbox_border"></div>
 				<div class="toolbox_body">	
 					<p>
-						Last saved<br /><span id="last_saved" style="color:green;"><%= time_ago_in_words(@article.updated_at) %> ago</span>
+						Last saved<br />
+						<% if @article.created_at == @article.updated_at %>
+						<span id="last_saved" class="red">Never</span>
+						<% else %>
+						<span id="last_saved" class="green"><%= time_ago_in_words(@article.updated_at) %> ago</span>
+						<% end %>
 					</p>
 		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"large save") -%>
 				</div>

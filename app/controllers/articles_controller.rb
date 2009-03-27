@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
-    @articles = @account.articles.find(:all)
+    @articles = @account.articles.find(:all, :order=>"date DESC")
 
     respond_to do |format|
       format.html # index.html.erb

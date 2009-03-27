@@ -7,14 +7,17 @@
 <ol>
 <% for article in @articles %>
 	<% unless article.created_at == article.updated_at %>
-	  <li onclick="" onmouseover="$(this).addClassName('highlighted');" onmouseout="$(this).removeClassName('highlighted');">
+	  <li onclick="select_article_li(this);" onmouseover="$(this).addClassName('highlighted');" onmouseout="$(this).removeClassName('highlighted');">
 	    <%= link_to "&nbsp;", [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete" %>
 		<div><input type="checkbox" value="<%= article.id %>"/></div>
 		<div class="article">
 			<h1>&ldquo;<%=link_to h(article.display_title), edit_account_article_url(@account, article) %>&rdquo;</h1>
-			<div><%= link_to "Edit", edit_account_article_url(@account, article) %> | <%= link_to "Quick View" %> </div>
+			<div><em><%= article.authors_list if article.authors_list %></em></div>
 		</div>
-		<div class="date"><%=h article.date.to_s(:standard) %></div>
+		<div class="date">
+			<%=h article.date.to_s(:standard_date_only) %>
+			<p><%= article.bodytext.scan(/\w+/).size %> words</p>
+		</div>
 	  </li>
 	<% end %>
 <% end %>
