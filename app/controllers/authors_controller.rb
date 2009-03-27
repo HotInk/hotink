@@ -2,8 +2,12 @@ class AuthorsController < ApplicationController
   # GET /authors
   # GET /authors.xml
   def index
-    @authors = @account.authors.find(:all)
-
+    if @article = find_article
+      @authors = @article.authors
+    else 
+      @authors = @account.authors.find(:all)
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @authors }
