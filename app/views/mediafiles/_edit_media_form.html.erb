@@ -1,8 +1,6 @@
 <div id="edit_media_container" class="<%= @mediafile.is_a?(Image) ? "image_container " : "mediafile_container " -%>clearfix">
-	<div class="window_label">
-		<div><span>Edit media details</span></div><p class="close_button"><a href="#" onclick="article_form_overlay.end();return false;">x</a></p>
-	</div>
-	<div id="edit_media_form">
+	<p class="close_button"><a href="#" onclick="article_form_overlay.end();return false;">x</a></p>
+	<div id="edit_media_form" class="clearfix">
 		  	<div id="media_matte" class="clearfix">
 				<% if @mediafile.is_a? Image %>
 					<% form_labels = {:form_label => "Edit image details", :credits_label => "Image credits", :title_label => "Title"} %>
@@ -34,7 +32,7 @@
 		  	</div>
 			<div id="media_details" class="clearfix">
 				<% form_for :mediafile, :url => account_article_mediafile_url(@account, @article, @mediafile),  :html=>{:method=>:put, :multipart=>true, :target=>"upload_frame", :onsubmit => "article_form_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
-			 	<%= f.error_messages %>
+				<%= f.error_messages %>
 				<h4><%= form_labels[:form_label] %></h4>
 				<p><%= f.label :title, form_labels[:title_label] %><br />
 					<%= f.text_field :title, :class=>"text_input" %>
@@ -72,15 +70,13 @@
 					    });
 					</script>
 				</div>
+				<div class="form_buttons"><%= button_link_to_submit "Save changes", :class=>"save pill-l", :id=>"media_save_changes" %><%= button_link_to_function "Cancel", "article_form_overlay.end();", :class=>"cancel pill-r"%></div>
 				<% end %>
 				<div id="media_tags_form">
 					<script type="text/javascript" charset="utf-8">
 						new Ajax.Request('<%= new_account_mediafile_tag_url(@account, @mediafile, :format=>:js) %>', {method: 'get'});
 					</script>
 				</div>
-				<p style="text-align:right;margin-top:10px;margin-right:0;">
-			  		<%= button_link_to_submit "Save changes", :class=>"save pill-l", :id=>"media_save_changes" %><%= button_link_to_function "Cancel", "article_form_overlay.end();", :class=>"cancel pill-r"%>
-				</p>
 		</div>			
 	</div>
 </div>

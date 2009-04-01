@@ -109,11 +109,6 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 
 /* Modal window styles */
 
-.window_label { margin: 0px -5px 10px -5px; height:30px; border-top:1px solid #699DE3; border-bottom:1px solid #699DE3; background-color: #432800; }
-.window_label div {float:left; width: 90%; font-size:16px; height:100%; padding: 0px 0px; margin: 0 0;}
-.window_label span { margin-left: 15px; height:20px; padding:7px 10px 3px 10px;font-weight: bold; display: inline-block; background-color: #FFF;}
-.window_label div a { color: #FFF; text-decoration: underline; }
-
 .close_button  { float: right; display: inline-block; margin: 5px 6px 7px 6px; padding: 0px 3px 3px 3px; text-decoration: none !important;line-height:14px; font-size: 14px; color: #FFF; background-color: #E62424; border: 1px solid #AAA;  }
 .close_button a { color: #FFF; }
 
@@ -149,7 +144,7 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 /* Attach media styles */
 #attach_media_container { width: 660px; min-height: 50px; margin-bottom:0px;}
 #upload_media_tab {  border: 1px solid #AAA; padding: 5px;}
-#upload_media_form>div { margin: 50px 50px;}
+#upload_media_form>div { margin: 40px 50px;}
 #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
 #upload_media_form p { font-size: 13px; }
 
@@ -167,6 +162,7 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 #edit_media_form #media_tags_form input { width:80%;}
 #edit_media_form #media_matte { float:left; margin: 0; padding:0; background-color: #CEE4F3; }
 #edit_media_form #media_matte img { border: 1px solid #AAA; }
+#edit_media_form .form_buttons { margin: 10px 0px;}
 .mediafile_container #media_matte { width:100%; padding:5px;}
 .image_container #media_matte { width:402px;min-height:350px;text-align:center; padding:5px;}
 #edit_media_form #media_matte div { text-align:left; padding: 10px 10px; margin-bottom:0;}
@@ -226,7 +222,7 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 #overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; }
 #loading{ position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0;}
 #overlay_container{ position: relative; width: 250px; height: 250px; background-color: #fff; margin: 0 auto;}
-#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 5px 5px 5px 5px; background-color: #fff;}
+#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 5px 5px 5px 5px; background-color: #fff; border: 2px solid #AAA;}
 
 
 /* Author autocomplete css */
