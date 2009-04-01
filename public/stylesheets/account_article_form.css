@@ -1,6 +1,7 @@
 /* Main style */
 
-body { background-color: #F9F9F9; color: #333; margin: 0 auto; padding: 0px 5px; }
+body { background-color: #F9F9F9; color: #333; margin: 0 auto; padding: 0px 5px; text-algin: center;}
+div#page_container { margin-left: auto;  margin-right: auto; width: 885px; padding: 5px; text-align: left;}
 
 body, p, ol, ul, td {
   font-family: "lucida grande", verdana, arial, helvetica, sans-serif;
@@ -130,17 +131,7 @@ dl.faq dt {font-weight: bold;}
 .close_button a { color: #FFF; }
 
 
-/* Form style */
-#page_container {
-	margin: 5px 0px;	
-	width: 885px;
-	padding: 5px;
-	padding-left: 10px;
-	float: left;
-	
-	text-align: left;
-	/* border: 2px solid #3399DE; */
-}
+/* Article form style */
 
 #article_form_top_links{ width:600px; float:left; margin-bottom: 5px; }
 
