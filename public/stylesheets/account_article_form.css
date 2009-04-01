@@ -32,8 +32,8 @@ html[xmlns] .clearfix{display:block;}
 		-moz-opacity: 0.75;       /* mozilla, netscape */
 		opacity: 0.75;           /* fx, safari, opera */
 }
-.even-row { background-color: #FFFFFF; }
-.odd-row { background-color: #F4F4F4; }
+.even-row { background-color: #FAFAFA; }
+.odd-row { background-color: #F1F1F1; }
 .red { color: #E62424; }
 .green { color: green; }
 
@@ -330,16 +330,18 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .title_bar a { vertical-align: text-bottom;}
 #articles .select_all { margin: 0px 9px;}
 #articles ol {margin-top: 5px; width: 700px; padding-left: 0; list-style-type: none;}
-#articles ol li { background-color: #FFFFFF; }
+#articles ol li {  }
 #articles ol a { margin: 12px 0px;}
 #articles ol a:visited { color: #555;}
 #articles ol a:hover { color: #3399DE;}
 #articles ol a:active { color: #333;}
 #articles ol div { padding: 5px 5px; display: inline-block;vertical-align: top;}
-#articles .article { width: 555px; line-height: 1.2em;}
-#articles .article h1 { font-size: 16px; margin: 0px 5px; color: #666; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
-#articles .date { width: 70px; color: #AAA; font-size: 16px;}
-#articles .date p { font-size: 11px; color: #666; margin: 5px 0px; font-style:italic;}
+#articles .article { width: 553px; min-height: 38px; padding: 5px 0px; line-height: 1.2em; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf;}
+#articles .article h1 { font-size: 16px; margin: 0; padding: 0px 5px 5px 5px; color: #666; border-bottom: 1px solid #DDD; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
+#articles .article div { font-size: 11px; }
+#articles div div { padding-bottom: 0px;}
+#articles .date { width: 70px; color: #AAA; font-size: 16px; padding-top: 8px;}
+#articles .date p { font-size: 11px; color: #666; margin: 0px; margin-top: 8px; font-style:italic;}
 #articles .highlighted { background-color: #CEE4F3;}
 #articles a.delete { float: right; width: 9px; margin: 3px; background: url('/token_x.gif') no-repeat;}
 
