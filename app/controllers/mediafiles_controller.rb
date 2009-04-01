@@ -1,4 +1,6 @@
 class MediafilesController < ApplicationController
+  layout 'hotink'
+  
   # GET /mediafiles
   # GET /mediafiles.xml
   def index

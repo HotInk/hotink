@@ -1,18 +1,9 @@
 /* Main style */
 
-body { background-color: #F9F9F9; color: #333; margin: 0 auto; padding: 0px 5px; }
-
-body, p, ol, ul, td {
-  font-family: "lucida grande", verdana, arial, helvetica, sans-serif;
-  font-size:   12px;
-  line-height: 16px;
-}
-
-pre {
-  background-color: #eee;
-  padding: 10px;
-  font-size: 11px;
-}
+body { background-color: #F9F9F9; color: #333; margin: 0 auto; text-algin: center;}
+body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 12px; line-height: 16px; }
+div#page_container { margin-left: auto;  margin-right: auto; width: 885px; padding: 5px; text-align: left; }
+pre { background-color: #eee; padding: 10px; font-size: 11px; }
 
 a { text-decoration:none; color: #000; }
 a:visited { color: #333; }
@@ -24,8 +15,10 @@ a.weblink { text-decoration: underline;}
 .clearfix{display:inline-block;}
 html[xmlns] .clearfix{display:block;}
 * html .clearfix{height:1%;}
+
 .hidden { display:none;}
 .user { font-family: georgia, "Times New Roman", times, serif;}
+
 .translucent  {
 		filter: alpha(opacity=75); /* internet explorer */
 		-khtml-opacity: 0.75;      /* khtml, old safari */
@@ -57,7 +50,11 @@ dl.faq dt {font-weight: bold;}
 .btn span { background:#ddd url(/bg-button.gif) repeat-x 0 0; margin:0; padding:3px 0; border-left:1px solid #bbb; border-right:1px solid #aaa; }
 * html .btn span {  padding-top:0; }
 .btn span span { position:relative; padding:3px .4em; border-width:0; border-top:1px solid #bbb; border-bottom:1px solid #aaa; }
-   
+  
+.btn:hover span, .btn:hover span span, .btn:focus span, .btn:focus span span { cursor:pointer; border-color:#9cf !important; color:#000; }
+.btn:active span { background-position:0 -400px; outline:none; }
+.btn:focus, .btn:active { outline:none; /* doesn't seem to be respected for <button>, only <a> */ }
+ 
 /* pill classes only needed if using pill style buttons ( LEFT | CENTER | RIGHT ) */
 .pill-l span { border-right-width:0; }
 .pill-l span span { border-right:1px solid #bbb; }
@@ -75,20 +72,6 @@ dl.faq dt {font-weight: bold;}
 .tab-b { padding: 1px 0px; }
 .tab-b span { border-top: 1px solid #DEDEDE; } 
 .tab-b span span { border-top-width:0; padding: 1px .5em; }
-   
-   /* only needed if implementing separate hover/focus/active state for buttons */
-   .btn:hover span, .btn:hover span span, .btn:focus span, .btn:focus span span {
-     cursor:pointer; /* important for any clickable/pressable element */
-     border-color:#9cf !important;
-     color:#000;
-     }
-   .btn:active span {
-     background-position:0 -400px;
-     outline:none;
-     }
-   .btn:focus, .btn:active {
-     outline:none; /* doesn't seem to be respected for <button>, only <a> */
-     }
 
 /* use if one button should be the 'primary' button */
 .primary { font-weight:bold; color:#000; }
@@ -119,30 +102,20 @@ dl.faq dt {font-weight: bold;}
 /* End of custom button CSS
 ---------------------------------------- */
 
-/* Modal window styles */
+/* Navigation CSS */
 
-.window_label { margin: 0px -5px 10px -5px; height:30px; border-top:1px solid #699DE3; border-bottom:1px solid #699DE3; background-color: #432800; }
-.window_label div {float:left; width: 90%; font-size:16px; height:100%; padding: 0px 0px; margin: 0 0;}
-.window_label span { margin-left: 15px; height:20px; padding:7px 10px 3px 10px;font-weight: bold; display: inline-block; background-color: #FFF;}
-.window_label div a { color: #FFF; text-decoration: underline; }
+div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: #FFF; border-bottom: 1px solid #CEE4F3; text-align: center;}
+#navigation #links { font-size: 17px; line-height: 20px; }
+
+/* Modal window styles */
 
 .close_button  { float: right; display: inline-block; margin: 5px 6px 7px 6px; padding: 0px 3px 3px 3px; text-decoration: none !important;line-height:14px; font-size: 14px; color: #FFF; background-color: #E62424; border: 1px solid #AAA;  }
 .close_button a { color: #FFF; }
 
 
-/* Form style */
-#page_container {
-	margin: 5px 0px;	
-	width: 885px;
-	padding: 5px;
-	padding-left: 10px;
-	float: left;
-	
-	text-align: left;
-	/* border: 2px solid #3399DE; */
-}
+/* Article form style */
 
-#article_form_top_links{ width:600px; float:left; margin-bottom: 5px; }
+#article_form_top_links{ width:600px; float:left;margin-top: 2px; margin-bottom: 5px; }
 
 .note {	font-size: 11px; }
 .text_input {
@@ -171,7 +144,7 @@ dl.faq dt {font-weight: bold;}
 /* Attach media styles */
 #attach_media_container { width: 660px; min-height: 50px; margin-bottom:0px;}
 #upload_media_tab {  border: 1px solid #AAA; padding: 5px;}
-#upload_media_form>div { margin: 50px 50px;}
+#upload_media_form>div { margin: 40px 50px;}
 #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
 #upload_media_form p { font-size: 13px; }
 
@@ -189,6 +162,7 @@ dl.faq dt {font-weight: bold;}
 #edit_media_form #media_tags_form input { width:80%;}
 #edit_media_form #media_matte { float:left; margin: 0; padding:0; background-color: #CEE4F3; }
 #edit_media_form #media_matte img { border: 1px solid #AAA; }
+#edit_media_form .form_buttons { margin: 10px 0px;}
 .mediafile_container #media_matte { width:100%; padding:5px;}
 .image_container #media_matte { width:402px;min-height:350px;text-align:center; padding:5px;}
 #edit_media_form #media_matte div { text-align:left; padding: 10px 10px; margin-bottom:0;}
@@ -227,7 +201,7 @@ dl.faq dt {font-weight: bold;}
 
 /* Tool box styles */
 
-#tools { width: 255px; padding: 5px; float: right;	}
+#tools { width: 255px; padding: 0px 5px; float: right;	}
 #tools p{ margin: 0px 0px 6px 0px; }
 
 #tools .toolbox { width: 255px; margin-bottom: 10px; }
@@ -248,7 +222,7 @@ dl.faq dt {font-weight: bold;}
 #overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; }
 #loading{ position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0;}
 #overlay_container{ position: relative; width: 250px; height: 250px; background-color: #fff; margin: 0 auto;}
-#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 5px 5px 5px 5px; background-color: #fff;}
+#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 5px 5px 5px 5px; background-color: #fff; border: 2px solid #AAA;}
 
 
 /* Author autocomplete css */
