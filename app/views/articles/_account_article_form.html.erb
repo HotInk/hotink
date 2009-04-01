@@ -19,7 +19,7 @@
 		    <%= f.label :date %>&nbsp;<%= f.unobtrusive_date_text_picker :date, {:format => "M-D-Y"}, :class => "text_input", :size => "10" %>
 		  </p>
 		  <p class="half_column">
-			<%= f.label :section_id, "Primary section"%>&nbsp;<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => true},  :class => :text_input)%>
+			<%= f.label :section_id, "Primary section"%>&nbsp;<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => "None" },  :class => :text_input)%>
 		  </p>
 	  </div>
 	  <div id ="author_list" class="field">
