@@ -44,7 +44,6 @@
 	  <div id="authorship_form_hidden_elements" class="hidden"></div>
 	<% end %>
 </div><!-- /article_form -->
-	<div id="sidebar">
 		<div id="tools">
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
@@ -95,7 +94,6 @@
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - tags -->		
 		</div><!-- /tools -->
-	</div><!-- /siderbar -->
 
 <script type="text/javascript">
 	//Load toolbox functionality
@@ -109,9 +107,6 @@
 	reload_media = function() {
 		new Ajax.Request('/accounts/<%= @account.id %>/articles/<%= @article.id %>/mediafiles', {method:'get'});
 	}
-
-	//This is a quick hack to fix button display in firefox
-	load_button_fix();
 	
  	// WMD Editor Configuration script
     // Set this *before* you load wmd.js

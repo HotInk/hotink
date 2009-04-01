@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
   
+  layout 'hotink'
+  
   # GET /articles
   # GET /articles.xml
   def index
