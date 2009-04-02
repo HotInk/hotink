@@ -5,7 +5,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
-    @articles = @account.articles.find(:all, :order=>"date DESC")
+    @articles = @account.articles.find(:all, :order=>"date DESC", :include => :authors)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +16,7 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.xml
   def show
-    @article = @account.articles.find(params[:id])
+    @article = @account.articles.find(params[:id], :include=>:authors)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -30,7 +30,7 @@ class ArticlesController < ApplicationController
     @article = @account.articles.build    
     @article.date = Time.now
     
-    #Check to see if the last article created is exitsts, and is blank.
+    #Check to see if the last article created is exists and is blank.
     #If so, redate it and serve it up instead of a new article, to prevent
     #the data from becoming cluttered with abandoned articles.
     #

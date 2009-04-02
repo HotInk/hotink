@@ -303,14 +303,14 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .title_bar  h1 { display:inline; margin-right: 25px;}
 #articles .title_bar a { vertical-align: text-bottom;}
 #articles .select_all { margin: 0px 9px;}
-#articles ol {margin-top: 5px; width: 700px; padding-left: 0; list-style-type: none;}
+#articles ol {margin-top: 5px; width: 885px; padding-left: 0; list-style-type: none;}
 #articles ol li {  }
 #articles ol a { margin: 12px 0px;}
 #articles ol a:visited { color: #555;}
 #articles ol a:hover { color: #3399DE;}
 #articles ol a:active { color: #333;}
 #articles ol div { padding: 5px 5px; display: inline-block;vertical-align: top;}
-#articles .article { width: 553px; min-height: 38px; padding: 5px 0px; line-height: 1.2em; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf;}
+#articles .article { width: 749px; min-height: 38px; padding: 5px 0px; line-height: 1.2em; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf;}
 #articles .article h1 { font-size: 16px; margin: 0; padding: 0px 5px 5px 5px; color: #666; border-bottom: 1px solid #DDD; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #articles .article div { font-size: 11px; }
 #articles div div { padding-bottom: 0px;}

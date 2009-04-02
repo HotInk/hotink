@@ -53,7 +53,7 @@ class Article < ActiveRecord::Base
   def authors_list
      case self.authors.length
      when 0
-       return false
+       return nil
      when 1
        return self.authors.first.name
      when 2
@@ -75,5 +75,19 @@ class Article < ActiveRecord::Base
       end
     end
   end
+  
+  def to_xml(options = {})
+     options[:indent] ||= 2
+     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+     xml.instruct! unless options[:skip_instruct]
+     
+     xml.article do
+       xml.tag!( :title, self.title )
+       xml.tag!( :authors_list, self.authors_list )
+       xml.tag!( :bodytext, self.bodytext )
+     end
+
+  end
+  
   
 end
