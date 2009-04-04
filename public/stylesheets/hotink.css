@@ -125,7 +125,7 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 	color: #555;
 }
 .column_holder { float: none; margin-bottom: 10px; }
-.half_column { float: left; width: 50%; }
+.half_column { float: left; width: 50%; margin: 5px 0px; }
 .third_column { float: left; width: 33%; }
 .two_thirds_column { float: left; width:66%; }
 
@@ -133,7 +133,7 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 #article_form #article_title {width: 100%; height: 24px; padding: 4px 2px; margin-bottom: 10px; font-size: 20px;}
 #article_form #article_subtitle { width: 100%; padding: 4px 2px; height: 18px; margin-bottom: 10px; font-size: 16px; }
 #article_form #article_date { height: 16px; padding: 3px 2px; font-size: 13px; }
-#article_form #article_section_id { height: 26px; padding: 3px 2px; font-size: 12px; color: #333; }
+#article_form #article_section_id { height: 26px; max-width: 302px; padding: 3px 2px; font-size: 12px; color: #333; }
 #article_form #author_list { width: 600px; margin-bottom: 20px; }
 #article_form #article_bodytext { min-width: 590px; max-width: 750px; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
 #article_form #article_bodytext textarea {  }
@@ -190,7 +190,7 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 #account_article_sorting_list label{ color: #3399DE; padding: 0px 3px; }
 #account_article_sorting_list .printsection label { color:#333; }
 #account_article_sorting_list #categories_sort { margin-top: 5px; padding-left: 0px; list-style-type: none; } 
-#account_article_sorting_list #categories_sort input[type='text'] { width: 100px;}
+#account_article_sorting_list #categories_sort input[type='text'] { width: 160px;}
 #account_article_sorting_list #categories_sort input[type='checkbox'] { padding: 1px 0px;}
 #account_article_sorting_list #categories_sort ul { padding-left: 20px; list-style-type: none; }
 #account_article_sorting_list #categories_list ul div {display:inline-block;} 
@@ -310,12 +310,14 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles ol a:hover { color: #3399DE;}
 #articles ol a:active { color: #333;}
 #articles ol div { padding: 5px 5px; display: inline-block;vertical-align: top;}
-#articles .article { width: 749px; min-height: 38px; padding: 5px 0px; line-height: 1.2em; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf;}
-#articles .article h1 { font-size: 16px; margin: 0; padding: 0px 5px 5px 5px; color: #666; border-bottom: 1px solid #DDD; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
+#articles .article { width: 643px; min-height: 40px; padding: 5px 0px;  height: 100%; line-height: 1.2em; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf;}
+#articles .article h1 { font-size: 16px; margin: 0; padding: 0px 5px 5px 5px; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #articles .article div { font-size: 11px; }
+#articles .section_media { width: 100px; margin-left: 10px; padding: 5px 0px; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf; }
+#articles .section_media p { font-size: 13px; padding: 0px 5px; color: #AAA; margin: 0;}
 #articles div div { padding-bottom: 0px;}
 #articles .date { width: 70px; color: #AAA; font-size: 16px; padding-top: 8px;}
-#articles .date p { font-size: 11px; color: #666; margin: 0px; margin-top: 8px; font-style:italic;}
+#articles .date p { font-size: 11px; color: #AAA; margin: 0px; margin-top: 8px; font-style:italic; font-family: georgia,"times new roman",times, serif;}
 #articles .highlighted { background-color: #CEE4F3;}
 #articles a.delete { float: right; width: 9px; margin: 3px; background: url('/token_x.gif') no-repeat;}
 

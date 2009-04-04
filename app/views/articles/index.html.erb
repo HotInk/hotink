@@ -14,8 +14,11 @@
 			<h1>&ldquo;<%=link_to h(article.display_title), edit_account_article_url(@account, article) %>&rdquo;</h1>
 			<div><em><%= article.authors_list if article.authors_list %></em></div>
 		</div>
+		<div class="section_media">
+			<p> <%= article.section.blank? ? "<span style=\"color: #DEDEDE\">No section</span>" : article.section.name %></p>
+		</div>
 		<div class="date">
-			<%=h article.date.to_s(:standard_date_only) %>
+			<%= h article.date.to_s(:standard_date_only) %>
 			<p><%= article.bodytext.scan(/\w+/).size %> words</p>
 		</div>
 	  </li>
@@ -29,7 +32,8 @@
 
 <script type="text/javascript" charset="utf-8">
 	// Activate table header checkboxes select_all functionality
-	$$('.select_all').each(	function(element){ Event.observe(element, 'click', function( event ) { if (element.checked){ $$('ol input[type="checkbox"], .select_all').each(function(node){ node.checked = 'checked' });} else { $$('ol input[type="checkbox"], .select_all').each(function(node){ node.checked = null }); } }); });
+	$$('.select_all').each(	function(element){ Event.observe(element, 'click', function( event ) { if (element.checked){ $$('ol input[type="checkbox"]').each(function(node){ node.checked = 'checked' });} else { $$('ol input[type="checkbox"], .select_all').each(function(node){ node.checked = null }); } }); });
+	//$$('#articles>ol>li').each(	function(element){ Event.observe(element, 'click', function( event ) { if (element.checked){ $$('ol input[type="checkbox"]').each(function(node){ node.checked = 'checked' });} else { $$('ol input[type="checkbox"], .select_all').each(function(node){ node.checked = null }); } }); });
 	
 </script>
 

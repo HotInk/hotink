@@ -74,7 +74,7 @@ var load_category_edit = function(){
 	
 	if (categories_editing) {
 		// Hide edit buttons
-		$('categories_list').select('li').each(function (item){ item.childElements()[1].childElements()[1].setStyle({visibility:'hidden'})});
+		$('categories_list').select('li').each(function (item){ item.down().childElements()[2].setStyle({visibility:'hidden'})});
 		
 		categories_tree.setUnsortable();
 		new Effect.SlideUp($('hidden_categories_buttons'), {duration:0.1});
@@ -84,7 +84,7 @@ var load_category_edit = function(){
 		new Effect.SlideDown($('hidden_categories_buttons'), {duration:0.1});
 		
 		//Make edit buttons visible
-		$('categories_list').select('li').each(function (item){ item.childElements()[1].childElements()[1].setStyle({visibility:'visible'})});
+		$('categories_list').select('li').each(function (item){ item.down().childElements()[2].setStyle({visibility:'visible'})});
 		
 		//  Build SortableTree from list items.
 		categories_tree = new SortableTree('categories_sort', {

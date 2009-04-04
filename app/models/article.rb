@@ -76,6 +76,10 @@ class Article < ActiveRecord::Base
     end
   end
   
+  def has_attached_media?
+    self.mediafiles ? true : false
+  end
+  
   def to_xml(options = {})
      options[:indent] ||= 2
      xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
