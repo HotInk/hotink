@@ -302,8 +302,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .title_bar { margin: 15px 5px;}
 #articles .title_bar  h1 { display:inline; margin-right: 25px;}
 #articles .title_bar a { vertical-align: text-bottom;}
-#articles .select_all_wrap { display:inline; float: left; margin: 5px 0px;}
-#articles .select_all { margin: 0px 9px; }
+#articles .select_all_wrap { display:inline; float: left; margin: 2px 0px; padding: 3px 8px 3px 0px; background-color: #CEE4F3;  border: 1px dotted #9cf;}
+#articles .select_all { margin: 3px 3px 3px 7px; }
 #articles .pagination { display: inline; float: right; margin: 5px 0px; }
 #articles .pagination .disabled { display: none;}
 #articles ol {margin-top: 5px; width: 885px; padding-left: 0; list-style-type: none;}
