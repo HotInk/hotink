@@ -302,7 +302,10 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .title_bar { margin: 15px 5px;}
 #articles .title_bar  h1 { display:inline; margin-right: 25px;}
 #articles .title_bar a { vertical-align: text-bottom;}
-#articles .select_all { margin: 0px 9px;}
+#articles .select_all_wrap { display:inline; float: left; margin: 5px 0px;}
+#articles .select_all { margin: 0px 9px; }
+#articles .pagination { display: inline; float: right; margin: 5px 0px; }
+#articles .pagination .disabled { display: none;}
 #articles ol {margin-top: 5px; width: 885px; padding-left: 0; list-style-type: none;}
 #articles ol li {  }
 #articles ol a { margin: 12px 0px;}
@@ -321,6 +324,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .highlighted_card { background-color: #CEE4F3;}
 #articles .selected_card { background-color: #CEE4F3;}
 #articles a.delete { float: right; width: 9px; margin: 3px; background: url('/token_x.gif') no-repeat;}
+
 
 /* Start table CSS here
 ---------------------------------------- */

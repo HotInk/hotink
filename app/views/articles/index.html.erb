@@ -1,32 +1,33 @@
 <div id="articles">
 <div class="title_bar"><h1>Articles</h1><%= button_link_to 'New article', new_account_article_path(@account), :class=>"" %></div>
 
-
-<p><input id="select_all_head" type="checkbox" class="select_all"/><label for="select_all_head">&nbsp;Select all</label></p>
-
-<ol>
-<% for article in @articles %>
-	<% unless article.created_at == article.updated_at %>
-	  <li class="<%= cycle("even-row", "odd-row") %>" onmouseout="$(this).removeClassName('highlighted');$(this).down().hide()">
-	    <%= link_to "&nbsp;", [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete", :style=>"display:none;" %>
-		<div><input type="checkbox" value="<%= article.id %>"/></div>
-		<div class="article">
-			<h1>&ldquo;<%=link_to h(article.display_title), edit_account_article_url(@account, article) %>&rdquo;</h1>
-			<div><em><%= article.authors_list if article.authors_list %></em></div>
-		</div>
-		<div class="section_media">
-			<p> <%= article.section.blank? ? "<span style=\"color: #DEDEDE\">No section</span>" : article.section.name %></p>
-		</div>
-		<div class="date">
-			<%= h article.date.to_s(:standard_date_only) %>
-			<p><%= article.bodytext.scan(/\w+/).size %> words</p>
-		</div>
-	  </li>
+<div class="clearfix">
+<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/><label for="select_all_head">&nbsp;Select all</label></p>
+<% paginated_section @posts do %>
+</div>
+	<ol>
+	<% for article in @articles %>
+		<% unless article.created_at == article.updated_at %>
+		  <li class="<%= cycle("even-row", "odd-row") %>" onmouseout="$(this).removeClassName('highlighted');$(this).down().hide()">
+		    <%= link_to "&nbsp;", [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete", :style=>"display:none;" %>
+			<div><input type="checkbox" value="<%= article.id %>"/></div>
+			<div class="article">
+				<h1>&ldquo;<%=link_to h(article.display_title), edit_account_article_url(@account, article) %>&rdquo;</h1>
+				<div><em><%= article.authors_list if article.authors_list %></em></div>
+			</div>
+			<div class="section_media">
+				<p> <%= article.section.blank? ? "<span style=\"color: #DEDEDE\">No section</span>" : article.section.name %></p>
+			</div>
+			<div class="date">
+				<%= h article.date.to_s(:standard_date_only) %>
+				<p><%= article.bodytext.scan(/\w+/).size %> words</p>
+			</div>
+		  </li>
+		<% end %>
 	<% end %>
+	</ol>
 <% end %>
-</ol>
-
-<p><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
+<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
 
 <br />
 

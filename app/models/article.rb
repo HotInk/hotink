@@ -88,7 +88,7 @@ class Article < ActiveRecord::Base
      xml.article do
        xml.tag!( :title, self.title )
        xml.tag!( :authors_list, self.authors_list )
-       xml.tag!( :bodytext, self.bodytext )
+       #xml.tag!( :bodytext, self.bodytext )
      end
 
   end
