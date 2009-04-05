@@ -4,18 +4,13 @@ require 'culerity'
 
 Before do
   $server ||= Culerity::run_server
-  $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox}
+  $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox, :resynchronize => true}
   @host = 'http://localhost:3001'
 end
 
 at_exit do
   $browser.exit
   $server.close
-end
-
-Given /^I am on (.+)$/ do |page_name|
-  $browser.goto path_to(page_name)
-  assert_successful_response
 end
 
 When /I press "(.*)"/ do |button|
@@ -46,6 +41,10 @@ end
 
 When /I choose "(.*)"/ do |field|
   $browser.radio(:id, find_label(field).for).set(true)
+end
+
+When /^I am on (.+)$/ do |path|
+  $browser.goto @host + path_to(path)
 end
 
 When /I go to (.+)/ do |path|

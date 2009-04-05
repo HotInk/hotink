@@ -313,12 +313,13 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .article { width: 643px; min-height: 40px; padding: 5px 0px;  height: 100%; line-height: 1.2em; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf;}
 #articles .article h1 { font-size: 16px; margin: 0; padding: 0px 5px 5px 5px; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #articles .article div { font-size: 11px; }
-#articles .section_media { width: 100px; margin-left: 10px; padding: 5px 0px; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf; }
+#articles .section_media { width: 100px; margin-left: 10px; padding: 4px 0px; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf; }
 #articles .section_media p { font-size: 13px; padding: 0px 5px; color: #AAA; margin: 0;}
 #articles div div { padding-bottom: 0px;}
 #articles .date { width: 70px; color: #AAA; font-size: 16px; padding-top: 8px;}
 #articles .date p { font-size: 11px; color: #AAA; margin: 0px; margin-top: 8px; font-style:italic; font-family: georgia,"times new roman",times, serif;}
-#articles .highlighted { background-color: #CEE4F3;}
+#articles .highlighted_card { background-color: #CEE4F3;}
+#articles .selected_card { background-color: #CEE4F3;}
 #articles a.delete { float: right; width: 9px; margin: 3px; background: url('/token_x.gif') no-repeat;}
 
 /* Start table CSS here

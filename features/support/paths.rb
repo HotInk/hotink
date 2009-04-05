@@ -4,7 +4,11 @@ module NavigationHelpers
           
     # Add more page name => path mappings here
     when /the accounts index page/
-      "http://localhost:3001/accounts"
+      accounts_path
+    
+    when /the article edit page/
+      article = Factory(:article)
+      edit_account_article_path(article.account, article )
       
     else
       raise "Can't find mapping from \"#{page_name}\" to a path."

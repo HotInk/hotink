@@ -7,7 +7,7 @@
 <ol>
 <% for article in @articles %>
 	<% unless article.created_at == article.updated_at %>
-	  <li class="<%= cycle("even-row", "odd-row") %>" onclick="select_article_li(this);" onmouseover="$(this).addClassName('highlighted');$(this).down().show()" onmouseout="$(this).removeClassName('highlighted');$(this).down().hide()">
+	  <li class="<%= cycle("even-row", "odd-row") %>" onmouseout="$(this).removeClassName('highlighted');$(this).down().hide()">
 	    <%= link_to "&nbsp;", [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete", :style=>"display:none;" %>
 		<div><input type="checkbox" value="<%= article.id %>"/></div>
 		<div class="article">
@@ -31,9 +31,29 @@
 <br />
 
 <script type="text/javascript" charset="utf-8">
+	//Load each article <li> as a Card
+	$('articles').select('ol>li').each( function (t) { new Card(t); });
+	
 	// Activate table header checkboxes select_all functionality
-	$$('.select_all').each(	function(element){ Event.observe(element, 'click', function( event ) { if (element.checked){ $$('ol input[type="checkbox"]').each(function(node){ node.checked = 'checked' });} else { $$('ol input[type="checkbox"], .select_all').each(function(node){ node.checked = null }); } }); });
-	//$$('#articles>ol>li').each(	function(element){ Event.observe(element, 'click', function( event ) { if (element.checked){ $$('ol input[type="checkbox"]').each(function(node){ node.checked = 'checked' });} else { $$('ol input[type="checkbox"], .select_all').each(function(node){ node.checked = null }); } }); });
+	$$('.select_all').each(	function(element) { 
+			Event.observe(element, 'click', function( event ) { 
+					if (element.checked){ 
+						$$('ol>li').each(
+								function(el){ 
+									el.card.select(); 
+								}
+						); 
+						$$('.select_all').checked = true;
+					} else {
+						$$('ol>li').each( 	
+							function(el){ 
+								el.card.deselect(); 
+							}
+						); 
+						$$('.select_all').checked = null; 
+					} 
+			})
+	});
 	
 </script>
 
