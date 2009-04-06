@@ -3,7 +3,7 @@
 
 <div class="clearfix">
 <p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
-<% paginated_section @articles do %>
+<% paginated_section(@articles, :inner_window => 1, :outer_window => 1) do %>
 <p class="page_entries_info"><%= page_entries_info @articles %></p>
 </div>
 	<ol>

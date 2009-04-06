@@ -305,13 +305,12 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .select_all_wrap { display:inline; float: left; margin: 0px 0px; padding: 3px 8px 3px 0px; background-color: #CEE4F3;  border: 1px dotted #9cf;}
 #articles .select_all_wrap input { margin: 3px 3px 3px 7px; }
 #articles .page_entries_info { float: right; margin: 6px 30px 4px 5px; font-style: italic;}
-#articles .pagination { display: inline; float: right; margin: 5px 0px;  color: #AAA; font-size: 16px;}
+#articles .pagination { display: inline; float: right; margin: 5px 0px;  color: #AAA; font-size: 14px;}
 #articles .pagination a { color: #AAA; }
 #articles .pagination .current { color: #333; }
 #articles .pagination .disabled { display: none;}
-#articles ol {margin-top: 5px; width: 885px; padding-left: 0; list-style-type: none; border: 1px dotted #999;}
+#articles ol {margin-top: 5px; width: 885px; padding-left: 0; list-style-type: none; border: 1px dotted #999; border-top: none;}
 #articles ol li {  border-top: 1px dotted #999; }
-#articles ol li:first-child { border-top:none; }
 #articles ol a { margin: 12px 0px;}
 #articles ol a:visited { color: #555;}
 #articles ol a:hover { color: #3399DE;}
@@ -321,7 +320,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .article h1 { font-size: 16px; margin: 0; padding: 6px 5px 6px 5px; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #articles .article div { font-size: 11px; }
 #articles .article .article_details { width: 100%; min-height: 24px; padding-top: 0px;}
-#articles .article .authors { float: left; padding: 5px;}
+#articles .article .authors { float: left; padding: 5px 0px;}
 #articles .article .media { float: right; text-align: right; margin-right: 2px; height: 18px; padding-top: 2px; padding-bottom: 2px;}
 #articles .article .media img{ display: inline;}
 #articles .section { width: 100px; margin-left: 10px; padding: 5px 0px; overflow: hidden; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf; }
