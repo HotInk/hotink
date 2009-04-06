@@ -13,13 +13,15 @@
 		    <%= link_to "&nbsp;", [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete", :style=>"display:none;" %>
 			<div><input type="checkbox" value="<%= article.id %>"/></div>
 			<div class="article">
-				<h1>&ldquo;<%=link_to h(article.display_title), edit_account_article_url(@account, article) %>&rdquo;</h1>
+				<h1>&ldquo;<%=link_to h(article.display_title.strip), edit_account_article_url(@account, article) %>&rdquo;</h1>
 				<div class="article_details clearfix">
 					<div class="authors">
 						<em><%= article.authors_list if article.authors_list %></em>
 					</div>
 					<div class="media">
-						No media
+						<% article.images.each do | i | %>
+							<%= image_tag(i.file.url(:system_icon), :border=>1) %>
+						<% end %>
 					</div>
 				</div>
 			</div>

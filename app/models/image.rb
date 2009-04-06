@@ -2,7 +2,8 @@ class Image < Mediafile
   
   has_attached_file :file,
       :styles => {
-        :system_thumb=> ["100>", 'jpg'],
+        :system_icon => [ "x18>", 'jpg' ],
+        :system_thumb => ["100>", 'jpg'],
         :thumb  => Proc.new { |instance| instance.settings["thumb"].to_s },
         :small => Proc.new { |instance| instance.settings["small"].to_s },
         :medium => Proc.new { |instance| instance.settings["medium"].to_s },

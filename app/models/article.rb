@@ -13,7 +13,7 @@ class Article < ActiveRecord::Base
   
   has_many :waxings
   has_many :mediafiles, :through => :waxings
-  has_many :images, :through => :waxings, :source=>'mediafile'
+  has_many :images, :through => :waxings, :source=>'mediafile', :conditions => { :type => 'Image'}
   
   acts_as_taggable_on :tags
   
