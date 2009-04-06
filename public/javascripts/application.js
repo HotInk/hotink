@@ -231,21 +231,21 @@ var Card = Class.create({
 	onclick: function() {
 		if (this.selected) {
 			this.deselect();
-			this.selected = false;
 		} else { 
 			this.select();
-			this.selected = true;
 		}
 	},
 	
 	select: function() {
 		this.checkbox.checked = true;
 		this.element.addClassName("selected_card");
+		this.selected = true;
 	},
 	
 	deselect: function() {
 		this.checkbox.checked = null;
 		this.element.removeClassName("selected_card");
+		this.selected = false;
 	},
 	
 	onmouseover: function() {
