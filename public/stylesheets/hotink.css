@@ -310,8 +310,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .pagination .current { color: #333; }
 #articles .pagination .disabled { display: none;}
 #articles ol {margin-top: 5px; width: 885px; padding-left: 0; list-style-type: none; border: 1px dotted #999; border-top: none;}
-#articles ol li {  border-top: 1px dotted #999; }
-#articles ol a { margin: 12px 0px;}
+#articles ol li {  border-top: 1px dotted #999; cursor: default;}
+#articles ol a { margin: 12px 0px; cursor: pointer;}
 #articles ol a:visited { color: #555;}
 #articles ol a:hover { color: #3399DE;}
 #articles ol a:active { color: #333;}
@@ -325,7 +325,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #articles .article .media img{ display: inline;}
 #articles .section { width: 100px; margin-left: 10px; padding: 5px 0px; overflow: hidden; background-color: #FFF; margin: 4px 0px; border: 1px dotted #9cf; }
 #articles .section p { font-size: 13px; padding: 0px 0px 0px 5px; color: #666; margin: 0;}
-#articles div div { padding-bottom: 0px;}
+#articles div div { padding-bottom: 0px; }
 #articles .date { width: 70px; color: #AAA; font-size: 16px; padding-top: 8px;}
 #articles .date p { font-size: 11px; color: #AAA; margin: 0px; margin-top: 8px; font-style:italic; font-family: georgia,"times new roman",times, serif;}
 #articles .selected_card { background-color: #FFF6DD;}
