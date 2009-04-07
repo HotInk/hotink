@@ -1,6 +1,6 @@
 class Account < ActiveRecord::Base
   
-  #Main data models (and subclasses)
+  # Main data models (and subclasses)
   has_many :mediafiles, :dependent => :delete_all
   has_many :images
   has_many :audiofiles
@@ -10,7 +10,10 @@ class Account < ActiveRecord::Base
   has_many :sections, :dependent => :delete_all
   has_many :issues, :dependent => :delete_all, :order => "date"
   
-  #Join models
+  # Authentication
+  has_many :users, :dependent => :delete_all
+  
+  # Join models
   has_many :authorships, :dependent => :delete_all
   has_many :photocredits, :dependent => :delete_all
   has_many :printings, :dependent => :delete_all
