@@ -10,3 +10,6 @@
 [submodule "vendor/plugins/culerity"]
 	path = vendor/plugins/culerity
 	url = git://github.com/langalex/culerity.git
+[submodule "vendor/plugins/webrat"]
+	path = vendor/plugins/webrat
+	url = git://github.com/brynary/webrat.git
