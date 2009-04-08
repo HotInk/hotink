@@ -4,6 +4,7 @@ begin
   require 'cucumber/rake/task'
 
   Cucumber::Rake::Task.new(:features) do |t|
+    t.rcov = true
     t.cucumber_opts = "--format pretty"
   end
   task :features => 'db:test:prepare'
