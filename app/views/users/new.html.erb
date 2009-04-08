@@ -1,0 +1,8 @@
+<h1>Register</h1>
+
+<% form_for @user do |f| %>
+  <%= f.error_messages :header_message => "Sorry, there was a problem with your application", :message => "Here's what went wrong:" %>
+  <%= render :partial => "form", :object => f %>
+	<br />
+  <%= button_link_to_submit "Register", :class => "save" %>
+<% end %>
