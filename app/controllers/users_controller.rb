@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  layout 'hotink'
+  layout 'hotink', :only => [:show, :edit]
+  layout 'login', :only => :new
   
   before_filter :require_user, :except=>[:new, :create]
   

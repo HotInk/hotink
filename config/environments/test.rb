@@ -25,3 +25,9 @@ config.action_mailer.delivery_method = :test
 config.gem "thoughtbot-factory_girl",
            :lib    => "factory_girl",
            :source => "http://gems.github.com"
+config.gem "webrat", :lib => false, :version => ">= 0.4.3"
+config.gem "nokogiri", :lib => false, :version => ">= 1.2.3"
+
+# Test configuration requires some environment variables
+ENV['AUTOFEATURE'] = "true"
+ENV['RSPEC'] = "true"

@@ -8,6 +8,6 @@ require 'cucumber/formatters/unicode' # Comment out this line if you don't want 
 require 'cucumber/rails/rspec'
 
 require 'factory_girl' 
-require 'test/factories'
+require 'features/factories'
 
 
