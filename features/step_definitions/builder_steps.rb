@@ -21,7 +21,7 @@ Given /^the following (.+?)(?:s|) exist(?:s|):$/ do |model_name, table|
   table.hashes.each do |hash|
     attributes = {}
     hash.each { |k, v| attributes[k.gsub(' ','').underscore] = v }
-    create_model(model_name, attributes)
+    Factory.build(model_name.to_sym, attributes)
   end
 end
 

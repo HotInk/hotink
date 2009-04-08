@@ -4,11 +4,13 @@ Factory.sequence :email do |n|
 end
 
 Factory.define :account do |a|
+  a.id
   a.name "onlinejournalgazette"
   a.time_zone "Eastern Time (US & Canada)"
 end
 
 Factory.define :article do |a|
+  a.id
   a.date Time.now
   a.account {|a| a.association(:account) }
 end

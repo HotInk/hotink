@@ -14,3 +14,23 @@ Scenario: Authenticated user granted access
 	Given I am on the login page
 	When I log in
 	Then I should see "Logged in"
+	
+Scenario: Articles index protected from public
+	Given I am not a registered user
+	When I go to the articles index page
+	Then I should see "Login"
+	
+Scenario: Articles index available to registered users
+	Given I am a registered user
+	When I go to the articles index page
+	Then I should see "Articles"
+
+Scenario: Article page protected from public
+	Given I am not a registered user
+	When I go to an article page
+	Then I should see "Login"
+
+Scenario: Article page available to registered users
+	Given I am a registered user
+	When I go to an article page
+	Then I should see "Articles"
