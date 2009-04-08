@@ -1,6 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
-
-  # Nothing exists in the app without belonging to an account, routing reflects this fact.
+  
+  map.resource :user_session
+  map.root :controller => "user_sessions", :action => "new"
+  map.resources :users
+  
+  # No content exists in HotInk without belonging to an account, routing reflects this fact.
   map.resources :accounts do |account|
     account.resources :articles do |article|
       article.resources :authors

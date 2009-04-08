@@ -18,7 +18,10 @@
 
 </head>
 <body>
-<div id="navigation"><span id="links"><%= link_to "Articles", account_articles_url(@account) %> | <%= link_to "Media", account_mediafiles_url(@account) %> </span></div>
+<div id="navigation">
+	<span id="links"><%= link_to "Articles", account_articles_url(@account) %> | <%= link_to "Media", account_mediafiles_url(@account) %> </span>
+	<span id="user_details"> | Logged in as: <%= link_to current_user.login, edit_user_path(current_user) %></span><%= button_link_to "Logout", user_session_url, :method=>:delete, :class=>"micro" %>
+</div>
 <div id="page_container" class="clearfix">
 	<%= yield  %>
 </div>

@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   
   layout 'hotink'
+  before_filter :require_user
   
   # GET /articles
   # GET /articles.xml

@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   skip_before_filter :find_account
-  layout 'articles'
+  layout 'hotink'
   
   # GET /accounts
   # GET /accounts.xml
