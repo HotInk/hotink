@@ -1,36 +1,19 @@
 Feature: User authentication
-In order to give account holders control over their data
-Registered users should have to
-Login before they can access the site
+In order to restrict access to content
+As a Content Owner
+I want to respond only to authenticated users
 
-Scenario: Unauthenticated user denied access
-	Given I am not a registered user
-	Given I am on the login page
-	When I log in
-	Then I should see "Login"
-	
-Scenario: Authenticated user granted access
-	Given I am a registered user
-	Given I am on the login page
-	When I log in
-	Then I should see "Logged in"
-	
-Scenario: Articles index protected from public
-	Given I am not a registered user
-	When I go to the articles index page
-	Then I should see "Login"
-	
-Scenario: Articles index available to registered users
-	Given I am a registered user
-	When I go to the articles index page
-	Then I should see "Articles"
+Scenario: Refer unathenticated user to login form
+	Given I am an unauthenticated user
+	When I load the articles index page
+	Then I should see the login form
 
-Scenario: Article page protected from public
-	Given I am not a registered user
-	When I go to an article page
-	Then I should see "Login"
-
-Scenario: Article page available to registered users
-	Given I am a registered user
-	When I go to an article page
-	Then I should see "Articles"
+Scenario Outline: Allow authenticated user to view content
+	Given I am an authenticated user
+	When I load <page>
+	Then I should see <page>
+	
+	Examples:
+		| page 					 	|
+		| the articles index page	|
+		| a new article form		|
