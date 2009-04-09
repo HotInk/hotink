@@ -1,10 +1,10 @@
 module NavigationHelpers
+  
   def path_to(page_name)
     case page_name
     
-    when /the login page/i
-      new_user_session_path
-      
+    when /the login form/i
+      new_user_session_path        
     
     # Add more page name => path mappings here
     
