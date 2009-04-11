@@ -1,8 +1,8 @@
 /* Main style */
 
 body { background-color: #F9F9F9; color: #333; margin: 0 auto; text-algin: center;}
-body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 12px; line-height: 16px; }
-div#page_container { margin-left: auto;  margin-right: auto; width: 885px; padding: 5px; text-align: left; }
+body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2em; }
+div#page_container { margin-left: auto;  margin-right: auto; max-width: 69em; padding: 0.5em; text-align: left; }
 pre { background-color: #eee; padding: 10px; font-size: 11px; }
 
 a { text-decoration:none; color: #000; }
@@ -115,7 +115,6 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 
 /* Article form style */
 
-#article_form_top_links{ width:600px; float:left;margin-top: 2px; margin-bottom: 5px; }
 
 .note {	font-size: 11px; }
 .text_input {
@@ -129,17 +128,39 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 .third_column { float: left; width: 33%; }
 .two_thirds_column { float: left; width:66%; }
 
-#article_form {	float:left; }
-#article_form #article_title {width: 100%; height: 24px; padding: 4px 2px; margin-bottom: 10px; font-size: 20px;}
-#article_form #article_subtitle { width: 100%; padding: 4px 2px; height: 18px; margin-bottom: 10px; font-size: 16px; }
-#article_form #article_date { height: 16px; padding: 3px 2px; font-size: 13px; }
-#article_form #article_section_id { height: 26px; max-width: 302px; padding: 3px 2px; font-size: 12px; color: #333; }
-#article_form #author_list { width: 600px; margin-bottom: 20px; }
-#article_form #article_bodytext { min-width: 590px; max-width: 750px; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
-#article_form #article_bodytext textarea {  }
-#article_form #article_bodytext_preview { width: 594px; height: 300px; padding: 0 3px; overflow: auto; border: 1px solid #999; background-color: #FFF; }
-#article_form #article_bodytext_preview p { margin: 5px 0; }
-#article_summary { width: 600px; height: 85px; }
+#article_form {	width: 68%; float:left; }
+#tools { width: 30%; float: right;	}
+
+#article_form #top_links { margin-top: 2px; margin-bottom: 5px; }
+#article_form #last_saved {  font-size:10px; font-style: italic; line-height:12px; margin: 0.5em 0; padding: 0.5em; }
+#article_form div.field_element input { width: 100%; padding: 0.125em;}
+#article_form #article_title { margin-bottom: 0.5em; font-size: 1.8em;}
+#article_form #buttons { float: right; margin: 10px 0px; text-align: right;}
+#article_form #article_subtitle { margin-bottom: 0.75em; font-size: 1.3em; }
+#article_form #article_date { font-size: 14px; height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; }
+#article_form #article_section_id { height: 1.6em; max-width: 22em; font-size: 14px; margin: 0.25em 0; }
+#article_form #article_authors_list{ border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;color: #515151;}
+/*IE6-/Win only*/
+/*\*/ * html .tokenizer_input_borderless #article_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
+#article_form #autocomplete_populate{ width: 450px;}
+#article_form #author_list { margin-bottom: 20px; }
+#article_form #article_bodytext { width:99%; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
+#article_summary { width:100%; height: 85px; }
+
+/* Tool box styles */
+
+#tools p{ margin: 0px 0px 6px 0px; }
+#tools .toolbox { margin-bottom: 10px; padding: 0px 5px; }
+#tools .toolbox h2{ display: inline; cursor: pointer; }
+#tools .toolbox h2 span { background: url('/arrows.png') no-repeat; background-position: 0px -29px;}
+#tools .toolbox_border { height: 1px; margin:0 1px; padding:0; background-color: #aaa;	color: #aaa; }
+#tools .toolbox_separator { height: 1px; margin:0 5px; padding:0; background-color: #aaa; }
+#tools .toolbox_label_body { background:#ddd url('/images/bg-button.gif') repeat-x 0 0; margin:0; padding: 4px 5px 6px 5px; overflow:visible; 
+						font: 100%/1.2; text-decoration:none; color:#333; border-right: 1px solid #aaa; border-left: 1px solid #bbb; }
+* html .toolbox_label_body{ padding-bottom:1px; }
+#tools .toolbox_label_body h2 { margin: 0; font-size: 16px; }
+#tools .toolbox_body { margin-top: -1px; padding: 6px 6px; border-right: 1px solid #aaa; border-left: 1px solid #bbb; background-color: #FFF; }
+#tools .newtag { width: 80%; margin-right: 4px; }
 
 /* Attach media styles */
 #attach_media_container { width: 660px; min-height: 50px; margin-bottom:0px;}
@@ -181,8 +202,8 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 
 /* Sorting forms styles*/
 #account_article_sorting_list button.categories_edit_tab{margin-left:208px; }
-#account_article_sorting_list div#categories_list { border: 1px solid #AAA; width: 240px; }
-#account_article_sorting_list #hidden_categories_buttons { width:236px; padding: 4px 2px; text-align: right; background-color: #DEDEDE; 
+#account_article_sorting_list div#categories_list { border: 1px solid #AAA; }
+#account_article_sorting_list #hidden_categories_buttons { padding: 4px 2px; text-align: right; background-color: #DEDEDE; 
 																border-bottom: 1px solid #9cf;}
 #account_article_sorting_list #categories_controls { margin-left: 3px;  }
 #account_article_sorting_list ul#categories_sort{  max-height: 180px; overflow:auto; margin:0;}
@@ -199,24 +220,7 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 #account_article_sorting_list #categories_sort .drop_bottom { background-position: bottom left; }
 #account_article_sorting_list #categories_sort .drop_insert { background-position: 65px 100%; }
 
-/* Tool box styles */
-
-#tools { width: 255px; padding: 0px 5px; float: right;	}
-#tools p{ margin: 0px 0px 6px 0px; }
-
-#tools .toolbox { width: 255px; margin-bottom: 10px; }
-#tools .toolbox h2{ display: inline; cursor: pointer; }
-#tools .toolbox h2 span { background: url('/arrows.png') no-repeat; background-position: 0px -29px;}
-#tools .toolbox_border { height: 1px; margin:0 1px; padding:0; background-color: #aaa;	color: #aaa; }
-#tools .toolbox_separator { height: 1px; margin:0 5px; padding:0; background-color: #aaa; }
-#tools .toolbox_label_body { background:#ddd url('/images/bg-button.gif') repeat-x 0 0; margin:0; padding: 4px 5px 6px 5px; overflow:visible; 
-						font: 100%/1.2; text-decoration:none; color:#333; border-right: 1px solid #aaa; border-left: 1px solid #bbb; }
-* html .toolbox_label_body{ padding-bottom:1px; }
-#tools .toolbox_label_body h2 { margin: 0; font-size: 16px; }
-#tools .toolbox_body { margin-top: -1px; padding: 6px 6px; border-right: 1px solid #aaa; border-left: 1px solid #bbb; background-color: #FFF; }
-#tools .newtag { width: 80%; margin-right: 4px; }
-
-/* Toolbox overlay css */
+/* Overlay css */
 
 #overlay{ position: absolute; top: 0; left: 0; z-index: 900; width: 100%; height: 500px; background-color: #000; }
 #overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; }
@@ -240,13 +244,9 @@ div.tokenizer{border: 1px solid #DEDEDE;}
 .tokenizer .tokenizer_stretcher{display:block;float:left;overflow:hidden;width:0px;}
 .tokenizer .tab_stop{height:0px;}
 .tokenizer .tokenizer_stretcher{padding-top:7px;}
-#article_authors_list{color: #555;}
 .tokenizer .tab_stop input{border:0px solid black;display:inline;position:relative;left:-500px;}
 .tokenizer .tokenizer_input_borderless {left:4px;margin-left:-1px;overflow:hidden;position:relative;}
 .tokenizer_input_borderless  
-#article_authors_list{ width: 20px; border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;}
-/*IE6-/Win only*/
-/*\*/ * html .tokenizer_input_borderless #article_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
 .tokenizer div:-moz-first-node{padding-top:1px!important;}
 .tokenizer_input{max-width:450px;overflow:hidden;padding:1px 0px;}
 .tokenizer_input input,

@@ -176,6 +176,11 @@ onKeyPress: function(event) {
         setTimeout(this.onObserverEvent.bind(this), this.options.frequency * 1000);
 
     },
+markPrevious: function() {
+    if(this.index > 0) this.index--;
+      else this.index = this.entryCount-1;
+    this.getEntry(this.index).scrollIntoView(false);
+  },
 addTokenToList: function(item, value) {
 			if (item instanceof Element) {
 				var value = Element.readAttribute(item,'value')

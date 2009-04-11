@@ -1,5 +1,6 @@
 #Update the last saved note
-page.replace 'last_saved', :text =>"<span id=\"last_saved\" class=\"green\">#{time_ago_in_words(@article.updated_at)} ago</span>"
+page.replace_html 'last_saved', :text =>"Last modified #{time_ago_in_words(@article.updated_at)} ago"
+page.visual_effect :highlight, "last_saved", :duration => 0.5
  
 #Reload sortings form to keep javascript calls up-to-date
 page << "new Ajax.Request('#{account_article_sortings_url(@account, @article, :format=>:js)}', {method:'get'});"

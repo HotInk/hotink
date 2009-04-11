@@ -1,34 +1,45 @@
-<p id="article_form_top_links">	
-	<%= link_to "&#171; Back to articles list", account_articles_url(@account), :class=>"weblink" %>
-</p>	
 <div id="article_form">
+	<% remote_form_for([@account, @article]) do |f| %>
+	  <!-- Form submit button for browsers without Ajax-->
+	  <div id="buttons">
+		<%= button_link_to_submit "Save", :class=>"save large" %>	
+		<p id="last_saved">
+		  <% if @article.created_at == @article.updated_at %>
+		  	Never saved
+		  <% else %>
+		  	Last modified <%= time_ago_in_words(@article.updated_at) %> ago
+		  <% end %>
+		</p>
+	  </div>
+	<p id="top_links">	
+		<%= link_to "&#171; Back to articles list", account_articles_url(@account), :class=>"weblink" %>
+	</p>
 	<h1>Edit article</h1>
 	<%= "<p style=\"color: green\">#{ flash[:notice] }</p>" if flash[:notice] %>
-	<% remote_form_for([@account, @article]) do |f| %>
 	  <%= f.error_messages %>
-	  <div>
+	  <div class="field_element">
 	    <%= f.label :title, "Headline"%><br />
 	    <%= f.text_field :title , :class => "text_input user" %>
 	  </div>
-	  <p>
+	  <div class="field_element">
 	    <%= f.label :subtitle, "Subhead"%><br />
 	    <%= f.text_field :subtitle, :class => "text_input user"  %>
-	  </p>
-	  <div class="column_holder clearfix">
-	  	  <p class="half_column">
+	  </div>
+	  <div class="form_element column_holder clearfix">
+	  	  <div class="half_column">
 		    <%= f.label :date %><br />
 			<%= f.unobtrusive_date_text_picker :date, {:format => "M-D-Y"}, :class => "text_input", :size => "10" %>
-		  </p>
-		  <p class="half_column">
+		  </div>
+		  <div class="half_column">
 			<%= f.label :section_id, "Primary section"%><br />
 			<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => "None" },  :class => :text_input)%>
-		  </p>
+		  </div>
 	  </div>
 	  <div id ="author_list" class="field">
 			<%= render :partial => 'article_author_form' %>
 	  </div><!-- /author_list -->
 	
-	  <div id="bodytext">
+	  <div id="bodytext" class="clearfix">
 		<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
 	    <%= f.label :bodytext, "Body text" %><br />
 	    <%= f.text_area :bodytext %>
@@ -47,24 +58,6 @@
 	<% end %>
 </div><!-- /article_form -->
 		<div id="tools">
-			<div class="toolbox">
-				<div class="toolbox_border"></div>
-				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Article tools</h2></div>
-				<div class="toolbox_border"></div>
-				<div class="toolbox_body">	
-					<p>
-						Last saved<br />
-						<% if @article.created_at == @article.updated_at %>
-						<span id="last_saved" class="red">Never</span>
-						<% else %>
-						<span id="last_saved" class="green"><%= time_ago_in_words(@article.updated_at) %> ago</span>
-						<% end %>
-					</p>
-		    	  	<%= button_link_to_function("Save", "$('edit_article_#{@article.id}').onsubmit();", :class=>"large save") -%>
-				</div>
-				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - article tools -->
-			
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Media</h2></div>
