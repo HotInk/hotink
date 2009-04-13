@@ -1,42 +1,83 @@
-<h1>Listing attachments</h1>
+<div id="mediafiles" class="index">
+<div class="title_bar"><h1>Media files:</h1><%= button_link_to 'New med', new_account_article_path(@account), :class=>"" %></div>
 
-<table>
-  <tr>
-    <th>Filename</th>
-    <th>File type</th>
-    <th>Filesize</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Width</th>
-    <th>Height</th>
-    <th>Length</th>
-    <th>Link alternate</th>
-    <th>Date</th>
-    <th>Account</th>
-    <th>Type</th>
-  </tr>
+<div class="clearfix">
+<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
+<% paginated_section(@mediafiles, :inner_window => 1, :outer_window => 1) do %>
+<p class="page_entries_info"><%= page_entries_info @mediafiles %></p>
+</div>
+	<ol>
+	<% for mediafile in @mediafiles %>
+		  <li class="<%= cycle("even-row", "odd-row") %> clearfix">
 
-<% for attachment in @attachments %>
-  <tr>
-    <td><%=h attachment.filename %></td>
-    <td><%=h attachment.file_type %></td>
-    <td><%=h attachment.filesize %></td>
-    <td><%=h attachment.title %></td>
-    <td><%=h attachment.description %></td>
-    <td><%=h attachment.width %></td>
-    <td><%=h attachment.height %></td>
-    <td><%=h attachment.length %></td>
-    <td><%=h attachment.link_alternate %></td>
-    <td><%=h attachment.date %></td>
-    <td><%=h attachment.account_id %></td>
-    <td><%=h attachment.type %></td>
-    <td><%= link_to 'Show', attachment %></td>
-    <td><%= link_to 'Edit', edit_attachment_path(attachment) %></td>
-    <td><%= link_to 'Destroy', attachment, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+			<div id="status">
+				<input type="checkbox" value="<%= mediafile.id %>"/>
+			</div>
+			
+			<div class="media">
+				<% if mediafile.is_a?(Image) %>
+					<%= image_tag(mediafile.file.url(:system_thumb)) %>
+				<% elsif mediafile.is_a?(Audiofile) %>
+					<object type="application/x-shockwave-flash"
+					data="/musicplayer.swf?&song_url=<%= mediafile.file.url %>" 
+					width="56" height="56">
+					<param name="movie" 
+					value="/&song_url=<%= mediafile.file.url %>" />
+					<!-- <img src="noflash.gif" width="56" height="56" alt="" /> -->
+					</object>
+				<% end %>
+			</div>
+			
+			<div class="mediafile">
+				<h1><%=link_to h(mediafile.display_title.strip), edit_account_mediafile_url(@account, mediafile), :class=>"document_link" %></h1>
+				<div class="mediafile_details clearfix">
+					<div class="authors">
+						<em><%= mediafile.authors_list if mediafile.authors_list %></em>
+					</div>
+				</div>
+			</div>
+			
+			<div class="icons">
+				<%= link_to "&nbsp;&nbsp;&nbsp;", [@account, mediafile], :confirm => "You are about to delete the mediafile: \n \n &quot;" + h(mediafile.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete_link", :style=>"display:none;" %>
+			</div>
+			
+			<div class="date">
+				<%= h mediafile.updated_at.to_s(:standard_date_only) %>
+			</div>
+			
+		  </li>
+	<% end %>
+	</ol>
 <% end %>
-</table>
+<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
 
 <br />
 
-<%= link_to 'New attachment', new_attachment_path %>
+<script type="text/javascript" charset="utf-8">
+	//Load each article <li> as a Card and check to see if any checkboxes are pre-checked and need to be pre-selected 
+	$('mediafiles').select('ol>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });
+	
+	// Activate table header checkboxes select_all functionality
+	$$('.select_all').each(	function(element) { 
+			Event.observe(element, 'click', function( event ) { 
+					if (element.checked){ 
+						$$('ol>li').each(
+								function(el){ 
+									el.card.select(); 
+								}
+						); 
+						$$('.select_all').checked = true;
+					} else {
+						$$('ol>li').each( 	
+							function(el){ 
+								el.card.deselect(); 
+							}
+						); 
+						$$('.select_all').checked = null; 
+					} 
+			})
+	});
+	
+</script>
+
+</div><!-- /articles -->

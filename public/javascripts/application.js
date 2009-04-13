@@ -218,8 +218,8 @@ ResizingTextArea.prototype = {
 var Card = Class.create({
 	initialize: function(element, selected) {
 		this.element = $(element);
-		this.article_link = this.element.down().next().next().down().down();
-		this.delete_link = this.element.down();
+		this.document_link = this.element.select('.document_link')[0];
+		this.delete_link = this.element.select('.delete_link')[0];
 		this.selected = selected;
 		this.skip_select = false; // This is used to catch events and prevent them from triggering the select method.
 		this.element.card = this;
@@ -231,7 +231,11 @@ var Card = Class.create({
 	},
 	
 	onclick: function( event ) {
-		if (event.originalTarget == this.article_link || event.target == this.article_link ) this.skip_select = true;
+		if (	event.originalTarget == this.document_link || 
+				event.target == this.document_link || 
+				event.originalTarget == this.delete_link || 
+				event.target == this.delete_link) 
+			this.skip_select = true;
 		if (!this.skip_select) {
 			if (this.selected) {
 				this.deselect();

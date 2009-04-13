@@ -28,11 +28,40 @@ class Mediafile < ActiveRecord::Base
       :url => "/system/:class/:id_partition/:basename_:style.:extension"
   
       
-  def new_authors_list
-    return ""
+  # Returns list of article's author names as a readable list, separated by commas and the word "and".
+  def authors_list
+     case self.authors.length
+     when 0
+       return nil
+     when 1
+       return self.authors.first.name
+     when 2
+       return self.authors.first.name + " and " + self.authors.second.name
+     else
+      list = String.new
+      (0..(self.authors.count - 3)).each{ |i| list += authors[i].name + ", " }
+      list += authors[self.authors.length-2].name + " and " + authors[self.authors.length-1].name # last two authors get special formatting
+      return list
+    end         
+  end
+
+  #Breaks up a human readable list of authors and creates each one and adds it to self.authors.
+  def authors_list=(list)
+    if list
+      list.split(/, and | and |,/).each do |name| 
+        author = Author.find_or_create_by_name_and_account_id(name.strip, self.account.id)
+        self.authors << author unless self.authors.member?(author) || author.nil?
+      end
+    end
   end
   
-  def new_authors_list=(list)
+  def display_title
+    if self.title and self.title.strip != ""
+      return self.title
+    else 
+      return self.file_file_name
+    end
   end
+  
   
 end

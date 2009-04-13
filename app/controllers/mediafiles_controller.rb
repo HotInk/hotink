@@ -4,10 +4,10 @@ class MediafilesController < ApplicationController
   # GET /mediafiles
   # GET /mediafiles.xml
   def index
-    if @article = find_article
+    if find_article
       @mediafiles = @article.mediafiles.find(:all, :include => [ :waxings ], :conditions => ['waxings.article_id = ?', @article.id])
     else
-      @mediafiles = @account.mediafiles
+      @mediafiles = @account.mediafiles.paginate(:page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order=>"date DESC, updated_at DESC", :include => :authors)
     end
 
     respond_to do |format|

@@ -20,7 +20,8 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :authors
     account.resources :sections
     account.resources :categories
-    account.resources  :images
+    account.resources :images
+    account.resources :audiofiles
   end
   
 

@@ -1,60 +1,110 @@
-<h1>Editing attachment</h1>
+<div id="mediafile_form" class="form">
+	<% form_for([@account, @mediafile]) do |f| %>
+	<div id="buttons">
+		<%= button_link_to_submit "Save", :class=>"save large" %>	
+		<p id="last_saved">
+		  <% if @mediafile.updated_at %>
+		  	Last modified <%= time_ago_in_words(@mediafile.updated_at) %> ago
+		  <% else %>
+		  	Never saved
+		  <% end %>
+	</p>
+	</div>
+	<p id="top_links">	
+		<%= link_to "&#171; Back to media list", account_mediafiles_url(@account), :class=>"weblink" %>
+	</p>
+	<h1>Edit <%= @mediafile.class.name.downcase %></h1>
+	<%= f.error_messages %>
+	<div id="media">
+		<%= image_tag(@mediafile.file.url)%>
+	</div>
+	<div class="field_element">
+	    <%= f.label :title, "Title"%><br />
+	    <%= f.text_field :title , :class => "user" %>
+	</div>
+	<div class="column_holder clearfix">
+		<div class="third_column">
+			<%= f.label :date %><br />
+			<%= f.unobtrusive_date_text_picker :date, {:format => "M-D-Y"}, :size => "10" %>
+		</div>
+		<div class="two_thirds_column">
+			<%= label_tag "#{@mediafile.class.name.downcase}[authors_list]", 'Credits' %><br />
+			<div id="photocredits_form" class="clearfix tokenizer text_input" onclick="$('<%= @mediafile.class.name.downcase %>_authors_list').focus()">
+			    <span class="tokenizer_stretcher">^_^</span>
+				<span class="tab_stop">
+					<input type="text" id="hidden_input" tabindex="-1" />
+				</span>
+			    <div id="autocomplete_display" class="tokenizer_input">
+					<%= text_field_tag "#{@mediafile.class.name.downcase}[authors_list]", '' %>
+			    </div>
+			</div>
+			<div id="autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10; height: auto; overflow-y: hidden;display:none"></div>
 
-<% form_for(@attachment) do |f| %>
-  <%= f.error_messages %>
+				<script type="text/javascript">
+				// preload images.
+			    (new Image()).src='/images/token.gif';
+			    (new Image()).src='/images/token_selected.gif';
+			    (new Image()).src='/images/token_hover.gif';
+			    (new Image()).src='/images/token_x.gif';
 
-  <p>
-    <%= f.label :filename %><br />
-    <%= f.text_field :filename %>
-  </p>
-  <p>
-    <%= f.label :file_type %><br />
-    <%= f.text_field :file_type %>
-  </p>
-  <p>
-    <%= f.label :filesize %><br />
-    <%= f.text_field :filesize %>
-  </p>
-  <p>
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </p>
-  <p>
-    <%= f.label :width %><br />
-    <%= f.text_field :width %>
-  </p>
-  <p>
-    <%= f.label :height %><br />
-    <%= f.text_field :height %>
-  </p>
-  <p>
-    <%= f.label :length %><br />
-    <%= f.text_field :length %>
-  </p>
-  <p>
-    <%= f.label :link_alternate %><br />
-    <%= f.text_field :link_alternate %>
-  </p>
-  <p>
-    <%= f.label :date %><br />
-    <%= f.date_select :date %>
-  </p>
-  <p>
-    <%= f.label :account_id %><br />
-    <%= f.text_field :account_id %>
-  </p>
-  <p>
-    <%= f.label :type %><br />
-    <%= f.text_field :type %>
-  </p>
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
+				createNewAuthor = function( new_token_text, auto_complete ){
+					new_author_auto_complete = auto_complete;
+					new Ajax.Request( 	"<%= account_authors_url(@account, :format=>:json )%>", 
+										{	method: 'post', parameters: {"author[name]": new_token_text, "authenticity_token": "<%= form_authenticity_token %>"},
+											onSuccess: function(transport){
+															var json = transport.responseText.evalJSON(true);
+															new_author_auto_complete.addTokenToList( json.author.name, (new_author_auto_complete.options.array.push(json) - 1));
+															new_author_auto_complete.set_input_size();
+															}
+										});
+				}
 
-<%= link_to 'Show', @attachment %> |
-<%= link_to 'Back', attachments_path %>
+			    var author_list = new Autocompleter.LocalTokenizer("<%= @mediafile.class.name.downcase %>_authors_list", 'autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
+			        frequency: 0.1,
+					parent_model: "<%= @mediafile.class.name.downcase %>",
+			        search_field: "name",
+					search_model: "author",
+					search_join_model: "photocredit",
+					search_join_models: "photocredits",
+					text_field_width: 380,
+					token_delimiter: /, and | and |,/,
+					saved_token_join_json: <%= @mediafile.photocredits.to_json(:include=>:author, :only=>[:name, :id]) %>,
+					hidden_input_id: 'hidden_input',
+					onNewToken: createNewAuthor
+			    });
+			    </script>
+			</div>
+		</div><!-- .columnholder -->
+		<div id="description" class="clearfix">
+			<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
+	    	<%= f.label :description, "Description" %><br />
+	    	<%= f.text_area :description %>
+	  	</div>
+	<% end %>
+</div><!-- #mediafile_form -->
+
+<div id="tools">
+	
+</div>
+
+<script type="text/javascript">
+	//Load toolbox functionality
+	$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
+	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
+	
+	//Initialize Overlay
+	var mediafile_form_overlay = new Overlay ();
+	
+	load_button_fix();
+	
+	// WMD Editor Configuration script
+    // Set this *before* you load wmd.js
+    wmd_options = {
+					output: "Markdown",
+					lineLength: 40,
+					buttons: "bold italic heading | link blockquote image | ol ul hr ",
+					autostart: true 
+				  };
+</script>
+
+<%= javascript_include_tag 'wmd/wmd.js' %>
