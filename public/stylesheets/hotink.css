@@ -118,10 +118,10 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 .index .title_bar { margin: 15px 5px;}
 .index .title_bar  h1 { display:inline; margin-right: 25px; }
 .index .title_bar a { vertical-align: text-bottom;vertical-align: 0.25em;}
-.index .select_all_wrap { display:inline; float: left; margin: 0px 0px; padding: 3px 8px 3px 0px; background-color: #CEE4F3;  border: 1px dotted #9cf;}
+.index .select_all_wrap { display:inline; float: left; margin: 0px 0px; padding: 0.25em; padding-left: 0; background-color: #CEE4F3;  border: 1px dotted #9cf;}
 .index .select_all_wrap input { margin: 3px 3px 3px 7px; }
-.index .page_entries_info { float: right; margin: 6px 30px 4px 5px; font-style: italic;}
-.index .pagination { display: inline; float: right; margin: 5px 0px;  color: #AAA; font-size: 14px;}
+.index .page_entries_info { float: right; margin: 0.25em; margin-top: 0.45em; font-style: italic; font-size: 0.9em;}
+.index .pagination { display: inline; float: right; margin: 0.25em; margin-left: 1em; color: #AAA; font-size: 1.1em;}
 .index .pagination a { color: #AAA; }
 .index .pagination .current { color: #333; }
 .index .pagination .disabled { display: none;}
