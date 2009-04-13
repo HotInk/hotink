@@ -19,6 +19,7 @@
 </head>
 <body>
 <div id="navigation" class="clearfix">
+	<div id="logo"><%= image_tag '/images/logo_tiny.png' %></div>
 	<div id="links"><%= link_to "Articles", account_articles_url(@account) %> | <%= link_to "Media", account_mediafiles_url(@account) %> </div>
 	<div id="user_details">Logged in as: <%= link_to current_user.login, edit_user_path(current_user), :class=>"weblink" %>  <%= button_link_to "Logout", user_session_url, :method=>:delete, :class=>"micro" %></div>
 	<div id="account_details"> <%= button_link_to "Edit account settings", edit_account_url(@account), :class=>"tiny" %> </div>
