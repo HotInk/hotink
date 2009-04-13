@@ -2,7 +2,7 @@
  	<% unless @account.categories.empty? %>
 		<div style="text-align:right;margin:0;padding:0;"><%= button_link_to_function "Edit", "swap($(this.parentNode.parentNode).childElements()[2], $(this.parentNode.parentNode).childElements()[3], this);load_category_edit();$(this).setStyle({opacity: 0.2});$(this).disabled='true'", :class=>"tab-t categories_edit_tab" %></div>
 		<div id="categories_list">
-			<div id="hidden_categories_buttons" style="display:none"><%= button_link_to_function "Save changes", "$('account_categories_edit_form').onsubmit();", :class=>"small save" %><%= button_link_to_function "Cancel", "new Ajax.Request('#{account_article_sortings_url(@account, @article)}', {method:'get'}); categories_editing=false;$(this).up().up().setStyle({opacity:0.5});", :class=>"small cancel" %></div>
+			<div id="hidden_categories_buttons" style="display:none"><%= button_link_to_function "Save changes", "$('account_categories_edit_form').onsubmit();", :class=>"small save" %><%= button_link_to_function "Cancel", "new Ajax.Request('#{account_article_sortings_url(@account, @article)}', {method:'get', onComplete: function(transport){ load_button_fix(); }}); categories_editing=false;$(this).up().up().setStyle({opacity:0.5});", :class=>"small cancel" %></div>
 			<ul id="categories_sort" style="">
 				<%= render :partial=>"parent", :collection=>@account.categories.select{ |sec| sec.parent_id.nil? } %>
 			</ul>
