@@ -82,7 +82,7 @@ class MediafilesController < ApplicationController
           return
         end
         flash[:notice] = 'Mediafile was successfully created.'
-        format.html { redirect_to(@mediafile) }
+        format.html { redirect_to(account_mediafiles_path(@account)) }
         format.xml  { render :xml => @mediafile, :status => :created, :location => @mediafile }
       else
         format.html { head :bad_request }
@@ -121,11 +121,12 @@ class MediafilesController < ApplicationController
   # DELETE /mediafiles/1
   # DELETE /mediafiles/1.xml
   def destroy
-    @mediafile = Mediafile.find(params[:id])
+    @mediafile = @account.mediafiles.find(params[:id])
     @mediafile.destroy
 
     respond_to do |format|
-      format.html { redirect_to(mediafiles_url) }
+      format.html { redirect_to(account_mediafiles_path(@account)) }
+      format.js   { head :ok }
       format.xml  { head :ok }
     end
   end

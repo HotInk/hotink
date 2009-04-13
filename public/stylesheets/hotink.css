@@ -164,6 +164,13 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 #mediafiles .media { width: 100px; height: 56px; text-align: center; }
 #mediafiles .media img{ display: inline; border: 1px solid #AAA;}
 
+/* New mediafile form styles */
+#mediafile { width: 50em; margin: 0 auto; min-height: 50px; }
+#mediafile #upload_media_tab {  border: 1px solid #AAA; padding: 5px;}
+#mediafile #upload_media_form>div { margin: 40px 50px;}
+#mediafile #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
+#mediafile #upload_media_form p { font-size: 13px; }
+
 
 /* Form styles */
 
@@ -226,7 +233,7 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 #tools .toolbox_body { margin-top: -1px; padding: 6px 6px; border-right: 1px solid #aaa; border-left: 1px solid #bbb; background-color: #FFF; }
 #tools .newtag { width: 80%; margin-right: 4px; }
 
-/* Attach media styles */
+/* Attach media modal styles */
 #attach_media_container { width: 660px; min-height: 50px; margin-bottom:0px;}
 #upload_media_tab {  border: 1px solid #AAA; padding: 5px;}
 #upload_media_form>div { margin: 40px 50px;}
@@ -234,7 +241,7 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 #upload_media_form p { font-size: 13px; }
 
 
-/* Edit media styles 
+/* Edit media modal styles 
 --------------------------------*/
 #edit_media_container { min-height: 50px; margin-bottom:0px; padding:0px;}
 .image_container { width: 707px; }
