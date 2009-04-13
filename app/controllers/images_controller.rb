@@ -93,7 +93,7 @@ class ImagesController < ApplicationController
     respond_to do |format|
       if @image.update_attributes(params[:image])
         flash[:notice] = 'Image was successfully updated.'
-        format.html { redirect_to([@account, @image]) }
+        format.html { redirect_to(account_mediafiles_path(@account)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
