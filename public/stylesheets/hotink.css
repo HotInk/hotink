@@ -177,7 +177,7 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 /* Form styles */
 
 .form { }
-.form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FFF; color: #555; }
+.form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FFF; }
 .form div.field_element input { width: 100%; padding: 0.125em;}
 .form #buttons { float: right; margin: 10px 0px; text-align: right;}
 .form #last_saved {  font-size:10px; font-style: italic; line-height:12px; margin: 0.5em 0; padding: 0.5em; }
@@ -185,7 +185,8 @@ div#navigation { width: 100%; height: 25px; padding-top: 5px; background-color: 
 
 /* Mediafile form styles */
 
-#mediafile_form #media { width: 100%; }
+#mediafile_form #media { width: 100%; border: 1px solid #DEDEDE; background-color: #FFF; color: #555; text-align: center; }
+#mediafile_form h2 { text-align: left; margin: 0.5em;}
 #mediafile_form #autocomplete_populate{ width: 416px;}
 #mediafile_form #description { margin:1em 0;}
 /* Image form */
