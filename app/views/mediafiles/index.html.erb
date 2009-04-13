@@ -1,5 +1,5 @@
 <div id="mediafiles" class="index">
-<div class="title_bar"><h1>Media files:</h1><%= button_link_to 'Upload media', new_account_mediafile_path(@account), :class=>"" %></div>
+<div class="title_bar"><h1>Media files</h1><%= button_link_to 'Upload media', new_account_mediafile_path(@account), :class=>"" %></div>
 
 <div class="clearfix">
 <p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
@@ -35,6 +35,14 @@
 						<em><%= mediafile.authors_list if mediafile.authors_list %></em>
 					</div>
 				</div>
+			</div>
+			
+			<div class="tags">
+				<% unless mediafile.tag_list.blank? %>
+					<p><em> <%= mediafile.tag_list %></em></p>
+				<% else %>
+					<p><em> <span style="color: #BBB">No tags</span> </em></p>
+				<% end %>
 			</div>
 			
 			<div class="icons">
