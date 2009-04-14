@@ -115,9 +115,11 @@ dl.faq dt {font-weight: bold;}
 #navigation #links ol li.current a { color: #515151; }
 #navigation #links ol li a:hover { color: #333; }
 #navigation #links ol li:hover { background-color: #CEE4F3; margin:0;}
-#navigation #user_details{ float: right; padding: 0.25em 0.3em; font-size: 0.8em; border: 1px solid #CEE4F3; background-color: #FFF6DD;}
-#navigation #user_details p{ display: inline-block; font-size: 1.0em; margin: 0; padding: 0.125em; }
+#navigation #user_details { float: right; padding: 0.25em 0.3em; font-size: 0.8em; border: 1px solid #CEE4F3; background-color: #FFF6DD;}
+#navigation #user_details p { display: inline-block; font-size: 1.0em; margin: 0; padding: 0.125em; }
 #navigation #account_details{ float: right; font-size: 1.0em; padding: 0.25em; margin-top: 0.3em; }
+#navigation #flash { line-height:0; min-width: 12em; height: 1.1em; text-align: left; padding: 0.25em 0.5em; color: green; float: right;  margin-left: 1%; background-color: #F9F9F9; border: 1px solid #CEE4F3;}
+#navigation #flash p { font-size: 0.9em; margin: 0; display:inline;}
 #navigation .btn { margin-bottom: 0.25em; }
 
 /* Modal window styles */
@@ -231,8 +233,8 @@ dl.faq dt {font-weight: bold;}
 
 #article_form #article_title { margin-bottom: 0.5em; font-size: 1.8em;}
 #article_form #article_subtitle { margin-bottom: 0.75em; font-size: 1.3em; }
-#article_form #article_date { font-size: 14px; height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; }
-#article_form #article_section_id { height: 1.6em; max-width: 22em; font-size: 14px; margin: 0.25em 0; }
+#article_form #article_date { font-size: 14px; height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; background-color: #F9F9F9;}
+#article_form #article_section_id { height: 1.6em; max-width: 22em; font-size: 14px; margin: 0.25em 0; background-color: #F9F9F9; }
 #article_form #authorships_form { background-color: #F9F9F9; }
 #article_form #article_authors_list{ border:3px solid #F9F9F9!important;border-left:none;display:block;margin:0px 3px -4px -2px;background-color: #F9F9F9;padding:0px!important;color: #515151;}
 /*IE6-/Win only*/
@@ -248,12 +250,12 @@ dl.faq dt {font-weight: bold;}
 #tools .toolbox { margin-bottom: 10px; padding: 0px 5px; }
 #tools .toolbox h2{ display: inline; cursor: pointer; font-size: 1.1em; font-weight: normal; margin: 0;}
 #tools .toolbox h2 span { background: url('/images/arrows.png') no-repeat; background-position: 0px -29px; margin: 0 0.125em;}
-#tools .toolbox_border { height: 1px; margin:0 1px; padding:0; background-color: #aaa;	color: #aaa; }
-#tools .toolbox_separator { height: 1px; margin:0 5px; padding:0; background-color: #aaa; }
-#tools .toolbox_label_body { background:#515151; margin:0; padding: 0.25em; height: 1.5em; overflow:visible; text-decoration:none; color:#F9F9F9; border-right: 1px solid #aaa; border-left: 1px solid #bbb; }
+#tools .toolbox_border { height: 1px; margin:0 1px; padding:0; background-color: #999; }
+#tools .toolbox_separator { height: 1px; margin:0 5px; padding:0; background-color: #999; }
+#tools .toolbox_label_body { background:#999; font-family: georgia, "Times New Roman", times, serif; font-style:italic; margin:0; padding: 0.3em; height: 1.5em; overflow:visible; text-decoration:none; color:#FFF; border-right: 1px solid #999; border-left: 1px solid #AAA; }
 * html .toolbox_label_body{ padding-bottom:1px; }
-#tools .toolbox_label_body h2 {  }
-#tools .toolbox_body { margin-top: -1px; padding: 6px 6px; border-right: 1px solid #aaa; border-left: 1px solid #bbb; background-color: #FFF; }
+#tools .toolbox_label_body h2 { font-size:1.3em; letter-spacing: 0.5px;  }
+#tools .toolbox_body { margin-top: -1px; padding: 6px 6px; border-right: 1px solid #999; border-left: 1px solid #AAA; background-color: #FFF; }
 #tools .newtag { width: 80%; margin-right: 4px; }
 
 /* New mediafile form styles */

@@ -31,6 +31,7 @@
 	</div>
 	<div id="user_details"><p>Logged in as:</p> <%= link_to current_user.login, edit_user_path(current_user), :class=>"weblink" %>  <%= button_link_to "Logout", user_session_url, :method=>:delete, :class=>"micro" %></div>
 	<div id="account_details"> <%= button_link_to "Edit account settings", edit_account_url(@account), :class=>"tiny" %> </div>
+	<div id="flash"><p class="translucent"><%= flash[:notice] %></p></div>
 </div>
 <div id="page_container" class="clearfix">
 	<%= yield  %>
@@ -38,6 +39,9 @@
 <script type="text/javascript" charset="utf-8">
 	//This is a quick hack to fix button display in firefox
 	load_button_fix();
+	//Set flash to fade after load - application.js
+	fade_flash();
+
 </script>
 </body>
 </html>

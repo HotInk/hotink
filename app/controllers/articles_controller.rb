@@ -51,6 +51,7 @@ class ArticlesController < ApplicationController
 
     
     respond_to do |format|
+      flash[:notice] = "New article"
       format.html { redirect_to edit_account_article_path(@account, @article) }
       format.xml  { render :xml => @article }
     end
@@ -90,10 +91,9 @@ class ArticlesController < ApplicationController
   
     respond_to do |format|
       if @article.update_attributes(params[:article])
-        
+        flash[:notice] = "Article saved"
         @article = @account.articles.find(params[:id])
-        @article.categories << @article.section unless @article.categories.member?(@article.section) || @article.section.nil? #Create sorting for current section, if necessary
-        
+        @article.categories << @article.section unless @article.categories.member?(@article.section) || @article.section.nil? #Create sorting for current section, if necessary        
         format.js
         format.html { redirect_to(edit_account_article_path(@account, @article)) }
         format.xml  { head :ok }

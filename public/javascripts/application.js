@@ -63,6 +63,17 @@ var swap = function(element1, element2, toggle){
 	}
 }
 
+// Fade flash function hides flash notices shortly after they're loaded.
+ var fade_flash = function() {
+	$('flash').insert('<p style="color: #DADADA;font-style: italic; font-family: \'Lucide grande\', Verdana, Arial, Helvetica, sans-serif;">Notice board</p>').down().next().hide();
+	$('flash').down().fade();
+	apr_flash.delay(1); // 
+}
+
+var apr_flash = function() {
+		$('flash').down().next().appear();
+};
+
 // Load category edit functionality
 // This is 100% custom functionality and it's pretty complex. 
 // It will probably be worthwhile to abstract it as a control, but that'll be a huge job.

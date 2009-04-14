@@ -14,7 +14,6 @@
 		<%= link_to "&#171; Back to articles list", account_articles_url(@account), :class=>"weblink" %>
 	</p>
 	<h1>Edit article</h1>
-	<%= "<p style=\"color: green\">#{ flash[:notice] }</p>" if flash[:notice] %>
 	  <%= f.error_messages %>
 	  <div class="field_element">
 	    <%= f.label :title, "Headline"%><br />
@@ -93,7 +92,6 @@
 	//Load toolbox functionality
 	$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
 	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
-	
 	//Initialize Overlay
 	var article_form_overlay = new Overlay ();
 	

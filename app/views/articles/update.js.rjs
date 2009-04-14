@@ -1,7 +1,8 @@
-#Update the last saved note
+#Update the last saved notes and trigger flash
 page.replace_html 'last_saved', :text =>"Last modified #{time_ago_in_words(@article.updated_at)} ago"
 page.visual_effect :highlight, "last_saved", :duration => 0.5
- 
+page.replace_html 'flash', :text =>"<p class=\"translucent\">#{flash[:notice]}</p>"
+page << "fade_flash();"
 #Reload sortings form to keep javascript calls up-to-date
 page << "new Ajax.Request('#{account_article_sortings_url(@account, @article, :format=>:js)}', {method:'get', onComplete: function(transport){ load_button_fix(); }});"
 #Remove nested form create elements for newly-created sortings
