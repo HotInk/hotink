@@ -1,5 +1,5 @@
 <div id="mediafiles" class="index">
-<div class="title_bar"><h1>Media files</h1><%= button_link_to 'Upload media', new_account_mediafile_path(@account), :class=>"" %></div>
+<div class="title_bar"><h1>Media </h1><%= button_link_to 'Upload media', new_account_mediafile_path(@account), :class=>"" %></div>
 
 <div class="clearfix">
 <p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
@@ -19,14 +19,8 @@
 			<div class="media">
 					<%= image_tag(mediafile.file.url(:system_thumb)) %>
 				<% elsif mediafile.is_a?(Audiofile) %>
-			<div class="media">
-					<object type="application/x-shockwave-flash"
-					data="/musicplayer.swf?&song_url=<%= mediafile.file.url %>" 
-					width="56" height="56">
-					<param name="movie" 
-					value="/&song_url=<%= mediafile.file.url %>" />
-					<!-- <img src="noflash.gif" width="56" height="56" alt="" /> -->
-					</object>
+			<div class="media blank_file">
+					<p><%= mediafile.file_file_name.split(".").last.upcase %></p>
 				<% else %>
 			<div class="media blank_file">
 					<p><%= mediafile.file_file_name.split(".").last.upcase %></p>			
