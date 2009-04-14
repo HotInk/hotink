@@ -109,7 +109,7 @@ dl.faq dt {font-weight: bold;}
 #navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; }
 #navigation #links { float: left; font-size: 1.2em; margin-left: 22.5em; color: #F9F9F9;}
 #navigation #links a{ color: #F9F9F9;}
-#navigation #user_details{ float: right; font-size: 0.8em; padding: 0.25em 0.3em; border: 1px solid #CEE4F3; background-color: #F9F9F9;}
+#navigation #user_details{ float: right; font-size: 0.8em; padding: 0.25em 0.3em; border: 1px solid #CEE4F3; background-color: #FFF6DD;}
 #navigation #account_details{ float: right; font-size: 1.0em; padding: 0.3em; }
 #navigation .btn { margin-bottom: 0.25em; }
 
