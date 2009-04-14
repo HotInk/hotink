@@ -2,7 +2,7 @@
 
 body { background-color: #F9F9F9; color: #333; margin: 0 auto; text-algin: center;}
 body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2em; }
-div#page_container { background-color: #F9F9F9; margin: 0.5em auto; max-width: 69em; padding: 0.5em; text-align: left; }
+div#page_container { background-color: #FFF; margin: 0 auto; max-width: 69em; padding: 1em 1.5em; border-left: 1px solid #DDD; border-right: 1px solid #DDD;text-align: left; }
 pre { background-color: #eee; padding: 10px; font-size: 11px; }
 
 a { text-decoration:none; color: #000; }
@@ -92,25 +92,26 @@ dl.faq dt {font-weight: bold;}
 .selected:hover span, .selected:hover span span, .selected:focus span, .selected:focus span span { cursor:pointer; border-color:#9cf !important; color:#FFF; }
 	
 /* Button size classes */
-.large { font-size: 13px; line-height: 1.2; }
+.large { font-size: 1em; line-height: 1.2em; }
 .large:active span{ background-position:0 -390px;}
-.small { font-size: 10px; line-height: 1; }
+.small { font-size: 0.85em; line-height: 1; }
 .small span{ background-position: 0px -3px; }
-.tiny { font-size: 9px; line-height: 1;  }
-.micro { font-size: 8px; line-height: 1em; }
+.tiny { font-size: 0.775em; line-height: 1;  }
+.micro { font-size: 0.75em; line-height: 1em; }
 	
 /* End of custom button CSS
 ---------------------------------------- */
 
 /* Navigation CSS */
 
-#navigation { width: 100%; min-height: 2.0em; background-color: #515151; border-bottom: 1px solid #CEE4F3; text-align: center;}
+#navigation { width: 100%; min-height: 2.4em; background-color: #515151; border-bottom: 1px solid #CEE4F3; text-align: center;}
 #navigation div { display: inline-block; margin: 0.25em; margin-top: 0.3em; padding: 0.25em; }
 #navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; }
 #navigation #links { float: left; font-size: 1.2em; margin-left: 22.5em; color: #F9F9F9;}
 #navigation #links a{ color: #F9F9F9;}
-#navigation #user_details{ float: right; font-size: 0.8em; padding: 0.25em; border: 1px solid #CEE4F3; background-color: #F9F9F9;}
+#navigation #user_details{ float: right; font-size: 0.8em; padding: 0.25em 0.3em; border: 1px solid #CEE4F3; background-color: #F9F9F9;}
 #navigation #account_details{ float: right; font-size: 1.0em; padding: 0.3em; }
+#navigation .btn { margin-bottom: 0.25em; }
 
 /* Modal window styles */
 
@@ -170,19 +171,13 @@ dl.faq dt {font-weight: bold;}
 #mediafiles li div.tags p { font-size: 0.8em; margin: 0;}
 #mediafiles li div.media { width: 100px; height: 56px; text-align: center;} /* width & height are fixed in pixels, since media preview size is fixed as well */
 #mediafiles .media img{ display: inline; border: 1px solid #AAA;}
-
-/* New mediafile form styles */
-#mediafile { width: 50em; margin: 0 auto; min-height: 50px; }
-#mediafile #upload_media_tab {  border: 1px solid #AAA; padding: 5px;}
-#mediafile #upload_media_form>div { margin: 40px 50px;}
-#mediafile #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
-#mediafile #upload_media_form p { font-size: 13px; }
-
+#mediafiles .blank_file { background:url('/images/blank_file.png') center no-repeat; margin-top:0.5em; }
+#mediafiles .blank_file  p{ float:left;width:100%;height:100%;margin-top:35px;font-size: 0.8em; color: #555 }
 
 /* Form styles */
 
 .form { }
-.form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FFF; }
+.form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; }
 .form div.field_element input { width: 100%; padding: 0.125em;}
 .form #buttons { float: right; margin: 10px 0px; text-align: right;}
 .form #last_saved {  font-size:10px; font-style: italic; line-height:12px; margin: 0.5em 0; padding: 0.5em; }
@@ -192,23 +187,34 @@ dl.faq dt {font-weight: bold;}
 
 #mediafile_form #media { width: 100%; border: 1px solid #DEDEDE; background-color: #FFF; color: #555; text-align: center; }
 #mediafile_form h2 { text-align: left; margin: 0.5em;}
-#mediafile_form #autocomplete_populate{ width: 416px;}
+#mediafile_form #autocomplete_populate{ width: 415px;}
 #mediafile_form #description { margin:1em 0;}
 /* Image form */
 #mediafile_form #media img { margin: 0.5em auto; border: 1px solid #AAA;}
 #mediafile_form #image_title { margin-bottom: 0.5em; font-size: 1.6em;}
 #mediafile_form #image_authors_list{ border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;color: #515151;}
 #mediafile_form #image_date { font-size: 1.3em;height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; }
-#mediafile_form #image_description{ width:99%; height: 100px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
+#mediafile_form #image_description{ width:99%; height: 80px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
+/* Mediafile form */
+#mediafile_form #mediafile_title { margin-bottom: 0.5em; font-size: 1.6em;}
+#mediafile_form #mediafile_authors_list{ border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;color: #515151;}
+#mediafile_form #mediafile_date { font-size: 1.3em;height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; }
+#mediafile_form #mediafile_description{ width:99%; height: 80px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
+/* Audiofile form */
+#mediafile_form #audiofile_title { margin-bottom: 0.5em; font-size: 1.6em;}
+#mediafile_form #audiofile_authors_list{ border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;color: #515151;}
+#mediafile_form #audiofile_date { font-size: 1.3em;height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; }
+#mediafile_form #audiofile_description{ width:99%; height: 80px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
+
 
 /* Article form style */
 
 .note {	font-size: 11px; }
-.text_input { background: none; border: 1px solid #DEDEDE; background-color: #FFF; color: #555; }
+.text_input { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; color: #555; }
 .column_holder { float: none; }
 .half_column { float: left; width: 50%; margin: 5px 0px; }
 .third_column { float: left; width: 33%; }
-.two_thirds_column { float: left; width:66%; }
+.two_thirds_column { float: right; width:66%; }
 
 #article_form {	width: 68%; float:left; }
 #mediafile_form { width: 68%; float: left;}
@@ -240,6 +246,15 @@ dl.faq dt {font-weight: bold;}
 #tools .toolbox_label_body h2 { margin: 0; font-size: 16px; }
 #tools .toolbox_body { margin-top: -1px; padding: 6px 6px; border-right: 1px solid #aaa; border-left: 1px solid #bbb; background-color: #FFF; }
 #tools .newtag { width: 80%; margin-right: 4px; }
+
+/* New mediafile form styles */
+#mediafile { width: 50em; margin: 0 auto; min-height: 50px; }
+#mediafile #upload_media_form { float: left;}
+#mediafile #upload_media_tab {  border: 1px solid #AAA; padding: 5px;}
+#mediafile #upload_media_form>div { margin: 40px 50px;}
+#mediafile #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
+#mediafile #upload_media_form p { font-size: 13px; }
+
 
 /* Attach media modal styles */
 #attach_media_container { width: 660px; min-height: 50px; margin-bottom:0px;}

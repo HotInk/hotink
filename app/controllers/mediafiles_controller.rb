@@ -82,7 +82,7 @@ class MediafilesController < ApplicationController
           return
         end
         flash[:notice] = 'Mediafile was successfully created.'
-        format.html { redirect_to(account_mediafiles_path(@account)) }
+        format.html { redirect_to(edit_account_mediafile_path(@account, @mediafile)) }
         format.xml  { render :xml => @mediafile, :status => :created, :location => @mediafile }
       else
         format.html { head :bad_request }

@@ -14,10 +14,12 @@
 				<input type="checkbox" value="<%= mediafile.id %>"/>
 			</div>
 			
-			<div class="media">
+			
 				<% if mediafile.is_a?(Image) %>
+			<div class="media">
 					<%= image_tag(mediafile.file.url(:system_thumb)) %>
 				<% elsif mediafile.is_a?(Audiofile) %>
+			<div class="media">
 					<object type="application/x-shockwave-flash"
 					data="/musicplayer.swf?&song_url=<%= mediafile.file.url %>" 
 					width="56" height="56">
@@ -25,6 +27,9 @@
 					value="/&song_url=<%= mediafile.file.url %>" />
 					<!-- <img src="noflash.gif" width="56" height="56" alt="" /> -->
 					</object>
+				<% else %>
+			<div class="media blank_file">
+					<p><%= mediafile.file_file_name.split(".").last.upcase %></p>			
 				<% end %>
 			</div>
 			
@@ -50,7 +55,7 @@
 			</div>
 			
 			<div class="date">
-				<%= h mediafile.updated_at.to_s(:standard_date_only) %>
+				<%= h mediafile.date.to_s(:standard) %>
 			</div>
 			
 		  </li>
