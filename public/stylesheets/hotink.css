@@ -235,7 +235,7 @@ dl.faq dt {font-weight: bold;}
 /*IE6-/Win only*/
 /*\*/ * html .tokenizer_input_borderless #article_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
 #article_form #autocomplete_populate{ width: 450px;}
-#article_form #author_list { margin-bottom: 20px; }
+#article_form #author_list { margin-bottom: 20px; line-height: 1.6; }
 #article_form #article_bodytext { width:99%; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
 #article_summary { width:100%; height: 85px; }
 
