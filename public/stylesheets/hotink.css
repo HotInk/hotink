@@ -107,12 +107,12 @@ dl.faq dt {font-weight: bold;}
 #navigation { width: 100%; min-height: 2.4em; background-color: #515151; border-bottom: 1px solid #CEE4F3; text-align: center;}
 #navigation div { display: inline-block; margin: 0.25em; margin-top: 0.3em; padding: 0.25em; }
 #navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; }
-#navigation #links { float: left; padding: 0; margin-left: 1%; border: 1px solid #ED6BDC; }
+#navigation #links { float: left; padding: 0; margin-left: 1%; }
 #navigation #links ol { margin: 0; padding: 0; font-size: 1.2em; }
 #navigation #links ol li { display: inline-block; margin: 0; padding: 0.125em 0.5em; background-color: #F9F9F9; }
 #navigation #links ol li a { color: #515151; }
 #navigation #links ol li.current { background-color: #FFF6DD; margin:0; }
-#navigation #links ol li.current a { color: #232323; }
+#navigation #links ol li.current a { color: #515151; }
 #navigation #links ol li a:hover { color: #333; }
 #navigation #links ol li:hover { background-color: #CEE4F3; margin:0;}
 #navigation #user_details{ float: right; padding: 0.25em 0.3em; font-size: 0.8em; border: 1px solid #CEE4F3; background-color: #FFF6DD;}
@@ -187,7 +187,7 @@ dl.faq dt {font-weight: bold;}
 .form label { color: #515151;}
 .form h1 { font-size: 2.5em;line-height: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
 .form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; color:#333;}
-.form div.field_element input { width: 100%; padding: 0.125em;}
+.form div.field_element input { width: 100%; padding: 0.125em; background-color: #F9F9F9;}
 .form #buttons { float: right; margin: 10px 0px; text-align: right;}
 .form #last_saved {  font-size:10px; font-style: italic; line-height:12px; margin: 0.5em 0; padding: 0.5em; }
 .form #top_links { margin-top: 2px; margin-bottom: 5px; }
@@ -234,26 +234,25 @@ dl.faq dt {font-weight: bold;}
 #article_form #article_date { font-size: 14px; height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; }
 #article_form #article_section_id { height: 1.6em; max-width: 22em; font-size: 14px; margin: 0.25em 0; }
 #article_form #authorships_form { background-color: #F9F9F9; }
-#article_form #article_authors_list{ border:3px solid white!important;border-left:none;display:block;margin:0px 3px -4px -2px;background-color: #FFF;padding:0px!important;color: #515151;}
+#article_form #article_authors_list{ border:3px solid #F9F9F9!important;border-left:none;display:block;margin:0px 3px -4px -2px;background-color: #F9F9F9;padding:0px!important;color: #515151;}
 /*IE6-/Win only*/
 /*\*/ * html .tokenizer_input_borderless #article_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
 #article_form #autocomplete_populate{ width: 450px;}
 #article_form #author_list { margin-bottom: 1.5em; line-height: 1.6; }
 #article_form #article_bodytext { width:99%; border: 1px solid #999; background-color: #F9F9F9; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
-#article_summary { width:100%; height: 85px;  background-color: #F9F9F9; border-color: #999; padding: 0.5em; line-height: 1.4; color: #333;}
+#article_summary { width:99%; height: 85px;  background-color: #F9F9F9; border-color: #999; padding: 0.5em; line-height: 1.4; color: #333;}
 
 /* Tool box styles */
 
 #tools p{ margin: 0px 0px 6px 0px; }
 #tools .toolbox { margin-bottom: 10px; padding: 0px 5px; }
-#tools .toolbox h2{ display: inline; cursor: pointer; }
-#tools .toolbox h2 span { background: url('/arrows.png') no-repeat; background-position: 0px -29px;}
+#tools .toolbox h2{ display: inline; cursor: pointer; font-size: 1.1em; font-weight: normal; margin: 0;}
+#tools .toolbox h2 span { background: url('/images/arrows.png') no-repeat; background-position: 0px -29px; margin: 0 0.125em;}
 #tools .toolbox_border { height: 1px; margin:0 1px; padding:0; background-color: #aaa;	color: #aaa; }
 #tools .toolbox_separator { height: 1px; margin:0 5px; padding:0; background-color: #aaa; }
-#tools .toolbox_label_body { background:#ddd url('/images/bg-button.gif') repeat-x 0 0; margin:0; padding: 4px 5px 6px 5px; overflow:visible; 
-						font: 100%/1.2; text-decoration:none; color:#333; border-right: 1px solid #aaa; border-left: 1px solid #bbb; }
+#tools .toolbox_label_body { background:#515151; margin:0; padding: 0.25em; height: 1.5em; overflow:visible; text-decoration:none; color:#F9F9F9; border-right: 1px solid #aaa; border-left: 1px solid #bbb; }
 * html .toolbox_label_body{ padding-bottom:1px; }
-#tools .toolbox_label_body h2 { margin: 0; font-size: 16px; }
+#tools .toolbox_label_body h2 {  }
 #tools .toolbox_body { margin-top: -1px; padding: 6px 6px; border-right: 1px solid #aaa; border-left: 1px solid #bbb; background-color: #FFF; }
 #tools .newtag { width: 80%; margin-right: 4px; }
 
@@ -269,6 +268,7 @@ dl.faq dt {font-weight: bold;}
 /* Attach media modal styles */
 #attach_media_container { width: 660px; min-height: 50px; margin-bottom:0px;}
 #upload_media_tab {  border: 1px solid #AAA; padding: 5px;}
+#attach_media_container #upload_media_form {float: left;}
 #upload_media_form>div { margin: 40px 50px;}
 #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
 #upload_media_form p { font-size: 13px; }
@@ -387,12 +387,12 @@ div.autocomplete ul li {  list-style-type:none;  display:block;  margin:0;  padd
 /* Mediafiles list styles
 --------------------------------*/
 
-div.media_list .token{padding:2px 2px 5px 3px;background-repeat:no-repeat;float: left; width: 98%; background-color: #CEE4F3;border: 1px solid #B9DCF4;}
+div.media_list .token{padding:2px 2px 5px 3px;background-repeat:no-repeat;float: left; width: 99%; background-color: #FFF6D3; }
 
 div.media_list .token span.x,
 div.media_list .token span.x_hover,
 div.media_list .token:hover span.x,
-div.media_list .token:hover span.x_hover{float:right;width: 5%;background-image:url('/images/token_x.gif');background-position:3px 0px;background-repeat:no-repeat;cursor:pointer;display:inline;}
+div.media_list .token:hover span.x_hover{float:right;width: 5%;background-image:url('/images/token_x_red.gif');background-position:3px 0px;background-repeat:no-repeat;cursor:pointer;display:inline;}
 div.media_list textarea{ width: 48%;height:80px;font-size: 10px;color: #333;outline:none; overflow: hidden;margin: 0px 5px 4px 0px;}
 div.media_list .token { margin-bottom: 5px; }
 div.media_list p { font-size:10px;line-height:12px; }
