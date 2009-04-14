@@ -45,7 +45,7 @@
 	  </div>
 	  <p>
 	    <%= f.label :summary %><br />
-	    <%= f.text_area :summary %>
+	    <%= f.text_area :summary, :class=>"text_input user" %>
 	  </p>
 	  <div id="article_form_hidden_elements" class="hidden">	  	
 		<% f.fields_for :sortings do |sorting| %>

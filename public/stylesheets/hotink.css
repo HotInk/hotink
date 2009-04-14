@@ -231,13 +231,14 @@ dl.faq dt {font-weight: bold;}
 #article_form #article_subtitle { margin-bottom: 0.75em; font-size: 1.3em; }
 #article_form #article_date { font-size: 14px; height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; }
 #article_form #article_section_id { height: 1.6em; max-width: 22em; font-size: 14px; margin: 0.25em 0; }
-#article_form #article_authors_list{ border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;color: #515151;}
+#article_form #authorships_form { background-color: #F9F9F9; }
+#article_form #article_authors_list{ border:3px solid white!important;border-left:none;display:block;margin:0px 3px -4px -2px;background-color: #FFF;padding:0px!important;color: #515151;}
 /*IE6-/Win only*/
 /*\*/ * html .tokenizer_input_borderless #article_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
 #article_form #autocomplete_populate{ width: 450px;}
 #article_form #author_list { margin-bottom: 20px; line-height: 1.6; }
 #article_form #article_bodytext { width:99%; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
-#article_summary { width:100%; height: 85px; }
+#article_summary { width:100%; height: 85px;  background-color: #F9F9F9; border-color: #999; padding: 0.5em; line-height: 1.4; color: #333;}
 
 /* Tool box styles */
 
