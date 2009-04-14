@@ -1,7 +1,7 @@
 /* Main style */
 
 body { background-color: #F9F9F9; color: #333; margin: 0 auto; text-algin: center;}
-body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2em; }
+body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
 div#page_container { background-color: #FFF; margin: 0 auto; max-width: 69em; padding: 1em 1.5em; border-left: 1px solid #DDD; border-right: 1px solid #DDD;text-align: left; }
 pre { background-color: #eee; padding: 10px; font-size: 11px; }
 
@@ -127,7 +127,7 @@ dl.faq dt {font-weight: bold;}
 /* Hot Ink index styles
 --------------------------------*/
 
-.index .title_bar { margin: 1em; margin-bottom: 1em;}
+.index .title_bar { margin-bottom: 1em;}
 .index .title_bar  h1 { display:inline; margin-right: 0.5em; font-size: 3em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA;}
 .index .title_bar a { vertical-align: 0.25em;}
 .index .select_all_wrap { display:inline; float: left; margin: 0px 0px; padding: 0.25em; padding-left: 0; background-color: #CEE4F3;  border: 1px dotted #9cf;}
@@ -183,7 +183,8 @@ dl.faq dt {font-weight: bold;}
 /* Form styles */
 
 .form { }
-.form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; }
+.form h1 { font-size: 2.5em;line-height: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
+.form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; color:#333;}
 .form div.field_element input { width: 100%; padding: 0.125em;}
 .form #buttons { float: right; margin: 10px 0px; text-align: right;}
 .form #last_saved {  font-size:10px; font-style: italic; line-height:12px; margin: 0.5em 0; padding: 0.5em; }
