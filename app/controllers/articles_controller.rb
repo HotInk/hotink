@@ -111,6 +111,7 @@ class ArticlesController < ApplicationController
     @article.destroy
 
     respond_to do |format|
+      flash[:notice] = "Article trashed"
       format.html { redirect_to(account_articles_url(@account)) }
       format.xml  { head :ok }
     end

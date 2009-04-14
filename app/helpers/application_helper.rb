@@ -81,5 +81,25 @@ module ApplicationHelper
        ]
      end
    end
+   
+   #This method triggers the flash
+   def render_flash( message, options={})
+     case action_name
+     when "destroy"
+       color = "red"
+     when "update"
+       color = "green"
+     else
+      color = "blue"
+     end
+     
+     case message
+     when "Article trashed"
+       color = "red"
+     end
+     
+     color = options[:color].nil? ? color : options[:color]
+     "<p class=\"translucent\" style=\"color: #{color};\">" + message.to_s + "</p>"
+   end
   
 end
