@@ -22,8 +22,12 @@
 						<em><%= article.authors_list if article.authors_list %></em>
 					</div>
 					<div class="media">
-						<% article.images.each do | i | %>
-							<%= image_tag(i.file.url(:system_icon), :border=>1) %>
+						<% article.mediafiles.each do | i | %>
+							<% if i.is_a?(Image) %>
+								<%= image_tag(i.file.url(:system_icon), :border=>1) %>
+							<% else %>
+								<%= image_tag('/images/blank_file_icon.png', :alt=>i.file.original_filename)%>
+							<% end %>
 						<% end %>
 					</div> 
 				</div>
