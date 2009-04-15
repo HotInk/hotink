@@ -389,16 +389,17 @@ div.autocomplete ul li {  list-style-type:none;  display:block;  margin:0;  padd
 /* Mediafiles list styles
 --------------------------------*/
 
-div.media_list .token{padding:2px 2px 5px 3px;background-repeat:no-repeat;float: left; width: 99%; background-color: #FFF6D3; }
+div.media_list .token{padding:0.5em; background-repeat:no-repeat;float: left; width: 95%; background-color: #FFF6D3; }
 
 div.media_list .token span.x,
 div.media_list .token span.x_hover,
 div.media_list .token:hover span.x,
-div.media_list .token:hover span.x_hover{float:right;width: 5%;background-image:url('/images/token_x_red.gif');background-position:3px 0px;background-repeat:no-repeat;cursor:pointer;display:inline;}
+div.media_list .token:hover span.x_hover{float:right;width: 5%; background-image:url('/images/token_x_red.gif');background-position:3px 0px;background-repeat:no-repeat;cursor:pointer;display:inline;}
 div.media_list textarea{ width: 48%;height:80px;font-size: 10px;color: #333;outline:none; overflow: hidden;margin: 0px 5px 4px 0px;}
 div.media_list .token { margin-bottom: 5px; }
-div.media_list p { font-size:10px;line-height:12px; }
-div.media_list img { margin: 0.5em; margin-right: 0; border: 1px solid #AAA; }
+div.media_list p { font-size:10px;line-height:12px;}
+div.media_list .file { width: 91%; margin: 0; margin-bottom: 0.5em; padding: 0.25em;}
+div.media_list .token img { margin: 0.5em; margin-right: 0; border: 1px solid #AAA; }
 div.media_list p a{ cursor: text; }
 div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left: 5px;}
 
