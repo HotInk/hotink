@@ -85,11 +85,11 @@ module ApplicationHelper
    #This method formats the flash content. The color gets intelligently selected based on the content of the message.   
    def render_flash( message )
      case message
-     when /saved|updated/
-       color = "green"
+     when /saved|updated/i
+       color = "#8CC63F"
      when /new|attached/i
-       color = "blue"
-     when /trashed|deleted|destroy|trash/
+       color = "#8DB4D6"
+     when /deleted|destroy|trash/i
        color = "red"
      when /NOT/
        color = "red"
@@ -97,7 +97,7 @@ module ApplicationHelper
        color = "blue"
      end
 
-     "<p class=\"translucent\" style=\"color: #{color};\">" + message.to_s + "</p>"
+     "<p style=\"color: #{color};\">" + message.to_s + "</p>"
    end
   
 end
