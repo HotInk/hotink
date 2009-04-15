@@ -72,7 +72,7 @@ var swap = function(element1, element2, toggle){
 
 var trigger_flash = function ( message ) {
 	$('flash').innerHTML = ( message );
-	fade_flash();
+	fade_flash.delay(1);
 }
 
 var apr_flash = function() {
