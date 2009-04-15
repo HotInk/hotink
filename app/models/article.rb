@@ -11,7 +11,7 @@ class Article < ActiveRecord::Base
   has_many :sortings
   has_many :categories, :through => :sortings
   
-  has_many :waxings
+  has_many :waxings, :dependent => :destroy
   has_many :mediafiles, :through => :waxings
   has_many :images, :through => :waxings, :source=>'mediafile', :conditions => { :type => 'Image'}
   
