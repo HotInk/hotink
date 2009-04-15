@@ -78,7 +78,8 @@ class AudiofilesController < ApplicationController
     @audiofile.destroy
 
     respond_to do |format|
-      format.html { redirect_to(audiofiles_url) }
+      flash[:notice] = 'mp3 trashed'
+      format.html { redirect_to(account_mediafiles_url(@account)) }
       format.xml  { head :ok }
     end
   end

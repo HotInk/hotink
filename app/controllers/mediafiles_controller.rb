@@ -82,7 +82,7 @@ class MediafilesController < ApplicationController
           end
           return
         end
-        flash[:notice] = 'Mediafile was successfully created.'
+        flash[:notice] = 'Media added'
         format.html { redirect_to(edit_account_mediafile_path(@account, @mediafile)) }
         format.xml  { render :xml => @mediafile, :status => :created, :location => @mediafile }
       else
@@ -104,12 +104,13 @@ class MediafilesController < ApplicationController
         if @article = find_article
           responds_to_parent do
           			render :update do |page|
+          			  page << 'trigger_flash(\'<p style="color:green;">Media updated</p>\');'          			  
           				page << "reload_media();"
           			end
           end
           return
         end
-        flash[:notice] = 'Mediafile was successfully updated.'
+        flash[:notice] = 'Media updated'
         format.html { redirect_to(@mediafile) }
         format.xml  { head :ok }
       else
@@ -126,6 +127,7 @@ class MediafilesController < ApplicationController
     @mediafile.destroy
 
     respond_to do |format|
+      flash[:notice] = 'Media trashed'
       format.html { redirect_to(account_mediafiles_path(@account)) }
       format.js   { head :ok }
       format.xml  { head :ok }

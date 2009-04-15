@@ -109,6 +109,7 @@ class ImagesController < ApplicationController
     @image.destroy
 
     respond_to do |format|
+      flash[:notice] = 'Image trashed'
       format.html { redirect_to(account_mediafiles_path(@account)) }
       format.js   { head :ok }
       format.xml  { head :ok }
