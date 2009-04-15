@@ -1,5 +1,5 @@
 <div id="article_form" class="form">
-	<% remote_form_for([@account, @article]) do |f| %>
+	<% remote_form_for([@account, @article], :html=>{:autocomplete=>"off"}) do |f| %>
 	  <div id="buttons">
 		<%= button_link_to_submit "Save", :class=>"save large" %>	
 		<p id="last_saved">

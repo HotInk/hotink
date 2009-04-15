@@ -28,12 +28,13 @@ class Mediafile < ActiveRecord::Base
       :url => "/system/:class/:id_partition/:basename_:style.:extension"
   
   def title
-    if title = self.read_attribute('title')
+    title = self.read_attribute(:title)
+    if title and title.strip != ""
       return title.strip
-    elsif filename = self.read_attribute('file_file_name')
+    elsif filename = self.read_attribute(:file_file_name)
       return filename
     else
-      return
+      return "No file"
     end
   end
       
@@ -63,14 +64,5 @@ class Mediafile < ActiveRecord::Base
       end
     end
   end
-  
-  def display_title
-    if self.title and self.title.strip != ""
-      return self.title
-    else 
-      return self.file_file_name
-    end
-  end
-  
   
 end
