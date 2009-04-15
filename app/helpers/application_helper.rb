@@ -81,24 +81,22 @@ module ApplicationHelper
        ]
      end
    end
-   
-   #This method triggers the flash
-   def render_flash( message, options={})
-     case action_name
-     when "destroy"
-       color = "red"
-     when "update"
-       color = "green"
-     else
-      color = "blue"
-     end
-     
+
+   #This method formats the flash content. The color gets intelligently selected based on the content of the message.   
+   def render_flash( message )
      case message
-     when "Article trashed"
+     when /saved|updated/
+       color = "green"
+     when /new|attached/i
+       color = "blue"
+     when /trashed|deleted|destroy|trash/
        color = "red"
+     when /NOT/
+       color = "red"
+     else
+       color = "blue"
      end
-     
-     color = options[:color].nil? ? color : options[:color]
+
      "<p class=\"translucent\" style=\"color: #{color};\">" + message.to_s + "</p>"
    end
   

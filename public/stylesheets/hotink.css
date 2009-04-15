@@ -118,13 +118,13 @@ dl.faq dt {font-weight: bold;}
 #navigation #user_details { float: right; padding: 0.25em 0.3em; font-size: 0.8em; border: 1px solid #CEE4F3; background-color: #FFF6DD;}
 #navigation #user_details p { display: inline-block; font-size: 1.0em; margin: 0; padding: 0.125em; }
 #navigation #account_details{ float: right; font-size: 1.0em; padding: 0.25em; margin-top: 0.3em; }
-#navigation #flash { line-height:0; min-width: 12em; height: 1.1em; text-align: left; padding: 0.25em 0.5em; color: green; float: right;  margin-left: 1%; background-color: #F9F9F9; border: 1px solid #CEE4F3;}
+#navigation #flash { line-height:0; min-width: 12em; height: 1.1em; text-align: left; padding: 0.25em 0.5em; float: right;  margin-left: 1%; background-color: #F9F9F9; border: 1px solid #CEE4F3;}
 #navigation #flash p { font-size: 0.9em; margin: 0; display:inline;}
 #navigation .btn { margin-bottom: 0.25em; }
 
 /* Modal window styles */
 
-.close_button  { float: right; display: inline-block; margin: 5px 6px 7px 6px; padding: 0px 3px 3px 3px; text-decoration: none !important;line-height:14px; font-size: 14px; color: #FFF; background-color: #E62424; border: 1px solid #AAA;  }
+.close_button  { float: right; background-image: url('/images/token_x_red.gif'); width: 10px; height: 10px; margin: 0; margin-right: 0.125em; display: inline-block; font-size: 1em; }
 .close_button a { color: #FFF; }
 
 /* Hot Ink index styles

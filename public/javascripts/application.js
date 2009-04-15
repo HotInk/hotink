@@ -70,6 +70,11 @@ var swap = function(element1, element2, toggle){
 	apr_flash.delay(1); // 
 }
 
+var trigger_flash = function ( message ) {
+	$('flash').innerHTML = ( message );
+	fade_flash();
+}
+
 var apr_flash = function() {
 		$('flash').down().next().appear();
 };

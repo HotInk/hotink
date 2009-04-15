@@ -76,6 +76,7 @@ class MediafilesController < ApplicationController
           @waxing = @account.waxings.create(:article_id => @article.id, :mediafile_id=> @mediafile.id);
           responds_to_parent do
           			render :update do |page|
+          			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'
           				page << "reload_media();"
           			end
           end
