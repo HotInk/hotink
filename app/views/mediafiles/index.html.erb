@@ -4,7 +4,7 @@
 <div class="clearfix">
 <p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
 <% paginated_section(@mediafiles, :inner_window => 1, :outer_window => 1) do %>
-<p class="page_entries_info"><%= page_entries_info @mediafiles %></p>
+<p class="page_entries_info"><%= page_entries_info @mediafiles, :entry_name => "media file" %></p>
 </div>
 	<ol id="mediafiles_list">
 	<% for mediafile in @mediafiles %>
@@ -28,7 +28,7 @@
 			</div>
 			
 			<div class="mediafile">
-				<h1><%=link_to h(mediafile.display_title.strip), edit_account_mediafile_url(@account, mediafile), :class=>"document_link" %></h1>
+				<h1><%=link_to h(mediafile.title), edit_account_mediafile_url(@account, mediafile), :class=>"document_link" %></h1>
 				<div class="mediafile_details clearfix">
 					<div class="authors">
 						<em><%= mediafile.authors_list if mediafile.authors_list %></em>

@@ -1,9 +1,9 @@
 <div id="attach_media_container" class="column_holder clearfix">
-	<p class="close_button"><a href="#" class="close_window" onclick="article_form_overlay.end();return false;">&nbsp;</a></p>
+	<p class="close_button"><a href="#" class="close_window" onclick="page_overlay.end();return false;">&nbsp;</a></p>
 	<div id="upload_media_form" class="two_thirds_column">
 				<h4>Upload media file</h4>
 			<div>
-				<% form_for [@account, @article, @mediafile], :html=>{:multipart=>true, :target=>"upload_frame", :onsubmit => "article_form_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
+				<% form_for [@account, @article, @mediafile], :html=>{:multipart=>true, :target=>"upload_frame", :onsubmit => "page_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
 					<%= f.error_messages %>
 					<p>
 						<%= f.label :file, "Media file" %><br />

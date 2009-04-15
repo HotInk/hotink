@@ -24,7 +24,7 @@
 					<div class="media">
 						<% article.mediafiles.each do | i | %>
 							<% if i.is_a?(Image) %>
-								<%= image_tag(i.file.url(:system_icon), :border=>1) %>
+								<%= link_to_remote image_tag(i.file.url(:system_icon), :border=>1), :url=>edit_account_article_mediafile_url(@account, article, i, :format=>:js), :method=>:get %>
 							<% else %>
 								<%= image_tag('/images/blank_file_icon.png', :alt=>i.file.original_filename)%>
 							<% end %>
@@ -58,6 +58,23 @@
 <script type="text/javascript" charset="utf-8">
 	//Load each article <li> as a Card and check to see if any checkboxes are pre-checked and need to be pre-selected 
 	$('articles').select('ol#articles_list>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });
+	
+	//Initialize Overlay
+	var page_overlay = new Overlay ();
+	
+	//(for author creation in edit media overlay)
+	createNewAuthor = function( new_token_text, auto_complete ){
+		new_author_auto_complete = auto_complete;
+		new Ajax.Request( 	"<%= account_authors_url(@account, :format=>:json )%>", 
+							{	method: 'post', parameters: {"author[name]": new_token_text, "authenticity_token": "<%= form_authenticity_token %>"},
+								onSuccess: function(transport){
+												var json = transport.responseText.evalJSON(true);
+												new_author_auto_complete.addTokenToList( json.author.name, (new_author_auto_complete.options.array.push(json) - 1));
+												new_author_auto_complete.set_input_size();
+												}
+							});
+	}
+	
 	
 	// Activate table header checkboxes select_all functionality
 	$$('.select_all').each(	function(element) { 

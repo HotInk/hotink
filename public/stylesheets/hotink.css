@@ -289,7 +289,7 @@ dl.faq dt {font-weight: bold;}
 #edit_media_form #media_tags_form input { width:80%;}
 #edit_media_form #media_matte { float:left; margin: 0; padding:0; background-color: #CEE4F3; }
 #edit_media_form #media_matte img { border: 1px solid #AAA; }
-#edit_media_form .form_buttons { margin: 10px 0px;}
+#edit_media_form .form_buttons { margin: 10px 0px; float: right;}
 .mediafile_container #media_matte { width:100%; padding:5px;}
 .image_container #media_matte { width:402px;min-height:350px;text-align:center; padding:5px;}
 #edit_media_form #media_matte div { text-align:left; padding: 10px 10px; margin-bottom:0;}
@@ -445,10 +445,8 @@ table#record_list td {
 }
 
 /* Tag list styles */
-
-#media_tags_form p{
-	font-size: 0.8em;
-}
+#media_tags_form  { font-size: 0.8em; }
+#media_tags_form p{  }
 
 /*-----------------------------------
 /*

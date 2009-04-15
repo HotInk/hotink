@@ -1,5 +1,5 @@
 <div id="edit_media_container" class="<%= @mediafile.is_a?(Image) ? "image_container " : "mediafile_container " -%>clearfix">
-	<p class="close_button"><a href="#" onclick="article_form_overlay.end();return false;">x</a></p>
+	<p class="close_button"><a href="#" onclick="page_overlay.end();return false;">&nbsp;&nbsp;</a></p>
 	<div id="edit_media_form" class="clearfix">
 		  	<div id="media_matte" class="clearfix">
 				<% if @mediafile.is_a? Image %>
@@ -31,8 +31,9 @@
 				<% end %>
 		  	</div>
 			<div id="media_details" class="clearfix">
-				<% form_for :mediafile, :url => account_article_mediafile_url(@account, @article, @mediafile),  :html=>{:method=>:put, :multipart=>true, :target=>"upload_frame", :onsubmit => "article_form_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
+				<% form_for :mediafile, :url => account_article_mediafile_url(@account, @article, @mediafile),  :html=>{:method=>:put, :multipart=>true, :target=>"upload_frame", :onsubmit => "page_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
 				<%= f.error_messages %>
+				<div class="form_buttons"><%= button_link_to_submit "Save", :class=>"save", :id=>"media_save_changes" %></div>
 				<h4><%= form_labels[:form_label] %></h4>
 				<p><%= f.label :title, form_labels[:title_label] %><br />
 					<%= f.text_field :title, :class=>"text_input" %>
@@ -44,18 +45,18 @@
 					<%= f.text_area :description, :class=>"text_input" %>
 				</p>
 				<p style="margin-bottom:3px;"><%= label_tag 'mediafile[new_authors_list]',  form_labels[:credits_label] %></p>
-				<div id="photocredits_form" class="clearfix tokenizer text_input" onclick="$('mediafile_new_authors_list').focus()">
+				<div id="photocredits_form" class="clearfix tokenizer text_input" onclick="$('mediafile_authors_list').focus()">
 				    <span class="tokenizer_stretcher">^_^</span>
 					<span class="tab_stop">
 						<input type="text" id="media_hidden_input" tabindex="-1" />
 					</span>
 				    <div id="media_autocomplete_display" class="tokenizer_input">
-						<%= text_field_tag 'mediafile[new_authors_list]', '' %>
+						<%= text_field_tag 'mediafile[authors_list]', '' %>
 				    </div>
 				</div>
 				<div id="media_autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10; width: 290px; height: auto; overflow-y: hidden;display:none"> </div>
 					<script type="text/javascript">
-				    var photocredit_list = new Autocompleter.LocalTokenizer('mediafile_new_authors_list', 'media_autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
+				    var photocredit_list = new Autocompleter.LocalTokenizer('mediafile_authors_list', 'media_autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
 					        frequency: 0.1,
 							parent_model: "mediafile",
 					        search_field: "name",
@@ -70,7 +71,6 @@
 					    });
 					</script>
 				</div>
-				<div class="form_buttons"><%= button_link_to_submit "Save changes", :class=>"save pill-l", :id=>"media_save_changes" %><%= button_link_to_function "Cancel", "article_form_overlay.end();", :class=>"cancel pill-r"%></div>
 				<% end %>
 				<div id="media_tags_form">
 					<script type="text/javascript" charset="utf-8">

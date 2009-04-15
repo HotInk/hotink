@@ -1,5 +1,5 @@
 page.assign "mediafiles_overlay", render(:partial => 'edit_media_form')
 page << "if($('edit_media_container')) $('edit_media_container').remove();"
-page << "article_form_overlay.render( mediafiles_overlay );"
+page << "page_overlay.render( mediafiles_overlay );"
 page.unobtrusive_date_picker_create('mediafile_date')
 

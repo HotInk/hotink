@@ -27,6 +27,15 @@ class Mediafile < ActiveRecord::Base
       :path => ":rails_root/public/system/:class/:id_partition/:basename_:style.:extension",
       :url => "/system/:class/:id_partition/:basename_:style.:extension"
   
+  def title
+    if title = self.read_attribute('title')
+      return title.strip
+    elsif filename = self.read_attribute('file_file_name')
+      return filename
+    else
+      return
+    end
+  end
       
   # Returns list of article's author names as a readable list, separated by commas and the word "and".
   def authors_list
