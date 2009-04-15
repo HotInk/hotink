@@ -399,7 +399,7 @@ div.media_list textarea{ width: 48%;height:80px;font-size: 10px;color: #333;outl
 div.media_list .token { margin-bottom: 5px; }
 div.media_list p { font-size:10px;line-height:12px;}
 div.media_list .file { width: 91%; margin: 0; margin-bottom: 0.5em; padding: 0.25em;}
-div.media_list .token img { margin: 0.5em; margin-right: 0; border: 1px solid #AAA; }
+div.media_list .token img { margin: 0.5em; margin-right: 0.125em; border: 1px solid #AAA; }
 div.media_list p a{ cursor: text; }
 div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left: 5px;}
 
