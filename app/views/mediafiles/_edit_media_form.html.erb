@@ -31,7 +31,7 @@
 				<% end %>
 		  	</div>
 			<div id="media_details" class="clearfix">
-				<% form_for :mediafile, :url => account_article_mediafile_url(@account, @article, @mediafile),  :html=>{:method=>:put, :multipart=>true, :target=>"upload_frame", :onsubmit => "page_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" src=\"/loading.gif\" />');"} do |f| %>
+				<% remote_form_for :mediafile, :url => account_article_mediafile_url(@account, @article, @mediafile), :after => "page_overlay.end();",  :html=>{:method=>:put } do |f| %>
 				<%= f.error_messages %>
 				<div class="form_buttons"><%= button_link_to_submit "Save", :class=>"save", :id=>"media_save_changes" %></div>
 				<h4><%= form_labels[:form_label] %></h4>

@@ -1,6 +1,8 @@
 class MediafilesController < ApplicationController
   layout 'hotink'
   
+  before_filter :find_article
+  
   # GET /mediafiles
   # GET /mediafiles.xml
   def index
@@ -48,9 +50,7 @@ class MediafilesController < ApplicationController
   def edit
     @mediafile = @account.mediafiles.find(params[:id])
      respond_to do |format|
-        if @article = find_article
-          format.js
-        end
+        format.js
         format.html # new.html.erb
      end
   end
@@ -69,23 +69,26 @@ class MediafilesController < ApplicationController
     else @mediafile = @account.mediafiles.build(params[:mediafile])
     end
     @mediafile.date = Time.now
+    
+
     respond_to do |format|
       if @mediafile.save!
-        #Special behaviour to mimic ajax file-upload
-        if @article = find_article
-          @waxing = @account.waxings.create(:article_id => @article.id, :mediafile_id=> @mediafile.id);
-          responds_to_parent do
-          			render :update do |page|
-          			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'
-          				page << "reload_media();"
-          			end
-          end
-          return
-        end
         flash[:notice] = 'Media added'
+            #Special behaviour to mimic ajax file-upload on article form, if it's an iframe
+            if params[:iframe_post] && @article
+              @waxing = @account.waxings.create(:article_id => @article.id, :mediafile_id=> @mediafile.id);
+              responds_to_parent do
+              			render :update do |page|
+              			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'
+              				page << "reload_media();"
+              			end
+              end
+              return
+            end
         format.html { redirect_to(edit_account_mediafile_path(@account, @mediafile)) }
+        format.js { redirect_to(account_mediafiles_path(@account)) }
         format.xml  { render :xml => @mediafile, :status => :created, :location => @mediafile }
-      else
+     else
         format.html { head :bad_request }
         format.js { head :bad_request }
         format.xml  { render :xml => @mediafile.errors, :status => :unprocessable_entity }
@@ -97,23 +100,15 @@ class MediafilesController < ApplicationController
   # PUT /mediafiles/1.xml
   def update
     @mediafile = @account.mediafiles.find(params[:id])
-
+   	 
     respond_to do |format|
       if @mediafile.update_attributes(params[:mediafile])
-        #Special behaviour to mimic ajax file-upload
-        if @article = find_article
-          responds_to_parent do
-          			render :update do |page|
-          			  page << 'trigger_flash(\'<p style="color:green;">Media updated</p>\');'          			  
-          				page << "reload_media();"
-          			end
-          end
-          return
-        end
-        flash[:notice] = 'Media updated'
-        format.html { redirect_to(@mediafile) }
+        flash[:notice] = 'Media updated'      
+        format.js
+        format.html { redirect_to(account_mediafiles_path(@account))}
         format.xml  { head :ok }
       else
+        flash[:notice] = 'Error! Media NOT updated'      
         format.html { render :action => "edit" }
         format.xml  { render :xml => @mediafile.errors, :status => :unprocessable_entity }
       end

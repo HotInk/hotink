@@ -241,10 +241,8 @@ var Card = Class.create({
 	},
 	
 	onclick: function( event ) {
-		if (	event.originalTarget == this.document_link || 
-				event.target == this.document_link || 
-				event.originalTarget == this.delete_link || 
-				event.target == this.delete_link) 
+		skipped_elements = this.element.select('.delete_link, .document_link, a, img')
+		if (skipped_elements.include(event.originalTarget) || skipped_elements.include(event.target))
 			this.skip_select = true;
 		if (!this.skip_select) {
 			if (this.selected) {

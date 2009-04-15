@@ -91,7 +91,7 @@ module ApplicationHelper
        color = "#8DB4D6"
      when /deleted|destroy|trash/i
        color = "red"
-     when /NOT/
+     when /NOT|error/
        color = "red"
      else
        color = "blue"

@@ -294,7 +294,7 @@ dl.faq dt {font-weight: bold;}
 .image_container #media_matte { width:402px;min-height:350px;text-align:center; padding:5px;}
 #edit_media_form #media_matte div { text-align:left; padding: 10px 10px; margin-bottom:0;}
 #edit_media_form #media_matte div p { margin: 5px 0px; font-size: 10px; }
-#mediafile_new_authors_list{ color: #555; width: 20px; border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;}
+#mediafile_authors_list{ color: #555; width: 20px; border:3px solid white!important;border-left:none;display:block;margin:-3px 3px -4px -2px;padding:0px!important;}
 /*IE6-/Win only*/
 /*\*/ * html .tokenizer_input_borderless #mediafile_new_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
 #edit_media_form #photocredits_form { width: 290px; }
