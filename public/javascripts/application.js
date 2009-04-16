@@ -231,7 +231,6 @@ var Card = Class.create({
 		this.document_link = this.element.select('.document_link')[0];
 		this.delete_link = this.element.select('.delete_link')[0];
 		this.selected = selected;
-		this.skip_select = false; // This is used to catch events and prevent them from triggering the select method.
 		this.element.card = this;
 		this.checkbox = this.element.select('input[type="checkbox"]')[0];
 		Event.observe(this.element, 'click', this.onclick.bindAsEventListener(this));
@@ -240,13 +239,13 @@ var Card = Class.create({
 			    
 	},
 	
-	onclick: function( event ) {
-		if (	event.originalTarget == this.document_link || 
-				event.target == this.document_link || 
-				event.originalTarget == this.delete_link || 
-				event.target == this.delete_link) 
-			this.skip_select = true;
-		if (!this.skip_select) {
+	onclick: function( e ) {
+		var eventTarget = e.target ? e.target: e.srcElement;
+    	skipped_elements = this.element.select('a, img');
+		console.log(skipped_elements);
+		console.log(e);
+
+		if (!skipped_elements.include(eventTarget)) {
 			if (this.selected) {
 				this.deselect();
 			} else { 
