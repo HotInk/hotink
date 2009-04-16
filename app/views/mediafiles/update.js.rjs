@@ -1,0 +1,1 @@
+page << "trigger_flash('<p style=\"color:#8CC63F\">#{flash[:notice]}</p>');"
