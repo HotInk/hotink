@@ -30,6 +30,8 @@ class Article < ActiveRecord::Base
     indexes title, :sortable => :true
     indexes subtitle
     indexes bodytext
+    indexes authors.name, :as => :authors_names
+    indexes tags.name, :as => :tags
     indexes date, :sortable => :true
 
     has created_at
