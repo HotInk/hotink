@@ -1,0 +1,2 @@
+page.replace 'articles_page_info', :partial => 'pagination'
+page.replace_html 'articles_list', :partial => 'article', :collection => @articles
