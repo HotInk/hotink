@@ -1,5 +1,16 @@
 <div id="articles" class="index">
-<div class="title_bar"><h1>Articles</h1><%= button_link_to 'New article', new_account_article_path(@account), :class=>"" %></div>
+<div class="title_bar clearfix">
+	<div class="actions">
+		<h1>Articles</h1>
+		<%= button_link_to 'New article', new_account_article_path(@account) %>
+	</div>
+	<div class="search">
+		<form method="GET">
+			<input type="text" name="search" class="text_input user" onclick="if(this.value=='Search') clearText(this);" onblur="addText(this);" value="<%=h( @search_query || "Search") %>" />
+			<%= button_link_to_submit "Go" %>
+		</form>
+	</div>
+</div>
 
 <div class="clearfix">
 <p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>

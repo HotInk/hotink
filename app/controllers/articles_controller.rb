@@ -6,7 +6,8 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
-    @articles = @account.articles.paginate(:page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :conditions=>"created_at != updated_at", :order=>"date DESC, updated_at DESC", :include => :authors)
+    @search_query = params[:search]
+    @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => :date, :sort_mode => :desc, :include => :authors)
 
     respond_to do |format|
       format.html # index.html.erb

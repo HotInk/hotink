@@ -130,9 +130,13 @@ dl.faq dt {font-weight: bold;}
 /* Hot Ink index styles
 --------------------------------*/
 
-.index .title_bar { margin-bottom: 0.5em;}
-.index .title_bar  h1 { display:inline; margin-right: 0.5em; font-size: 3em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA;}
-.index .title_bar a { vertical-align: 0.5em;}
+.index .title_bar { width: 100%; }
+.index .title_bar .actions { float: left; margin: 0.25em 0em;}
+.index .title_bar .actions a { vertical-align: 0.25em;}
+.index .title_bar h1 { display:inline; margin: 0; margin-right: 0.5em; font-size: 3em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA;}
+.index .title_bar .search { display: inline-block; float: right;}
+.index .title_bar .search input { padding: 0.25em; font-size: 1.2em;}
+.index .title_bar .search button { font-size: 1em; }
 .index .select_all_wrap { display:inline; float: left; margin: 0px 0px; padding: 0.25em; padding-left: 0; background-color: #CEE4F3;  border: 1px dotted #9cf;}
 .index .select_all_wrap input { margin: 3px 3px 3px 7px; }
 .index .page_entries_info { float: right; margin: 0.25em; margin-top: 0.45em; font-style: italic; font-size: 0.9em;}
