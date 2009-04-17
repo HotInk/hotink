@@ -110,10 +110,10 @@ dl.faq dt {font-weight: bold;}
 
 /* Navigation CSS */
 
-#navigation { width: 100%; min-height: 2.4em; background-color: #515151; border-bottom: 1px solid #CEE4F3; text-align: center;}
+#navigation { width: 100%; min-height: 2.4em; background-color: #333333; border-bottom: 1px solid #CEE4F3; text-align: center;}
 #navigation div { display: inline-block; margin: 0.25em; margin-top: 0.3em; padding: 0.25em; }
 #navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; }
-#navigation #links { float: left; padding: 0; margin-left: 1%; }
+#navigation #links { float: left; padding: 0; margin: 0; margin-left: 1%; margin-top: 0.75em; }
 #navigation #links ol { margin: 0; padding: 0; font-size: 1.2em; }
 #navigation #links ol li { display: inline-block; margin: 0; padding: 0.125em 0.5em; background-color: #F9F9F9; }
 #navigation #links ol li a { color: #515151; }
