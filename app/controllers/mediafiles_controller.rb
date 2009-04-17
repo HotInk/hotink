@@ -16,6 +16,8 @@ class MediafilesController < ApplicationController
     respond_to do |format|
       if @article = find_article
         format.js { render :action => :article_mediafiles }
+      else
+        format.js
       end
       format.html # index.html.erb
       format.xml  { render :xml => @mediafiles }
