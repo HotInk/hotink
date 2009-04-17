@@ -167,7 +167,7 @@ dl.faq dt {font-weight: bold;}
 /* Articles index styles
 --------------------------------*/
 
-#articles li .article { width: 41em; min-height: 40px; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
+#articles li .article { width: 42em; min-height: 40px; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
 #articles li .article h1 { font-size: 1.2em; line-height: 1.2; margin: 0; padding: 0.25em; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #articles li .article div { font-size: .9em; }
 #articles li .article .article_details { width: 100%; min-height: 24px;}
@@ -176,8 +176,8 @@ dl.faq dt {font-weight: bold;}
 #articles li .article .media img{ float: right; margin: 0 0.125em;}
 #articles li div.section { width: 7.5em; overflow: hidden; background-color: #FFF; padding: 0.5em 0; border: 1px dotted #9cf; }
 #articles li div.section p { padding: 0px 0px 0px 5px; color: #333; margin: 0;}
-#articles li div.tags { width: 8.5em; padding: 0.5em; overflow: hidden; height: 100%; background-color: #FFF; border: 1px dotted #9cf; }
-#articles li div.tags p { font-size: 0.8em; margin: 0; color: #515151;}
+#articles li div.tags { width: 7.5em; padding: 0.5em; overflow: hidden; height: 100%; background-color: #FFF; border: 1px dotted #9cf; }
+#articles li div.tags p { font-size: 0.8em; margin: 0; padding-top: 0.25em; color: #515151;}
 
 
 /* Mediafiles index styles

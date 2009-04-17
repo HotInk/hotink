@@ -31,7 +31,6 @@ class ArticlesController < ApplicationController
   # GET /articles/new.xml
   def new
     @article = @account.articles.build    
-    @article.date = Time.now
     
     #Check to see if the last article created is exists and is blank.
     #If so, redate it and serve it up instead of a new article, to prevent
@@ -43,6 +42,7 @@ class ArticlesController < ApplicationController
          @article = last_article
          @article.date = Time.now
       else
+        @article.date = Time.now
         @article.save
       end
     else

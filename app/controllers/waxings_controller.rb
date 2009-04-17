@@ -1,4 +1,6 @@
 class WaxingsController < ApplicationController
+  before_filter :find_article, :find_mediafile
+  
   # GET /waxings
   # GET /waxings.xml
   def index
@@ -24,8 +26,10 @@ class WaxingsController < ApplicationController
   # GET /waxings/new
   # GET /waxings/new.xml
   def new
-    @waxing = Waxing.new
-
+    @waxing = @account.waxings.build
+    @waxing.article = @article
+    @mediafiles = @account.mediafiles.search(@search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => :date, :sort_mode => :desc, :include => [:authors])
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @waxing }
@@ -86,7 +90,7 @@ class WaxingsController < ApplicationController
     @waxing.destroy
 
     respond_to do |format|
-      if @article = find_article && @article == @waxing.article
+      if @article == @waxing.article
         format.js { head :ok }
       end
       format.html { redirect_to(waxings_url) }
