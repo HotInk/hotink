@@ -1,1 +1,5 @@
-page.replace 'account_article_mediafiles_list', :partial => 'article_mediafiles'
+if @mediafiles.length > 0
+  page.replace 'mediafiles_page_info', :partial => 'pagination'
+  page.replace_html 'mediafiles_list', :partial => 'mediafile', :collection => @mediafiles
+  page << "$('mediafiles').select('ol#mediafiles_list>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });"
+end
