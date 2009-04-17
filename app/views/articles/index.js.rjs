@@ -1,2 +1,5 @@
-page.replace 'articles_page_info', :partial => 'pagination'
-page.replace_html 'articles_list', :partial => 'article', :collection => @articles
+if @articles.length > 0
+  page.replace 'articles_page_info', :partial => 'pagination'
+  page.replace_html 'articles_list', :partial => 'article', :collection => @articles
+  page << "$('articles').select('ol#articles_list>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });"
+end

@@ -25,6 +25,12 @@ html[xmlns] .clearfix{display:block;}
 		-moz-opacity: 0.75;       /* mozilla, netscape */
 		opacity: 0.75;           /* fx, safari, opera */
 }
+.transparent  {
+		filter: alpha(opacity=40); /* internet explorer */
+		-khtml-opacity: 0.40;      /* khtml, old safari */
+		-moz-opacity: 0.40;       /* mozilla, netscape */
+		opacity: 0.40;           /* fx, safari, opera */
+}
 .even-row { background-color: #FAFAFA; }
 .odd-row { background-color: #F1F1F1; }
 .red { color: #E62424; }

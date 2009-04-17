@@ -6,22 +6,28 @@
 	</div>
 	<div class="search">
 		<form method="GET">
-			<input type="text" id="articles_search" name="search" class="text_input user" onclick="if(this.value=='Search articles') clearText(this);" onblur="addText(this);" value="<%=h( @search_query || "Search articles") %>" />
+			<input type="text" id="articles_search" name="search" class="text_input user" onclick="if(this.value=='Search articles') clearText(this);" value="<%=h( @search_query || "Search articles") %>" />
 			<%= button_link_to_submit "Go" %>
 		</form>
-		<%= observe_field :articles_search, :url => account_articles_url(@account), :with => "search", :frequency=>0.5, :method=>:get %>
+		<%= observe_field :articles_search, :url => account_articles_url(@account), :with => "search", :frequency=>0.5, :method=>:get, :after =>"$('articles_list').select('li').invoke('addClassName', 'transparent');" %>
 	</div>
 </div>
 
 <div class="clearfix">
 	<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
-	<% paginated_section(@articles, :inner_window => 1, :outer_window => 1) do %>
+	<%= will_paginate(@articles, :inner_window => 1, :outer_window => 1) %>
 	<%= render :partial=>'pagination' %>
 </div>
 	<ol id="articles_list">
+		<% if @articles.length > 0 %>
 			<%= render @articles %>
+		<% elsif @search_query %>
+			<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
+		<% else %>
+			<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles found.</em></p>
+		<% end %>
 	</ol>
-<% end %>
+<%= will_paginate(@articles, :inner_window => 1, :outer_window => 1) %>
 <p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
 
 <br />
