@@ -22,14 +22,10 @@
 	<div id="logo"><%= image_tag '/images/logo_tiny.png' %></div>
 	<div id="links">
 		<ol>
-			<li <%= 'class="current"' if controller_name == "articles" %>>
-				<%= link_to "Articles", account_articles_url(@account) %>
-			</li><li <%= 'class="current"' if controller_name == "mediafiles" %>>
-					<%= link_to "Media", account_mediafiles_url(@account) %>
-			</li>
+			<li <%= 'class="current"' if controller_name == "articles" %>><%= link_to "Articles", account_articles_url(@account) %></li><li <%= 'class="current"' if controller_name == "mediafiles" %>><%= link_to "Media", account_mediafiles_url(@account) %></li>
 		</ol>
 	</div>
-	<div id="user_details"><p>Logged in as:</p> <%= link_to current_user.login, edit_user_path(current_user), :class=>"weblink" %>  <%= button_link_to "Logout", user_session_url, :method=>:delete, :class=>"micro" %></div>
+	<div id="user_details"><p>Logged in as: <%= link_to current_user.login, edit_user_path(current_user), :class=>"weblink" %>  <%= button_link_to "Logout", user_session_url, :method=>:delete, :class=>"micro" %></p></div>
 	<div id="account_details"> <%= button_link_to "Edit account settings", edit_account_url(@account), :class=>"tiny" %> </div>
 	<div id="flash"><%= render_flash(flash[:notice])%></div>
 </div>

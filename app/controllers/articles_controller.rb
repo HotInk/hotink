@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
   # GET /articles.xml
   def index
     @search_query = params[:search]
-    @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => :date, :sort_mode => :desc, :include => :authors)
+    @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => :date, :sort_mode => :desc, :include => [:authors, :mediafiles, :section])
 
     respond_to do |format|
       format.html # index.html.erb

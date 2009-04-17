@@ -26,6 +26,14 @@
 	<div class="section">
 		<p> <%= article.section.blank? ? "<span style=\"color: #BBB\">No section</span>" : article.section.name %></p>
 	</div>
+	
+	<div class="tags">
+		<% unless article.tag_list.blank? %>
+			<p><em> <%= article.tag_list %></em></p>
+		<% else %>
+			<p><em><span style="color: #BBB">No tags</span> </em></p>
+		<% end %>
+	</div>
 
 	<div class="icons">
 		<%= link_to "&nbsp;&nbsp;&nbsp;", [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete_link", :style=>"display:none;" %>

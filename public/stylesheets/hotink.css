@@ -112,10 +112,10 @@ dl.faq dt {font-weight: bold;}
 
 #navigation { width: 100%; min-height: 2.4em; background-color: #333333; border-bottom: 1px solid #CEE4F3; text-align: center;}
 #navigation div { display: inline-block; margin: 0.25em; margin-top: 0.3em; padding: 0.25em; }
-#navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; }
-#navigation #links { float: left; padding: 0; margin: 0; margin-left: 1%; margin-top: 0.75em; }
-#navigation #links ol { margin: 0; padding: 0; font-size: 1.2em; }
-#navigation #links ol li { display: inline-block; margin: 0; padding: 0.125em 0.5em; background-color: #F9F9F9; }
+#navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; margin-left: 0.5em; }
+#navigation #links { float: left; padding: 0; margin: 0; margin-left: 3%; margin-top: 0.85em; }
+#navigation #links ol { margin: 0; padding: 0; font-size: 1.2em; list-style: none;}
+#navigation #links ol li { display: inline; margin: 0; padding: 0.2em 0.5em; background-color: #FFF; }
 #navigation #links ol li a { color: #515151; }
 #navigation #links ol li.current { background-color: #FFF6DD; margin:0; }
 #navigation #links ol li.current a { color: #515151; }
@@ -167,7 +167,7 @@ dl.faq dt {font-weight: bold;}
 /* Articles index styles
 --------------------------------*/
 
-#articles li .article { width: 50.5em; min-height: 40px; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
+#articles li .article { width: 41em; min-height: 40px; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
 #articles li .article h1 { font-size: 1.2em; line-height: 1.2; margin: 0; padding: 0.25em; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #articles li .article div { font-size: .9em; }
 #articles li .article .article_details { width: 100%; min-height: 24px;}
@@ -175,7 +175,9 @@ dl.faq dt {font-weight: bold;}
 #articles li .article .media { float: right; text-align: right; padding: 0.25em; }
 #articles li .article .media img{ float: right; margin: 0 0.125em;}
 #articles li div.section { width: 7.5em; overflow: hidden; background-color: #FFF; padding: 0.5em 0; border: 1px dotted #9cf; }
-#articles li div.section p { padding: 0px 0px 0px 5px; color: #666; margin: 0;}
+#articles li div.section p { padding: 0px 0px 0px 5px; color: #333; margin: 0;}
+#articles li div.tags { width: 8.5em; padding: 0.5em; overflow: hidden; height: 100%; background-color: #FFF; border: 1px dotted #9cf; }
+#articles li div.tags p { font-size: 0.8em; margin: 0; color: #515151;}
 
 
 /* Mediafiles index styles
