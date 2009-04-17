@@ -9,12 +9,13 @@ class MediafilesController < ApplicationController
     if find_article
       @mediafiles = @article.mediafiles.find(:all, :include => [ :waxings ], :conditions => ['waxings.article_id = ?', @article.id])
     else
-      @mediafiles = @account.mediafiles.paginate(:page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order=>"date DESC, updated_at DESC", :include => :authors)
+      @search_query = params[:search]
+      @mediafiles = @account.mediafiles.search(@search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => :date, :sort_mode => :desc, :include => :authors)
     end
 
     respond_to do |format|
       if @article = find_article
-        format.js
+        format.js { render :action => :article_mediafiles }
       end
       format.html # index.html.erb
       format.xml  { render :xml => @mediafiles }

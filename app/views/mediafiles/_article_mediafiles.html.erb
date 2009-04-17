@@ -6,11 +6,11 @@
 <% else %>
 	<% for mediafile in @mediafiles %> 
 		<% if mediafile.is_a? Image %>
-			<%= render :partial=>'image', :object=> mediafile %>
+			<%= render :partial=>'mediafiles/article_form/image', :object=> mediafile %>
 		<% elsif mediafile.is_a? Audiofile %>
-			<%= render :partial=>'audiofile', :object=> mediafile %>
+			<%= render :partial=>'mediafiles/article_form/audiofile', :object=> mediafile %>
 		<% else%>
-			<%= render :partial=>'mediafile', :object=> mediafile %>
+			<%= render :partial=>'mediafiles/article_form/mediafile', :object=> mediafile %>
 		<% end %>
 	<% end %>
 <% end %>

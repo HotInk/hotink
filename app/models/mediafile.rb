@@ -27,6 +27,20 @@ class Mediafile < ActiveRecord::Base
       :path => ":rails_root/public/system/:class/:id_partition/:basename_:style.:extension",
       :url => "/system/:class/:id_partition/:basename_:style.:extension"
   
+  define_index do
+    indexes title, :sortable => :true
+    indexes file_file_name, :as => :file_name
+    indexes file_content_type, :as => :content_type, :sortable => :true
+    indexes file_file_size, :as => :file_size, :sortable => :true
+    indexes description
+    indexes authors.name, :as => :credits
+    indexes tags.name, :as => :tags
+    indexes date, :sortable => :true
+
+    has created_at
+    has account_id
+  end
+  
   def title
     title = self.read_attribute(:title)
     if title and title.strip != ""

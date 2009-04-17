@@ -1,63 +1,34 @@
 <div id="mediafiles" class="index">
-<div class="title_bar"><h1>Media </h1><%= button_link_to 'Upload media', new_account_mediafile_path(@account), :class=>"" %></div>
+<div class="title_bar clearfix">
+	<div class="actions">	
+		<h1>Media </h1>
+		<%= button_link_to 'Upload media', new_account_mediafile_path(@account), :class=>"" %>
+	</div>
+	<div class="search">
+		<form method="GET">
+			<input type="text" id="mediafiles_search" name="search" class="text_input user" onclick="if(this.value=='Search media') clearText(this);" value="<%=h( @search_query || "Search media") %>" />
+			<%= button_link_to_submit "Go" %>
+		</form>
+		<%= observe_field :mediafiles_search, :url => account_mediafiles_url(@account), :with => "search", :frequency=>0.5, :method=>:get, :after =>"$('mediafiles_list').select('li').invoke('addClassName', 'transparent');" %>
+	</div>
+</div>
 
 <div class="clearfix">
-<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
-<% paginated_section(@mediafiles, :inner_window => 1, :outer_window => 1) do %>
-<p class="page_entries_info"><%= page_entries_info @mediafiles, :entry_name => "media file" %></p>
+	<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
+	<%= will_paginate(@mediafiles, :inner_window => 1, :outer_window => 1) %>
+	<%= render :partial=>'pagination' %>
 </div>
 	<ol id="mediafiles_list">
-	<% for mediafile in @mediafiles %>
-		  <li class="<%= cycle("even-row", "odd-row") %> clearfix">
-
-			<div id="status">
-				<input type="checkbox" value="<%= mediafile.id %>"/>
-			</div>
-			
-			
-				<% if mediafile.is_a?(Image) %>
-			<div class="media">
-					<%= image_tag(mediafile.file.url(:system_thumb)) %>
-				<% elsif mediafile.is_a?(Audiofile) %>
-			<div class="media blank_file">
-					<p><%= mediafile.file_file_name.split(".").last.upcase %></p>
-				<% else %>
-			<div class="media blank_file">
-					<p><%= mediafile.file_file_name.split(".").last.upcase %></p>			
-				<% end %>
-			</div>
-			
-			<div class="mediafile">
-				<h1><%=link_to h(mediafile.title), edit_account_mediafile_url(@account, mediafile), :class=>"document_link" %></h1>
-				<div class="mediafile_details clearfix">
-					<div class="authors">
-						<em><%= mediafile.authors_list if mediafile.authors_list %></em>
-					</div>
-				</div>
-			</div>
-			
-			<div class="tags">
-				<% unless mediafile.tag_list.blank? %>
-					<p><em> <%= mediafile.tag_list %></em></p>
-				<% else %>
-					<p><em> <span style="color: #BBB">No tags</span> </em></p>
-				<% end %>
-			</div>
-			
-			<div class="icons">
-				<%= link_to "&nbsp;&nbsp;&nbsp;", [@account, mediafile], :confirm => "You are about to delete the mediafile: \n \n &quot;" + h(mediafile.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete_link", :style=>"display:none;" %>
-			</div>
-			
-			<div class="date">
-				<%= h mediafile.date.to_s(:standard) %>
-			</div>
-			
-		  </li>
-	<% end %>
+			<% if @mediafiles.length > 0 %>
+				<%= render :partial => 'mediafile', :collection => @mediafiles %>
+			<% elsif @search_query %>
+				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
+			<% else %>
+				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles found.</em></p>
+			<% end %>
 	</ol>
-<% end %>
 <p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
-
+<%= will_paginate(@mediafiles, :inner_window => 1, :outer_window => 1) %>
 <br />
 
 <script type="text/javascript" charset="utf-8">
