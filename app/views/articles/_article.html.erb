@@ -2,7 +2,7 @@
   <li class="<%= cycle("even-row", "odd-row") %> clearfix">
 				
 	<div class="status">
-		<input type="checkbox" value="<%= article.id %>"/>
+		<input type="checkbox" value="<%= article.id %>" name="mediafile_ids[<%= article.id %>]"/>
 	</div>
 	
 	<div class="article clearfix">

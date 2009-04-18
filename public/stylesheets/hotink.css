@@ -150,8 +150,8 @@ dl.faq dt {font-weight: bold;}
 .index .pagination a { color: #AAA; }
 .index .pagination .current { color: #333; }
 .index .pagination .disabled { display: none;}
-.index ol {margin-top: 5px; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #999; border-top: none;}
-.index ol li { border-top: 1px dotted #999; cursor: default;}
+.index ol {margin-top: 5px; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; border-top: none;}
+.index ol li { border-top: 1px dotted #515151; cursor: default;}
 .index ol a { margin: 12px 0px; cursor: pointer;}
 .index ol a:visited { color: #555;}
 .index ol a:hover { color: #3399DE;}
@@ -182,7 +182,6 @@ dl.faq dt {font-weight: bold;}
 
 /* Mediafiles index styles
 --------------------------------*/
-
 #mediafiles li .mediafile { width: 41em; min-height: 40px; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
 #mediafiles li .mediafile h1 { font-size: 1.2em; margin: 0; padding: 0.5em; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #mediafiles li .mediafile div { font-size: 0.9em; }
@@ -194,6 +193,20 @@ dl.faq dt {font-weight: bold;}
 #mediafiles .media img{ display: inline; border: 1px solid #AAA;}
 #mediafiles .blank_file { background:url('/images/blank_file.png') center no-repeat; margin-top:0.4em; }
 #mediafiles .blank_file  p{ float:left;width:100%;height:100%;margin-top:38px;font-size: 0.7em;font-weight: bold; color: #555 }
+
+#mediafiles.small { width: 60%;}
+#mediafiles.small .scroll_window { height: 400px; padding:0.25em; margin: 0.25em 0em; border: 1px solid #AAA; overflow:auto;}
+#mediafiles.small ol { width: 99%; margin: 0;}
+#mediafiles.small li .mediafile { width:14.5em; overflow: hidden;}
+#mediafiles.small li .mediafile h1  { font-size:1em;}
+#mediafiles.small li div.tags { width: 6em; }
+#mediafiles.small li div.tags p { 0.75em }
+#mediafiles.small li div.date { font-size: 1em;}
+#mediafiles.small .page_entries_info { display: none; }
+#mediafiles.small .pagination { padding-top: 0.75em;}
+#mediafiles.small .select_all_wrap { display: none;}
+#mediafiles.small button.save { float: left; }
+
 
 /* Form styles */
 
