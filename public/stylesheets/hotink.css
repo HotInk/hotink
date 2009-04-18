@@ -198,7 +198,7 @@ dl.faq dt {font-weight: bold;}
 /* Form styles */
 
 .form { }
-.form label { color: #515151;}
+.form label { color: #515151; font-size:0.9em;}
 .form h1 { font-size: 2.5em;line-height: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
 .form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; color:#333;}
 .form div.field_element input { width: 100%; padding: 0.125em; background-color: #F9F9F9;}

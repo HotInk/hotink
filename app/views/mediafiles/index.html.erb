@@ -15,8 +15,7 @@
 
 <div class="clearfix">
 	<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
-	<%= will_paginate(@mediafiles, :inner_window => 1, :outer_window => 1) %>
-	<%= render :partial=>'pagination' %>
+	<div id="top_pagination"><%= render :partial=>'pagination' %></div>
 </div>
 	<ol id="mediafiles_list">
 			<% if @mediafiles.length > 0 %>
@@ -28,7 +27,7 @@
 			<% end %>
 	</ol>
 <p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
-<%= will_paginate(@mediafiles, :inner_window => 1, :outer_window => 1) %>
+<div id="bottom_pagination"><%= render :partial=>'pagination' %></div>
 <br />
 
 <script type="text/javascript" charset="utf-8">
