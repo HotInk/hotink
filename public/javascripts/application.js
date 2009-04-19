@@ -138,6 +138,13 @@ var create_category_name_nmfe = function(category_id, name_element) {
 	$('account_categories_edit_form').insert(hidden_name_element);
 }
 
+// Medialist clean-up tool
+
+var media_list_clean_up = function( array_of_ids ){
+	for(var i = 0; i < array_of_ids.length; i++){
+		if ($('mediafile_' + array_of_ids[i])) $('mediafile_' + array_of_ids[i]).remove();
+	}
+}
 
 //Toolbox - base class for a toolbox.
 
@@ -242,8 +249,6 @@ var Card = Class.create({
 	onclick: function( e ) {
 		var eventTarget = e.target ? e.target: e.srcElement;
     	skipped_elements = this.element.select('a, img');
-		console.log(skipped_elements);
-		console.log(e);
 
 		if (!skipped_elements.include(eventTarget)) {
 			if (this.selected) {

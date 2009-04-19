@@ -183,8 +183,8 @@ Overlay = Class.create({
         var wDiff = widthCurrent - widthNew;
         var hDiff = heightCurrent - heightNew;
 
-        if (hDiff != 0) new Effect.Scale(this.overlay_container, yScale, {scaleX: false, duration: this.resizeDuration, queue: 'front'}); 
-        if (wDiff != 0) new Effect.Scale(this.overlay_container, xScale, {scaleY: false, duration: this.resizeDuration, delay: this.resizeDuration}); 
+        if (hDiff != 0) new Effect.Scale(this.overlay_container, yScale, {scaleX: false, scaleContent: false, duration: this.resizeDuration, queue: 'front'}); 
+        if (wDiff != 0) new Effect.Scale(this.overlay_container, xScale, {scaleY: false, scaleContent: false, duration: this.resizeDuration, delay: this.resizeDuration}); 
 
         // if new and old content are same size and no scaling transition is necessary, 
         // do a quick pause to prevent flicker.

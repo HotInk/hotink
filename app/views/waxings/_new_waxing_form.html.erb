@@ -1,8 +1,8 @@
-<div id="mediafiles" class="index clearfix">
+<div id="mediafiles" class="small index clearfix">
+<p class="close_button"><a href="#" class="close_window" onclick="page_overlay.end();return false;">&nbsp;</a></p>
 <div class="title_bar clearfix">
 	<div class="actions">	
 		<h1>Attach media </h1>
-		<p>&ldquo;<em><%= link_to @article.title, edit_account_article_url(@account, @article) %></em>&rdquo;</p>
 	</div>
 	<div class="search">
 		<form method="GET">
@@ -12,11 +12,11 @@
 		<%= observe_field :mediafiles_search, :url => account_mediafiles_url(@account), :with => "search", :frequency=>0.5, :method=>:get, :after =>"$('mediafiles_list').select('li').invoke('addClassName', 'transparent');", :complete=>"media_list_clean_up([#{@article.mediafile_ids.join(',')}]);" %>
 	</div>
 </div>
-<% form_tag account_article_waxings_url(@account, @waxing.article), :method => :post do %>
+<% form_remote_tag :url=>account_article_waxings_url(@account, @waxing.article), :after=>"page_overlay.end();", :success=>"reload_media();trigger_flash('<p>Media attached</p>');", :method => :post do %>
 <div class="clearfix">
-	<%= button_link_to_submit "Attach selected", :class=>"save"%>
+	<%= button_link_to_submit "Attach selected", :class=>"save large" %>
 	<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
-	<div id="top_pagination"><%= render :partial=>'mediafiles/pagination' %></div>
+	<div id="top_pagination"><%= render :partial=>'mediafiles/ajax_pagination' %></div>
 </div>
 <div class="scroll_window">
 	<ol id="mediafiles_list">
@@ -30,7 +30,7 @@
 	</ol>
 </div>
 <p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
-<div id="bottom_pagination"><%= render :partial=>'mediafiles/pagination' %></div>
+<div id="bottom_pagination"><%= render :partial=>'mediafiles/ajax_pagination' %></div>
 <br />
 <% end %>
 <script type="text/javascript" charset="utf-8">

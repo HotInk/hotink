@@ -131,7 +131,7 @@ dl.faq dt {font-weight: bold;}
 /* Modal window styles */
 
 .close_button  { float: right; background-image: url('/images/token_x_red.gif'); width: 10px; height: 10px; margin: 0; margin-right: 0.125em; display: inline-block; font-size: 1em; }
-.close_button a { color: #FFF; }
+.close_button a { color: #FFF; display: inline-block; width: 100%;height: 100%;}
 
 /* Hot Ink index styles
 --------------------------------*/
@@ -194,7 +194,7 @@ dl.faq dt {font-weight: bold;}
 #mediafiles .blank_file { background:url('/images/blank_file.png') center no-repeat; margin-top:0.4em; }
 #mediafiles .blank_file  p{ float:left;width:100%;height:100%;margin-top:38px;font-size: 0.7em;font-weight: bold; color: #555 }
 
-#mediafiles.small { width: 60%;}
+#mediafiles.small { }
 #mediafiles.small .scroll_window { height: 400px; padding:0.25em; margin: 0.25em 0em; border: 1px solid #AAA; overflow:auto;}
 #mediafiles.small ol { width: 99%; margin: 0;}
 #mediafiles.small li .mediafile { width:14.5em; overflow: hidden;}
@@ -206,6 +206,7 @@ dl.faq dt {font-weight: bold;}
 #mediafiles.small .pagination { padding-top: 0.75em;}
 #mediafiles.small .select_all_wrap { display: none;}
 #mediafiles.small button.save { float: left; }
+#mediafiles.small #bottom_pagination { display: none;}
 
 
 /* Form styles */
@@ -293,13 +294,22 @@ dl.faq dt {font-weight: bold;}
 
 
 /* Attach media modal styles */
-#attach_media_container { width: 660px; min-height: 50px; margin-bottom:0px;}
-#upload_media_tab {  border: 1px solid #AAA; padding: 5px;}
-#attach_media_container #upload_media_form {float: left;}
-#upload_media_form>div { margin: 40px 50px;}
-#upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
-#upload_media_form p { font-size: 13px; }
+#overlay_content #upload_media_container { width: 565px; min-height: 50px; margin-bottom:0px;}
+#overlay_content #upload_media_container .title_bar button { vertical-align: 0.5em; }
+#overlay_content #upload_media_container .title_bar h1 {  display:inline; margin: 0 0.25em;  margin-right: 0.5em; font-size: 2.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA;}
+#overlay_content #upload_media_tab {  border: 1px solid #AAA; padding: 5px; }
+#overlay_content #upload_media_container #upload_media_form {float: left;}
+#overlay_content #upload_media_form>div { margin: 40px 50px;}
+#overlay_content #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
+#overlay_content #upload_media_form p { font-size: 13px; }
 
+#overlay_content #mediafiles.small { }
+#overlay_content #mediafiles.small h1 { }
+#overlay_content #mediafiles.small .title_bar { margin-bottom: 1em; }
+#overlay_content #mediafiles.small .title_bar div.search { margin-top: 1em; }
+#overlay_content #mediafiles.small .title_bar .search input {  }
+#overlay_content #mediafiles.small button.save { margin-top: 0.5em;}
+#overlay_content #mediafiles.small .pagination { font-size: 1.2em; }
 
 /* Edit media modal styles 
 --------------------------------*/

@@ -1,6 +1,6 @@
 if @mediafiles.length > 0
-  page.replace_html 'top_pagination', :partial => 'pagination'
-  page.replace_html 'bottom_pagination', :partial => 'pagination'
+  page.replace_html 'top_pagination', :partial => 'ajax_pagination'
+  page.replace_html 'bottom_pagination', :partial => 'ajax_pagination'
   
   page.replace_html 'mediafiles_list', :partial => 'mediafile', :collection => @mediafiles
   page << "$('mediafiles').select('ol#mediafiles_list>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });"

@@ -1,5 +1,11 @@
-<div id="attach_media_container" class="column_holder clearfix">
+<div id="upload_media_container" class="column_holder clearfix">
 	<p class="close_button"><a href="#" class="close_window" onclick="page_overlay.end();return false;">&nbsp;</a></p>
+	<div class="title_bar clearfix">
+		<div class="actions">	
+			<h1>Attach media </h1>
+			<%= button_link_to_remote 'Attach archive media &raquo;', :url=>new_account_article_waxing_path(@account, @article, :format=>:js), :method => :get, :html=>{ :class=>'primary'} %>
+		</div>
+	</div>
 	<div id="upload_media_form" class="two_thirds_column">
 				<h4>Upload media file</h4>
 			<div>
