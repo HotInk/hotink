@@ -26,11 +26,12 @@ class Article < ActiveRecord::Base
   validates_associated :account, :message => "Account must be valid"
 
 
-  define_index do
+  define_index do    
     indexes title, :sortable => :true
     indexes subtitle
     indexes bodytext
     indexes authors.name, :as => :authors_names
+    indexes waxings.caption, :as => :captions
     indexes tags.name, :as => :tags
     indexes date, :sortable => :true
 
