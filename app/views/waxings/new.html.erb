@@ -13,9 +13,9 @@
 	</div>
 </div>
 <% form_tag account_article_waxings_url(@account, @waxing.article), :method => :post do %>
-<div class="clearfix">
-	<%= button_link_to_submit "Attach selected", :class=>"save"%>
+<div class="function_bar clearfix">
 	<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
+	<%= button_link_to_submit "Attach selected", :class=>"save large" %>
 	<div id="top_pagination"><%= render :partial=>'mediafiles/pagination' %></div>
 </div>
 <div class="scroll_window">

@@ -143,8 +143,11 @@ dl.faq dt {font-weight: bold;}
 .index .title_bar .search { display: inline-block; float: right;}
 .index .title_bar .search input { padding: 0.25em; font-size: 1.2em; color: #515151;}
 .index .title_bar .search button { font-size: 1em; }
-.index .select_all_wrap { display:inline; float: left; margin: 0px 0px; padding: 0.25em; padding-left: 0; background-color: #CEE4F3;  border: 1px dotted #9cf;}
+.index .function_bar p, .index .function_bar button { float:left; }
+.index .function_bar button { margin-top: 0.25em;}
+.index .select_all_wrap { margin: 0px 0px; margin-right: 0.5em; padding: 0.25em; padding-left: 0; background-color: #CEE4F3;  border: 1px dotted #9cf;}
 .index .select_all_wrap input { margin: 3px 3px 3px 7px; }
+.index .function_bar #top_pagination{ float: right; display:inline-block;}
 .index .page_entries_info { float: right; margin: 0.25em; margin-top: 0.45em; font-style: italic; font-size: 0.9em;}
 .index .pagination { display: inline; float: right; margin: 0.25em; margin-left: 1em; color: #AAA; font-size: 1.1em;}
 .index .pagination a { color: #AAA; }

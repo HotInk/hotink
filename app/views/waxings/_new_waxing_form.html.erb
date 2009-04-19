@@ -13,7 +13,7 @@
 	</div>
 </div>
 <% form_remote_tag :url=>account_article_waxings_url(@account, @waxing.article), :after=>"page_overlay.end();", :success=>"reload_media();trigger_flash('<p>Media attached</p>');", :method => :post do %>
-<div class="clearfix">
+<div class="function_bar clearfix">
 	<%= button_link_to_submit "Attach selected", :class=>"save large" %>
 	<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
 	<div id="top_pagination"><%= render :partial=>'mediafiles/ajax_pagination' %></div>

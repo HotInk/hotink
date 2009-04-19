@@ -20,7 +20,7 @@ theField.value = theField.defaultValue;
 //
 // Call this after the page loads buttons
 var load_button_fix = function () {
-	if(Prototype.Browser.Gecko) $$('button').each(function(bt){bt.setStyle({margin: "0 -3px"});});
+	if(Prototype.Browser.Gecko) $$('button').each(function(bt){bt.setStyle({marginLeft: "-3px", marginRight: "-3px"});});
 }
 
 
