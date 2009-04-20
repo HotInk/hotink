@@ -309,8 +309,8 @@ dl.faq dt {font-weight: bold;}
 #overlay_content #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
 #overlay_content #upload_media_form p { font-size: 13px; }
 
-#overlay_content #mediafiles.small { width: 49em;}
-#overlay_content #mediafiles.small h1 { }
+#overlay_content #mediafiles.small { width: 49em; }
+#overlay_content #mediafiles.small h1 { padding: 0.125em; }
 #overlay_content #mediafiles.small .title_bar { margin-bottom: 1em; }
 #overlay_content #mediafiles.small .title_bar div.search { margin-top: 1em; }
 #overlay_content #mediafiles.small .title_bar .search input {  }
