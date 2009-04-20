@@ -1,21 +1,33 @@
-<div id="account_form_top_links"><%= link_to "&#171; Back to accounts list", accounts_url, :class=>"weblink" %></div>
-<div id="account_form">
+<div id="account" class="clearfix">
 	<% form_for(@account) do |f| %>
-	  <%= f.error_messages %>
-	    <%= button_link_to_submit @account.new_record? ? "Create account" : "Update account details", :class=>"large save pill-l" %>
-	  <p>
-	    <%= f.label :name, "Account name" %><br />
-	    <%= f.text_field :name, :class =>"text_input account_name" %>
-	  </p>
-	  <p>
-	    <%= f.label :time_zone, "Account preferred time zone" %><br />
-	    <%= f.time_zone_select :time_zone, /Canada|Newfoundland|Saskatchewan/, :default => "Eastern Time (US & Canada)"  %>
-	  </p>
-	  <p>
-		<%= f.label :settings, "Settings" %><br />
-		<%= f.text_area :settings, :class =>"text_input"  %>
-	  </p>
-	<% end %>
+	<%= button_link_to_submit @account.new_record? ? "Create your account" : "Save changes", :class=>"save large" %>
+	<h1>Account settings</h1>
+		
+	<div class="tab_window clearfix">
+		<ol class="left">
+			<li class="current">General</li>
+			<li>Images</li>
+		</ol>
+		<div id="general">
+	  		<%= f.error_messages %>
+			  <div>
+			    <%= f.label :name, "Account" %>
+				<%= f.text_field :name, :class =>"text_input account_name", :disabled => true %>
+			  </div>
+			  <div>
+				<%= f.label :formal_name, "Formal name" %>
+				<%= f.text_field :formal_name, :class =>"text_input formal_name" %>
+			  </div>
+			  <div>
+			    <%= f.label :time_zone, "Time zone" %>
+			    <%= f.time_zone_select :time_zone, /Canada|Newfoundland|Saskatchewan/, :include_blank => true  %>
+			  </div>
+		</div>
+		<div id="image" style="display:none">
+			
+		</div>
+	</div>
+	<% end %>	
 	<script type="text/javascript" charset="utf-8">
 		load_button_fix();
 	</script>

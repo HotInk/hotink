@@ -1,6 +1,7 @@
 class AccountsController < ApplicationController
   skip_before_filter :find_account
-  layout 'login'
+  layout 'login', :only=>[:new, :create]
+  layout 'hotink', :only=>:edit
   
   # GET /accounts
   # GET /accounts.xml
@@ -47,6 +48,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save
+        flash[:notice] = "Account created"
         format.html { redirect_to(accounts_url) }
         format.xml  { render :xml => @account, :status => :created, :location => @account }
       else
@@ -63,7 +65,8 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.update_attributes(params[:account])
-        format.html { redirect_to(accounts_url) }
+        flash[:notice] = "Account updated"
+        format.html { redirect_to(account_articles_url(@account)) }
         format.js { head :ok } #The categories-list on the article form posts here. This is it's js. 
         format.xml  { head :ok }
       else

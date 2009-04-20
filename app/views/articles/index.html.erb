@@ -26,9 +26,10 @@
 			<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles found.</em></p>
 		<% end %>
 	</ol>
-<div id="bottom_pagination"><%= render :partial=>'pagination' %></div>
-<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
-
+<div class="function_bar clearfix">
+	<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
+	<div id="bottom_pagination"><%= render :partial=>'pagination' %></div>
+</div>
 <br />
 
 <script type="text/javascript" charset="utf-8">

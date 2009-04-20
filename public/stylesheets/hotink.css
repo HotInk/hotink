@@ -143,17 +143,20 @@ dl.faq dt {font-weight: bold;}
 .index .title_bar .search { display: inline-block; float: right;}
 .index .title_bar .search input { padding: 0.25em; font-size: 1.2em; color: #515151;}
 .index .title_bar .search button { font-size: 1em; }
+.index .function_bar { margin-top: 0.25em;}
 .index .function_bar p, .index .function_bar button { float:left; }
 .index .function_bar button { margin-top: 0.25em;}
-.index .select_all_wrap { margin: 0px 0px; margin-right: 0.5em; padding: 0.25em; padding-left: 0; background-color: #CEE4F3;  border: 1px dotted #9cf;}
-.index .select_all_wrap input { margin: 3px 3px 3px 7px; }
+.index .select_all_wrap { margin: 0.5em 0px; display:inline-block; float: left; margin-right: 0.5em; padding-right: 0.5em; padding-left: 0;}
+.index .select_all_wrap label { vertical-align:-1px; padding-left:0.125em; }
+.index .select_all_wrap input { margin: 0px 3px 5px 7px; }
 .index .function_bar #top_pagination{ float: right; display:inline-block;}
+.index .function_bar #bottom_pagination{ float: right; display:inline-block;}
 .index .page_entries_info { float: right; margin: 0.25em; margin-top: 0.45em; font-style: italic; font-size: 0.9em;}
 .index .pagination { display: inline; float: right; margin: 0.25em; margin-left: 1em; color: #AAA; font-size: 1.1em;}
 .index .pagination a { color: #AAA; }
 .index .pagination .current { color: #333; }
 .index .pagination .disabled { display: none;}
-.index ol {margin-top: 5px; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; border-top: none;}
+.index ol {margin-top: 0.125em; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; border-top: none;}
 .index ol li { border-top: 1px dotted #515151; cursor: default;}
 .index ol a { margin: 12px 0px; cursor: pointer;}
 .index ol a:visited { color: #555;}
@@ -306,7 +309,7 @@ dl.faq dt {font-weight: bold;}
 #overlay_content #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
 #overlay_content #upload_media_form p { font-size: 13px; }
 
-#overlay_content #mediafiles.small { }
+#overlay_content #mediafiles.small { width: 49em;}
 #overlay_content #mediafiles.small h1 { }
 #overlay_content #mediafiles.small .title_bar { margin-bottom: 1em; }
 #overlay_content #mediafiles.small .title_bar div.search { margin-top: 1em; }
@@ -441,50 +444,19 @@ div.media_list .token img { margin: 0.5em; margin-right: 0.125em; border: 1px so
 div.media_list p a{ cursor: text; }
 div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left: 5px;}
 
-/* Start table CSS here
----------------------------------------- */
-
-table#record_list {
-	border: none;
-	max-width: 885px;
-	min-width: 850px;
-	width: auto;
-}
-
-table#record_list thead {
-	background:#ddd url(/bg-button.gif) repeat-x 0 0;
-    margin:0px;
-    padding: 4px 5px 6px 5px;
-}
-
-table#record_list th{
-	border: 1px solid #3399DE;
-}
-
-table#record_list tfoot {
-	background:#ddd url(/bg-button.gif) repeat-x 0 0;
-    margin:0px;
-    padding: 4px 5px 6px 5px;
-}
-
-table#record_list tbody {
-	vertical-align: top;
-}
-
-
-
-table#record_list tr {
-	padding: 5px 0px;
-}
-
-table#record_list td {
-	height: 32px;
-	padding: 0px 3px;
-}
-
 /* Tag list styles */
 #media_tags_form  { font-size: 0.8em; }
 #media_tags_form p{  }
+
+/* Tab Window UI-Control */ 
+.tab_window { padding: 1% 1%; width: 98%; height: 30em; border: 1px solid #DDD; background-color: #F9F9F9; }
+.tab_window>ol { list-style-type: none;}
+.tab_window>ol li { padding: 0.25em; font-size: 1.2em; color: #515151; text-align: center; cursor: pointer;}
+.tab_window>ol li.current { background-color: #3D9BDF; color: white;  }
+.tab_window ol.left, .tab_window>div {  border: 1px solid #DDD; background-color: #FFF; overflow:auto; }
+.tab_window ol.left { float: left; width: 21%; margin: 0; margin-right: 1%; padding: 0; height: 99.25%; }
+.tab_window>div { float: left; width: 71.25%; padding: 0 3%;  height: 99.25%;}
+.tab_window>div div { font-size: 1.1em; margin: 1.5em 0em; color: #515151;}
 
 /*-----------------------------------
 /*
@@ -498,9 +470,16 @@ table#record_list td {
 #accounts_index th{ text-align:left; }
 #accounts_index td{ font-size: 20px; color: #999; height: 20px; padding: 5px 2px;}
 
-#account_form_top_links{ width:400px; margin: 5px; }
+#account { width: 50em; margin: 0 auto; }
+#account button { float: right; }
+#account h1 {  font-size: 1.75em; margin:0.25em 0.25em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
+#account select { background: none; margin: 0em 0.25em; width: auto; font-size: 1em; padding: 0.125em 0em; height: 1.8em; color: #666; border: 1px solid #DEDEDE;	}	
+#account input[type="text"] { font-size: 1.4em; width: 82.5%; color:#999; padding: 0.125em 0.25em; }
+#account input.formal_name { width: 100%; font-family: georgia, "Times New Roman", times, serif; font-style: italic; }
+
 #account_form { padding: 5px; }
-#account_form select {	background: none; width: 400px; font-size: 16px; color: #666; height: 25px; border: 1px solid #DEDEDE;	}	
+#account_form p { float: left;}
+#account_form select {	background: none; width: auto; font-size: 1.5em; color: #666; height: 1.6em; border: 1px solid #DEDEDE;	}	
 #account_form .account_name { background: none; height: 32px; font-size: 24px; width: 400px; padding: 3px; }
 #account_form textarea { width: 400px; }
 #account_form button {  }
