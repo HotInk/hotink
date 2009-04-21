@@ -146,12 +146,12 @@ dl.faq dt {font-weight: bold;}
 .index .function_bar { margin-top: 0.25em;}
 .index .function_bar p, .index .function_bar button { float:left; }
 .index .function_bar button { margin-top: 0.25em;}
-.index .select_all_wrap { margin: 0.5em 0px; display:inline-block; float: left; margin-right: 0.5em; padding-right: 0.5em; padding-left: 0;}
+.index .select_all_wrap { margin: 0.25em 0px; display:inline-block; float: left; margin-right: 0.5em; padding-right: 0.5em; padding-left: 0;}
 .index .select_all_wrap label { vertical-align:-1px; padding-left:0.125em; }
 .index .select_all_wrap input { margin: 0px 3px 5px 7px; }
 .index .function_bar #top_pagination{ float: right; display:inline-block;}
 .index .function_bar #bottom_pagination{ float: right; display:inline-block;}
-.index .page_entries_info { float: right; margin: 0.25em; margin-top: 0.45em; font-style: italic; font-size: 0.9em;}
+.index .page_entries_info { float: right; margin: 0.25em; margin-top: 0.5em; font-style: italic; font-size: 0.9em;}
 .index .pagination { display: inline; float: right; margin: 0.25em; margin-left: 1em; color: #AAA; font-size: 1.1em;}
 .index .pagination a { color: #AAA; }
 .index .pagination .current { color: #333; }
