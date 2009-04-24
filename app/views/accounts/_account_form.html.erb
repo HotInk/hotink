@@ -28,7 +28,7 @@
 		</div>
 		<div id="access-window" style="display:none">
 			<h2>Access management</h2>
-			<%= button_link_to("Users", "#", :class=>"pill-l selected") + button_link_to("Roles", "#", :class=>"pill-c") + button_link_to("Permissions", "#", :class=>"pill-r") %>
+			<%= button_link_to("Users", "#", :class=>"pill-l selected", :onclick=>"return false;") + button_link_to("Roles", "#", :class=>"pill-c", :onclick=>"return false;") + button_link_to("Permissions", "#", :class=>"pill-r", :onclick=>"return false;") %>
 			<div id="users-window">
 				<h2>Users</h2>
 			</div>
