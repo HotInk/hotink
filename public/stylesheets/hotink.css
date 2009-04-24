@@ -455,10 +455,12 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 .tab_window>ol { list-style-type: none;}
 .tab_window>ol li { padding: 0.25em; font-size: 1.2em; color: #515151; text-align: center; cursor: pointer;}
 .tab_window>ol li.selected { background-color: #3D9BDF; color: white; cursor: pointer; }
-.tab_window ol.left, .tab_window>div {  border: 1px solid #DDD; background-color: #FFF; overflow:auto; }
-.tab_window ol.left { float: left; width: 21%; margin: 0; margin-right: 1%; padding: 0; height: 99.25%; }
-.tab_window>div { float: left; width: 71.25%; padding: 0 3%;  height: 99.25%;}
+.tab_window ol.left, .tab_window>div {  border: 1px solid #DDD; background-color: #FFF;  }
+.tab_window ol.left { float: left; width: 21%; margin: 0; margin-right: 1%; padding: 0; height: 99.25%; overflow:hidden;}
+.tab_window>div { float: left; width: 71.25%; padding: 0 3%;  height: 99.25%; overflow:auto;  }
 .tab_window>div div { font-size: 1.1em; margin: 1.5em 0em; color: #515151;}
+.tab_window>div h2 { font-family: georgia, "Times New Roman", times, serif; color: #AAA; font-size: 2em; margin:0.5em 0; font-weight: normal; }
+
 
 /*-----------------------------------
 /*
@@ -478,6 +480,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account select { background: none; margin: 0em 0.25em; width: auto; font-size: 1em; padding: 0.125em 0em; height: 1.8em; color: #666; border: 1px solid #DEDEDE;	}	
 #account input[type="text"] { font-size: 1.4em; width: 82.5%; color:#999; padding: 0.125em 0.25em; }
 #account input.formal_name { width: 100%; font-family: georgia, "Times New Roman", times, serif; font-style: italic; }
+
+#access-window div { border: 1px solid #DDD; background-color: #FFF; height: 75%; width: 100%; margin: 2% 0;}
 
 #account_form { padding: 5px; }
 #account_form p { float: left;}

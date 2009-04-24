@@ -1,15 +1,16 @@
 <div id="account" class="clearfix">
-	<% form_for(@account) do |f| %>
-	<%= button_link_to_submit @account.new_record? ? "Create your account" : "Save changes", :class=>"save large" %>
 	<h1>Account settings</h1>
 		
 	<div id="account_settings" class="tab_window clearfix">
 		<ol class="left">
 			<li class="selected">General</li>
-			<li>Users</li>
+			<li>Access</li>
 			<li>Images</li>
 		</ol>
 		<div id="general-window">
+		<% form_for(@account) do |f| %>
+		<%= button_link_to_submit @account.new_record? ? "Create your account" : "Save changes", :class=>"save large" %>
+			<h2>General settings</h2>
 	  		<%= f.error_messages %>
 			  <div>
 			    <%= f.label :name, "Account" %>
@@ -23,17 +24,28 @@
 			    <%= f.label :time_zone, "Time zone" %>
 			    <%= f.time_zone_select :time_zone, /Canada|Newfoundland|Saskatchewan/, :include_blank => true  %>
 			  </div>
+			<% end %>	
 		</div>
-		<div id="users-window" style="display:none">
-			
+		<div id="access-window" style="display:none">
+			<h2>Access management</h2>
+			<%= button_link_to("Users", "#", :class=>"pill-l selected") + button_link_to("Roles", "#", :class=>"pill-c") + button_link_to("Permissions", "#", :class=>"pill-r") %>
+			<div id="users-window">
+				<h2>Users</h2>
+			</div>
+			<div id="roles-window" style="display:none;">
+				<h2>Roles</h2>
+			</div>
+			<div id="permissions-window" style="display:none;">
+				<h2>Permissions</h2>
+			</div>
 		</div>
 		<div id="images-window" style="display:none">
-			
+			<h2>Image settings</h2>
 		</div>
 	</div>
-	<% end %>	
 	<script type="text/javascript" charset="utf-8">
 		load_button_fix();
 		$('account_settings').select('ol li').each( function(el){ new Tab( el, el.hasClassName('selected') ) });
+		$('access-window').select('a.btn').each( function(el){ new Tab( el, el.hasClassName('selected'), el.down().down().innerHTML.toLowerCase() + '-window' ) } )
 	</script>
 </div>
