@@ -116,9 +116,9 @@ dl.faq dt {font-weight: bold;}
 #navigation #links { float: left; padding: 0; margin: 0; margin-left: 3%; margin-top: 0.85em; }
 #navigation #links ol { margin: 0; padding: 0; font-size: 1.2em; list-style: none;}
 #navigation #links ol li { display: inline; margin: 0; padding: 0.2em 0.5em; background-color: #FFF; }
-#navigation #links ol li a { color: #515151; }
+#navigation #links ol li a { color: #333; }
 #navigation #links ol li.current { background-color: #FFF6DD; margin:0; }
-#navigation #links ol li.current a { color: #515151; }
+#navigation #links ol li.current a { color: #333; }
 #navigation #links ol li a:hover { color: #333; }
 #navigation #links ol li:hover { background-color: #CEE4F3; margin:0;}
 #navigation #user_details { float: right; padding: 0.25em 0.3em; font-size: 0.8em; border: 1px solid #CEE4F3; background-color: #FFF6DD;}
@@ -136,27 +136,29 @@ dl.faq dt {font-weight: bold;}
 /* Hot Ink index styles
 --------------------------------*/
 
-.index .title_bar { width: 100%; }
+.index .title_bar { width: 100%; margin-bottom: 0.5em;}
 .index .title_bar .actions { float: left; margin: 0.25em 0em;}
 .index .title_bar .actions a { vertical-align: 0.25em;}
 .index .title_bar h1 { display:inline; margin: 0; margin-right: 0.5em; font-size: 3em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA;}
 .index .title_bar .search { display: inline-block; float: right;}
 .index .title_bar .search input { padding: 0.25em; font-size: 1.2em; color: #515151;}
 .index .title_bar .search button { font-size: 1em; }
-.index .function_bar { margin-top: 0.25em;}
+.index .function_bar {  }
 .index .function_bar p, .index .function_bar button { float:left; }
-.index .function_bar button { margin-top: 0.25em;}
-.index .select_all_wrap { margin: 0.25em 0px; display:inline-block; float: left; margin-right: 0.5em; padding-right: 0.5em; padding-left: 0;}
-.index .select_all_wrap label { vertical-align:-1px; padding-left:0.125em; }
-.index .select_all_wrap input { margin: 0px 3px 5px 7px; }
-.index .function_bar #top_pagination{ float: right; display:inline-block;}
+.index .select_all_wrap { margin: 0.6em 0 0.4em 0; display:inline-block; float: left; }
+.index .select_all_wrap label { display:inline-block; }
+.index .select_all_wrap input { padding: 0.125em 0; margin-left: 6px; }
+.index .function_bar #top_pagination{ float: right; display:inline-block; margin: 0.8em 0 0.2em 0; }
 .index .function_bar #bottom_pagination{ float: right; display:inline-block;}
-.index .page_entries_info { float: right; margin: 0.25em; margin-top: 0.5em; font-style: italic; font-size: 0.9em;}
-.index .pagination { display: inline; float: right; margin: 0.25em; margin-left: 1em; color: #AAA; font-size: 1.1em;}
-.index .pagination a { color: #AAA; }
+.index .function_bar .batch_affect { float: left; margin-left: 2em; padding-top: 0.4em; }
+.index .function_bar .batch_affect select { height: 1.65em; padding:0; min-width: 14em; font-size:1.1em; float: left; }
+.index .function_bar .batch_affect button { float: left; font-size: 0.65em; height: 2.35em; vertical-align: middle;  }
+.index .page_entries_info { float: right; font-size: 0.9em; margin: 0.1em; margin-right: 1em;  font-style: italic; }
+.index .pagination { display: inline; float: right; color: #AAA; }
+.index .pagination a { color: #666; }
 .index .pagination .current { color: #333; }
 .index .pagination .disabled { display: none;}
-.index ol {margin-top: 0.125em; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; border-top: none;}
+.index ol {margin-top: 0.25em; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; border-top: none;}
 .index ol li { border-top: 1px dotted #515151; cursor: default;}
 .index ol a { margin: 12px 0px; cursor: pointer;}
 .index ol a:visited { color: #555;}
@@ -452,11 +454,13 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 .tab_window { padding: 1% 1%; width: 98%; height: 30em; border: 1px solid #DDD; background-color: #F9F9F9; }
 .tab_window>ol { list-style-type: none;}
 .tab_window>ol li { padding: 0.25em; font-size: 1.2em; color: #515151; text-align: center; cursor: pointer;}
-.tab_window>ol li.current { background-color: #3D9BDF; color: white;  }
-.tab_window ol.left, .tab_window>div {  border: 1px solid #DDD; background-color: #FFF; overflow:auto; }
-.tab_window ol.left { float: left; width: 21%; margin: 0; margin-right: 1%; padding: 0; height: 99.25%; }
-.tab_window>div { float: left; width: 71.25%; padding: 0 3%;  height: 99.25%;}
+.tab_window>ol li.selected { background-color: #3D9BDF; color: white; cursor: pointer; }
+.tab_window ol.left, .tab_window>div {  border: 1px solid #DDD; background-color: #FFF;  }
+.tab_window ol.left { float: left; width: 21%; margin: 0; margin-right: 1%; padding: 0; height: 99.25%; overflow:hidden;}
+.tab_window>div { float: left; width: 71.25%; padding: 0 3%;  height: 99.25%; overflow:auto;  }
 .tab_window>div div { font-size: 1.1em; margin: 1.5em 0em; color: #515151;}
+.tab_window>div h2 { font-family: georgia, "Times New Roman", times, serif; color: #AAA; font-size: 2em; margin:0.5em 0; font-weight: normal; }
+
 
 /*-----------------------------------
 /*
@@ -476,6 +480,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account select { background: none; margin: 0em 0.25em; width: auto; font-size: 1em; padding: 0.125em 0em; height: 1.8em; color: #666; border: 1px solid #DEDEDE;	}	
 #account input[type="text"] { font-size: 1.4em; width: 82.5%; color:#999; padding: 0.125em 0.25em; }
 #account input.formal_name { width: 100%; font-family: georgia, "Times New Roman", times, serif; font-style: italic; }
+
+#access-window div { border: 1px solid #DDD; background-color: #FFF; height: 75%; width: 100%; margin: 2% 0;}
 
 #account_form { padding: 5px; }
 #account_form p { float: left;}
