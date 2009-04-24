@@ -14,9 +14,17 @@
 </div>
 
 <div class="function_bar clearfix">
-	<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
-	<div class="batch_affect"> </div>
+	<div class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></div>
 	<div id="top_pagination"><%= render :partial=>'pagination' %></div>
+	<!--
+	<div class="batch_affect"> 
+		<select class="text_input">
+			<option value="">Affect selected</option>
+			<option value="delete">Delete from archive</option>
+		</select>
+		<%= button_link_to_submit "Apply", :class=>"save tiny" %>
+	</div>
+	-->
 </div>
 	<ol id="articles_list">
 		<% if @articles.length > 0 %>
