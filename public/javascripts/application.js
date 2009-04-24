@@ -307,8 +307,7 @@ var Tab = Class.create({
 	},
 	
 	onclick: function() {
-		this.toggle();
-		return false;
+		if(!this.selected) this.select();
 	},
 	
 	select: function(){
