@@ -42,6 +42,18 @@ class Article < ActiveRecord::Base
   def self.per_page
       10
   end
+  
+  # If the article doesn't have a date, return it's created_at time. If its new, return Time.now
+  def date
+    d = read_attribute('date')
+    if d
+      return d
+    elsif self.new_record?
+      return Time.now
+    else
+      return self.created_at
+    end
+  end
 
   
   def display_title
@@ -89,10 +101,12 @@ class Article < ActiveRecord::Base
      xml.instruct! unless options[:skip_instruct]
      
      xml.article do
+       xml.tag!( :date, self.date.to_formatted_s(:long))
        xml.tag!( :title, self.title )
        xml.tag!( :subtitle, self.subtitle )
        xml.tag!( :authors_list, self.authors_list )
        xml.tag!( :bodytext, self.bodytext )
+       xml.tag!( :id, self.id )
      end
 
   end

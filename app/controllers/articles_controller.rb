@@ -2,6 +2,8 @@ class ArticlesController < ApplicationController
   
   layout 'hotink'
   before_filter :require_user
+  skip_before_filter :verify_authenticity_token
+  
   
   # GET /articles
   # GET /articles.xml
@@ -40,17 +42,13 @@ class ArticlesController < ApplicationController
     if last_article = @account.articles.find(:last)
       if last_article.created_at == last_article.updated_at
          @article = last_article
-         @article.date = Time.now
+         @article.date = Time.now #Give it the current time, without saving.
       else
-        @article.date = Time.now
         @article.save
       end
     else
       @article.save
     end
-    
-    #Update the date
-
     
     respond_to do |format|
       flash[:notice] = "New article"
@@ -78,7 +76,7 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       if @article.save
         format.html { redirect_to(account_article_path(@account, @article)) }
-        format.xml  { render :xml => @article, :status => :created, :location => @article }
+        format.xml  { render :xml => @article, :status => :created, :location => [@account, @article] }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @article.errors, :status => :unprocessable_entity }
