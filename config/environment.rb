@@ -27,7 +27,7 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem "authlogic"
+  config.gem "authlogic", :version=>'2.0.4'
   config.gem "bcrypt-ruby", :lib => "bcrypt"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
