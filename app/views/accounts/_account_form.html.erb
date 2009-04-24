@@ -3,12 +3,13 @@
 	<%= button_link_to_submit @account.new_record? ? "Create your account" : "Save changes", :class=>"save large" %>
 	<h1>Account settings</h1>
 		
-	<div class="tab_window clearfix">
+	<div id="account_settings" class="tab_window clearfix">
 		<ol class="left">
-			<li class="current">General</li>
+			<li class="selected">General</li>
+			<li>Users</li>
 			<li>Images</li>
 		</ol>
-		<div id="general">
+		<div id="general-window">
 	  		<%= f.error_messages %>
 			  <div>
 			    <%= f.label :name, "Account" %>
@@ -23,12 +24,16 @@
 			    <%= f.time_zone_select :time_zone, /Canada|Newfoundland|Saskatchewan/, :include_blank => true  %>
 			  </div>
 		</div>
-		<div id="image" style="display:none">
+		<div id="users-window" style="display:none">
+			
+		</div>
+		<div id="images-window" style="display:none">
 			
 		</div>
 	</div>
 	<% end %>	
 	<script type="text/javascript" charset="utf-8">
 		load_button_fix();
+		$('account_settings').select('ol li').each( function(el){ new Tab( el, el.hasClassName('selected') ) });
 	</script>
 </div>

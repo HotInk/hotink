@@ -281,3 +281,52 @@ var Card = Class.create({
 		this.delete_link.hide();
 	}
 });
+
+/* tab window */
+
+
+
+var Tab = Class.create({
+	initialize: function(element, selected){
+		this.element = $(element);
+		this.element.tab = this;
+		this.selected = selected;
+		this.tab_window = $(this.element.innerHTML.toLowerCase() + '-window');
+		Event.observe(this.element, 'click', this.onclick.bindAsEventListener(this));
+		Event.observe(this.element, 'mouseover', this.onmouseover.bindAsEventListener(this));	    
+		Event.observe(this.element, 'mouseout', this.onmouseout.bindAsEventListener(this));		
+	},
+	
+	onmouseover: function() {
+		this.element.addClassName('highlighted');
+	},
+	
+	onmouseout: function() {
+		this.element.removeClassName('highlighted');
+	},
+	
+	onclick: function() {
+		this.toggle();
+	},
+	
+	select: function(){
+		if(this.element.up().select('.selected')) this.element.up().select('.selected')[0].tab.deselect();
+		this.element.addClassName('selected');
+		this.tab_window.show();
+		this.selected = true;
+	},
+	
+	deselect: function(){
+		this.element.removeClassName('selected');
+		this.tab_window.hide();
+		this.selected = false;
+	},
+
+	toggle: function(){
+		if(this.selected) {
+			this.deselect();
+		} else {
+			this.select();
+		}
+	}
+});
