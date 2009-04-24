@@ -26,7 +26,10 @@ class Article < ActiveRecord::Base
   validates_associated :account, :message => "Account must be valid"
 
 
-  define_index do    
+  define_index do
+    set_property :delta => true
+    
+        
     indexes title, :sortable => :true
     indexes subtitle
     indexes bodytext
