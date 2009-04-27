@@ -8,9 +8,17 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
-    @search_query = params[:search]
-    @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => :date, :sort_mode => :desc, :include => [:authors, :mediafiles, :section])
-
+    
+    # This split ona blank search query is important, even though thinking-sphinx will return ordered search
+    # results on a blank query. Sphinx delta index isn't ordered with the regular index, so the ordering just
+    # doesn't work.
+    if params[:search].blank?
+      @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "date DESC", :include => [:authors, :mediafiles, :section])
+    else  
+      @search_query = params[:search]
+      @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => :date, :sort_mode => :desc, :include => [:authors, :mediafiles, :section])
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.js

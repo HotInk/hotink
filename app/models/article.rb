@@ -27,9 +27,6 @@ class Article < ActiveRecord::Base
 
 
   define_index do
-    set_property :delta => true
-    
-        
     indexes title, :sortable => :true
     indexes subtitle
     indexes bodytext
@@ -40,6 +37,8 @@ class Article < ActiveRecord::Base
 
     has created_at
     has account_id
+    
+    set_property :delta => true
   end
 
   def self.per_page

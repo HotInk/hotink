@@ -5,4 +5,7 @@ class User < ActiveRecord::Base
       c.crypto_provider = Authlogic::CryptoProviders::BCrypt
   end
   
+  acts_as_authorized_user
+  acts_as_authorizable
+  
 end

@@ -13,3 +13,6 @@
 [submodule "vendor/plugins/webrat"]
 	path = vendor/plugins/webrat
 	url = git://github.com/brynary/webrat.git
+[submodule "vendor/plugins/authorization"]
+	path = vendor/plugins/authorization
+	url = git://github.com/DocSavage/rails-authorization-plugin.git

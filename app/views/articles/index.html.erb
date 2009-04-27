@@ -9,7 +9,9 @@
 			<input type="text" id="articles_search" name="search" class="text_input user" onclick="if(this.value=='Search articles') clearText(this);" value="<%=h( @search_query || "Search articles") %>" />
 			<%= button_link_to_submit "Go" %>
 		</form>
-		<%= observe_field :articles_search, :url => account_articles_url(@account), :with => "search", :frequency=>0.5, :method=>:get, :after =>"$('articles_list').select('li').invoke('addClassName', 'transparent');" %>
+		<%= # Disable ajax search for now
+			# observe_field :articles_search, :url => account_articles_url(@account), :with => "search", :frequency=>0.5, :method=>:get, :after =>"$('articles_list').select('li').invoke('addClassName', 'transparent');" 
+			%>
 	</div>
 </div>
 
