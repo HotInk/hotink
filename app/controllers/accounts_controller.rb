@@ -7,6 +7,10 @@ class AccountsController < ApplicationController
   # GET /accounts.xml
   def index
     @accounts = Account.find(:all)
+    if @accounts.blank?
+      redirect_to new_account_url
+      return
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,14 +29,21 @@ class AccountsController < ApplicationController
     end
   end
 
-  # GET /accounts/new
-  # GET /accounts/new.xml
+  # The new account action has two different behaviours. It helps create accounts on an existing
+  # Hot Ink installation, but it also handles the Hot Ink installation wizard.
   def new
     @account = Account.new
+    
+    #Behave differently on first account creation 
+    if Account.find(:first)
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @account }
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @account }
+      end
+    else
+      @user = User.new
+      render :action=>"accounts/first_account/first_account_form", :layout=>'login'
     end
   end
 
@@ -41,20 +52,37 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
   end
 
-  # POST /accounts
-  # POST /accounts.xml
+  # Like #new, this action has variable effect depending on whether there are any existing accounts.
   def create
     @account = Account.new(params[:account])
-
-    respond_to do |format|
-      if @account.save
-        flash[:notice] = "Account created"
-        format.html { redirect_to(accounts_url) }
-        format.xml  { render :xml => @account, :status => :created, :location => @account }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+    
+    if Account.find(:first)
+        respond_to do |format|
+          if @account.save
+            flash[:notice] = "Account created"
+            format.html { redirect_to(accounts_url) }
+            format.xml  { render :xml => @account, :status => :created, :location => @account }
+          else
+            format.html { render :action => "new" }
+            format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+          end
+        end
+    else
+      @user = User.new(params[:user])
+      
+      begin        
+        ActiveRecord::Base.transaction do
+          @account.save!
+          @user.account = @account
+          @user.has_role "site admin"
+          @user.save!
+        end
+      rescue ActiveRecord::RecordInvalid => invalid
+        render :action=>"accounts/first_account/first_account_form", :layout=>'login'
+        return
       end
+      flash[:notice] = "Welcome to Hot Ink!"
+      redirect_to account_articles_url(@user.account)
     end
   end
 

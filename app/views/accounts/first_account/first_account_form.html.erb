@@ -1,0 +1,68 @@
+<div id="first_account_form">
+	<h1>Hey, Boss!</h1>
+	<p>Congratulations, looks like you're in charge of this installation of Hot Ink. 
+	<p> To get the ball rolling you'll need to create a username
+	and password for yourself and set up the root account.</p>
+	<br />
+	<%= error_messages_for 'account', 'user' %>
+	<% form_tag accounts_url do %>
+	<fieldset>
+		<legend>Site administrator</legend>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag "user[login]", "Login" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= text_field_tag "user[login]", @user.login, :class=>"text_input" %>
+			</div>
+		</div>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag "user[email]", "Email" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= text_field_tag "user[email]", @user.email, :class=>"text_input" %>
+			</div>
+		</div>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag "user[password]", "Password" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= password_field_tag "user[password]", nil, :class=>"text_input" %>
+			</div>
+		</div>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag "user[password_confirmation]", "Password confirmation" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= password_field_tag "user[password_confirmation]", nil, :class=>"on text_input" %>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>First account</legend>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag  "account[name]", "Account name" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= text_field_tag "account[name]", "root", :class=>"text_input" %>
+			</div>
+		</div>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+		    	<%= label_tag "account[time_zone]", "Time zone" %>
+			</div>
+			<div class="two_thirds_column right_column">
+		    	<%= time_zone_select "account", "time_zone", /Canada|Newfoundland|Saskatchewan/, :include_blank => true  %>
+			</div>
+		</div>
+	</fieldset>
+	
+	<%= button_link_to_submit "Start using Hot Ink", :class=>"save very_big_button"%>
+		
+	<% end %>
+
+</div>

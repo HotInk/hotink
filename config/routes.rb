@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   
   map.resource :user_session
-  map.root :controller => "user_sessions", :action => "new"
+  map.root :controller => "accounts", :action => "index"
   map.resources :users
   
   # No content exists in HotInk without belonging to an account, routing reflects this fact.

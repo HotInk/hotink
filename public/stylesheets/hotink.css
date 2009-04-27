@@ -3,6 +3,7 @@
 body { background-color: #F9F9F9; color: #333; margin: 0 auto; text-algin: center;}
 body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
 div#page_container { background-color: #FFF; margin: 0 auto; max-width: 69em; padding: 1em 1.5em; border-left: 1px solid #DDD; border-right: 1px solid #DDD;text-align: left; }
+#login_container { background-color: #515151; }
 pre { background-color: #eee; padding: 10px; font-size: 11px; }
 
 a { text-decoration:none; color: #000; }
