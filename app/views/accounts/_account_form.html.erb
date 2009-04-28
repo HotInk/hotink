@@ -6,6 +6,9 @@
 			<li class="selected">General</li>
 			<li>Access</li>
 			<li>Images</li>
+			<% if permit? "'site admin'" %>
+			<li>Accounts</li>
+			<% end %>
 		</ol>
 		<div id="general-window">
 		<% form_for(@account) do |f| %>
@@ -41,6 +44,9 @@
 		</div>
 		<div id="images-window" style="display:none">
 			<h2>Image settings</h2>
+		</div>
+		<div id="accounts-window" style="display:none">
+			<h2>Accounts</h2>
 		</div>
 	</div>
 	<script type="text/javascript" charset="utf-8">

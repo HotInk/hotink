@@ -22,7 +22,8 @@ class Account < ActiveRecord::Base
   
   accepts_nested_attributes_for :categories
   
-  #Implement acts_as_taggable_on
+  #Implement acts_as
+  acts_as_authorizable
   acts_as_tagger
 
   validates_presence_of :time_zone, :message => "Account must indicate its preferred time zone."

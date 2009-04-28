@@ -34,7 +34,7 @@ class AccountsController < ApplicationController
   def new
     @account = Account.new
     
-    #Behave differently on first account creation 
+    # General processing below, first account processing in "else" block.
     if Account.find(:first)
 
       respond_to do |format|
@@ -56,6 +56,7 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(params[:account])
     
+    # General processing below, first account processing in "else" block.
     if Account.find(:first)
         respond_to do |format|
           if @account.save
@@ -70,12 +71,14 @@ class AccountsController < ApplicationController
     else
       @user = User.new(params[:user])
       
+      # User and account must be created simultaneously, we do this in a transaction.
       begin        
         ActiveRecord::Base.transaction do
           @account.save!
           @user.account = @account
-          @user.has_role "site admin"
+          @user.has_role "admin"
           @user.save!
+          @account.accepts_role "manager", @user
         end
       rescue ActiveRecord::RecordInvalid => invalid
         render :action=>"accounts/first_account/first_account_form", :layout=>'login'
