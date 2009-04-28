@@ -26,7 +26,7 @@
 		</ol>
 	</div>
 	<div id="user_details"><p>Logged in as: <%= link_to current_user.login, edit_user_path(current_user), :class=>"weblink" %>  <%= button_link_to "Logout", user_session_url, :method=>:delete, :class=>"micro" %></p></div>
-	<div id="account_details"> <%= button_link_to "Edit account settings", edit_account_url(@account), :class=>"tiny" %> </div>
+	<div id="account_details"> <%= button_link_to_remote "Manage account", :url=>edit_account_url(@account, :format => :js ), :method=>:get, :class=>"tiny" %> </div>
 	<div id="flash"><%= render_flash(flash[:notice])%></div>
 </div>
 <div id="page_container" class="clearfix">

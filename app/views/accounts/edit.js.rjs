@@ -1,0 +1,4 @@
+page.assign "accounts_overlay", render(:partial => 'account_form')
+page << "if($('account')) $('account').remove();"
+page << "page_overlay.render( accounts_overlay );"
+
