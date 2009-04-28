@@ -46,10 +46,12 @@
 		<div id="images-window" style="display:none">
 			<h2>Image settings</h2>
 		</div>
+		<% if permit? "admin" %>
 		<div id="accounts-window" style="display:none">
 			<h2>Accounts</h2>
 			<%= render :partial => 'account_activations/new_activation_form' %>
 		</div>
+		<% end %>
 	</div>
 	<script type="text/javascript" charset="utf-8">
 		load_button_fix();
