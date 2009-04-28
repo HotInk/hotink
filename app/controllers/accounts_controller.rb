@@ -34,16 +34,15 @@ class AccountsController < ApplicationController
   def new
     @account = Account.new
     
-    # General processing below, first account processing in "else" block.
-    if Account.find(:first)
-
+    # First account processing below, general processing in "else" block.
+    if Account.all.blank?
+      @user = User.new
+      render :action=>"accounts/first_account/first_account_form", :layout=>'login'
+    else
       respond_to do |format|
         format.html # new.html.erb
         format.xml  { render :xml => @account }
       end
-    else
-      @user = User.new
-      render :action=>"accounts/first_account/first_account_form", :layout=>'login'
     end
   end
 
@@ -56,22 +55,13 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(params[:account])
     
-    # General processing below, first account processing in "else" block.
-    if Account.find(:first)
-        respond_to do |format|
-          if @account.save
-            flash[:notice] = "Account created"
-            format.html { redirect_to(accounts_url) }
-            format.xml  { render :xml => @account, :status => :created, :location => @account }
-          else
-            format.html { render :action => "new" }
-            format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
-          end
-        end
-    else
-      @user = User.new(params[:user])
-      
-      # User and account must be created simultaneously, we do this in a transaction.
+    # First account processing below, general processing in "else" block.
+    if Account.all.blank?     
+      @user = User.new(params[:user])  
+          
+      # An admin user and an account must both be created for the system to work.
+      # We do this in a transaction. Transactions only work if an error is both raised
+      # and caught before it stops the action from processing.
       begin        
         ActiveRecord::Base.transaction do
           @account.save!
@@ -86,7 +76,19 @@ class AccountsController < ApplicationController
       end
       flash[:notice] = "Welcome to Hot Ink!"
       redirect_to account_articles_url(@user.account)
+    else
+        respond_to do |format|
+            if @account.save
+                flash[:notice] = "Account created"
+                format.html { redirect_to(accounts_url) }
+                format.xml  { render :xml => @account, :status => :created, :location => @account }
+            else
+              format.html { render :action => "new" }
+              format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+            end
+        end
     end
+    
   end
 
   # PUT /accounts/1

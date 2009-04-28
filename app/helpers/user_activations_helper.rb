@@ -1,0 +1,2 @@
+module UserActivationsHelper
+end

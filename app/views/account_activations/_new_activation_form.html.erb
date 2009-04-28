@@ -1,0 +1,8 @@
+<p>To create a new account, enter the email address of the new account manager below.</p>
+<% form_remote_tag :url=>account_activations_url do %>	
+	<%= label_tag "account_activation[email]", "Email" %>
+	<%= text_field_tag "account_activation[email]", nil, :class=>"text_input" %>
+	<br />
+	<br />
+	<%= button_link_to_submit "Create account", :class=>"save large"%>
+<% end %>
