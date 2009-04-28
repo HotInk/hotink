@@ -16,3 +16,6 @@
 [submodule "vendor/plugins/authorization"]
 	path = vendor/plugins/authorization
 	url = git://github.com/DocSavage/rails-authorization-plugin.git
+[submodule "vendor/plugins/settingslogic"]
+	path = vendor/plugins/settingslogic
+	url = git://github.com/HotInk/settingslogic.git
