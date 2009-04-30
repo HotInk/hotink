@@ -30,13 +30,6 @@ class Account < ActiveRecord::Base
   validates_presence_of :name, :message => "Account must have a name"
   validates_uniqueness_of :name, :message => "Account name must be unique"
   
-  def settings
-    settings_from_db = read_attribute('settings')
-    if settings_from_db
-      YAML::load( read_attribute('settings'))
-    else
-      {}
-    end
-  end
+  serialize :settings
   
 end
