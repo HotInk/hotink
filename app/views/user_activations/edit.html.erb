@@ -1,0 +1,51 @@
+<div id="account_activation_form">
+	<h1>Hey compadre!</h1>
+	<p>Congratulations, you've been given access to the wonderful world of Hot Ink.</p> 
+	<p> To get the ball rolling you'll need to create a username
+	and password for yourself.</p>
+	<br />
+	<%= error_messages_for 'user' %>
+	<% form_tag user_activation_url(@user.perishable_token), :method => :put do %>
+	<fieldset>
+		<legend>Your details</legend>
+		<p>Don't worry, you can adjust all these after activation.</p>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag "user[login]", "Login" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= text_field_tag "user[login]", @user.login, :class=>"text_input" %>
+				<small>Your login is a short name used to identify yourself to the system</small>
+			</div>
+		</div>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag "user[email]", "Email" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= text_field_tag "user[email]", @user.email, :class=>"text_input" %>
+			</div>
+		</div>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag "user[password]", "Password" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= password_field_tag "user[password]", nil, :class=>"text_input" %>
+			</div>
+		</div>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag "user[password_confirmation]", "Password confirmation" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= password_field_tag "user[password_confirmation]", nil, :class=>"on text_input" %>
+				<small>Try to make your password as secure as possible. Remember, there's no reason to ever give out a Hot Ink password to anyone.</small>
+			</div>
+		</div>
+	</fieldset>	
+	<%= button_link_to_submit "Start using Hot Ink", :class=>"save very_big_button"%>
+		
+	<% end %>
+
+</div>

@@ -22,7 +22,6 @@ class AccountActivationsController < ApplicationController
    end 
 
     def edit
-      @account = @user.account  
       render :layout => 'login'
     end  
 
@@ -40,11 +39,11 @@ class AccountActivationsController < ApplicationController
         end
       rescue ActiveRecord::RecordInvalid => invalid
         render :action=>"edit", :layout=>'login'
-        return
+      else
+        @account.accepts_role "manager", @user
+        flash[:notice] = "Welcome to Hot Ink!"
+        redirect_to account_articles_url(@user.account)
       end
-      @account.accepts_role "manager", @user
-      flash[:notice] = "Welcome to Hot Ink!"
-      redirect_to account_articles_url(@user.account)
     end
 
     private  

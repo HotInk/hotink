@@ -3,10 +3,12 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => "accounts", :action => "index"
   
   map.resource :user_session
-  map.resources :account_activations
+  map.resources :user_activations
   map.resources :users
   
+  
   # No content exists in Hot Ink without belonging to an account, routing reflects this fact.
+  map.resources :account_activations
   map.resources :accounts do |account|
     account.resources :articles do |article|
       article.resources :authors

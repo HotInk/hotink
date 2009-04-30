@@ -1,37 +1,45 @@
 class UserActivationsController < ApplicationController
-  before_filter :require_no_user  
-  before_filter :load_user_using_perishable_token, :only => [:edit, :update]  
- 
+  
+  skip_before_filter :find_account
+  before_filter :load_user_using_perishable_token, :only => [:edit, :update]
+  
   def new  
     render  
   end  
 
-  def create  
-    @user = User.find_by_email(params[:email])  
+  def create
+    # params[account_id] comes from the form here, not the url as usual, 
+    # so we skip the filter and make it explicit  
+    @account = find_account 
+    @user = @account.users.create(params[:user_activation])  
     if @user  
-      @user.deliver_activation_instructions!  
-      flash[:notice] = "Instructions to reset your password have been emailed to you. " +  
-      "Please check your email."  
-      redirect_to root_url  
+      @user.deliver_user_activation_instructions!  
+      flash[:notice] = "New user added, activation instructions emailed"
+      respond_to do |format|
+        format.js
+      end
     else  
       flash[:notice] = "No user was found with that email address"  
-      render :action => :new  
+      redirect_to account_articles
     end  
   end 
    
    def edit  
-     render  
+     @account = @user.account # find_account filter is skipped for this controller 
+     render :layout => 'login' 
    end  
-
-   def update  
-     @user.password = params[:user][:password]  
-     @user.password_confirmation = params[:user][:password_confirmation]  
-     if @user.save  
-       flash[:notice] = "Password successfully updated"  
-       redirect_to account_url  
-     else  
-       render :action => :edit  
-     end  
+   
+   # This action simply catches invalid users and tosses them back to the form.
+   def update            
+     begin
+       @user.update_attributes!(params[:user])
+     rescue ActiveRecord::RecordInvalid => invalid
+        render :action=>"edit", :layout=>'login'
+     else
+       @user.account.accepts_role "staff", @user
+       flash[:notice] = "Welcome to Hot Ink!"
+       redirect_to account_articles_url(@user.account)
+     end
    end
    
    private  

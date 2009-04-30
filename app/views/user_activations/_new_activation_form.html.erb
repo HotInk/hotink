@@ -1,0 +1,9 @@
+<p>To add a user to your account just enter the new user's email address below.</p>
+<% form_remote_tag :url=>user_activations_url do %>	
+	<%= label_tag "user_activation[email]", "Email" %>
+	<%= text_field_tag "user_activation[email]", nil, :class=>"text_input" %>
+	<%= hidden_field_tag "account_id", @account.id %>
+	<br />
+	<br />
+	<%= button_link_to_submit "Add user", :class=>"save large"%>
+<% end %>

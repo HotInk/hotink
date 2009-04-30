@@ -32,16 +32,8 @@
 		</div>
 		<div id="access-window" style="display:none">
 			<h2>Access management</h2>
-			<%= button_link_to("Users", "#", :class=>"pill-l selected", :onclick=>"return false;") + button_link_to("Roles", "#", :class=>"pill-c", :onclick=>"return false;") + button_link_to("Permissions", "#", :class=>"pill-r", :onclick=>"return false;") %>
-			<div id="users-window">
-				<h2>Users</h2>
-			</div>
-			<div id="roles-window" style="display:none;">
-				<h2>Roles</h2>
-			</div>
-			<div id="permissions-window" style="display:none;">
-				<h2>Permissions</h2>
-			</div>
+			<%= render :partial => 'user_activations/new_activation_form' %>
+			
 		</div>
 		<div id="images-window" style="display:none">
 			<h2>Image settings</h2>
@@ -56,6 +48,5 @@
 	<script type="text/javascript" charset="utf-8">
 		load_button_fix();
 		$('account_settings').select('ol li').each( function(el){ new Tab( el, el.hasClassName('selected') ) });
-		$('access-window').select('a.btn').each( function(el){ new Tab( el, el.hasClassName('selected'), el.down().down().innerHTML.toLowerCase() + '-window' ) } )
 	</script>
 </div>
