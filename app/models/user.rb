@@ -24,6 +24,20 @@ class User < ActiveRecord::Base
     Circulation.deliver_account_activation_instructions(self)  
   end
   
+  # When users are invited to Hot Ink, they're saved with a random
+  # password, but emailed a single_access_token. They don't know the 
+  # password, so they have to "activate" in order to set their own.
+  # We call this pre-activation stage "inactive"
+  def save_as_inactive(validate = true)
+    reset_password
+    save(validate)
+  end
+  
+  def save_as_inactive!(validate = true)
+    reset_password
+    save!(validate)
+  end
+  
   private
   
   # This method takes care of making sure "blank" login fields still pass validation, without forcing users to select a login.
