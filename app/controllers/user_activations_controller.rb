@@ -11,8 +11,8 @@ class UserActivationsController < ApplicationController
     # params[account_id] comes from the form here, not the url as usual, 
     # so we skip the filter and make it explicit  
     @account = find_account 
-    @user = @account.users.create(params[:user_activation])  
-    if @user  
+    @user = @account.users.build(params[:user_activation])  
+    if @user.save_as_inactive  
       @user.deliver_user_activation_instructions!  
       flash[:notice] = "New user added, activation instructions emailed"
       respond_to do |format|

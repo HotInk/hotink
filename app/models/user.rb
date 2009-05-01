@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   
   acts_as_authentic do |c|
       c.crypto_provider = Authlogic::CryptoProviders::BCrypt # Stronger acd more scalable protection with BCrypt
+      c.ignore_blank_passwords = false # To catch activations, we want the system to complain if a user leaves the password/confirmation fields blank
   end
   acts_as_authorized_user
   acts_as_authorizable
@@ -24,10 +25,8 @@ class User < ActiveRecord::Base
     Circulation.deliver_account_activation_instructions(self)  
   end
   
-  # When users are invited to Hot Ink, they're saved with a random
-  # password, but emailed a single_access_token. They don't know the 
-  # password, so they have to "activate" in order to set their own.
-  # We call this pre-activation stage "inactive"
+  # When users are invited to Hot Ink, they're saved with a random password, but emailed a single_access_token. They don't know the 
+  # password, so they have to "activate" in order to set their own. We call users in this pre-activation stage "inactive."
   def save_as_inactive(validate = true)
     reset_password
     save(validate)

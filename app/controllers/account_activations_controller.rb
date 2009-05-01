@@ -8,8 +8,8 @@ class AccountActivationsController < ApplicationController
    end  
 
    def create  
-       @user = User.create(params[:account_activation])  
-       if @user
+       @user = User.new(params[:account_activation])  
+       if @user.save_as_inactive 
          @user.deliver_account_activation_instructions!  
          flash[:notice] = "New account created, activation instructions emailed"
          respond_to do |format|
