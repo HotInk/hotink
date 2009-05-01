@@ -20,7 +20,7 @@ class UserActivationsController < ApplicationController
       end
     else  
       flash[:notice] = "No user was found with that email address"  
-      redirect_to account_articles
+      redirect_to account_articles_url(@user.account)
     end  
   end 
    

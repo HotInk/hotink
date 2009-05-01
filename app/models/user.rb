@@ -42,7 +42,15 @@ class User < ActiveRecord::Base
   # This method takes care of making sure "blank" login fields still pass validation, without forcing users to select a login.
   # By default, logins are set to the part of the user's email address before the '@' symbol. Of course, users can also set logins to be anything they want.
   def set_empty_login_to_email_username
-       self.login = self.email.split('@').first if self.email && self.login.blank?
+    if self.email && self.login.blank?
+       email_username = self.email.split('@').first
+       temp_login, num = email_username, 1
+       while User.find_by_login(temp_login) do
+         temp_login = email_username + num.to_s
+         num = num + 1
+       end
+       self.login = temp_login
+    end
   end
   
   
