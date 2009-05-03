@@ -1,9 +1,15 @@
-<p>To add a user to your account just enter the new user's email address below.</p>
-<% form_remote_tag :url=>user_activations_url do %>	
-	<%= label_tag "user_activation[email]", "Email" %>
-	<%= text_field_tag "user_activation[email]", nil, :class=>"text_input" %>
-	<%= hidden_field_tag "account_id", @account.id %>
-	<br />
-	<br />
-	<%= button_link_to_submit "Add user", :class=>"save large"%>
+<% form_tag user_activations_url, :class => "activation_form" do %>	
+<fieldset>
+	<legend>Add user</legend>
+	<p>To add a new user to your account enter their <strong>email address</strong> below.</p>
+	<div class="column_holder clearfix">	
+		<div class="two_thirds_column">
+			<%= text_field_tag "user_activation[email]", nil, :class=>"text_input" %>
+		</div>
+		<div class="third_column">
+			<%= hidden_field_tag "account_id", @account.id %>
+			<%= button_link_to_submit "Add user", :class=>"save large"%>
+		</div>
+	</div>
+</fieldset>
 <% end %>

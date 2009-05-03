@@ -1,0 +1,17 @@
+<% form_remote_tag :url=>account_url(@account), :method => :put, :update => 'notice' do |f| %>
+<%= button_link_to_submit "Save changes", :class=>"save large" %>
+<h2>Image settings</h2>
+<div id="notice"> </div>
+	  <div>
+	    <%= f.label :name, "Account" %>
+		<%= f.text_field :name, :class =>"text_input account_name" %>
+	  </div>
+	  <div>
+		<%= f.label :formal_name, "Formal name" %>
+		<%= f.text_field :formal_name, :class =>"text_input formal_name" %>
+	  </div>
+	  <div>
+	    <%= f.label :time_zone, "Time zone" %>
+	    <%= f.time_zone_select :time_zone, /Canada|Newfoundland|Saskatchewan/, :include_blank => true, :class=>"big"  %>
+	  </div>
+<% end %>

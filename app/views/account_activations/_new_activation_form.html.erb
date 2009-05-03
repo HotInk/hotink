@@ -1,8 +1,13 @@
-<p>To create a new account, enter the email address of the new account manager below.</p>
-<% form_remote_tag :url=>account_activations_url do %>	
-	<%= label_tag "account_activation[email]", "Email" %>
-	<%= text_field_tag "account_activation[email]", nil, :class=>"text_input" %>
-	<br />
-	<br />
-	<%= button_link_to_submit "Create account", :class=>"save large"%>
+<% form_tag account_activations_url, :class=>"activation_form" do %>
+<fieldset>
+	<legend>New account</legend>
+	<p>To create a new account, enter the <strong>email address</strong> of the new account manager below.</p>
+	<div class="column_holder clearfix">	
+		<div class="two_thirds_column">
+			<%= text_field_tag "account_activation[email]", nil, :class=>"text_input" %>
+		</div>
+		<div class="third_column">
+			<%= button_link_to_submit "Create account", :class=>"save large"%>
+		</div>
+</fieldset>
 <% end %>

@@ -49,6 +49,9 @@ class AccountsController < ApplicationController
   # GET /accounts/1/edit
   def edit
     @account = Account.find(params[:id])
+    if permit? "admin", current_user 
+      @accounts = Account.find(:all)
+    end
   end
 
   # Like #new, this action has variable effect depending on whether there are any existing accounts.

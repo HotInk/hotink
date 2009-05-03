@@ -1,14 +1,13 @@
 body { background-color: #333333; color: #333; margin: 0 auto; text-algin: center;}
 div#page_container { background-color: #FFF; margin: 5% auto; max-width: 40em; padding: 1em 1.5em; border-left: 1px solid #DDD; border-right: 1px solid #DDD;text-align: left; }
 h1 { color: #ED1B8C; font-weight: normal; font-size: 3em; margin: 5px 0; font-family: georgia, "Times New Roman", times, serif;}
-p {font-size: 1.05em; line-height: 1.3;}
+p {font-size: 1.05em; line-height: 1.3; margin: 0.7em 0;}
 
-.text_input { font-size: 1.3em; padding: 0.2em; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
+.text_input { font-size: 1.3em; padding: 0.2em; margin-bottom: 0.125em; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
 .column_holder { margin-bottom: 1em; }
-.left_column { text-align: right; height: 1.4em;}
-.right_column { text-align: left; }
-label { font-size: 1.1em; color: #515151; padding: 0.5em 0; display: block;}
-
+.left_column { height: 1.4em;}
+label { font-size: 1em; color: #333; padding: 0.5em; margin: 0 0.125em; display: block;}
+small { line-height: 1.3;}
 fieldset { border: 1px solid #AAA; margin-bottom: 1em; padding-bottom: 0;}
 legend { color: #ED1B8C; font-size: 1.2em; font-weight: 600; }
 select { background: #F9F9F9; width: 95%; font-size: 1.2em; margin: 0.125em 0;padding: 0.125em 0em; height: 1.8em; color: #666; border: 1px solid #DEDEDE;	}	

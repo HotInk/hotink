@@ -7,6 +7,7 @@
 			<li class="selected">General</li>
 			<li>Access</li>
 			<li>Images</li>
+			<li>Categories</li>
 			<% if permit? "admin" %>
 			<li>Accounts</li>
 			<% end %>
@@ -25,25 +26,36 @@
 				<%= f.text_field :formal_name, :class =>"text_input formal_name" %>
 			  </div>
 			  <div>
-			    <%= f.label :time_zone, "Time zone" %>
+			    <%= f.label :time_zone, "Time zone" %><br />
 			    <%= f.time_zone_select :time_zone, /Canada|Newfoundland|Saskatchewan/, :include_blank => true  %>
 			  </div>
 			<% end %>	
 		</div>
-		<div id="access-window" style="display:none">
+
+		<div id="access-window"  class="index" style="display:none">
 			<h2>Access management</h2>
-			<%= render :partial => 'user_activations/new_activation_form' %>
-			
+			<ol id="users">
+				<%= render :partial=>'user', :collection => @account.users %>
+			</ol>
+			<%= render :partial => 'user_activations/new_activation_form' %>	
 		</div>
 		<div id="images-window" style="display:none">
 			<h2>Image settings</h2>
 		</div>
+		
+		<div id="categories-window" style="display:none;">
+			
+		</div>
 		<% if permit? "admin" %>
-		<div id="accounts-window" style="display:none">
+		<div id="accounts-window" class="index" style="display:none">
 			<h2>Accounts</h2>
+			<ol id="accounts" class="index">
+				<%= render @accounts %>
+			</ol>
 			<%= render :partial => 'account_activations/new_activation_form' %>
 		</div>
 		<% end %>
+		
 	</div>
 	<script type="text/javascript" charset="utf-8">
 		load_button_fix();
