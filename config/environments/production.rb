@@ -27,3 +27,6 @@ ActionMailer::Base.smtp_settings = {
   :address => 'mail.campusplus.com',
   :domain => "hotink.net"
 }
+
+#Tells the server where to find ImageMagick
+Paperclip.options[:command_path] = "/opt/local/bin"
