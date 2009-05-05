@@ -1,5 +1,6 @@
 <li id="account_<%= account.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
 	<div class="account clearfix">
-		<h1><%= account.name %></h1>
+		<h4><%= account.name %></h4>
+		<p class="managers"><%= h account.managers_list %></p>
 	</div>
 </li>
