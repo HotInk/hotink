@@ -32,4 +32,22 @@ class Account < ActiveRecord::Base
   
   serialize :settings
   
+  # Human readable list of account manager
+  def managers_list
+    managers = self.has_managers
+     case managers.length
+     when 0
+       return nil
+     when 1
+       return "#{managers.first.login} <#{managers.first.email}>"
+     when 2
+       return "#{managers.first.login} <#{managers.first.email}>" + " and " + "#{managers.second.login} <#{managers.second.email}>"
+     else
+      list = String.new
+      (0..(self.authors.count - 3)).each{ |i| list += managers[i].login + ", " }
+      list += "#{managers[managers.length-2].login} <#{managers[managers.length-2].email}>" + " and " + "#{managers[managers.length-1].login} <#{managers[managers.length-1].email}>" # last two authors get special formatting
+      return list
+    end         
+  end
+  
 end
