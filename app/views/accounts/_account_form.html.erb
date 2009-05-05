@@ -3,7 +3,7 @@
 	<h1>Account settings</h1>
 		
 	<div id="account_settings" class="tab_window clearfix">
-		<ol class="left">
+		<ol id="tablist" class="left">
 			<li class="selected">General</li>
 			<li>Users</li>
 			<li>Images</li>
@@ -35,7 +35,7 @@
 		<div id="users-window"  class="index" style="display:none">
 			<h2>Users</h2>
 			<ol id="users">
-				<%= render :partial=>'user', :collection => @account.has_staff %>
+				<%= render @account.has_staff %>
 			</ol>
 			<%= render :partial => 'user_activations/new_activation_form' %>	
 		</div>
@@ -60,6 +60,6 @@
 	</div>
 	<script type="text/javascript" charset="utf-8">
 		load_button_fix();
-		$('account_settings').select('ol li').each( function(el){ new Tab( el, el.hasClassName('selected') ) });
+		$('account_settings').select('ol#tablist li').each( function(el){ new Tab( el, el.hasClassName('selected') ) });
 	</script>
 </div>

@@ -483,7 +483,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account h4 { font-size: 1.05em; }
 #account select { background: none; margin: 0em 0.25em; width: auto; font-size: 1em; padding: 0.125em 0em; height: 1.8em; color: #666; border: 1px solid #DEDEDE;	}	
 #account label { font-size: 0.85em;}
-#account input[type="text"] { font-size: 1.4em; width: 82.5%; color:#999; padding: 0.125em 0.25em; }
+#account input[type="text"] { font-size: 1.1em; width: 82.5%; color:#333; padding: 0.125em 0.25em;  font-family: georgia, "Times New Roman", times, serif;}
 #account input.formal_name { width: 98%; font-family: georgia, "Times New Roman", times, serif; font-style: italic; }
 #account .close_button { margin:0;}
 #account .edit_account>div { margin-bottom: 1em;}
@@ -495,7 +495,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .activation_form .third_column { width: auto; margin-left: 0.7em;}
 #account .activation_form input[type="text"] { width: 98%; padding: 0.125em 1%;}
 
-#account .index ol { height: 18.3em; border: 1px solid #DDD; overflow:auto;}
+#account .index ol { height: 18.5em; border: 1px solid #DDD; overflow:auto;}
 #account .index ol li { border-top: none;} 
 #account .index ol li h4 { padding: 0.25em 0.4em; margin:0; border-bottom: 1px solid #DDD; }
 #account .index .account { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
@@ -504,3 +504,4 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .user p.email { font-weight: bolder; max-width: 60%;}
 #account .index .user p { font-size: 0.8em; margin-top: 0.7em; margin-bottom: 0.7em; display:inline-block; margin-left: 0.3em; vertical-align: top;}
 #account .index .user .admin { color:#ED1B8C;}
+#account .index .user button { float: none; margin: 0 0.25em; margin-top: 1%;}

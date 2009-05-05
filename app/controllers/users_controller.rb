@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   layout 'login'
   
+  permit "admin", :only => :deputize
+  permit "manager of account", :only => :promote
+  
   before_filter :require_user, :except=>[:new, :create]
   
   def new
@@ -32,6 +35,30 @@ class UsersController < ApplicationController
       redirect_to user_url(@user)
     else
       render :action => :edit
+    end
+  end
+  
+  def promote
+    @user = @account.users.find(params[:id])
+    if @user
+      @account.accepts_role 'manager', @user
+      render @user
+    end
+  end
+  
+  def demote
+    @user = @account.users.find(params[:id])
+    if @user
+      @account.accepts_no_role 'manager', @user
+      render @user
+    end
+  end
+    
+  def deptuize
+    @user = Users.find(params[:id])
+    if @user
+      @user.has_role 'admin'
+      render @user
     end
   end
   

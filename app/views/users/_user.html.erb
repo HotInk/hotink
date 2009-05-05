@@ -1,0 +1,26 @@
+<li id="user_<%= user.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
+	<div class="user clearfix">
+		
+		<p class="name"><%= user.name %></p>
+		<p class="email"><%= user.email %></p>
+	
+		<% if user.has_role? 'manager', @account %>
+			<p>Manager</p>
+		<% end %>
+				
+		<% if (permit? "manager of account") && !(user.has_role? 'manager', @account) %>
+			<%= button_link_to_remote "Promote", :url => promote_user_url(user, :account_id=>user.account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>		
+		<% end %>
+		<% if permit? "admin" %>
+			<% if user.has_role? 'manager', @account %>
+				<%= button_link_to_remote "Demote", :url => demote_user_url(user, :account_id=>user.account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>		
+			<% end %>
+			<%= button_link_to_remote "Deputize", :url => deputize_user_url(user, :account_id=>user.account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro', :style=>"color: #ED1B8C;"}, :confirm=>"Are you sure you want to make #{user.name} an account administrator? This can't be undone, once you approve they're also in charge.\n\nPress 'OK' to confirm this prestigious promotion." unless user.has_role? "admin" %>
+		<% end %>
+		
+		<% if user.has_role? "admin" %>
+			<p class="admin">Administrator</p>
+		<% end %>
+		
+	</div>
+</li>
