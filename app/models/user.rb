@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :account
+  serialize :preferences
+  
   
   acts_as_authentic do |c|
       c.crypto_provider = Authlogic::CryptoProviders::BCrypt # Stronger acd more scalable protection with BCrypt
@@ -10,6 +12,9 @@ class User < ActiveRecord::Base
   
   # Callbacks
   before_validation :set_empty_login_to_email_username
+  
+  # Validations
+  validates_presence_of :name
   
   def self.find_by_login_or_email(login)
     find_by_login(login) || find_by_email(login)

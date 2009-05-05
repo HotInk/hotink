@@ -9,7 +9,7 @@ class AccountActivationsController < ApplicationController
 
    def create  
        @user = User.new(params[:account_activation])  
-       if @user.save_as_inactive 
+       if @user.save_as_inactive(false)
          @user.deliver_account_activation_instructions!  
          flash[:notice] = "New account created, activation instructions emailed"
          respond_to do |format|
@@ -41,6 +41,7 @@ class AccountActivationsController < ApplicationController
         render :action=>"edit", :layout=>'login'
       else
         @account.accepts_role "manager", @user
+        @account.accepts_role "staff", @user
         flash[:notice] = "Welcome to Hot Ink!"
         redirect_to account_articles_url(@user.account)
       end

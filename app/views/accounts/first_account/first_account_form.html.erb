@@ -1,11 +1,11 @@
 <div id="first_account_form">
 	<h1>Hey, Boss!</h1>
-	<p>Congratulations, looks like you're in charge of this installation of Hot Ink. 
+	<p>Congratulations, looks like you're in charge of this installation of <strong>Hot Ink</strong>. 
 	<p> To get the ball rolling you'll need to create a username
 	and password for yourself and set up the root account.</p>
 	<br />
-	<%= error_messages_for 'account', 'user' %>
 	<% form_tag accounts_url do %>
+	<%= error_messages_for 'account', 'user' %>
 	<fieldset>
 		<legend>Site administrator</legend>
 		<div class="column_holder clearfix">
@@ -13,7 +13,17 @@
 				<%= label_tag "user[login]", "Login" %>
 			</div>
 			<div class="two_thirds_column right_column">
-				<%= text_field_tag "user[login]", @user.login, :class=>"text_input" %>
+				<%= text_field_tag "user[login]", @user.login.blank? ?  "admin" : @user.login, :class=>"text_input" %>
+				<small>Your login is a short name used to identify yourself to the system. It should contain only letters and numbers&mdash;no punctuation, please.</small>
+			</div>
+		</div>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag "user[name]", "Name" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= text_field_tag "user[name]", @user.name, :class=>"text_input" %>
+				<small>Your full name, first and last. Middle initial too, if you like.</small>
 			</div>
 		</div>
 		<div class="column_holder clearfix">
@@ -38,6 +48,7 @@
 			</div>
 			<div class="two_thirds_column right_column">
 				<%= password_field_tag "user[password_confirmation]", nil, :class=>"on text_input" %>
+				<small>Try to make your password as secure as possible. There's no reason to ever give out a Hot Ink password to anyone.</small>
 			</div>
 		</div>
 	</fieldset>

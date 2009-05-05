@@ -71,7 +71,8 @@ class AccountsController < ApplicationController
           @user.account = @account
           @user.has_role "admin"
           @user.save!
-          @account.accepts_role "manager", @user
+          @account.accepts_role "manager", @user # Gives admin control over account
+          @account.accepts_role "staff", @user # Makes user a staff member of the account
         end
       rescue ActiveRecord::RecordInvalid => invalid
         render :action=>"accounts/first_account/first_account_form", :layout=>'login'

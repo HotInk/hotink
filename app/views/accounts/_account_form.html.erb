@@ -5,11 +5,11 @@
 	<div id="account_settings" class="tab_window clearfix">
 		<ol class="left">
 			<li class="selected">General</li>
-			<li>Access</li>
+			<li>Users</li>
 			<li>Images</li>
 			<li>Categories</li>
 			<% if permit? "admin" %>
-			<li>Accounts</li>
+				<li>Accounts</li>
 			<% end %>
 		</ol>
 		<div id="general-window">
@@ -31,14 +31,15 @@
 			  </div>
 			<% end %>	
 		</div>
-
-		<div id="access-window"  class="index" style="display:none">
-			<h2>Access management</h2>
+		
+		<div id="users-window"  class="index" style="display:none">
+			<h2>Users</h2>
 			<ol id="users">
-				<%= render :partial=>'user', :collection => @account.users %>
+				<%= render :partial=>'user', :collection => @account.has_staff %>
 			</ol>
 			<%= render :partial => 'user_activations/new_activation_form' %>	
 		</div>
+		
 		<div id="images-window" style="display:none">
 			<h2>Image settings</h2>
 		</div>

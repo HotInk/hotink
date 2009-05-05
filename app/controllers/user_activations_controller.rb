@@ -12,7 +12,7 @@ class UserActivationsController < ApplicationController
     # so we skip the filter and make it explicit  
     @account = find_account 
     @user = @account.users.build(params[:user_activation])  
-    if @user.save_as_inactive  
+    if @user.save_as_inactive(false)  
       @user.deliver_user_activation_instructions!  
       flash[:notice] = "New user added, activation instructions emailed"
       respond_to do |format|
