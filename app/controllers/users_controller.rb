@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   layout 'login'
   
   permit "admin", :only => :deputize
-  permit "manager of account", :only => :promote, :demote
+  permit "manager of account", :only => [:promote, :demote]
   
   before_filter :require_user, :except=>[:new, :create]
   
