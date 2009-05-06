@@ -43,8 +43,8 @@ class UsersController < ApplicationController
     end
   end
     
-  def deptuize
-    @user = Users.find(params[:id])
+  def deputize
+    @user = User.find(params[:id])
     if @user
       @user.has_role 'admin'
       render @user

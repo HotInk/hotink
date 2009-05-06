@@ -501,7 +501,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .account { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
 #account .index .account p { padding: 0.5em 0.4em; margin: 0; min-height: 1.1em; }
 #account .index .user { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
-#account .index .user p.email { font-weight: bolder; max-width: 60%;}
+#account .index .user p.email { font-weight: bolder; width: 32%; overflow: hidden; }
+#account .index .user p.name { width: 20%;}
 #account .index .user p { font-size: 0.8em; margin: 0.7em 0.3em; display:inline-block; vertical-align: top;}
 #account .index .user .admin { color:#ED1B8C;}
 #account .index .user button { float: none; margin: 0 0.25em; position: relative; top: 0.45em; }
