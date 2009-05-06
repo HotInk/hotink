@@ -2,10 +2,10 @@ class AccountActivationsController < ApplicationController
   
    skip_before_filter :find_account #Since we're taling about creating accounts, there's no need to find the current one.
    before_filter :load_user_using_perishable_token, :only => [:edit, :update]
+   before_filter :check_user_qualifications, :only => [:edit, :update]
   
-   def new  
-     render  
-   end  
+   permit "admin", :only => :create
+  
 
    def create  
        @user = User.new(params[:account_activation])  
@@ -21,13 +21,14 @@ class AccountActivationsController < ApplicationController
        end  
    end 
 
-    def edit
+    def edit     
       render :layout => 'login'
     end  
 
     def update
+      
       @account = Account.new(params[:account])
-
+            
       # An manager and an account must both be created for the system to work.
       # We do this in a transaction. Transactions only work if an error is both raised
       # and caught before it stops the action from processing.
@@ -59,6 +60,11 @@ class AccountActivationsController < ApplicationController
         "process."  
         redirect_to root_url  
       end
+    end
+    
+    #Catch sneaky new existing-account users who want their own accounts.
+    def check_user_qualifications
+      redirect_to edit_user_activation_url(@user.perishable_token) and return if @user.account
     end
 
   

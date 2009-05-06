@@ -1,16 +1,12 @@
 class UserActivationsController < ApplicationController
   
-  skip_before_filter :find_account
+  skip_before_filter :find_account, :except => [:create]
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
+  before_filter :check_user_qualifications, :only => [:edit, :update]
   
-  def new  
-    render  
-  end  
-
-  def create
-    # params[account_id] comes from the form here, not the url as usual, 
-    # so we skip the filter and make it explicit  
-    @account = find_account 
+  permit "admin or manager of account", :only => :create
+  
+  def create 
     @user = @account.users.build(params[:user_activation])  
     if @user.save_as_inactive(false)  
       @user.deliver_user_activation_instructions!  
@@ -24,13 +20,12 @@ class UserActivationsController < ApplicationController
     end  
   end 
    
-   def edit  
+   def edit 
      @account = @user.account # find_account filter is skipped for this controller 
      render :layout => 'login' 
    end  
    
-   # This action simply catches invalid users and tosses them back to the form.
-   def update            
+   def update
      begin
        @user.update_attributes!(params[:user])
      rescue ActiveRecord::RecordInvalid => invalid
@@ -42,7 +37,7 @@ class UserActivationsController < ApplicationController
      end
    end
    
-   private  
+   private 
    
    def load_user_using_perishable_token  
      # Make user activation url valid for 1 full day.
@@ -54,6 +49,11 @@ class UserActivationsController < ApplicationController
        "process."  
        redirect_to root_url  
      end
+   end
+   
+   #Catch sneaky new-account-activation users who want access to this account.
+   def check_user_qualifications
+     redirect_to edit_account_activation_url(@user.perishable_token) and return unless @user.account
    end
    
 end

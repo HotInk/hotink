@@ -2,23 +2,12 @@ class UsersController < ApplicationController
   layout 'login'
   
   permit "admin", :only => :deputize
-  permit "manager of account", :only => :promote
+  permit "manager of account", :only => :promote, :demote
   
   before_filter :require_user, :except=>[:new, :create]
   
-  def new
-    @user = User.new
-  end
-
-  def create
-    @user = User.new(params[:user])
-    if @user.save
-      flash[:notice] = "User registered."
-      redirect_back_or_default user_url(@user)
-    else
-      render :action => :new
-    end
-  end
+  # Users are created via activations, so no "new" or "create" methods exist in this controller.
+  # This also helps thwart smart users who try parameter hacking.
 
   def show
     @user = @current_user

@@ -2,6 +2,10 @@ class User < ActiveRecord::Base
   belongs_to :account
   serialize :preferences
   
+  # A user's account is it's ticket to access during activation
+  # To prevent users from sneaking in a new account during activation, we protect it.
+  # After activation, it's not a big deal, since roles handle access.
+  attr_protected :account_id
   
   acts_as_authentic do |c|
       c.crypto_provider = Authlogic::CryptoProviders::BCrypt # Stronger acd more scalable protection with BCrypt
