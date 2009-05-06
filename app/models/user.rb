@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   acts_as_authorizable
   
   # Callbacks
-  before_validation :set_empty_login_to_email_username
+  before_create :set_empty_login_to_email_username
   
   # Validations
   validates_presence_of :name
@@ -33,11 +33,13 @@ class User < ActiveRecord::Base
   # When users are invited to Hot Ink, they're saved with a random password, but emailed a single_access_token. They don't know the 
   # password, so they have to "activate" in order to set their own. We call users in this pre-activation stage "inactive."
   def save_as_inactive(validate = true)
+    reset_single_access_token
     reset_password
     save(validate)
   end
   
   def save_as_inactive!(validate = true)
+    reset_single_access_token
     reset_password
     save!(validate)
   end
