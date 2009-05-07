@@ -495,6 +495,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 
 #account .account_settings h2 { margin-bottom: 1em;}
 
+#account #account_management_categories_form .column_holder { margin-bottom: 0em; margin-top: 0.25em; }
+
 #account .activation_form button{ margin-top: 5%; font-size:0.8em;}
 #account .activation_form .column_holder { margin-bottom: 0;}
 #account .activation_form legend { margin: 0; }
