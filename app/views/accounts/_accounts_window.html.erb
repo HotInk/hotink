@@ -1,6 +1,6 @@
 <h2>Accounts</h2>
 <ol id="accounts" class="index">
 	<%= render @accounts %>
-	<%= render :partial => 'accounts/account_activation', :collection => @account_activations %>
+	<%= render :partial => 'accounts/account_invitation', :collection => @account_activations %>
 </ol>
 <%= render :partial => 'account_activations/new_activation_form' %>

@@ -4,12 +4,13 @@ class UserActivationsController < ApplicationController
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
   before_filter :check_user_qualifications, :only => [:edit, :update]
   
-  permit "admin or manager of account", :only => :create
+  permit "admin or manager of account", :only => [:create, :destroy]
   
   def create 
     @user = @account.users.build(params[:user_activation])  
     if @user.save_as_inactive(false)  
-      @user.deliver_user_activation_instructions!  
+      @user.deliver_user_activation_instructions! 
+      @user_activations = User.find(:all, :conditions => "account_id=#{@account.id} AND created_at = updated_at") 
       flash[:notice] = "New user added, activation instructions emailed"
       render :partial => 'accounts/users_window'
     else  
@@ -34,6 +35,22 @@ class UserActivationsController < ApplicationController
        redirect_to account_articles_url(@user.account)
      end
    end
+   
+   # A no complaints ajax destroy function
+   def destroy
+     begin     
+       @user = User.find(params[:id])
+       @user.destroy
+       flash[:notice] = "Invitation revoked"
+     rescue
+       flash[:notice] = "Error: Invitation NOT revoked"
+     ensure
+       @account = find_account
+       @user_activations = User.find(:all, :conditions => "account_id=#{@account.id} AND created_at = updated_at") 
+       render :partial => 'accounts/users_window'
+     end
+   end
+   
    
    private 
    

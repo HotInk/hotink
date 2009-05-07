@@ -1,0 +1,7 @@
+<li id="user_<%= user_invitation.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
+	<div class="user clearfix">
+		<p class="email"><%= user_invitation.email %></p>
+		<p class="name">Invitation</p>
+		<p class="kill_link"><%= link_to_remote "x", :url=>user_activation_url(user_invitation, :account_id => @account), :method => :delete, :update=>"users-window", :after=>"$(self).up().up().up().addClassName('transparent');" %></p>
+	</div>
+</li>

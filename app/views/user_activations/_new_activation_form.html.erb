@@ -1,10 +1,10 @@
-<% form_remote_tag :url => user_activations_url, :after=>"$(this).disable();$(this).select('.spinner')[0].show();", :update=>'users-window', :html => { :class => "activation_form" } do %>	
+<% form_remote_tag :url => user_activations_url, :after=>"$(this).disable();$(this).select('.spinner')[0].show();", :update=>'users-window', :confirm => "You're about to give a new user access to your account.\n\nAre you sure you want to do this? Press 'OK' to send an invitation.", :html => { :class => "activation_form" } do %>	
 <fieldset>
 	<legend>Add user</legend>
 	<p>To add a new user to your account enter their <strong>email address</strong> below.</p>
 	<div class="column_holder clearfix">	
 		<div class="two_thirds_column">
-			<%= text_field_tag "user_activation[email]", nil, :class=>"text_input" %>
+			<%= text_field_tag "user_activation[email]", nil, :class=>"text_input", :id=>"new_user_email" %>
 		</div>
 		<div class="third_column">
 			<%= hidden_field_tag "account_id", @account.id %>

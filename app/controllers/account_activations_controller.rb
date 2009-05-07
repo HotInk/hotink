@@ -4,7 +4,7 @@ class AccountActivationsController < ApplicationController
    before_filter :load_user_using_perishable_token, :only => [:edit, :update]
    before_filter :check_user_qualifications, :only => [:edit, :update]
   
-   permit "admin", :only => :create
+   permit "admin", :only => [:create, :destroy]
   
 
    def create  
@@ -45,6 +45,21 @@ class AccountActivationsController < ApplicationController
         @account.accepts_role "staff", @user
         flash[:notice] = "Welcome to Hot Ink!"
         redirect_to account_articles_url(@user.account)
+      end
+    end
+
+    # A no complaints ajax destroy function
+    def destroy
+      begin     
+        @user = User.find(params[:id])
+        @user.destroy
+        flash[:notice] = "Invitation revoked"
+      rescue
+        flash[:notice] = "Error: Invitation NOT revoked"
+      ensure
+        @accounts = Account.find(:all)
+        @account_activations = User.find(:all, :conditions => { :account_id => nil })
+        render :partial => 'accounts/accounts_window'
       end
     end
 
