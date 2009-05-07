@@ -495,6 +495,13 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 
 #account .account_settings h2 { margin-bottom: 1em;}
 
+#account .index .section p { font-size: 0.8em; margin: 0.7em 0.3em; display:inline-block; vertical-align: top;}
+#account .index .section { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
+#account .index .section p.name { max-width: 30%;}
+#account .index .category p { font-size: 0.8em; margin: 0.7em 0.3em; display:inline-block; vertical-align: top;}
+#account .index .category { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
+#account .index .category p.name { max-width: 30%;}
+
 #account #account_management_categories_form .column_holder { margin-bottom: 0em; margin-top: 0.25em; }
 
 #account .activation_form button{ margin-top: 5%; font-size:0.8em;}
