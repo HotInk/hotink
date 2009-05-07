@@ -12,6 +12,7 @@ class AccountActivationsController < ApplicationController
        if @user.save_as_inactive(false)
          @user.deliver_account_activation_instructions!
          @accounts = Account.find(:all)
+         @account_activations = User.find(:all, :conditions => { :account_id => nil })
          flash[:notice] = "New account created, activation instructions emailed"
          render :partial => 'accounts/accounts_window'
        else  

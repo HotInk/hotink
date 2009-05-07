@@ -51,6 +51,7 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
     if permit? "admin", current_user 
       @accounts = Account.find(:all)
+      @account_activations = User.find(:all, :conditions => { :account_id => nil })
     end
   end
 
