@@ -351,10 +351,7 @@ div.small_top_button a { padding: 5px; }
 
 
 
-/* Issue form style */
-#issue_form {	width: 240px; padding: 10px; border: 2px solid #3399DE; }
-#issue_form_name_check { }
-#issue_name {	width: auto; }
+
 
 /* Sorting forms styles*/
 #account_article_sorting_list button.categories_edit_tab{margin-left:208px; }
@@ -525,3 +522,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .user button { float: none; margin: 0 0.25em; position: relative; top: 0.45em; }
 #account .index .user .kill_link { text-align: right; margin-right: 0.5em;}
 #account .index .user .kill_link a{ color: red;}
+
+/* Issue form style */
+#issue_form { }
+#issue_form_name_check { }
+#issue_name { }

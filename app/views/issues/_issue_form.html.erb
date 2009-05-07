@@ -2,31 +2,15 @@
 <div id="issue_form">
 <% form_for([@account, @issue]) do |f| %>
   <%= f.error_messages %>
-
-  <p>
-    <%= f.label :date %><br />
-    <%= f.date_select :date %>
-  </p>
-
-  <p>
-	<label for="issue_form_name_check">Special issue?</label>
-	<input 	id="issue_form_name_check" 
-			name="issue_form_name_check" 
-			type="checkbox" 
-			<%= 'checked="checked"' unless @issue.name.blank? %> 
-			onclick="$('issue_form_name_fields').toggle();">
-  </p>
-  <p id="issue_form_name_fields" style="display:none;">
-		<%= f.label :name, "Special issue name" %>
-	  	<%= f.text_field :name %>
-  </p>
-  <% unless @issue.name.empty? %>
+    	<%= f.label :date %>
+    	<%= f.date_select :date %>
+		<%= f.label :description, "Special issue name" %>
+	  	<%= f.text_field :description %>
+  <% unless @issue.description.blank? %>
 	<script type="text/javascript" charset="utf-8">
 		$('issue_form_name_fields').toggle();
 	</script>
   <% end %>
-  <p>
-    <%= f.submit @issue.new_record? ? "Create" : "Update" %>
-  </p>
+     <%= button_link_to_submit (@issue.new_record? ? "Create" : "Update"), :class => "save" %>
 <% end %>
 </div><!-- /issue_form -->

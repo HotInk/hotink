@@ -1,4 +1,7 @@
 class IssuesController < ApplicationController
+  
+  layout 'hotink'
+  
   # GET /issues
   # GET /issues.xml
   def index
