@@ -16,8 +16,10 @@ class AccountActivationsController < ApplicationController
        @user.account = nil # attr_protected keeps account_id safe from mass assignment
        @user.deliver_account_activation_instructions!
        flash[:account_activation_notice] = "Account invitation emailed"
+     
      rescue ArgumentError
        flash[:account_activation_notice] = "Sorry, can't work with that, it's not an email address"
+    
      rescue ActiveRecord::RecordNotFound => new_account_user # Catch brand new users, raised by User.find_by_email
        @user = User.new(params[:account_activation])  
        if @user.save_as_inactive(false)
@@ -26,6 +28,7 @@ class AccountActivationsController < ApplicationController
        else
          flash[:account_activation_notice] = "Error sending email"
        end
+    
      ensure
         @accounts = Account.find(:all)
         @account_activations = User.find(:all, :conditions => { :account_id => nil })
