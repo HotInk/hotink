@@ -7,16 +7,26 @@ class UserActivationsController < ApplicationController
   permit "admin or manager of account", :only => [:create, :destroy]
   
   def create 
-    @user = @account.users.build(params[:user_activation])  
-    if @user.save_as_inactive(false)  
-      @user.deliver_user_activation_instructions! 
+    begin
+      raise ArgumentError unless params[:user_activation] && params[:user_activation][:email] && params[:user_activation][:email].strip.match(/^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)$/i)
+      @user = User.find_by_email!(params[:user_activation][:email])
+      @account.accepts_role "staff", @user
+      flash[:user_activation_notice] = "#{@user.name} is officially a staff member."
+    rescue ArgumentError
+      flash[:user_activation_notice] = "Sorry, can't work with that, it's not an email address"  
+    rescue ActiveRecord::RecordNotFound => new_account_user # Catch brand new users, raised by User.find_by_email!
+      @user = User.new(params[:user_activation]) 
+      @user.account = @account # attr_protected means we must make this explicit 
+      if @user.save_as_inactive(false)
+        @user.deliver_user_activation_instructions!
+        flash[:user_activation_notice] = "Account invitation emailed"
+      else
+        flash[:user_activation_notice] = "Error sending email"
+      end
+    ensure
       @user_activations = User.find(:all, :conditions => "account_id=#{@account.id} AND created_at = updated_at") 
-      flash[:notice] = "New user added, activation instructions emailed"
       render :partial => 'accounts/users_window'
-    else  
-      flash[:notice] = "No user was found with that email address"  
-      redirect_to account_articles_url(@user.account)
-    end  
+    end
   end 
    
    def edit 

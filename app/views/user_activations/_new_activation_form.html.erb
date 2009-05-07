@@ -5,6 +5,7 @@
 	<div class="column_holder clearfix">	
 		<div class="two_thirds_column">
 			<%= text_field_tag "user_activation[email]", nil, :class=>"text_input", :id=>"new_user_email" %>
+			<small><%= flash[:user_activation_notice] %></small>
 		</div>
 		<div class="third_column">
 			<%= hidden_field_tag "account_id", @account.id %>
