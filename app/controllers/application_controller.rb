@@ -92,4 +92,8 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
   
+  def clear_flash
+    flash[:notice] = ""
+  end
+  
 end

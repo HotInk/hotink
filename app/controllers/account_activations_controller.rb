@@ -6,19 +6,31 @@ class AccountActivationsController < ApplicationController
   
    permit "admin", :only => [:create, :destroy]
   
-
-   def create  
+   
+   # The create function parses the user input to make sure it's a simple email address, then behaves in a number of different
+   # ways, depending on whether or not the user already exists or not.
+   def create
+     begin
+       raise ArgumentError unless params[:account_activation] && params[:account_activation][:email] && params[:account_activation][:email].strip.match(/^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)$/i)
+       @user = User.find_by_email!(params[:account_activation][:email])
+       @user.account = nil # attr_protected keeps account_id safe from mass assignment
+       @user.deliver_account_activation_instructions!
+       flash[:notice] = "Account invitation emailed"
+     rescue ArgumentError
+       flash[:notice] = "Sorry, can't work with that, it's not an email address"
+     rescue ActiveRecord::RecordNotFound => new_account_user # Catch brand new users, raised by User.find_by_email
        @user = User.new(params[:account_activation])  
        if @user.save_as_inactive(false)
          @user.deliver_account_activation_instructions!
-         @accounts = Account.find(:all)
-         @account_activations = User.find(:all, :conditions => { :account_id => nil })
-         flash[:notice] = "New account created, activation instructions emailed"
-         render :partial => 'accounts/accounts_window'
-       else  
-         flash[:notice] = "No user was found with that email address"  
-        render :action => :new  
-       end  
+         flash[:notice] = "Account invitation emailed"
+       else
+         flash[:notice] = "Error sending email"
+       end
+     ensure
+        @accounts = Account.find(:all)
+        @account_activations = User.find(:all, :conditions => { :account_id => nil })
+        render :partial => 'accounts/accounts_window' 
+     end  
    end 
 
     def edit     

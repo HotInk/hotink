@@ -1,5 +1,8 @@
 class AccountsController < ApplicationController
+  
   skip_before_filter :find_account
+  before_filter :clear_flash, :only => :edit
+  
   layout 'login', :only=>[:new, :create]
   layout 'hotink', :only=>:edit
   
@@ -49,7 +52,6 @@ class AccountsController < ApplicationController
   # GET /accounts/1/edit
   def edit
     @account = Account.find(params[:id])
-    
     # Invited users have an account id but have not been edited.
     @user_activations = User.find(:all, :conditions => "account_id=#{@account.id} AND created_at = updated_at")
     if permit? "admin", current_user 
@@ -129,4 +131,8 @@ class AccountsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
 end
+
+
+
