@@ -41,7 +41,7 @@ Overlay = Class.create({
 		objBody.appendChild(Builder.node('div',{id:'overlay'}));
 		
 		objBody.appendChild(Builder.node('div',{id:'overlaybox'}, [
-            Builder.node('div',{id:'overlay_container'}, [ Builder.node('div',{id:'overlay_content'}), Builder.node('div',{id:'loading'}, 
+            Builder.node('div',{id:'overlay_container'}, [ Builder.node('div',{id:'overlay_content', 'class':'clearfix'}), Builder.node('div',{id:'loading'}, 
                    Builder.node('a',{id:'loading_link', href: '#' }, 
                        Builder.node('img', {src: this.fileLoadingImage})
                    )

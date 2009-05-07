@@ -1,4 +1,4 @@
-<% form_remote_tag :url=>account_activations_url, :html=>{:class=>"activation_form"} do %>
+<% form_remote_tag :url=>account_activations_url, :after=>"$(this).disable();$(this).select('.spinner')[0].show();", :update=>'accounts-window', :html=>{:class=>"activation_form"} do %>
 <fieldset>
 	<legend>New account</legend>
 	<p>To create a new account, enter the <strong>email address</strong> of the new account manager below.</p>
@@ -7,7 +7,7 @@
 			<%= text_field_tag "account_activation[email]", nil, :class=>"text_input" %>
 		</div>
 		<div class="third_column">
-			<%= button_link_to_submit "Create account", :class=>"save large"%>
+			<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.5em;" class="spinner"/><%= button_link_to_submit "Create account", :class=>"save large"%>
 		</div>
 </fieldset>
 <% end %>

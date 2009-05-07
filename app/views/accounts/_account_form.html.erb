@@ -1,7 +1,5 @@
+<div class="small_top_button clearfix"><a href="#" class="close_window" onclick="page_overlay.end();return false;">&nbsp;</a></div>
 <div id="account" class="clearfix">
-	<p class="close_button"><a href="#" class="close_window" onclick="page_overlay.end();return false;">&nbsp;</a></p>
-	<h1>Account settings</h1>
-		
 	<div id="account_settings" class="tab_window clearfix">
 		<ol id="tablist" class="left">
 			<li class="selected">General</li>
@@ -12,32 +10,46 @@
 				<li>Accounts</li>
 			<% end %>
 		</ol>
-		<div id="general-window">
+		<div id="general-window" class="account_settings">
 		<% form_for(@account) do |f| %>
 		<%= button_link_to_submit @account.new_record? ? "Create your account" : "Save changes", :class=>"save large" %>
 			<h2>General settings</h2>
 	  		<%= f.error_messages %>
-			  <div>
-			    <%= f.label :name, "Account" %>
-				<%= f.text_field :name, :class =>"text_input account_name", :disabled => true %>
-			  </div>
-			  <div>
-				<%= f.label :formal_name, "Formal name" %>
-				<%= f.text_field :formal_name, :class =>"text_input formal_name" %>
-			  </div>
-			  <div>
-			    <%= f.label :time_zone, "Time zone" %>
-			    <%= f.time_zone_select :time_zone, /Canada|Newfoundland|Saskatchewan/, :include_blank => true  %>
-			  </div>
+			<fieldset>
+		  		<div class="column_holder clearfix">
+					<div class="quarter_column left_column">
+						<%= f.label :name, "Account" %>
+					</div>
+					<div class="two_thirds_column right_column">
+						<%= f.text_field :name, :class =>"text_input account_name", :disabled => true %>
+						<small>This is your account's name. You can't change it. You may need it for installing extensions or for API applications.</small>
+					</div>
+				</div>
+			  	<div class="column_holder clearfix">
+					<div class="quarter_column left_column">
+						<%= f.label :formal_name, "Formal name" %>
+					</div>
+					<div class="two_thirds_column right_column">
+						<%= f.text_field :formal_name, :class =>"text_input formal_name" %>
+						<small>This is what you'd like your publication to be called, what's in your nameplate (i.e. <cite>the Manitoban</cite> or <cite>Excalibur</cite> ).</small>
+					</div>
+				</div>
+			  	<div class="column_holder clearfix">
+					<div class="quarter_column left_column">
+					    <%= f.label :time_zone, "Time zone" %>
+					</div>
+					<div class="three_quarters_column right_column">
+					    <%= f.time_zone_select :time_zone, /Canada|Newfoundland|Saskatchewan/, :include_blank => true  %>
+						<small> </small>
+					</div>
+				</div>
+			</fieldset>
+			
 			<% end %>	
 		</div>
 		
 		<div id="users-window"  class="index" style="display:none">
-			<h2>Users</h2>
-			<ol id="users">
-				<%= render @account.has_staff %>
-			</ol>
-			<%= render :partial => 'user_activations/new_activation_form' %>	
+			<%= render :partial => "users_window" %>
 		</div>
 		
 		<div id="images-window" style="display:none">
@@ -49,11 +61,7 @@
 		</div>
 		<% if permit? "admin" %>
 		<div id="accounts-window" class="index" style="display:none">
-			<h2>Accounts</h2>
-			<ol id="accounts" class="index">
-				<%= render @accounts %>
-			</ol>
-			<%= render :partial => 'account_activations/new_activation_form' %>
+			<%= render :partial => 'accounts_window' %>
 		</div>
 		<% end %>
 		

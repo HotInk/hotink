@@ -10,11 +10,10 @@ class AccountActivationsController < ApplicationController
    def create  
        @user = User.new(params[:account_activation])  
        if @user.save_as_inactive(false)
-         @user.deliver_account_activation_instructions!  
+         @user.deliver_account_activation_instructions!
+         @accounts = Account.find(:all)
          flash[:notice] = "New account created, activation instructions emailed"
-         respond_to do |format|
-           format.js
-         end
+         render :partial => 'accounts/accounts_window'
        else  
          flash[:notice] = "No user was found with that email address"  
         render :action => :new  

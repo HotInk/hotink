@@ -1,4 +1,4 @@
-<% form_remote_tag :url => user_activations_url, :html => { :class => "activation_form" } do %>	
+<% form_remote_tag :url => user_activations_url, :after=>"$(this).disable();$(this).select('.spinner')[0].show();", :update=>'users-window', :html => { :class => "activation_form" } do %>	
 <fieldset>
 	<legend>Add user</legend>
 	<p>To add a new user to your account enter their <strong>email address</strong> below.</p>
@@ -8,7 +8,7 @@
 		</div>
 		<div class="third_column">
 			<%= hidden_field_tag "account_id", @account.id %>
-			<%= button_link_to_submit "Add user", :class=>"save large"%>
+			<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.5em;" class="spinner"/><%= button_link_to_submit "Add user", :class=>"save large"%>
 		</div>
 	</div>
 </fieldset>

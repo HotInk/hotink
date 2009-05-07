@@ -11,9 +11,7 @@ class UserActivationsController < ApplicationController
     if @user.save_as_inactive(false)  
       @user.deliver_user_activation_instructions!  
       flash[:notice] = "New user added, activation instructions emailed"
-      respond_to do |format|
-        format.js
-      end
+      render :partial => 'accounts/users_window'
     else  
       flash[:notice] = "No user was found with that email address"  
       redirect_to account_articles_url(@user.account)
