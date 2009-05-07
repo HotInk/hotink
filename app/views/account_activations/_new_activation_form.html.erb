@@ -5,7 +5,7 @@
 	<div class="column_holder clearfix">	
 		<div class="two_thirds_column">
 			<%= text_field_tag "account_activation[email]", nil, :class=>"text_input" %>
-			<small><%= flash[:notice] %></small>
+			<small><%= flash[:account_activation_notice] %></small>
 		</div>
 		<div class="third_column">
 			<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.5em;" class="spinner"/><%= button_link_to_submit "Create account", :class=>"save large"%>
