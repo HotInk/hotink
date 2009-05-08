@@ -1,16 +1,13 @@
-
-<div id="issue_form">
-<% form_for([@account, @issue]) do |f| %>
-  <%= f.error_messages %>
+<div id="issue">
+	<h1>New issue</h1>
+	<div id="issue_form">
+		<% form_for([@account, @issue]) do |f| %>
+  		<%= f.error_messages %>
     	<%= f.label :date %>
-    	<%= f.date_select :date %>
+    	<%= f.unobtrusive_date_text_picker :date, {:format => "M-D-Y"}, :size => "10" %>
 		<%= f.label :description, "Special issue name" %>
 	  	<%= f.text_field :description %>
-  <% unless @issue.description.blank? %>
-	<script type="text/javascript" charset="utf-8">
-		$('issue_form_name_fields').toggle();
-	</script>
-  <% end %>
-     <%= button_link_to_submit (@issue.new_record? ? "Create" : "Update"), :class => "save" %>
+     	<%= button_link_to_submit (@issue.new_record? ? "Create" : "Update"), :class => "save" %>
+	</div>
 <% end %>
 </div><!-- /issue_form -->

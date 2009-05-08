@@ -524,6 +524,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .user .kill_link a{ color: red;}
 
 /* Issue form style */
-#issue_form { }
-#issue_form_name_check { }
-#issue_name { }
+#issue h1 { float: left; min-width: 20%;font-family: georgia, "Times New Roman", times, serif; font-weight: normal; margin: 0.1em 0; }
+#issue #issue_form{ margin: 0.9em 0.5em; float: left; }
+
+
+

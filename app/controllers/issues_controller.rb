@@ -27,7 +27,7 @@ class IssuesController < ApplicationController
   # GET /issues/new
   # GET /issues/new.xml
   def new
-    @issue = Issue.new
+    @issue = Issue.new(:date => Time.now )
 
     respond_to do |format|
       format.html # new.html.erb
