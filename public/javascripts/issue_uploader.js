@@ -51,7 +51,7 @@ function uploadProgress(file, bytesLoaded) {
 		var progress = new FileProgress(file,  this.customSettings.upload_target);
 		progress.setProgress(percent);
 		if (percent === 100) {
-			progress.setStatus("Processing screen-quality PDF version. This will take a couple of minutes, please be patient.");
+			progress.setStatus("Processing screen-quality PDF version. This will take a couple of minutes.");
 			progress.toggleCancel(false, this);
 		} else {
 			progress.setStatus("Uploading...");
