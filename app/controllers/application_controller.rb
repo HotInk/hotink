@@ -4,7 +4,8 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   helper_method :current_user_session, :current_user
-
+  
+  before_filter :require_user
   before_filter :find_account
 
   # See ActionController::RequestForgeryProtection for details
