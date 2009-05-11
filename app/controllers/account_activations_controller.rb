@@ -1,6 +1,7 @@
 class AccountActivationsController < ApplicationController
   
    skip_before_filter :find_account #Since we're taling about creating accounts, there's no need to find the current one.
+   skip_before_filter :require_user, :only => [:edit, :update]
    before_filter :load_user_using_perishable_token, :only => [:edit, :update]
    before_filter :check_user_qualifications, :only => [:edit, :update]
   
