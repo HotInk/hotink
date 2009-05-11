@@ -1,8 +1,9 @@
 /* Main style */
-
+html, body {	height: 100%; }
 body { background-color: #FFF; color: #333; margin: 0 auto; text-algin: center;}
 body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
-div#page_container { background-color: #FFF; margin: 0; min-height: 51em; max-width: 74em; padding: 1em 1.5em; text-align: left; }
+div#page_container { background-color: #FFF; margin: 0; min-height: 100%; height: auto !important; height: 100%; max-width: 74em; padding: 1em 1.5em; text-align: left; padding-bottom: 0; margin-bottom: -30px; /* the bottom margin is the negative value of the footer's height */ }
+
 #login_container { background-color: #515151; }
 pre { background-color: #eee; padding: 10px; font-size: 11px; }
 
@@ -567,8 +568,6 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 /*		Issue styles
 /*---------------------------------------*/
 
-#footer { width: 99%; min-height: 2.4em; padding-right: 1%;background-color: #222; text-align: center; border-right: 1px solid #DDD;}
-
 /* progress bar styles */
 .progressWrapper {
 	float: left;
@@ -650,3 +649,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 	text-align: left;
 	white-space: nowrap;
 }
+
+#footer_push { height: 30px; /* #footer_push must be the same height as #footer */  }
+#footer { width: 99%; height: 30px; padding-right: 1%;background-color: #222; text-align: right; border-right: 1px solid #DDD;}
+#footer p { margin: 0.7em 0; float: right;}
