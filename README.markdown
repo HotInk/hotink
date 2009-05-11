@@ -14,7 +14,7 @@ allowing developers the freedom to focus on developing a customized view applica
 Volunteers interested in getting involved in the development of the system are encouraged to create a branch and begin working. After database config, this applciation 
 should work fine for testing and development purposes. 
 
-**KEEP IN MIND**: This project is still under development and NOT ready for general use. Hang in there, though. The first public release should be arriving **May 10th**.
+**KEEP IN MIND**: This project is still under development and NOT ready for general use. Hang in there, though. The first public release should be arriving **May <del>10th</del>20th**.
 
 ## HotInk Publisher
 
