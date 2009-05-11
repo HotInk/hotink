@@ -41,7 +41,7 @@
 					window.onload = function () {
 						swfu = new SWFUpload({
 							// Backend Settings
-							upload_url: "upload_pdf",
+							upload_url: "<%= account_issue_url(@account, @issue) + "/upload_pdf"%>",
 							post_params: {"authenticity_token": "<%= form_authenticity_token %>", "user_credentials" : "<%= current_user.single_access_token %>" },
 
 							// File Upload Settings
@@ -58,7 +58,6 @@
 							upload_progress_handler : uploadProgress,
 							upload_error_handler : uploadError,
 							upload_success_handler : uploadSuccess,
-							upload_complete_handler : uploadComplete,
 
 							// Button Settings
 							button_placeholder_id : "spanButtonPlaceholder",

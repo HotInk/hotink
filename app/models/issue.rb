@@ -6,7 +6,7 @@ class Issue < ActiveRecord::Base
 
   has_attached_file :pdf,
       :styles => {
-        :screen_quality => { :quality=>'screen', :processors => [:pdf_quality_filter]},
+        #:screen_quality => { :quality=>'screen', :processors => [:pdf_quality_filter]},
         #:system_cover_icon => [ "x20>", 'jpg' ],
         :system_cover_thumb => ["175>", 'jpg'],
         #:thumb_cover  => Proc.new { |instance| instance.settings["thumb"].to_s },
@@ -16,7 +16,7 @@ class Issue < ActiveRecord::Base
       #  :large_cover => Proc.new { |instance| instance.settings["large"].to_s }
       },
       :convert_options => {
-        :all => "-colorspace RGB -strip"
+        :all => "-colorspace RGB -depth 8 -strip"
       },
       :default_url => '/images/no_issue_cover_small.jpg',
       :default_style => :system_cover_thumb,

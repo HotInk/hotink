@@ -53,7 +53,7 @@ class AccountsController < ApplicationController
   def edit
     @account = Account.find(params[:id])
     # Invited users have an account id but have not been edited.
-    @user_activations = User.find(:all, :conditions => "account_id=#{@account.id} AND created_at = updated_at")
+    @user_activations = User.find(:all, :conditions => "account_id=#{@account.id} AND (name = '') OR (name=NULL)")
     if permit? "admin", current_user 
       @accounts = Account.find(:all)
       # Users invited to open an account have no account id

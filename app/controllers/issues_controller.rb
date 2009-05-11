@@ -58,6 +58,10 @@ class IssuesController < ApplicationController
   # GET /issues/1/edit
   def edit
     @issue = Issue.find(params[:id])
+    respond_to do |format|
+      format.html # edit.html.erb
+      format.js   # edit.js.rjs
+    end
   end
 
   # POST /issues
@@ -114,7 +118,11 @@ class IssuesController < ApplicationController
     @issue.swfupload_file = params[:Filedata]
     flash[:notice] = "PDF uploaded" if @issue.save
     respond_to do |format|
-        format.html { redirect_to edit_account_issue_url(@account, @issue) }  
+        format.html do # After an image upload, reload the page with javascript          
+          render :update do |page|
+              page.replace  'issue', :partial => 'issue_form'
+          end         
+        end
     end
   end
   

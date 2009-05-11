@@ -65,9 +65,9 @@ function uploadProgress(file, bytesLoaded) {
 function uploadSuccess(file, serverData) {
 	try {
 		var progress = new FileProgress(file,  this.customSettings.upload_target);
-		
+		progress.setStatus("Loading issue PDF...");	
 	} catch (ex) {
-		this.debug(ex);
+		alert("Error in Issues_handler/uploadSuccess!")
 	}
 }
 
@@ -79,7 +79,7 @@ function uploadComplete(file) {
 		} else {
 			var progress = new FileProgress(file,  this.customSettings.upload_target);
 			progress.setComplete();
-			progress.setStatus("PDF uploaded and processed.");
+			progress.setStatus("PDF processed and loaded.");
 			progress.toggleCancel(false);
 		}
 	} catch (ex) {
