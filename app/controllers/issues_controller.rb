@@ -1,5 +1,8 @@
 class IssuesController < ApplicationController
   
+  skip_before_filter :verify_authenticity_token
+  
+  
   layout 'hotink'
   
   # GET /issues
@@ -27,7 +30,24 @@ class IssuesController < ApplicationController
   # GET /issues/new
   # GET /issues/new.xml
   def new
-    @issue = Issue.new(:date => Time.now )
+    @issue = @account.issues.build(:date => Time.now )
+        
+    #Check to see if the last issue created is exists and is untouched.
+    #If so, redate it and serve it up instead of a new article, to prevent
+    #the data from becoming cluttered with abandoned articles.
+    #
+    #If the last article was legit, save the fresh article so it can have relationships 
+    if last_issue = @account.issues.find(:last)
+      if last_issue.created_at == last_issue.updated_at
+         @issue = last_issue
+         @issue.date = Time.now #Give it the current time, without saving.
+      else
+        @issue.save
+      end
+    else
+      @issue.save
+    end
+    
 
     respond_to do |format|
       format.html # new.html.erb
@@ -62,7 +82,7 @@ class IssuesController < ApplicationController
   # PUT /issues/1.xml
   def update
     @issue = @account.issues.find(params[:id])
-    @issue.account = @account
+    date= @issue.date
 
     respond_to do |format|
       if @issue.update_attributes(params[:issue])
@@ -70,6 +90,7 @@ class IssuesController < ApplicationController
         format.html { redirect_to([@account, @issue]) }
         format.xml  { head :ok }
       else
+        @issue.date = date
         format.html { render :action => "edit" }
         format.xml  { render :xml => @issue.errors, :status => :unprocessable_entity }
       end
@@ -87,4 +108,20 @@ class IssuesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def upload_pdf
+    @issue = @account.issues.find(params[:id])
+    @issue.swfupload_file = params[:Filedata]
+    flash[:notice] = "PDF uploaded" if @issue.save
+    respond_to do |format|
+        format.html { redirect_to edit_account_issue_url(@account, @issue) }  
+    end
+  end
+  
+  private
+  
+  def single_access_allowed?
+    action_name == 'upload_pdf'
+  end
+  
 end

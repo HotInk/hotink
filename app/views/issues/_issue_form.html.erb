@@ -1,13 +1,115 @@
-<div id="issue">
-	<h1>New issue</h1>
-	<div id="issue_form">
-		<% form_for([@account, @issue]) do |f| %>
-  		<%= f.error_messages %>
-    	<%= f.label :date %>
-    	<%= f.unobtrusive_date_text_picker :date, {:format => "M-D-Y"}, :size => "10" %>
-		<%= f.label :description, "Special issue name" %>
-	  	<%= f.text_field :description %>
-     	<%= button_link_to_submit (@issue.new_record? ? "Create" : "Update"), :class => "save" %>
+<div id="issue" class="form">
+	<% form_for([@account, @issue], :html=>{:multipart=>true}) do |f| %>
+	<div class="column_holder clearfix">
+		<div class="details">
+		    	<div class="column_holder clearfix">
+						<div class="half_column">
+							<h1><%= @issue.new_record? ? "New" : "Edit" %> issue </h1>
+						</div>
+						<div class="half_column">
+							<%= button_link_to_submit (@issue.new_record? ? "Create" : "Save"), :class => "save large" %>
+						</div>
+						
+						<%= f.error_messages %>
+						
+						<div class="half_column">
+							<%= f.label :date %> <%= f.unobtrusive_date_text_picker :date, {:format => "Y-M-D", :divider => '-' }, :size => "10" %>
+						</div>
+						<div class="half_column">
+							<%= f.label :volume, "Vol." %> <%= f.text_field :volume, :class=>"text_input" %> <%= f.label :number, "No." %> <%= f.text_field :number, :class=>"text_input" %>
+					     	
+						</div>
+						
+						<div class="full_column">
+							<%= f.label :name %><br />
+							<%= f.text_field :name, :class=>"text_input" %>
+							<small><strong>Optional</strong> – If this issue has a name, you can record it here (e.g. <cite>"Frosh Issue"</cite> or <cite>"Fall magazine"</cite>)</small>
+						</div>
+						<div class="full_column clearfix">
+							<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
+					    	<%= f.label :description, "Description" %><br />
+					    	<%= f.text_area :description %>
+					  	</div>
+				</div>	
+		</div>
+		<% end %>
+		<div class="cover">
+			<%= javascript_include_tag 'swfupload.js' %>
+			<%= javascript_include_tag 'issue_uploader.js' %>
+			<script type="text/javascript">
+					var swfu;
+					window.onload = function () {
+						swfu = new SWFUpload({
+							// Backend Settings
+							upload_url: "upload_pdf",
+							post_params: {"authenticity_token": "<%= form_authenticity_token %>", "user_credentials" : "<%= current_user.single_access_token %>" },
+
+							// File Upload Settings
+							file_size_limit : 0,	// We want them big
+							file_types : "*.pdf",
+							file_types_description : "PDF documents",
+							file_upload_limit : "0",
+
+							// Event Handler Settings - these functions as defined in Handlers.js
+							//  The handlers are not part of SWFUpload but are part of my website and control how
+							//  my website reacts to the SWFUpload events.
+							file_queue_error_handler : fileQueueError,
+							file_dialog_complete_handler : fileDialogComplete,
+							upload_progress_handler : uploadProgress,
+							upload_error_handler : uploadError,
+							upload_success_handler : uploadSuccess,
+							upload_complete_handler : uploadComplete,
+
+							// Button Settings
+							button_placeholder_id : "spanButtonPlaceholder",
+							button_width: <%= @issue.pdf_file_name ? 108 : 100  %>,
+							button_height: 25,
+							button_text : '<span class="upload_flash"><%= @issue.pdf_file_name ? "Replace PDF" : "Upload PDF"  %></span>',
+							button_text_style : '.upload_flash { font-family: Helvetica, Arial, sans-serif; font-size: 16pt; margin-top: 5px; }',
+							button_text_top_padding: 5,
+							button_text_left_padding: 5,
+							button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+							button_cursor: SWFUpload.CURSOR.HAND,
+
+							// Flash Settings
+							flash_url : "/swfupload.swf",
+
+							custom_settings : {
+								upload_target : "divFileProgressContainer"
+							},
+
+							// Debug Settings
+							debug: false
+						});
+					};
+				</script>
+			<div id="issue_pdf">
+				<div id="issue_pdf_upload" class="clearfix">
+					<div class="upload_button clearfix"> 
+							<span id="spanButtonPlaceholder"></span>
+					</div>
+					<p class="filename user"><%= @issue.pdf_file_name.nil? ? "No PDF currently in the archive." : @issue.pdf_file_name %></p>
+					<div id="divFileProgressContainer" class="clearfix"></div>
+				</div>
+			</div>
+			<% if @issue.pdf_file_name %>
+				<%= image_tag @issue.pdf.url(:system_default) %>
+			<% else %>
+				<%= image_tag 'no_issue_cover.jpg' %>
+			<% end %>
+		</div>
 	</div>
-<% end %>
 </div><!-- /issue_form -->
+<script type="text/javascript" charset="utf-8">
+	
+	// WMD Editor Configuration script
+    // Set this *before* you load wmd.js
+    wmd_options = {
+					output: "Markdown",
+					lineLength: 40,
+					buttons: "bold italic heading | link blockquote image | ol ul hr ",
+					autostart: true 
+				  };
+				
+</script>
+<%= javascript_include_tag 'wmd/wmd.js' %>

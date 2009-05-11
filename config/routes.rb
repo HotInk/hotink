@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
       mediafile.resources :authors
       mediafile.resources :tags
     end
-    account.resources :issues
+    account.resources :issues, :member=>{:upload_pdf => :post}
     account.resources :authors
     account.resources :sections
     account.resources :categories

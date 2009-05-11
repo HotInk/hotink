@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090505145225) do
+ActiveRecord::Schema.define(:version => 20090510173747) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -68,6 +68,10 @@ ActiveRecord::Schema.define(:version => 20090505145225) do
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "pdf_file_name"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
+    t.string   "name"
   end
 
   create_table "mediafiles", :force => true do |t|
@@ -82,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20090505145225) do
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
+    t.datetime "file_updated_at"
   end
 
   create_table "photocredits", :force => true do |t|

@@ -16,3 +16,6 @@
 [submodule "vendor/plugins/authorization"]
 	path = vendor/plugins/authorization
 	url = git://github.com/DocSavage/rails-authorization-plugin.git
+[submodule "vendor/plugins/validates_timeliness"]
+	path = vendor/plugins/validates_timeliness
+	url = git://github.com/adzap/validates_timeliness.git

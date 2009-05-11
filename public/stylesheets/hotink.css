@@ -2,7 +2,7 @@
 
 body { background-color: #FFF; color: #333; margin: 0 auto; text-algin: center;}
 body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
-div#page_container { background-color: #FFF; margin: 0; max-width: 69em; padding: 1em 1.5em; text-align: left; }
+div#page_container { background-color: #FFF; margin: 0; min-height: 51em; max-width: 74em; padding: 1em 1.5em; text-align: left; }
 #login_container { background-color: #515151; }
 pre { background-color: #eee; padding: 10px; font-size: 11px; }
 
@@ -38,10 +38,11 @@ html[xmlns] .clearfix{display:block;}
 .green { color: green; }
 
 .fieldWithErrors { padding: 2px; color: red; }
-#errorExplanation { width: 97%; border: 2px solid red; padding: 1%; padding-bottom: 1em; margin-bottom: 1.5em; background-color: #f0f0f0; }
+#errorExplanation { width: 97%; border: 2px solid red; padding: 1%; padding-bottom: 0.5em; margin-bottom: 1.5em; background-color: #f0f0f0; }
 #errorExplanation h2 { text-align: left; font-weight: bold; padding: 5px 5px 5px 15px; font-size: 12px; margin: -7px; background-color: #c00; color: #fff;}
 #errorExplanation p { color: #333; margin-bottom: 0; padding: 5px; }
-#errorExplanation ul li { font-size: 12px; list-style: square;}
+#errorExplanation ul { margin: 0; padding: 1%;}
+#errorExplanation ul li { font-size: 1em; margin-bottom: 0.2em; list-style-type:none;}
 
 /* faq styles */
 
@@ -111,7 +112,7 @@ dl.faq dt {font-weight: bold;}
 
 /* Navigation CSS */
 
-#navigation { width: 99%; min-height: 2.4em; padding-right: 1%;background-color: #333333; border-bottom: 1px solid #CEE4F3; text-align: center; border-right: 1px solid #DDD;}
+#navigation { width: 99%; min-height: 2.4em; padding-right: 1%;background-color: #222; border-bottom: 1px solid #CEE4F3; text-align: center; border-right: 1px solid #DDD;}
 #navigation div { display: inline-block; margin: 0.25em; margin-top: 0.3em; padding: 0.25em; }
 #navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; margin-left: 0.5em; }
 #navigation #links { float: left; padding: 0; margin: 0; margin-left: 3%; margin-top: 0.85em; }
@@ -224,7 +225,9 @@ div.small_top_button a { padding: 5px; }
 
 .form { }
 .form label { color: #515151; font-size:0.9em;}
-.form h1 { font-size: 2.5em;line-height: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
+.form fieldset { border: none; margin: 0; padding-left: 0;}
+.form legend { font-size: 1.3em; padding-bottom: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #999; }
+.form h1 { font-size: 2.5em;line-height: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #999; }
 .form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; color:#333;}
 .form div.field_element input { width: 100%; padding: 0.125em; background-color: #F9F9F9;}
 .form #buttons { float: right; margin: 10px 0px; text-align: right;}
@@ -232,7 +235,6 @@ div.small_top_button a { padding: 5px; }
 .form #top_links { margin-top: 2px; margin-bottom: 5px; }
 
 /* Mediafile form styles */
-
 #mediafile_form #media { width: 100%; border: 1px solid #DEDEDE; background-color: #FFF; color: #555; text-align: center; }
 #mediafile_form h2 { text-align: left; margin: 0.5em;}
 #mediafile_form #autocomplete_populate{ width: 415px;}
@@ -258,15 +260,19 @@ div.small_top_button a { padding: 5px; }
 /* Article form style */
 
 .note {	font-size: 11px; }
-.text_input { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; color: #555; }
+.text_input { background: none; font-size: 1em; padding: 0.1em; border: 1px solid #DEDEDE; background-color: #FDFDFD; color: #555; }
 .column_holder { float: none; }
 .third_column { float: left; width: 33%; }
 .quarter_column { float: left; width: 25%; }
 .half_column { float: left; width: 50%; margin: 5px 0px; }
 .two_thirds_column { float: left; width:66%; }
 .three_quarters_column { float: left; width: 75%;}
+.tenth_column { float: left; width: 10%;}
+.nine_tenths_column { float: left; width: 90%;}
+.full_column { float: left; width: 100%;}
 .left_column { text-align: right; }
 .right_column { text-align: left; }
+.padded>label, .padded>div { display: block; padding-top: 0.5em; padding-bottom: 0.5em; }
 
 #article_form {	width: 68%; float:left; }
 #mediafile_form { width: 68%; float: left;}
@@ -314,7 +320,7 @@ div.small_top_button a { padding: 5px; }
 #overlay_content #upload_media_container .title_bar h1 {  display:inline; margin: 0 0.25em;  margin-right: 0.5em; font-size: 2.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA;}
 #overlay_content #upload_media_tab {  border: 1px solid #AAA; padding: 5px; }
 #overlay_content #upload_media_container #upload_media_form {float: left;}
-#overlay_content #upload_media_form>div { margin: 40px 50px;}
+#overlay_content #upload_media_form>div { margin: 1em;}
 #overlay_content #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
 #overlay_content #upload_media_form p { font-size: 13px; }
 
@@ -523,9 +529,124 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .user .kill_link { text-align: right; margin-right: 0.5em;}
 #account .index .user .kill_link a{ color: red;}
 
-/* Issue form style */
-#issue h1 { float: left; min-width: 20%;font-family: georgia, "Times New Roman", times, serif; font-weight: normal; margin: 0.1em 0; }
-#issue #issue_form{ margin: 0.9em 0.5em; float: left; }
+/*-----------------------------------
+/*		Issue styles
+/*---------------------------------------*/
 
+#issues ol { list-style-type:none; margin:0; padding:0; border:none;}
+#issues ol li { background-color: #F9F9F9; display: inline-block; border:none; padding: 0.25em; margin:0.25em;}
+#issues ol li .cover {  }
+#issues ol li .cover img { border:1px solid #EDEDED;}
+#issues ol li .cover img:hover { border:1px solid #9cf;}
+#issues ol li .small_top_button { float: right;}
+#issues ol li .details { clear: left; width: 96%; margin: 0 2%;}
+#issues ol li .details h4 { font-size: 0.9em; color: #222; font-weight: normal; margin: 0.2em 0em; font-family: georgia, "Times New Roman", times, serif;}
 
+#issue h1 { margin: 0.2em 0;}
+#issue legend { padding-left: 2em;}
+#issue label { font-size: 1.2em; color: #333; }
+#issue .details { width:55%; margin-right: 2%;float: left;}
+#issue .cover { width:43%;float: right; }
+#issue .cover img { margin: 0em 1.5em; border:1px solid #AAA; }
+#issue .column_holder>div { margin-bottom: 1.5em; min-height: 2.5em;}
+#issue #issue_date { font-size: 1.6em; padding: 0.1em; font-family: georgia, "Times New Roman", times, serif;  color: #333;}
+#issue #issue_volume { width: 1.8em; font-size: 1.6em; font-family: georgia, "Times New Roman", times, serif; }
+#issue #issue_number { width: 1.8em; font-size: 1.6em; font-family: georgia, "Times New Roman", times, serif; }
+#issue #issue_name { font-size: 1.6em; width: 98%;}
+#issue #issue_description{ width:96.5%; height: 6em; padding: 0.5em; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
+#issue button.save { float: right; font-size: 1.3em; margin: 0.2em 0;}
+#issue #issue_pdf {  width: 94.5%; background-color: #FFF6DD; float: left; border:1px solid #AAA; margin: 0em 1.5em; margin-bottom: 1em; }
+#issue #issue_pdf_upload { margin: 0 1em; }
+#issue #issue_pdf_upload p.filename { margin: 1em 0.8em; float: right; }
+#issue .upload_button { height: 28px; display: block; float: left; margin-top: 0.5em; background:#ddd url('/images/bg-button.gif') repeat-x 0 0; border:1px solid #AAA; }
+#issue .upload_button:hover { cursor:pointer; border-color:#9cf !important; color:#000; }
+#issue .upload_button:active { background-position:0 -400px; outline:none; }
+#issue #issue_pdf_upload #divFileProgressContainer { float: left; width: 94.5%; font-size: 0.9em;}
 
+/*-----------------------------------
+/*		Issue styles
+/*---------------------------------------*/
+
+#footer { width: 99%; min-height: 2.4em; padding-right: 1%;background-color: #222; text-align: center; border-right: 1px solid #DDD;}
+
+/* progress bar styles */
+.progressWrapper {
+	float: left;
+	width: 357px;
+	overflow: hidden;
+}
+
+.progressContainer {
+	margin: 5px;
+	padding: 4px;
+	border: solid 1px #E8E8E8;
+	background-color: #F7F7F7;
+	overflow: hidden;
+}
+/* Message */
+.message {
+	margin: 1em 0;
+	padding: 10px 20px;
+	border: solid 1px #FFDD99;
+	background-color: #FFFFCC;
+	overflow: hidden;
+}
+/* Error */
+.red {
+	border: solid 1px #B50000;
+	background-color: #FFEBEB;
+}
+
+/* Current */
+.green {
+	border: solid 1px #DDF0DD;
+	background-color: #EBFFEB;
+}
+
+/* Complete */
+.blue {
+	border: solid 1px #CEE2F2;
+	background-color: #F0F5FF;
+}
+
+.progressName {
+	font-size: 8pt;
+	font-weight: 700;
+	color: #555;
+	width: 323px;
+	height: 14px;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+	font-size: 0;
+	width: 0%;
+	height: 2px;
+	background-color: blue;
+	margin-top: 2px;
+}
+
+.progressBarComplete {
+	width: 100%;
+	background-color: green;
+	visibility: hidden;
+}
+
+.progressBarError {
+	width: 100%;
+	background-color: red;
+	visibility: hidden;
+}
+
+.progressBarStatus {
+	margin-top: 2px;
+	width: 337px;
+	font-size: 7pt;
+	font-family: Arial;
+	text-align: left;
+	white-space: nowrap;
+}
