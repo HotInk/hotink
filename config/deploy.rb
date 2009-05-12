@@ -75,6 +75,7 @@ end
 namespace :deploy do
   desc "Restarting Passenger with restart.txt"
   task :restart, :roles => :app, :except => { :no_release => true } do
+    restart_sphinx
     run "touch #{current_path}/tmp/restart.txt"
   end
   
@@ -87,10 +88,37 @@ end
 namespace :passenger do  
    desc "Restart Application"  
    task :restart do  
-     run "touch #{current_path}/tmp/restart.txt"  
+     run "touch #{current_path}/tmp/restart.txt"
    end  
 end  
    
 after :deploy, "passenger:restart"
 
+#############################
+# Thinking Sphinx recipes
+
+desc "Re-establish symlinks"
+task :after_symlink do
+  run <<-CMD
+    rm -fr #{release_path}/db/sphinx &&
+    ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx
+  CMD
+end
+
+desc "Stop the sphinx server"
+task :stop_sphinx , :roles => :app do
+  run "cd #{current_path} && rake thinking_sphinx:stop RAILS_ENV=production"
+end
+
+
+desc "Start the sphinx server"
+task :start_sphinx, :roles => :app do
+  run "cd #{current_path} && rake thinking_sphinx:configure RAILS_ENV=production && rake thinking_sphinx:start RAILS_ENV=production"
+end
+
+desc "Restart the sphinx server"
+task :restart_sphinx, :roles => :app do
+  stop_sphinx
+  start_sphinx
+end
 
