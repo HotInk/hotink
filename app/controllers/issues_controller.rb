@@ -58,6 +58,7 @@ class IssuesController < ApplicationController
   # GET /issues/1/edit
   def edit
     @issue = Issue.find(params[:id])
+ 
     respond_to do |format|
       format.html # edit.html.erb
       format.js   # edit.js.rjs
@@ -91,7 +92,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       if @issue.update_attributes(params[:issue])
         flash[:notice] = 'Issue was successfully updated.'
-        format.html { redirect_to([@account, @issue]) }
+        format.html { redirect_to account_issues_url(@account) }
         format.xml  { head :ok }
       else
         @issue.date = date

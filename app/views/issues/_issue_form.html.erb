@@ -16,7 +16,7 @@
 							<%= f.label :date %> <%= f.unobtrusive_date_text_picker :date, {:format => "Y-M-D", :divider => '-' }, :size => "10" %>
 						</div>
 						<div class="half_column">
-							<%= f.label :volume, "Vol." %> <%= f.text_field :volume, :class=>"text_input" %> <%= f.label :number, "No." %> <%= f.text_field :number, :class=>"text_input" %>
+							<%= f.label :volume, "Vol." %> <%= text_field_tag 'issue[volume]', @issue.volume, :class=>"text_input" %> <%= f.label :number, "No." %> <%= text_field_tag 'issue[number]', @issue.number, :class=>"text_input" %>
 					     	
 						</div>
 						
