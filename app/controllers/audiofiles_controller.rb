@@ -62,7 +62,7 @@ class AudiofilesController < ApplicationController
     respond_to do |format|
       if @audiofile.update_attributes(params[:audiofile])
         flash[:notice] = 'Audiofile was successfully updated.'
-        format.html { redirect_to(@audiofile) }
+        format.html { redirect_to account_mediafiles_url(@account) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

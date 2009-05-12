@@ -48,6 +48,7 @@ class Issue < ActiveRecord::Base
   def volume
     if self.read_attribute('volume').nil?
         issues = self.account.issues
+        issues.delete(self)
         if issues[-2]
           return issues[-2].volume || 1
         else
@@ -61,6 +62,7 @@ class Issue < ActiveRecord::Base
   def number
     if self.read_attribute('number').nil?
       issues = self.account.issues
+      issues.delete(self)
       if issues[-2] && issues[-2].number
         return issues[-2].number + 1 
       else
