@@ -25,11 +25,8 @@ class AccountsController < ApplicationController
   # GET /accounts/1
   # GET /accounts/1.xml
   def show
-    @account = Account.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @account }
+      format.html { redirect_to account_articles_url(current_user.account )}
     end
   end
 
@@ -43,9 +40,9 @@ class AccountsController < ApplicationController
       @user = User.new
       render :action=>"accounts/first_account/first_account_form", :layout=>'login'
     else
+      #This action isn't used to create accounts, so we forward the curious away.
       respond_to do |format|
-        format.html # new.html.erb
-        format.xml  { render :xml => @account }
+        format.html { redirect_to account_articles_url(current_user.account )}
       end
     end
   end
@@ -59,6 +56,11 @@ class AccountsController < ApplicationController
       @accounts = Account.find(:all)
       # Users invited to open an account have no account id
       @account_activations = User.find(:all, :conditions => { :account_id => nil })
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to account_articles_url(current_user.account) }
+      format.js
     end
   end
 
