@@ -50,7 +50,7 @@ class IssuesController < ApplicationController
     
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { redirect_to edit_account_issue_url(@account, @issue ) }
       format.xml  { render :xml => @issue }
     end
   end
