@@ -20,7 +20,7 @@
 			</p>
 			 <div id="new_account_category" style="display:none;">&nbsp;</div>
 		</div>
-		<% remote_form_for (@account, :after=>"$(this).up().setStyle({opacity:0.5})", :complete => "new Ajax.Request('#{account_article_sortings_url(@account, @article, :format=>:js)}', {method:'get'});", :html=>{:style=>"display:none;", :id=>"account_categories_edit_form"}) do |f| %>
+		<% remote_form_for(@account, :after=>"$(this).up().setStyle({opacity:0.5})", :complete => "new Ajax.Request('#{account_article_sortings_url(@account, @article, :format=>:js)}', {method:'get'});", :html=>{:style=>"display:none;", :id=>"account_categories_edit_form"}) do |f| %>
 		<% end %>
 	<% else %>
 		<p id="new_account_category">
