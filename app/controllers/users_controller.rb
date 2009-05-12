@@ -3,25 +3,30 @@ class UsersController < ApplicationController
   
   permit "admin", :only => :deputize
   permit "manager of account", :only => [:promote, :demote]
-  
-  before_filter :require_user, :except=>[:new, :create]
-  
+    
   # Users are created via activations, so no "new" or "create" methods exist in this controller.
-  # This also helps thwart smart users who try parameter hacking.
+  # This also helps thwart smart users who try parameter hacking to create their own user.
 
   def show
-    @user = @current_user
+    @user = current_user
   end
 
   def edit
-    @user = @current_user
+    @user = current_user
+    respond_to do |format|  
+      format.html 
+      format.js
+    end
   end
 
   def update
-    @user = @current_user # makes our views "cleaner" and more consistent
+    @user = current_user # makes our views "cleaner" and more consistent
     if @user.update_attributes(params[:user])
       flash[:notice] = "User updated."
-      redirect_to user_url(@user)
+      respond_to do |format|  
+        format.html { redirect_to user_url(@user) }
+        format.js   { head :ok }
+      end
     else
       render :action => :edit
     end

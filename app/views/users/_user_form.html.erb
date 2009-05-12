@@ -1,0 +1,16 @@
+<div class="small_top_button clearfix"><a href="#" class="close_window" onclick="page_overlay.end();return false;">&nbsp;</a></div>
+<div id="user" class="clearfix">
+	<% remote_form_for @user, :url=>user_url(@user) , :method => :put, :success =>"location.reload(true)" do |f| %>
+	<h1>Edit your personal details</h1> <%= button_link_to_submit "Save", :onclick => "$(this).next().show();", :class=>"save large" %><img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.3em;" class="spinner"/>
+	  <%= f.error_messages %>
+	  <div class="column_holder">
+		<div class="quarter_column left_column"><%= f.label :login %></div>
+		<div class="three_quarters_column right_column"><%= f.text_field :login, :class=>"text_input" %></div>
+
+		<div class="quarter_column left_column"><%= f.label :email %></div>
+		<div class="three_quarters_column right_column"><%= f.text_field :email, :class=>"text_input" %></div>
+		<div class="quarter_column left_column"><%= f.label :name %></div>
+		<div class="three_quarters_column right_column"><%= f.text_field :name, :class=>"text_input" %></div>
+	</div>
+	<% end %>
+</div>

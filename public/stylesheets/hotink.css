@@ -593,8 +593,16 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 /*		User details form styles
 /*---------------------------------------*/
 
+#overlay_content #user{ width: 35em; margin: 0.5em; margin-right: 1em; float: left;}
 #user .column_holder>div { margin-bottom: 1.5em; }
+#user label {margin-right: 0.5em;}
 #user button.save { float: right; }
+#user .text_input { font-size: 1.3em; padding: 0.2em; margin-bottom: 0.125em; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
+#user legend { font-size: 1.4em; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
+#user select { background: none; margin: 0; width: 100%; font-size: 1.2em; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.8em; color: #333; border: 1px solid #DEDEDE;	}	
+#user label { font-size: 1em; color: #333; padding: 0.5em; margin: 0 0.125em; display: block;}
+#user h1 {  float: left; width: 75%; font-size: 1.75em; margin: 0 0.25em; margin-bottom: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
+#user p { font-size: 0.9em; }
 
 /*-----------------------------------
 /*		Footer styles

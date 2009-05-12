@@ -1,11 +1,1 @@
-<div id="user">
-
-	<h1>Edit your personal details</h1>
- 
-	<% form_for @user, :url => account_path do |f| %>
-	  <%= f.error_messages %>
-	  <%= render :partial => "form", :object => f %>
-	<% end %>
-
-
-</div>
+<%= render :partial => 'user_form' %>
