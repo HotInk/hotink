@@ -30,7 +30,6 @@ class IssuesController < ApplicationController
   # GET /issues/new
   # GET /issues/new.xml
   def new
-    last_issue = @account.issues.last # Grab last issue before we build
     @issue = @account.issues.build(:date => Time.now )
         
     #Check to see if the last issue created is exists and is untouched.
@@ -38,7 +37,7 @@ class IssuesController < ApplicationController
     #the data from becoming cluttered with abandoned articles.
     #
     #If the last article was legit, save the fresh article so it can have relationships 
-    if last_issue
+    if last_issue = @account.issues.find(:last)
       if last_issue.created_at == last_issue.updated_at
          @issue = last_issue
          @issue.date = Time.now #Give it the current time, without saving.
