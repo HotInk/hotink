@@ -85,12 +85,17 @@
 				</script>
 			<div id="issue_pdf">
 				<div id="issue_pdf_upload" class="clearfix">
-					<div class="upload_button clearfix"> 
+						<% if @issue.pdf_file_name.nil? %>
+							<p class="file user">No PDF currently in the archive.</p>
+						<% else %>
+							<p class="file user"><big><%= link_to @issue.pdf_file_name, @issue.pdf.url(:original), :class => :weblink, :confirm => "This file is #{number_to_human_size @issue.pdf_file_size}. Are you sure you want to download it?\n\nPress 'OK' to continue." %></big></p><p class="file user"><big><%= number_to_human_size @issue.pdf_file_size %></big></p><p class="file user"><%= link_to "View screen-quality pdf (#{number_to_human_size File.size( @issue.pdf.path(:screen_quality) )})", @issue.pdf.url(:screen_quality), :class => :weblink %></p>
+						<% end %>
+						<div class="upload_button clearfix"> 
 							<span id="spanButtonPlaceholder"></span>
-					</div>
-					<p class="filename user"><%= @issue.pdf_file_name.nil? ? "No PDF currently in the archive." : @issue.pdf_file_name %></p>
-					<div id="divFileProgressContainer" class="clearfix"></div>
+						</div>
+						<div id="divFileProgressContainer" class="clearfix"></div>
 				</div>
+
 			</div>
 			<% if @issue.pdf_file_name %>
 				<%= image_tag @issue.pdf.url(:system_default) %>

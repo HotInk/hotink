@@ -558,8 +558,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #issue button.save { float: right; font-size: 1.3em; margin: 0.2em 0;}
 #issue #issue_pdf {  width: 94.5%; background-color: #FFF6DD; float: left; border:1px solid #AAA; margin: 0em 1.5em; margin-bottom: 1em; }
 #issue #issue_pdf_upload { margin: 0 1em; }
-#issue #issue_pdf_upload p.filename { margin: 1em 0.8em; float: right; }
-#issue .upload_button { height: 28px; display: block; float: left; margin-top: 0.5em; background:#ddd url('/images/bg-button.gif') repeat-x 0 0; border:1px solid #AAA; }
+#issue #issue_pdf_upload p.file { margin: 0 0.8em; margin-top: 0.5em; min-width: 60%; float: right; text-align: right; }
+#issue .upload_button { height: 28px; display: block; float: left; margin-top: 0.5em; margin-bottom: 0.5em; background:#ddd url('/images/bg-button.gif') repeat-x 0 0; border:1px solid #AAA; }
 #issue .upload_button:hover { cursor:pointer; border-color:#9cf !important; color:#000; }
 #issue .upload_button:active { background-position:0 -400px; outline:none; }
 #issue #issue_pdf_upload #divFileProgressContainer { float: left; width: 100%; font-size: 0.9em;}
