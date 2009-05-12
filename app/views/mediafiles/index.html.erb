@@ -34,9 +34,6 @@
 	//Load each article <li> as a Card and check to see if any checkboxes are pre-checked and need to be pre-selected 
 	$('mediafiles').select('ol#mediafiles_list>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });
 	
-	//Initialize Overlay
-	var page_overlay = new Overlay ();
-	
 	// Activate table header checkboxes select_all functionality
 	$$('.select_all').each(	function(element) { 
 			Event.observe(element, 'click', function( event ) { 

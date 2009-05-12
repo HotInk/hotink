@@ -92,9 +92,7 @@
 	//Load toolbox functionality
 	$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
 	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
-	//Initialize Overlay
-	var page_overlay = new Overlay ();
-	
+
 	//Shortcut function to reload media list
 	reload_media = function() {
 		new Ajax.Request('/accounts/<%= @account.id %>/articles/<%= @article.id %>/mediafiles', {method:'get'});
