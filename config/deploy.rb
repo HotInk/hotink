@@ -75,7 +75,6 @@ end
 namespace :deploy do
   desc "Restarting Passenger with restart.txt"
   task :restart, :roles => :app, :except => { :no_release => true } do
-    restart_sphinx
     run "touch #{current_path}/tmp/restart.txt"
   end
   
