@@ -2,6 +2,6 @@
 	<div class="user clearfix">
 		<p class="email"><%= account_invitation.email %></p>
 		<p class="name">Invitation</p>
-		<p class="kill_link"><%= link_to_remote "x", :url=>account_activation_url(account_invitation), :method => :delete, :update=>"accounts-window", :after=>"$(self).up().up().up().addClassName('transparent');" %></p>
+		<p class="kill_link"><%= link_to_remote "x", :url=>account_activation_url(account_invitation), :method => :delete, :update=>"accounts-window", :after=>"$(this).up().up().up().addClassName('transparent');" %></p>
 	</div>
 </li>
