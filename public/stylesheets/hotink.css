@@ -369,9 +369,10 @@ div.small_top_button a { padding: 5px; }
 #account_article_sorting_list #categories_controls { margin-left: 3px;  }
 #account_article_sorting_list ul#categories_sort{  max-height: 180px; overflow:auto; margin:0;}
 #account_article_sorting_list .text_input { font-size: 13px; width: 98%; height: 16px;}
-#account_article_sorting_list label{ color: #3399DE; padding: 0px 3px; }
-#account_article_sorting_list .printsection label { color:#333; }
 #account_article_sorting_list #categories_sort { margin-top: 5px; padding-left: 0px; list-style-type: none; } 
+
+#account_article_sorting_list #categories_sort { color: #3399DE; }
+#account_article_sorting_list #categories_sort div.printsection { color: #333; }
 #account_article_sorting_list #categories_sort input[type='text'] { width: 160px;}
 #account_article_sorting_list #categories_sort input[type='checkbox'] { padding: 1px 0px;}
 #account_article_sorting_list #categories_sort ul { padding-left: 20px; list-style-type: none; }
