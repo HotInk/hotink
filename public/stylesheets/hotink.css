@@ -2,7 +2,8 @@
 html, body {	height: 100%; }
 body { background-color: #FFF; color: #333; margin: 0 auto; text-algin: center;}
 body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
-div#page_container { background-color: #FFF; margin: 0; min-height: 100%; height: auto !important; height: 100%; max-width: 74em; padding: 1em 1.5em; text-align: left; padding-bottom: 0; margin-bottom: -30px; /* the bottom margin is the negative value of the footer's height */ }
+div#page_wrapper { min-height: 100%; height: auto !important; height: 100%; margin-bottom: -30px; /* the bottom margin is the negative value of the footer's height */}
+div#page_container { background-color: #FFF; margin: 0; max-width: 74em; padding: 1em 1.5em; text-align: left; padding-bottom: 0;  }
 
 #login_container { background-color: #515151; }
 pre { background-color: #eee; padding: 10px; font-size: 11px; }
@@ -126,7 +127,7 @@ dl.faq dt {font-weight: bold;}
 #navigation #links ol li:hover { background-color: #CEE4F3; margin:0;}
 #navigation #user_details { float: right; padding: 0.2em 0.3em; padding-top: 0.3em; font-size: 0.8em; border: 1px solid #CEE4F3; background-color: #FFF6DD;}
 #navigation #user_details p { display: inline-block; font-size: 1.0em; margin: 0; padding: 0.125em; }
-#navigation #account_details{ float: right; font-size: 1.0em; padding: 0.25em; margin-top: 0.2em; }
+#navigation #account_details{ float: right; font-size: 1.0em; padding: 0.25em; padding-top: 0.15em; }
 #navigation #flash { line-height:0; height: 1.1em; text-align: left; color: #F9F9F9; padding: 0.25em 0.5em; float: right;  margin-left: 1%; }
 #navigation #flash p { font-size: 0.9em; margin: 0.25em; display:inline;}
 #navigation .btn { margin-bottom: 0em; }
@@ -606,6 +607,7 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 
 /*-----------------------------------
 /*		Footer styles
+/* 		Relies on div#page_wrapper		
 /*---------------------------------------*/
 
 #footer_push { height: 30px; /* #footer_push must be the same height as #footer */  }
