@@ -135,7 +135,7 @@ dl.faq dt {font-weight: bold;}
 
 .close_button  { float: right; background-image: url('/images/token_x_red.gif'); width: 10px; height: 10px; margin: 0; margin-right: 0.125em; display: inline-block; font-size: 1em; }
 .close_button a { color: #FFF; display: inline-block; width: 100%;height: 100%;}
-div.small_top_button { display: block; clear:left; float: right; width: 10px; height: 11px; background-image: url('/images/token_x_red.gif'); width}
+div.small_top_button { display: block; clear:left; float: right; width: 10px; height: 11px; background-image: url('/images/token_x_red.gif'); }
 div.small_top_button a { padding: 5px; }
 
 /* Hot Ink index styles
@@ -586,6 +586,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 .progressBarComplete { width: 100%; background-color: green; visibility: hidden; }
 .progressBarError { width: 100%; background-color: red; visibility: hidden; }
 .progressBarStatus { margin-top: 2px; width: 337px; font-size: 7pt;	text-align: left; white-space: nowrap;}
+
+a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; background-image: url('/images/token_x_red.gif'); margin: 3px; float: right; }
 
 #footer_push { height: 30px; /* #footer_push must be the same height as #footer */  }
 #footer { width: 99%; height: 30px; padding-right: 1%;background-color: #222; text-align: right; border-right: 1px solid #DDD;}
