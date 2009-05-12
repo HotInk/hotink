@@ -60,6 +60,7 @@ Overlay = Class.create({
 	
 	start: function() {
 		if(this.started) return true;
+		if(page_overlay==undefined) return false;
 		
 		// TODO: Fix this section to hide only elements necessary by browser (ie, textareas in Firefox 2 but not 3)
 		$$('select', 'object', 'embed').each(function(node){ node.style.visibility = 'hidden' });
