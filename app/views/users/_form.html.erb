@@ -1,11 +1,10 @@
-<%= form.label :login %><br />
-<%= form.text_field :login, :class=>"text_input" %><br />
-<br />
-<%= form.label :email %><br />
-<%= form.text_field :email, :class=>"text_input" %><br />
-<br />
-<%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
-<%= form.password_field :password, :class=>"text_input" %><br />
-<br />
-<%= form.label :password_confirmation %><br />
-<%= form.password_field :password_confirmation, :class=>"text_input" %><br />
+<div class="column_holder">
+	<div class="full_column"><%= button_link_to_submit "Save", :class=>"save large" %></div>
+	<div class="quarter_column left_column"><%= form.label :login %></div>
+	<div class="three_quarters_column right_column"><%= form.text_field :login, :class=>"text_input" %></div>
+
+	<div class="quarter_column left_column"><%= form.label :email %></div>
+	<div class="three_quarters_column right_column"><%= form.text_field :email, :class=>"text_input" %></div>
+	<div class="quarter_column left_column"><%= form.label :name %></div>
+	<div class="three_quarters_column right_column"><%= form.text_field :name, :class=>"text_input" %></div>
+</div>

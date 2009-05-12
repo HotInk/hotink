@@ -589,6 +589,17 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 
 a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; background-image: url('/images/token_x_red.gif'); margin: 3px; float: right; }
 
+/*-----------------------------------
+/*		User details form styles
+/*---------------------------------------*/
+
+#user .column_holder>div { margin-bottom: 1.5em; }
+#user button.save { float: right; }
+
+/*-----------------------------------
+/*		Footer styles
+/*---------------------------------------*/
+
 #footer_push { height: 30px; /* #footer_push must be the same height as #footer */  }
 #footer { width: 99%; height: 30px; padding-right: 1%;background-color: #222; text-align: right; border-right: 1px solid #DDD;}
 #footer p { margin: 0.7em 0; float: right;}
