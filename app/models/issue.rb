@@ -45,34 +45,6 @@ class Issue < ActiveRecord::Base
     end
   end
   
-  def volume
-    if self.read_attribute('volume').nil?
-        issues = self.account.issues
-        issues.delete(self)
-        if issues[-2]
-          return issues[-2].volume || 1
-        else
-          return 1
-        end
-    else
-      return self.read_attribute('volume')
-    end  
-  end
-  
-  def number
-    if self.read_attribute('number').nil?
-      issues = self.account.issues
-      issues.delete(self)
-      if issues[-2] && issues[-2].number
-        return issues[-2].number + 1 
-      else
-        return 1
-      end
-    else
-      return self.read_attribute('number')
-    end  
-  end
-  
   # Fix the mime types on uploaded PDFs. Make sure to require the mime-types gem
   def swfupload_file=(data)
     data.content_type = MIME::Types.type_for(data.original_filename).to_s

@@ -30,6 +30,7 @@ class IssuesController < ApplicationController
   # GET /issues/new
   # GET /issues/new.xml
   def new
+    last_issue = @account.issues.last # Grab last issue before we build
     @issue = @account.issues.build(:date => Time.now )
         
     #Check to see if the last issue created is exists and is untouched.
@@ -37,7 +38,7 @@ class IssuesController < ApplicationController
     #the data from becoming cluttered with abandoned articles.
     #
     #If the last article was legit, save the fresh article so it can have relationships 
-    if last_issue = @account.issues.find(:last)
+    if last_issue
       if last_issue.created_at == last_issue.updated_at
          @issue = last_issue
          @issue.date = Time.now #Give it the current time, without saving.
@@ -74,10 +75,10 @@ class IssuesController < ApplicationController
     respond_to do |format|
       if @issue.save
         flash[:notice] = 'Issue was successfully created.'
-        format.html { redirect_to([@account, @issue]) }
+        format.html { redirect_to account_issues_url(@account) }
         format.xml  { render :xml => @issue, :status => :created, :location => [@account, @issue] }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => "edit" }
         format.xml  { render :xml => @issue.errors, :status => :unprocessable_entity }
       end
     end
