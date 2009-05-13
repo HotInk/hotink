@@ -136,7 +136,7 @@ dl.faq dt {font-weight: bold;}
 
 .close_button  { float: right; background-image: url('/images/token_x_red.gif'); width: 10px; height: 10px; margin: 0; margin-right: 0.125em; display: inline-block; font-size: 1em; }
 .close_button a { color: #FFF; display: inline-block; width: 100%;height: 100%;}
-div.small_top_button { display: block; clear:left; float: right; width: 10px; height: 11px; background-image: url('/images/token_x_red.gif'); }
+div.small_top_button { display: block; clear:left; float: right; width: 10px; height: 11px; margin-bottom: 5px; background-image: url('/images/token_x_red.gif'); }
 div.small_top_button a { padding: 5px; }
 
 /* Hot Ink index styles
@@ -358,9 +358,6 @@ div.small_top_button a { padding: 5px; }
 #edit_media_form #photocredits_form { width: 290px; }
 
 
-
-
-
 /* Sorting forms styles*/
 #account_article_sorting_list button.categories_edit_tab{margin-left:208px; }
 #account_article_sorting_list div#categories_list { border: 1px solid #AAA; }
@@ -388,7 +385,7 @@ div.small_top_button a { padding: 5px; }
 #overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; }
 #loading{ position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0;}
 #overlay_container{ position: relative; width: 250px; height: 250px; background-color: #fff; margin: 0 auto;}
-#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 2px 2px 5px 5px; background-color: #fff; border: 2px solid #AAA;}
+#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 5px; background-color: #fff; border: 2px solid #AAA;}
 
 
 /* Author autocomplete css */
@@ -490,16 +487,18 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account button { float: right; }
 #account h1 {  font-size: 1.75em; margin:0.25em 0.25em; margin-top:0; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
 #account h4 { font-size: 1.05em; }
-#account p { font-size: 0.9em; }
+#account p { font-size: 0.9em; line-height: 1.45; margin: 0.5em 0; }
 #account fieldset { border: none; padding: 0; }
-#account .column_holder { margin-bottom: 1.5em;}
+#account .column_holder>div { margin-bottom: 1.5em;}
 #account .text_input { font-size: 1.3em; padding: 0.2em; margin-bottom: 0.125em; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
-#account legend { font-size: 1.4em; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
+#account legend { font-size: 1.4em; padding: 0; padding-bottom: 0.3em; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
 #account select { background: none; margin: 0; width: 100%; font-size: 1.2em; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.8em; color: #333; border: 1px solid #DEDEDE;	}	
 #account label { font-size: 1em; color: #333; padding: 0.5em; margin: 0 0.125em; display: block;}
 #account .edit_account>div { margin-bottom: 1em;}
 
 #account .account_settings h2 { margin-bottom: 1em;}
+
+#account #images-window label{ padding-right: 3.5em; font-weight: bold; font-family: georgia, "Times New Roman", times, serif;}
 
 #account .index .section p { font-size: 0.8em; margin: 0.7em 0.3em; display:inline-block; vertical-align: top;}
 #account .index .section { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }

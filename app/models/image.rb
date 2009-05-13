@@ -1,5 +1,12 @@
 class Image < Mediafile
   
+  IMAGE_DEFAULT_SETTINGS = { 
+            "thumb" => ['100>', 'jpg'],  
+            "small" => ['250>', 'jpg'],
+            "medium" => ['440>', 'jpg'],
+            "large" => ['800>', 'jpg']
+  }
+  
   has_attached_file :file,
       :styles => {
         :system_icon => [ "x20>", 'jpg' ],
@@ -22,17 +29,10 @@ class Image < Mediafile
   # Default settings
   # Right now these image sizes are processed automatically.
   def settings
-       default_settings = {
-        "thumb" => ['100>', 'jpg'],
-        "small" => ['250>', 'jpg'],
-        "medium" => ['440>', 'jpg'],
-        "large" => ['800>', 'jpg']
-        }
     if self.account
-      default_settings.merge!(self.account.settings["image"]) if self.account.settings["image"] if self.account.settings
-      return default_settings
+      return IMAGE_DEFAULT_SETTINGS.merge(self.account.settings["image"]) if self.account.settings["image"]
     else
-      return default_settings 
+      return IMAGE_DEFAULT_SETTINGS
     end
   end
   
