@@ -39,13 +39,13 @@ class Account < ActiveRecord::Base
      when 0
        return nil
      when 1
-       return "#{managers.first.login} <#{managers.first.email}>"
+       return "#{managers.first.name} <#{managers.first.email}>"
      when 2
-       return "#{managers.first.login} <#{managers.first.email}>" + " and " + "#{managers.second.login} <#{managers.second.email}>"
+       return "#{managers.first.name} <#{managers.first.email}>" + " and " + "#{managers.second.login} <#{managers.second.email}>"
      else
       list = String.new
-      (0..(managers.count - 3)).each{ |i| list += managers[i].login + ", " }
-      list += "#{managers[managers.length-2].login} <#{managers[managers.length-2].email}>" + " and " + "#{managers[managers.length-1].login} <#{managers[managers.length-1].email}>" # last two managers get special formatting
+      (0..(managers.length - 3)).each{ |i| list += "#{managers[i].name} <#{managers[i].email}>, " }
+      list += "#{managers[managers.length-2].name} <#{managers[managers.length-2].email}>" + " and " + "#{managers[managers.length-1].name} <#{managers[managers.length-1].email}>" # last two managers get special formatting
       return list
     end         
   end
