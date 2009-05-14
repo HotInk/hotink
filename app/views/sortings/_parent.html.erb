@@ -1,8 +1,8 @@
-<li id="category_<%= parent.id %>" class="<%= "printsection" if parent.is_a?(Section) %>" >
+<li id="category_<%= parent.id %>" >
 	<% options = {:onclick => (@article.categories.member?(parent) ? "mark_sorting_for_delete(#{@article.sortings.find_by_category_id(parent.id).id}, #{parent.id}, this)" :  "new_article_sorting(#{parent.id}, this)") } -%>
 	<% options = options.merge({:disabled => "true"}) if @article.section == parent %>
 	<% checked = @article.categories.member?(parent) ? true : false -%>
-	<div id="category_<%= parent.id %>_label">
+	<div id="category_<%= parent.id %>_label" class="<%= "printsection" if parent.is_a?(Section) %>">
 		<%= check_box_tag "article_category_" + parent.id.to_s, parent.id.to_s, checked, options %>
 		<%= label_tag "article_category_#{parent.id}", parent.name, :id=>"category_#{parent.id}_form" %>&nbsp;<%= button_link_to_function "Edit", "new Effect.SlideUp($(this.parentNode), {queue: 'front', duration: 0.1});new Effect.SlideDown($(this.parentNode).next(), {queue: 'end', duration: 0.1})", :class=>"micro",  :style=>"visibility:hidden;" %>
 	</div>

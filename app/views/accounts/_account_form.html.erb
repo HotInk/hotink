@@ -4,8 +4,8 @@
 		<ol id="tablist" class="left">
 			<li class="selected">General</li>
 			<li>Users</li>
-			<!-- <li>Images</li> -->
-			<!-- <li>Categories</li> -->
+			<li>Images</li>
+			<!--<li>Categories</li> -->
 			<% if permit? "admin" %>
 				<li>Accounts</li>
 			<% end %>
@@ -53,8 +53,20 @@
 		</div>
 		
 		<div id="images-window" style="display:none">
-			<h2>Images</h2>
-			
+			<!-- <h2>Images</h2>
+			<fieldset>
+				<legend>Display sizes</legend>	
+				<p>Images are archived in their <strong>original size and format</strong>. It's important to upload <strong>high resolution</strong>
+				 images so that the materials in the archive age well. To make those images a little more reader friendly, they're also made available 
+				 in these <strong>standard sizes</strong>, which you can adjust below.</p>
+				<div class="column_holder">
+					<div class="third_column"></div>
+					<div class="third_column">No wider than</div>
+					<div class="third_column">No taller than</div>
+					<div class="third_column left_column"><label>Thumbnail</label></div>
+					<div class="third_column"><%= %></div>
+				<div>
+			</fieldset> -->
 		</div>
 		
 		<div id="categories-window" class="index" style="display:none;">
