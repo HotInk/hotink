@@ -1,0 +1,31 @@
+<h2>Categories and Sections</h2>
+
+<ol id="categories">
+	<%= render @account.categories.select { |cat| cat.parent_id.blank? } %>
+</ol>
+
+<div id="account_management_categories_form">
+	<% form_remote_tag :url=>account_categories_url(@account), :method => :post do %>
+	<fieldset>
+		<legend>New category</legend>
+		<div class="column_holder clearfix">	
+			<div class="two_thirds_column">
+				<%= text_field_tag 'category[name]', nil, :class => :text_input %>
+				<small></small>
+			</div>
+			<div class="third_column">
+				<label for="print_section">Print section? &nbsp;<%= check_box_tag('print_section', 'print_section', false) %></label>
+			</div>
+		</div>
+		<div class="column_holder clearfix">	
+			<div class="two_thirds_column">
+				<select id="category_parent_id" name="category[parent_id]"><%= options_for_category_select(@account.categories) %></select>
+				<small></small>
+			</div>
+			<div class="third_column">
+				<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.5em;" class="spinner"/><%= button_link_to_submit "Create category", :class=>"save"%>
+			</div>
+		</div>
+	</fieldset>
+	<% end %>
+</div>

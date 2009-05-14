@@ -27,6 +27,13 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :categories
     account.resources :images
     account.resources :audiofiles
+    
+    account.authorize 'oauth/authorize', :controller=>'oauth',:action=>'authorize'
+    account.request_token 'oauth/request_token', :controller=>'oauth',:action=>'request_token'
+    account.access_token 'oauth/access_token', :controller=>'oauth',:action=>'access_token'
+    account.test_request 'oauth/test_request', :controller=>'oauth',:action=>'test_request'
+    
+    account.resources :oauth_clients
   end
   
 
