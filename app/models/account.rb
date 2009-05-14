@@ -45,7 +45,7 @@ class Account < ActiveRecord::Base
      else
       list = String.new
       (0..(managers.count - 3)).each{ |i| list += managers[i].login + ", " }
-      list += "#{managers[managers.length-2].login} <#{managers[managers.length-2].email}>" + " and " + "#{managers[managers.length-1].login} <#{managers[managers.length-1].email}>" # last two authors get special formatting
+      list += "#{managers[managers.length-2].login} <#{managers[managers.length-2].email}>" + " and " + "#{managers[managers.length-1].login} <#{managers[managers.length-1].email}>" # last two managers get special formatting
       return list
     end         
   end
