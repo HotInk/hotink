@@ -516,7 +516,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .activation_form .third_column { width: auto; margin-left: 0.7em;}
 #account .activation_form input[type="text"] { width: 98%; padding: 0.125em 1%;}
 
-#account .index ol { height: 18.5em; border: 1px solid #DDD; overflow:auto;}
+#account .index ol { height: 17.5em; border: 1px solid #DDD; overflow:auto;}
 #account .index ol li { border-top: none;} 
 #account .index ol li h4 { padding: 0.25em 0.4em; margin:0; border-bottom: 1px solid #DDD; }
 #account .index .account { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
