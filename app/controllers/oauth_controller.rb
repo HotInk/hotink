@@ -3,6 +3,7 @@ class OauthController < ApplicationController
   
   before_filter :require_user_or_oauth, :only => [:test_request]
   before_filter :verify_oauth_consumer_signature, :only => [:request_token]
+  before_filter :log_request_url, :only => [:access_token]
   before_filter :verify_oauth_request_token, :only => [:access_token]
 
   layout 'login'
@@ -59,6 +60,12 @@ class OauthController < ApplicationController
       flash[:notice] = "You've revoked the token for #{@token.client_application.name}"
     end
     redirect_to oauth_clients_url
+  end
+  
+  private
+  
+  def log_request_url
+    logger.info "Request url is: #{request.url}"
   end
   
 end

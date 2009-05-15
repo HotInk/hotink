@@ -21,7 +21,6 @@ class Account < ActiveRecord::Base
   has_many :waxings, :dependent => :delete_all
   
   # OAuth API implementation
-  has_many :client_applications
   has_many :tokens, :class_name=>"OauthToken", :order=>"authorized_at desc", :include=>[:client_application]
   
   

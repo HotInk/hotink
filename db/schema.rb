@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(:version => 20090514171201) do
     t.string   "callback_url"
     t.string   "key",          :limit => 50
     t.string   "secret",       :limit => 50
-    t.integer  "account_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

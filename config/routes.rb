@@ -6,6 +6,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_activations
   map.resources :users, :member => {:promote => :put, :demote => :put, :deputize => :put}
   
+  map.authorize '/oauth/authorize', :controller=>'oauth',:action=>'authorize'
+  map.request_token '/oauth/request_token', :controller=>'oauth',:action=>'request_token'
+  map.access_token '/oauth/access_token', :controller=>'oauth',:action=>'access_token'
+  map.test_request '/oauth/test_request', :controller=>'oauth',:action=>'test_request'
+  map.resources :oauth_clients
+  
   
   # No content exists in Hot Ink without belonging to an account, routing reflects this fact.
   map.resources :account_activations
@@ -27,14 +33,7 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :categories
     account.resources :images
     account.resources :audiofiles
-    
-    account.authorize 'oauth/authorize', :controller=>'oauth',:action=>'authorize'
-    account.request_token 'oauth/request_token', :controller=>'oauth',:action=>'request_token'
-    account.access_token 'oauth/access_token', :controller=>'oauth',:action=>'access_token'
-    account.test_request 'oauth/test_request', :controller=>'oauth',:action=>'test_request'
-    
-    account.resources :oauth_clients
-  end
+      end
   
 
   # The priority is based upon order of creation: first created -> highest priority.
