@@ -109,8 +109,8 @@ class Article < ActiveRecord::Base
        xml.tag!( :authors_list, self.authors_list )
        xml.tag!( :bodytext, self.bodytext )
        xml.tag!( :id, self.id )
+       self.section.nil? ? xml.section("") : xml.section(self.section.name)
      end
-
   end
   
   
