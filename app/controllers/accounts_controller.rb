@@ -25,8 +25,10 @@ class AccountsController < ApplicationController
   # GET /accounts/1
   # GET /accounts/1.xml
   def show
+    @account = Account.find(params[:id])    
     respond_to do |format|
       format.html { redirect_to account_articles_url(current_user.account )}
+      format.xml { render :xml => @account }
     end
   end
 
