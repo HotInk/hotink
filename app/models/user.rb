@@ -1,6 +1,10 @@
 class User < ActiveRecord::Base
   belongs_to :account
+  
+  # OAuth API application support
   has_many :client_applications
+  has_many :tokens, :class_name=>"OauthToken",:order=>"authorized_at desc",:include=>[:client_application]
+  
   
   serialize :preferences
   

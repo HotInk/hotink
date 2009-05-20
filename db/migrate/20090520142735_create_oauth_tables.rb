@@ -14,7 +14,7 @@ class CreateOauthTables < ActiveRecord::Migration
     add_index :client_applications, :key, :unique
     
     create_table :oauth_tokens do |t|
-      t.integer :account_id
+      t.integer :user_id
       t.string :type, :limit => 20
       t.integer :client_application_id
       t.string :token, :limit => 50

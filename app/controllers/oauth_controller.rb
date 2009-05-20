@@ -1,12 +1,10 @@
 class OauthController < ApplicationController
   skip_before_filter :require_user, :only => [:request_token, :access_token, :test_request]
-  
   before_filter :require_user_or_oauth, :only => [:test_request]
   before_filter :verify_oauth_consumer_signature, :only => [:request_token]
-  before_filter :log_request_url, :only => [:access_token]
   before_filter :verify_oauth_request_token, :only => [:access_token]
-
-  layout 'login'
+  # Uncomment the following if you are using restful_open_id_authentication
+  # skip_before_filter :verify_authenticity_token
 
   def request_token
     @token = current_client_application.create_request_token
@@ -19,7 +17,6 @@ class OauthController < ApplicationController
   
   def access_token
     @token = current_token && current_token.exchange!
-    logger.info "Current token : #{current_token} -30-"
     if @token
       render :text => @token.to_query
     else
@@ -36,7 +33,7 @@ class OauthController < ApplicationController
     unless @token.invalidated?    
       if request.post? 
         if params[:authorize] == '1'
-          @token.authorize!(@account)
+          @token.authorize!(current_user)
           redirect_url = params[:oauth_callback] || @token.client_application.callback_url
           if redirect_url
             redirect_to "#{redirect_url}?oauth_token=#{@token.token}"
@@ -60,12 +57,6 @@ class OauthController < ApplicationController
       flash[:notice] = "You've revoked the token for #{@token.client_application.name}"
     end
     redirect_to oauth_clients_url
-  end
-  
-  private
-  
-  def log_request_url
-    logger.info "Request url is: #{request.url}"
   end
   
 end

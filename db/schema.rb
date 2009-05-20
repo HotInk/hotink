@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090514171201) do
+ActiveRecord::Schema.define(:version => 20090520142735) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20090514171201) do
   add_index "oauth_nonces", ["nonce", "timestamp"], :name => "index_oauth_nonces_on_nonce_and_timestamp", :unique => true
 
   create_table "oauth_tokens", :force => true do |t|
-    t.integer  "account_id"
+    t.integer  "user_id"
     t.string   "type",                  :limit => 20
     t.integer  "client_application_id"
     t.string   "token",                 :limit => 50

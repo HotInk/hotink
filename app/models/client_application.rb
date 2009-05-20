@@ -33,7 +33,7 @@ class ClientApplication < ActiveRecord::Base
   end
   
   def oauth_server
-    @oauth_server ||= OAuth::Server.new("http://0.0.0.0:3000")
+    @oauth_server ||= OAuth::Server.new("http://your.site")
   end
   
   def credentials

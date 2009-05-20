@@ -1,7 +1,7 @@
 class RequestToken < OauthToken
-  def authorize!(account)
+  def authorize!(user)
     return false if authorized?
-    self.account = account
+    self.user = user
     self.authorized_at = Time.now
     self.save
   end
@@ -9,7 +9,7 @@ class RequestToken < OauthToken
   def exchange!
     return false unless authorized?
     RequestToken.transaction do
-      access_token = AccessToken.create(:account => account, :client_application => client_application)
+      access_token = AccessToken.create(:user => user, :client_application => client_application)
       invalidate!
       access_token
     end

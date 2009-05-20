@@ -1,10 +1,11 @@
 class OauthClientsController < ApplicationController
   before_filter :require_user
+  
   layout 'login'
   
   def index
-    @client_applications = ClientApplication.find(:all)
-    @tokens = @account.tokens.find :all, :conditions => 'oauth_tokens.invalidated_at is null and oauth_tokens.authorized_at is not null'
+    @client_applications = current_user.client_applications
+    @tokens = current_user.tokens.find :all, :conditions => 'oauth_tokens.invalidated_at is null and oauth_tokens.authorized_at is not null'
   end
 
   def new
@@ -22,15 +23,15 @@ class OauthClientsController < ApplicationController
   end
   
   def show
-    @client_application = ClientApplication.find(params[:id])
+    @client_application = current_user.client_applications.find(params[:id])
   end
 
   def edit
-    @client_application = ClientApplication.find(params[:id])
+    @client_application = current_user.client_applications.find(params[:id])
   end
   
   def update
-    @client_application = ClientApplication.find(params[:id])
+    @client_application = current_user.client_applications.find(params[:id])
     if @client_application.update_attributes(params[:client_application])
       flash[:notice] = "Updated the client information successfully"
       redirect_to :action => "show", :id => @client_application.id
@@ -40,7 +41,7 @@ class OauthClientsController < ApplicationController
   end
 
   def destroy
-    @client_application = @account.client_applications.find(params[:id])
+    @client_application = current_user.client_applications.find(params[:id])
     @client_application.destroy
     flash[:notice] = "Destroyed the client application registration"
     redirect_to :action => "index"
