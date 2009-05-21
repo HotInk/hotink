@@ -24,7 +24,6 @@ class ClientApplication < ActiveRecord::Base
       logger.info "Token: #{signature.send :token}"
       return false unless OauthNonce.remember(signature.request.nonce, signature.request.timestamp)
       value = signature.verify
-      logger.info "Signature verification returned: #{value.to_s}"
       value
     rescue OAuth::Signature::UnknownSignatureMethod => e
       logger.info "ERROR"+e.to_s

@@ -5,8 +5,9 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   helper_method :current_user_session, :current_user
   
-  before_filter :login_required
   before_filter :find_account
+  before_filter :login_required
+
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -82,6 +83,17 @@ class ApplicationController < ActionController::Base
       redirect_to account_url
       return false
     end
+  end
+  
+  # This method determines whether an OAuth request is kosher. 
+  # A request is alright if:
+  #   - There's no attached account
+  #   - The user is staff on this account
+  # If neither is true, then the request will fail.
+  def authorized?
+    return true unless @account
+    return true if @account && @account.accepts_role?("staff", current_user)
+    false
   end
   
   def store_location
