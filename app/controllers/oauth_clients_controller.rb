@@ -1,6 +1,4 @@
-class OauthClientsController < ApplicationController
-  before_filter :login_required
-  
+class OauthClientsController < ApplicationController  
   layout 'login'
   
   def index

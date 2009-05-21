@@ -1,5 +1,5 @@
 class OauthController < ApplicationController
-  skip_before_filter :login_required, :only => [:request_token, :access_token, :test_request]
+  skip_before_filter :login_or_oauth_required, :only => [:request_token, :access_token, :test_request]
   before_filter :verify_oauth_consumer_signature, :only => [:request_token]
   before_filter :verify_oauth_request_token, :only => [:access_token]
   before_filter :oauth_required, :only => :test_request

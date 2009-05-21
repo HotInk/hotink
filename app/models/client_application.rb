@@ -26,7 +26,7 @@ class ClientApplication < ActiveRecord::Base
       value = signature.verify
       value
     rescue OAuth::Signature::UnknownSignatureMethod => e
-      logger.info "ERROR"+e.to_s
+      logger.info "ERROR: "+e.to_s
       false
     end
   end

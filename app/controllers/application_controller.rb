@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user
   
   before_filter :find_account
-  before_filter :login_required
+  before_filter :login_or_oauth_required
 
 
   # See ActionController::RequestForgeryProtection for details
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    return @current_user if defined?(@current_user)
+    return @current_user if defined?(@current_user)&&@current_user # Only returns a user if it's defined and not nil
     @current_user = current_user_session && current_user_session.user
   end
   
