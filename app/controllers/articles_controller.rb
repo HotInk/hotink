@@ -1,7 +1,6 @@
 class ArticlesController < ApplicationController
   
   layout 'hotink'
-  before_filter :require_user
   skip_before_filter :verify_authenticity_token
 
   

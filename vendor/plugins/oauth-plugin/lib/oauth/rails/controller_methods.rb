@@ -43,7 +43,8 @@ module OAuth
         end
       end
       
-      def require_user_or_oauth
+      # This requies that you have an acts_as_authenticated compatible authentication plugin installed
+      def login_or_oauth_required
         if oauthenticate
           if authorized?
             return true
@@ -51,7 +52,7 @@ module OAuth
             invalid_oauth_response
           end
         else
-          require_user
+          login_required
         end
       end
       
@@ -85,7 +86,7 @@ module OAuth
       def current_token=(token)
         @current_token=token
         if @current_token
-          @account = @current_token.account
+          @current_user=@current_token.user
           @current_client_application=@current_token.client_application 
         end
         @current_token
@@ -93,7 +94,6 @@ module OAuth
       
       # Implement this for your own application using app-specific models
       def verify_oauth_signature
-        logger.debug "Entering signature verification..."
         begin
           valid = ClientApplication.verify_request(request) do |request|
             self.current_token = ClientApplication.find_token(request.token)

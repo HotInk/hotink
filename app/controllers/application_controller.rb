@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   helper_method :current_user_session, :current_user
   
-  before_filter :require_user
+  before_filter :login_required
   before_filter :find_account
 
   # See ActionController::RequestForgeryProtection for details
@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def require_user
+  def login_required
     unless current_user
       store_location
       
@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def require_no_user
+  def login_forbidden
     if current_user
       store_location
       flash[:notice] = "You must be logged out to access this page"

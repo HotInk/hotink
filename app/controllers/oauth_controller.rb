@@ -1,10 +1,12 @@
 class OauthController < ApplicationController
-  skip_before_filter :require_user, :only => [:request_token, :access_token, :test_request]
-  before_filter :require_user_or_oauth, :only => [:test_request]
+  skip_before_filter :login_required, :only => [:request_token, :access_token, :test_request]
   before_filter :verify_oauth_consumer_signature, :only => [:request_token]
   before_filter :verify_oauth_request_token, :only => [:access_token]
+  before_filter :oauth_required, :only => :test_request
   # Uncomment the following if you are using restful_open_id_authentication
   # skip_before_filter :verify_authenticity_token
+
+  layout 'login'
 
   def request_token
     @token = current_client_application.create_request_token

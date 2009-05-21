@@ -1,5 +1,5 @@
 class OauthClientsController < ApplicationController
-  before_filter :require_user
+  before_filter :login_required
   
   layout 'login'
   
