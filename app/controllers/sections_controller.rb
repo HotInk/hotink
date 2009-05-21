@@ -6,7 +6,7 @@ class SectionsController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => [@account, @sections] }
+      format.xml  { render :xml => @sections }
     end
   end
 
@@ -17,7 +17,7 @@ class SectionsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => [@account, @section] }
+      format.xml  { render :xml => @section }
     end
   end
 
@@ -33,7 +33,7 @@ class SectionsController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.js
-      format.xml  { render :xml => [@account, @section] }
+      format.xml  { render :xml => @section }
     end
   end
 
@@ -73,7 +73,7 @@ class SectionsController < ApplicationController
     respond_to do |format|
       if @section.update_attributes(params[:section])
         flash[:notice] = 'Section was successfully updated.'
-        format.html { redirect_to([@account, @section]) }
+        format.html { redirect_to([@section]) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

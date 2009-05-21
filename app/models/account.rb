@@ -51,5 +51,17 @@ class Account < ActiveRecord::Base
       return list
     end         
   end
+
+  def to_xml(options = {})
+     options[:indent] ||= 2
+     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+     xml.instruct! unless options[:skip_instruct]
+     
+     xml.account do
+       xml.tag!( :id, self.id )       
+       xml.tag!( :name, self.name)
+       xml.tag!( :time_zone, self.time_zone)
+     end
+  end
   
 end
