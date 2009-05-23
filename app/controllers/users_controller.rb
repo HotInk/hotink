@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   layout 'login'
   
   permit "admin", :only => :deputize
-  permit "manager of account", :only => [:promote, :demote]
+  permit "manager of account and admin", :only => [:promote, :demote]
     
   # Users are created via activations, so no "new" or "create" methods exist in this controller.
   # This also helps thwart smart users who try parameter hacking to create their own user.

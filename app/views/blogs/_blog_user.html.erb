@@ -6,10 +6,12 @@
 		
 		<% if blog_user.has_role? 'editor', @blog %>
 			<p>Editor</p>
+		<% else %>
+			<%= button_link_to_remote "Promote", :url => promote_user_account_blog_url(@account, @blog, :user=>blog_user.id), :method => :put, :html =>{ :class=> 'micro'} %>		
 		<% end %>
-		
+				
 		<% unless @blog.has_contributors.length==1 && @blog.has_contributors.first==blog_user  %>	
-			<p class="kill_link"><%= link_to_remote "x", :url=>remove_user_account_blog_url(@account, @blog, :user=>blog_user.id), :method => :post, :after=>"$(this).up().up().up().addClassName('transparent');" %></p>
+			<p class="kill_link"><%= link_to_remote "x", :url=>remove_user_account_blog_url(@account, @blog, :user=>blog_user.id), :method => :put, :after=>"$(this).up().up().up().addClassName('transparent');" %></p>
 		<% end %>
 	</div>
 </li>

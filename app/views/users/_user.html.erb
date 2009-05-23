@@ -8,7 +8,7 @@
 			<p>Manager</p>
 		<% end %>
 				
-		<% if (permit? "manager of account") && !(user.has_role? 'manager', @account) %>
+		<% if (permit? "manager of account and admin") && !(user.has_role? 'manager', @account) %>
 			<%= button_link_to_remote "Promote", :url => promote_user_url(user, :account_id=>user.account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>		
 		<% end %>
 		<% if permit? "admin" %>

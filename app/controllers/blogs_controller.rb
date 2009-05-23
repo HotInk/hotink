@@ -51,6 +51,7 @@ class BlogsController < ApplicationController
     @blog = @account.blogs.find(params[:id])
     @user = User.find(params[:user])
     
+    # Only account staff can contribute to a blog
     if @user.has_role?("staff", @account)
       @user.has_role( "contributor", @blog)
     end
@@ -65,15 +66,32 @@ class BlogsController < ApplicationController
     @blog = @account.blogs.find(params[:id])
     @user = User.find(params[:user])
     
-    if @user.has_role?( "contributor", @blog)
-      @user.has_no_role("contributor", @blog)
-      @user.has_no_role("editor", @blog)      
-    end
+    
+      if @user.has_role?( "contributor", @blog)
+        @user.has_no_role("contributor", @blog)
+        @user.has_no_role("editor", @blog)      
+      end
+    
     respond_to do |format|
       format.js
     end
 
   end
   
+  def promote_user
+    @blog = @account.blogs.find(params[:id])
+    @user = User.find(params[:user])
+    
+    # Only staff can post to or edit a blog
+    if @user.has_role?( "staff", @account)
+      @user.has_role("contributor", @blog)
+      @user.has_role("editor", @blog)      
+    end
+    
+    respond_to do |format|
+      format.js
+    end
+
+  end
   
 end

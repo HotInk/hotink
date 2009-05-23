@@ -633,6 +633,7 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blog_users .blog_user p { font-size: 0.8em; margin: 0.7em 0.3em; display:inline-block; vertical-align: top;}
 #blog_users .blog_user p.email { font-weight: bolder; max-width: 32%; overflow: hidden; }
 #blog_users .blog_user p.name { max-width: 20%;}
+#blog_users .blog_user button { float: none; margin: 0 0.25em; position: relative; top: 0.45em; }
 #blog_users .blog_user .kill_link { text-align: right; margin-right: 0.5em;}
 #blog_users .blog_user .kill_link a{ color: red;}
 
