@@ -624,7 +624,7 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blog_users .add_blog_user { float: left; width: 50%; clear: right; margin-bottom: 0.125em; }
 #blog_users .add_blog_user p { margin: 0.5em 0;}
 #blog_users .add_blog_user p.flash { margin: 0.125em 0;}
-#blog_users .add_blog_user select { width: 85%; background: none; margin: 0; font-size: 1em; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.8em; color: #333; border: 1px solid #DEDEDE;	}	
+#blog_users .add_blog_user select { width: 80%; background: none; margin: 0; font-size: 1em; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.8em; color: #333; border: 1px solid #DEDEDE;	}	
 #blog_users >p { width: 50%; }
 #blog_users ul { height: 17.5em; float: left; width: 50%; border: 1px solid #DDD; overflow:auto; margin: 0; padding:0;}
 #blog_users ul li { border-top: none;}
