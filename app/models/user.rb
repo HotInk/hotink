@@ -33,6 +33,10 @@ class User < ActiveRecord::Base
     find_by_login(login) || find_by_email(login)
   end
   
+  def to_select_option_text
+    "#{name} <#{email}>"
+  end
+  
   def deliver_user_activation_instructions!  
     reset_perishable_token!  
     Circulation.deliver_user_activation_instructions(self)  

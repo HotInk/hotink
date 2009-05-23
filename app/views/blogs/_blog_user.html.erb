@@ -1,0 +1,15 @@
+<li id="blog_user_<%= blog_user.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
+	<div class="blog_user clearfix">
+
+		<p class="name"><%= blog_user.name %></p>
+		<p class="email"><%= blog_user.email %></p>	
+		
+		<% if blog_user.has_role? 'editor', @blog %>
+			<p>Editor</p>
+		<% end %>
+		
+		<% unless @blog.has_contributors.length==1 && @blog.has_contributors.first==blog_user  %>	
+			<p class="kill_link"><%= link_to_remote "x", :url=>remove_user_account_blog_url(@account, @blog, :user=>blog_user.id), :method => :post, :after=>"$(this).up().up().up().addClassName('transparent');" %></p>
+		<% end %>
+	</div>
+</li>

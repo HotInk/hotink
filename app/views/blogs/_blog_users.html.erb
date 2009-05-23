@@ -1,0 +1,16 @@
+<div id="blog_users">
+		<h2>Contributors</h2>
+		<p>Contributors are the users who write and maintain this blog. Only these users can post to this blog.</p>
+		
+		<ul>
+			<%= render :partial => 'blog_user', :collection => @blog.contributors %>
+		</ul>
+		
+		<div class="add_blog_user">
+			<% form_remote_tag :url=>add_user_account_blog_url(@account, @blog), :after=>"$(this).disable();$(this).select('.spinner')[0].show();" do %>
+			<p>To add a contributor, select their name below.</p>
+			<%= select_tag :user, options_from_collection_for_select(@account.has_staff - @blog.has_contributors, :id, :to_select_option_text) %>
+			<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.5em;" class="spinner"/><%= button_link_to_submit "Add" %>
+			<% end %>
+		</div>
+</div>

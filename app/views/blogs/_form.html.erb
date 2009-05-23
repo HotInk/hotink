@@ -1,0 +1,27 @@
+<div id="blog" class="form">
+	<% form_for [@account, @blog] do |f| %>
+	<div class="column_holder half_column">
+		<div class="third_column">
+			<h1><%= @blog.new_record? ? "New blog" : "Manage blog" %></h1>
+		</div>
+		<div class="two_thirds_column left_column">
+			<%= button_link_to_submit "Save", :class=>"large save" %>
+		</div>
+		<fieldset>
+			<legend>Blog details</legend>
+			<div class="quarter_column left_column">
+				<%= f.label :title %>
+			</div>
+			<div class="three_quarters_column right_column">
+				<%= f.text_field :title, :class => :text_input %>
+			</div>
+			<div class="quarter_column left_column">
+				<%= f.label :description %>
+			</div>
+			<div class="three_quarters_column right_column">
+				<%= f.text_area :description, :class=>:text_input %>
+			</div>
+		</fieldset>
+	</div>
+	<% end %>
+</div>

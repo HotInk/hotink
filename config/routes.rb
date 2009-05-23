@@ -28,13 +28,14 @@ ActionController::Routing::Routes.draw do |map|
       mediafile.resources :authors
       mediafile.resources :tags
     end
-    account.resources :issues, :member=>{:upload_pdf => :post}
+    account.resources :blogs, :member=>{ :add_user => :post, :remove_user => :post }
+    account.resources :issues, :member=>{ :upload_pdf => :post }
     account.resources :authors
     account.resources :sections
     account.resources :categories
     account.resources :images
     account.resources :audiofiles
-      end
+  end
   
 
   # The priority is based upon order of creation: first created -> highest priority.

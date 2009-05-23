@@ -1,0 +1,1 @@
+page.replace 'blog_users', :partial => 'blog_users'

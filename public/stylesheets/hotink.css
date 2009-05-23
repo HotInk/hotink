@@ -606,6 +606,37 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #user p { font-size: 0.9em; }
 
 /*-----------------------------------
+/*		Blog styles
+/*---------------------------------------*/
+
+#blog h1 { font-size: 2em; margin: 0;}
+#blog label { font-size: 1.1em; color: #333; padding: 0.5em; margin: 0 0.25em; display: block; text-decoration: underline;}
+#blog fieldset { border: 1px solid #DDD; padding: 0; float: left; margin-bottom: 0.5em; }
+#blog .text_input { font-size: 1.2em; padding: 0.2em; margin: 0.25em 0; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
+#blog div.column_holder>div { margin-bottom: 1em; }
+#blog #blog_title { font-size: 1.4em; }
+#blog .title { font-size: 1.4em; margin: 0.3em 0; }
+#blog .description { font-size: 1.4em; height: 10em; margin: 0.3em 0; }
+#blog #blog_description { height: 10em; }
+
+#blog_users { float: left; clear: left; width: 99.5%; margin-bottom: 1em;}
+#blog_users h2 { margin: 0.25em 0;}
+#blog_users .add_blog_user { float: left; width: 50%; clear: right; margin-bottom: 0.125em; }
+#blog_users .add_blog_user p { margin: 0.5em 0;}
+#blog_users .add_blog_user p.flash { margin: 0.125em 0;}
+#blog_users .add_blog_user select { width: 85%; background: none; margin: 0; font-size: 1em; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.8em; color: #333; border: 1px solid #DEDEDE;	}	
+#blog_users >p { width: 50%; }
+#blog_users ul { height: 17.5em; float: left; width: 50%; border: 1px solid #DDD; overflow:auto; margin: 0; padding:0;}
+#blog_users ul li { border-top: none;}
+#blog_users ul li h4 { padding: 0.25em 0.4em; margin:0; border-bottom: 1px solid #DDD; }
+#blog_users .blog_user { width: 98%; margin: 0.25em 1%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
+#blog_users .blog_user p { font-size: 0.8em; margin: 0.7em 0.3em; display:inline-block; vertical-align: top;}
+#blog_users .blog_user p.email { font-weight: bolder; max-width: 32%; overflow: hidden; }
+#blog_users .blog_user p.name { max-width: 20%;}
+#blog_users .blog_user .kill_link { text-align: right; margin-right: 0.5em;}
+#blog_users .blog_user .kill_link a{ color: red;}
+
+/*-----------------------------------
 /*		Footer styles
 /* 		Relies on div#page_wrapper		
 /*---------------------------------------*/
