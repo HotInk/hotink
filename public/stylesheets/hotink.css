@@ -609,6 +609,14 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 /*		Blog styles
 /*---------------------------------------*/
 
+#blogs ol { border: none; }
+#blogs li { margin-bottom: 1em;}
+#blogs li div { margin: 0; padding:0;}
+#blogs h2 { margin: 0.5em 0; font-weight: normal; font-size: 1.8em; font-family: georgia, "Times New Roman", times, serif;}
+#blogs h3 { margin: 0.75em 0;}
+#blogs #blog_entries h3 { margin-top:0; }
+#blogs li p { font-size: 0.9em; margin: 0.5em 0; margin-top: 0; }
+
 #blog h1 { font-size: 2em; margin: 0;}
 #blog label { font-size: 1.1em; color: #333; padding: 0.5em; margin: 0 0.25em; display: block; text-decoration: underline;}
 #blog fieldset { border: 1px solid #DDD; padding: 0; float: left; margin-bottom: 0.5em; }
@@ -619,8 +627,10 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blog .description { font-size: 1.4em; height: 10em; margin: 0.3em 0; }
 #blog #blog_description { height: 10em; }
 
+#blog_entries { width: 98%; margin-left: 1%; }
+
 #blog_users { float: left; clear: left; width: 99.5%; margin-bottom: 1em;}
-#blog_users h2 { margin: 0.25em 0;}
+#blog_users h2 { margin: 0.25em 0; margin-bottom: -0.5em;}
 #blog_users .add_blog_user { float: left; width: 50%; clear: right; margin-bottom: 0.125em; }
 #blog_users .add_blog_user p { margin: 0.5em 0;}
 #blog_users .add_blog_user p.flash { margin: 0.125em 0;}

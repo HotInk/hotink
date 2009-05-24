@@ -1,0 +1,29 @@
+<li class="clearfix">
+	<h2><%= link_to blog.title, account_blog_url(@account, blog) %></h1>
+	<div class="column_holder full_column">
+			<div class="third_column">
+				<p class="description"><%= blog.description %></p>
+				<h3>Contributors</h3>
+				<p class="contributors">
+					<% blog.has_editors.each do |e| -%>
+						<% if blog.has_contributors.length > 1 -%>
+							<%= "#{e.name} (Editor)," %>
+						<% else -%>
+							<%= "#{e.name} (Editor)" %>
+						<% end -%>	
+					<% end -%>
+					<% (blog.has_contributor - blog.has_editors).each do |c| -%>
+						<%= c.name %>
+					<% end -%>
+				</p>
+			</div>
+			<div class="two_thirds_column">
+				<div id="blog_entries">
+					<h3>Recent entries</h3>
+					<ol>
+						<%= %>
+					</ol>
+				</div>
+			</div>
+	</div>
+</li>

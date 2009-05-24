@@ -2,8 +2,24 @@ class BlogsController < ApplicationController
   
   layout 'hotink'
   
+  def index
+    @blogs = @account.blogs
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.js
+      format.xml  { render :xml => @blogs }
+    end
+    
+  end
+  
   def new
     @blog = @account.blogs.build
+    
+    respond_to do |format|
+      format.html 
+      format.xml  { render :xml => @blog }
+    end
   end
   
   def create
@@ -26,6 +42,11 @@ class BlogsController < ApplicationController
   
   def show
     @blog = @account.blogs.find(params[:id])
+    
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @blog }
+    end
   end
   
   def edit

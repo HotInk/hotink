@@ -7,7 +7,7 @@ class MediafilesController < ApplicationController
   # GET /mediafiles.xml
   def index
     if find_article
-      @mediafiles = @article.mediafiles.find(:all, :include => [ :waxings ], :conditions => ['waxings.article_id = ?', @article.id])
+      @mediafiles = @article.mediafiles.find(:all, :include => [ :waxings ], :conditions => ['waxings.document_id = ?', @article.id])
     elsif params[:search].blank?
       @mediafiles = @account.mediafiles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "date DESC", :include => [:authors])
     else
@@ -81,7 +81,7 @@ class MediafilesController < ApplicationController
         flash[:notice] = 'Media added'
             #Special behaviour to mimic ajax file-upload on article form, if it's an iframe
             if params[:iframe_post] && @article
-              @waxing = @account.waxings.create(:article_id => @article.id, :mediafile_id=> @mediafile.id);
+              @waxing = @account.waxings.create(:document_id => @article.id, :mediafile_id=> @mediafile.id);
               responds_to_parent do
               			render :update do |page|
               			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090522150201) do
+ActiveRecord::Schema.define(:version => 20090524151005) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -18,20 +18,6 @@ ActiveRecord::Schema.define(:version => 20090522150201) do
     t.datetime "updated_at"
     t.string   "time_zone"
     t.text     "settings"
-  end
-
-  create_table "articles", :force => true do |t|
-    t.string   "title"
-    t.string   "alternate_title"
-    t.string   "subtitle"
-    t.text     "bodytext"
-    t.string   "summary"
-    t.datetime "date"
-    t.integer  "account_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "section_id"
-    t.boolean  "delta"
   end
 
   create_table "authors", :force => true do |t|
@@ -43,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20090522150201) do
 
   create_table "authorships", :force => true do |t|
     t.string   "staff_position"
-    t.integer  "article_id"
+    t.integer  "document_id"
     t.integer  "author_id"
     t.integer  "account_id"
     t.datetime "created_at"
@@ -81,6 +67,21 @@ ActiveRecord::Schema.define(:version => 20090522150201) do
   end
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
+
+  create_table "documents", :force => true do |t|
+    t.string   "title"
+    t.string   "alternate_title"
+    t.string   "subtitle"
+    t.text     "bodytext"
+    t.string   "summary"
+    t.datetime "date"
+    t.integer  "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "section_id"
+    t.boolean  "delta"
+    t.string   "type"
+  end
 
   create_table "issues", :force => true do |t|
     t.date     "date"
@@ -143,7 +144,7 @@ ActiveRecord::Schema.define(:version => 20090522150201) do
   end
 
   create_table "printings", :force => true do |t|
-    t.integer  "article_id"
+    t.integer  "document_id"
     t.integer  "issue_id"
     t.string   "page_number"
     t.integer  "account_id"
@@ -168,7 +169,7 @@ ActiveRecord::Schema.define(:version => 20090522150201) do
 
   create_table "sortings", :force => true do |t|
     t.integer  "category_id"
-    t.integer  "article_id"
+    t.integer  "document_id"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -215,7 +216,7 @@ ActiveRecord::Schema.define(:version => 20090522150201) do
 
   create_table "waxings", :force => true do |t|
     t.integer  "mediafile_id"
-    t.integer  "article_id"
+    t.integer  "document_id"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
