@@ -610,25 +610,30 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 /*---------------------------------------*/
 
 #blogs ol { border: none; }
-#blogs li { margin-bottom: 1em;}
+#blogs >ol>li { margin-bottom: 1em;}
 #blogs li div { margin: 0; padding:0;}
-#blogs h2 { margin: 0.5em 0; font-weight: normal; font-size: 1.8em; font-family: georgia, "Times New Roman", times, serif;}
-#blogs h3 { margin: 0.75em 0; margin-bottom: 0.25em;}
+#blogs h2 { margin: 0.75em 0; float: left; width: 80%; font-weight: normal; font-size: 2.0em; font-family: georgia, "Times New Roman", times, serif;}
+#blogs h3 { margin: 1em 0; margin-bottom: 0.125em;}
+#blogs h4 { margin: 1em 0; margin-bottom: 0.125em;}
+#blogs .contributors { min-height: 3.5em;  }
 #blogs li p { font-size: 0.9em; margin: 0.5em 0; margin-top: 0; }
+#blogs li .actions { float: left; width: 20%; padding-top: 0.9em;}
+#blogs li .actions a { float: right;}
 #blogs .third_column { margin-right: 1%;}
 
-#blog h1 { font-size: 2.2em; margin: 0; margin-bottom: 0.5em;}
+#blog h1 { font-size: 2.2em; margin: 0; margin-bottom: 0.1em;}
 #blog label { font-size: 1.1em; color: #333; padding: 0.5em; margin: 0 0.25em; display: block; text-decoration: underline;}
-#blog fieldset { border: 1px solid #DDD; padding: 0; float: left; margin-bottom: 0.5em; }
+#blog fieldset { width: 98.75%; border: 1px solid #DDD; padding: 0; float: left; margin-bottom: 0.5em; }
 #blog .text_input { font-size: 1.2em; padding: 0.2em; margin: 0.25em 0; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
 #blog div.column_holder>div { margin-bottom: 1em; }
 #blog #blog_title { font-size: 1.4em; }
 #blog .title { font-size: 1.4em; margin: 0.3em 0; }
-#blog .description { font-size: 1.4em; height: 10em; margin: 0.3em 0; }
-#blog #blog_description { height: 10em; }
+#blog .nine_tenths_column { width: 88%; margin-left: 2%;}
+#blog .description { font-size: 1.4em; height: auto; margin: 0.3em 0; margin-bottom: 0.5em; }
+#blog #blog_description { height: 3em; }
 
 #blog_entries h3 { margin-top:0; }
-#blog_entries ol {margin-top: 0.25em; min-height: 90px; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; }
+#blog_entries ol {margin-top: 0.25em; min-height:120px; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; }
 #blog_entries li { width: 99%; padding: 3px 0.5%; border:none; }
 #blog_entries li .entry { width: 88%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
 #blog_entries li .entry h1 { font-size: 1.2em; line-height: 1.2; margin: 0; padding: 0.25em; color: #666; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}

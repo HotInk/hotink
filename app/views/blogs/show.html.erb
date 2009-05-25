@@ -1,5 +1,5 @@
-<div id="blog" class="form">
-	<div class="column_holder half_column">
+<div id="blog" class="clearfix form">
+	<div class="column_holder full_column">
 		<div class="third_column">
 			<h1><%= @blog.new_record? ? "New blog" : "Manage blog" %></h1>
 		</div>
@@ -8,16 +8,16 @@
 		</div>
 		<fieldset>
 			<legend>Blog details</legend>
-			<div class="quarter_column left_column">
+			<div class="tenth_column left_column">
 				<%= label_tag :title %>
 			</div>
-			<div class="three_quarters_column right_column">
+			<div class="nine_tenths_column right_column">
 				<p class="title user"><%= @blog.title %></p>
 			</div>
-			<div class="quarter_column left_column">
+			<div class="tenth_column left_column">
 				<%= label_tag :description, "Description" %>
 			</div>
-			<div class="three_quarters_column right_column">
+			<div class="nine_tenths_column right_column">
 				<p class="description user"><%= @blog.description %></p>
 			</div>
 		</fieldset>

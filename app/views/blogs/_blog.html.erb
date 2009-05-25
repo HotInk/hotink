@@ -1,9 +1,10 @@
 <li class="clearfix">
 	<h2><%= link_to blog.title, account_blog_url(@account, blog) %></h2>
+	<div class="actions"> <%= button_link_to "New post", new_account_blog_entry_url(@account, blog)%></div>
 	<div class="column_holder full_column">
 			<div class="third_column">
 				<p class="description"><%= blog.description %></p>
-				<h3>Contributors</h3>
+				<h4>Contributors</h4>
 				<p class="contributors">
 					<% blog.has_editors.each do |e| -%>
 						<% if blog.has_contributors.length > 1 -%>
@@ -16,13 +17,15 @@
 						<%= c.name %>
 					<% end -%>
 				</p>
+				<p><strong><%= "#{pluralize(blog.entries.size, 'entry')} in total" %> </strong></p>
+				<p><strong><%= "Last posting was #{blog.entries.last.created_at.to_s(:standard)}" if blog.entries.last %> </strong></p>
 			</div>
 			<div class="two_thirds_column">
 				<div id="blog_entries" class="index">
 					<h3>Recent entries</h3>
 					<ol>
 						<% if blog.entries.size > 0 -%>
-							<%= render blog.entries %>
+							<%= render blog.entries.find(:all, :limit=>4) %>
 						<% else -%>
 						<li>
 							<div class="entry">
