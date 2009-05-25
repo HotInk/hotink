@@ -1,0 +1,45 @@
+<li id="mediafile_<%= mediafile_list_item.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
+
+	<div class="status">
+		<input type="checkbox" value="<%= mediafile_list_item.id %>" name="mediafile_ids[<%= mediafile_list_item.id %>]"/>
+	</div>
+	
+	
+		<% if mediafile_list_item.is_a?(Image) %>
+	<div class="media">
+			<%= image_tag(mediafile_list_item.file.url(:system_thumb)) %>
+		<% elsif mediafile_list_item.is_a?(Audiofile) %>
+	<div class="media blank_file">
+			<p><%= mediafile_list_item.file_file_name.split(".").last.upcase %></p>
+		<% else %>
+	<div class="media blank_file">
+			<p><%= mediafile_list_item.file_file_name.split(".").last.upcase %></p>			
+		<% end %>
+	</div>
+	
+	<div class="mediafile">
+		<h1><%=link_to h(mediafile_list_item.title), edit_account_mediafile_url(@account, mediafile_list_item), :class=>"document_link" %></h1>
+		<div class="mediafile_details clearfix">
+			<div class="authors">
+				<em><%= mediafile_list_item.authors_list if mediafile_list_item.authors_list %></em>
+			</div>
+		</div>
+	</div>
+	
+	<div class="tags">
+		<% unless mediafile_list_item.tag_list.blank? %>
+			<p><em> <%= mediafile_list_item.tag_list %></em></p>
+		<% else %>
+			<p><em> <span style="color: #BBB">No tags</span> </em></p>
+		<% end %>
+	</div>
+	
+	<div class="icons">
+		<%= link_to "&nbsp;&nbsp;&nbsp;", [@account, mediafile_list_item], :confirm => "You are about to delete the mediafile: \n \n &quot;" + h(mediafile_list_item.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete_link", :style=>"display:none;" %>
+	</div>
+	
+	<div class="date">
+		<%= h mediafile_list_item.date.to_s(:standard) %>
+	</div>
+	
+</li>

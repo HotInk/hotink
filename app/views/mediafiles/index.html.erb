@@ -19,7 +19,7 @@
 </div>
 	<ol id="mediafiles_list">
 			<% if @mediafiles.length > 0 %>
-				<%= render :partial => 'mediafile', :collection => @mediafiles %>
+				<%= render :partial => 'mediafile_list_item', :collection => @mediafiles %>
 			<% elsif @search_query %>
 				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No media matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
 			<% else %>
