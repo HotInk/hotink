@@ -32,6 +32,8 @@ class ApplicationController < ActionController::Base
   
   private
   
+  # These 'find_*' methods load models passed in through url parameters.
+  
   def find_account
     if @account
       @account
@@ -59,6 +61,17 @@ class ApplicationController < ActionController::Base
       @mediafile = false
     end
   end
+  
+  def find_entry
+    if params[:blog_id] && params[:entry_id]
+      @blog = @account.blogs.find(params[:blog_id])
+      @entry = @blog.entries.find(params[:entry_id])
+    else
+      @blog = false
+      @entry = false
+    end
+  end
+  
   
   def login_required
     unless current_user

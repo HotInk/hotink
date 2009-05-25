@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-  before_filter :find_article, :find_mediafile
+  before_filter :find_article, :find_mediafile, :find_entry
   
   # GET /tags
   # GET /tags.xml
@@ -50,6 +50,8 @@ class TagsController < ApplicationController
         #Check to see what sort of media we're tagging
         if @article
           tagged = @article
+        elsif @entry
+          tagged = @entry
         elsif @mediafile
           tagged = @mediafile
         end
@@ -68,6 +70,8 @@ class TagsController < ApplicationController
     respond_to do |format|
         if tagged.is_a? Article
           format.js   { redirect_to(new_account_article_tag_url(@account, @article, :format=>:js))}
+        elsif tagged.is_a? Entry
+          format.js   { redirect_to(new_account_blog_entry_tag_url(@account, @blog, @entry, :format=>:js))}
         elsif tagged.is_a? Mediafile
           format.js   { redirect_to(new_account_mediafile_tag_url(@account, @mediafile, :format=>:js))}
         end
@@ -110,5 +114,6 @@ class TagsController < ApplicationController
       format.html { redirect_to(tags_url) }
       format.xml  { head :ok }
     end
-  end
+  end  
+ 
 end

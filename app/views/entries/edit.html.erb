@@ -52,8 +52,9 @@
 	  <div id="authorship_form_hidden_elements" class="hidden"></div>
 	<% end %>
 </div><!-- /article_form -->
-<!-- 
+
 		<div id="tools">
+			<!-- 
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Media</h2></div>
@@ -75,18 +76,17 @@
 						%>" charset="utf-8"></script>
 				</div>
 				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - categories 
+			</div><!-- /toolbox - categories -->
 
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tags</h2></div>
 				<div class="toolbox_border"></div>
 				<div class="toolbox_body">	
-					<script id="article_tags_form" type="text/javascript" src="<%= #new_account_article_tag_url(@account, @article, :format=>:js ) 
-					%>"></script>
+					<script id="entry_tags_form" type="text/javascript" src="<%= new_account_blog_entry_tag_url(@account, @blog, @entry, :format=>:js ) %>"></script>
 				</div>
 				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - tags		
+			</div><!-- /toolbox - tags	-->	
 		</div><!-- /tools -->
 		
 <script type="text/javascript">

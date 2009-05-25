@@ -27,7 +27,9 @@ ActionController::Routing::Routes.draw do |map|
       mediafile.resources :tags
     end
     account.resources :blogs, :member => { :add_user => :put, :remove_user => :put, :promote_user => :put } do |blog|
-      blog.resources :entries
+      blog.resources :entries do |entry|
+        entry.resources :tags
+      end
     end
     account.resources :issues, :member => { :upload_pdf => :post }
     account.resources :authors

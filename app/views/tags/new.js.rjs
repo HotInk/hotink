@@ -1,5 +1,7 @@
 if @article
   page.replace 'article_tags_form', :partial => "article_tags_form"
+elsif @entry
+  page.replace 'entry_tags_form', :partial => "entry_tags_form"
 elsif @mediafile
   page.replace 'media_tags_form', :partial => "media_tags_form"
 end
