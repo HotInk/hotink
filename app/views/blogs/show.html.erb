@@ -23,5 +23,25 @@
 		</fieldset>
 	</div>
 </div>
-
-<%= render :partial => 'blog_users' %>
+<div class="column_holder full_column">
+	<div class="two_thirds_column">
+		<div id="entries" class="index clearfix">
+			<h2>Entries</h2>
+			<div id="top_pagination" class="clearfix"><%= render :partial=>'pagination' %></div>
+			<ol>
+				<% if @blog.entries.size > 0 -%>
+					<%= render @blog.entries %>
+				<% else -%>
+				<li>
+					<div class="entry">
+						<h1><small><em>No entries in this blog, yet</em></small></h1>
+					</div>
+				</li>
+				<% end -%>
+			</ol>
+		</div>
+	</div>
+	<div class="third_column">
+		<%= render :partial => 'blog_users' %>
+	</div>
+</div>

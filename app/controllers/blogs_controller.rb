@@ -42,6 +42,7 @@ class BlogsController < ApplicationController
   
   def show
     @blog = @account.blogs.find(params[:id])
+    @entries = @blog.entries.paginate( :page => params[:page], :per_page => params[:per_page])
     
     respond_to do |format|
       format.html # show.html.erb
