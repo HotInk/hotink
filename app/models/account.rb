@@ -4,7 +4,8 @@ class Account < ActiveRecord::Base
   has_many :mediafiles, :dependent => :delete_all
   has_many :images
   has_many :audiofiles
-  has_many :articles, :dependent => :delete_all  
+  has_many :articles, :dependent => :delete_all 
+  has_many :entries, :dependent => :delete_all 
   has_many :authors, :dependent => :delete_all
   has_many :categories, :order => "position", :dependent => :delete_all
   has_many :sections, :dependent => :delete_all

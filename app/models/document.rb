@@ -37,6 +37,7 @@ class Document < ActiveRecord::Base
 
     has created_at
     has account_id
+    has type
     
     set_property :delta => true
   end

@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
     if params[:article_id]
       @article = @account.articles.find(params[:article_id])
     else
-      false
+      @article = false
     end
   end
   
@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
     if params[:mediafile_id]
       @mediafile = @account.mediafiles.find(params[:mediafile_id])
     else
-      false
+      @mediafile = false
     end
   end
   

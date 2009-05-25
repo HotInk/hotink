@@ -12,8 +12,6 @@ ActionController::Routing::Routes.draw do |map|
   map.access_token '/oauth/access_token',:controller=>'oauth',:action=>'access_token'
   map.test_request '/oauth/test_request',:controller=>'oauth',:action=>'test_request'
 
-  
-  
   # No content exists in Hot Ink without belonging to an account, routing reflects this fact.
   map.resources :account_activations
   map.resources :accounts do |account|
@@ -28,7 +26,9 @@ ActionController::Routing::Routes.draw do |map|
       mediafile.resources :authors
       mediafile.resources :tags
     end
-    account.resources :blogs, :member => { :add_user => :put, :remove_user => :put, :promote_user => :put }
+    account.resources :blogs, :member => { :add_user => :put, :remove_user => :put, :promote_user => :put } do |blog|
+      blog.resources :entries
+    end
     account.resources :issues, :member => { :upload_pdf => :post }
     account.resources :authors
     account.resources :sections

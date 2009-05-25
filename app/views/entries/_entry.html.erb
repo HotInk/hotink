@@ -1,0 +1,12 @@
+<li id="entry_<%= entry.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
+
+	<div class="entry clearfix">
+		<h1>&ldquo;<%=link_to h(entry.display_title.strip), edit_account_blog_entry_url(@account, entry.blogs.first, entry), :class=>"document_link" %>&rdquo;</h1>
+	
+	</div>
+	
+	<div class="date">
+		<%= h entry.date.to_s(:standard_date_only) %>
+	</div>
+	
+</li>

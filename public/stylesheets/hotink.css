@@ -613,11 +613,11 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blogs li { margin-bottom: 1em;}
 #blogs li div { margin: 0; padding:0;}
 #blogs h2 { margin: 0.5em 0; font-weight: normal; font-size: 1.8em; font-family: georgia, "Times New Roman", times, serif;}
-#blogs h3 { margin: 0.75em 0;}
-#blogs #blog_entries h3 { margin-top:0; }
+#blogs h3 { margin: 0.75em 0; margin-bottom: 0.25em;}
 #blogs li p { font-size: 0.9em; margin: 0.5em 0; margin-top: 0; }
+#blogs .third_column { margin-right: 1%;}
 
-#blog h1 { font-size: 2em; margin: 0;}
+#blog h1 { font-size: 2.2em; margin: 0; margin-bottom: 0.5em;}
 #blog label { font-size: 1.1em; color: #333; padding: 0.5em; margin: 0 0.25em; display: block; text-decoration: underline;}
 #blog fieldset { border: 1px solid #DDD; padding: 0; float: left; margin-bottom: 0.5em; }
 #blog .text_input { font-size: 1.2em; padding: 0.2em; margin: 0.25em 0; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
@@ -627,7 +627,18 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blog .description { font-size: 1.4em; height: 10em; margin: 0.3em 0; }
 #blog #blog_description { height: 10em; }
 
-#blog_entries { width: 98%; margin-left: 1%; }
+#blog_entries h3 { margin-top:0; }
+#blog_entries ol {margin-top: 0.25em; min-height: 90px; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; }
+#blog_entries li { width: 99%; padding: 3px 0.5%; border:none; }
+#blog_entries li .entry { width: 88%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
+#blog_entries li .entry h1 { font-size: 1.2em; line-height: 1.2; margin: 0; padding: 0.25em; color: #666; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
+#blog_entries li .entry div { font-size: .9em; }
+#blog_entries li .entry .entry_details { width: 100%; min-height: 24px;}
+#blog_entries li .entry .authors { float: left; padding: 0.5em;}
+#blog_entries li .entry .media { float: right; text-align: right; padding: 0.25em; }
+#blog_entries li .entry .media img{ float: right; margin: 0 0.125em;}
+#blog_entries li .date { float: right; width: 10%; color: #999; font-size: 1.1em; padding: 0.5em 1%; text-align:right;}
+
 
 #blog_users { float: left; clear: left; width: 99.5%; margin-bottom: 1em;}
 #blog_users h2 { margin: 0.25em 0; margin-bottom: -0.5em;}
@@ -646,6 +657,15 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blog_users .blog_user button { float: none; margin: 0 0.25em; position: relative; top: 0.45em; }
 #blog_users .blog_user .kill_link { text-align: right; margin-right: 0.5em;}
 #blog_users .blog_user .kill_link a{ color: red;}
+
+#entry_form { width: 68%; float:left; }
+#entry_form h3 { font-weight: normal; font-size: 1.5em; margin: 0.25em 0;}
+#entry_form #entry_title { margin-bottom: 0.5em; font-size: 1.8em;}
+#entry_form #entry_subtitle { margin-bottom: 0.75em; font-size: 1.3em; }
+#entry_form #entry_date { font-size: 14px; height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; background-color: #F9F9F9;}
+#entry_form #entry_section_id { height: 1.6em; max-width: 22em; font-size: 14px; margin: 0.25em 0; background-color: #F9F9F9; }
+#entry_form #entry_bodytext { width:99%; border: 1px solid #999; background-color: #F9F9F9; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
+#entry_form #entry_summary { width:99%; height: 85px;  background-color: #F9F9F9; border-color: #999; padding: 0.5em; line-height: 1.4; color: #333;}
 
 /*-----------------------------------
 /*		Footer styles

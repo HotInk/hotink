@@ -1,5 +1,5 @@
 <li class="clearfix">
-	<h2><%= link_to blog.title, account_blog_url(@account, blog) %></h1>
+	<h2><%= link_to blog.title, account_blog_url(@account, blog) %></h2>
 	<div class="column_holder full_column">
 			<div class="third_column">
 				<p class="description"><%= blog.description %></p>
@@ -18,10 +18,18 @@
 				</p>
 			</div>
 			<div class="two_thirds_column">
-				<div id="blog_entries">
+				<div id="blog_entries" class="index">
 					<h3>Recent entries</h3>
 					<ol>
-						<%= %>
+						<% if blog.entries.size > 0 -%>
+							<%= render blog.entries %>
+						<% else -%>
+						<li>
+							<div class="entry">
+								<h1><small><em>No entries in this blog, yet</em></small></h1>
+							</div>
+						</li>
+						<% end -%>
 					</ol>
 				</div>
 			</div>
