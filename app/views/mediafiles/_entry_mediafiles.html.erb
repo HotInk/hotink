@@ -1,0 +1,18 @@
+<div id="account_blog_entry_mediafiles_list" class="media_list">
+<% if @mediafiles.empty? %>
+	<p class="no_media">
+		No media attached.
+	</p>
+<% else %>
+	<% for mediafile in @mediafiles %> 
+		<% if mediafile.is_a? Image %>
+			<%= render :partial=>'mediafiles/entry_form/image', :object=> mediafile %>
+		<% elsif mediafile.is_a? Audiofile %>
+			<%= render :partial=>'mediafiles/entry_form/audiofile', :object=> mediafile %>
+		<% else%>
+			<%= render :partial=>'mediafiles/entry_form/mediafile', :object=> mediafile %>
+		<% end %>
+	<% end %>
+<% end %>
+<%= button_link_to_remote "Attach Media", :url=>new_account_blog_entry_mediafile_url(@account, @blog, @entry, :format=>:js), :method=>:get %>
+</div>

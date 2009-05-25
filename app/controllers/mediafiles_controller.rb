@@ -1,13 +1,15 @@
 class MediafilesController < ApplicationController
   layout 'hotink'
   
-  before_filter :find_article
+  before_filter :find_article, :find_entry
   
   # GET /mediafiles
   # GET /mediafiles.xml
   def index
-    if find_article
+    if @article
       @mediafiles = @article.mediafiles.find(:all, :include => [ :waxings ], :conditions => ['waxings.document_id = ?', @article.id])
+    elsif @entry
+      @mediafiles = @entry.mediafiles.find(:all, :include => [ :waxings ], :conditions => ['waxings.document_id = ?', @entry.id])
     elsif params[:search].blank?
       @mediafiles = @account.mediafiles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "date DESC", :include => [:authors])
     else
@@ -16,8 +18,10 @@ class MediafilesController < ApplicationController
     end
 
     respond_to do |format|
-      if @article = find_article
+      if @article
         format.js { render :action => :article_mediafiles }
+      elsif @entry
+        format.js { render :action => :entry_mediafiles }
       else
         format.js
       end
@@ -44,7 +48,7 @@ class MediafilesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      if @article = find_article
+      if @article || @entry
         format.js
       end
       format.xml  { render :xml => @mediafile }
@@ -79,9 +83,13 @@ class MediafilesController < ApplicationController
     respond_to do |format|
       if @mediafile.save!
         flash[:notice] = 'Media added'
-            #Special behaviour to mimic ajax file-upload on article form, if it's an iframe
-            if params[:iframe_post] && @article
-              @waxing = @account.waxings.create(:document_id => @article.id, :mediafile_id=> @mediafile.id);
+            #Special behaviour to mimic ajax file-upload on article & entry form, if it's an iframe
+            if params[:iframe_post] && (@article || @entry)
+              if @article
+                @waxing = @account.waxings.create(:document_id => @article.id, :mediafile_id=> @mediafile.id);
+              elsif @entry
+                @waxing = @account.waxings.create(:document_id => @entry.id, :mediafile_id=> @mediafile.id);
+              end
               responds_to_parent do
               			render :update do |page|
               			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'

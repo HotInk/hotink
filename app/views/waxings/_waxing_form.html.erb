@@ -1,8 +1,15 @@
 <div id="waxing-<%= @waxing.id %>">
 	<p><strong>Caption:</strong></p>
-	<% remote_form_for [@account, @article, @waxing] do |f| %>
-	<%= text_area_tag "waxing[caption]", @waxing.caption, :id=>"waxing_caption_#{@waxing.id}" %>
-	<%= button_link_to_function "Save caption","$('edit_waxing_#{@waxing.id}').onsubmit();$(this).next().show();$('waxing_caption_#{@waxing.id}').disable();", :class => "tiny"  %><img src="/loading_small.gif" style="display:none;" class="spinner"/>
+	<% if @article %>
+		<% remote_form_for [@account, @article, @waxing] do |f| %>
+		<%= text_area_tag "waxing[caption]", @waxing.caption, :id=>"waxing_caption_#{@waxing.id}" %>
+		<%= button_link_to_function "Save caption","$('edit_waxing_#{@waxing.id}').onsubmit();$(this).next().show();$('waxing_caption_#{@waxing.id}').disable();", :class => "tiny"  %><img src="/loading_small.gif" style="display:none;" class="spinner"/>
+		<% end %>
+	<% elsif @entry %>
+		<% remote_form_for [@account, @blog, @entry, @waxing] do |f| %>
+		<%= text_area_tag "waxing[caption]", @waxing.caption, :id=>"waxing_caption_#{@waxing.id}" %>
+		<%= button_link_to_function "Save caption","$('edit_waxing_#{@waxing.id}').onsubmit();$(this).next().show();$('waxing_caption_#{@waxing.id}').disable();", :class => "tiny"  %><img src="/loading_small.gif" style="display:none;" class="spinner"/>
+		<% end %>
 	<% end %>
 	<script type="text/javascript" charset="utf-8">
 		$('waxing_caption_<%= @waxing.id %>').focus();
