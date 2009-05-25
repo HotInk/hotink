@@ -634,8 +634,9 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blog .contributors { font-size: 1.1em; margin: 0.5em 0;}
 #blog #blog_description { height: 3em; }
 
-#entries { width: 98%; }
-#entries h2 { float: left; margin-bottom: 0em;}
+#entries { width: 97%; }
+#entries h2 { float: left; margin-bottom: 0.25em;}
+#entries >a { float: left; margin: 1.8em; margin-bottom: 0;}
 #entries #page_info { padding-top: 1.8em; }
 #entries ol { border: 1px dotted #515151; }
 #entries li { width: 99%; padding: 3px 0.5%; border:none; }
@@ -652,7 +653,7 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blog_entries h3 { margin-top:0; }
 #blog_entries ol {margin-top: 0.25em; min-height:120px; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; }
 #blog_entries li { width: 99%; padding: 3px 0.5%; border:none; }
-#blog_entries li .entry { width: 88%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
+#blog_entries li .entry { width: 85%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
 #blog_entries li .entry h1 { font-size: 1.2em; line-height: 1.2; margin: 0; padding: 0.25em; color: #666; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #blog_entries li .entry div { font-size: .9em; }
 #blog_entries li .entry .entry_details { width: 100%; min-height: 24px;}
