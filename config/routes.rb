@@ -15,11 +15,14 @@ ActionController::Routing::Routes.draw do |map|
   # No content exists in Hot Ink without belonging to an account, routing reflects this fact.
   map.resources :account_activations
   map.resources :accounts do |account|
+    account.resources :documents do |document|
+      document.resources :mediafiles
+      document.resources :waxings
+    end
     account.resources :articles do |article|
       article.resources :authors
       article.resources :sortings
       article.resources :tags
-      article.resources :mediafiles
       article.resources :waxings
     end
     account.resources :mediafiles do |mediafile|
@@ -28,7 +31,6 @@ ActionController::Routing::Routes.draw do |map|
     end
     account.resources :blogs, :member => { :add_user => :put, :remove_user => :put, :promote_user => :put } do |blog|
       blog.resources :entries do |entry|
-        entry.resources :mediafiles
         entry.resources :waxings
         entry.resources :tags
       end
@@ -39,6 +41,7 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :categories
     account.resources :images
     account.resources :audiofiles
+    account.resources :waxings
   end
   
 

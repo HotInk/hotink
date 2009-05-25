@@ -1,0 +1,10 @@
+<div id="mediafiles_list" class="media_list">
+<% unless @document.waxings %>
+	<p class="no_media">
+		No media attached.
+	</p>
+<% else %>
+	<%= render @document.waxings %>
+<% end %>
+<%= button_link_to_remote "Attach Media", :url=>new_account_document_mediafile_url(@account, @document, :format=>:js), :method=>:get %>
+</div>

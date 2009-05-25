@@ -1,0 +1,1 @@
+page.replace 'mediafiles_list', :partial => 'mediafiles_list'

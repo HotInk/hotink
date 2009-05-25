@@ -6,11 +6,8 @@ class MediafilesController < ApplicationController
   # GET /mediafiles
   # GET /mediafiles.xml
   def index
-    if @article
-      @mediafiles = @article.mediafiles.find(:all, :include => [ :waxings ], :conditions => ['waxings.document_id = ?', @article.id])
-    elsif @entry
-      @mediafiles = @entry.mediafiles.find(:all, :include => [ :waxings ], :conditions => ['waxings.document_id = ?', @entry.id])
-    elsif params[:search].blank?
+
+    if params[:search].blank?
       @mediafiles = @account.mediafiles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "date DESC", :include => [:authors])
     else
       @search_query = params[:search]
@@ -18,13 +15,7 @@ class MediafilesController < ApplicationController
     end
 
     respond_to do |format|
-      if @article
-        format.js { render :action => :article_mediafiles }
-      elsif @entry
-        format.js { render :action => :entry_mediafiles }
-      else
-        format.js
-      end
+      format.js
       format.html # index.html.erb
       format.xml  { render :xml => @mediafiles }
     end

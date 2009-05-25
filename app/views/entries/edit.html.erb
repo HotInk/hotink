@@ -60,22 +60,20 @@
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Media</h2></div>
 				<div class="toolbox_border"></div>
 				<div class="toolbox_body">	
-					<script id="account_blog_entry_mediafiles_list" type="text/javascript" src="<%= account_blog_entry_mediafiles_url(@account, @blog, @entry, :format=>:js) %>" charset="utf-8"></script>
+					<div id="mediafiles_list" class="media_list">
+						<% unless @entry.waxings %>
+							<p class="no_media">
+								No media attached.
+							</p>
+						<% else %>
+							<%= render @entry.waxings %>
+						<% end %>
+						<%= button_link_to_remote "Attach Media", :url=>new_account_document_mediafile_url(@account, @entry, :format=>:js), :method=>:get %>
+					</div>
 					<iframe name="upload_frame" style="display: none"></iframe>
 				</div>
 				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - media -->
-		<!--
-			<div class="toolbox">
-				<div class="toolbox_border"></div>
-				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Categories</h2></div>
-				<div class="toolbox_border"></div>
-				<div class="toolbox_body">	
-						<script id="account_article_sorting_list" type="text/javascript" src="<%= #account_article_sortings_url(@account, @article, :format=>:js) 
-						%>" charset="utf-8"></script>
-				</div>
-				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - categories -->
+			</div> <!-- /toolbox - media -->
 
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
@@ -95,7 +93,7 @@
 
 	//Shortcut function to reload media list
 	reload_media = function() {
-		new Ajax.Request('<%= account_blog_entry_mediafiles_path(@account, @blog, @entry )%>', {method:'get'});
+		new Ajax.Request('<%= account_document_mediafiles_path(@account, @entry )%>', {method:'get'});
 	}
 	
  	// WMD Editor Configuration script
