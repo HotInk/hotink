@@ -46,6 +46,7 @@ class EntriesController < ApplicationController
     respond_to do |format|
       if @entry.update_attributes(params[:entry])
         flash[:notice] = "Entry saved"
+        @entry = @blog.entries.find(params[:id])
         format.js
         format.html { redirect_to(edit_account_blog_entry_path(@account, @blog, @entry)) }
         format.xml  { head :ok }

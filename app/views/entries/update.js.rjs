@@ -3,3 +3,6 @@ page.replace_html 'last_saved', :text =>"Last modified #{time_ago_in_words(@entr
 page.visual_effect :highlight, "last_saved", :duration => 0.5
 page.replace_html 'flash', :text =>render_flash(flash[:notice])
 page << "fade_flash();"
+
+#Remove existing author mechanism and completely replace
+page.replace_html 'author_list', :partial => 'authors_form'

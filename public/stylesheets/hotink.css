@@ -689,6 +689,14 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #entry_form #entry_section_id { height: 1.6em; max-width: 22em; font-size: 14px; margin: 0.25em 0; background-color: #F9F9F9; }
 #entry_form #entry_bodytext { width:99%; border: 1px solid #999; background-color: #F9F9F9; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
 #entry_form #entry_summary { width:99%; height: 85px;  background-color: #F9F9F9; border-color: #999; padding: 0.5em; line-height: 1.4; color: #333;}
+#entry_form #authorships_form { background-color: #F9F9F9; }
+#entry_form #article_authors_list{ border:3px solid #F9F9F9!important;border-left:none;display:block;margin:0px 3px -4px -2px;background-color: #F9F9F9;padding:0px!important;color: #515151;}
+/*IE6-/Win only*/
+/*\*/ * html .tokenizer_input_borderless #article_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
+#entry_form #autocomplete_populate{ width: 450px;}
+#entry_form #author_list { margin-bottom: 1.5em; line-height: 1.6; }
+
+
 
 /*-----------------------------------
 /*		Footer styles

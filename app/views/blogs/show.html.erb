@@ -28,7 +28,7 @@
 		<div id="entries" class="index clearfix">
 			<h2>Entries</h2> <%= button_link_to "New entry", new_account_blog_entry_url(@account, @blog), :class=>"small" %>
 			<div id="top_pagination" class="clearfix"><%= render :partial=>'pagination' %></div>
-			<ol>
+			<ol class="clearfix">
 				<% if @blog.entries.size > 0 -%>
 					<%= render @blog.entries %>
 				<% else -%>
