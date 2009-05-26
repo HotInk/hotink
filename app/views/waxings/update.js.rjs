@@ -1,1 +1,1 @@
-page.replace "waxing-#{@waxing.id}", :partial => 'waxing_display'
+page.replace "waxing-form-#{@waxing.id}", :partial => 'waxing_display'

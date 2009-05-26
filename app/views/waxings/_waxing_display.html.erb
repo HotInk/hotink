@@ -1,8 +1,4 @@
 <div id="waxing-form-<%= @waxing.id %>">
 	  <p><strong>Caption:</strong></p>
-	<% if @article %>
-	  <p><%= link_to_remote ((@waxing.caption.nil?||@waxing.caption.strip=="") ? "[Click here to add a caption]" : @waxing.caption), :url=>edit_account_article_waxing_url(@account, @article, @waxing), :method=>:get %></p>
-	<% elsif @entry %>
-	  <p><%= link_to_remote ((@waxing.caption.nil?||@waxing.caption.strip=="") ? "[Click here to add a caption]" : @waxing.caption), :url=>edit_account_blog_entry_waxing_url(@account, @blog, @entry, @waxing), :method=>:get %></p>
-	<% end %>
+	  <p><%= link_to_remote ((@waxing.caption.nil? || @waxing.caption.strip =="" ) ? "[Click here to add a caption]" : @waxing.caption), :url=>edit_account_waxing_url(@account, @waxing), :method=>:get %></p>
 </div>

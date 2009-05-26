@@ -48,10 +48,7 @@ class WaxingsController < ApplicationController
   def edit
     @waxing = @account.waxings.find(params[:id])
     respond_to do |format|
-      if @article || @entry
-        format.js
-      end
-      format.html
+      format.js
     end
   end
 
@@ -99,9 +96,7 @@ class WaxingsController < ApplicationController
 
     respond_to do |format|
       if @waxing.update_attributes(params[:waxing])
-        if @article || @entry
-          format.js
-        end
+        format.js
         format.html { redirect_to(@waxing) }
         format.xml  { head :ok }
       else
