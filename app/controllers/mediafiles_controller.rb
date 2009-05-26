@@ -1,7 +1,7 @@
 class MediafilesController < ApplicationController
   layout 'hotink'
   
-  before_filter :find_article, :find_entry
+  before_filter :find_article, :find_entry, :find_document
   
   # GET /mediafiles
   # GET /mediafiles.xml
@@ -39,7 +39,7 @@ class MediafilesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      if @article || @entry
+      if @document
         format.js
       end
       format.xml  { render :xml => @mediafile }
@@ -75,16 +75,12 @@ class MediafilesController < ApplicationController
       if @mediafile.save!
         flash[:notice] = 'Media added'
             #Special behaviour to mimic ajax file-upload on article & entry form, if it's an iframe
-            if params[:iframe_post] && (@article || @entry)
-              if @article
-                @waxing = @account.waxings.create(:document_id => @article.id, :mediafile_id=> @mediafile.id);
-              elsif @entry
-                @waxing = @account.waxings.create(:document_id => @entry.id, :mediafile_id=> @mediafile.id);
-              end
+            if params[:iframe_post] && @document
+              @waxing = @account.waxings.create(:document_id => @document.id, :mediafile_id=> @mediafile.id);
               responds_to_parent do
               			render :update do |page|
               			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'
-              				page << "reload_media();"
+              				page.replace_html 'mediafiles_list', :partial => 'waxing', :collection => @document.waxings
               			end
               end
               return

@@ -14,7 +14,7 @@
 			<div class="media">
 				<% article.mediafiles.each do | i | %>
 					<% if i.is_a?(Image) %>
-						<%= link_to_remote image_tag(i.file.url(:system_icon), :border=>1), :url=>edit_account_article_mediafile_url(@account, article, i, :format=>:js), :method=>:get %>
+						<%= link_to_remote image_tag(i.file.url(:system_icon), :border=>1), :url=>edit_account_mediafile_url(@account, i, :format=>:js), :method=>:get %>
 					<% else %>
 						<%= image_tag('/images/blank_file_icon.png', :alt=>i.file_file_name) if i %>
 					<% end %>

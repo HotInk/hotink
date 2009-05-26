@@ -62,6 +62,14 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def find_document
+    if params[:document_id]
+      @document = @account.documents.find(params[:document_id])
+    else
+      @document = false
+    end
+  end
+  
   def find_entry
     if params[:blog_id] && params[:entry_id]
       @blog = @account.blogs.find(params[:blog_id])

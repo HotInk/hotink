@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
       document.resources :waxings
     end
     account.resources :articles do |article|
+      article.resources :mediafiles
       article.resources :authors
       article.resources :sortings
       article.resources :tags
@@ -31,6 +32,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     account.resources :blogs, :member => { :add_user => :put, :remove_user => :put, :promote_user => :put } do |blog|
       blog.resources :entries do |entry|
+        entry.resources :mediafiles
         entry.resources :waxings
         entry.resources :tags
       end

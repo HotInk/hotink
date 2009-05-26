@@ -12,7 +12,7 @@
 		<%= observe_field :mediafiles_search, :url => account_mediafiles_url(@account), :with => "search", :frequency=>0.5, :method=>:get, :after =>"$('mediafiles_list').select('li').invoke('addClassName', 'transparent');", :complete=>"media_list_clean_up([#{@waxing.document.mediafile_ids.join(',')}]);" %>
 	</div>
 </div>
-<% form_remote_tag :url=>@url_for_create, :after=>"page_overlay.end();", :success=>"reload_media();trigger_flash('<p>Media attached</p>');", :method => :post do %>
+<% form_remote_tag :url=>account_document_waxings_url(@account, @document), :after=>"page_overlay.end();", :success=>"trigger_flash('<p>Media attached</p>');", :method => :post do %>
 <div class="function_bar clearfix">
 	<%= button_link_to_submit "Attach selected", :class=>"save large" %>
 	<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
@@ -21,7 +21,7 @@
 <div class="scroll_window">
 	<ol id="mediafiles_list">
 			<% if @mediafiles.length > 0 %>
-				<%= render :partial => '/mediafiles/mediafile', :collection => @mediafiles %>
+				<%= render :partial => '/mediafiles/mediafile_list_item', :collection => @mediafiles %>
 			<% elsif @search_query %>
 				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No media matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
 			<% else %>

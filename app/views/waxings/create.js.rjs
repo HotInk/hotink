@@ -1,0 +1,1 @@
+page.replace_html 'mediafiles_list', :partial => 'waxing', :collection => @document.waxings

@@ -3,41 +3,22 @@
 	<div class="title_bar clearfix">
 		<div class="actions">	
 			<h1>Attach media </h1>
-			<% if @article -%>
-				<%= button_link_to_remote 'Attach archive media &raquo;', :url=>new_account_article_waxing_path(@account, @article, :format=>:js), :method => :get, :html=>{ :class=>'primary'} %>
-			<% elsif @entry -%>
-				<%= button_link_to_remote 'Attach archive media &raquo;', :url=>new_account_blog_entry_waxing_path(@account, @blog, @entry, :format=>:js), :method => :get, :html=>{ :class=>'primary'} %>
-			<% end -%>
+				<%= button_link_to_remote 'Attach archive media &raquo;', :url=>new_account_document_waxing_url(@account, @document, :format=>:js), :method => :get, :html=>{ :class=>'primary'} %>
 		</div>
 	</div>
 	<div id="upload_media_form" class="two_thirds_column">
 				<h4>Upload media file</h4>
 			<div>
-				<% if @article -%>
-					<% form_for [@account, @article, @mediafile], :html=>{:multipart=>true, :target=>"upload_frame", :onsubmit => "page_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" style=\"margin: 1em 1.5em;\" src=\"/loading.gif\" />');"} do |f| %>
-						<%= f.error_messages %>
+					<% form_tag account_document_mediafiles_url(@account, @document), :method => :post, :multipart=>true, :target=>"upload_frame", :onsubmit => "page_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" style=\"margin: 1em 1.5em;\" src=\"/loading.gif\" />');" do %>
 						<p>
-							<%= f.label :file, "Media file" %><br />
-							<%= f.file_field :file, :class=>"text_input" %>			
+							<%= label_tag 'mediafile[file]', "Media file" %><br />
+							<%= file_field_tag 'mediafile[file]', :class=>"text_input" %>			
 						</p>
 						<p style="text-align:left;padding-top:10px;">
 							<%= button_link_to_submit "Upload", :class=>"large save" %>
 						</p>
 						<%= hidden_field_tag 'iframe_post', true %>
 					<% end %>
-				<% elsif @entry -%>
-					<% form_for [@account, @blog, @entry, @mediafile], :html=>{:multipart=>true, :target=>"upload_frame", :onsubmit => "page_overlay.end();$('account_blog_entry_mediafiles_list').insert('<img class=\"mediafile_loading\" style=\"margin: 1em 1.5em;\" src=\"/loading.gif\" />');"} do |f| %>
-						<%= f.error_messages %>
-						<p>
-							<%= f.label :file, "Media file" %><br />
-							<%= f.file_field :file, :class=>"text_input" %>			
-						</p>
-						<p style="text-align:left;padding-top:10px;">
-							<%= button_link_to_submit "Upload", :class=>"large save" %>
-						</p>
-						<%= hidden_field_tag 'iframe_post', true %>
-					<% end %>
-				<% end -%>
 			</div>
 	</div>
 	<div class="third_column">

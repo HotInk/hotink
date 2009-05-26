@@ -1,6 +1,8 @@
 class WaxingsController < ApplicationController
-  before_filter :find_article, :find_mediafile, :find_entry
+  before_filter :find_article, :find_mediafile, :find_entry, :find_document
   layout 'hotink'
+  
+  helper_method :plural_class_name
   
   # GET /waxings
   # GET /waxings.xml
@@ -29,13 +31,7 @@ class WaxingsController < ApplicationController
   def new
     @waxing = @account.waxings.build
     
-    if @article
-      @waxing.document = @article
-      @url_for_create = account_article_waxings_url(@waxing.account, @article)
-    elsif @entry
-      @waxing.document = @entry
-      @url_for_create = account_blog_entry_waxings_url(@waxing.account, @blog, @entry )
-    end
+    @waxing.document = @document
 
     #@mediafiles = @account.mediafiles.search(@search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 10 ), :order => :date, :sort_mode => :desc, :include => [:authors])
     @mediafiles = @account.mediafiles.paginate(:page=>(params[:page] || 1), :per_page => (params[:per_page] || 10 ), :order => 'date DESC', :include => [:authors])
@@ -78,21 +74,20 @@ class WaxingsController < ApplicationController
       end
     elsif params[:mediafile_ids]
       
+      
       # Set behaviour based on document type
-      if @article
-        doc = @article
-        redirect_path = edit_account_article_url(@account, @article)
-      elsif @entry
-        doc = @entry
-        redirect_path = edit_account_blog_entry_url(@account, @blog, @entry)
+      if @document.is_a? Article
+        redirect_path = edit_account_article_url(@account, @document)
+      elsif @document.is_a? Entry
+        redirect_path = edit_account_blog_entry_url(@account, @document.blogs.first, @document)
       end
       
-      params[:mediafile_ids].each { |k, v| @account.waxings.create(:document_id => doc.id, :mediafile_id => k)  }
+      params[:mediafile_ids].each { |k, v| @account.waxings.create(:document_id => @document.id, :mediafile_id => k)  }
       
       respond_to do |format|
         flash[:notice] = "Media attached"
         format.html { redirect_to(redirect_path) }
-        format.js { head :ok }
+        format.js
       end
     end
   end
@@ -120,14 +115,12 @@ class WaxingsController < ApplicationController
   # DELETE /waxings/1.xml
   def destroy
     @waxing = @account.waxings.find(params[:id])
-    @waxing.destroy
-
+    
     respond_to do |format|
-      if (@article == @waxing.document) || (@entry == @waxing.document)
+      if @waxing.destroy
         format.js { head :ok }
+        format.xml  { head :ok }
       end
-      format.html { redirect_to(waxings_url) }
-      format.xml  { head :ok }
     end
   end
 end

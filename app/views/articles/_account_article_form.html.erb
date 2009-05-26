@@ -60,8 +60,17 @@
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Media</h2></div>
 				<div class="toolbox_border"></div>
-				<div class="toolbox_body">	
-					<script id="mediafiles_list" type="text/javascript" src="<%= account_article_mediafiles_url(@account, @article, :format=>:js) %>" charset="utf-8"></script>
+				<div class="toolbox_body clearfix">	
+					<div id="mediafiles_list" class="media_list">
+						<% unless @article.waxings %>
+							<p class="no_media">
+								No media attached.
+							</p>
+						<% else %>
+							<%= render @article.waxings %>
+						<% end %>
+					</div>
+					<%= button_link_to_remote "Attach Media", :url=>new_account_document_mediafile_url(@account, @article, :format=>:js), :method=>:get %>
 					<iframe name="upload_frame" style="display: none"></iframe>
 				</div>
 				<div class="toolbox_border"></div>
