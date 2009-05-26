@@ -1,0 +1,2 @@
+page.visual_effect(:fade, "entry_#{@entry.id}")
+page << "trigger_flash('<p style=\"color:#E62424\">#{flash[:notice]}</p>');"

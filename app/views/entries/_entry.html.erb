@@ -5,8 +5,17 @@
 	
 	</div>
 	
+	<div class="kill_link">
+	<%= link_to_remote 	"x", 
+						:url=>account_blog_entry_url(@account, entry.blogs.first, entry), 
+						:method => :delete, 
+						:confirm => "You're about to delete the entry: \n\n\"#{entry.display_title}\" \n\nPress OK to delete this entry.",
+						:after=>"$(this).up().addClassName('transparent');" 
+	%>
+	</div>
+	
 	<div class="date">
 		<%= h entry.date.to_s(:standard_date_only) %>
 	</div>
-	
+
 </li>

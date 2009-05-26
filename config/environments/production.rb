@@ -24,6 +24,6 @@ config.action_controller.perform_caching             = true
 # config.action_mailer.raise_delivery_errors = false
 
 ActionMailer::Base.smtp_settings = {
-  :address => 'mail.campusplus.com',
+  :address => 'theorem.ca',
   :domain => "hotink.net"
 }

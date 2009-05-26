@@ -57,6 +57,21 @@ class EntriesController < ApplicationController
     end
   end
   
+
+  def destroy
+    @entry = @blog.entries.find(params[:id])
+
+    respond_to do |format|
+      if @entry.destroy
+        flash[:notice] = "Entry trashed"
+        format.js
+        format.html { redirect_to(account_blog_url(@account, @blog)) }
+        format.xml  { head :ok }
+      else
+        flash[:notice] = "Entry couldn't be deleted"
+      end
+    end
+  end
   
   private
   
