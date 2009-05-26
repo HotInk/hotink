@@ -1,0 +1,2 @@
+page.visual_effect(:fade, "waxing-#{@waxing.id}")
+page << "trigger_flash('<p style=\"color:#8CC63F\">#{flash[:notice]}</p>');"

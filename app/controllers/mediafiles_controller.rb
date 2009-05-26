@@ -80,7 +80,7 @@ class MediafilesController < ApplicationController
               responds_to_parent do
               			render :update do |page|
               			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'
-              				page.replace_html 'mediafiles_list', :partial => 'waxing', :collection => @document.waxings
+              				page.replace_html 'mediafiles_list', :partial => 'waxings/waxing', :collection => @document.waxings
               			end
               end
               return

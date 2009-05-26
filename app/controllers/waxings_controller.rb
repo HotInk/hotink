@@ -118,7 +118,8 @@ class WaxingsController < ApplicationController
     
     respond_to do |format|
       if @waxing.destroy
-        format.js { head :ok }
+        flash[:notice] = "Media detached"
+        format.js
         format.xml  { head :ok }
       end
     end

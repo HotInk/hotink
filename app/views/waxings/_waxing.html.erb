@@ -1,14 +1,13 @@
-<div class="token" href="#" onclick="return false;">
+<div id="waxing-<%= waxing.id %>" class="token" href="#" onclick="return false;">
 	<span class="x" onclick="<%=	remote_function(	:url=>account_waxing_url(@account, waxing), 
 														:method=>:delete, 
 														:confirm=>"Are you sure you want to detach this image from this article?\n\nAny caption saved with this article will be lost, though you'll still be able to find the image in your archive.",
-														:success=>"new Effect.Fade($(this.parentNode));trigger_flash('<p>Media detached</p>');",
 														:failure=>"trigger_flash('<p>Media could not be deleted</p>');" )
 							 %>; return false;" onmouseover="this.className='x_hover'" onmouseout="this.className='x'">&nbsp;</span>
 	  
 	<%= render waxing.mediafile %>
 	
-	<div id="waxing-<%= waxing.id %>">
+	<div id="waxing-form-<%= waxing.id %>">
 		  <p><strong>Caption:</strong></p>
 		  <p><%= link_to_remote ((waxing.caption.nil? || waxing.caption.strip =="" ) ? "[Click here to add a caption]" : waxing.caption), :url=>edit_account_waxing_url(@account, waxing), :method=>:get %></p>
 	</div>

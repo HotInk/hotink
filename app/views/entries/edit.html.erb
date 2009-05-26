@@ -59,7 +59,7 @@
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Media</h2></div>
 				<div class="toolbox_border"></div>
-				<div class="toolbox_body">	
+				<div class="toolbox_body clearfix">	
 					<div id="mediafiles_list" class="media_list">
 						<% unless @entry.waxings %>
 							<p class="no_media">
@@ -68,8 +68,8 @@
 						<% else %>
 							<%= render @entry.waxings %>
 						<% end %>
-						<%= button_link_to_remote "Attach Media", :url=>new_account_document_mediafile_url(@account, @entry, :format=>:js), :method=>:get %>
 					</div>
+					<%= button_link_to_remote "Attach Media", :url=>new_account_document_mediafile_url(@account, @entry, :format=>:js), :method=>:get %>
 					<iframe name="upload_frame" style="display: none"></iframe>
 				</div>
 				<div class="toolbox_border"></div>

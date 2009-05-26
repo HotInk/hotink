@@ -1,1 +1,0 @@
-page.replace 'account_blog_entry_mediafiles_list', :partial => 'entry_mediafiles'

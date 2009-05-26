@@ -9,7 +9,7 @@
 	<div id="upload_media_form" class="two_thirds_column">
 				<h4>Upload media file</h4>
 			<div>
-					<% form_tag account_document_mediafiles_url(@account, @document), :method => :post, :multipart=>true, :target=>"upload_frame", :onsubmit => "page_overlay.end();$('account_article_mediafiles_list').insert('<img class=\"mediafile_loading\" style=\"margin: 1em 1.5em;\" src=\"/loading.gif\" />');" do %>
+					<% form_tag account_document_mediafiles_url(@account, @document), :method => :post, :multipart=>true, :target=>"upload_frame", :onsubmit => "page_overlay.end();$('mediafiles_list').insert('<img class=\"mediafile_loading\" style=\"margin: 1em 1.5em;\" src=\"/loading.gif\" />');" do %>
 						<p>
 							<%= label_tag 'mediafile[file]', "Media file" %><br />
 							<%= file_field_tag 'mediafile[file]', :class=>"text_input" %>			
