@@ -16,6 +16,10 @@ class Category < ActiveRecord::Base
   #Callbacks
   before_destroy :orphan_child_categories  
   
+  def has_children?
+    self.children.blank? ? false : true
+  end
+  
   #Be sure to remove references to self in child categories before destroy
   def orphan_child_categories
     self.children.each do |child|

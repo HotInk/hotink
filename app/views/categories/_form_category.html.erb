@@ -1,0 +1,15 @@
+<li id="category_<%= form_category.id %>" class="clearfix">
+	<% if document %>
+		<% options = {:onclick => (document.categories.member?(form_category) ? "mark_sorting_for_delete(#{document.sortings.find_by_category_id(form_category.id).id}, #{form_category.id}, this)" :  "new_article_sorting(#{form_category.id}, this)") } -%>
+		<% options = options.merge({:disabled => "true"}) if document.section == form_category %>
+		<% checked = document.categories.member?(form_category) ? true : false -%>
+		<%= check_box_tag "article_category_" + form_category.id.to_s, form_category.id.to_s, checked, options %>
+	<% end %>
+	<%= form_category.name %> 
+	
+	<% if form_category.has_children? %>
+		<ol class="subcategories">
+			<%= render :partial=>'categories/form_category', :collection => form_category.children, :locals => { :document => document } %>
+		</ol>
+	<% end %>
+</li>

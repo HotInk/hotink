@@ -74,7 +74,21 @@
 				</div>
 				<div class="toolbox_border"></div>
 			</div> <!-- /toolbox - media -->
-
+			
+			<div class="toolbox">
+				<div class="toolbox_border"></div>
+				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Categories</h2></div>
+				<div class="toolbox_border"></div>
+				<div class="toolbox_body clearfix">
+					<div id="categories">
+						<ol>
+							<%= render :partial => "categories/form_category", :collection => @account.main_categories, :locals => { :document => @entry } %>
+						</ol>
+					</div>
+				</div>
+				<div class="toolbox_border"></div>
+			</div> <!-- /toolbox - media -->	
+					
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tags</h2></div>
@@ -88,8 +102,8 @@
 		
 <script type="text/javascript">
 	//Load toolbox functionality
-	//$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
-	//Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
+	$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
+	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
 
 	//Shortcut function to reload media list
 	reload_media = function() {

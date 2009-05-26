@@ -1,5 +1,9 @@
-<li id="section_<%= section.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
-	<div class="section clearfix">
-		<p class="name"><%= section.name %></p>
-	</div>
+<li id="section_<%= section.id %>" class="section <%= cycle("even-row", "odd-row") %> clearfix">
+	<%= section.name %>
+	
+	<% if section.has_children? %>
+		<ol class="subcategories">
+			<%= render section.children %>
+		</ol>
+	<% end %>
 </li>

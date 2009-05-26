@@ -1,5 +1,9 @@
 <li id="category_<%= category.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
-	<div class="category clearfix">
-		<p class="name"><%= category.name %></p>
-	</div>
+	<%= category.name %>
+	
+	<% if category.has_children? %>
+		<ol class="subcategories">
+			<%= render category.children %>
+		</ol>
+	<% end %>
 </li>

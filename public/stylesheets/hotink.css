@@ -698,6 +698,14 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #entry_form #autocomplete_populate{ width: 450px;}
 #entry_form #author_list { margin-bottom: 1.5em; line-height: 1.6; }
 
+/*-----------------------------------
+/*		Categories styles
+/*---------------------------------------*/
+
+#categories>ol { padding: 0 0.5em; margin: 0.25em 0; border: 1px solid #AAA; }
+#categories li>ol { padding-left: 1em; margin-bottom: -0.25em; } /* Negative margin prevents the inner and outer list item margins from making spacing between last <li> in inner <ol> and the next <li> even */
+
+#categories li { padding: 0.25em 0.125em; }
 
 
 /*-----------------------------------

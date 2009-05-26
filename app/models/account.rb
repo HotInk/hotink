@@ -1,6 +1,6 @@
 class Account < ActiveRecord::Base
   
-  # Main data models (and subclasses)
+  # Main data models (and STI subclasses)
   has_many :mediafiles, :dependent => :delete_all
   has_many :images
   has_many :audiofiles
@@ -22,7 +22,9 @@ class Account < ActiveRecord::Base
   has_many :printings, :dependent => :delete_all
   has_many :sortings, :dependent => :delete_all
   has_many :waxings, :dependent => :delete_all
-   
+  
+  # Special category functionality 
+  has_many :main_categories, :class_name => "Category", :conditions => {:parent_id => nil }#, :order => :position # An account's top-level categories
   accepts_nested_attributes_for :categories
   
   #Implement acts_as
