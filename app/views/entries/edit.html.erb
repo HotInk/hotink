@@ -43,13 +43,12 @@
 	    <%= f.label :summary %><br />
 	    <%= f.text_area :summary, :class=>"text_input user" %>
 	  </p>
-	  <div id="article_form_hidden_elements" class="hidden">	  	
-		<% f.fields_for :sortings do |sorting| %>
-			<%= sorting.hidden_field '_delete' %>
-		<%end%>
+	  <div id="categories_hidden">
+	  	<% @account.categories.each do |cat| %>
+			<input type="hidden" name="entry[categories_attributes][<%= cat.id %>]" value="" id="entry_categories_attributes_<%= cat.id %>" />
+		<% end %>
 	  </div>
 	  <div id="category_form_hidden_elements" class="hidden"></div>
-	  <div id="authorship_form_hidden_elements" class="hidden"></div>
 	<% end %>
 </div><!-- /entry_form -->
 

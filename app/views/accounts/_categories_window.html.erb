@@ -1,7 +1,7 @@
 <h2>Categories and Sections</h2>
 
 <ol id="categories">
-	<%= render @account.categories.select { |cat| cat.parent_id.blank? } %>
+	<%= render @account.main_categories %>
 </ol>
 
 <div id="account_management_categories_form">
@@ -23,7 +23,7 @@
 				<small></small>
 			</div>
 			<div class="third_column">
-				<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.5em;" class="spinner"/><%= button_link_to_submit "Create category", :class=>"save"%>
+				<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.5em;" class="spinner"/><%= button_link_to_submit "Create category", :class=>"large save"%>
 			</div>
 		</div>
 	</fieldset>

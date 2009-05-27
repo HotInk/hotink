@@ -1,6 +1,31 @@
-<li id="section_<%= section.id %>" class="section <%= cycle("even-row", "odd-row") %> clearfix">
-	<%= section.name %>
+<li id="section_<%= section.id %>" class=" clearfix">
+	<div class="section clearfix">
+		<div class="name">
+			<%= section.name %>
+		</div>
 	
+		<div class="edit">
+			<%= button_link_to_function "Edit", "edit_category( '#{section.class.name.downcase}_#{section.id}' );", :class=>"micro" %>
+		</div>
+	
+		<div class="edit_form" style="display:none;">
+
+		</div>
+	</div>
+	<div class="category_form clearfix" style="display: none;">
+		<div class="name">
+			<%= text_field_tag "category[#{section.id.to_s}][name]", section.name, :class => "text_input" %>
+		</div>
+	
+		<div class="edit">
+			<%= button_link_to_function "Edit", "", :class=>"micro" %>
+		</div>
+	
+		<div class="edit_form" style="display:none;">
+
+		</div>
+	</div>
+
 	<% if section.has_children? %>
 		<ol class="subcategories">
 			<%= render section.children %>

@@ -1,5 +1,31 @@
-<li id="category_<%= category.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
-	<%= category.name %>
+<li id="category_<%= category.id %>" class="clearfix">
+	<div class="category clearfix">
+		<div class="name">
+			<%= category.name %>
+		</div>
+	
+		<div class="edit">
+			<%= button_link_to_function "Edit", "edit_category( '#{category.class.name.downcase}_#{category.id}' );", :class=>"micro" %>
+		</div>
+	
+		<div class="edit_form" style="display:none;">
+
+		</div>
+	</div>
+	
+	<div class="category_form clearfix" style="display: none;">
+		<div class="name">
+			<%= text_field_tag "category[#{category.id.to_s}][name]", category.name, :class => "text_input" %>
+		</div>
+	
+		<div class="edit">
+			<%= button_link_to_function "Edit", "", :class=>"micro" %>
+		</div>
+	
+		<div class="edit_form" style="display:none;">
+
+		</div>
+	</div>
 	
 	<% if category.has_children? %>
 		<ol class="subcategories">

@@ -48,6 +48,12 @@ function mark_sorting_for_delete(sorting_id, category_id, caller)
 	$(caller).writeAttribute("onclick", "new_article_sorting(" + category_id + ", this)");
 }
 
+function edit_category( category_li ){
+	li = $(category_li);
+	li.down().fade({queue: 'front', duration: 0.1});
+	li.down().next().appear({queue: 'front', duration: 0.1});
+}
+
 // Swaping drawer button effect
 
 var swap = function(element1, element2, toggle){

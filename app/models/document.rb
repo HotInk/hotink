@@ -67,6 +67,28 @@ class Document < ActiveRecord::Base
     end
   end
   
+  # Categories are set in a checkbox style, and that's reflected in this attribute method.
+  # 
+  # Category attributes should be passed in as a hash with the category id as the key and 
+  # a value of 0, "0", or anything ".blank?" to indicate no Sorting for this category and anything else to
+  # indicate that a Sorting should exist 
+  def categories_attributes=(attributes)
+    raise ActiveRecord::AttributeAssignmentError unless attributes.is_a? Hash
+    attributes.each do | cat_id, value |
+      if value.blank? || value==0 || value=="0"
+        begin
+          cat = categories.find(cat_id)
+          categories.delete(cat)
+        rescue ActiveRecord::RecordNotFound # If it's not already a category, do nothing
+        end
+      else
+        if cat = account.categories.find(cat_id)
+          categories << cat
+        end
+      end
+    end
+  end
+  
   # Returns list of article's author names as a readable list, separated by commas and the word "and".
   def authors_list
      case self.authors.length

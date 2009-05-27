@@ -1,9 +1,9 @@
 <li id="category_<%= form_category.id %>" class="clearfix">
 	<% if document %>
-		<% options = {:onclick => (document.categories.member?(form_category) ? "mark_sorting_for_delete(#{document.sortings.find_by_category_id(form_category.id).id}, #{form_category.id}, this)" :  "new_article_sorting(#{form_category.id}, this)") } -%>
+		<% options = { 	:onclick => "if ($(this.checked)) { $('#{document.class.name.downcase}_categories_attributes_#{form_category.id}').value = 1; } else { $('#{document.class.name.downcase}_categories_attributes_#{form_category.id}').value = 0; }" } -%>
 		<% options = options.merge({:disabled => "true"}) if document.section == form_category %>
 		<% checked = document.categories.member?(form_category) ? true : false -%>
-		<%= check_box_tag "article_category_" + form_category.id.to_s, form_category.id.to_s, checked, options %>
+		<%= check_box_tag "category_" + form_category.id.to_s + "_checkbox", form_category.id.to_s, checked, options %>
 	<% end %>
 	<%= form_category.name %> 
 	

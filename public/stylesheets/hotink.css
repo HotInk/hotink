@@ -500,14 +500,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 
 #account #images-window label{ padding-right: 3.5em; font-weight: bold; font-family: georgia, "Times New Roman", times, serif;}
 
-#account .index .section p { font-size: 0.8em; margin: 0.7em 0.3em; display:inline-block; vertical-align: top;}
-#account .index .section { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
-#account .index .section p.name { max-width: 30%;}
-#account .index .category p { font-size: 0.8em; margin: 0.7em 0.3em; display:inline-block; vertical-align: top;}
-#account .index .category { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
-#account .index .category p.name { max-width: 30%;}
-
-#account #account_management_categories_form .column_holder { margin-bottom: 0em; margin-top: 0.25em; }
+#account #account_management_categories_form .column_holder>div { margin-bottom: 0.25em;  }
 
 #account .activation_form button{ margin-top: 5%; font-size:0.8em;}
 #account .activation_form .column_holder { margin-bottom: 0;}
@@ -516,8 +509,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .activation_form .third_column { width: auto; margin-left: 0.7em;}
 #account .activation_form input[type="text"] { width: 98%; padding: 0.125em 1%;}
 
-#account .index ol { height: 17.5em; border: 1px solid #DDD; overflow:auto;}
-#account .index ol li { border-top: none;} 
+#account .index >ol { height: 17.5em; border: 1px solid #DDD; overflow:auto;}
+#account .index >ol li { width: 98%; border-top: none; margin: 0.25em 1%;} 
 #account .index ol li h4 { padding: 0.25em 0.4em; margin:0; border-bottom: 1px solid #DDD; }
 #account .index .account { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
 #account .index .account h4 {color:#ED1B8C;}
@@ -530,6 +523,15 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .user button { float: none; margin: 0 0.25em; position: relative; top: 0.45em; }
 #account .index .user .kill_link { text-align: right; margin-right: 0.5em;}
 #account .index .user .kill_link a{ color: red;}
+#account .index ol ol { border: none; clear: left; }
+#account .index .category, #account .index .section { margin: 0; display: block;}
+#account .index .category div, #account .index .section div { float: left; }
+#account .index .category_form { width: 100%;}
+#account .index .category_form .text_input { float: left; width: 40%; font-size: 1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
+#account .index .category_form button { float: left; }
+#account .index .category .name, #account .index .section .name { display: block;} 
+#account .index .category .edit, #account .index .section .edit { padding-left: 0.5em;}
+#account .index .subcategories { padding: 0; width: 95%; padding-left: 5%; padding-top: 0.25em;}
 
 /*-----------------------------------
 /*		Issue styles
