@@ -3,12 +3,6 @@ page.replace_html 'last_saved', :text =>"Last modified #{time_ago_in_words(@arti
 page.visual_effect :highlight, "last_saved", :duration => 0.5
 page.replace_html 'flash', :text =>render_flash(flash[:notice])
 page << "fade_flash();"
-#Reload sortings form to keep javascript calls up-to-date
-page << "new Ajax.Request('#{account_article_sortings_url(@account, @article, :format=>:js)}', {method:'get', onComplete: function(transport){ load_button_fix(); }});"
-#Remove nested form create elements for newly-created sortings
-page << "$('category_form_hidden_elements').childElements().invoke('remove');"
-#Create nestd form delete elements for newly-created sortings
-page.replace_html 'article_form_hidden_elements', :partial => 'delete_tag', :collection => @article.sortings
 
 #Remove existing author mechanism and completely replace
 page.replace_html 'author_list', :partial => 'article_author_form'

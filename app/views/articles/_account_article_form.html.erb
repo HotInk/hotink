@@ -46,12 +46,11 @@
 	    <%= f.label :summary %><br />
 	    <%= f.text_area :summary, :class=>"text_input user" %>
 	  </p>
-	  <div id="article_form_hidden_elements" class="hidden">	  	
-		<% f.fields_for :sortings do |sorting| %>
-			<%= sorting.hidden_field '_delete' %>
-		<%end%>
+	  <div id="categories_hidden">
+	  	<% @account.categories.each do |cat| %>
+			<input type="hidden" name="article[categories_attributes][<%= cat.id %>]" value="" id="article_categories_attributes_<%= cat.id %>" />
+		<% end %>
 	  </div>
-	  <div id="category_form_hidden_elements" class="hidden"></div>
 	<% end %>
 </div><!-- /article_form -->
 		<div id="tools">
@@ -79,9 +78,12 @@
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Categories</h2></div>
 				<div class="toolbox_border"></div>
-				<div class="toolbox_body">	
-						<script id="account_article_sorting_list" type="text/javascript" src="<%= account_article_sortings_url(@account, @article, :format=>:js) %>" charset="utf-8"></script>
-				</div>
+				<div class="toolbox_body clearfix">	
+					<div id="categories">
+						<ol>
+							<%= render :partial => "categories/form_category", :collection => @account.main_categories, :locals => { :document => @article } %>
+						</ol>
+					</div>				</div>
 				<div class="toolbox_border"></div>
 			</div><!-- /toolbox - categories -->
 
