@@ -51,8 +51,13 @@ function mark_sorting_for_delete(sorting_id, category_id, caller)
 function edit_category( category_li ){
 	li = $(category_li);
 	li.down().fade({queue: 'front', duration: 0.1});
-	li.down().next().appear({queue: 'front', duration: 0.1});
+	show_category_form.delay(0.4, li);
 }
+function show_category_form( category_li ) {
+	li = $(category_li);
+	li.down().next().setStyle({visibility:'visible'});	
+}
+
 
 // Swaping drawer button effect
 

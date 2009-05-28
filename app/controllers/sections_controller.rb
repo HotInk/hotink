@@ -72,8 +72,8 @@ class SectionsController < ApplicationController
 
     respond_to do |format|
       if @section.update_attributes(params[:section])
-        flash[:notice] = 'Section was successfully updated.'
-        format.html { redirect_to([@section]) }
+        flash[:notice] = 'Section updated'
+        format.js
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

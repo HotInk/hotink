@@ -1,4 +1,4 @@
-<li id="category_<%= category.id %>" class="clearfix">
+<li id="<%= category.class.name.downcase %>_<%= category.id %>" class="clearfix">
 	<div class="category clearfix">
 		<div class="name">
 			<%= category.name %>
@@ -7,29 +7,29 @@
 		<div class="edit">
 			<%= button_link_to_function "Edit", "edit_category( '#{category.class.name.downcase}_#{category.id}' );", :class=>"micro" %>
 		</div>
-	
-		<div class="edit_form" style="display:none;">
-
+		<div class="kill_link"><%= link_to_remote 	"x", 
+													:url=>account_category_url(@account, category), 
+													:method => :delete, 
+													:after=>"$(this).up().up().up().addClassName('transparent');",
+													:confirm => "Are you sure you want to delete the \"#{category.name}\" category?\n\nThis delete cannot be undone.\n\nTo delete this category, press 'OK'."
+								%>
 		</div>
+
 	</div>
 	
-	<div class="category_form clearfix" style="display: none;">
-		<div class="name">
-			<%= text_field_tag "category[#{category.id.to_s}][name]", category.name, :class => "text_input" %>
-		</div>
-	
-		<div class="edit">
-			<%= button_link_to_function "Edit", "", :class=>"micro" %>
-		</div>
-	
-		<div class="edit_form" style="display:none;">
-
-		</div>
+	<div class="category_form clearfix" style="visibility: hidden;">
+			<% remote_form_for [@account, category], :after=>"$(this).disable();$(this).select('.spinner')[0].show();" do |f|%>
+				<%= f.text_field :name, :class => "text_input" %>
+				<div class="save_button clearfix">
+					<%= button_link_to_submit "Save", :class=>"save tiny" %>
+				</div>
+				<img src="/loading_small_white.gif" style="float:left;margin-left:1em;margin-top:0.25em;display:none;" class="spinner"/>
+			<% end %>
 	</div>
 	
 	<% if category.has_children? %>
 		<ol class="subcategories">
-			<%= render category.children %>
+			<%= render :partial=>'categories/category', :collection=>category.children %>
 		</ol>
 	<% end %>
 </li>

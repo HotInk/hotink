@@ -492,7 +492,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .column_holder>div { margin-bottom: 1.5em;}
 #account .text_input { font-size: 1.3em; padding: 0.2em; margin-bottom: 0.125em; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
 #account legend { font-size: 1.4em; padding: 0; padding-bottom: 0.3em; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
-#account select { background: none; margin: 0; width: 100%; font-size: 1.2em; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.8em; color: #333; border: 1px solid #DEDEDE;	}	
+#account .edit_account select { background: none; margin: 0; width: 100%; font-size: 1.2em; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.8em; color: #333; border: 1px solid #DEDEDE;	}	
 #account label { font-size: 1em; color: #333; padding: 0.5em; margin: 0 0.125em; display: block;}
 #account .edit_account>div { margin-bottom: 1em;}
 
@@ -500,7 +500,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 
 #account #images-window label{ padding-right: 3.5em; font-weight: bold; font-family: georgia, "Times New Roman", times, serif;}
 
-#account #account_management_categories_form .column_holder>div { margin-bottom: 0.25em;  }
+#account #new_category_form .column_holder>div { margin-bottom: 0.25em;  }
 
 #account .activation_form button{ margin-top: 5%; font-size:0.8em;}
 #account .activation_form .column_holder { margin-bottom: 0;}
@@ -524,14 +524,21 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .user .kill_link { text-align: right; margin-right: 0.5em;}
 #account .index .user .kill_link a{ color: red;}
 #account .index ol ol { border: none; clear: left; }
-#account .index .category, #account .index .section { margin: 0; display: block;}
-#account .index .category div, #account .index .section div { float: left; }
-#account .index .category_form { width: 100%;}
-#account .index .category_form .text_input { float: left; width: 40%; font-size: 1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
-#account .index .category_form button { float: left; }
-#account .index .category .name, #account .index .section .name { display: block;} 
+#account .index .category div { float: left; }
+#account .index .category_form { margin-top:0;}
+#account .index .category_form .text_input { float: left; width: 60%; margin-top: 0; padding-bottom: 1px; font-size: 1.1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
+#account .index .category_form button { position: relative; top: 2px; }
+#account .index #new_category_form select { font-size: 0.9em; margin-bottom: 0.5em; background: none; width: 97%; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.6em; color: #333; border: 1px solid #DEDEDE;	}
+#account .index .category_form .save_button { margin-left: 0.5em;float: left;}
+#account .index .category .name, #account .index .section .name { display: block; font-size: 1.2em;} 
 #account .index .category .edit, #account .index .section .edit { padding-left: 0.5em;}
 #account .index .subcategories { padding: 0; width: 95%; padding-left: 5%; padding-top: 0.25em;}
+#account .index .category_form { float: left; width: 50%;}
+#account .index .category { float: left; width: 42%;}
+#account .index .category_form { float: left; width: 50%;}
+#account .index .category .kill_link {float: left; margin-left: 1em;} 
+#account .index .category .kill_link a{ color: #E62424; }
+#account .category_form small { display: inline-block; margin-top: 2px;}
 
 /*-----------------------------------
 /*		Issue styles
@@ -706,9 +713,7 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 
 #categories>ol { padding: 0 0.5em; margin: 0.25em 0; border: 1px solid #AAA; }
 #categories li>ol { padding-left: 1em; margin-bottom: -0.25em; } /* Negative margin prevents the inner and outer list item margins from making spacing between last <li> in inner <ol> and the next <li> even */
-
 #categories li { padding: 0.25em 0.125em; }
-
 
 /*-----------------------------------
 /*		Footer styles

@@ -1,4 +1,4 @@
-<li id="category_<%= form_category.id %>" class="clearfix">
+<li id="form_category_<%= form_category.id %>" class="clearfix">
 	<% if document %>
 		<% options = { 	:onclick => "if ($(this.checked)) { $('#{document.class.name.downcase}_categories_attributes_#{form_category.id}').value = 1; } else { $('#{document.class.name.downcase}_categories_attributes_#{form_category.id}').value = 0; }" } -%>
 		<% options = options.merge({:disabled => "true"}) if document.section == form_category %>

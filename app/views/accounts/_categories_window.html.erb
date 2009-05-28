@@ -1,10 +1,10 @@
 <h2>Categories and Sections</h2>
 
 <ol id="categories">
-	<%= render @account.main_categories %>
+	<%= render :partial=>'categories/category', :collection => @account.main_categories %>
 </ol>
 
-<div id="account_management_categories_form">
+<div id="new_category_form">
 	<% form_remote_tag :url=>account_categories_url(@account), :method => :post do %>
 	<fieldset>
 		<legend>New category</legend>
@@ -19,8 +19,8 @@
 		</div>
 		<div class="column_holder clearfix">	
 			<div class="two_thirds_column">
-				<select id="category_parent_id" name="category[parent_id]"><%= options_for_category_select(@account.categories) %></select>
-				<small></small>
+				<select id="category_parent_id" name="category[parent_id]"><%= options_for_category_select(@account.categories) %></select><br />
+				<small><%= flash[:categories_notice]%></small>
 			</div>
 			<div class="third_column">
 				<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.5em;" class="spinner"/><%= button_link_to_submit "Create category", :class=>"large save"%>

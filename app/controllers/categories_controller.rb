@@ -56,11 +56,13 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save!
-        flash[:notice] = 'Category was successfully created.'
-        format.js { redirect_to(account_article_sortings_url(@account, @article, :format=>:js)) if @article}
+        flash[:categories_notice] =  "\"#{@category.name}\" created"        
+        format.js
         format.html { redirect_to(account_categories_url(@account)) }
         format.xml  { render :xml => [@account, @category], :status => :created, :location =>[@account, @category] }
       else
+        flash[:categories_notice] =  "Sorry, can't create that category"        
+        format.js
         format.html { render :action => "new" }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }
       end
@@ -75,7 +77,8 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.update_attributes(params[:category])
-        flash[:notice] = 'Category was successfully updated.'
+        flash[:notice] = 'Category updated'
+        format.js
         format.html { redirect_to([@account, @category]) }
         format.xml  { head :ok }
       else
@@ -92,7 +95,9 @@ class CategoriesController < ApplicationController
     @category.destroy
 
     respond_to do |format|
+      flash[:categories_notice] = "\"#{@category.name}\" deleted"
       format.html { redirect_to(account_categories_url(@account)) }
+      format.js
       format.xml  { head :ok }
     end
   end
