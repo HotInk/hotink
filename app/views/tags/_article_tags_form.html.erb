@@ -6,7 +6,7 @@
 	</p>
 	<% end %>
 	<p class="note"><em>Separate tags with a comma</em></p>
-	<p>
+	<p class="kill_link">
 		<% for tag in @article.tags %>
 			<%= link_to_remote("x", :url=> account_article_tag_url(@account, @article, tag), :method => :delete) + "&nbsp;#{tag.name.sub(" ", "&nbsp;")}&nbsp;&nbsp;" %>
 		<% end %>

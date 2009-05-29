@@ -101,8 +101,8 @@ class TagsController < ApplicationController
   def destroy
     @tag = Tag.find(params[:id])
     
-    #If an article is specified, use it, otherwise use a mediafile.
-    taggable = @article ? @article : @mediafile
+    # Find out which taggable we're working with
+    taggable = (@article || @mediafile || @entry)
     taggable.tags.delete(@tag)
 
     respond_to do |format|
@@ -110,6 +110,8 @@ class TagsController < ApplicationController
         format.js   { redirect_to(new_account_article_tag_url(@account, @article, :format=>:js)) }
       elsif @mediafile
         format.js   { redirect_to(new_account_mediafile_tag_url(@account, @mediafile, :format=>:js)) }
+      elsif @entry
+        format.js   { redirect_to(new_account_blog_entry_tag_url(@account, @blog, @entry, :format=>:js)) }
       end
       format.html { redirect_to(tags_url) }
       format.xml  { head :ok }

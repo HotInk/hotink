@@ -39,6 +39,8 @@ html[xmlns] .clearfix{display:block;}
 .red { color: #E62424; }
 .green { color: green; }
 
+.kill_link a{ color: red;}
+
 .fieldWithErrors { padding: 2px; color: red; }
 #errorExplanation { width: 97%; border: 2px solid red; padding: 1%; padding-bottom: 0.5em; margin-bottom: 1.5em; background-color: #f0f0f0; }
 #errorExplanation h2 { text-align: left; font-weight: bold; padding: 5px 5px 5px 15px; font-size: 12px; margin: -7px; background-color: #c00; color: #fff;}

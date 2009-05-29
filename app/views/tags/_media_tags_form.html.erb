@@ -6,7 +6,7 @@
 		<em>Separate tags with a comma</em>
 	</p>
 	<% end %>
-	<p>
+	<p class="kill_link">
 		<% for tag in @mediafile.tags %>
 			<%= link_to_remote("x", :url=> account_mediafile_tag_url(@account, @mediafile, tag), :method => :delete) + "&nbsp;#{tag.name.sub(" ", "&nbsp;")}&nbsp;&nbsp;" %>
 		<% end %>
