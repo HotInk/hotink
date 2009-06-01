@@ -45,7 +45,7 @@
 	  </p>
 	  <div id="categories_hidden">
 	  	<% @account.categories.each do |cat| %>
-			<input type="hidden" name="entry[categories_attributes][<%= cat.id %>]" value="" id="entry_categories_attributes_<%= cat.id %>" />
+			<input type="hidden" name="entry[categories_attributes][<%= cat.id %>]" value="<%= "1" if @entry.categories.member?(cat) %>" id="entry_categories_attributes_<%= cat.id %>" />
 		<% end %>
 	  </div>
 	<% end %>

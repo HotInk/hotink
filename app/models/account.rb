@@ -9,7 +9,7 @@ class Account < ActiveRecord::Base
   has_many :entries
   has_many :authors, :dependent => :delete_all
   has_many :categories, :order => "position", :dependent => :delete_all
-  has_many :sections, :dependent => :delete_all
+  has_many :sections, :order => "parent_id, position", :dependent => :delete_all
   has_many :blogs, :dependent => :delete_all
   has_many :issues, :dependent => :delete_all, :order => "date"
   
