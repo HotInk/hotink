@@ -48,17 +48,6 @@ function mark_sorting_for_delete(sorting_id, category_id, caller)
 	$(caller).writeAttribute("onclick", "new_article_sorting(" + category_id + ", this)");
 }
 
-function edit_category( category_li ){
-	li = $(category_li);
-	li.down().fade({queue: 'front', duration: 0.1});
-	show_category_form.delay(0.4, li);
-}
-function show_category_form( category_li ) {
-	li = $(category_li);
-	li.down().next().setStyle({visibility:'visible'});	
-}
-
-
 // Swaping drawer button effect
 
 var swap = function(element1, element2, toggle){
@@ -84,31 +73,67 @@ var trigger_flash = function ( message ) {
 	fade_flash.delay(1);
 }
 
-// Load category edit functionality
-// This is 100% custom functionality and it's pretty complex. 
-// It will probably be worthwhile to abstract it as a control, but that'll be a huge job.
-// TODO: Abstract category edit functionality for general use as a list/tree-list edit control
+// Category edit functionality
 
-var categories_editing = false;
+function edit_category( category_li ){
+	li = $(category_li);
+	li.down().fade({queue: 'front', duration: 0.1});
+	show_category_form.delay(0.4, li);
+}
+function show_category_form( category_li ) {
+	li = $(category_li);
+	li.down().next().setStyle({visibility:'visible'});	
+}
+
+var i_am_reordering_categories = false;
 var categories_tree = {};
-var load_category_edit = function(){
+var toggle_category_reordering = function(){
 	
-	if (categories_editing) {
-		// Hide edit buttons
+	if (i_am_reordering_categories) {
+		// Then end the reordering session
+		$('categories').select('li div.category div.edit, li div.category div.kill_link').invoke('show');
+			
+		categories_tree.setUnsortable();
+		
+		
+		i_am_reordering_categories = false;
+		//
+		/*
 		$('categories_list').select('li').each(function (item){ item.down().childElements()[2].setStyle({visibility:'hidden'})});
 		
-		categories_tree.setUnsortable();
 		new Effect.SlideUp($('hidden_categories_buttons'), {duration:0.1});
 		$('categories_list').select('input').each( function (inp){ inp.setStyle({opacity:1.0}); inp.enable(); });
-		categories_editing = false;
+		*/
 	} else {
-		new Effect.SlideDown($('hidden_categories_buttons'), {duration:0.1});
+		// Begin a reordering session
+		$('categories').select('li div.category div.edit, li div.category div.kill_link').invoke('hide');
+		
+		$('categories').select('li').each( 
+				function (list_item){ 
+					if( !list_item.down().visible() ) { 
+						list_item.down().next().setStyle({visibility:'hidden'});
+						list_item.down().show(); 
+					}
+				}
+	 	);
+		
+		categories_tree = new SortableTree('categories', {
+			onDrop: function(drag, drop, event){
+				console.log('testing');
+			},
+			containerTagName: 'OL'
+		});
+		categories_tree.setSortable();
+		
+		i_am_reordering_categories = true;
+		//
+		// new Effect.SlideDown($('hidden_categories_buttons'), {duration:0.1});
 		
 		//Make edit buttons visible
-		$('categories_list').select('li').each(function (item){ item.down().childElements()[2].setStyle({visibility:'visible'})});
+		// $('categories_list').select('li').each(function (item){ item.down().childElements()[2].setStyle({visibility:'visible'})});
 		
 		//  Build SortableTree from list items.
-		categories_tree = new SortableTree('categories_sort', {
+		/* categories_tree = new SortableTree('categories_sort', {
 			onDrop: function(drag, drop, event){
 					
 					//Count upwards looking for siblings until we hit null, that's our drop point.
@@ -133,21 +158,11 @@ var load_category_edit = function(){
 					
 	    			}
 	  	});
-		categories_tree.setSortable();
 		$('categories_list').select('input[type=\'checkbox\']').each( function (inp){ inp.setStyle({opacity:0.6}); inp.disable(); });
-		categories_editing = true;
+		categories_editing = true; */
 	}
 }
 
-var create_category_name_nmfe = function(category_id, name_element) {
-	var id_el_name = 'account[categories_attributes][' + category_id + '][id]';
-	var name_el_name = 'account[categories_attributes][' + category_id + '][name]';
- 	var hidden_name_element = Builder.node('input', {'type': 'hidden', name: name_el_name, id: name_el_name.replace(/\]\[|\[|\]/g, "_").replace(/_$/, "" )}).writeAttribute('value', $F(name_element));
-	var hidden_id_element = Builder.node('input', {'type': 'hidden', name: id_el_name, id: id_el_name.replace(/\]\[|\[|\]/g, "_").replace(/_$/, "" )}).writeAttribute('value', category_id);
- 	
-	$('account_categories_edit_form').insert(hidden_id_element);
-	$('account_categories_edit_form').insert(hidden_name_element);
-}
 
 // Medialist clean-up tool
 

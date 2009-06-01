@@ -1,4 +1,4 @@
-<h2>Categories and Sections</h2>
+<h2>Categories and Sections</h2><%= button_link_to_function "Reorder categories", "toggle_category_reordering()", :style => "float: right;"%>
 
 <ol id="categories">
 	<%= render :partial=>'categories/category', :collection => @account.main_categories %>

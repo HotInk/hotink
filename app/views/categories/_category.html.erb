@@ -26,10 +26,10 @@
 				<img src="/loading_small_white.gif" style="float:left;margin-left:1em;margin-top:0.25em;display:none;" class="spinner"/>
 			<% end %>
 	</div>
-	
-	<% if category.has_children? %>
-		<ol class="subcategories">
+
+	<ol class="subcategories">	
+		<% if category.has_children? %>
 			<%= render :partial=>'categories/category', :collection=>category.children %>
-		</ol>
-	<% end %>
+		<% end %>
+	</ol>
 </li>

@@ -525,7 +525,16 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .user button { float: none; margin: 0 0.25em; position: relative; top: 0.45em; }
 #account .index .user .kill_link { text-align: right; margin-right: 0.5em;}
 #account .index .user .kill_link a{ color: red;}
-#account .index ol ol { border: none; clear: left; }
+
+#account #categories-window h2 { float: left; }
+#account #categories-window ol { list-style-type: decimal; }
+
+#account ol#categories ol { border: none; clear: left;}
+#account ol#categories .drop_hover { background: url('/images/drag.png') no-repeat bottom left; }
+#account ol#categories .drop_top {	background-position: top left; }
+#account ol#categories .drop_bottom { background-position: bottom left; }
+#account ol#categories .drop_insert { background-position: 65px 100%; }
+
 #account .index .category div { float: left; }
 #account .index .category_form { margin-top:0;}
 #account .index .category_form .text_input { float: left; width: 60%; margin-top: 0; padding-bottom: 1px; font-size: 1.1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
@@ -713,9 +722,9 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 /*		Categories styles
 /*---------------------------------------*/
 
-#categories>ol { padding: 0 0.5em; margin: 0; max-height: 12em; overflow: auto;}
-#categories li>ol { padding-left: 1em; margin-bottom: -0.25em; } /* Negative margin prevents the inner and outer list item margins from making spacing between last <li> in inner <ol> and the next <li> even */
-#categories li { padding: 0.25em 0.125em; }
+#form_categories>ol { padding: 0 0.5em; margin: 0; max-height: 12em; overflow: auto;}
+#form_categories li>ol { padding-left: 1em; margin-bottom: -0.25em; } /* Negative margin prevents the inner and outer list item margins from making spacing between last <li> in inner <ol> and the next <li> even */
+#form_categories li { padding: 0.25em 0.125em; }
 
 /*-----------------------------------
 /*		Footer styles
