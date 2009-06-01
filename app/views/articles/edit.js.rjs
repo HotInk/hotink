@@ -1,1 +1,1 @@
-page.replace 'page_container', :partial => 'account_article_form'
+page.replace 'page_container', :partial => 'form'
