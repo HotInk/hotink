@@ -26,7 +26,8 @@
 			</ol>
 		</div>
 		<div id="user_details"><p>Logged in as: <%= link_to_remote current_user.login, :url=> edit_user_path(current_user), :method => :get, :html => { :class=>"weblink" } %>  <%= button_link_to "Logout", user_session_url, :method=>:delete, :class=>"micro" %></p></div>
-		<div id="account_details"> <%= button_link_to_remote "Manage account", :url=>edit_account_url(@account, :format => :js ), :method=>:get, :html=>{:class=>"tiny"} %> </div>
+		<div id="account_details"><img src="/loading_small_222.gif" style="float:left;margin-right:0.5em;margin-top:0.25em;display:none;" class="spinner"/>
+		<%= button_link_to_remote "Manage account", :url=>edit_account_url(@account, :format => :js ), :method=>:get, :after=>"$(this).up().select('.spinner')[0].show();", :html=>{:class=>"tiny"} %> </div>
 		<div id="flash"><%= render_flash(flash[:notice])%></div>
 	</div>
 <div id="page_container" class="clearfix">
