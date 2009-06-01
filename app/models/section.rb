@@ -3,9 +3,6 @@ class Section < Category
   #Here we override parent realationship from superclass "Category"
   #Sections have parents that are other sections, not other categories
   belongs_to :parent, :class_name => "Section"
-  
-  has_many :sortings
-  has_many :articles, :through => :sortings
 
   validates_presence_of :account, :message => "Must have an account"
   validates_presence_of :name, :message => "Section must have a name"
