@@ -1,7 +1,7 @@
 class Issue < ActiveRecord::Base
   belongs_to :account
   
-  has_many :printings
+  has_many :printings, :dependent => :destroy
   has_many :articles, :through => :printings
 
   has_attached_file :pdf,

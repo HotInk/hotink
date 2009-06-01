@@ -1,7 +1,7 @@
 class Category < ActiveRecord::Base
   belongs_to :account
   
-  has_many :sortings
+  has_many :sortings, :dependent => :destroy
   has_many :articles, :through => :sortings
   
   belongs_to :parent, :class_name => "Category"

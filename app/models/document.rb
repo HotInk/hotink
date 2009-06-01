@@ -1,14 +1,14 @@
 class Document < ActiveRecord::Base
   belongs_to :account
   
-  has_many :authorships
+  has_many :authorships, :dependent => :destroy
   has_many :authors, :through => :authorships
   
-  has_many :printings
+  has_many :printings, :dependent => :destroy
   has_many :issues, :through => :printings
   
   belongs_to :section
-  has_many :sortings
+  has_many :sortings, :dependent => :destroy
   has_many :categories, :through => :sortings
   
   has_many :waxings, :dependent => :destroy
