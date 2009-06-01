@@ -527,7 +527,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .user .kill_link a{ color: red;}
 
 #account #categories-window h2 { float: left; }
-#account #categories-window ol { list-style-type: decimal; }
+#account #categories-window #categories_order_form { width: 55%; float: right; margin: 0.75em; margin-right: none; }
 
 #account ol#categories ol { border: none; clear: left;}
 #account ol#categories .drop_hover { background: url('/images/drag.png') no-repeat bottom left; }

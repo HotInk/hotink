@@ -24,7 +24,7 @@ class Account < ActiveRecord::Base
   has_many :waxings, :dependent => :delete_all
   
   # Special category functionality 
-  has_many :main_categories, :class_name => "Category", :conditions => {:parent_id => nil }#, :order => :position # An account's top-level categories
+  has_many :main_categories, :class_name => "Category", :order => "position", :conditions => {:parent_id => nil } # An account's top-level categories
   accepts_nested_attributes_for :categories
   
   #Implement acts_as

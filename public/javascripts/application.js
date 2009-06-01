@@ -92,22 +92,16 @@ var toggle_category_reordering = function(){
 	if (i_am_reordering_categories) {
 		// Then end the reordering session
 		$('categories').select('li div.category div.edit, li div.category div.kill_link').invoke('show');
-			
+		$('categories_reorder_submit').setStyle({visibility:"hidden"});$('categories_reorder_toggle').setStyle({visibility:"visible"});
 		categories_tree.setUnsortable();
-		
-		
+		$('categories_order_form').select('.spinner')[0].hide();
 		i_am_reordering_categories = false;
-		//
-		/*
-		$('categories_list').select('li').each(function (item){ item.down().childElements()[2].setStyle({visibility:'hidden'})});
-		
-		new Effect.SlideUp($('hidden_categories_buttons'), {duration:0.1});
-		$('categories_list').select('input').each( function (inp){ inp.setStyle({opacity:1.0}); inp.enable(); });
-		*/
 	} else {
 		// Begin a reordering session
 		$('categories').select('li div.category div.edit, li div.category div.kill_link').invoke('hide');
+		$('categories_reorder_toggle').setStyle({visibility:"hidden"});$('categories_reorder_submit').setStyle({visibility:"visible"});
 		
+		// Make sure the categories are showing and category forms are hidden
 		$('categories').select('li').each( 
 				function (list_item){ 
 					if( !list_item.down().visible() ) { 
@@ -116,50 +110,33 @@ var toggle_category_reordering = function(){
 					}
 				}
 	 	);
-		
+			
 		categories_tree = new SortableTree('categories', {
 			onDrop: function(drag, drop, event){
-				console.log('testing');
+				
+				// Find and set the dragged category's new parent id 
+				var parent = {};
+				if ( drag.element.up()==$('categories') ) { 
+					parent = drag.element.up();
+					$(drag.element.id +"_parent_id").value="";
+				} else {
+					parent = drag.element.up()
+					var parent_id = parent.up().id.split("_")[1] // Move up from the "parent" list to get the "parent" <li>'s id
+					$(drag.element.id +"_parent_id").value=parent_id;
+				}
+				
+				// Find and set the position for each of that parent's children
+				var child = parent.down();
+				var child_position = 1;
+				while( child ) {
+					$(child.id + '_position').value = child_position;
+					child=child.next(); child_position++;
+				}
 			},
 			containerTagName: 'OL'
 		});
 		categories_tree.setSortable();
-		
 		i_am_reordering_categories = true;
-		//
-		// new Effect.SlideDown($('hidden_categories_buttons'), {duration:0.1});
-		
-		//Make edit buttons visible
-		// $('categories_list').select('li').each(function (item){ item.down().childElements()[2].setStyle({visibility:'visible'})});
-		
-		//  Build SortableTree from list items.
-		/* categories_tree = new SortableTree('categories_sort', {
-			onDrop: function(drag, drop, event){
-					
-					//Count upwards looking for siblings until we hit null, that's our drop point.
-					var drop_position = 1;
-					var root_node_check = drag.previousSibling();	
-					while (root_node_check!=null){
-						root_node_check = root_node_check.previousSibling();
-						drop_position++;
-					}
-					
-					var hidden_category_id = drag.to_nested_form_element("id").writeAttribute('value', drag.id());
-					var hidden_parent_id = drag.to_nested_form_element("parent_id").writeAttribute('value', (drag.parent.id()=='null' ? "" : drag.parent.id()) );
-					var hidden_position = drag.to_nested_form_element("position").writeAttribute('value', drop_position );
-					
-					// If elements with match ids are on the page, toss em
-					if ($(hidden_parent_id.id)) $(hidden_parent_id.id).remove();
-					if ($(hidden_position.id)) $(hidden_position.id).remove();
-					
-					$('account_categories_edit_form').insert(hidden_category_id);
-					$('account_categories_edit_form').insert(hidden_parent_id);
-					$('account_categories_edit_form').insert(hidden_position);
-					
-	    			}
-	  	});
-		$('categories_list').select('input[type=\'checkbox\']').each( function (inp){ inp.setStyle({opacity:0.6}); inp.disable(); });
-		categories_editing = true; */
 	}
 }
 

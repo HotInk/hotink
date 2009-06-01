@@ -1,4 +1,14 @@
-<h2>Categories and Sections</h2><%= button_link_to_function "Reorder categories", "toggle_category_reordering()", :style => "float: right;"%>
+<h2>Categories and Sections</h2>
+
+<div id="categories_order_form">
+	<% remote_form_for @account, :after=>"$(this).select('.spinner')[0].show();", :success => "toggle_category_reordering();" do |f| %>
+	<% f.fields_for :categories do |c| %>
+			<%= c.hidden_field :parent_id, :id=>"#{c.object.class.name.downcase}_#{c.object.id}_parent_id" %>
+			<%= c.hidden_field :position, :id=>"#{c.object.class.name.downcase}_#{c.object.id}_position" %>
+	<% end %>
+	<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.4em;" class="spinner"/><%= button_link_to_submit "Save order", :class =>"save", :id=>"categories_reorder_submit", :style=>"visibility:hidden;" %><%= button_link_to_function "Reorder categories", "toggle_category_reordering()", :id=>"categories_reorder_toggle" %>
+	<% end %>
+</div>
 
 <ol id="categories">
 	<%= render :partial=>'categories/category', :collection => @account.main_categories %>

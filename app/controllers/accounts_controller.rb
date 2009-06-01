@@ -1,8 +1,9 @@
 class AccountsController < ApplicationController
   
   skip_before_filter :find_account
+  skip_before_filter :verify_authenticity_token
   skip_before_filter :login_or_oauth_required, :only => [:new, :create] unless User.find(:first)
-  before_filter :clear_flash, :only => :edit
+  before_filter :clear_flash
   
   layout 'login', :only=>[:new, :create]
   layout 'hotink', :only=>:edit
