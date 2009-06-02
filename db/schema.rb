@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(:version => 20090602000715) do
     t.string   "subtitle"
     t.text     "bodytext"
     t.string   "summary"
-    t.datetime "date"
+    t.datetime "published_at"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"

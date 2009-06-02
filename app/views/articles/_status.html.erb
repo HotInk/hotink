@@ -19,7 +19,7 @@
 	<div id="schedule" class="box clearfix" style="display:none;">
 		<% remote_form_for [@account, @article] do |f| -%>
 			<%= f.hidden_field :status, :value =>"Published" %>
-			<%= unobtrusive_datetime_picker_tags :date, @article.date %><%= button_link_to_submit "Set & publish", :class => "publish" %>
+			<%= f.unobtrusive_datetime_picker :published_at %><%= button_link_to_submit "Set & publish", :class => "publish" %>
 		<% end %>
 	</div>
 </div>
