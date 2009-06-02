@@ -95,7 +95,7 @@ class ArticlesController < ApplicationController
   # PUT /articles/1.xml
   def update
     @article = @account.articles.find(params[:id])
-  
+    
     respond_to do |format|
       if @article.update_attributes(params[:article])
         flash[:notice] = "Article saved"

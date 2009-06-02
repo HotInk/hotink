@@ -1,5 +1,5 @@
 <div id="status">
-	<div id="status_box" class="clearfix">
+	<div class="box clearfix">
 		<h2 class="four_tenths_column">Article status:</h2>
 		<% if @article.status == "Published" %>
 			<h2 class="six_tenths_column published">Published</h2>
@@ -10,10 +10,16 @@
 	<% remote_form_for [@account, @article] do |f| -%>
 		<% if @article.status == "Published" -%>
 			<%= f.hidden_field :status, :value =>"" %>
-			<%= button_link_to_submit "Take offline", :class=>"cancel pill-l" %><%= button_link_to_function "Schedule", "", :class=>"pill-r"%><img src="/loading_small_yellow.gif" style="display:none; margin-left:0.5em;vertical-align: middle;" class="spinner"/>
+			<%= button_link_to_submit "Take offline", :class=>"cancel pill-l" %><%= button_link_to_function "Schedule", "toggle_schedule(this);", :class=>"pill-r"%><img src="/loading_small_yellow.gif" style="display:none; margin-left:0.5em;vertical-align: middle;" class="spinner"/>
 		<% else -%>
 			<%= f.hidden_field :status, :value =>"Published" %>
-			<%= button_link_to_submit "Publish now", :class=>"publish pill-l" %><%= button_link_to_function "Schedule", "", :class=>"pill-r"%><img src="/loading_small_yellow.gif" style="display:none; margin-left:0.5em;vertical-align: middle;" class="spinner"/>
+			<%= button_link_to_submit "Publish now", :class=>"publish pill-l" %><%= button_link_to_function "Schedule", "toggle_schedule(this);", :class=>"pill-r"%><img src="/loading_small_yellow.gif" style="display:none; margin-left:0.5em;vertical-align: middle;" class="spinner"/>
 		<% end -%>
-	<% end -%>
+	<% end %>
+	<div id="schedule" class="box clearfix" style="display:none;">
+		<% remote_form_for [@account, @article] do |f| -%>
+			<%= f.hidden_field :status, :value =>"Published" %>
+			<%= unobtrusive_datetime_picker_tags :date, @article.date %><%= button_link_to_submit "Set & publish", :class => "publish" %>
+		<% end %>
+	</div>
 </div>

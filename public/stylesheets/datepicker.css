@@ -4,11 +4,13 @@
 div.datePicker
         {
         position:absolute;
-        min-width:20em;
-        width:20em;
-		font-size:0.9em;
+        min-width:24em;
+        width:24em;
         z-index:9999;
         text-align:center;
+
+        /* Change the font-size to suit your design's CSS. The following line is for the demo that has a 12px font-size defined on the body tag */
+        font:900 0.8em/0.8em Verdana, Sans-Serif;
         
         /* For Example: If using the YUI font CSS, uncomment the following line to get a 10px font-size within the datePicker */
         /* font:900 77%/77% Verdana; */
@@ -72,7 +74,7 @@ a.date-picker-control span
         {
         display:block;
         width:16px;
-        height:12px;
+        height:16px;
         margin:auto 0;
         }
 /* The next & previous buttons */
@@ -85,6 +87,7 @@ div.datePicker th span
         text-align:center;
         line-height:1em;
         border-width:0;
+        font-family: georgia, times new roman, palatino, times, bookman, serif;
         background:transparent;
         font-weight:bold;
         cursor:pointer;
@@ -94,8 +97,7 @@ div.datePicker th span.year-display
         {
         text-transform:uppercase;
         letter-spacing:1px;
-        font-weight:normal 
-		font-size: 1.2em;
+        font:normal 1.2em Verdana, Sans-Serif;
         cursor:default;
         }
 div.datePicker th span.prev-but,
@@ -109,8 +111,7 @@ div.datePicker th span.today-but
         {
         text-align:center;
         margin:0 auto;
-        font-weight:normal 
-		font-size: 1em;
+        font:normal 1em Verdana, Sans-Serif;
         width:100%;
         text-decoration:none;
         line-height:1.6em;
@@ -127,8 +128,7 @@ div.datePicker th span.fd-day-header
         {
         text-align:center;
         margin:0 auto;
-        font-weight:900;
- 		font-size: 1em;
+        font:900 1em Verdana, Sans-Serif;
         height:1.4em;
         width:2em;
         text-decoration:none;
@@ -160,9 +160,9 @@ div.datePicker table td
         line-height:1.2em;
         cursor:pointer;
         background:#fff url(/images/datepicker/gradient-e5e5e5-ffffff.gif) repeat-x 0 -40px;
-        width:2.2em;
-        height:2.2em !important;
-        height:2.0em;
+        width:3em;
+        height:3em !important;
+        height:2.8em;
         outline:none;
         }
 div.datePicker table th
@@ -192,7 +192,7 @@ div.datePicker table thead th.date-picker-title
 div.datePicker table th.date-picker-day-header
         {
         text-transform:lowercase;
-        width:2.0em;
+        width:3em;
         }
 div.datePicker table th.date-picker-day-header span
         {

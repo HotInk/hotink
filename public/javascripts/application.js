@@ -149,6 +149,22 @@ var media_list_clean_up = function( array_of_ids ){
 	}
 }
 
+// Schedule script
+var schedule_visible = false
+var toggle_schedule = function( button ) {
+	if (schedule_visible) {
+		// Hide schedule form
+		$(button).removeClassName('selected');
+		new Effect.SlideUp('schedule', {'duration': '0.5'});
+		schedule_visible = false;
+	} else {
+		// Show schedule form
+		$(button).addClassName('selected');
+		new Effect.SlideDown('schedule', {'duration': '0.5'});
+		schedule_visible = true;
+	}
+}
+
 //Toolbox - base class for a toolbox.
 
 var Toolbox = Class.create({

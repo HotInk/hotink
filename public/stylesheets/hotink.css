@@ -97,8 +97,8 @@ dl.faq dt {font-weight: bold;}
 /* Cancel buttons use a red background, as opposed to a grey one.*/
 .cancel { color: #FFF; }
 .cancel:hover span, .cancel:hover span span, .cancel:focus span, .cancel:focus span span{ color: #CCC; }
-.cancel:active span { color: #FFF; outline:none; }
-.cancel span{ background:#E62424 url('/images/bg-button-red.gif') repeat-x 0 -1px; }
+.cancel:active span { background-position:0 -395px; color: #FFF; outline:none; }
+.cancel span{ background:#E62424 url('/images/bg-button-red.gif') repeat-x 0 -4px; }
 	
 .selected span { color:#FFF; background-image: none; background-color:  #6A6A6A;/*#75AAF1;*/ }
 .selected:hover span, .selected:hover span span, .selected:focus span, .selected:focus span span { cursor:pointer; border-color:#9cf !important; color:#FFF; }
@@ -327,9 +327,11 @@ h2.published { color: #00DD00; font-weight: bold; }
 #tools .newtag { width: 80%; margin-right: 4px; }
 
 #tools #status { float:left; background-color: #FFF6DD; border: 1px solid #CEE4F3; width: 96.5%; padding: 0.3em 1.5%; }
-#tools #status_box { width: 95.5%; background-color:white; padding: 0.25em 2%; border: 1px solid #CEE4F3; }
+#tools .box { width: 95.5%; background-color:white; padding: 0.25em 2%; border: 1px solid #CEE4F3; }
 #tools #status h2 { float:left; font-size: 1em; line-height: 1.4; }
 #tools #status button { margin-top: 0.5em; margin-bottom: 0; }
+#tools #status .selected span span { border-bottom-color: #CEE4F3; }
+#tools #schedule select { border: 1px solid #CCC; margin: 0.5em 0;} 
 
 /* New mediafile form styles */
 #mediafile { width: 50em; margin: 0 auto; min-height: 50px; }
