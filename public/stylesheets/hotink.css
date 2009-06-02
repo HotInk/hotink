@@ -102,8 +102,16 @@ dl.faq dt {font-weight: bold;}
 	
 .selected span { color:#FFF; background-image: none; background-color:  #6A6A6A;/*#75AAF1;*/ }
 .selected:hover span, .selected:hover span span, .selected:focus span, .selected:focus span span { cursor:pointer; border-color:#9cf !important; color:#FFF; }
-	
+
+.publish { color: white; }
+.publish span, .publish span span { border-color:#999 !important; }
+.publish:hover span, .publish:hover span span, .publish:focus span, .publish:focus span span{ color: #EEE; border-color:#9cf !important;}
+.publish:active span { color: #FFF; outline:none; background-position:0 -398px;}
+.publish span{ background: #00af2e url('/images/bg-button-green.gif') repeat-x 0 0px; }
+
+
 /* Button size classes */
+.larger { font-size: 1.2em; line-height: 1.1; }
 .large { font-size: 1em; line-height: 1.2em; }
 .large:active span{ background-position:0 -390px;}
 .small { font-size: 0.85em; line-height: 1; }
@@ -140,6 +148,12 @@ dl.faq dt {font-weight: bold;}
 .close_button a { color: #FFF; display: inline-block; width: 100%;height: 100%;}
 div.small_top_button { display: block; clear:left; float: right; width: 10px; height: 11px; margin-bottom: 5px; background-image: url('/images/token_x_red.gif'); }
 div.small_top_button a { padding: 5px; }
+
+/* Status styles */
+
+h2.unpublished { color: #EDBE00; font-weight: bold; }
+h2.published { color: #00DD00; font-weight: bold; }
+
 
 /* Hot Ink index styles
 --------------------------------*/
@@ -231,12 +245,13 @@ div.small_top_button a { padding: 5px; }
 .form label { color: #515151; font-size:0.9em;}
 .form fieldset { border: none; margin: 0; padding-left: 0;}
 .form legend { font-size: 1.3em; padding-bottom: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #999; }
-.form h1 { font-size: 2.5em;line-height: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #999; }
+.form h1 { font-size: 2.2em;line-height: 1.1; margin: 0.6em 0; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #999; }
 .form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; color:#333;}
-.form div.field_element input { width: 100%; padding: 0.125em; background-color: #F9F9F9;}
-.form #buttons { float: right; margin: 10px 0px; text-align: right;}
-.form #last_saved {  font-size:10px; font-style: italic; line-height:12px; margin: 0.5em 0; padding: 0.5em; }
-.form #top_links { margin-top: 2px; margin-bottom: 5px; }
+.form div.field_element input { display: block; width: 100%; background-color: #F9F9F9;}
+.form #buttons { float: right; margin-botton: 0.2em; text-align: right;}
+.form #buttons button { float: right;}
+.form #last_saved {  float: right;font-size:10px; font-style: italic; line-height:12px; margin: 0.6em 0.5em; margin-bottom:0; padding: 0.5em; }
+.form #top_links { margin: 0.5em 0; height: 1.6em; }
 
 /* Mediafile form styles */
 #mediafile_form #media { width: 100%; border: 1px solid #DEDEDE; background-color: #FFF; color: #555; text-align: center; }
@@ -268,7 +283,9 @@ div.small_top_button a { padding: 5px; }
 .column_holder { float: none; }
 .third_column { float: left; width: 33%; }
 .quarter_column { float: left; width: 25%; }
+.four_tenths_column { float:left; width: 40%;}
 .half_column { float: left; width: 50%; margin: 5px 0px; }
+.six_tenths_column { float:left; width: 60%;}
 .two_thirds_column { float: left; width:66%; }
 .three_quarters_column { float: left; width: 75%;}
 .tenth_column { float: left; width: 10%;}
@@ -282,10 +299,10 @@ div.small_top_button a { padding: 5px; }
 #mediafile_form { width: 68%; float: left;}
 #tools { width: 30%; float: right;	}
 
-#article_form #article_title { margin-bottom: 0.5em; font-size: 1.8em;}
-#article_form #article_subtitle { margin-bottom: 0.75em; font-size: 1.3em; }
+#article_form #article_title { margin-bottom: 0.5em; font-size: 1.9em; height: 1.2em; padding: 0.1em;}
+#article_form #article_subtitle { margin-bottom: 0.75em; font-size: 1.4em; height: 1.3em; padding: 0.15em; width: 96%; }
 #article_form #article_date { font-size: 14px; height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; background-color: #F9F9F9;}
-#article_form #article_section_id { height: 1.6em; max-width: 22em; font-size: 14px; margin: 0.25em 0; background-color: #F9F9F9; }
+#article_form #article_section_id { max-width: 22em; font-size: 1.3em; margin-top: 0.25em; width: 98%; padding: 0em 1%; background-color: #F9F9F9; }
 #article_form #authorships_form { background-color: #F9F9F9; }
 #article_form #article_authors_list{ border:3px solid #F9F9F9!important;border-left:none;display:block;margin:0px 3px -4px -2px;background-color: #F9F9F9;padding:0px!important;color: #515151;}
 /*IE6-/Win only*/
@@ -308,6 +325,11 @@ div.small_top_button a { padding: 5px; }
 #tools .toolbox_label_body h2 { font-size:1.3em; letter-spacing: 0.5px;  }
 #tools .toolbox_body { margin-top: -1px; padding: 6px 6px; border-right: 1px solid #999; border-left: 1px solid #AAA; background-color: #FFF; }
 #tools .newtag { width: 80%; margin-right: 4px; }
+
+#tools #status { float:left; background-color: #FFF6DD; border: 1px solid #CEE4F3; width: 96.5%; padding: 0.3em 1.5%; }
+#tools #status_box { width: 95.5%; background-color:white; padding: 0.25em 2%; border: 1px solid #CEE4F3; }
+#tools #status h2 { float:left; font-size: 1em; line-height: 1.4; }
+#tools #status button { margin-top: 0.5em; margin-bottom: 0; }
 
 /* New mediafile form styles */
 #mediafile { width: 50em; margin: 0 auto; min-height: 50px; }
@@ -358,28 +380,6 @@ div.small_top_button a { padding: 5px; }
 /*IE6-/Win only*/
 /*\*/ * html .tokenizer_input_borderless #mediafile_new_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
 #edit_media_form #photocredits_form { width: 290px; }
-
-
-/* Sorting forms styles*/
-#account_article_sorting_list button.categories_edit_tab{margin-left:208px; }
-#account_article_sorting_list div#categories_list { border: 1px solid #AAA; }
-#account_article_sorting_list #hidden_categories_buttons { padding: 4px 2px; text-align: right; background-color: #DEDEDE; 
-																border-bottom: 1px solid #9cf;}
-#account_article_sorting_list #categories_controls { margin-left: 3px;  }
-#account_article_sorting_list ul#categories_sort{  max-height: 180px; overflow:auto; margin:0;}
-#account_article_sorting_list .text_input { font-size: 13px; width: 98%; height: 16px;}
-#account_article_sorting_list #categories_sort { margin-top: 5px; padding-left: 0px; list-style-type: none; } 
-
-#account_article_sorting_list #categories_sort { color: #3399DE; }
-#account_article_sorting_list #categories_sort div.printsection { color: #333; }
-#account_article_sorting_list #categories_sort input[type='text'] { width: 160px;}
-#account_article_sorting_list #categories_sort input[type='checkbox'] { padding: 1px 0px;}
-#account_article_sorting_list #categories_sort ul { padding-left: 20px; list-style-type: none; }
-#account_article_sorting_list #categories_list ul div {display:inline-block;} 
-#account_article_sorting_list #categories_sort .drop_hover { background: url('/drag.png') no-repeat bottom left; }
-#account_article_sorting_list #categories_sort .drop_top {	background-position: top left; }
-#account_article_sorting_list #categories_sort .drop_bottom { background-position: bottom left; }
-#account_article_sorting_list #categories_sort .drop_insert { background-position: 65px 100%; }
 
 /* Overlay css */
 
@@ -499,10 +499,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .edit_account>div { margin-bottom: 1em;}
 
 #account .account_settings h2 { margin-bottom: 1em;}
-
 #account #images-window label{ padding-right: 3.5em; font-weight: bold; font-family: georgia, "Times New Roman", times, serif;}
-
-#account #new_category_form .column_holder>div { margin-bottom: 0.25em;  }
 
 #account .activation_form button{ margin-top: 5%; font-size:0.8em;}
 #account .activation_form .column_holder { margin-bottom: 0;}
@@ -527,19 +524,23 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .user .kill_link a{ color: red;}
 
 #account #categories-window h2 { float: left; }
-#account #categories-window #categories_order_form { width: 55%; float: right; margin: 0.75em; margin-right: none; }
+#account #categories-window #categories_order_form { width: 45%; float: right; margin: 0.75em; margin-right: none; }
 
+#account ol#categories { float: left;}
 #account ol#categories ol { border: none; clear: left;}
 #account ol#categories .drop_hover { background: url('/images/drag.png') no-repeat bottom left; }
 #account ol#categories .drop_top {	background-position: top left; }
 #account ol#categories .drop_bottom { background-position: bottom left; }
 #account ol#categories .drop_insert { background-position: 65px 100%; }
+#account #new_category_form { float: left; width: 100%;}
+#account #new_category_form select { font-size: 0.9em; margin-bottom: 0.5em; background: none; width: 97%; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.6em; color: #333; border: 1px solid #DEDEDE;	}
+#account #new_category_form .column_holder>div { margin-bottom: 0.25em;  }
+
 
 #account .index .category div { float: left; }
 #account .index .category_form { margin-top:0;}
 #account .index .category_form .text_input { float: left; width: 60%; margin-top: 0; padding-bottom: 1px; font-size: 1.1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
 #account .index .category_form button { position: relative; top: 2px; }
-#account .index #new_category_form select { font-size: 0.9em; margin-bottom: 0.5em; background: none; width: 97%; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.6em; color: #333; border: 1px solid #DEDEDE;	}
 #account .index .category_form .save_button { margin-left: 0.5em;float: left;}
 #account .index .category .name, #account .index .section .name { display: block; font-size: 1.2em;} 
 #account .index .category .edit, #account .index .section .edit { padding-left: 0.5em;}
@@ -704,9 +705,10 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blog_users .blog_user .kill_link a{ color: red;}
 
 #entry_form { width: 68%; float:left; }
+#entry_form h1 strong { color: #444; font-weight: normal;}
 #entry_form h3 { font-weight: normal; font-size: 1.5em; margin: 0.25em 0;}
-#entry_form #entry_title { margin-bottom: 0.5em; font-size: 1.8em;}
-#entry_form #entry_subtitle { margin-bottom: 0.75em; font-size: 1.3em; }
+#entry_form #entry_title { margin-bottom: 0.5em; font-size: 1.9em; height: 1.2em; padding: 0.1em;}
+#entry_form #entry_subtitle { margin-bottom: 0.75em; font-size: 1.4em; height: 1.2em; padding: 0.2em; width: 99.75%;}
 #entry_form #entry_date { font-size: 14px; height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; background-color: #F9F9F9;}
 #entry_form #entry_section_id { height: 1.6em; max-width: 22em; font-size: 14px; margin: 0.25em 0; background-color: #F9F9F9; }
 #entry_form #entry_bodytext { width:99%; border: 1px solid #999; background-color: #F9F9F9; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }

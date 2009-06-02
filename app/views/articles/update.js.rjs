@@ -1,5 +1,6 @@
 #Update the last saved notes and trigger flash
 page.replace_html 'last_saved', :text =>"Last modified #{time_ago_in_words(@article.updated_at)} ago"
+page.replace 'status', :partial => 'status'
 page.visual_effect :highlight, "last_saved", :duration => 0.5
 page.replace_html 'flash', :text =>render_flash(flash[:notice])
 page << "fade_flash();"

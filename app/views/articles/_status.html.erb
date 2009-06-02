@@ -1,0 +1,19 @@
+<div id="status">
+	<div id="status_box" class="clearfix">
+		<h2 class="four_tenths_column">Article status:</h2>
+		<% if @article.status == "Published" %>
+			<h2 class="six_tenths_column published">Published</h2>
+		<% else %>
+			<h2 class="six_tenths_column unpublished">Unpublished</h2>
+		<% end %>
+	</div>
+	<% remote_form_for [@account, @article] do |f| -%>
+		<% if @article.status == "Published" -%>
+			<%= f.hidden_field :status, :value =>"" %>
+			<%= button_link_to_submit "Take offline", :class=>"cancel pill-l" %><%= button_link_to_function "Schedule", "", :class=>"pill-r"%><img src="/loading_small_yellow.gif" style="display:none; margin-left:0.5em;vertical-align: middle;" class="spinner"/>
+		<% else -%>
+			<%= f.hidden_field :status, :value =>"Published" %>
+			<%= button_link_to_submit "Publish now", :class=>"publish pill-l" %><%= button_link_to_function "Schedule", "", :class=>"pill-r"%><img src="/loading_small_yellow.gif" style="display:none; margin-left:0.5em;vertical-align: middle;" class="spinner"/>
+		<% end -%>
+	<% end -%>
+</div>

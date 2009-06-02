@@ -19,16 +19,13 @@
 	    <%= f.label :title, "Headline"%><br />
 	    <%= f.text_field :title , :class => "user" %>
 	  </div>
-	  <div class="field_element">
-	    <%= f.label :subtitle, "Subhead"%><br />
-	    <%= f.text_field :subtitle, :class => "user"  %>
-	  </div>
+	
 	  <div class="column_holder clearfix">
-	  	  <div class="half_column">
-		    <%= f.label :date %><br />
-			<%= f.unobtrusive_date_text_picker :date, {:format => "M-D-Y"}, :size => "10" %>
+		  <div class="field_element three_quarters_column">
+		    <%= f.label :subtitle, "Subhead"%><br />
+		    <%= f.text_field :subtitle, :class => "user"  %>
 		  </div>
-		  <div class="half_column">
+		  <div class="field_element quarter_column">
 			<%= f.label :section_id, "Primary section"%><br />
 			<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => "None" },  :class => :text_input)%>
 		  </div>
@@ -54,6 +51,16 @@
 	<% end %>
 </div><!-- /article_form -->
 		<div id="tools">
+			<div class="toolbox">
+				<div class="toolbox_border"></div>
+				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tools</h2></div>
+				<div class="toolbox_border"></div>
+				<div class="toolbox_body clearfix">
+					<%= render :partial=>'status' %>
+				</div>
+				<div class="toolbox_border"></div>
+			</div><!-- /toolbox - tools -->
+			
 			<div class="toolbox">
 				<div class="toolbox_border"></div>
 				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Media</h2></div>

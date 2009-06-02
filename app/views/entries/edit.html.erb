@@ -1,7 +1,7 @@
 <div id="entry_form" class="form">
 	<% remote_form_for([@account, @blog, @entry], :html=>{:autocomplete=>"off"}) do |f| %>
 	  <div id="buttons">
-		<%= button_link_to_submit "Save", :class=>"save large" %>	
+		<%= button_link_to_submit "Save", :class=>"save larger" %>	
 		<p id="last_saved">
 		  <% if @entry.created_at == @entry.updated_at %>
 		  	Never saved
@@ -11,10 +11,9 @@
 		</p>
 	  </div>
 	<p id="top_links">
-		<h3>&ldquo;<%= @blog.title %>&rdquo;</h3>	
 		<%= link_to "&#171; Back to blog", account_blog_url(@account, @blog), :class=>"weblink" %>
 	</p>
-	<h1>Edit entry</h1>
+	<h1>Edit entry in &ldquo;<strong><%= @blog.title %></strong>&rdquo;</h1>
 	  <%= f.error_messages %>
 	  <div class="field_element">
 	    <%= f.label :title, "Headline"%><br />
@@ -23,12 +22,6 @@
 	  <div class="field_element">
 	    <%= f.label :subtitle, "Subhead"%><br />
 	    <%= f.text_field :subtitle, :class => "user"  %>
-	  </div>
-	  <div class="column_holder clearfix">
-	  	  <div class="half_column">
-		    <%= f.label :date %><br />
-			<%= f.unobtrusive_date_text_picker :date, {:format => "M-D-Y"}, :size => "10" %>
-		  </div>
 	  </div>
 	  <div id ="author_list" class="field">
 			<%=  render :partial => 'authors_form' 	%>
