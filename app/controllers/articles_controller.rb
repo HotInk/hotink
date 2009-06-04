@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.js
-      format.xml  { render :xml => @articles }
+      format.xml  { render :xml => @articles.select{ |article| article.status=="Published" && article.published_at < Time.now} }
     end
   end
 

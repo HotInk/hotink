@@ -1,12 +1,12 @@
 <% unless article.created_at == article.updated_at %>
-  <li id="article_<%= article.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
+  <li id="article_<%= article.id %>" class="<%= cycle("even-row", "odd-row") %> <%= article.status=="Published" ? (article.published_at > Time.now ? "scheduled" : "published") : "unpublished" %> clearfix">
 				
 	<div class="status">
 		<input type="checkbox" value="<%= article.id %>" name="mediafile_ids[<%= article.id %>]"/>
 	</div>
 	
 	<div class="article clearfix">
-		<h1>&ldquo;<%=link_to h(article.display_title.strip), edit_account_article_url(@account, article), :class=>"document_link" %>&rdquo;</h1>
+		<h1><%= article.status=="Published" ? (article.published_at > Time.now ? "<small>Scheduled</small>" : "<small>Published</small>") : "<small>Draft</small>" %> &ldquo;<%=link_to h(article.display_title.strip), edit_account_article_url(@account, article), :class=>"document_link" %>&rdquo;</h1>
 		<div class="article_details clearfix">
 			<div class="authors">
 				<em><%= article.authors_list if article.authors_list %></em>
