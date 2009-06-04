@@ -74,7 +74,6 @@ ActiveRecord::Schema.define(:version => 20090602000715) do
     t.string   "subtitle"
     t.text     "bodytext"
     t.string   "summary"
-    t.datetime "published_at"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -82,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20090602000715) do
     t.boolean  "delta"
     t.string   "type"
     t.string   "status"
+    t.datetime "published_at"
   end
 
   create_table "issues", :force => true do |t|

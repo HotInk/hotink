@@ -102,30 +102,6 @@ Rails::Initializer.run do |config|
   
 end
 
-#Load custom datetime formats
-ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
-  :standard => lambda { |date| Time.now.beginning_of_day <= date ? 
-    "#{date.strftime('%I').to_i}:#{date.strftime('%M')} #{date.strftime('%p').downcase}" : 
-    Time.now.beginning_of_year <= date ? "#{date.strftime('%b')} #{date.day}" :
-     "#{date.month}/#{date.day}/#{date.strftime('%y')}"
-  }
-)
-
-ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
-  :standard_date_only => lambda { |date| Time.now.beginning_of_year <= date ? 
-     "#{date.strftime('%b')} #{date.day}" :
-     "#{date.month}/#{date.day}/#{date.strftime('%y')}"
-  }
-)
-
-ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
-  :standard => lambda { |date| Time.now.beginning_of_day <= date ? 
-    "#{date.strftime('%I').to_i}:#{date.strftime('%M')} #{date.strftime('%p').downcase}" : 
-    (Time.now.beginning_of_year <= date ? "#{date.strftime('%b')} #{date.day}" : 
-    "#{date.month}/#{date.day}/#{date.strftime('%y')}") 
-  }
-)
-
 #Load custom Paperclip interpolation
 Paperclip::Attachment.interpolations[:account] = proc do |attachment, style|
   attachment.instance.account.name

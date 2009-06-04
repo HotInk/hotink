@@ -42,6 +42,18 @@ class EntriesController < ApplicationController
   
   def update
     @entry = @blog.entries.find(params[:id])
+    
+    # Only touch published status if status is passed
+    if params[:entry][:status]      
+      # Should we schedule publishing on a custom date or immediately?
+      # Hot Ink relies on a "schedule" parameter to determine which.
+      if params[:entry][:schedule] 
+        schedule = params[:entry].delete(:schedule)
+        @entry.publish(params[:entry].delete(:status), Time.local(schedule[:year].to_i, schedule[:month].to_i, schedule[:day].to_i, schedule[:hour].to_i, schedule[:minute].to_i) )
+      else
+        @entry.publish(params[:entry].delete(:status))
+      end
+    end
   
     respond_to do |format|
       if @entry.update_attributes(params[:entry])
