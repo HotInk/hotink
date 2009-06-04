@@ -13,8 +13,12 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.xml
   def show
-    @category = @account.categories.find(params[:id])
-
+    begin
+      @category = @account.categories.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      @category = @account.categories.find_by_name(params[:id]) 
+    end
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => [@account, @category] }

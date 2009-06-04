@@ -13,8 +13,13 @@ class SectionsController < ApplicationController
   # GET /sections/1
   # GET /sections/1.xml
   def show
-    @section = @account.sections.find(params[:id])
-
+    
+    begin
+      @section = @account.sections.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      @section = @account.sections.find_by_name(params[:id]) 
+    end
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @section }
