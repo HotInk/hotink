@@ -25,7 +25,6 @@ class Document < ActiveRecord::Base
   validates_presence_of :account, :message => "Must have an account"
   validates_associated :account, :message => "Account must be valid"
 
-
   define_index do
     indexes title, :sortable => :true
     indexes subtitle

@@ -254,8 +254,9 @@ h2.published { color: #00DD00; font-weight: bold; }
 .form #top_links { margin: 0.5em 0; height: 1.6em; }
 
 /* Mediafile form styles */
-#mediafile_form #media { width: 100%; border: 1px solid #DEDEDE; background-color: #FFF; color: #555; text-align: center; }
-#mediafile_form h2 { text-align: left; margin: 0.5em;}
+#mediafile_form #media { width: 100%; border: 1px solid #DEDEDE; padding: 0.5em; margin-bottom: 2em; background-color: #FFF; color: #555; text-align: center; }
+#mediafile_form h2 { text-align: left; float: left; margin: 0.5em;}
+#mediafile_form object { float: left; }
 #mediafile_form #autocomplete_populate{ width: 415px;}
 #mediafile_form #description { margin:1em 0;}
 /* Image form */

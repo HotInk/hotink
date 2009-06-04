@@ -78,7 +78,7 @@
 	    	<%= f.text_area :description %>
 	  	</div>
 	
-		<div id="media">
+		<div id="media" class="clearfix">
 			<h2><%= @mediafile.class.name.capitalize %></h2>
 			<% if @mediafile.is_a?(Image)%>
 				<%= image_tag(@mediafile.file.url)%>
@@ -90,6 +90,8 @@
 					 <embed src="/niftyplayer.swf?file=<%= @mediafile.file.url %>&as=0" quality="high" bgcolor="#FFFFFF" width="204" height="37" name="audiofile_<%= @mediafile.id %>_player" align="center" type="application/x-shockwave-flash" swLiveConnect="true" pluginspage="http://www.macromedia.com/go/getflashplayer">
 					</embed>
 					</object>
+			<% else %>
+				<%= image_tag('/file.png') %>
 			<% end %>
 		</div>
 	
