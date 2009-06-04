@@ -1,11 +1,13 @@
 class AddStatusToArticles < ActiveRecord::Migration
   def self.up
+    remove_column :documents, :date
     add_column :documents, :status, :string
-    rename_column :documents, :date, :published_at
+    add_column :documents, :published_at, :datetime
   end
 
   def self.down
     remove_column :documents, :status
-    rename_column :documents, :published_at, :date
+    remove_column :documents, :published_at
+    add_column :documents, :date, :datetime
   end
 end

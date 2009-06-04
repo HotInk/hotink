@@ -2,7 +2,19 @@
 	<div class="box clearfix">
 		<h2 class="four_tenths_column">Article status:</h2>
 		<% if @article.status == "Published" %>
-			<h2 class="six_tenths_column published">Published</h2>
+			<% if @article.published_at <= Time.now %>
+				<h2 class="six_tenths_column published">
+					Published on <strong><%= @article.published_at.to_formatted_s(:standard_date_only) %></strong><br />
+					at <strong><%= @article.published_at.to_formatted_s(:time) %></strong><br />
+					<small>(<%= distance_of_time_in_words_to_now(@article.published_at) %> ago)</small>
+				</h2>
+			<% else %>
+				<h2 class="six_tenths_column scheduled">
+					Scheduled for <strong><%= @article.published_at.to_formatted_s(:standard_date_only) %></strong><br />
+					at <strong><%= @article.published_at.to_formatted_s(:time) %></strong><br />
+					<small>(<%= distance_of_time_in_words_to_now(@article.published_at) %> from now)</small>
+				</h2>
+			<% end %>
 		<% else %>
 			<h2 class="six_tenths_column unpublished">Unpublished</h2>
 		<% end %>
@@ -19,7 +31,9 @@
 	<div id="schedule" class="box clearfix" style="display:none;">
 		<% remote_form_for [@account, @article] do |f| -%>
 			<%= f.hidden_field :status, :value =>"Published" %>
-			<%= f.unobtrusive_datetime_picker :published_at %><%= button_link_to_submit "Set & publish", :class => "publish" %>
+			<label for="article[schedule][year]">Publish at a specific date and time:</label><br />
+			<%= select_datetime (@article.published_at.nil? ? Time.now : @article.published_at), :datetime_separator => "<br />", :time_separator => ": ", :prefix => "article[schedule]" %>
+			<%= button_link_to_submit "Set publish date", :class => "publish" %>
 		<% end %>
 	</div>
 </div>

@@ -40,8 +40,17 @@
 	</div>
 	
 	<div class="date">
-		<%= h article.date.to_s(:standard_date_only) %>
-		<p><%= article.bodytext.scan(/\w+/).size %> words</p>
+		<% if article.published_at %>
+			<%= h article.published_at.to_s(:standard_date_only) %>
+		<% else %>
+			<%= h article.updated_at.to_s(:standard_date_only) %>
+		<% end %>
+		
+		<% if article.bodytext %>
+			<p><%= article.bodytext.scan(/\w+/).size %> words</p>
+		<% else %>
+			<p>No bodytext</p>
+		<% end %>
 	</div>
 		
   </li>

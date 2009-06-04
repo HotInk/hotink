@@ -33,7 +33,7 @@ class Document < ActiveRecord::Base
     indexes authors.name, :as => :authors_names
     indexes waxings.caption, :as => :captions
     indexes tags.name, :as => :tags
-    indexes date, :sortable => :true
+    indexes published_at, :sortable => :true
 
     has created_at
     has account_id
@@ -46,25 +46,28 @@ class Document < ActiveRecord::Base
       10
   end
   
-  # If the article doesn't have a date, return it's created_at time. If its new, return Time.now
-  def date
-    d = read_attribute('date')
-    if d
-      return d
-    elsif self.new_record?
-      return Time.now
-    else
-      return self.created_at
-    end
-  end
-
-  
   def display_title
     if self.title and self.title.strip != ""
       return self.title
     else 
       return "(no headline)"
     end
+  end
+  
+  # This method handles the public availability of a Document
+  def publish(status=nil, time = Time.now)
+    case status
+    when "Published"
+      self.status = "Published"
+      self.published_at = time
+    else
+      self.status = nil
+    end
+  end
+  
+  # Logical alias used for unpublishing an article
+  def unpublish
+    publish
   end
   
   # Categories are set in a checkbox style, and that's reflected in this attribute method.
@@ -126,7 +129,7 @@ class Document < ActiveRecord::Base
      xml.instruct! unless options[:skip_instruct]
      
      xml.article do
-       xml.tag!( :date, self.date.to_formatted_s(:long))
+       xml.tag!( :published_at, self.published_at.to_formatted_s(:long))
        xml.tag!( :title, self.title )
        xml.tag!( :subtitle, self.subtitle )
        xml.tag!( :authors_list, self.authors_list )

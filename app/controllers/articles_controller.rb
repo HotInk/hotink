@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
     # results on a blank query. Sphinx delta index isn't ordered with the regular index, so the ordering just
     # doesn't work.
     if params[:search].blank?
-      @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "date DESC", :include => [:authors, :mediafiles, :section])
+      @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "published_at DESC", :include => [:authors, :mediafiles, :section])
     else  
       @search_query = params[:search]
       @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => :date, :sort_mode => :desc, :include => [:authors, :mediafiles, :section])
@@ -49,7 +49,6 @@ class ArticlesController < ApplicationController
     if last_article = @account.articles.find(:last)
       if last_article.created_at == last_article.updated_at
          @article = last_article
-         @article.date = Time.now #Give it the current time, without saving.
       else
         @article.save
       end
@@ -95,6 +94,20 @@ class ArticlesController < ApplicationController
   # PUT /articles/1.xml
   def update
     @article = @account.articles.find(params[:id])
+    
+    # Only touch published status if status is passed
+    if params[:article][:status]      
+      # Should we schedule publishing on a custom date or immediately?
+      # Hot Ink relies on a "schedule" parameter to determine which.
+      if params[:article][:schedule] 
+        schedule = params[:article].delete(:schedule)
+        @article.publish(params[:article].delete(:status), Time.local(schedule[:year].to_i, schedule[:month].to_i, schedule[:day].to_i, schedule[:hour].to_i, schedule[:minute].to_i) )
+      else
+        @article.publish(params[:article].delete(:status))
+      end
+    end
+    
+    logger.info (params)
     
     respond_to do |format|
       if @article.update_attributes(params[:article])

@@ -2,7 +2,7 @@
 page.replace_html 'last_saved', :text =>"Last modified #{time_ago_in_words(@article.updated_at)} ago"
 
 page.replace 'status', :partial => 'status'
-
+page.assign 'schedule_visible', false
 page.visual_effect :highlight, "last_saved", :duration => 0.5
 page.replace_html 'flash', :text =>render_flash(flash[:notice])
 page << "fade_flash();load_button_fix();"
