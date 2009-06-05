@@ -12,16 +12,17 @@ class ArticlesController < ApplicationController
     # results on a blank query. Sphinx delta index isn't ordered with the regular index, so the ordering just
     # doesn't work.
     if params[:search].blank?
-      @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "published_at DESC", :include => [:authors, :mediafiles, :section])
+      @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :conditions => { :status => "Published" }, :order => "published_at DESC", :include => [:authors, :mediafiles, :section])
+      @drafts = @account.articles.find( :all, :conditions => { :status => nil }, :include => [:authors, :mediafiles, :section] ) unless params[:page]
     else  
       @search_query = params[:search]
-      @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => :date, :sort_mode => :desc, :include => [:authors, :mediafiles, :section])
+      @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :include => [:authors, :mediafiles, :section])
     end
     
     respond_to do |format|
       format.html # index.html.erb
       format.js
-      format.xml  { render :xml => @articles.select{ |article| article.status=="Published" && article.published_at < Time.now} }
+      format.xml  { render :xml => @articles.select{ |article| article.published_at < Time.now } }
     end
   end
 
