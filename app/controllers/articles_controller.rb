@@ -98,7 +98,7 @@ class ArticlesController < ApplicationController
     # Only touch published status if status is passed
     if params[:article][:status]      
       # Should we schedule publishing on a custom date or immediately?
-      # Hot Ink relies on a "schedule" parameter to determine which.
+      # Rely on a "schedule" parameter to determine which.
       if params[:article][:schedule] 
         schedule = params[:article].delete(:schedule)
         @article.publish(params[:article].delete(:status), Time.local(schedule[:year].to_i, schedule[:month].to_i, schedule[:day].to_i, schedule[:hour].to_i, schedule[:minute].to_i) )
@@ -106,9 +106,7 @@ class ArticlesController < ApplicationController
         @article.publish(params[:article].delete(:status))
       end
     end
-    
-    logger.info (params)
-    
+        
     respond_to do |format|
       if @article.update_attributes(params[:article])
         flash[:notice] = "Article saved"

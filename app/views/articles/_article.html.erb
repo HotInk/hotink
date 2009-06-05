@@ -35,7 +35,7 @@
 		<% end %>
 	</div>
 
-	<div class="icons">
+	<div class="icons transparent">
 		<%= link_to "&nbsp;&nbsp;&nbsp;", [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete_link", :style=>"display:none;" %>
 	</div>
 	

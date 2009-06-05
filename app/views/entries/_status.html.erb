@@ -22,7 +22,7 @@
 	<% remote_form_for [@account, @blog, @entry] do |f| -%>
 		<% if @entry.status == "Published" -%>
 			<%= f.hidden_field :status, :value =>"" %>
-			<%= button_link_to_submit "Unpublish", :class=>"cancel pill-l" %><%= button_link_to_function "Schedule", "toggle_schedule(this);", :class=>"pill-r"%><img src="/loading_small_yellow.gif" style="display:none; margin-left:0.5em;vertical-align: middle;" class="spinner"/>
+			<%= button_link_to_submit "Unpublish", :class=>"cancel pill-l" %><%= button_link_to_function "Reschedule", "toggle_schedule(this);", :class=>"pill-r"%><img src="/loading_small_yellow.gif" style="display:none; margin-left:0.5em;vertical-align: middle;" class="spinner"/>
 		<% else -%>
 			<%= f.hidden_field :status, :value =>"Published" %>
 			<%= button_link_to_submit "Publish now", :class=>"publish pill-l" %><%= button_link_to_function "Schedule", "toggle_schedule(this);", :class=>"pill-r"%><img src="/loading_small_yellow.gif" style="display:none; margin-left:0.5em;vertical-align: middle;" class="spinner"/>
