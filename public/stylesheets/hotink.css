@@ -187,15 +187,15 @@ li.unpublished h1>small { color: #EDBE00; }
 .index .pagination a { color: #666; }
 .index .pagination .current { color: #333; }
 .index .pagination .disabled { display: none;}
-.index ol {margin-top: 0.25em; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; border-top: none; }
-.index ol li { border-top: 1px dotted #515151; cursor: default;}
+.index ol {margin-top: 0.25em; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #777; border-top: none; }
+.index ol li { border-top: 1px dotted #777; cursor: default;}
 .index ol a { margin: 12px 0px; cursor: pointer;}
 .index ol a:visited { color: #555;}
 .index ol a:hover { color: #3399DE;}
 .index ol a:active { color: #333;}
 .index ol li>div{ display: inline-block; float: left; vertical-align: top; margin: 0.25em;}
 .index a.delete_link { background: url('/images/token_x_red.gif') no-repeat;}
-.index li div.date { float: right; width: 4.25em; color: #AAA; font-size: 1.2em; padding: 0.5em 0; text-align:right;}
+.index li div.date { float: right; width: 9%; color: #AAA; font-size: 1.2em; padding: 0.5em 0; text-align:right;}
 .index li div.date p { font-size: 0.65em; color: #AAA; margin: 0px; margin-top: 8px; font-style:italic; font-family: georgia,"times new roman",times, serif;}
 .index li div.icons { float: right; width: 1.0em; height: 1.2em; margin-right: 0; }
 .index li.selected_card { background-color: #CDFBDC; }
@@ -204,7 +204,7 @@ li.unpublished h1>small { color: #EDBE00; }
 /* Articles index styles
 --------------------------------*/
 
-#articles li .article { width: 42em; min-height: 40px; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
+#articles li .article { width: 61%; min-height: 40px; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
 #articles li .article h1 { font-size: 1.2em; line-height: 1.2; margin: 0; padding: 0.25em; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #articles li .article div { font-size: .9em; }
 #articles li .article .article_details { width: 100%; min-height: 24px;}
