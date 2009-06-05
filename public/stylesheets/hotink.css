@@ -195,8 +195,8 @@ li.unpublished h1>small { color: #EDBE00; }
 .index ol a:active { color: #333;}
 .index ol li>div{ display: inline-block; float: left; vertical-align: top; margin: 0.25em;}
 .index a.delete_link { background: url('/images/token_x_red.gif') no-repeat;}
-.index li div.date { float: right; width: 9%; color: #AAA; font-size: 1.2em; padding: 0.5em 0; text-align:right;}
-.index li div.date p { font-size: 0.65em; color: #AAA; margin: 0px; margin-top: 8px; font-style:italic; font-family: georgia,"times new roman",times, serif;}
+.index li div.date { float: right; width: 9%; color: #515151; font-size: 1.2em; padding: 0.5em 0; text-align:right;}
+.index li div.date p { font-size: 0.65em; color: #515151; margin: 0px; margin-top: 8px; font-style:italic; font-family: georgia,"times new roman",times, serif;}
 .index li div.icons { float: right; width: 1.0em; height: 1.2em; margin-right: 0; }
 .index li.selected_card { background-color: #CDFBDC; }
 .index li.highlighted_card {  }
