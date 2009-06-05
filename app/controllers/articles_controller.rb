@@ -12,7 +12,17 @@ class ArticlesController < ApplicationController
     # results on a blank query. Sphinx delta index isn't ordered with the regular index, so the ordering just
     # doesn't work.
     if params[:search].blank?
-      @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "published_at DESC", :include => [:authors, :mediafiles, :section])
+
+      conditions = {}
+      
+      # check whether we're looking for section articles
+      unless params[:section_id].blank?
+        conditions[:section_id] = params[:section_id]
+      end
+      
+      # TODO: do something similar for issues
+      
+      @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "published_at DESC", :include => [:authors, :mediafiles, :section], :conditions => conditions)
     else  
       @search_query = params[:search]
       @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => :date, :sort_mode => :desc, :include => [:authors, :mediafiles, :section])

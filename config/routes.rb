@@ -37,9 +37,25 @@ ActionController::Routing::Routes.draw do |map|
         entry.resources :tags
       end
     end
-    account.resources :issues, :member => { :upload_pdf => :post }
+    account.resources :issues, :member => { :upload_pdf => :post } do |issue|
+      issue.resources :articles do |article|
+        article.resources :mediafiles
+        article.resources :authors
+        article.resources :sortings
+        article.resources :tags
+        article.resources :waxings
+      end
+    end
     account.resources :authors
-    account.resources :sections
+    account.resources :sections do |section|
+      section.resources :articles do |article|
+        article.resources :mediafiles
+        article.resources :authors
+        article.resources :sortings
+        article.resources :tags
+        article.resources :waxings
+      end
+    end
     account.resources :categories
     account.resources :images
     account.resources :audiofiles
