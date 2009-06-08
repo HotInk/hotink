@@ -13,16 +13,15 @@ class ArticlesController < ApplicationController
     # doesn't work.
     if params[:search].blank?
       
-      conditions = {}
+      conditions = { :status => "published" }
       
       # check whether we're looking for section articles
       unless params[:section_id].blank?
         conditions[:section_id] = params[:section_id]
       end
-      
-      # TODO: do something similar for issues
-      
-      @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :conditions => { :status => "Published" }, :order => "published_at DESC", :include => [:authors, :mediafiles, :section], :conditions => conditions)
+  
+      # TODO: do something similar for issues      
+      @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "published_at DESC", :include => [:authors, :mediafiles, :section], :conditions => conditions)
       @drafts = @account.articles.find( :all, :conditions => { :status => nil }, :include => [:authors, :mediafiles, :section] ) unless params[:page]
     else  
       @search_query = params[:search]
