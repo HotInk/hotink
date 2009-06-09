@@ -165,7 +165,7 @@ li.unpublished h1>small { color: #EDBE00; }
 /* Hot Ink index styles
 --------------------------------*/
 
-.index .title_bar { width: 100%; margin-bottom: 0.5em;}
+.index .title_bar { width: 100%; margin-bottom: 0.75em;}
 .index .title_bar .actions { float: left; margin: 0.25em 0em;}
 .index .title_bar .actions a { vertical-align: 0.25em;}
 .index .title_bar h1 { display:inline; margin: 0; margin-right: 0.5em; font-size: 3em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA;}
@@ -177,11 +177,10 @@ li.unpublished h1>small { color: #EDBE00; }
 .index .select_all_wrap { margin: 0.6em 0 0.4em 0; display:inline-block; float: left; }
 .index .select_all_wrap label { display:inline-block; }
 .index .select_all_wrap input { padding: 0.125em 0; margin-left: 6px; }
-.index .function_bar #top_pagination{ float: right; display:inline-block; margin: 0.8em 0 0.2em 0; }
+.index .function_bar #top_pagination{ float: right; display:inline-block; margin: 1.1em 0 0.2em 0; }
 .index .function_bar #bottom_pagination{ float: right; display:inline-block;}
 .index .function_bar .batch_affect { float: left; margin-left: 2em; padding-top: 0.4em; }
-.index .function_bar .batch_affect select { height: 1.65em; padding:0; min-width: 14em; font-size:1.1em; float: left; }
-.index .function_bar .batch_affect button { float: left; font-size: 0.65em; height: 2.35em; vertical-align: middle;  }
+.index .function_bar .batch_affect button { font-size: 1em; height: 2.35em; vertical-align: middle;  }
 .index .page_entries_info { float: right; font-size: 0.9em; margin: 0.1em; margin-right: 1em;  font-style: italic; }
 .index .pagination { display: inline; float: right; color: #AAA; }
 .index .pagination a { color: #666; }
@@ -342,6 +341,13 @@ li.unpublished h1>small { color: #EDBE00; }
 #tools #schedule select { border: 1px solid #CCC; margin: 0.5em 0;} 
 #tools #schedule label { font-size: 0.9em;}
 
+#tools #printings { float:left; background-color: #FFF6DD; border: 1px solid #CEE4F3; width: 96.5%; margin-top:0.5em;padding: 0.3em 1.5%; }
+#tools #printings h2 { font-weight: bold; font-size: 1em; line-height: 1.4; }
+#tools #printings ul { margin: 0.5em 0; padding-left: 0em; list-style: none; }
+#tools #printings ul li h3, #tools #printings ul li p { margin: 0; font-family:georgia,"times new roman",times, serif; margin-bottom: 0.25em; margin-left: 0.5em;}
+#tools #printings ul h3 { float: left; font-weight: normal; font-size: 1.1em;}
+#tools #printings ul .issue_date { float:left; font-size: 1.2em; color: #999; }
+#tools #printings a.weblink { padding-left: 0.5em; font-size: 0.9em; display: block; margin-bottom: 0.5em; }
 /* New mediafile form styles */
 #mediafile { width: 50em; margin: 0 auto; min-height: 50px; }
 #mediafile #upload_media_form { float: left;}
