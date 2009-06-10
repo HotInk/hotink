@@ -180,13 +180,15 @@ li.unpublished h1>small { color: #EDBE00; }
 .index .function_bar #top_pagination{ float: right; display:inline-block; margin: 1.1em 0 0.2em 0; }
 .index .function_bar #bottom_pagination{ float: right; display:inline-block;}
 .index .function_bar .batch_affect { float: left; margin-left: 2em; padding-top: 0.4em; }
-.index .function_bar .batch_affect button { font-size: 1em; height: 2.35em; vertical-align: middle;  }
-.index .page_entries_info { float: right; font-size: 0.9em; margin: 0.1em; margin-right: 1em;  font-style: italic; }
+.index .function_bar  .batch_actions { display: inline-block; margin-left: 1em; }
+.index .function_bar .batch_affect button { font-size: 1em; height: 2.35em; position: relative; top: -0.25em;  }
+.index #bottom_pagination { padding-top: 0.5em; }
+.index .page_entries_info { float: right; font-size: 0.9em; margin: 0.1em; margin-right: 1em; font-style: italic; }
 .index .pagination { display: inline; float: right; color: #AAA; }
 .index .pagination a { color: #666; }
 .index .pagination .current { color: #333; }
 .index .pagination .disabled { display: none;}
-.index ol {margin-top: 0.25em; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #777; border-top: none; }
+.index ol {margin: 0.25em 0; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #777; border-top: none; }
 .index ol li { border-top: 1px dotted #777; cursor: default;}
 .index ol a { margin: 12px 0px; cursor: pointer;}
 .index ol a:visited { color: #555;}
@@ -251,7 +253,7 @@ li.unpublished h1>small { color: #EDBE00; }
 .form label { color: #515151; font-size:0.9em;}
 .form fieldset { border: none; margin: 0; padding-left: 0;}
 .form legend { font-size: 1.3em; padding-bottom: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #999; }
-.form h1 { font-size: 2.2em;line-height: 1.1; margin: 0.6em 0; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #999; }
+.form h1 { font-size: 2.25em;line-height: 1.1; margin: 0.35em 0; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #999; }
 .form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; color:#333;}
 .form div.field_element input { display: block; width: 100%; background-color: #F9F9F9;}
 .form #buttons { float: right; margin-botton: 0.2em; text-align: right;}
