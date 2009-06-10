@@ -348,6 +348,10 @@ li.unpublished h1>small { color: #EDBE00; }
 #tools #printings ul h3 { float: left; font-weight: normal; font-size: 1.1em;}
 #tools #printings ul .issue_date { float:left; font-size: 1.2em; color: #999; }
 #tools #printings a.weblink { padding-left: 0.5em; font-size: 0.9em; display: block; margin-bottom: 0.5em; }
+#tools #printings .kill_link { position: relative; top: 0.125em; left: 0.5em;}
+#tools #printings #printing_form { margin-bottom: 0.5em; margin-left: 0.5em; }
+#tools #printings #printing_form select { width: 60%; border: 1px solid #D4D4D4; background: none;}
+
 /* New mediafile form styles */
 #mediafile { width: 50em; margin: 0 auto; min-height: 50px; }
 #mediafile #upload_media_form { float: left;}
@@ -588,7 +592,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #issue .details { width:55%; margin-right: 2%;float: left;}
 #issue .cover { width:43%;float: right; }
 #issue .cover img { margin: 0em 1.5em; border:1px solid #AAA; }
-#issue .column_holder>div { margin-bottom: 1.5em; min-height: 2.5em;}
+#issue .column_holder>div { margin-bottom: 0.75em; min-height: 2.5em;}
 #issue #issue_date { font-size: 1.6em; padding: 0.1em; font-family: georgia, "Times New Roman", times, serif;  color: #333;}
 #issue #issue_volume { width: 1.8em; font-size: 1.6em; font-family: georgia, "Times New Roman", times, serif; }
 #issue #issue_number { width: 1.8em; font-size: 1.6em; font-family: georgia, "Times New Roman", times, serif; }

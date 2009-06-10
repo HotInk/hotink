@@ -25,6 +25,7 @@ ActionController::Routing::Routes.draw do |map|
       article.resources :sortings
       article.resources :tags
       article.resources :waxings
+      article.resources :printings
     end
     account.resources :mediafiles do |mediafile|
       mediafile.resources :authors

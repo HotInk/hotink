@@ -5,21 +5,21 @@
 		    	<div class="column_holder clearfix">
 						<div class="half_column">
 							<h1><%= @issue.new_record? ? "New" : "Edit" %> issue </h1>
+							<%= f.error_messages %>
 						</div>
 						<div class="half_column">
 							<%= button_link_to_submit (@issue.new_record? ? "Create" : "Save"), :class => "save large" %>
 						</div>
-						
-						<%= f.error_messages %>
-						
+			   	</div>
+				<div class="column_holder clearfix">
 						<div class="half_column">
 							<%= f.label :date %> <%= f.unobtrusive_date_text_picker :date, {:format => "Y-M-D", :divider => '-' }, :size => "10" %>
 						</div>
 						<div class="half_column">
 							<%= f.label :volume, "Vol." %> <%= text_field_tag 'issue[volume]', @issue.volume, :class=>"text_input" %> <%= f.label :number, "No." %> <%= text_field_tag 'issue[number]', @issue.number, :class=>"text_input" %>
-					     	
 						</div>
-						
+				</div>		
+		    	<div class="column_holder clearfix">
 						<div class="full_column">
 							<%= f.label :name %><br />
 							<%= f.text_field :name, :class=>"text_input" %>

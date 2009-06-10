@@ -1,5 +1,7 @@
 class PrintingsController < ApplicationController
-  # GET /printings
+  
+  before_filter :find_article, :only => [ :create, :destroy ]
+
   # GET /printings.xml
   def index
     @printings = Printing.find(:all)
@@ -40,12 +42,14 @@ class PrintingsController < ApplicationController
   # POST /printings
   # POST /printings.xml
   def create
-    @printing = Printing.new(params[:printing])
+    @printing = @account.printings.build(params[:printing])
+    @printing.document = @article
 
     respond_to do |format|
       if @printing.save
-        flash[:notice] = 'Printing was successfully created.'
-        format.html { redirect_to(@printing) }
+        flash[:notice] = 'Printing recorded'
+        format.html { redirect_to( edit_account_article_url(@account, @article) ) }
+        format.js 
         format.xml  { render :xml => @printing, :status => :created, :location => @printing }
       else
         format.html { render :action => "new" }
@@ -74,11 +78,12 @@ class PrintingsController < ApplicationController
   # DELETE /printings/1
   # DELETE /printings/1.xml
   def destroy
-    @printing = Printing.find(params[:id])
+    @printing = @article.printings.find(params[:id])
     @printing.destroy
 
     respond_to do |format|
-      format.html { redirect_to(printings_url) }
+      format.html { redirect_to( edit_account_article_url(@account, @article) ) }
+      format.js
       format.xml  { head :ok }
     end
   end
