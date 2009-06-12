@@ -33,7 +33,7 @@ class Issue < ActiveRecord::Base
   def settings
        default_settings = {
         "thumb" => ['50>', 'jpg'],
-        "small" => ['175>', 'jpg'],
+        "small" => ['148>', 'jpg'],
         "medium" => ['500>', 'jpg'],
         "large" => ['800>', 'jpg']
         }

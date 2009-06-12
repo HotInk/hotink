@@ -88,7 +88,14 @@
 						<% if @issue.pdf_file_name.nil? %>
 							<p class="file user">No PDF currently in the archive.</p>
 						<% else %>
-							<p class="file user"><big><%= link_to @issue.pdf_file_name, @issue.pdf.url(:original), :class => :weblink, :confirm => "This file is #{number_to_human_size @issue.pdf_file_size}. Are you sure you want to download it?\n\nPress 'OK' to continue." %></big></p><p class="file user"><big><%= number_to_human_size @issue.pdf_file_size %></big></p><p class="file user"><%= link_to "View screen-quality pdf (#{number_to_human_size File.size( @issue.pdf.path(:screen_quality) )})", @issue.pdf.url(:screen_quality), :class => :weblink %></p>
+							<p class="file user"><big><%= link_to @issue.pdf_file_name, @issue.pdf.url(:original), :class => :weblink, :confirm => "This file is #{number_to_human_size @issue.pdf_file_size}. Are you sure you want to download it?\n\nPress 'OK' to continue." %></big></p><p class="file user"><big><%= number_to_human_size @issue.pdf_file_size %></big></p>
+							<p class="file user">
+								<% if File.exists?(@issue.pdf.path(:screen_quality)) %>
+									<%= link_to "View screen-quality pdf (#{number_to_human_size File.size( @issue.pdf.path(:screen_quality) )})", @issue.pdf.url(:screen_quality), :class => :weblink %>
+								<% else %>
+									<%= link_to "View screen-quality pdf (#{number_to_human_size File.size( @issue.pdf.path(:original) )})", @issue.pdf.url(:original), :class => :weblink %>
+								<% end %>
+							</p>
 						<% end %>
 						<div class="upload_button clearfix"> 
 							<span id="spanButtonPlaceholder"></span>

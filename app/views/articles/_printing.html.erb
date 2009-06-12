@@ -5,10 +5,10 @@
 			<% @article.printings.each do |p| %>
 				<li class="clearfix">
 					<% if p.issue.volume && p.issue.number %>
-						<h3>Vol. <%= p.issue.volume %>, No. <%= p.issue.number %></h3>
+						<h3>Vol. <span><%= p.issue.volume %></span>, No. <span><%= p.issue.number %></span></h3>
 					<% end %>
 					<% if p.issue.date %>
-						<p class="issue_date"><%= p.issue.date.strftime("%b %e, %Y")%></p>
+						<p class="issue_date"><%= p.issue.date.strftime("%b <span>%e, %Y</span>")%></p>
 					<% end %>
 						<div class="kill_link"><%= link_to_remote "x", :url=>account_article_printing_url(@account, @article, p), :method => :delete, :after=>"$(this).up().addClassName('transparent');" %></div>
 				</li>
