@@ -1,5 +1,7 @@
 class Image < Mediafile
   
+  before_create :save_dimensions 
+  
   IMAGE_DEFAULT_SETTINGS = { 
             "thumb" => ['100>', 'jpg'],  
             "small" => ['250>', 'jpg'],
@@ -36,5 +38,9 @@ class Image < Mediafile
     end
   end
   
+  def save_dimensions 
+        self.width = Paperclip::Geometry.from_file(file.to_file(:original)).width 
+        self.height = Paperclip::Geometry.from_file(file.to_file(:original)).height 
+  end
   
 end
