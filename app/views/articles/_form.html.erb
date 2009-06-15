@@ -27,7 +27,7 @@
 		  </div>
 		  <div class="field_element quarter_column">
 			<%= f.label :section_id, "Primary section"%><br />
-			<%= collection_select(:article, :section_id, @account.sections, :id, :name, {:include_blank => "None" },  :class => :text_input)%>
+			<%= select_tag("article[section_id]", options_for_category_select(@account.categories, @article.section ), :class => :text_input)%>
 		  </div>
 	  </div>
 	  <div id ="author_list" class="field">

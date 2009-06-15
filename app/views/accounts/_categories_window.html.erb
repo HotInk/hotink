@@ -29,7 +29,7 @@
 		</div>
 		<div class="column_holder clearfix">	
 			<div class="two_thirds_column">
-				<select id="category_parent_id" name="category[parent_id]"><%= options_for_category_select(@account.categories) %></select><br />
+				<select id="category_parent_id" name="category[parent_id]"><%= options_for_parent_category_select(@account.categories, :parent) %></select><br />
 				<small><%= flash[:categories_notice]%></small>
 			</div>
 			<div class="third_column">
