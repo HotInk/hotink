@@ -9,7 +9,8 @@
 			<input type="text" id="mediafiles_search" name="search" class="text_input user" onclick="if(this.value=='Search media') clearText(this);" value="<%=h( @search_query || "Search media") %>" />
 			<%= button_link_to_submit "Go" %>
 		</form>
-		<%= observe_field :mediafiles_search, :url => account_mediafiles_url(@account), :with => "search", :frequency=>0.5, :method=>:get, :after =>"$('mediafiles_list').select('li').invoke('addClassName', 'transparent');" %>
+		<%= #observe_field :mediafiles_search, :url => account_mediafiles_url(@account), :with => "search", :frequency=>0.5, :method=>:get, :after =>"$('mediafiles_list').select('li').invoke('addClassName', 'transparent');" 
+		%>
 	</div>
 </div>
 
