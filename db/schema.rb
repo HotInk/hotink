@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090602000715) do
+ActiveRecord::Schema.define(:version => 20090613190056) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20090602000715) do
     t.string   "subtitle"
     t.text     "bodytext"
     t.string   "summary"
+    t.datetime "published_at"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -81,7 +82,6 @@ ActiveRecord::Schema.define(:version => 20090602000715) do
     t.boolean  "delta"
     t.string   "type"
     t.string   "status"
-    t.datetime "published_at"
   end
 
   create_table "issues", :force => true do |t|
@@ -111,6 +111,8 @@ ActiveRecord::Schema.define(:version => 20090602000715) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
+    t.integer  "width"
+    t.integer  "height"
   end
 
   create_table "oauth_nonces", :force => true do |t|

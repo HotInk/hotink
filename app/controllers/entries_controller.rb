@@ -40,6 +40,26 @@ class EntriesController < ApplicationController
     @entry = @blog.entries.find(params[:id])
   end
   
+  def index
+    @entries = @blog.entries.find(:all)
+    
+    respond_to do |format|
+      format.xml {
+        render :xml => @entries
+      }
+    end
+  end
+  
+  def show
+    @entry = @blog.entries.find(params[:id])
+    
+    respond_to do |format|
+      format.xml {
+        render :xml => @entry
+      }
+    end    
+  end
+  
   def update
     @entry = @blog.entries.find(params[:id])
     
