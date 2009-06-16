@@ -14,26 +14,32 @@
 			%>
 	</div>
 </div>
-
-<div class="function_bar clearfix">
-	<div class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></div>
-	<div id="top_pagination"><%= render :partial=>'pagination' %></div>
-	<div class="batch_affect"> 
-		<%= button_link_to_function "Publish", "alert('Publish!')", :class => "pill-l" %><%= button_link_to_function "Schedule", "alert('Schedule!')", :class => "pill-c" %><%= button_link_to_function "Delete", "alert('Schedule!')", :class => "pill-r" %>
-		
-		<div class="batch_actions"><%= button_link_to_function "More actions", "alert('Publish!')" %></div>
+	<div class="select_all_wrap clearfix">
+		<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
 	</div>
-</div>
-	<ol id="articles_list">
-		<% if @articles.length > 0 %>
-			<%= render @drafts if @drafts %>
-			<%= render @articles %>
-		<% elsif @search_query %>
-			<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
-		<% else %>
-			<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles found.</em></p>
-		<% end %>
-	</ol>
+	<% form_tag account_actions_url(@account) do %>
+	<%= hidden_field_tag "content_types[]", 'article'%>
+		<div id="actions" class="clearfix">
+			<%= button_link_to_submit "Publish", "alert('Publish!')", :class => "pill-l" %><%= button_link_to_function "Schedule", "alert('Schedule!')", :class => "pill-c" %><%= button_link_to_function "Delete", "alert('Schedule!')", :class => "pill-r" %>
+			<div class="batch_actions">
+				<%= button_link_to_function "More actions", "$(this).next().show();" %>
+				<div style="border: 1px solid #DEDEDE; background-color: white; width: 10em; height: 12em; position: absolute; top: 1.55em; display:none;" onmouseout="$(this).hide();"> </div> 
+			</div>
+		</div>
+		<div class="top_pagination clearfix">
+			<%= render :partial=>'pagination' %>
+		</div>
+		<ol id="articles_list">
+			<% if @articles.length > 0 %>
+				<%= render @drafts if @drafts %>
+				<%= render @articles %>
+			<% elsif @search_query %>
+				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
+			<% else %>
+				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles found.</em></p>
+			<% end %>
+		</ol>
+	<% end %> 
 <div class="function_bar clearfix">
 	<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
 	<div id="bottom_pagination"><%= render :partial=>'pagination' %></div>

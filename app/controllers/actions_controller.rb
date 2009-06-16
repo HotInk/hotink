@@ -9,18 +9,18 @@ class ActionsController < ApplicationController
   
   
   def create    
-    function = params[:id]
+    function = params[:id] || "publish"
     function_options = params[function] || {}   
 
     params[:content_types].each do |content_type|
           klass = content_type.tableize          
-          params[content_type+"_ids"].each do |id|
+          params[content_type.downcase+"_ids"].each do |id|
                 send(function, klass, id, function_options)
           end      
     end
     
     respond_to do |format|
-      format.html { head :ok }
+      format.html { redirect_to account_articles_url(@account) }
     end
       
   end
@@ -31,7 +31,7 @@ class ActionsController < ApplicationController
   def publish(klass, id, options = {} )
     raise ArgumentError unless klass=="articles"
     record = @account.send(klass).find(id)
-    record.update_attributes({:status => "Published", :published_at => Time.now })
+    flash[:notice] = "Articles published" if record.update_attributes({:status => "Published", :published_at => Time.now })
   end
   
 end

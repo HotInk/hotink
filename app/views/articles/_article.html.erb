@@ -2,7 +2,7 @@
   <li id="article_<%= article.id %>" class="<%= cycle("even-row", "odd-row") %> <%= article.status=="Published" ? (article.published_at > Time.now ? "scheduled" : "published") : "unpublished" %> clearfix">
 				
 	<div class="status">
-		<input type="checkbox" value="<%= article.id %>" name="mediafile_ids[<%= article.id %>]"/>
+		<input type="checkbox" value="<%= article.id %>" name="article_ids[]"/>
 	</div>
 	
 	<div class="article clearfix">
