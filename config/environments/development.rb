@@ -14,8 +14,8 @@ config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = false
 
 ActionMailer::Base.smtp_settings = {
-  :address => 'theorem.ca',
-  :domain => "hotink.net"
+  :address => 'outbox.allstream.net',
+  :domain => "campusplus.com"
 }
 
 # Don't care if the mailer can't send
