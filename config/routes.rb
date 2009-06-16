@@ -61,6 +61,8 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :images
     account.resources :audiofiles
     account.resources :waxings
+    
+    account.resources :actions
   end
   
 
