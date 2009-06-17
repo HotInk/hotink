@@ -242,8 +242,8 @@ li.unpublished h1>small { color: #EDBE00; }
 #mediafiles.small #bottom_pagination { display: none;}
 
 /* Action styles */
-#action_container { width: 40em; min-height: 50px; }
-
+#action { width: 40em; min-height: 50px; font-family: georgia, "Times New Roman", times, serif; }
+#action { }
 
 /* Form styles */
 
