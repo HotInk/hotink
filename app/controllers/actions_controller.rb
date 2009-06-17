@@ -7,9 +7,22 @@
 class ActionsController < ApplicationController
   
   
+  def new
+    @action = Action.new
+    @action.name = params[:name]
+    @action.content_types = params[:content_types]
+    @records = Hash.new
+    params[:content_types].each do |content_type|
+      @records[content_type] = content_type.camelize.constantize.find(params[(content_type+"_ids").to_sym])
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   
   def create    
-    function = params[:id] || "publish"
+    function = params[:name] || "save"
     function_options = params[function] || {}   
 
     params[:content_types].each do |content_type|

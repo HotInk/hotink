@@ -1,0 +1,10 @@
+<div id="action_container">
+	<h1>Action</h1>
+	
+	<h3><%= @action.content_types %></h3>
+	<ul>
+		<% for record in @records[@action.content_types[0]] %>
+		<li><%= record.title %></li>
+		<% end %>
+	</ul>
+</div>

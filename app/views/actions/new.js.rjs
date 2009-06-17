@@ -1,0 +1,3 @@
+page.assign "action_overlay", render(:partial => 'action')
+page << "page_overlay.render( action_overlay );"
+

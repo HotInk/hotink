@@ -275,6 +275,7 @@ var Card = Class.create({
 		this.element.removeClassName('highlighted_card');
 		this.delete_link.hide();
 	}
+
 });
 
 /* tab window */

@@ -17,12 +17,17 @@
 	<div class="select_all_wrap clearfix">
 		<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
 	</div>
-	<% form_tag account_actions_url(@account) do %>
+	
+	<% form_remote_tag :url=>new_account_action_url(@account), :method => :get do %>
 	<%= hidden_field_tag "content_types[]", 'article'%>
+	<%= hidden_field_tag "name", '', :id=>"article_action_name"%>
+	
 		<div id="actions" class="clearfix">
-			<%= button_link_to_submit "Publish", "alert('Publish!')", :class => "pill-l" %><%= button_link_to_function "Schedule", "alert('Schedule!')", :class => "pill-c" %><%= button_link_to_function "Delete", "alert('Schedule!')", :class => "pill-r" %>
+			<%= button_link_to_submit "Publish", :onclick => "$('article_action_name').value='publish';return true;", :class => "pill-l" %>
+			<%= button_link_to_submit "Schedule", :onclick => "$('article_action_name').value='schedule';return true;", :class => "pill-c" %>
+			<%= button_link_to_submit "Delete",  :onclick => "$('article_action_name').value='delete';return true;", :class => "pill-r" %>
 			<div class="batch_actions">
-				<%= button_link_to_function "More actions", "$(this).next().show();" %>
+				<%= button_link_to_function "More actions", "$(this).next().show()" %>
 				<div style="border: 1px solid #DEDEDE; background-color: white; width: 10em; height: 12em; position: absolute; top: 1.55em; display:none;" onmouseout="$(this).hide();"> </div> 
 			</div>
 		</div>
@@ -40,6 +45,7 @@
 			<% end %>
 		</ol>
 	<% end %> 
+
 <div class="function_bar clearfix">
 	<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
 	<div id="bottom_pagination"><%= render :partial=>'pagination' %></div>
