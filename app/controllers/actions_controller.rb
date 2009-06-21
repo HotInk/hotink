@@ -53,7 +53,24 @@ class ActionsController < ApplicationController
     raise ArgumentError unless klass=="articles"
     record = @account.send(klass).find(id)
     unless record.status=="Published"
-        flash[:notice] = "Articles schedule" if record.update_attributes({:status => "Published", :published_at => Time.local(options[:year].to_i, options[:month].to_i, options[:day].to_i, options[:hour].to_i, options[:minute].to_i) })
+        flash[:notice] = "Articles scheduled" if record.update_attributes({:status => "Published", :published_at => Time.local(options[:year].to_i, options[:month].to_i, options[:day].to_i, options[:hour].to_i, options[:minute].to_i) })
+    end
+  end
+  
+  def delete( klass, id, options = {} )
+    record = @account.send(klass).find(id)
+    begin
+      record.destroy
+      flash[:notice] = "Trashed"
+    rescue
+    end
+  end
+  
+  def unpublish( klass, id, options = {} )
+    raise ArgumentError unless klass=="articles"
+    record = @account.send(klass).find(id)
+    if record.status=="Published"
+      flash[:notice] = "Articles unpublished" if record.update_attributes({:status => nil, :published_at => nil })
     end
   end
   

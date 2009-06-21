@@ -175,6 +175,8 @@ li.unpublished h1>small { color: #EDBE00; }
 .index #actions { float: left; margin: 0 2em;  padding-bottom: 0.25em; }
 .index #actions button { float: left;font-size: 1em; }
 .index #actions .batch_actions { float: left; margin: 0 1em; position: relative;}
+.index #actions .batch_actions input { background: none; border: none; padding: 0.5em; font-size: 1em; cursor: pointer;}
+.index #actions .batch_actions input:hover { color: #515151;}
 .index .top_pagination { float: right; clear: right; position: relative; top: 0.25em; padding-bottom: 0.7em;}
 .index .page_entries_info { display:inline; font-size: 0.9em; margin-right: 1em; font-style: italic; }
 .index .pagination { display: inline; color: #AAA; }
@@ -254,8 +256,8 @@ li.unpublished h1>small { color: #EDBE00; }
 #action { width: 29em; padding: 0.5em; font-family: georgia, "Times New Roman", times, serif; }
 #action p, #action h1, #action h2, #action h3, #action h4 { margin: 0 0 1em 0; }
 #action p { line-height: 1.4; font-size: 1.2em; clear: both; }
-#action button { margin-top: 1em; float: right; }
-#action select { border: 1px solid #CCC; background: none; font-size: 1.1em; margin: 0.5em 0;}
+#action button { margin-top: 0.5em; float: right; }
+#action select { border: 1px solid #CCC; background: none; font-size: 1.1em; margin-bottom: 1em; }
 
 /* Form styles */
 
