@@ -6,13 +6,13 @@
 	
 	
 		<% if mediafile_list_item.is_a?(Image) %>
-	<div class="media">
+	<div class="thumb">
 			<%= image_tag(mediafile_list_item.file.url(:system_thumb)) %>
 		<% elsif mediafile_list_item.is_a?(Audiofile) %>
-	<div class="media blank_file">
+	<div class="thumb blank_file">
 			<p><%= mediafile_list_item.file_file_name.split(".").last.upcase %></p>
 		<% else %>
-	<div class="media blank_file">
+	<div class="thumb blank_file">
 			<p><%= mediafile_list_item.file_file_name.split(".").last.upcase %></p>			
 		<% end %>
 	</div>

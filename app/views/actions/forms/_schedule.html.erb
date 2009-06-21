@@ -1,0 +1,3 @@
+<p>Schedule the selected drafts to publish on:</p>
+<%= select_datetime Time.now,  :time_separator => ": ", :prefix => "schedule" %>
+<%= button_link_to_submit "Schedule", :class=>"save large" %>

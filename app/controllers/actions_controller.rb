@@ -22,7 +22,7 @@ class ActionsController < ApplicationController
   
   
   def create    
-    function = params[:name] || "save"
+    function = params[:name]
     function_options = params[function] || {}   
 
     params[:content_types].each do |content_type|
@@ -41,11 +41,19 @@ class ActionsController < ApplicationController
   
   private
   
-  def publish(klass, id, options = {} )
+  def publish( klass, id, options = {} )
     raise ArgumentError unless klass=="articles"
     record = @account.send(klass).find(id)
     unless record.status=="Published"
       flash[:notice] = "Articles published" if record.update_attributes({:status => "Published", :published_at => Time.now })
+    end
+  end
+  
+  def schedule( klass, id, options = {} )
+    raise ArgumentError unless klass=="articles"
+    record = @account.send(klass).find(id)
+    unless record.status=="Published"
+        flash[:notice] = "Articles schedule" if record.update_attributes({:status => "Published", :published_at => Time.local(options[:year].to_i, options[:month].to_i, options[:day].to_i, options[:hour].to_i, options[:minute].to_i) })
     end
   end
   

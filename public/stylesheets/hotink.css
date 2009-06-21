@@ -173,21 +173,21 @@ li.unpublished h1>small { color: #EDBE00; }
 .index .select_all_wrap { float: left; clear: left; padding-left: 0.3em; }
 .index .function_bar p.select_all_wrap { margin: 0; margin-top: 0.25em;}
 .index #actions { float: left; margin: 0 2em;  padding-bottom: 0.25em; }
-.index #actions button { float: left; }
+.index #actions button { float: left;font-size: 1em; }
 .index #actions .batch_actions { float: left; margin: 0 1em; position: relative;}
-.index .top_pagination { float: right; clear: right; position: relative; top: 0.25em;}
+.index .top_pagination { float: right; clear: right; position: relative; top: 0.25em; padding-bottom: 0.7em;}
 .index .page_entries_info { display:inline; font-size: 0.9em; margin-right: 1em; font-style: italic; }
 .index .pagination { display: inline; color: #AAA; }
 .index .pagination a { color: #666; }
 .index .pagination .current { color: #333; }
 .index .pagination .disabled { display: none;}
-.index ol {float: left; clear: both; margin: 0.25em 0; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #777; border-top: none; }
-.index ol li { border-top: 1px dotted #777; cursor: default;}
-.index ol a { margin: 12px 0px; cursor: pointer;}
-.index ol a:visited { color: #555;}
-.index ol a:hover { color: #3399DE;}
-.index ol a:active { color: #333;}
-.index ol li>div{ display: inline-block; float: left; vertical-align: top; margin: 0.25em;}
+.index ol, .index ul {float: left; clear: both; margin: 0.25em 0; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #777; border-top: none; }
+.index ol li, .index ul li { border-top: 1px dotted #777; cursor: default;}
+.index ol a, .index ul a { margin: 12px 0px; cursor: pointer;}
+.index ol a:visited, .index ul a:visited { color: #555;}
+.index ol a:hover, .index ul a:hover { color: #3399DE;}
+.index ol a:active, .index ul a:active { color: #333;}
+.index ol li>div, .index ul li>div { display: inline-block; float: left; vertical-align: top; margin: 0.25em;}
 .index .function_bar #bottom_pagination{ float: right; display:inline-block;}
 .index #bottom_pagination { padding-top: 0.25em; }
 .index a.delete_link { background: url('/images/token_x_red.gif') no-repeat;}
@@ -200,50 +200,62 @@ li.unpublished h1>small { color: #EDBE00; }
 /* Articles index styles
 --------------------------------*/
 
-#articles li .article { width: 61%; min-height: 40px; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
-#articles li .article h1 { font-size: 1.2em; line-height: 1.2; margin: 0; padding: 0.25em; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
-#articles li .article div { font-size: .9em; }
-#articles li .article .article_details { width: 100%; min-height: 24px;}
-#articles li .article .authors { float: left; padding: 0.5em;}
-#articles li .article .media { float: right; text-align: right; padding: 0.25em; }
-#articles li .article .media img{ float: right; margin: 0 0.125em;}
-#articles li div.section { width: 7.5em; overflow: hidden; background-color: #FFF; padding: 0.5em 0; border: 1px dotted #9cf; }
-#articles li div.section p { padding: 0px 0px 0px 5px; color: #333; margin: 0;}
-#articles li div.tags { width: 7.5em; padding: 0.5em; overflow: hidden; height: 100%; background-color: #FFF; border: 1px dotted #9cf; }
-#articles li div.tags p { font-size: 0.8em; margin: 0; padding-top: 0.25em; color: #515151;}
+.index li .article { width: 61%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
+.index li .article h1 { font-size: 1.2em; line-height: 1.2; margin: 0; padding: 0.25em; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
+.index li .article div { font-size: .9em; }
+.index li .article .article_details { width: 100%; min-height: 24px;}
+.index li .article .authors { float: left; padding: 0.5em;}
+.index li .article .media { float: right; text-align: right; padding: 0.25em; }
+.index li .article .media img{ float: right; margin: 0 0.125em;}
+.index li div.section { width: 7.5em; overflow: hidden; background-color: #FFF; padding: 0.5em 0; border: 1px dotted #9cf; }
+.index li div.section p { padding: 0px 0px 0px 5px; color: #333; margin: 0;}
+.index li div.tags { width: 7.5em; padding: 0.5em; overflow: hidden; height: 100%; background-color: #FFF; border: 1px dotted #9cf; }
+.index li div.tags p { font-size: 0.8em; margin: 0; padding-top: 0.25em; color: #515151;}
 
 
 /* Mediafiles index styles
 --------------------------------*/
-#mediafiles li .mediafile { width: 41em; min-height: 40px; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
-#mediafiles li .mediafile h1 { font-size: 1.2em; margin: 0; padding: 0.5em; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
-#mediafiles li .mediafile div { font-size: 0.9em; }
-#mediafiles li .mediafile .mediafile_details { width: 100%; min-height: 24px;}
-#mediafiles li .mediafile .authors { float: left; padding: 0.5em;}
-#mediafiles li div.tags { width: 8.5em; padding: 0.5em; overflow: hidden; height: 100%; background-color: #FFF; border: 1px dotted #9cf; }
-#mediafiles li div.tags p { font-size: 0.8em; margin: 0;}
-#mediafiles li div.media { width: 100px; height: 56px; text-align: center;} /* width & height are fixed in pixels, since media preview size is fixed as well */
-#mediafiles .media img{ display: inline; border: 1px solid #AAA;}
-#mediafiles .blank_file { background:url('/images/blank_file.png') center no-repeat; margin-top:0.4em; }
-#mediafiles .blank_file  p{ float:left;width:100%;height:100%;margin-top:38px;font-size: 0.7em;font-weight: bold; color: #555 }
+.index li .mediafile { width: 41em; min-height: 40px; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
+.index li .mediafile h1 { font-size: 1.2em; margin: 0; padding: 0.5em; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
+.index li .mediafile div { font-size: 0.9em; }
+.index li .mediafile .mediafile_details { width: 100%; min-height: 24px;}
+.index li .mediafile .authors { float: left; padding: 0.5em;}
+.index #mediafiles_list li div.tags { width: 8.5em; padding: 0.5em; overflow: hidden; height: 100%; background-color: #FFF; border: 1px dotted #9cf; }
+.index li div.tags p { font-size: 0.8em; margin: 0;}
+.index li div.thumb { width: 100px; height: 56px; text-align: center;} /* width & height are fixed in pixels, since media preview size is fixed as well */
+.index .media img{ display: inline; border: 1px solid #AAA;}
+.index .blank_file { background:url('/images/blank_file.png') center no-repeat; margin-top:0.4em; }
+.index .blank_file  p{ float:left;width:100%;height:100%;margin-top:38px;font-size: 0.7em;font-weight: bold; color: #555 }
 
-#mediafiles.small { }
-#mediafiles.small .scroll_window { height: 400px; padding:0.25em; margin: 0.25em 0em; border: 1px solid #AAA; overflow:auto;}
-#mediafiles.small ol { width: 99%; margin: 0;}
-#mediafiles.small li .mediafile { width:14.5em; overflow: hidden;}
-#mediafiles.small li .mediafile h1  { font-size:1em;}
-#mediafiles.small li div.tags { width: 6em; }
-#mediafiles.small li div.tags p { 0.75em }
-#mediafiles.small li div.date { font-size: 1em;}
-#mediafiles.small .page_entries_info { display: none; }
-#mediafiles.small .pagination { padding-top: 0.75em;}
-#mediafiles.small .select_all_wrap { display: none;}
-#mediafiles.small button.save { float: left; }
-#mediafiles.small #bottom_pagination { display: none;}
+.index.small { }
+.index.small .scroll_window { height: 400px; padding:0.25em; margin: 0.25em 0em; border: 1px solid #AAA; overflow:auto;}
+.index.small ol { width: 99%; margin: 0;}
+.index.small li .mediafile { width:14.5em; overflow: hidden;}
+.index.small li .mediafile h1  { font-size:1em;}
+.index.small li div.tags { width: 6em; }
+.index.small li div.tags p { 0.75em }
+.index.small li div.date { font-size: 1em;}
+.index.small .page_entries_info { display: none; }
+.index.small .pagination { padding-top: 0.75em;}
+.index.small .select_all_wrap { display: none;}
+.index.small button.save { float: left; }
+.index.small #bottom_pagination { display: none;}
+
+.index.brief li div.tags { display: none; }
+.index.brief ul { width: 80%; margin: 0 9.5%; }
+.index.brief ul li div.article { width: 70%; }
+.index.brief ul li .date { width: 15%; padding: 0.55em 0; font-size: 1em; }
+.index.brief ul li .date p { display: none; }
+.index.brief ul li .article .article_details { display: none; }
+.index.brief li .article h1 {  font-size: 1em; padding: 0.5em; border-width: 0; }
+.index.brief ul li .section { display: none; }
 
 /* Action styles */
-#action { width: 40em; min-height: 50px; font-family: georgia, "Times New Roman", times, serif; }
-#action { }
+#action { width: 29em; padding: 0.5em; font-family: georgia, "Times New Roman", times, serif; }
+#action p, #action h1, #action h2, #action h3, #action h4 { margin: 0 0 1em 0; }
+#action p { line-height: 1.4; font-size: 1.2em; clear: both; }
+#action button { margin-top: 1em; float: right; }
+#action select { border: 1px solid #CCC; background: none; font-size: 1.1em; margin: 0.5em 0;}
 
 /* Form styles */
 
@@ -409,7 +421,7 @@ li.unpublished h1>small { color: #EDBE00; }
 #overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; }
 #loading{ position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0;}
 #overlay_container{ position: relative; width: 250px; height: 250px; background-color: #fff; margin: 0 auto;}
-#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 5px; background-color: #fff; border: 2px solid #AAA;}
+#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 5px; background-color: #fff; border: 1px solid #515151;}
 
 
 /* Author autocomplete css */

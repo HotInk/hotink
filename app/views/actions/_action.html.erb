@@ -1,18 +1,15 @@
-<div id="action">
-	<h1>Action</h1>
+<div class="small_top_button clearfix"><a href="#" class="close_window" onclick="page_overlay.end();return false;">&nbsp;</a></div>
+<div id="action" class="index clearfix">
 	<% form_tag account_actions_url(@account) do %>
-		<%= hidden_field_tag 'name', @action.name %>
-		<%= render :partial=>"actions/forms/#{@action.name}"%>
 	
+		<%= render :partial=>"actions/forms/#{@action.name}"%>
+
+		<%= hidden_field_tag 'name', @action.name %>	
 		<% for content_type in @action.content_types %>
 			<%= hidden_field_tag 'content_types[]', content_type %>
-			<h3><%= content_type %></h3>
-			<ul>
-				<% for record in @records[content_type] %>
-				<li><%= check_box_tag "#{content_type}_ids[]", record.id, true %><%= record.title %></li>
-				<% end %>
-			</ul>
+			<% for record in @records[content_type] %>
+				<%= hidden_field_tag 'article_ids[]', record.id %>
+			<% end %>
 		<% end %>
-	
 	<% end %>
 </div>

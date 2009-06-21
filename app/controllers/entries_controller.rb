@@ -5,7 +5,7 @@ class EntriesController < ApplicationController
   
   def new
     @entry = @account.entries.build 
-    
+
     # Check to see if the last entry created for this blog exists and is blank.
     # If so, redate it and serve it up instead of a new entry, to prevent
     # the data from becoming cluttered with abandoned entries.
@@ -14,7 +14,6 @@ class EntriesController < ApplicationController
    if last_blog_entry = @blog.entries.find(:last)
      if last_blog_entry.created_at == last_blog_entry.updated_at
         @entry = last_blog_entry
-         @entry.date = Time.now #Give it the current time, without saving.
      else
         @entry.save
         @blog.entries << @entry

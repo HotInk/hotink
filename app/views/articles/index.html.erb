@@ -27,16 +27,17 @@
 			<%= button_link_to_submit "Schedule", :onclick => "$('article_action_name').value='schedule';return true;", :class => "pill-c" %>
 			<%= button_link_to_submit "Delete",  :onclick => "$('article_action_name').value='delete';return true;", :class => "pill-r" %>
 			<div class="batch_actions">
-				<%= button_link_to_function "More actions", "$(this).next().show()" %>
-				<div style="border: 1px solid #DEDEDE; background-color: white; width: 10em; height: 12em; position: absolute; top: 1.55em; display:none;" onmouseout="$(this).hide();"> </div> 
+				<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
+				<div style="border: 1px solid #DEDEDE; background-color: white; width: 10em; height: 12em; position: absolute; top: 1.75em; display:none;" onmouseout="$(this).hide();"> </div> 
 			</div>
 		</div>
 		<div class="top_pagination clearfix">
 			<%= render :partial=>'pagination' %>
 		</div>
 		<ol id="articles_list">
+			<%= render @drafts if @drafts %>
+			
 			<% if @articles.length > 0 %>
-				<%= render @drafts if @drafts %>
 				<%= render @articles %>
 			<% elsif @search_query %>
 				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
