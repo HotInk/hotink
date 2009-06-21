@@ -126,9 +126,9 @@ dl.faq dt {font-weight: bold;}
 #navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; margin-left: 0.5em; }
 #navigation #links { float: left; padding: 0; margin: 0; margin-left: 3%; margin-top: 0.85em; }
 #navigation #links ol { margin: 0; padding: 0; font-size: 1.2em; list-style: none;}
-#navigation #links ol li { display: inline; margin: 0; padding: 0.2em 0.5em; background-color: #FFF; }
-#navigation #links ol li a { color: #333; }
-#navigation #links ol li.current { background-color: #FFF6DD; margin:0; }
+#navigation #links ol li { display: inline; margin: 0; padding: 0.2em 0.5em; background-color: #FFF6DD; }
+#navigation #links ol li a { color: #000; }
+#navigation #links ol li.current { background-color: #FFF; color: #515151; margin:0; }
 #navigation #links ol li.current a { color: #333; }
 #navigation #links ol li a:hover { color: #333; }
 #navigation #links ol li:hover { background-color: #CEE4F3; margin:0;}
@@ -255,7 +255,7 @@ li.unpublished h1>small { color: #EDBE00; }
 /* Action styles */
 #action { width: 29em; padding: 0.5em; font-family: georgia, "Times New Roman", times, serif; }
 #action p, #action h1, #action h2, #action h3, #action h4 { margin: 0 0 1em 0; }
-#action p { line-height: 1.4; font-size: 1.2em; clear: both; }
+#action p { line-height: 1.4; font-size: 1.15em; clear: both; }
 #action button { margin-top: 0.5em; float: right; }
 #action select { border: 1px solid #CCC; background: none; font-size: 1.1em; margin-bottom: 1em; }
 
