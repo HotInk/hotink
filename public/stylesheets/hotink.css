@@ -143,8 +143,9 @@ dl.faq dt {font-weight: bold;}
 
 .close_button  { float: right; background-image: url('/images/token_x_red.gif'); width: 10px; height: 10px; margin: 0; margin-right: 0.125em; display: inline-block; font-size: 1em; }
 .close_button a { color: #FFF; display: inline-block; width: 100%;height: 100%;}
-div.small_top_button { display: block; clear:left; float: right; width: 10px; height: 11px; margin-bottom: 5px; background-image: url('/images/token_x_red.gif'); }
+div.small_top_button { display: block; position: relative; top: -14px; left: 18px; clear:left; float: right; height: 0px; overflow: visible; }
 div.small_top_button a { padding: 5px; }
+div.small_top_button a img { width: 18px; border: none; }
 
 /* Status styles */
 
@@ -499,7 +500,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #media_tags_form p{  }
 
 /* Tab Window UI-Control */ 
-.tab_window { padding: 1% 1%; width: 97%; height: 31em; border: 1px solid #DDD; background-color: #F9F9F9; }
+.tab_window { width: 100%; height: 31em; position: relative; z-index: 501;}
 .tab_window>ol { list-style-type: none;}
 .tab_window>ol li { padding: 0.35em 0.25em; font-size: 1.2em; color: #333; font-family: georgia, "Times New Roman", times, serif; text-align: center; cursor: pointer;}
 .tab_window>ol li.selected { background-color: #3D9BDF; color: white; cursor: pointer; }
@@ -521,12 +522,12 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 /*
 /*---------------------------------------*/
 
-#account { width: 50em; margin: 0 auto; float: left; }
+#account { width: 50em; margin: 0 auto; }
 #account button { float: right; }
 #account h1 {  font-size: 1.75em; margin:0.25em 0.25em; margin-top:0; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
 #account h4 { font-size: 1.05em; }
 #account p { font-size: 0.9em; line-height: 1.45; margin: 0.5em 0; }
-#account fieldset { border: none; padding: 0; }
+#account fieldset { border: none; padding: 0; float: left; width: 100%; }
 #account .column_holder>div { margin-bottom: 1.5em;}
 #account .text_input { font-size: 1.3em; padding: 0.2em; margin-bottom: 0.125em; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
 #account legend { font-size: 1.4em; padding: 0; padding-bottom: 0.3em; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }

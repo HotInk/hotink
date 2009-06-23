@@ -1,5 +1,5 @@
+<div class="small_top_button clearfix"><a href="#" class="close_window" onclick="page_overlay.end();return false;"> <img src="/images/window_x.png" /> </a></div>
 <div id="edit_media_container" class="<%= @mediafile.is_a?(Image) ? "image_container " : "mediafile_container " -%>clearfix">
-	<p class="close_button"><a href="#" onclick="page_overlay.end();return false;">&nbsp;&nbsp;</a></p>
 	<div id="edit_media_form" class="clearfix">
 		  	<div id="media_matte" class="clearfix">
 				<% if @mediafile.is_a? Image %>
