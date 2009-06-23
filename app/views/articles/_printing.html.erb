@@ -5,7 +5,7 @@
 			<% @article.printings.each do |p| %>
 				<li class="clearfix">
 					<% if p.issue.volume && p.issue.number %>
-						<h3>Vol. <span><%= p.issue.volume %></span>, No. <span><%= p.issue.number %></span></h3>
+						<h3>Vol. <%= p.issue.volume %>, No. <%= p.issue.number %></h3>
 					<% end %>
 					<% if p.issue.date %>
 						<p class="issue_date"><%= p.issue.date.strftime("%b <span>%e, %Y</span>")%></p>

@@ -361,7 +361,7 @@ li.unpublished h1>small { color: #EDBE00; }
 #tools #printings ul { margin: 0.5em 0; padding-left: 0em; list-style: none; }
 #tools #printings ul li h3, #tools #printings ul li p { margin: 0; font-family:georgia,"times new roman",times, serif; margin-bottom: 0.25em; margin-left: 0.5em;}
 #tools #printings ul h3 { float: left; font-weight: normal; font-size: 1.1em;}
-#tools #printings h3 span, #tools #printings p span { font-family: "Book Antigua", Palatino,"times new roman",times, serif;}
+#tools #printings h3, #tools #printings p.issue_date { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
 #tools #printings ul .issue_date { float:left; font-size: 1.2em; color: #999; }
 #tools #printings a.weblink { padding-left: 0.5em; font-size: 0.9em; display: block; margin-bottom: 0.5em; }
 #tools #printings .kill_link { position: relative; top: 0.125em; left: 0.5em;}
