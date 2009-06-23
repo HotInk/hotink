@@ -20,8 +20,8 @@ class Issue < ActiveRecord::Base
       },
       :default_url => '/images/no_issue_cover_small.jpg',
       :default_style => :system_cover_thumb,
-      :path => ":rails_root/public/system/:class/:account/:id_partition/:basename_:style.:extension",
-      :url => "/system/:class/:account/:id_partition/:basename_:style.:extension"
+      :path => ":rails_root/public/system/:account/:class/:id_partition/:basename_:style.:extension",
+      :url => "/system/:account/:class/:id_partition/:basename_:style.:extension"
   
   
   validates_presence_of :account, :message => "must be attached"

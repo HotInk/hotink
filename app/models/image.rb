@@ -23,8 +23,8 @@ class Image < Mediafile
         :all => "-colorspace RGB -strip"
       },
       :default_style => :system_default,
-      :path => ":rails_root/public/system/:class/:account/:id_partition/:basename_:style.:extension",
-      :url => "/system/:class/:account/:id_partition/:basename_:style.:extension"
+      :path => ":rails_root/public/system/:account/:class/:id_partition/:basename_:style.:extension",
+      :url => "/system/:account/:class/:id_partition/:basename_:style.:extension"
       
   validates_attachment_presence :file
   

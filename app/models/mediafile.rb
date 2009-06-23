@@ -24,8 +24,8 @@ class Mediafile < ActiveRecord::Base
   acts_as_taggable_on :tags
   
   has_attached_file :file,
-      :path => ":rails_root/public/system/:class/:id_partition/:basename_:style.:extension",
-      :url => "/system/:class/:id_partition/:basename_:style.:extension"
+      :path => ":rails_root/public/system/:account/:class/:id_partition/:basename_:style.:extension",
+      :url => "/system/:account/:class/:id_partition/:basename_:style.:extension"
   
   define_index do
     indexes title, :sortable => :true
