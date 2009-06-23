@@ -1,28 +1,16 @@
-<p>
-  <b>Title:</b>
-  <%=h @article.title %>
-</p>
+<div id="article">
+	<p id="top_links">	
+		<%= link_to "&#171; Back to articles list", account_articles_url(@account), :class=>"weblink" %>
+	</p>
+ 	
+	<h1><%=h @article.title %></h1>
 
-<p>
-  <b>Subtitle:</b>
-  <%=h @article.subtitle %>
-</p>
+	<h2><%=h @article.subtitle %></h2>
+	
+	<p class="date"><%= @article.status=="Published" ? @article.published_at.to_formatted_s(:long) : "Last saved " + @article.updated_at.to_formatted_s(:long) %></p>
+	<p class="byline"><%=h @article.authors_list%></p>
+	
+	<%= markdown @article.bodytext %>
 
-<p>
-  <b>Bodytext:</b>
-  <%=h @article.bodytext %>
-</p>
+</div>
 
-<p>
-  <b>Summary:</b>
-  <%=h @article.summary %>
-</p>
-
-<p>
-  <b>Date:</b>
-  <%=h @article.date %>
-</p>
-
-
-<%= link_to 'Edit', edit_account_article_path(@account, @article) %> |
-<%= link_to 'Back', account_articles_path(@account) %>

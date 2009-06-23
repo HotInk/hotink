@@ -19,21 +19,19 @@
 	    <%= f.label :title, "Headline"%><br />
 	    <%= f.text_field :title , :class => "user" %>
 	  </div>
-	
-	  <div class="column_holder clearfix">
-		  <div class="field_element three_quarters_column">
+	  <div class="field_element">
 		    <%= f.label :subtitle, "Subhead"%><br />
 		    <%= f.text_field :subtitle, :class => "user"  %>
-		  </div>
-		  <div class="field_element quarter_column">
+	  </div>
+	  <div class="column_holder clearfix">
+	  	<div id ="author_list" class="field_element three_quarters_column">
+				<%= render :partial => 'article_author_form' %>
+	  	</div><!-- /author_list -->
+		<div class="field_element quarter_column">
 			<%= f.label :section_id, "Primary section"%><br />
 			<%= select_tag("article[section_id]", options_for_category_select(@account.categories, @article.section ), :class => :text_input)%>
-		  </div>
+		</div>
 	  </div>
-	  <div id ="author_list" class="field">
-			<%= render :partial => 'article_author_form' %>
-	  </div><!-- /author_list -->
-	
 	  <div id="bodytext" class="clearfix">
 		<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
 	    <%= f.label :bodytext, "Body text" %><br />

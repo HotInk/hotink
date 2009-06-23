@@ -36,7 +36,7 @@
 		search_model: "author",
 		search_join_model: "authorship",
 		search_join_models: "authorships",
-		text_field_width: 575,
+		text_field_width: 440,
 		token_delimiter: /, and | and |,/,
 		saved_token_join_json: <%= @article.authorships.to_json(:include=>:author, :only=>[:name, :id]) %>,
 		hidden_input_id: 'hidden_input',
