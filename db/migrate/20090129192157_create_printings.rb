@@ -1,6 +1,6 @@
 class CreatePrintings < ActiveRecord::Migration
   def self.up
-    create_table :printings do |t|
+    create_table :printings, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
       t.integer :article_id
       t.integer :issue_id
       t.string :page_number

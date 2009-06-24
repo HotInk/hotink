@@ -1,6 +1,6 @@
 class CreateArticles < ActiveRecord::Migration
   def self.up
-    create_table :articles do |t|
+    create_table :articles, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
       t.string :title
       t.string :alternate_title
       t.string :subtitle

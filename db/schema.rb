@@ -11,7 +11,7 @@
 
 ActiveRecord::Schema.define(:version => 20090613190056) do
 
-  create_table "accounts", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "accounts", :force => true do |t|
     t.string   "name"
     t.string   "formal_name"
     t.datetime "created_at"
@@ -20,14 +20,14 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.text     "settings"
   end
 
-  create_table "authors", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "authors", :force => true do |t|
     t.string   "name"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "authorships", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "authorships", :force => true do |t|
     t.string   "staff_position"
     t.integer  "document_id"
     t.integer  "author_id"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.datetime "updated_at"
   end
 
-  create_table "blogs", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "blogs", :force => true do |t|
     t.string   "title"
     t.text     "description"
     t.integer  "account_id"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.datetime "updated_at"
   end
 
-  create_table "categories", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "categories", :force => true do |t|
     t.string   "name"
     t.integer  "parent_id"
     t.integer  "account_id"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.integer  "position"
   end
 
-  create_table "client_applications", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "client_applications", :force => true do |t|
     t.string   "name"
     t.string   "url"
     t.string   "support_url"
@@ -68,13 +68,12 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
 
-  create_table "documents", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "documents", :force => true do |t|
     t.string   "title"
     t.string   "alternate_title"
     t.string   "subtitle"
     t.text     "bodytext"
     t.string   "summary"
-    t.datetime "published_at"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -82,9 +81,10 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.boolean  "delta"
     t.string   "type"
     t.string   "status"
+    t.datetime "published_at"
   end
 
-  create_table "issues", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "issues", :force => true do |t|
     t.date     "date"
     t.integer  "number"
     t.integer  "volume"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.string   "name"
   end
 
-  create_table "mediafiles", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "mediafiles", :force => true do |t|
     t.string   "title"
     t.text     "description"
     t.string   "link_alternate"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.integer  "height"
   end
 
-  create_table "oauth_nonces", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "oauth_nonces", :force => true do |t|
     t.string   "nonce"
     t.integer  "timestamp"
     t.datetime "created_at"
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
 
   add_index "oauth_nonces", ["nonce", "timestamp"], :name => "index_oauth_nonces_on_nonce_and_timestamp", :unique => true
 
-  create_table "oauth_tokens", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "oauth_tokens", :force => true do |t|
     t.integer  "user_id"
     t.string   "type",                  :limit => 20
     t.integer  "client_application_id"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
 
   add_index "oauth_tokens", ["token"], :name => "index_oauth_tokens_on_token", :unique => true
 
-  create_table "photocredits", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8',  :force => true do |t|
+  create_table "photocredits", :force => true do |t|
     t.integer  "mediafile_id"
     t.integer  "author_id"
     t.integer  "account_id"
@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.datetime "updated_at"
   end
 
-  create_table "postings", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "postings", :force => true do |t|
     t.integer  "account_id"
     t.integer  "entry_id"
     t.integer  "blog_id"
@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.datetime "updated_at"
   end
 
-  create_table "printings", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "printings", :force => true do |t|
     t.integer  "document_id"
     t.integer  "issue_id"
     t.string   "page_number"
@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.datetime "updated_at"
   end
 
-  create_table "roles", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "roles", :force => true do |t|
     t.string   "name",              :limit => 40
     t.string   "authorizable_type", :limit => 40
     t.integer  "authorizable_id"
@@ -171,14 +171,14 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.datetime "updated_at"
   end
 
-  create_table "roles_users", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :id => false, :force => true do |t|
+  create_table "roles_users", :id => false, :force => true do |t|
     t.integer  "user_id"
     t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "sortings", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "sortings", :force => true do |t|
     t.integer  "category_id"
     t.integer  "document_id"
     t.integer  "account_id"
@@ -186,7 +186,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.datetime "updated_at"
   end
 
-  create_table "taggings", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
     t.integer  "tagger_id"
@@ -199,11 +199,11 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
   add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
   add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
-  create_table "tags", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "tags", :force => true do |t|
     t.string "name"
   end
 
-  create_table "users", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "users", :force => true do |t|
     t.string   "login",               :default => "", :null => false
     t.string   "email",               :default => "", :null => false
     t.string   "crypted_password",    :default => "", :null => false
@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.text     "preferences"
   end
 
-  create_table "waxings", :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8', :force => true do |t|
+  create_table "waxings", :force => true do |t|
     t.integer  "mediafile_id"
     t.integer  "document_id"
     t.integer  "account_id"

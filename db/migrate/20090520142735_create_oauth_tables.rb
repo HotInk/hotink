@@ -1,6 +1,6 @@
 class CreateOauthTables < ActiveRecord::Migration
   def self.up
-    create_table :client_applications do |t|
+    create_table :client_applications, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
       t.string :name
       t.string :url
       t.string :support_url

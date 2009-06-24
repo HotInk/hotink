@@ -1,6 +1,6 @@
 class CreateWaxings < ActiveRecord::Migration
   def self.up
-    create_table :waxings do |t|
+    create_table :waxings, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
       t.integer :mediafile_id
       t.integer :article_id
       t.integer :account_id

@@ -1,6 +1,6 @@
 class CreateIssues < ActiveRecord::Migration
   def self.up
-    create_table :issues do |t|
+    create_table :issues, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
       t.date :date
       t.integer :number
       t.integer :volume

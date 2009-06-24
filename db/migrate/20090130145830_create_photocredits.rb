@@ -1,6 +1,6 @@
 class CreatePhotocredits < ActiveRecord::Migration
   def self.up
-    create_table :photocredits do |t|
+    create_table :photocredits, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
       t.integer :mediafile_id
       t.integer :author_id
       t.integer :account_id
