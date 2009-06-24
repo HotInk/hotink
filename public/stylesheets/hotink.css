@@ -517,7 +517,6 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 .tab_window>div { float: left; width: 79.25%; padding: 0 1.5%;  height: 99.25%; overflow:auto;  }
 .tab_window>div h2 { font-family: georgia, "Times New Roman", times, serif; color: #333; font-size: 1.5em; margin:0.5em 0; font-weight: normal; }
 
-
 #accounts_index { margin: 2px;}
 #accounts_index h1 {margin: 10px 0px;}
 #accounts_index table{ width:400px; }
@@ -530,14 +529,14 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 /*
 /*---------------------------------------*/
 
-#account { width: 50em; margin: 0 auto; }
+#account { width: 51em; margin: 0 auto; }
 #account button { float: right; }
 #account h1 {  font-size: 1.75em; margin:0.25em 0.25em; margin-top:0; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
 #account h4 { font-size: 1.05em; }
 #account p { font-size: 0.9em; line-height: 1.45; margin: 0.5em 0; }
 #account fieldset { border: none; padding: 0; float: left; width: 100%; }
-#account .column_holder>div { margin-bottom: 1.5em;}
-#account .text_input { font-size: 1.3em; padding: 0.2em; margin-bottom: 0.125em; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
+#account .column_holder>div { margin-bottom: 1.5em; }
+#account .text_input { font-size: 1.3em; padding: 0.2em; margin-bottom: 0.125em; color:#000; font-family: georgia, "Times New Roman", times, serif; width:93%;}
 #account legend { font-size: 1.4em; padding: 0; padding-bottom: 0.3em; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
 #account .edit_account select { background: none; margin: 0; width: 100%; font-size: 1.2em; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.8em; color: #333; border: 1px solid #DEDEDE;	}	
 #account label { font-size: 1em; color: #333; padding: 0.5em; margin: 0 0.125em; display: block;}
