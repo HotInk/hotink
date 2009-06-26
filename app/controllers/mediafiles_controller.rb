@@ -17,7 +17,7 @@ class MediafilesController < ApplicationController
     respond_to do |format|
       format.js
       format.html # index.html.erb
-      format.xml  { render :xml => @mediafiles.collect{ |m| m.becomes(Mediafile) } }
+      format.xml  { render :xml => @mediafiles.to_xml(:root => "mediafiles") }
     end
   end
 

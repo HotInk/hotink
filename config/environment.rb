@@ -102,8 +102,3 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
   
 end
-
-#Load custom Paperclip interpolation
-Paperclip::Attachment.interpolations[:account] = proc do |attachment, style|
-  attachment.instance.account.name
-end
