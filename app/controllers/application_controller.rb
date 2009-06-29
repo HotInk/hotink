@@ -80,7 +80,6 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  
   def login_required
     unless current_user
       store_location
@@ -101,7 +100,7 @@ class ApplicationController < ActionController::Base
     if current_user
       store_location
       flash[:notice] = "You must be logged out to access this page"
-      redirect_to account_url
+      redirect_to root_url
       return false
     end
   end
@@ -128,6 +127,18 @@ class ApplicationController < ActionController::Base
   
   def clear_flash
     flash[:notice] = ""
+  end
+  
+  def load_user_using_perishable_token  
+    # Make user activation url valid for 1 full day.
+    @user = User.find_using_perishable_token(params[:id], 1.week)  
+    unless @user  
+      flash[:notice] = "We're sorry, but we could not locate your account. " +  
+      "If you are having issues try copying and pasting the URL " +  
+      "from your email into your browser or restarting the " +  
+      "process."  
+      redirect_to root_url  
+    end
   end
   
 end

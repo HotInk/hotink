@@ -61,21 +61,8 @@ class UserActivationsController < ApplicationController
        render :partial => 'accounts/users_window'
      end
    end
-   
-   
+     
    private 
-   
-   def load_user_using_perishable_token  
-     # Make user activation url valid for 1 full day.
-     @user = User.find_using_perishable_token(params[:id], 1.week)  
-     unless @user  
-       flash[:notice] = "We're sorry, but we could not locate your account. " +  
-       "If you are having issues try copying and pasting the URL " +  
-       "from your email into your browser or restarting the " +  
-       "process."  
-       redirect_to root_url  
-     end
-   end
    
    #Catch sneaky new-account-activation users who want access to this account.
    def check_user_qualifications

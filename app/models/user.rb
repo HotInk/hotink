@@ -37,6 +37,11 @@ class User < ActiveRecord::Base
     "#{name} <#{email}>"
   end
   
+  def deliver_password_reset_instructions!  
+    reset_perishable_token!  
+    Circulation.deliver_password_reset_instructions(self)  
+  end
+  
   def deliver_user_activation_instructions!  
     reset_perishable_token!  
     Circulation.deliver_user_activation_instructions(self)  

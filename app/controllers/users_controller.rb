@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:notice] = "User updated."
       respond_to do |format|  
-        format.html { redirect_to user_url(@user) }
+        format.html { redirect_to root_url }
         format.js   { head :ok }
       end
     else
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   def letgo
     @user = @account.users.find(params[:id])
     if @user
-      @account.accepts_no_role 'staff', @user
+      @account.accepts_no_role "staff", @user
       head :ok
     end
   end
