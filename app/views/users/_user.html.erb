@@ -23,5 +23,10 @@
 			<% end %>
 		<% end %>
 		
+		<% if permit?("manager of account or admin")&&user!=current_user&&(!user.has_role?("manager", @account))&&(!user.has_role?("admin"))  %>
+			<p class="kill_link">
+				<%= link_to_remote "x", :url => letgo_user_url(user, :account_id=>user.account_id), :method => :delete, :after=>"$(this).up().up().up().addClassName('transparent');", :success=>"$('user_#{user.id.to_s}').remove();", :confirm=>"Are you sure you want to prevent the user at email:\n\n#{user.email.to_s}\n\nfrom accessing your account? You can give this user access again easily by adding their email. Press OK to remove this user's account access." , :html => { :class=>'kill_link' } %>
+			</p>
+		<% end %>
 	</div>
 </li>

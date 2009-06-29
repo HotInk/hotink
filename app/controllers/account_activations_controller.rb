@@ -37,11 +37,11 @@ class AccountActivationsController < ApplicationController
      end  
    end 
 
-    def edit     
+   def edit
       render :layout => 'login'
     end  
 
-    def update
+   def update
       
       @account = Account.new(params[:account])
             
@@ -82,7 +82,7 @@ class AccountActivationsController < ApplicationController
     private  
 
     def load_user_using_perishable_token  
-      # Make user activation url valid for 1 full day.
+      # Make user activation url valid for 1 full week.
       @user = User.find_using_perishable_token(params[:id], 1.week)  
       unless @user  
         flash[:notice] = "We're sorry, but we could not locate your account. " +  

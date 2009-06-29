@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resource :user_session
   map.resources :user_activations
-  map.resources :users, :member => {:promote => :put, :demote => :put, :deputize => :put}
+  map.resources :users, :member => { :promote => :put, :demote => :put, :deputize => :put, :letgo => :delete }
   
   map.resources :oauth_clients
   map.authorize '/oauth/authorize',:controller=>'oauth',:action=>'authorize'
