@@ -76,4 +76,16 @@ class ActionsController < ApplicationController
     end
   end
   
+  def add_tag( klass, id, options = {} )
+    raise ArgumentError unless klass=="articles"||klass=="mediafiles"
+    record = @account.send(klass).find(id)
+    if record.tag_list
+      record.tag_list = record.tag_list.to_s + ", #{options[:new_tag_list]}"
+    else
+      record.tag_list = options[:new_tag_list]
+    end
+    record.save
+    flash[:notice] = "Articles tagged"
+  end
+  
 end

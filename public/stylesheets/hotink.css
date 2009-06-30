@@ -262,7 +262,8 @@ li.unpublished h1>small { color: #EDBE00; }
 #action p, #action h1, #action h2, #action h3, #action h4 { margin: 0 0 1em 0; }
 #action p { line-height: 1.4; font-size: 1.15em; clear: both; }
 #action button { margin-top: 0.5em; float: right; }
-#action select { border: 1px solid #CCC; background: none; font-size: 1.1em; margin-bottom: 1em; }
+#action select, #action input[type="text" ] { border: 1px solid #CCC; background: none; font-size: 1.1em; margin-bottom: 1em; }
+#action input[type="text" ] { width: 80%; padding: 0.2em; }
 
 /* Form styles */
 
