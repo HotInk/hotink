@@ -563,7 +563,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index >ol li { width: 98%; border-top: none; margin: 0.25em 1%;} 
 #account .index ol li h4 { padding: 0.25em 0.4em; margin:0; border-bottom: 1px solid #DDD; }
 #account .index .account { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
-#account .index .account h4 {color:#ED1B8C;}
+#account .index .account h4 a{color:#ED1B8C;}
 #account .index .account p { padding: 0.5em 0.4em; margin: 0; min-height: 1.1em; }
 #account .index .user { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
 #account .index .user p.email { font-weight: bolder; max-width: 32%; overflow: hidden; }

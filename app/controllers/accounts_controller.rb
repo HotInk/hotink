@@ -31,7 +31,7 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])    
     respond_to do |format|
       if permit?("admin") || permit?('manager of account')
-        format.html { redirect_to account_articles_url(current_user.account )}
+        format.html { redirect_to account_articles_url( @account )}
         format.xml { render :xml => @account }
       else
         format.html { head :unauthorized }
