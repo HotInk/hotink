@@ -613,7 +613,9 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #issues ol li .cover img:hover { border:1px solid #9cf;}
 #issues ol li .small_top_button { float: right;}
 #issues ol li .details { clear: left; width: 96%; margin: 0 2%;}
-#issues ol li .details h4 { font-size: 0.9em; color: #222; font-weight: normal; margin: 0.2em 0em; font-family: georgia, "Times New Roman", times, serif;}
+#issues ol li .details h4 { float: left; font-size: 0.9em; color: #222; font-weight: normal; margin: 0.2em 0em; font-family: georgia, "Times New Roman", times, serif;}
+#issues ol li .details p.kill_link  { float: right; width: 12px; margin: 0; margin-right: 0.5em; }
+#issues ol li .details p.kill_link a { color: red;}
 
 #issue h1 { margin: 0.2em 0;}
 #issue legend { padding-left: 2em;}
