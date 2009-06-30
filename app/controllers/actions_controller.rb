@@ -88,4 +88,11 @@ class ActionsController < ApplicationController
     flash[:notice] = "Articles tagged"
   end
   
+  def set_primary_section( klass, id, options = {} )
+    raise ArgumentError unless klass=="articles"
+    record = @account.send(klass).find(id)
+    record.section_id = options[:section_id]
+    record.save
+  end
+  
 end

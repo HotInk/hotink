@@ -28,8 +28,9 @@
 			<%= button_link_to_submit "Delete",  :onclick => "$('article_action_name').value='delete';return true;", :class => "pill-r" %>
 			<div class="batch_actions">
 				<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
-				<div style="border: 1px solid #DEDEDE; background-color: white; width: 10em; height: 12em; position: absolute; top: 1.75em; display:none;">
+				<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
 					<%= submit_tag "Unpublish", :onclick => "$('article_action_name').value='unpublish';return true;", :class => "menubutton" %>
+					<%= submit_tag "Set primary section", :onclick => "$('article_action_name').value='set_primary_section';return true;", :class => "menubutton" %>																				
 					<%= submit_tag "Add tag", :onclick => "$('article_action_name').value='add_tag';return true;", :class => "menubutton" %>																				
 				</div> 
 			</div>
