@@ -44,9 +44,11 @@ class ActionsController < ApplicationController
   def publish( klass, id, options = {} )
     raise ArgumentError unless klass=="articles"
     record = @account.send(klass).find(id)
+    
     unless record.status=="Published"
       flash[:notice] = "Articles published" if record.update_attributes({:status => "Published", :published_at => Time.now })
     end
+    
   end
   
   def schedule( klass, id, options = {} )

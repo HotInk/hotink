@@ -37,11 +37,11 @@ class AccountActivationsController < ApplicationController
      end  
    end 
 
-    def edit     
+   def edit
       render :layout => 'login'
     end  
 
-    def update
+   def update
       
       @account = Account.new(params[:account])
             
@@ -80,18 +80,6 @@ class AccountActivationsController < ApplicationController
     end
 
     private  
-
-    def load_user_using_perishable_token  
-      # Make user activation url valid for 1 full day.
-      @user = User.find_using_perishable_token(params[:id], 1.week)  
-      unless @user  
-        flash[:notice] = "We're sorry, but we could not locate your account. " +  
-        "If you are having issues try copying and pasting the URL " +  
-        "from your email into your browser or restarting the " +  
-        "process."  
-        redirect_to root_url  
-      end
-    end
     
     #Catch sneaky new existing-account users who want their own accounts.
     def check_user_qualifications

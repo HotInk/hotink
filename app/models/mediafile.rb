@@ -79,4 +79,20 @@ class Mediafile < ActiveRecord::Base
     end
   end
   
+  def to_xml(options = {})
+     options[:indent] ||= 2
+     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+     xml.instruct! unless options[:skip_instruct]
+     
+     xml.mediafile do
+       xml.tag!( :title, self.title )
+       xml.tag!( :type, self.type || "File" )
+       xml.tag!( :date, self.date )
+       xml.tag!( :authors_list, self.authors_list )
+       xml.tag!( :url, self.file.url )
+       xml.tag!( :content_type, self.file_content_type )
+       xml.tag!( :id, self.id )
+     end
+  end
+  
 end

@@ -5,6 +5,10 @@ body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, s
 div#page_wrapper { min-height: 100%; height: auto !important; height: 100%; margin-bottom: -30px; /* the bottom margin is the negative value of the footer's height */}
 div#page_container { background-color: #FFF; margin: 0; max-width: 74em; padding: 1em 1.5em; text-align: left; padding-bottom: 0;  }
 
+/* Font families */
+#account .letgo { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
+
+
 #login_container { background-color: #515151; }
 pre { background-color: #eee; padding: 10px; font-size: 11px; }
 
@@ -564,8 +568,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .user p { font-size: 0.8em; margin: 0.7em 0.3em; display:inline-block; vertical-align: top;}
 #account .index .user .admin { color:#ED1B8C;}
 #account .index .user button { float: none; margin: 0 0.25em; position: relative; top: 0.45em; }
-#account .index .user .kill_link { text-align: right; margin-right: 0.5em;}
-#account .index .user .kill_link a{ color: red;}
+#account .index .user .kill_link { width: 12px; margin-right: 0.5em;}
+#account .index .user .kill_link a { color: red;}
 
 #account #categories-window h2 { float: left; }
 #account #categories-window #categories_order_form { width: 45%; float: right; margin: 0.75em; margin-right: none; }
@@ -664,7 +668,7 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #user label {margin-right: 0.5em;}
 #user button.save { float: right; }
 #user .text_input { font-size: 1.3em; padding: 0.2em; margin-bottom: 0.125em; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
-#user legend { font-size: 1.4em; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
+#user legend { font-size: 1.4em; padding-bottom: 0.5em; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
 #user select { background: none; margin: 0; width: 100%; font-size: 1.2em; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.8em; color: #333; border: 1px solid #DEDEDE;	}	
 #user label { font-size: 1em; color: #333; padding: 0.5em; margin: 0 0.125em; display: block;}
 #user h1 {  float: left; width: 75%; font-size: 1.75em; margin: 0 0.25em; margin-bottom: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }

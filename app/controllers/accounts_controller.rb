@@ -5,8 +5,10 @@ class AccountsController < ApplicationController
   skip_before_filter :login_or_oauth_required, :only => [:new, :create] unless User.find(:first)
   before_filter :clear_flash
   
-  layout 'login', :only=>[:new, :create]
+  layout 'login', :only=> [:new, :create]
   layout 'hotink', :only=>:edit
+  
+  permit "admin", :only => [:index, :destroy ]
   
   # GET /accounts
   # GET /accounts.xml
@@ -23,18 +25,23 @@ class AccountsController < ApplicationController
     end
   end
 
-  # GET /accounts/1
-  # GET /accounts/1.xml
+  # Only allows admin and account managers.
+  # Permissions are inside because account isn't found until the action executes.
   def show
     @account = Account.find(params[:id])    
     respond_to do |format|
-      format.html { redirect_to account_articles_url(current_user.account )}
-      format.xml { render :xml => @account }
+      if permit?("admin") || permit?('manager of account')
+        format.html { redirect_to account_articles_url(current_user.account )}
+        format.xml { render :xml => @account }
+      else
+        format.html { head :unauthorized }
+        format.xml { head :unauthorized }
+      end
     end
   end
 
-  # The new account action has two different behaviours. It helps create accounts on an existing
-  # Hot Ink installation, but it also handles the Hot Ink installation wizard.
+  # The new account action handles the Hot Ink installation wizard for 
+  # the first account in a Hot Ink installation.
   def new
     @account = Account.new
     
@@ -43,35 +50,38 @@ class AccountsController < ApplicationController
       @user = User.new
       render :action=>"accounts/first_account/first_account_form", :layout=>'login'
     else
-      #This action isn't used to create accounts, so we forward the curious away.
+      #This action isn't used to create accounts, so we forward curious users away.
       respond_to do |format|
         format.html { redirect_to account_articles_url(current_user.account )}
       end
     end
   end
 
-  # GET /accounts/1/edit
+  # Loads the account management tab
   def edit
     @account = Account.find(params[:id])
-    # Invited users have an account id but have not been edited.
-    @user_activations = User.find(:all, :conditions => "account_id=#{@account.id} AND created_at = updated_at")
-    if permit? "admin", current_user 
-      @accounts = Account.find(:all)
-      # Users invited to open an account have no account id
-      @account_activations = User.find(:all, :conditions => { :account_id => nil })
-    end
+    permit "manager of :account or admin" do  
+   
+      # Invited users have an account id but have not been edited.
+      @user_activations = User.find(:all, :conditions => "account_id=#{@account.id} AND created_at = updated_at")
+      if permit? "admin", current_user 
+        @accounts = Account.find(:all)
+        # Users invited to open an account have no account id
+        @account_activations = User.find(:all, :conditions => { :account_id => nil })
+      end
     
-    respond_to do |format|
-      format.html { redirect_to account_articles_url(current_user.account) }
-      format.js
+      respond_to do |format|
+        format.html { redirect_to account_articles_url(current_user.account) }
+        format.js
+      end
+      
     end
   end
 
-  # Like #new, this action has variable effect depending on whether there are any existing accounts.
+  # For creating the first system account only, won't work if other accounts exist.
   def create
     @account = Account.new(params[:account])
     
-    # First account processing below, general processing in "else" block.
     if Account.all.blank?     
       @user = User.new(params[:user])  
           
@@ -92,18 +102,7 @@ class AccountsController < ApplicationController
         return
       end
       flash[:notice] = "Welcome to Hot Ink!"
-      redirect_to account_articles_url(@user.account)
-    else
-        respond_to do |format|
-            if @account.save
-                flash[:notice] = "Account created"
-                format.html { redirect_to(accounts_url) }
-                format.xml  { render :xml => @account, :status => :created, :location => @account }
-            else
-              format.html { render :action => "new" }
-              format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
-            end
-        end
+      redirect_to account_articles_url(@user.account)        
     end
     
   end
@@ -112,16 +111,17 @@ class AccountsController < ApplicationController
   # PUT /accounts/1.xml
   def update
     @account = Account.find(params[:id])
-
-    respond_to do |format|
-      if @account.update_attributes(params[:account])
-        flash[:notice] = "Account updated"
-        format.html { redirect_to(account_articles_url(@account)) }
-        format.js { head :ok } #The categories-list on the article form posts here. This is it's js. 
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+    permit "manager of :account or admin" do  
+      respond_to do |format|
+        if @account.update_attributes(params[:account])
+          flash[:notice] = "Account updated"
+          format.html { redirect_to(account_articles_url(@account)) }
+          format.js { head :ok } #The categories-list on the article form posts here. This is it's js. 
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @account.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
