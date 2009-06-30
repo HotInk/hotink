@@ -8,7 +8,7 @@
 		<% for content_type in @action.content_types %>
 			<%= hidden_field_tag 'content_types[]', content_type %>
 			<% for record in @records[content_type] %>
-				<%= hidden_field_tag 'article_ids[]', record.id %>
+				<%= hidden_field_tag "#{content_type}_ids[]", record.id %>
 			<% end %>
 		<% end %>
 	<% end %>

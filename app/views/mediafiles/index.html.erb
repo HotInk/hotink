@@ -23,7 +23,13 @@
 	<%= hidden_field_tag "name", '', :id=>"mediafile_action_name"%>
 	
 		<div id="actions" class="clearfix">
-			<%= button_link_to_submit "Delete",  :onclick => "$('mediafile_action_name').value='delete';return true;", :class => "cancel" %>
+			<%= button_link_to_submit "Delete",  :onclick => "$('mediafile_action_name').value='delete';return true;" %>
+			<div class="batch_actions">
+				<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
+				<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
+					<%= submit_tag "Add tag", :onclick => "$('mediafile_action_name').value='add_tag';return true;", :class => "menubutton" %>																				
+				</div> 
+			</div>
 		</div>
 
 	<div class="top_pagination"><%= render :partial=>'pagination' %></div>

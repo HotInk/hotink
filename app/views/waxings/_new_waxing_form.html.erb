@@ -5,21 +5,20 @@
 		<h1>Attach media </h1>
 	</div>
 	<div class="search">
-		<form method="GET">
+		<% form_remote_tag :url=>account_mediafiles_url(@account), :method => :get do %>
 			<input type="text" id="mediafiles_search" name="search" class="text_input user" onclick="if(this.value=='Search media') clearText(this);" value="<%=h( @search_query || "Search media") %>" />
 			<%= button_link_to_submit "Go" %>
-		</form>
-		<%= observe_field :mediafiles_search, :url => account_mediafiles_url(@account), :with => "search", :frequency=>0.5, :method=>:get, :after =>"$('mediafiles_list').select('li').invoke('addClassName', 'transparent');", :complete=>"media_list_clean_up([#{@waxing.document.mediafile_ids.join(',')}]);" %>
+		<% end %>
 	</div>
 </div>
 <% form_remote_tag :url=>account_document_waxings_url(@account, @document), :after=>"page_overlay.end();", :success=>"trigger_flash('<p>Media attached</p>');", :method => :post do %>
 <div class="function_bar clearfix">
 	<%= button_link_to_submit "Attach selected", :class=>"save large" %>
 	<p class="select_all_wrap"><input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label></p>
-	<div id="top_pagination"><%= render :partial=>'mediafiles/ajax_pagination' %></div>
+	<div id="top_pagination" class="top_pagination clearfix"><%= render :partial=>'mediafiles/ajax_pagination' %></div>
 </div>
 <div class="scroll_window">
-	<ol id="mediafiles_list">
+	<ol id="attach_mediafiles_list">
 			<% if @mediafiles.length > 0 %>
 				<%= render :partial => '/mediafiles/mediafile_list_item', :collection => @mediafiles %>
 			<% elsif @search_query %>

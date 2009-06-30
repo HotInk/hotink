@@ -117,14 +117,6 @@ var toggle_category_reordering = function(){
 }
 
 
-// Medialist clean-up tool
-
-var media_list_clean_up = function( array_of_ids ){
-	for(var i = 0; i < array_of_ids.length; i++){
-		if ($('mediafile_' + array_of_ids[i])) $('mediafile_' + array_of_ids[i]).remove();
-	}
-}
-
 // Schedule script
 var schedule_visible = false
 var toggle_schedule = function( button ) {

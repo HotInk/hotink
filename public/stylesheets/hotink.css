@@ -237,10 +237,10 @@ li.unpublished h1>small { color: #EDBE00; }
 .index.small { }
 .index.small .scroll_window { height: 400px; padding:0.25em; margin: 0.25em 0em; border: 1px solid #AAA; overflow:auto;}
 .index.small ol { width: 99%; margin: 0;}
-.index.small li .mediafile { width:14.5em; overflow: hidden;}
-.index.small li .mediafile h1  { font-size:1em;}
+.index.small li .mediafile { width:21.5em; overflow: hidden;}
+.index.small li .mediafile h1  { font-size:1em; padding-left: 0.5em;}
 .index.small li div.tags { width: 6em; }
-.index.small li div.tags p { 0.75em }
+.index.small li div.tags { display:none; }
 .index.small li div.date { font-size: 1em;}
 .index.small .page_entries_info { display: none; }
 .index.small .pagination { padding-top: 0.75em;}
@@ -401,12 +401,13 @@ li.unpublished h1>small { color: #EDBE00; }
 #overlay_content #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
 #overlay_content #upload_media_form p { font-size: 13px; }
 
-#overlay_content #mediafiles.small { width: 49em; }
+#overlay_content #mediafiles.small { width: 49em; padding: 0 0.5em; }
 #overlay_content #mediafiles.small h1 { padding: 0.125em; }
+#overlay_content #mediafiles.small ol li h1 { padding: 0.25em; }
 #overlay_content #mediafiles.small .title_bar { margin-bottom: 1em; }
 #overlay_content #mediafiles.small .title_bar div.search { margin-top: 1em; }
 #overlay_content #mediafiles.small .title_bar .search input {  }
-#overlay_content #mediafiles.small button.save { margin-top: 0.5em;}
+#overlay_content #mediafiles.small button.save { margin: 0.5em 0;}
 #overlay_content #mediafiles.small .pagination { font-size: 1.2em; }
 
 /* Edit media modal styles 
