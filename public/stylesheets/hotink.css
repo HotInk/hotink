@@ -263,7 +263,7 @@ li.unpublished h1>small { color: #EDBE00; }
 #action p { line-height: 1.4; font-size: 1.15em; clear: both; }
 #action button { margin-top: 0.5em; float: right; }
 #action select, #action input[type="text" ] { border: 1px solid #CCC; background: none; font-size: 1.1em; margin-bottom: 1em; }
-#action input[type="text" ] { width: 80%; padding: 0.2em; }
+#action input[type="text"] { width: 80%; padding: 0.2em; }
 
 #action #set_primary_section_section_id { width: 70%; }
 /* Form styles */
@@ -550,7 +550,9 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .edit_account>div { margin-bottom: 1em;}
 
 #account .account_settings h2 { margin-bottom: 1em;}
-#account #images-window label{ padding-right: 3.5em; font-weight: bold; font-family: georgia, "Times New Roman", times, serif;}
+#account #images-window label{ padding-right: 3.5em; text-align: right;  color: #222; font-weight: bold; font-family: georgia, "Times New Roman", times, serif;}
+#account #images-window input[type="text"] { width: 60px; }
+#account #images-window .column_holder { margin-top: 1.5em; }
 
 #account .activation_form button{ margin-top: 5%; font-size:0.8em;}
 #account .activation_form .column_holder { margin-bottom: 0;}

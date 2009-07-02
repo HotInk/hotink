@@ -2,13 +2,6 @@ class Image < Mediafile
   
   before_create :save_dimensions 
   
-  IMAGE_DEFAULT_SETTINGS = { 
-            "thumb" => ['100>', 'jpg'],  
-            "small" => ['250>', 'jpg'],
-            "medium" => ['440>', 'jpg'],
-            "large" => ['800>', 'jpg']
-  }
-  
   has_attached_file :file,
       :styles => {
         :system_icon => [ "x20>", 'jpg' ],
@@ -28,16 +21,8 @@ class Image < Mediafile
       
   validates_attachment_presence :file
   
-  # Default settings
-  # Right now these image sizes are processed automatically.
-  def settings
-    if self.account
-      return IMAGE_DEFAULT_SETTINGS.merge(self.account.settings["image"]) if self.account.settings["image"]
-    else
-      return IMAGE_DEFAULT_SETTINGS
-    end
-  end
-  
+  attr_accessor :settings
+    
   def save_dimensions 
         self.width = Paperclip::Geometry.from_file(file.to_file(:original)).width 
         self.height = Paperclip::Geometry.from_file(file.to_file(:original)).height  

@@ -62,7 +62,7 @@ class MediafilesController < ApplicationController
     # Catch various content types and build the appropriate media type
     case params[:mediafile][:file].content_type
     # Images
-    when %r"jpe?g", %r"tiff?", %r"png", %r"gif", %r"bmp"    then @mediafile = @account.images.build(params[:mediafile])
+    when %r"jpe?g", %r"tiff?", %r"png", %r"gif", %r"bmp"    then @mediafile = @account.images.build(params[:mediafile].merge(:settings => @account.settings["image"]))
     # mp3s/Audiofiles
     when  %r"audio\/mpeg"                                   then @mediafile = @account.audiofiles.build(params[:mediafile])
     # Catch-all for generic file attachments

@@ -4,7 +4,7 @@
 		<ol id="tablist" class="left">
 			<li class="selected">General</li>
 			<li>Users</li>
-			<!-- <li>Images</li>-->
+			<li>Images</li>
 			<li>Categories</li> 
 			<% if permit? "admin" %>
 				<li>Accounts</li>
@@ -12,7 +12,7 @@
 		</ol>
 		<div id="general-window" class="account_settings">
 		<% form_for(@account) do |f| %>
-		<%= button_link_to_submit @account.new_record? ? "Create your account" : "Save changes", :class=>"save large" %>
+		<%= button_link_to_submit "Save changes", :class=>"save large" %>
 			<h2>General settings</h2>
 	  		<%= f.error_messages %>
 			<fieldset>
@@ -53,20 +53,33 @@
 		</div>
 		
 		<div id="images-window" style="display:none">
-			<!-- <h2>Images</h2>
+			<% form_tag account_url(@account), :method=>:put do %>
+			<%= button_link_to_submit "Save changes", :class=>"save large" %>
+			<h2>Images</h2>
 			<fieldset>
-				<legend>Display sizes</legend>	
 				<p>Images are archived in their <strong>original size and format</strong>. It's important to upload <strong>high resolution</strong>
 				 images so that the materials in the archive age well. To make those images a little more reader friendly, they're also made available 
-				 in these <strong>standard sizes</strong>, which you can adjust below.</p>
-				<div class="column_holder">
+				 in these <strong>standard sizes</strong>, which you can adjust below. Remember, changing these sizes will only affect newly uploaded images.
+				 Older images will remain in their current size.</p>
+				<div class="column_holder clearfix">
 					<div class="third_column"></div>
 					<div class="third_column">No wider than</div>
 					<div class="third_column">No taller than</div>
-					<div class="third_column left_column"><label>Thumbnail</label></div>
-					<div class="third_column"><%= %></div>
-				<div>
-			</fieldset> -->
+					<div class="third_column"><label>Thumbnail</label></div>
+					<div class="third_column"><%= text_field_tag "account[image_settings][thumb][width]", geometry_string_width(@account.settings["image"]["thumb"][0]) , :class=>"text_input", :maxlength => "4" %> px</div>
+					<div class="third_column"><%= text_field_tag "account[image_settings][thumb][height]", geometry_string_height(@account.settings["image"]["thumb"][0]), :class=>"text_input", :maxlength => "4" %> px</div>
+					<div class="third_column"><label>Small</label></div>
+					<div class="third_column"><%= text_field_tag "account[image_settings][small][width]", geometry_string_width(@account.settings["image"]["small"][0]), :class=>"text_input", :maxlength => "4" %> px</div>
+					<div class="third_column"><%= text_field_tag "account[image_settings][small][height]", geometry_string_height(@account.settings["image"]["small"][0]), :class=>"text_input", :maxlength => "4" %> px</div>
+					<div class="third_column"><label>Medium</label></div>					
+					<div class="third_column"><%= text_field_tag "account[image_settings][medium][width]", geometry_string_width(@account.settings["image"]["medium"][0]), :class=>"text_input", :maxlength => "4" %> px</div>
+					<div class="third_column"><%= text_field_tag "account[image_settings][medium][height]", geometry_string_height(@account.settings["image"]["medium"][0]), :class=>"text_input", :maxlength => "4" %> px</div>
+					<div class="third_column"><label>Large</label></div>
+					<div class="third_column"><%= text_field_tag "account[image_settings][large][width]", geometry_string_width(@account.settings["image"]["large"][0]), :class=>"text_input", :maxlength => "4" %> px</div>
+					<div class="third_column"><%= text_field_tag "account[image_settings][large][height]", geometry_string_height(@account.settings["image"]["large"][0]), :class=>"text_input", :maxlength => "4" %> px</div>
+				</div>
+			</fieldset>
+		    <% end %>
 		</div>
 		
 		<div id="categories-window" class="index" style="display:none;">

@@ -37,7 +37,35 @@ class Account < ActiveRecord::Base
   
   serialize :settings
   
+  # Settings defaults
+  IMAGE_DEFAULT_SETTINGS = { 
+            "thumb" => ['100>', 'jpg'],  
+            "small" => ['250>', 'jpg'],
+            "medium" => ['440>', 'jpg'],
+            "large" => ['800>', 'jpg']
+  }
   
+  before_create :set_default_settings
+  
+  def image_settings= (new_settings)
+    raise ArgumentError unless new_settings.is_a? Hash
+    new_settings.each do |key, value|
+      
+      if value[:height].blank?
+        new_height = ""
+      else
+        new_height="x" + value[:height]
+      end
+      
+      if value[:width].blank?
+        new_width = ""
+      else
+        new_width= value[:width]
+      end
+      
+      settings["image"].update( key => [new_width + new_height + ">", "jpg"]) unless new_height.blank?&&new_width.blank?
+    end
+  end
   
   # Human readable list of account manager
   def managers_list
@@ -67,6 +95,12 @@ class Account < ActiveRecord::Base
        xml.tag!( :name, self.name)
        xml.tag!( :time_zone, self.time_zone)
      end
+  end
+  
+  private
+  
+  def set_default_settings
+    write_attribute(:settings, { "image" => IMAGE_DEFAULT_SETTINGS } )
   end
   
 end
