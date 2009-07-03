@@ -19,7 +19,7 @@ class AccountActivationsController < ApplicationController
        flash[:account_activation_notice] = "Account invitation emailed"
      
      rescue ArgumentError
-       flash[:account_activation_notice] = "Sorry, can't work with that, it's not an email address"
+       flash[:account_activation_notice] = "Sorry, can't work with that. It's not an email address."
     
      rescue ActiveRecord::RecordNotFound => new_account_user # Catch brand new users, raised by User.find_by_email
        @user = User.new(params[:account_activation])  

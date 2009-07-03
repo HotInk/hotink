@@ -8,7 +8,6 @@ class AccountsController < ApplicationController
   layout 'login', :only=> [:new, :create]
   layout 'hotink', :only=>:edit
   
-  permit "manager of account or admin", :only => [ :update ]
   permit "admin", :only => [:index, :destroy ]
   
   # GET /accounts
