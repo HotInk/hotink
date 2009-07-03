@@ -130,7 +130,7 @@ class ApplicationController < ActionController::Base
   end
   
   def load_user_using_perishable_token  
-    # Make user activation url valid for 1 full day.
+    # Make user activation url valid for 1 full week.
     @user = User.find_using_perishable_token(params[:id], 1.week)  
     unless @user  
       flash[:notice] = "We're sorry, but we could not locate your account. " +  

@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   acts_as_authentic do |c|
       c.crypto_provider = Authlogic::CryptoProviders::BCrypt # Stronger and more scalable protection with BCrypt
       c.ignore_blank_passwords = false # To catch activations, we want the system to complain if a user leaves the password/confirmation fields blank
+      c.disable_perishable_token_maintenance = true # Prevent authlogic from expiring this token on its own. If not, it gets reset on every logout 
   end
   acts_as_authorized_user
   acts_as_authorizable

@@ -42,6 +42,7 @@ class UserActivationsController < ApplicationController
         render :action=>"edit", :layout=>'login'
      else
        @user.account.accepts_role "staff", @user
+       @user.reset_perishable_token! # No more new users with this token
        flash[:notice] = "Welcome to Hot Ink!"
        redirect_to account_articles_url(@user.account)
      end

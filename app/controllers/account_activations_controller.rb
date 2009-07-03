@@ -59,6 +59,7 @@ class AccountActivationsController < ApplicationController
       else
         @account.accepts_role "manager", @user
         @account.accepts_role "staff", @user
+        @user.reset_perishable_token! # No more new accounts with this token
         flash[:notice] = "Welcome to Hot Ink!"
         redirect_to account_articles_url(@user.account)
       end
@@ -68,7 +69,15 @@ class AccountActivationsController < ApplicationController
     def destroy
       begin     
         @user = User.find(params[:id])
-        @user.destroy
+        
+        # If user has no other accounts, delete them. Otherwise, just set their account_id to revoke the invitation.
+        if @user.is_staff_for_what.blank?
+          @user.destroy
+        else
+          @user.account = @user.is_staff_for_what.first
+          @user.save!
+        end
+        
         flash[:notice] = "Invitation revoked"
       rescue
         flash[:notice] = "Error: Invitation NOT revoked"
