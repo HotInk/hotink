@@ -128,11 +128,7 @@ class Document < ActiveRecord::Base
      xml.instruct! unless options[:skip_instruct]
      
      xml.article do
-       if self.published_at
-        xml.tag!( :published_at, self.published_at.to_formatted_s(:long))
-       else
-         xml.tag!( :last_updated, self.updated_at.to_formatted_s(:long))
-       end
+       xml.tag!( :published_at, self.published_at.to_formatted_s(:long))
        xml.tag!( :title, self.title )
        xml.tag!( :subtitle, self.subtitle )
        xml.tag!( :authors_list, self.authors_list )
