@@ -24,5 +24,5 @@ config.action_controller.perform_caching             = true
 # config.action_mailer.raise_delivery_errors = false
 
 ActionMailer::Base.smtp_settings = {
-  :address => 'localhost'
+  :address => 'theorem.ca'
 }
