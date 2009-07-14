@@ -1,6 +1,6 @@
 class CreateSortings < ActiveRecord::Migration
   def self.up
-    create_table :sortings, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
+    create_table :sortings, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.integer :category_id
       t.integer :article_id
       t.integer :account_id

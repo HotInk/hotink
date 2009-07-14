@@ -1,6 +1,6 @@
 class CreateAuthors < ActiveRecord::Migration
   def self.up
-    create_table :authors, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin' do |t|
+    create_table :authors, :options => 'DEFAULT CHARSET=utf8 COLLATE=utf8_bin' do |t|
       t.string :name, :options => 'COLLATE utf_bin'
       t.integer :account_id
 

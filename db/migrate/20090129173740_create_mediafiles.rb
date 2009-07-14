@@ -1,6 +1,6 @@
 class CreateMediafiles < ActiveRecord::Migration
   def self.up
-    create_table :mediafiles, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
+    create_table :mediafiles, :options => 'DEFAULT CHARSET=utf8' do |t|
       t.string :title
       t.text :description
       t.string :link_alternate
