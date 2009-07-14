@@ -53,7 +53,7 @@ Rails::Initializer.run do |config|
   config.gem "bcrypt-ruby", :lib => "bcrypt"
   config.gem "mislav-will_paginate", :lib=>"will_paginate", :source => "http://gems.github.com"
   
-  config.gem 'BlueCloth'
+  config.gem 'bluecloth'
   
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
