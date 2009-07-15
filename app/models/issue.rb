@@ -12,7 +12,7 @@ class Issue < ActiveRecord::Base
         #:thumb_cover  => Proc.new { |instance| instance.settings["thumb"].to_s },
         #:small_cover => Proc.new { |instance| instance.settings["small"].to_s },
        # :medium_cover => Proc.new { |instance| instance.settings["medium"].to_s },
-        :system_default => ["400>", 'jpg'],
+        :system_default => ["400>", 'jpg']
       #  :large_cover => Proc.new { |instance| instance.settings["large"].to_s }
       },
       :convert_options => {
