@@ -4,7 +4,7 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration
       t.column :name, :string
     end
     
-    create_table :taggings, :options => 'DEFAULT CHARSET=utf8' do |t|
+    create_table :taggings do |t|
       t.column :tag_id, :integer
       t.column :taggable_id, :integer
       t.column :tagger_id, :integer
