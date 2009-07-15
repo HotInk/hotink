@@ -16,7 +16,7 @@ class Issue < ActiveRecord::Base
       #  :large_cover => Proc.new { |instance| instance.settings["large"].to_s }
       },
       :convert_options => {
-        :all => "-colorspace RGB -depth 8 -strip"
+        :all => "-colorspace RGB -strip"
       },
       :default_url => '/images/no_issue_cover_small.jpg',
       :default_style => :system_cover_thumb,
