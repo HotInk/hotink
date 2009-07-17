@@ -19,7 +19,7 @@ class Image < Mediafile
       :path => ":rails_root/public/system/:account/:class/:id_partition/:basename_:style.:extension",
       :url => "/system/:account/:class/:id_partition/:basename_:style.:extension"
       
-  validates_attachment_presence :file
+  #validates_attachment_presence :file
   
   attr_accessor :settings
     
