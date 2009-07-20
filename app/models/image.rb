@@ -1,6 +1,6 @@
 class Image < Mediafile
   
-  before_create :save_dimensions 
+  before_save :save_dimensions 
   
   has_attached_file :file,
       :styles => {
