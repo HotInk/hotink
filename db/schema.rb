@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.string   "title"
     t.text     "description"
     t.string   "link_alternate"
-    t.date     "date"
+    t.datetime "date"
     t.integer  "account_id"
     t.string   "type"
     t.datetime "created_at"

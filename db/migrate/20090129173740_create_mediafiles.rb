@@ -4,7 +4,7 @@ class CreateMediafiles < ActiveRecord::Migration
       t.string :title
       t.text :description
       t.string :link_alternate
-      t.date :date
+      t.datetime :date
       t.integer :account_id
       t.string :type
 
