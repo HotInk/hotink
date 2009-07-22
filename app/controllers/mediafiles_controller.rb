@@ -102,7 +102,7 @@ class MediafilesController < ApplicationController
     @mediafile = @account.mediafiles.find(params[:id])
    	 
     respond_to do |format|
-      if @mediafile.update_attributes(params[:mediafile].merge(:settings => @account.settings["image"])) # Pass image-size settings
+      if @mediafile.update_attributes(params[:mediafile]) 
         flash[:notice] = 'Media updated'      
         format.js
         format.html { redirect_to(account_mediafiles_path(@account))}

@@ -61,7 +61,7 @@ class ImagesController < ApplicationController
     # available to Paperclip
     @image = Image.new
     @image.account = @account
-    @image.attributes = params[:image]
+    @image.attributes = params[:image].merge(:settings => @account.settings["image"])
     
     respond_to do |format|
       if @image.save
@@ -91,7 +91,7 @@ class ImagesController < ApplicationController
     @image = @account.images.find(params[:id])
 
     respond_to do |format|
-      if @image.update_attributes(params[:image])
+      if @image.update_attributes(params[:image].merge(:settings => @account.settings["image"]))
         flash[:notice] = 'Image updated.'
         format.html { redirect_to(account_mediafiles_path(@account)) }
         format.xml  { head :ok }
