@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => "accounts", :action =>"new"
   
   map.resource :user_session
+  map.resource :remote_session
   map.resources :user_activations
   map.resources :password_resets
   map.resources :users, :member => { :promote => :put, :demote => :put, :deputize => :put, :letgo => :delete }
@@ -63,6 +64,7 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :audiofiles
     account.resources :waxings
     
+    account.resources :apps
     account.resources :actions
   end
   
