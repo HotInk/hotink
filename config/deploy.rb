@@ -1,22 +1,22 @@
 set :application, "hotink"
-set :branch, "master"
-set :repository,  "git@github.com:HotInk/hotink.git"
+set :branch, "0.2"
+set :repository,  "git://github.com/HotInk/hotink.git"
 
 
 # If you aren't deploying to /u/apps/#{application} on the target
 # servers (which is the default), you can specify the actual location
 # via the :deploy_to variable:
-set :deploy_to, "/Users/webapp/Sites/hotink-demo"
+set :deploy_to, "/home/hotink/hotink.net"
 
 # If you aren't using Subversion to manage your source code, specify
 # your SCM below:
 set :scm, :git
 set :git_enable_submodules, 1
 
-set :user, "webapp"
+set :user, "hotink"
 set :use_sudo, false
 
-server "hotink.net", :app, :web, :db, :primary => true
+server "theorem.ca", :app, :web, :db, :primary => true
 
 # Recipes below
 
@@ -26,7 +26,7 @@ server "hotink.net", :app, :web, :db, :primary => true
 before "deploy:setup", "db:configure"
 after "deploy:update_code", "db:symlink"
  
-set(:database_username, "hotink-sandbox")
+set(:database_username, "hotink")
 # set(:database_password, "root")
 set(:development_database) { application + "_development" }
 set(:test_database) { application + "_test" }

@@ -1,6 +1,6 @@
 class Circulation < ActionMailer::Base
 
-  default_url_options[:host] = "demo.hotink.net"  
+  default_url_options[:host] = "hotink.theorem.ca"  
   
   def password_reset_instructions(user)  
     subject       "Hot Ink Password Reset Instructions"  
