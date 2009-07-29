@@ -1,7 +1,7 @@
 <li id="entry_<%= entry.id %>" class="<%= cycle("even-row", "odd-row") %> <%= entry.status=="Published" ? (entry.published_at > Time.now ? "scheduled" : "published") : "unpublished" %> clearfix">
 
 	<div class="entry clearfix">
-		<h1><%= entry.status=="Published" ? (entry.published_at > Time.now ? "<small>Scheduled</small>" : "<small>Published</small>") : "<small>Draft</small>" %> &ldquo;<%=link_to h(entry.display_title.strip), edit_account_blog_entry_url(@account, entry.blogs.first, entry), :class=>"document_link" %>&rdquo;</h1>
+		<h1>&ldquo;<%=link_to h(entry.display_title.strip), edit_account_blog_entry_url(@account, entry.blogs.first, entry), :class=>"document_link" %>&rdquo;<%= entry.status=="Published" ? (entry.published_at > Time.now ? "<small>Scheduled</small>" : "<small>Published</small>") : "<small>Draft</small>" %></h1>
 	
 	</div>
 	
