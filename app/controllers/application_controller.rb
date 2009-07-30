@@ -113,6 +113,7 @@ class ApplicationController < ActionController::Base
   def authorized?
     return true unless @account
     return true if @account && @account.accepts_role?("staff", current_user)
+    return true if current_user.has_role? "admin"
     false
   end
   
