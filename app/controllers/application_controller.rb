@@ -94,6 +94,7 @@ class ApplicationController < ActionController::Base
       
       return false
     end
+    logger.info "Current user: #{current_user.email} at #{request.remote_ip}"
   end
 
   def login_forbidden
