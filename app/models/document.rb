@@ -128,13 +128,18 @@ class Document < ActiveRecord::Base
      xml.instruct! unless options[:skip_instruct]
      
      xml.article do
+       xml.tag!( :id, self.id )
        xml.tag!( :published_at, self.published_at.to_formatted_s(:long))
        xml.tag!( :title, self.title )
        xml.tag!( :subtitle, self.subtitle )
        xml.tag!( :authors_list, self.authors_list )
        xml.tag!( :bodytext, self.bodytext )
-       xml.tag!( :id, self.id )
+       
        self.section.nil? ? xml.section("") : xml.section(self.section.name)
+       xml.tag!( :tag_list, self.tag_list )
+       
+       xml.tag!( :account_id, self.account.id )
+       xml.tag!( :account_name, self.account.formal_name || self.account.name )
      end
   end
   
