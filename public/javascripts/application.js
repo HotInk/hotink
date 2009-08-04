@@ -14,6 +14,37 @@ if (theField.value == '')
 theField.value = theField.defaultValue;
 }
 
+// Application Iframe resizing
+
+window.onresize = function() {
+   resizeIframe();
+};
+
+
+function resizeIframe()
+{
+	$("application_frame").setStyle({ height: ( WindowHeight() - getObjHeight(document.getElementById("navigation")) + "px" });
+}
+
+function WindowHeight()
+{
+	var de = document.documentElement;
+	return self.innerHeight || 
+		(de && de.clientHeight ) ||
+		document.body.clientHeight;
+}
+
+function getObjHeight(obj)
+{
+	if( obj.offsetWidth )
+	{
+		return obj.offsetHeight;
+	}		
+	return obj.clientHeight;
+}
+
+
+
 // The hack below fixs a browser incosistency with button display.
 // Firefox adds 3px margin to the left and right, we need to knock it
 // off to match other browsers' display style.

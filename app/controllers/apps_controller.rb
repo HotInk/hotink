@@ -1,6 +1,6 @@
 class AppsController < ApplicationController
   
-  layout 'hotink'
+  layout 'apps'
   
   def show
     @app = ClientApplication.find(params[:id])

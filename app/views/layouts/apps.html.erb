@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Hot Ink | <%= controller_name.capitalize + " :: " + controller.action_name %></title>
+  
+  <%= stylesheet_link_tag 'hotink' %>
+  <%= unobtrusive_datepicker_includes %>
+  
+  <%= javascript_include_tag 'builder' %>
+  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag 'sortable_tree' %>
+  <%= javascript_include_tag 'autocompleter_localtokenizer' %>
+  <%= javascript_include_tag 'overlay.js' %>
+
+</head>
+<body>
+<div id="navigation" class="clearfix">
+	<div id="logo"><%= image_tag '/images/logo_tiny.png' %></div>
+	<div id="links">
+		<ol>
+			<li <%= 'class="current"' if controller_name == "articles" %>><%= link_to "Articles", account_articles_url(@account) %></li><li <%= 'class="current"' if controller_name == "mediafiles" %>><%= link_to "Media", account_mediafiles_url(@account) %></li><li <%= 'class="current"' if controller_name == "issues" %>><%= link_to "Issues", account_issues_url(@account) %></li><li <%= 'class="current"' if (controller_name == "blogs") || (controller_name == "entries") %>><%= link_to "Blogs", account_blogs_url(@account) %></li>
+		</ol>
+	</div>
+	<div id="user_details"><p>Logged in as: <%= link_to_remote current_user.login, :url=> edit_user_path(current_user), :method => :get, :html => { :class=>"weblink" } %>  <%= button_link_to "Logout", user_session_url, :method=>:delete, :class=>"micro", :id=>"user_logout_button" %></p></div>
+	<% if permit?("(manager of account)") || permit?("admin") %>
+		<div id="account_details">
+			<img src="/loading_small_222.gif" style="float:left;margin-right:0.5em;margin-top:0.25em;display:none;" class="spinner"/>
+			<%= button_link_to_remote "Manage account", :url=>edit_account_url(@account, :format => :js ), :method=>:get, :after=>"$(this).up().select('.spinner')[0].show();", :html=>{:class=>"tiny"} %> 
+		</div>
+	<% end %>
+	<div id="flash"><%= render_flash(flash[:notice])%></div>
+</div>
+<%= yield  %>
+<script type="text/javascript" charset="utf-8">
+	//Initialize Overlay
+	var page_overlay = new Overlay ();
+	//This is a quick hack to fix button display in firefox
+	load_button_fix();
+	//Set flash to fade after load - application.js
+	fade_flash.delay(1.5);
+	
+	resizeIframe();
+</script>
+</body>
+</html>
