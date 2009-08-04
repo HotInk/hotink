@@ -126,6 +126,7 @@ dl.faq dt {font-weight: bold;}
 /* Navigation CSS */
 
 #navigation { width: 99%; min-height: 2.4em; padding-right: 1%;background-color: #222; border-bottom: 1px solid #CEE4F3; text-align: center; border-right: 1px solid #DDD;}
+#navigation.apps { overflow: hidden; }
 #navigation div { display: inline-block; margin: 0.25em; margin-top: 0.3em; padding: 0.25em; }
 #navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; margin-left: 0.5em; }
 #navigation #links { float: left; padding: 0; margin: 0; margin-left: 3%; margin-top: 0.85em; }
@@ -787,7 +788,7 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 /*		Application iFrame styles
 /*---------------------------------------*/
 
-#application_frame { overflow: hidden;} /*this is to remove the scroll when not needed*/
+#application_frame { overflow: hidden; } /*this is to remove the scroll when not needed*/
  
 #application_frame, iframe
 {

@@ -23,7 +23,7 @@ window.onresize = function() {
 
 function resizeIframe()
 {
-	$("application_frame").setStyle({ height: ( WindowHeight() - getObjHeight(document.getElementById("navigation")) + "px" });
+	$("application_frame").setStyle({ height: ( WindowHeight() - getObjHeight(document.getElementById("navigation"))) + "px" });
 }
 
 function WindowHeight()
