@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090613190056) do
+ActiveRecord::Schema.define(:version => 20090805174420) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "include"
   end
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
@@ -102,7 +103,7 @@ ActiveRecord::Schema.define(:version => 20090613190056) do
     t.string   "title"
     t.text     "description"
     t.string   "link_alternate"
-    t.datetime "date"
+    t.date     "date"
     t.integer  "account_id"
     t.string   "type"
     t.datetime "created_at"

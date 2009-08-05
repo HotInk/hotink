@@ -1,5 +1,5 @@
 <h1>Edit your application</h1>
-<% form_for :client_application do |f| %>
+<% form_for @client_application, :url => {:controller => :oauth_clients, :action => "update" }, :html => { :method => :put} do |f| %>
        <%= render :partial => "form", :locals => { :f => f } %>
-       <%= submit_tag "Edit" %>
+       <%= button_link_to_submit "Update application", :class => "save" %>
 <% end %>
