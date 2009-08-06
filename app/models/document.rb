@@ -139,7 +139,7 @@ class Document < ActiveRecord::Base
        xml.tag!( :tag_list, self.tag_list )
        
        xml.tag!( :account_id, self.account.id )
-       xml.tag!( :account_name, self.account.formal_name.blank? ? self.account.name : self.account.formal_name )
+       xml.tag!( :account_name, self.account.formal_name.blank? ? self.account.name.capitalize : self.account.formal_name )
      end
   end
   
