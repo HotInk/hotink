@@ -143,24 +143,14 @@ class Document < ActiveRecord::Base
        
        xml.mediafiles :type => "array" do
          self.mediafiles.each do |mediafile|
-           xml.mediafile do
-             xml.tag!(:id, mediafile.id)
-             xml.tag!(:title, mediafile.title)
-             xml.tag!(:description, mediafile.description)
-             xml.tag!(:file_file_name, mediafile.file_file_name)
-             xml.tag!(:file_content_type, mediafile.file_content_type)
-             xml.tag!(:caption, self.waxings.find_by_mediafile_id(mediafile.id).caption)             
-           end
+           xml.<< mediafile.to_xml :skip_instruct => true
          end
        end
        
        if self.is_a?(Entry)
          xml.blogs :type => "array" do
            self.blogs.each do |blog|
-             xml.blog do
-               xml.tag!(:id, blog.id)
-               xml.tag!(:title, blog.title)               
-             end
+             xml.<< blog.to_xml :skip_instruct => true
            end
          end
        end
