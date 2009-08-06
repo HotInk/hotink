@@ -2,9 +2,12 @@
 <p>Would you like to authorize <%= link_to @token.client_application.name,@token.client_application.url %> (<%= link_to @token.client_application.url,@token.client_application.url %>) to access your account?</p>
 <% form_tag authorize_url do %>
   <%= hidden_field_tag "oauth_token", @token.token %>
-  <%- if params[:oauth_callback] -%>
-  <%= hidden_field_tag "oauth_callback", params[:oauth_callback] %>
-<%- end -%>
+  	<%- if params[:oauth_callback] -%>
+  		<%= hidden_field_tag "oauth_callback", params[:oauth_callback] %>
+	<%- end -%>
+	<%- if params[:request_url] -%>
+		<%= hidden_field_tag "request_url", params[:request_url] %>
+	<%- end -%>
 <p>
 	<%= check_box_tag 'authorize' %> authorize access
 </p>
