@@ -143,14 +143,14 @@ class Document < ActiveRecord::Base
        
        xml.mediafiles :type => "array" do
          self.mediafiles.each do |mediafile|
-           xml.<< mediafile.to_xml :skip_instruct => true
+           xml.<< mediafile.to_xml(:skip_instruct => true)
          end
        end
        
        if self.is_a?(Entry)
          xml.blogs :type => "array" do
            self.blogs.each do |blog|
-             xml.<< blog.to_xml :skip_instruct => true
+             xml.<< blog.to_xml(:skip_instruct => true)
            end
          end
        end

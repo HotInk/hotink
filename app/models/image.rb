@@ -38,11 +38,13 @@ class Image < Mediafile
        xml.tag!( :type, self.type || "File" )
        xml.tag!( :date, self.date )
        xml.tag!( :authors_list, self.authors_list )
-       xml.tag!(:url, self.file.url(:original), { :version=>"original"} )
-       xml.tag!(:url, self.file.url(:thumb), { :version=>"thumb"} )
-       xml.tag!(:url, self.file.url(:small), { :version=>"small"} )
-       xml.tag!(:url, self.file.url(:medium), { :version=>"medium"} )
-       xml.tag!(:url, self.file.url(:large), { :version=>"large"} )
+       xml.url do
+         xml.tag!(:original, self.file.url(:original))
+         xml.tag!(:thumb, self.file.url(:thumb) )
+         xml.tag!(:small, self.file.url(:small))
+         xml.tag!(:medium, self.file.url(:medium))
+         xml.tag!(:large, self.file.url(:large) )
+       end
        xml.tag!( :content_type, self.file_content_type )
        xml.tag!( :id, self.id )
      end
