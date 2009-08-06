@@ -44,6 +44,9 @@ class Image < Mediafile
          xml.tag!(:small, self.file.url(:small))
          xml.tag!(:medium, self.file.url(:medium))
          xml.tag!(:large, self.file.url(:large) )
+         xml.tag!(:system_default, self.file.url(:system_default) )
+         xml.tag!(:system_thumb, self.file.url(:system_thumb) )
+         xml.tag!(:system_icon, self.file.url(:system_icon) )
        end
        xml.tag!( :content_type, self.file_content_type )
        xml.tag!( :id, self.id )
