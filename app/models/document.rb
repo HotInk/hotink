@@ -140,6 +140,32 @@ class Document < ActiveRecord::Base
        
        xml.tag!( :account_id, self.account.id )
        xml.tag!( :account_name, self.account.formal_name.blank? ? self.account.name.capitalize : self.account.formal_name )
+       
+       xml.mediafiles :type => "array" do
+         self.mediafiles.each do |mediafile|
+           xml.mediafile do
+             xml.tag!(:id, mediafile.id)
+             xml.tag!(:title, mediafile.title)
+             xml.tag!(:description, mediafile.description)
+             xml.tag!(:file_file_name, mediafile.file_file_name)
+             xml.tag!(:file_content_type, mediafile.file_content_type)
+             xml.tag!(:caption, self.waxings.find_by_mediafile_id(mediafile.id).caption)             
+           end
+         end
+       end
+       
+       if self.is_a?(Entry)
+         xml.blogs :type => "array" do
+           self.blogs.each do |blog|
+             xml.blog do
+               xml.tag!(:id, blog.id)
+               xml.tag!(:title, blog.title)               
+             end
+           end
+         end
+       end
+       
+       
      end
   end
   
