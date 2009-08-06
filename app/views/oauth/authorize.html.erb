@@ -4,6 +4,8 @@
   <%= hidden_field_tag "oauth_token", @token.token %>
   	<%- if params[:oauth_callback] -%>
   		<%= hidden_field_tag "oauth_callback", params[:oauth_callback] %>
+	<%- end -%>
+	<%- if params[:request_url] -%>
 		<%= hidden_field_tag "request_url", params[:request_url] %>
 	<%- end -%>
 <p>
