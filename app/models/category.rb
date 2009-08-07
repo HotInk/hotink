@@ -27,5 +27,24 @@ class Category < ActiveRecord::Base
       child.save
     end
   end
+
+  def to_xml(options = {})
+     options[:indent] ||= 2
+     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+     xml.instruct! unless options[:skip_instruct]
+     
+     xml.section do
+       xml.tag!( :position, self.position )
+       xml.tag!( :id, self.id )
+       xml.tag!( :name, self.name)
+       
+       xml.children :type => "array" do
+         self.children.each do |category|
+           xml.<< category.to_xml(:skip_instruct => true)
+         end
+       end
+     end
+  end
+
   
 end
