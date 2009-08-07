@@ -141,10 +141,34 @@ class Document < ActiveRecord::Base
        xml.tag!( :account_id, self.account.id )
        xml.tag!( :account_name, self.account.formal_name.blank? ? self.account.name.capitalize : self.account.formal_name )
        
+
+       # to get the mediafiles' caption, we need to loop over the waxings 
        xml.mediafiles :type => "array" do
-         self.mediafiles.each do |mediafile|
-           xml.<< mediafile.to_xml(:skip_instruct => true)
+         self.waxings.each do |waxing|
+           xml.<< waxing.mediafile.to_xml(:skip_instruct => true, :caption => waxing.caption)
          end
+       end
+       
+       xml.sections :type => "array" do
+         self.categories.each do |category|
+           xml.<< category.to_xml(:skip_instruct => true)
+         end
+       end
+       
+       xml.tags :type => "array" do
+         self.tags.each do |tag|
+           xml.<< tag.to_xml(:skip_instruct => true)
+         end
+       end       
+       
+       xml.authors :type => "array" do
+         self.authors.each do |author|
+           xml.<< author.to_xml(:skip_instruct => true)
+         end
+       end
+       
+       xml.account :type => "array" do
+         xml.<< self.account.to_xml(:skip_instruct => true)
        end
        
        if self.is_a?(Entry)
