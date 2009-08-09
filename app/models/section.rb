@@ -8,16 +8,5 @@ class Section < Category
   validates_presence_of :name, :message => "Section must have a name"
   validates_uniqueness_of :name, :scope => :account_id, :message => "Section name must be unique"
 
-  def to_xml(options = {})
-     options[:indent] ||= 2
-     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
-     xml.instruct! unless options[:skip_instruct]
-     
-     xml.section do
-       xml.tag!( :position, self.position )
-       xml.tag!( :id, self.id )
-       xml.tag!( :name, self.name)
-     end
-  end
 
 end

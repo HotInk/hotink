@@ -30,19 +30,26 @@ class Image < Mediafile
   
   def to_xml(options = {})
      options[:indent] ||= 2
+     caption = options[:caption] || self.description
      xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
      xml.instruct! unless options[:skip_instruct]
      
      xml.mediafile do
        xml.tag!( :title, self.title )
-       xml.tag!( :type, self.type || "File" )
+       xml.tag!( :caption, caption)
+       xml.tag!( :mediafile_type, self.type || "Mediafile" )
        xml.tag!( :date, self.date )
        xml.tag!( :authors_list, self.authors_list )
-       xml.tag!(:url, self.file.url(:original), { :version=>"original"} )
-       xml.tag!(:url, self.file.url(:thumb), { :version=>"thumb"} )
-       xml.tag!(:url, self.file.url(:small), { :version=>"small"} )
-       xml.tag!(:url, self.file.url(:medium), { :version=>"medium"} )
-       xml.tag!(:url, self.file.url(:large), { :version=>"large"} )
+       xml.url do
+         xml.tag!(:original, self.file.url(:original))
+         xml.tag!(:thumb, self.file.url(:thumb) )
+         xml.tag!(:small, self.file.url(:small))
+         xml.tag!(:medium, self.file.url(:medium))
+         xml.tag!(:large, self.file.url(:large) )
+         xml.tag!(:system_default, self.file.url(:system_default) )
+         xml.tag!(:system_thumb, self.file.url(:system_thumb) )
+         xml.tag!(:system_icon, self.file.url(:system_icon) )
+       end
        xml.tag!( :content_type, self.file_content_type )
        xml.tag!( :id, self.id )
      end
