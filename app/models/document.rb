@@ -128,7 +128,7 @@ class Document < ActiveRecord::Base
      xml.instruct! unless options[:skip_instruct]
      
      xml.article do
-       xml.tag!( :id, self.id )
+       xml.tag!( :id, self.id, :type => "integer")
        xml.tag!( :published_at, self.published_at ? self.published_at.to_formatted_s(:long) : "" )
        xml.tag!( :title, self.title )
        xml.tag!( :subtitle, self.subtitle )
@@ -138,7 +138,7 @@ class Document < ActiveRecord::Base
        self.section.nil? ? xml.section("") : xml.section(self.section.name)
        xml.tag!( :tag_list, self.tag_list )
        
-       xml.tag!( :account_id, self.account.id )
+       xml.tag!( :account_id, self.account.id, :type => "integer")
        xml.tag!( :account_name, self.account.formal_name.blank? ? self.account.name.capitalize : self.account.formal_name )
        
 

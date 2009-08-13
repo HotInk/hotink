@@ -52,6 +52,8 @@ class Image < Mediafile
        end
        xml.tag!( :content_type, self.file_content_type )
        xml.tag!( :id, self.id )
+       xml.tag!( :width, self.width)
+       xml.tag!( :height, self.height)       
      end
   end
   
