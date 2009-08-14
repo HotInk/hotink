@@ -149,7 +149,7 @@ class Document < ActiveRecord::Base
          end
        end
        
-       xml.sections :type => "array" do
+       xml.categories :type => "array" do
          self.categories.each do |category|
            xml.<< category.to_xml(:skip_instruct => true)
          end

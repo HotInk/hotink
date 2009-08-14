@@ -7,32 +7,34 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
-    
-    # This split ona blank search query is important, even though thinking-sphinx will return ordered search
-    # results on a blank query. Sphinx delta index isn't ordered with the regular index, so the ordering just
-    # doesn't work.
-    if params[:search].blank?
+      # If the request if for secific ids, don't mess around, just return them
+      if params[:ids]
+        @articles = @account.articles.find(params[:ids], :include => [:authors, :mediafiles, :section])
+      # This split ona blank search query is important, even though thinking-sphinx will return ordered search
+      # results on a blank query. Sphinx delta index isn't ordered with the regular index, so the ordering just
+      # doesn't work.
+      elsif params[:search].blank? 
+        
+        conditions = { :status => "published" }
       
-      conditions = { :status => "published" }
-      
-      # check whether we're looking for section articles
-      unless params[:section_id].blank?
-        conditions[:section_id] = params[:section_id]
-      end
+        # check whether we're looking for section articles
+        unless params[:section_id].blank?
+          conditions[:section_id] = params[:section_id]
+        end
   
-      # TODO: do something similar for issues      
-      @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "published_at DESC", :include => [:authors, :mediafiles, :section], :conditions => conditions)
-      @drafts = @account.articles.find( :all, :conditions => { :status => nil }, :include => [:authors, :mediafiles, :section] ).reject{ |draft| draft.created_at == draft.updated_at } unless params[:page]
-    else  
-      @search_query = params[:search]
-      @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :include => [:authors, :mediafiles, :section])
-    end
+        # TODO: do something similar for issues      
+        @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "published_at DESC", :include => [:authors, :mediafiles, :section], :conditions => conditions)
+        @drafts = @account.articles.find( :all, :conditions => { :status => nil }, :include => [:authors, :mediafiles, :section] ).reject{ |draft| draft.created_at == draft.updated_at } unless params[:page]
+      else  
+        @search_query = params[:search]
+        @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :include => [:authors, :mediafiles, :section])
+      end
     
-    respond_to do |format|
-      format.html # index.html.erb
-      format.js
-      format.xml  { render :xml => @articles.select{ |article| article.published_at < Time.now } }
-    end
+      respond_to do |format|
+        format.html # index.html.erb
+        format.js
+        format.xml  { render :xml => @articles.select{ |article| article.published_at < Time.now } }
+      end
   end
 
   # GET /articles/1
