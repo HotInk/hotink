@@ -72,7 +72,7 @@ class Issue < ActiveRecord::Base
         xml.tag!( :large_cover_image, self.pdf.url(:system_default) )
         xml.tag!( :small_cover_image, self.pdf.url(:system_cover_thumb) )
 
-        xml.tag!(:uploaded_at, self.created_at.to_formatted_s(:long))
+        xml.tag!(:created_at, self.created_at.to_formatted_s(:long))
         xml.tag!(:last_updated, self.updated_at.to_formatted_s(:long))
       end
   end
