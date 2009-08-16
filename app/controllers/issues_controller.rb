@@ -8,8 +8,8 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.xml
   def index
-    @issues = @account.issues.find(:all)
-
+    @issues = @account.issues.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 15 ), :order => "date DESC")
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @issues }
@@ -113,7 +113,7 @@ class IssuesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+    
   def upload_pdf
     @issue = @account.issues.find(params[:id])
     @issue.swfupload_file = params[:Filedata]

@@ -4,6 +4,10 @@
 			<h1>Print issues</h1>
 		 	<%= button_link_to 'New issue', new_account_issue_path(@account) %>
 		</div>
+		
+		<div class="pagination">
+			<%= will_paginate(@issues, :inner_window => 1, :outer_window => 1) %>
+		</div>
 	</div>
 
 	<ol>
