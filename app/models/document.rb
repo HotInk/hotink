@@ -133,6 +133,7 @@ class Document < ActiveRecord::Base
        xml.tag!( :title, self.title )
        xml.tag!( :subtitle, self.subtitle )
        xml.tag!( :authors_list, self.authors_list )
+       xml.tag!( :summary, self.summary )
        xml.tag!( :bodytext, self.bodytext )
        
        self.section.nil? ? xml.section("") : xml.section(self.section.name)
