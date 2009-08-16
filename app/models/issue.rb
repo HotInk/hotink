@@ -51,4 +51,30 @@ class Issue < ActiveRecord::Base
     self.pdf = data
   end
   
+  def to_xml(options = {})
+      options[:indent] ||= 2
+      xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+      xml.instruct! unless options[:skip_instruct]
+      
+      xml.issue do 
+        xml.tag!( :id, self.id )
+        xml.tag!( :account_id, self.account.id )
+        xml.tag!( :account_name, self.account.formal_name.blank? ? self.account.name.capitalize : self.account.formal_name )
+
+        xml.tag!( :date, self.date )
+        xml.tag!( :name, self.title )
+        xml.tag!( :decription, self.description )
+        xml.tag!( :volume, self.volume ) if self.volume
+        xml.tag!( :number, self.number ) if self.volume
+
+        xml.tag!( :press_pdf_file, self.pdf.url )
+        xml.tag!( :screen_pdf_file, self.pdf.url(:screen_quality) )
+        xml.tag!( :large_cover_image, self.pdf.url(:system_default) )
+        xml.tag!( :small_cover_image, self.pdf.url(:system_cover_thumb) )
+
+        xml.tag!(:uploaded_at, self.created_at.to_formatted_s(:long))
+        xml.tag!(:last_updated, self.updated_at.to_formatted_s(:long))
+      end
+  end
+  
 end
