@@ -63,7 +63,7 @@ class Issue < ActiveRecord::Base
 
         xml.tag!( :date, self.date )
         xml.tag!( :name, self.name )
-        xml.tag!( :decription, self.description )
+        xml.tag!( :description, self.description )
         xml.tag!( :volume, self.volume ) if self.volume
         xml.tag!( :number, self.number ) if self.number
 
