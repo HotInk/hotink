@@ -62,10 +62,10 @@ class Issue < ActiveRecord::Base
         xml.tag!( :account_name, self.account.formal_name.blank? ? self.account.name.capitalize : self.account.formal_name )
 
         xml.tag!( :date, self.date )
-        xml.tag!( :name, self.title )
+        xml.tag!( :name, self.name )
         xml.tag!( :decription, self.description )
         xml.tag!( :volume, self.volume ) if self.volume
-        xml.tag!( :number, self.number ) if self.volume
+        xml.tag!( :number, self.number ) if self.number
 
         xml.tag!( :press_pdf_file, self.pdf.url )
         xml.tag!( :screen_pdf_file, self.pdf.url(:screen_quality) )
