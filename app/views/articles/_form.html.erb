@@ -11,7 +11,7 @@
 		</p>
 	  </div>
 	<p id="top_links">	
-		<%= link_to "&#171; Back to articles list", account_articles_url(@account), :class=>"weblink" %>
+		<%= link_to "&#171; Back to articles list", account_articles_url(@account), :class=>"weblink" %> <%= link_to "Add a new article", new_account_article_url(@account), :class => "weblink" %>
 	</p>
 	<h1>Edit article</h1>
 	  <%= f.error_messages %>
