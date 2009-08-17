@@ -610,6 +610,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 /*		Issue styles
 /*---------------------------------------*/
 
+#issues .pagination { font-size: 1.25em; float: right; margin: 10px;}
 #issues ol { list-style-type:none; margin:0; padding:0; border:none;}
 #issues ol li { background-color: #F9F9F9; display: inline-block; border:none; padding: 0.25em; margin:0.25em;}
 #issues ol li .cover {  }
