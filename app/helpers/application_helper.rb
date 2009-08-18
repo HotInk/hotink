@@ -103,7 +103,7 @@ module ApplicationHelper
   # This method is a hack to display applications only to users we select on accounts we select
   def render_applications( account, user )
     case account.name
-    when 'root', 'manit', 'fulcrum'
+    when 'root', 'manit', 'fulcrum', 'muse'
       if user.has_role?('admin') || user.has_role?('manager', account)
         if controller_name == "apps"
           "<li class=\"selected\">" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/3") + "</li>"
