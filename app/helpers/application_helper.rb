@@ -108,7 +108,7 @@ module ApplicationHelper
         if controller_name == "apps"
           "<li class=\"selected\">" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/3") + "</li>"
         else
-          "<li>" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/3") + "</li>"
+          "<li>" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
         end
       end
     end
