@@ -106,7 +106,7 @@ module ApplicationHelper
     when 'root', 'manit', 'fulcrum', 'muse'
       if user.has_role?('admin') || user.has_role?('manager', account)
         if controller_name == "apps"
-          "<li class=\"selected\">" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/3") + "</li>"
+          "<li class=\"selected\">" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
         else
           "<li>" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
         end
