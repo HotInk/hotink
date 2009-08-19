@@ -30,23 +30,35 @@ class OauthController < ApplicationController
   
   def authorize
     @token = RequestToken.find_by_token params[:oauth_token]
+    
+    # Check to see if user is allowed to access this account on the app
+    if params[:account_id]
+      @account = Account.find(params[:account_id])
+      unless current_user.is_manager_for_what.member?(@account)
+        render :action => "authorize_failure"
+        return
+      end
+    end
+    
     unless @token.invalidated?    
       if request.post? 
         if params[:authorize] == '1'
           @token.authorize!(current_user)
           redirect_url = params[:oauth_callback] || @token.client_application.callback_url
           if redirect_url
+            redirect_query_string = "oauth_token=#{@token.token}"
             if params[:request_url] # preserve a passed along request url
-              redirect_to "#{redirect_url}?oauth_token=#{@token.token}&request_url=#{params[:request_url]}"
-            else
-              redirect_to "#{redirect_url}?oauth_token=#{@token.token}"
+              redirect_query_string += "&request_url=#{params[:request_url]}"
+            elsif params[:account_id] # preserve a passed along account_id that we checked-out above above
+              redirect_query_string += "&account_id=#{params[:account_id]}"
             end
+            redirect_to "#{redirect_url}?#{redirect_query_string}"
           else
             render :action => "authorize_success"
           end
         elsif params[:authorize] == "0"
           @token.invalidate!
-          render :action => "authorize_failure"
+          
         end
       end
     else

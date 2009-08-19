@@ -8,6 +8,9 @@
 	<%- if params[:request_url] -%>
 		<%= hidden_field_tag "request_url", params[:request_url] %>
 	<%- end -%>
+	<%- if params[:account_id] -%>
+		<%= hidden_field_tag "account_id", params[:account_id] %>
+	<%- end -%>
 <p>
 	<%= check_box_tag 'authorize' %> authorize access
 </p>
