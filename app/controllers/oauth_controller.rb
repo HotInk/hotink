@@ -49,8 +49,9 @@ class OauthController < ApplicationController
             redirect_query_string = "oauth_token=#{@token.token}"
             if params[:request_url] # preserve a passed along request url
               redirect_query_string += "&request_url=#{params[:request_url]}"
-            elsif params[:account_id] # preserve a passed along account_id that we checked-out above above
-              redirect_query_string += "&account_id=#{params[:account_id]}"
+            end
+            if @account # preserve a passed along account_id that we checked-out above above
+              redirect_query_string += "&account_id=#{@account.id}"
             end
             redirect_to "#{redirect_url}?#{redirect_query_string}"
           else
