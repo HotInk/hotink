@@ -50,16 +50,15 @@ class OauthController < ApplicationController
             if params[:request_url] # preserve a passed along request url
               redirect_query_string += "&request_url=#{params[:request_url]}"
             end
-            if @account # preserve a passed along account_id that we checked-out above above
-              redirect_query_string += "&account_id=#{@account.id}"
+            if params[:account_id] # preserve a passed along account_id that we checked-out above above
+              redirect_query_string += "&account_id=#{params[:account_id]}"
             end
             redirect_to "#{redirect_url}?#{redirect_query_string}"
           else
             render :action => "authorize_success"
           end
         elsif params[:authorize] == "0"
-          @token.invalidate!
-          
+          @token.invalidate! 
         end
       end
     else
