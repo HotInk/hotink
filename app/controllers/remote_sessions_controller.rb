@@ -10,7 +10,7 @@ class RemoteSessionsController < ApplicationController
       query_string += "&request_url=#{params[:request_url]}" if params[:request_url]
       redirect_to(@app.callback_url + query_string )
     else
-      query_string = "?session_action=new_user&account_id="+ @account.id
+      query_string = "?session_action=new_user&account_id="+ @account.id.to_s
       query_string += "&request_url=#{params[:request_url]}" if params[:request_url]
       redirect_to(@app.callback_url + query_string)
       return
