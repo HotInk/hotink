@@ -2,7 +2,7 @@ class SectionsController < ApplicationController
   # GET /sections
   # GET /sections.xml
   def index
-    @sections = @account.sections.find(:all)
+    @sections = @account.main_categories
     
     respond_to do |format|
       format.html # index.html.erb
@@ -15,9 +15,9 @@ class SectionsController < ApplicationController
   def show
     
     begin
-      @section = @account.sections.find(params[:id])
+      @section = @account.categories.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      @section = @account.sections.find_by_name(params[:id]) 
+      @section = @account.categories.find_by_name(params[:id]) 
     end
     
     respond_to do |format|
