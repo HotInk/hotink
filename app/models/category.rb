@@ -37,7 +37,7 @@ class Category < ActiveRecord::Base
        xml.tag!( :position, self.position )
        xml.tag!( :id, self.id )
        xml.tag!( :name, self.name)
-       xml.tag!( :parent, self.parent )
+       xml.tag!( :parent_id, self.parent.id )
        xml.children :type => "array" do
          self.children.each do |category|
            xml.<< category.to_xml(:skip_instruct => true)
