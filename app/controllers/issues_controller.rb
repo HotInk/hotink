@@ -26,6 +26,21 @@ class IssuesController < ApplicationController
       format.xml  { render :xml => @issue }
     end
   end
+  
+  #Return an issue's articles in the api
+  def articles
+    @issue = @account.issues.find(params[:id])
+    
+    if params[:section_id]
+      @articles = @issue.articles.find_all_by_section_id(params[:section_id])
+    else
+      @articles = @issue.articles.all
+    end
+        
+    respond_to do |format|
+      format.xml  { render :xml => @articles }
+    end
+  end
 
   # GET /issues/new
   # GET /issues/new.xml
