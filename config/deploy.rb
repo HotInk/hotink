@@ -93,31 +93,4 @@ end
    
 after :deploy, "passenger:restart"
 
-#############################
-# Thinking Sphinx recipes
-
-desc "Re-establish symlinks"
-task :after_symlink do
-  run <<-CMD
-    rm -fr #{release_path}/db/sphinx &&
-    ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx
-  CMD
-end
-
-desc "Stop the sphinx server"
-task :stop_sphinx , :roles => :app do
-  run "cd #{current_path} && rake thinking_sphinx:stop RAILS_ENV=production"
-end
-
-
-desc "Start the sphinx server"
-task :start_sphinx, :roles => :app do
-  run "cd #{current_path} && rake thinking_sphinx:configure RAILS_ENV=production && rake thinking_sphinx:start RAILS_ENV=production"
-end
-
-desc "Restart the sphinx server"
-task :restart_sphinx, :roles => :app do
-  stop_sphinx
-  start_sphinx
-end
-
+after "deploy:setup", "thinking_sphinx:shared_sphinx_folder"

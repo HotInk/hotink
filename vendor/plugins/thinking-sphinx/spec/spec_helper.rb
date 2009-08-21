@@ -3,6 +3,7 @@ $:.unshift File.dirname(__FILE__) + '/../lib'
 require 'rubygems'
 require 'fileutils'
 require 'ginger'
+require 'jeweler'
 
 require 'lib/thinking_sphinx'
 
@@ -52,5 +53,16 @@ Spec::Runner.configure do |config|
   
   config.after :all do
     FileUtils.rm_r "#{Dir.pwd}/tmp" rescue nil
+  end
+end
+
+def minimal_result_hashes(*instances)
+  instances.collect do |instance|
+    {
+      :attributes => {
+        'sphinx_internal_id' => instance.id,
+        'class_crc'          => instance.class.name.to_crc32
+      }
+    }
   end
 end
