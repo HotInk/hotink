@@ -38,7 +38,7 @@ class Document < ActiveRecord::Base
     has account_id
     has type
     
-    set_property :delta => true
+    set_property :delta => :delayed
   end
 
   def self.per_page
