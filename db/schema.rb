@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090805174420) do
+ActiveRecord::Schema.define(:version => 20090822162233) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -69,6 +69,19 @@ ActiveRecord::Schema.define(:version => 20090805174420) do
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.string   "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "documents", :force => true do |t|
     t.string   "title"
     t.string   "alternate_title"
@@ -114,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20090805174420) do
     t.datetime "file_updated_at"
     t.integer  "width"
     t.integer  "height"
+    t.boolean  "delta",             :default => true, :null => false
   end
 
   create_table "oauth_nonces", :force => true do |t|
