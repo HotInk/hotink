@@ -27,8 +27,7 @@ class ArticlesController < ApplicationController
         @drafts = @account.articles.find( :all, :conditions => { :status => nil }, :include => [:authors, :mediafiles, :section] ).reject{ |draft| draft.created_at == draft.updated_at } unless params[:page]
       else  
         @search_query = params[:search]
-        @search_results = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :include => [:authors, :mediafiles, :section])
-        @articles = @search_results.collect
+        @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :include => [:authors, :mediafiles, :section])
       end
     
       respond_to do |format|
