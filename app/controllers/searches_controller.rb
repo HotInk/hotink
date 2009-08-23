@@ -23,10 +23,18 @@ class SearchesController < ApplicationController
       conditions.merge!( :description => params[:description] )
     end
     
+    # Select which class to use as our search base
+    case params[:only]
+    when nil
+      search_class = ThinkingSphinx
+    when "articles", "article", "Articles", "Article"
+      search_class = Article
+    end
+    
     if params[:q]
-      @results = ThinkingSphinx.search params[:q], :conditions => conditions, :with => withs
+      @results = search_class.search params[:q], :conditions => conditions, :with => withs
     else
-      @results = ThinkingSphinx.search :conditions => conditions, :with => withs
+      @results = search_class.search :conditions => conditions, :with => withs
     end
     
     respond_to do |format|
