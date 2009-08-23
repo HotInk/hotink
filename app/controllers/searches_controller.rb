@@ -1,7 +1,7 @@
 class SearchesController < ApplicationController
 
   def show
-    withs = { :status => 'published' }
+    withs = {}
     conditions = {}
     
     # Build "with" filters
