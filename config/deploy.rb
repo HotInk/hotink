@@ -1,3 +1,5 @@
+require 'vendor/plugins/thinking-sphinx/recipes/thinking_sphinx'
+
 set :application, "hotink"
 set :branch, "0.2"
 set :repository,  "git://github.com/HotInk/hotink.git"
@@ -94,3 +96,12 @@ end
 after :deploy, "passenger:restart"
 
 after "deploy:setup", "thinking_sphinx:shared_sphinx_folder"
+
+task :after_update_code, :roles => [:app] do
+  symlink_sphinx_indexes
+end
+
+task :symlink_sphinx_indexes, :roles => [:app] do
+  run "ln -nfs #{shared_path}/db/sphinx #{current_path}/db/sphinx"
+end
+
