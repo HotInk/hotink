@@ -91,7 +91,7 @@ class Mediafile < ActiveRecord::Base
      
      xml.mediafile do
        xml.tag!( :title, self.title )
-       xml.tag!( :type, self.type || "File" )
+       xml.tag!( :mediafile_type, self.type || "Mediafile" )
        xml.tag!( :date, self.date )
        xml.tag!( :authors_list, self.authors_list )
        xml.tag!( :url, self.file.url )
