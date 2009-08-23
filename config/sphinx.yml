@@ -2,3 +2,4 @@ production:
     port: 10920
     searchd_file_path: "/home/hotink/hotink.net/shared/db/sphinx/production/"
     morphology: stem_en
+    bin_path: '/usr/local/bin'
