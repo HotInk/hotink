@@ -40,6 +40,7 @@ class Mediafile < ActiveRecord::Base
     has created_at
     has account_id
     has type
+    has status
     
     set_property :delta => :delayed
   end

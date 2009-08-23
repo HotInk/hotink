@@ -13,7 +13,10 @@ ActionController::Routing::Routes.draw do |map|
   map.request_token '/oauth/request_token',:controller=>'oauth',:action=>'request_token'
   map.access_token '/oauth/access_token',:controller=>'oauth',:action=>'access_token'
   map.test_request '/oauth/test_request',:controller=>'oauth',:action=>'test_request'
-
+  
+  # You can search anything, regardless of account.
+  map.resource :search
+  
   # No content exists in Hot Ink without belonging to an account, routing reflects this fact.
   map.resources :account_activations
   map.resources :accounts do |account|

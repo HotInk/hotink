@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090822162233) do
+ActiveRecord::Schema.define(:version => 20090823152822) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -127,7 +127,8 @@ ActiveRecord::Schema.define(:version => 20090822162233) do
     t.datetime "file_updated_at"
     t.integer  "width"
     t.integer  "height"
-    t.boolean  "delta",             :default => true, :null => false
+    t.boolean  "delta",             :default => true,        :null => false
+    t.string   "status",            :default => "published", :null => false
   end
 
   create_table "oauth_nonces", :force => true do |t|
