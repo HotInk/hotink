@@ -23,7 +23,11 @@ class SearchesController < ApplicationController
       conditions.merge!( :description => params[:description] )
     end
     
-    @results = ThinkingSphinx.search params[:q], :conditions => conditions, :with => withs
+    if params[:q]
+      @results = ThinkingSphinx.search params[:q], :conditions => conditions, :with => withs
+    else
+      @results = ThinkingSphinx.search :conditions => conditions, :with => withs
+    end
     
     respond_to do |format|
       format.xml { render :xml => @results }

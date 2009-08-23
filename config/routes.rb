@@ -14,9 +14,6 @@ ActionController::Routing::Routes.draw do |map|
   map.access_token '/oauth/access_token',:controller=>'oauth',:action=>'access_token'
   map.test_request '/oauth/test_request',:controller=>'oauth',:action=>'test_request'
   
-  # You can search anything, regardless of account.
-  map.resource :search
-  
   # No content exists in Hot Ink without belonging to an account, routing reflects this fact.
   map.resources :account_activations
   map.resources :accounts do |account|
@@ -62,9 +59,13 @@ ActionController::Routing::Routes.draw do |map|
     
     account.resources :apps
     account.resources :actions
+    
+    account.resource :search
   end
   
-
+  # You can search anything, regardless of account.
+  map.resource :search
+  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
