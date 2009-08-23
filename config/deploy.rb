@@ -78,6 +78,7 @@ namespace :deploy do
   desc "Restarting Passenger with restart.txt"
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{current_path}/tmp/restart.txt"
+    thinking_sphinx.configure
   end
   
   [:start, :stop].each do |t|
@@ -96,18 +97,3 @@ end
 after :deploy, "passenger:restart"
 
 after "deploy:setup", "thinking_sphinx:shared_sphinx_folder"
-
-task :before_update_code, :roles => [:app] do
-  thinking_sphinx.stop
-end
-
-task :after_update_code, :roles => [:app] do
-  symlink_sphinx_indexes
-  thinking_sphinx.configure
-  thinking_sphinx.start
-end
-
-task :symlink_sphinx_indexes, :roles => [:app] do
-  run "ln -nfs #{shared_path}/db/sphinx #{current_path}/db/sphinx"
-end
-
