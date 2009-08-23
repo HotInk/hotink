@@ -78,14 +78,9 @@ class Document < ActiveRecord::Base
   # indicate that a Sorting should exist 
   def categories_attributes=(attributes)
     raise ActiveRecord::AttributeAssignmentError unless attributes.is_a? Hash
+    self.categories.clear
     attributes.each do | cat_id, value |
-      if value.blank? || value==0 || value=="0"
-        begin
-          cat = categories.find(cat_id)
-          categories.delete(cat)
-        rescue ActiveRecord::RecordNotFound # If it's not already a category, do nothing
-        end
-      else
+      unless value.blank? || value==0 || value=="0"
         if cat = account.categories.find(cat_id)
           categories << cat
         end
