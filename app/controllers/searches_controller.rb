@@ -4,9 +4,23 @@ class SearchesController < ApplicationController
     withs = {}
     conditions = {}
     
-    # Build "with" filters
+    # Build "with" filters from params
     if params[:account_id]
       withs.merge!( :account_id => Account.find(params[:account_id]).id )
+    end
+    
+    # Build conditional searchs from params
+    if params[:title]
+      conditions.merge!( :title => params[:title] )
+    end
+    if params[:subtitle]
+      conditions.merge!( :subtitle => params[:subtitle] )
+    end
+    if params[:bodytext]
+      conditions.merge!( :bodytext => params[:bodytext] )
+    end
+    if params[:description]
+      conditions.merge!( :description => params[:description] )
     end
     
     @results = ThinkingSphinx.search params[:q], :conditions => conditions, :with => withs
