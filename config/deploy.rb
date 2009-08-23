@@ -78,7 +78,7 @@ namespace :deploy do
   desc "Restarting Passenger with restart.txt"
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{current_path}/tmp/restart.txt"
-    run "cd #{latest_release} && /usr/local/bin/rake thinking_sphinx:configure"
+    run "cd #{current_path} && /usr/local/bin/rake thinking_sphinx:configure RAILS_ENV=production"
   end
   
   [:start, :stop].each do |t|
