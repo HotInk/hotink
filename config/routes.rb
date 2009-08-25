@@ -61,11 +61,12 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :actions
     
     account.resource :search
+    account.resource :query
   end
   
-  # You can search anything, regardless of account.
+  # You can search or query anything, regardless of account.
   map.resource :search
-  
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
