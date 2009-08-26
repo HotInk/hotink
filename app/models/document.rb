@@ -96,7 +96,12 @@ class Document < ActiveRecord::Base
      when 1
        return self.authors.first.name
      when 2
-       return self.authors.first.name + " and " + self.authors.second.name
+      #Catch cases where the second author is actually an editorial title, this is weirdly common.
+      if self.authors.second.name =~ / editor| Editor| writer| Writer/
+        return self.authors.first.name + " - " + self.authors.second.name
+      else
+        return self.authors.first.name + " and " + self.authors.second.name
+      end
      else
       list = String.new
       (0..(self.authors.count - 3)).each{ |i| list += authors[i].name + ", " }
