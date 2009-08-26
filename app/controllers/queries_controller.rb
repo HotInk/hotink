@@ -8,7 +8,7 @@ class QueriesController < ApplicationController
     case params[:group_by]
     when "section"
       for section in @account.main_categories
-         @results += section.articles.find(:all, :limit => num_records )
+         @results += @account.articles.find(:all, :conditions => { :section_id => section.id, :status => 'published' }, :limit => num_records, :order => "published_at DESC" )
        end
     end
 
