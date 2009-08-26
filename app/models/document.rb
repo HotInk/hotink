@@ -97,7 +97,7 @@ class Document < ActiveRecord::Base
        return self.authors.first.blank? ? "" : self.authors.first.name
      when 2
       #Catch cases where the second author is actually an editorial title, this is weirdly common.
-      if self.authors.second.name =~ / editor| Editor| writer| Writer/
+      if self.authors.second.name =~ / editor| Editor| writer| Writer|Columnist|/
         return self.authors.first.name + " - " + self.authors.second.name
       else
         return self.authors.first.name + " and " + self.authors.second.name
