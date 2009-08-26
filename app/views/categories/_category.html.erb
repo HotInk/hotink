@@ -1,30 +1,35 @@
-<li id="<%= category.class.name.downcase %>_<%= category.id %>" class="clearfix">
+<li id="<%= category.class.name.downcase %>_<%= category.id %>" class="clearfix<%= " inactive" unless category.active %>">
 	<div class="category clearfix">
 		<div class="name">
 			<%= category.name %>
 		</div>
 	
 		<div class="edit">
-			<%= button_link_to_function "Edit", "edit_category( '#{category.class.name.downcase}_#{category.id}' );", :class=>"micro" %>
-		</div>
-		<div class="kill_link"><%= link_to_remote 	"x", 
-													:url=>account_category_url(@account, category), 
-													:method => :delete, 
-													:after=>"$(this).up().up().up().addClassName('transparent');",
-													:confirm => "Are you sure you want to delete the \"#{category.name}\" category?\n\nThis delete cannot be undone. The articles filed in this category will not be deleted, but no record of their relationship with this category will remain.\n\nAny child categories will be orphaned, becoming children of this category's parent or main categories, as appropriate.\n\nTo permanently delete this category, press 'OK'."
-								%>
+			<% if category.active %>
+				<%= button_link_to_remote "Deactivate", :url => deactivate_account_category_url(@account, category), :method => :put, :confirm => "Deactivating this category will keep it in the archive, but will prevent it from being displayed with your list of current sections.\n\nIf you're displaying the sections on your website dynamically, this section will no longer appear. Are you sure?", :html => { :class=>"micro pill-r" } %>
+			<% else %>
+				<%= button_link_to_remote "Reactivate", :url => reactivate_account_category_url(@account, category), :method => :put, :html => { :class=>"micro pill-r" } %>
+			<% end %>
+			<%= button_link_to_function "Edit", "edit_category( '#{category.class.name.downcase}_#{category.id}' );", :class=>"micro pill-l" %>
 		</div>
 
 	</div>
 	
 	<div class="category_form clearfix" style="visibility: hidden;">
-			<% remote_form_for [@account, category], :after=>"$(this).disable();$(this).select('.spinner')[0].show();" do |f|%>
+			<% remote_form_for [@account, category], :after=>"$(this).disable();$(this).up().select('.spinner')[0].show();" do |f|%>
 				<%= f.text_field :name, :class => "text_input" %>
 				<div class="save_button clearfix">
 					<%= button_link_to_submit "Save", :class=>"save tiny" %>
 				</div>
-				<img src="/loading_small_white.gif" style="float:left;margin-left:1em;margin-top:0.25em;display:none;" class="spinner"/>
 			<% end %>
+			<img src="/loading_small_white.gif" style="float:left;margin-left:1em;margin-top:0.25em;display:none;" class="spinner"/>
+			<div class="kill_link"><%= link_to_remote 	"x", 
+														:url=>account_category_url(@account, category), 
+														:method => :delete, 
+														:after=>"$(this).up().up().up().addClassName('transparent');",
+														:confirm => "Are you sure you want to delete the \"#{category.name}\" category?\n\nThis delete cannot be undone. The articles filed in this category will not be deleted, but no record of their relationship with this category will remain.\n\nAny child categories will be orphaned, becoming children of this category's parent or main categories, as appropriate.\n\nTo permanently delete this category, press 'OK'."
+									%>
+			</div>
 	</div>
 
 	<ol class="subcategories">	

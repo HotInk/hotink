@@ -92,6 +92,25 @@ class CategoriesController < ApplicationController
     end
   end
 
+
+  def deactivate  
+    @category = @account.categories.find(params[:id])
+    @category.update_attribute(:active, false)
+  
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def reactivate  
+    @category = Category.find(params[:id], :conditions => { :account_id => @account.id })
+    @category.update_attribute(:active, true)
+  
+    respond_to do |format|
+      format.js
+    end
+  end
+
   # DELETE /categories/1
   # DELETE /categories/1.xml
   def destroy

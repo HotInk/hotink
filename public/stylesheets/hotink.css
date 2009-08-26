@@ -565,6 +565,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index >ol { height: 17.5em; border: 1px solid #DDD; overflow:auto;}
 #account .index >ol li { width: 98%; border-top: none; margin: 0.25em 1%;} 
 #account .index ol li h4 { padding: 0.25em 0.4em; margin:0; border-bottom: 1px solid #DDD; }
+#account .index li.inactive { color: #999; text-decoration: line-through; }
 #account .index .account { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
 #account .index .account h4 a{color:#ED1B8C;}
 #account .index .account p { padding: 0.5em 0.4em; margin: 0; min-height: 1.1em; }
@@ -602,8 +603,8 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #account .index .category_form { float: left; width: 50%;}
 #account .index .category { float: left; width: 42%;}
 #account .index .category_form { float: left; width: 50%;}
-#account .index .category .kill_link {float: left; margin-left: 1em;} 
-#account .index .category .kill_link a{ color: #E62424; }
+#account .index .category_form .kill_link {float: right; margin-right: 1em;} 
+#account .index .category_form .kill_link a{ color: #E62424; }
 #account .category_form small { display: inline-block; margin-top: 2px;}
 
 /*-----------------------------------
