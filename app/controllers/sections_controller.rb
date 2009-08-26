@@ -2,7 +2,7 @@ class SectionsController < ApplicationController
   # GET /sections
   # GET /sections.xml
   def index
-    @sections = @account.main_categories
+    @sections = @account.main_categories.select{ |cat| cat.active }
     
     respond_to do |format|
       format.html # index.html.erb

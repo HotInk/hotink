@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
         article.resources :waxings
       end
     end
-    account.resources :categories
+    account.resources :categories, :member => { :deactivate => :put, :reactivate => :put }
     account.resources :images
     account.resources :audiofiles
     account.resources :waxings

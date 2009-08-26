@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090823152822) do
+ActiveRecord::Schema.define(:version => 20090826012025) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20090823152822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
+    t.boolean  "active",     :default => true
   end
 
   create_table "client_applications", :force => true do |t|
@@ -116,7 +117,7 @@ ActiveRecord::Schema.define(:version => 20090823152822) do
     t.string   "title"
     t.text     "description"
     t.string   "link_alternate"
-    t.date     "date"
+    t.datetime "date"
     t.integer  "account_id"
     t.string   "type"
     t.datetime "created_at"
@@ -220,15 +221,15 @@ ActiveRecord::Schema.define(:version => 20090823152822) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",               :default => "", :null => false
-    t.string   "email",               :default => "", :null => false
-    t.string   "crypted_password",    :default => "", :null => false
-    t.string   "password_salt",       :default => "", :null => false
-    t.string   "persistence_token",   :default => "", :null => false
-    t.string   "single_access_token", :default => "", :null => false
-    t.string   "perishable_token",    :default => "", :null => false
-    t.integer  "login_count",         :default => 0,  :null => false
-    t.integer  "failed_login_count",  :default => 0,  :null => false
+    t.string   "login"
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token"
+    t.string   "single_access_token"
+    t.string   "perishable_token"
+    t.integer  "login_count",         :default => 0
+    t.integer  "failed_login_count",  :default => 0
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
