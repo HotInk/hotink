@@ -33,7 +33,7 @@ class ArticlesController < ApplicationController
       respond_to do |format|
         format.html # index.html.erb
         format.js
-        format.xml  { render :xml => @articles.select{ |article| article.published_at < Time.now } }
+        format.xml  { render :xml => @articles.delete_if{ |article| article.published_at > Time.now } }
       end
   end
 
