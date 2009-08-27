@@ -4,6 +4,9 @@ class SearchesController < ApplicationController
     withs = {}
     conditions = {}
     
+    @current_page = params[:page].blank? ? 1 : params[:page].to_i
+    @per_page = params[:per_page].blank? ? 20 : params[:per_page].to_i
+    
     # Build "with" filters from params
     if params[:account_id]
       withs.merge!( :account_id => Account.find(params[:account_id]).id )
@@ -32,13 +35,13 @@ class SearchesController < ApplicationController
     end
     
     if params[:q]
-      @results = search_class.search params[:q], :page => (params[:page] || 1), :per_page => (params[:per_page] || 20), :conditions => conditions, :with => withs
+      @results = search_class.search params[:q], :page => @current_page, :per_page => @per_page, :conditions => conditions, :with => withs
     else
-      @results = search_class.search :page => (params[:page] || 1), :per_page => (params[:per_page] || 20), :conditions => conditions, :with => withs
+      @results = search_class.search :page => @current_page, :per_page => @per_page, :conditions => conditions, :with => withs
     end
     
     respond_to do |format|
-      format.xml { render :xml => @results }
+      format.xml { render :xml => WillPaginate::Collection.create(@results.current_page, @results.per_page, @results.total_entries, @results.to_a) }
     end
   end
   
