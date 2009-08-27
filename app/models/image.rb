@@ -37,7 +37,7 @@ class Image < Mediafile
      xml.mediafile do
        xml.tag!( :title, self.title )
        xml.tag!( :caption, caption)
-       xml.tag!( :mediafile_type, self.type || "Mediafile" )
+       xml.tag!( :mediafile_type, read_attribute(:type) || "Mediafile" )
        xml.tag!( :date, self.date )
        xml.tag!( :authors_list, self.authors_list )
        xml.url do
