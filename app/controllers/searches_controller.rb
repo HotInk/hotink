@@ -32,9 +32,9 @@ class SearchesController < ApplicationController
     end
     
     if params[:q]
-      @results = search_class.search params[:q], :conditions => conditions, :with => withs
+      @results = search_class.search params[:q], :page => (params[:page] || 1), :per_page => (params[:per_page] || 20), :conditions => conditions, :with => withs
     else
-      @results = search_class.search :conditions => conditions, :with => withs
+      @results = search_class.search :page => (params[:page] || 1), :per_page => (params[:per_page] || 20), :conditions => conditions, :with => withs
     end
     
     respond_to do |format|
