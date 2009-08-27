@@ -41,7 +41,7 @@ class SearchesController < ApplicationController
     end
     
     respond_to do |format|
-      format.xml { render :xml => WillPaginate::Collection.create(@results.current_page, @results.per_page, @results.total_entries, @results.to_a) }
+      format.xml { render :xml => WillPaginate::Collection.create(@results.current_page, @results.per_page, @results.total_entries).replace(@results.to_a) }
     end
   end
   
