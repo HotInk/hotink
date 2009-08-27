@@ -170,6 +170,12 @@ class Document < ActiveRecord::Base
          end
        end
        
+       xml.issues :type => "array" do
+         self.issues.each do |issue|
+           xml.<< issue.to_xml(:skip_instruct => true)
+         end
+       end
+       
        xml.account :type => "array" do
          xml.<< self.account.to_xml(:skip_instruct => true)
        end
