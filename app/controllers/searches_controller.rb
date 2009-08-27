@@ -40,8 +40,11 @@ class SearchesController < ApplicationController
       @results = search_class.search :page => @current_page, :per_page => @per_page, :conditions => conditions, :with => withs
     end
     
+    @paginated_results = WillPaginate::Collection.create(@results.current_page, @results.per_page, @results.total_entries)
+    @paginated_results.replace(@results.to_a)
+    
     respond_to do |format|
-      format.xml { render :xml => WillPaginate::Collection.create(@results.current_page, @results.per_page, @results.total_entries).replace(@results.to_a) }
+      format.xml { render :xml => @paginated_results.to_xml }
     end
   end
   
