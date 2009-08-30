@@ -6,7 +6,7 @@ version = nil if version and version == ""
 if !version and framework_root = ["#{plugin_root}/rails", "#{plugin_root}/../../rails"].find { |p| File.directory? p }
   puts "found framework root: #{framework_root}"
   # this allows for a plugin to be tested outside of an app and without Rails gems
-  $:.unshift "#{framework_root}/activesupport/lib", "#{framework_root}/activerecord/lib", "#{framework_root}/actionpack/lib", "#{framework_root}/activeresource/lib"
+  $:.unshift "#{framework_root}/activesupport/lib", "#{framework_root}/activerecord/lib", "#{framework_root}/actionpack/lib"
 else
   # simply use installed gems if available
   puts "using Rails#{version ? ' ' + version : nil} gems"
@@ -17,6 +17,5 @@ else
   else
     gem 'actionpack'
     gem 'activerecord'
-    gem 'activeresource'
   end
 end
