@@ -32,9 +32,9 @@ class IssuesController < ApplicationController
     @issue = @account.issues.find(params[:id])
     
     if params[:section_id]
-      @articles = @issue.articles.find_all_by_section_id(params[:section_id])
+      @articles = @issue.articles.find_all_by_section_id(params[:section_id], :conditions => { :status => 'published' })
     else
-      @articles = @issue.articles.all
+      @articles = @issue.articles.find( :all, :conditions => { :status => 'published' } )
     end
         
     respond_to do |format|
