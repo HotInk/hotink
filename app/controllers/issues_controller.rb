@@ -32,13 +32,13 @@ class IssuesController < ApplicationController
     @issue = @account.issues.find(params[:id])
     
     if params[:section_id]
-      @articles = @issue.articles.find_all_by_section_id(params[:section_id], :conditions => { :status => 'published' })
+      @articles = @issue.articles.find_all_by_section_id(params[:section_id], :conditions => { :status => 'published' } )
     else
       @articles = @issue.articles.find( :all, :conditions => { :status => 'published' } )
     end
         
     respond_to do |format|
-      format.xml  { render :xml => @articles }
+      format.xml  { render :xml => @articles.delete_if{ |article| article.published_at > Time.now }  }
     end
   end
 
