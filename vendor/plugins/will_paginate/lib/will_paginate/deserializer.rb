@@ -58,7 +58,13 @@ module WillPaginate
       def paginate(*args)
         options = wp_parse_options(args.pop)
         results = find(:all, options)
-        results.is_a?(WillPaginate::Collection) ? results : results.paginate(:page => options[:params][:page], :per_page => options[:params][:per_page])
+        options.merge!(options[:params]) if options[:params]
+        
+        # The line below doesn't actually work, since the collections are being instatiated as an array (results.is_a?(WillPaginate::Collection) always is false)
+        # This elads to an interested error, whereby the first page works and none others do. The publisher is hacked to fix this for now.
+        # 
+        #results.is_a?(WillPaginate::Collection) ? results : results.paginate(:page => options[:page], :per_page => options[:per_page])
+        results
       end
       
       # Takes the format that Hash.from_xml produces out of an unknown type
@@ -82,13 +88,15 @@ module WillPaginate
       
       def wp_parse_options(options) #:nodoc:
         raise ArgumentError, 'parameter hash expected' unless options.respond_to? :symbolize_keys
-        options = options.symbolize_keys
-        raise ArgumentError, ':params hash parameter required' unless options.key?(:params) && options[:params].respond_to?(:symbolize_keys)
-        options[:params] = options[:params].symbolize_keys
-        raise ArgumentError, ':params => :page parameter required' unless options[:params].key? :page                      
+          
+        # Flatten any params hash in the options
+        options.merge!(options[:params]) if options.key?(:params) && options[:params].respond_to?(:symbolize_keys)
+        raise ArgumentError, ':page parameter required' unless options.key? :page        
+        
+        options = options.symbolize_keys              
 
-        options[:params][:per_page] ||= per_page
-        options[:params][:page] ||= 1
+        options[:per_page] ||= per_page
+        options[:page] ||= 1
         options
       end
     end        

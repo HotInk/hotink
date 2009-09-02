@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
   end
   
   def login_required
-    unless current_user
+    unless current_user && authorized?
       store_location
       
       respond_to do |format|
