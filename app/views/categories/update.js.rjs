@@ -1,1 +1,2 @@
 page.replace "category_#{@category.id}", :partial => 'categories/category', :object => @category
+page << "load_button_fix();"
