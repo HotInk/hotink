@@ -9,7 +9,11 @@ class QueriesController < ApplicationController
     when "section"
       for section in @account.main_categories
          @results += @account.articles.find(:all, :conditions => { :section_id => section.id, :status => 'published' }, :limit => num_records, :order => "published_at DESC" )
-       end
+      end  
+    when "blog"
+      for blog in @account.blogs
+         @results += blog.entries.find(:all, :conditions => { :status => 'published' }, :limit => num_records, :order => "published_at DESC" )
+      end
     end
 
      respond_to do |format|
