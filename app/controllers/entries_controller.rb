@@ -41,7 +41,7 @@ class EntriesController < ApplicationController
   
   
   def index    
-    conditions = {}
+    conditions = { :status => "published" }
     
     if @blog
       @entries = @blog.entries.paginate(:page => (params[:page] || 1), :per_page => (params[:per_page] || 20), :order => "published_at DESC", :conditions => conditions)
@@ -50,9 +50,9 @@ class EntriesController < ApplicationController
     end
     
     respond_to do |format|
-      format.xml {
+      format.xml do
         render :xml => @entries
-      }
+      end
     end
   end
   
