@@ -1,0 +1,6 @@
+<p>Make the selected articles belong to the following issue:</p>
+
+<%= select("add_issue", "issue", @account.issues.collect {|p| [ p.date.strftime("%b %e, %Y"), p.id ] }) %>
+
+<%= button_link_to_submit "Add to issue", :class=>"save large" %>
+
