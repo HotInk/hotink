@@ -88,6 +88,14 @@ class ActionsController < ApplicationController
     flash[:notice] = "Articles tagged"
   end
   
+  def add_issue( klass, id, options = {} )
+    raise ArgumentError unless klass=="articles"||klass=="mediafiles"
+    record = @account.send(klass).find(id)
+    record.issues << Issue.find(options[:issue])
+    record.save
+    flash[:notice] = "Articles attached to issue"
+  end  
+  
   def set_primary_section( klass, id, options = {} )
     raise ArgumentError unless klass=="articles"
     record = @account.send(klass).find(id)
