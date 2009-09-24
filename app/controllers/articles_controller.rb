@@ -42,6 +42,7 @@ class ArticlesController < ApplicationController
   def show
     @article = @account.articles.find(params[:id], :include=>:authors)
 
+    expires_in 3.minutes, :private => false
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @article }
