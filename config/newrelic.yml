@@ -37,7 +37,7 @@ common: &default_settings
   # by inserting lightweight tracers on key methods inside the rails
   # framework and asynchronously aggregating and reporting this
   # performance data to the NewRelic RPM service at newrelic.com.
-  enabled: false
+  enabled: true
 
   # The newrelic agent generates its own log file to keep its logging
   # information separate from that of your application.  Specify its
