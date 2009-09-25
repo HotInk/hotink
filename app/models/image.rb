@@ -6,7 +6,7 @@ class Image < Mediafile
       :styles => {
         :system_icon => [ "x20>", 'jpg' ],
         :system_thumb => ["100x56>", 'jpg'],
-        :thumb  => Proc.new { |instance| instance.settings["thumb"].to_s },
+        :thumb  => Proc.new { |instance| instance.settings["thumb"] },
         :small => Proc.new { |instance| instance.settings["small"].to_s },
         :medium => Proc.new { |instance| instance.settings["medium"].to_s },
         :system_default => ["400>", 'jpg'],
