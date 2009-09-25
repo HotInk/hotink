@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(:version => 20090924204451) do
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.string   "name"
-    t.boolean  "processing",     :default => true
+    t.boolean  "processing",     :default => false
   end
 
   create_table "mediafiles", :force => true do |t|

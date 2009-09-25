@@ -1,6 +1,6 @@
 class AddProcessingToIssues < ActiveRecord::Migration
   def self.up
-    add_column :issues, :processing, :boolean, :default => true
+    add_column :issues, :processing, :boolean, :default => false
   end
 
   def self.down

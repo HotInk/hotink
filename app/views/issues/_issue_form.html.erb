@@ -92,8 +92,10 @@
 							<p class="file user">
 								<% if File.exists?(@issue.pdf.path(:screen_quality)) %>
 									<%= link_to "View screen-quality pdf (#{number_to_human_size File.size( @issue.pdf.path(:screen_quality) )})", @issue.pdf.url(:screen_quality), :class => :weblink %>
+								<% elsif  @issue.processing? %>
+									Processing screen quality version...
 								<% else %>
-									<%= link_to "View screen-quality pdf (#{number_to_human_size File.size( @issue.pdf.path(:original) )})", @issue.pdf.url(:original), :class => :weblink %>
+								 <span style="color:red;">Error building screen-quality PDF</span>
 								<% end %>
 							</p>
 						<% end %>
@@ -104,10 +106,14 @@
 				</div>
 
 			</div>
-			<% if @issue.pdf_file_name %>
+			<% if @issue.pdf_file_name && !@issue.processing? %>
 				<%= image_tag @issue.pdf.url(:system_default) %>
 			<% else %>
-				<%= image_tag 'no_issue_cover.jpg' %>
+				<% if @issue.pdf && @issue.processing? %>
+					<%= image_tag 'processing_issue_large.jpg' %>
+				<% else %>
+					<%= image_tag 'no_issue_cover.jpg' %>
+				<% end %>
 			<% end %>
 		</div>
 	</div>

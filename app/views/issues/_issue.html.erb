@@ -1,6 +1,6 @@
 <li id="issue_<%= issue.id %>" class="issue">
 	<div class="cover">
-		<%= link_to image_tag(issue.pdf.url(:system_cover_thumb)), edit_account_issue_path(@account, issue) %>
+		<%= link_to image_tag(issue.pdf_url(:system_cover_thumb)), edit_account_issue_path(@account, issue) %>
 	</div>
 	<div class="details clearfix">
 		<h4><%= issue.date.to_formatted_s(:standard)%></h4>

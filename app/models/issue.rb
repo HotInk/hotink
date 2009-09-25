@@ -45,10 +45,35 @@ class Issue < ActiveRecord::Base
     end
   end
   
+  # Callbacks
+  before_pdf_post_process do |issue|
+    issue.processing = true if issue.pdf.dirty? # If the PDF has changed, mark the issue for processing
+    
+    false if issue.processing? # do not process if just added, processing attribute defaults to 'true'
+  end
+  
+  after_update do |issue|
+    Delayed::Job.enqueue IssueJob.new(issue.id) if issue.processing? # add to queue if the PDF is new
+  end
+  
+  # DelayedJob for PDF processing
+  def perform
+    self.processing = false # unlock for processing
+    pdf.reprocess! # do the processing
+    save
+  end
+  
   # Fix the mime types on uploaded PDFs. Make sure to require the mime-types gem
   def swfupload_file=(data)
     data.content_type = MIME::Types.type_for(data.original_filename).to_s
     self.pdf = data
+  end
+  
+  def pdf_url(style = :original)
+    if self.pdf && processing? && style != :original
+      return pdf.send(:interpolate, '/images/processing_issue.jpg', "#{style}")
+    end
+    pdf.url(style)
   end
   
   def to_xml(options = {})
@@ -67,8 +92,12 @@ class Issue < ActiveRecord::Base
         xml.tag!( :volume, self.volume )
         xml.tag!( :number, self.number )
 
-        xml.tag!( :press_pdf_file, self.pdf.url )
-        xml.tag!( :screen_pdf_file, self.pdf.url(:screen_quality) )
+        xml.tag!( :press_pdf_file, self.pdf.url(:original) )
+        if File.exists?(self.pdf.path(:screen_quality))
+          xml.tag!( :screen_pdf_file, self.pdf.url(:screen_quality) )
+        else
+          xml.tag!( :screen_pdf_file, self.pdf.url(:original) )
+        end
         xml.tag!( :large_cover_image, self.pdf.url(:system_default) )
         xml.tag!( :small_cover_image, self.pdf.url(:system_cover_thumb) )
 
