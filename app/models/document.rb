@@ -170,6 +170,14 @@ class Document < ActiveRecord::Base
          end
        end
        
+      if self.is_a?(Entry)
+        xml.blogs :type => "array" do
+          self.blogs.each do |blog|
+            xml.<< blog.to_xml(:skip_instruct => true)
+          end
+        end
+      end
+       
        xml.issues :type => "array" do
          self.issues.each do |issue|
            xml.<< issue.to_xml(:skip_instruct => true)
@@ -179,16 +187,7 @@ class Document < ActiveRecord::Base
        xml.account :type => "array" do
          xml.<< self.account.to_xml(:skip_instruct => true)
        end
-       
-       if self.is_a?(Entry)
-         xml.blogs :type => "array" do
-           self.blogs.each do |blog|
-             xml.<< blog.to_xml(:skip_instruct => true)
-           end
-         end
-       end
-       
-       
+              
      end
   end
   

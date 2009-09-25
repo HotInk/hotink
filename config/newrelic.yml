@@ -37,7 +37,7 @@ common: &default_settings
   # by inserting lightweight tracers on key methods inside the rails
   # framework and asynchronously aggregating and reporting this
   # performance data to the NewRelic RPM service at newrelic.com.
-  enabled: false
+  enabled: true
 
   # The newrelic agent generates its own log file to keep its logging
   # information separate from that of your application.  Specify its
@@ -103,7 +103,7 @@ common: &default_settings
     # Transaction tracer is enabled by default. Set this to false to
     # turn it off. This feature is only available at the Silver and
     # above product levels.
-    enabled: true
+    enabled: false
     
     # Threshold in seconds for when to collect a transaction
     # trace. When the response time of a controller action exceeds
@@ -178,7 +178,7 @@ test:
 # incurring any user-visible performance degredation.
 production:
   <<: *default_settings
-  enabled: false
+  enabled: true
 
 # many applications have a staging environment which behaves
 # identically to production.  Support for that environment is provided
