@@ -6,11 +6,11 @@ class Image < Mediafile
       :styles => {
         :system_icon => [ "x20>", 'jpg' ],
         :system_thumb => ["100x56>", 'jpg'],
-        :thumb  => Proc.new { |instance| instance.settings["thumb"].to_s },
-        :small => Proc.new { |instance| instance.settings["small"].to_s },
-        :medium => Proc.new { |instance| instance.settings["medium"].to_s },
+        :thumb  => [ Proc.new { |instance| instance.settings["thumb"].first }, 'jpg'],
+        :small => [ Proc.new { |instance| instance.settings["small"].first }, 'jpg'],
+        :medium => [ Proc.new { |instance| instance.settings["medium"].first }, 'jpg'],
         :system_default => ["400>", 'jpg'],
-        :large => Proc.new { |instance| instance.settings["large"].to_s }
+        :large => [ Proc.new { |instance| instance.settings["large"].first }, 'jpg']
       },
       :convert_options => {
         :all => "-colorspace RGB -strip"
