@@ -7,13 +7,19 @@ class IssuesController < ApplicationController
   
   # GET /issues
   # GET /issues.xml
-  def index    
+  def index 
     respond_to do |format|
+      page = (params[:page] || 1).to_1
+      per_page = (params[:per_page] || 15 ).to_i
       format.html do 
-        @issues = @account.issues.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 15 ), :order => "date DESC")
+        @issues = @account.issues.paginate( :page=>page, :per_page =>per_page, :order => "date DESC")
       end # index.html.erb
       format.xml do
-        @issues = @account.issues.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 15 ), :conditions => { :processing => false }, :order => "date DESC")   
+        if params[:find_type]=="find"
+          @issues = @account.issues.find(:all, :offset=>(page-1)*per_page, :limit=>per_page,  :conditions => { :processing => false }, :order => "date DESC" )
+        else
+          @issues = @account.issues.paginate(  :page=>page, :per_page =>per_page, :conditions => { :processing => false }, :order => "date DESC")   
+        end
         render :xml => @issues 
       end
     end
