@@ -11,15 +11,12 @@ class IssuesController < ApplicationController
     respond_to do |format|
       page = (params[:page] || 1).to_i
       per_page = (params[:per_page] || 15 ).to_i
+      
       format.html do 
         @issues = @account.issues.paginate( :page=>page, :per_page =>per_page, :order => "date DESC")
       end # index.html.erb
       format.xml do
-        if params[:find_type]=="find"
-          @issues = @account.issues.find(:all, :offset=>(page-1)*per_page, :limit=>per_page,  :conditions => { :processing => false }, :order => "date DESC" )
-        else
-          @issues = @account.issues.paginate(  :page=>page, :per_page =>per_page, :conditions => { :processing => false }, :order => "date DESC")   
-        end
+        @issues = @account.issues.paginate(  :page=>page, :per_page =>per_page, :conditions => { :processing => false }, :order => "date DESC")   
         render :xml => @issues 
       end
     end
