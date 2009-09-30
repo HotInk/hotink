@@ -9,7 +9,7 @@ class IssuesController < ApplicationController
   # GET /issues.xml
   def index 
     respond_to do |format|
-      page = (params[:page] || 1).to_1
+      page = (params[:page] || 1).to_i
       per_page = (params[:per_page] || 15 ).to_i
       format.html do 
         @issues = @account.issues.paginate( :page=>page, :per_page =>per_page, :order => "date DESC")
