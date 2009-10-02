@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090924204451) do
+ActiveRecord::Schema.define(:version => 20091002164750) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -84,9 +84,9 @@ ActiveRecord::Schema.define(:version => 20090924204451) do
   end
 
   create_table "documents", :force => true do |t|
-    t.string   "title"
+    t.text     "title"
     t.string   "alternate_title"
-    t.string   "subtitle"
+    t.text     "subtitle"
     t.text     "bodytext"
     t.string   "summary"
     t.integer  "account_id"
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(:version => 20090924204451) do
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.string   "name"
-    t.boolean  "processing",     :default => false
+    t.boolean  "processing"
   end
 
   create_table "mediafiles", :force => true do |t|
