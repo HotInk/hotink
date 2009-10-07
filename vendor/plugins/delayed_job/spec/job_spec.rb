@@ -10,6 +10,10 @@ class ErrorJob
   def perform; raise 'did not work'; end
 end             
 
+class LongRunningJob
+  def perform; sleep 250; end
+end
+
 module M
   class ModuleJob
     cattr_accessor :runs; self.runs = 0
@@ -171,6 +175,13 @@ describe Delayed::Job do
     Delayed::Job.destroy_failed_jobs = default
   end
 
+  it "should fail after MAX_RUN_TIME" do
+    @job = Delayed::Job.create :payload_object => LongRunningJob.new
+    Delayed::Job.reserve_and_run_one_job(1.second)
+    @job.reload.last_error.should =~ /expired/
+    @job.attempts.should == 1
+  end
+
   it "should never find failed jobs" do
     @job = Delayed::Job.create :payload_object => SimpleJob.new, :attempts => 50, :failed_at => Time.now
     Delayed::Job.find_available(1).length.should == 0
@@ -218,8 +229,27 @@ describe Delayed::Job do
       @job.lock_exclusively! 5.minutes, 'worker1'
       @job.lock_exclusively! 5.minutes, 'worker1'
     end                                        
-  end            
+  end
   
+  context "when another worker has worked on a task since the job was found to be available, it" do
+
+    before :each do
+      Delayed::Job.worker_name = 'worker1'
+      @job = Delayed::Job.create :payload_object => SimpleJob.new
+      @job_copy_for_worker_2 = Delayed::Job.find(@job.id)
+    end
+
+    it "should not allow a second worker to get exclusive access if already successfully processed by worker1" do
+      @job.delete
+      @job_copy_for_worker_2.lock_exclusively!(4.hours, 'worker2').should == false
+    end
+
+    it "should not allow a second worker to get exclusive access if failed to be processed by worker1 and run_at time is now in future (due to backing off behaviour)" do
+      @job.update_attributes(:attempts => 1, :run_at => Time.now + 1.day)
+      @job_copy_for_worker_2.lock_exclusively!(4.hours, 'worker2').should == false
+    end
+  end
+
   context "#name" do
     it "should be the class name of the job that was enqueued" do
       Delayed::Job.create(:payload_object => ErrorJob.new ).name.should == 'ErrorJob'
@@ -269,7 +299,21 @@ describe Delayed::Job do
       Delayed::Job.work_off
 
       SimpleJob.runs.should == 1
-    end                         
+    end
+    
+    it "should fetch jobs ordered by priority" do
+      number_of_jobs = 10
+      number_of_jobs.times { Delayed::Job.enqueue SimpleJob.new, rand(10) }
+      jobs = Delayed::Job.find_available(10)
+      ordered = true
+      jobs[1..-1].each_index{ |i| 
+        if (jobs[i].priority < jobs[i+1].priority)
+          ordered = false
+          break
+        end
+      }
+      ordered.should == true
+    end
    
   end
   

@@ -42,7 +42,7 @@ class EntriesController < ApplicationController
   
   def index    
 
-    conditions = {:account_id => @account.id }
+    conditions = {:account_id => @account.id, :status => "published" }
     
     if @blog
       @entries = @blog.entries.paginate(:page => (params[:page] || 1), :per_page => (params[:per_page] || 20), :order => "published_at DESC", :conditions => conditions)

@@ -17,7 +17,8 @@ class SectionsController < ApplicationController
     begin
       @section = @account.categories.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      @section = @account.categories.find_by_name(params[:id]) 
+      @section = @account.categories.find_by_name(params[:id])
+      render :nothing => true, :status => 404 and return unless @section
     end
     
     respond_to do |format|

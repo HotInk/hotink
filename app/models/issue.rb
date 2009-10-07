@@ -93,7 +93,7 @@ class Issue < ActiveRecord::Base
         xml.tag!( :number, self.number )
 
         xml.tag!( :press_pdf_file, self.pdf.url(:original) )
-        if File.exists?(self.pdf.path(:screen_quality))
+        if self.pdf.path(:screen_quality) && File.exists?(self.pdf.path(:screen_quality))
           xml.tag!( :screen_pdf_file, self.pdf.url(:screen_quality) )
         else
           xml.tag!( :screen_pdf_file, self.pdf.url(:original) )
