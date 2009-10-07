@@ -6,9 +6,9 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
-      # If the request if for secific ids, don't mess around, just return them
+        # If the request if for secific ids, don't mess around, just return them
       if params[:ids]
-        @articles = @account.articles.find(params[:ids], :include => [:authors, :mediafiles, :section])
+        @articles = @account.articles.find_all_by_id(params[:ids], :include => [:authors, :mediafiles, :section])
         
         # This is the primary way of finding tagged articles
       elsif params[:tagged_with]
