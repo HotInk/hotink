@@ -9,6 +9,11 @@ class ArticlesController < ApplicationController
       # If the request if for secific ids, don't mess around, just return them
       if params[:ids]
         @articles = @account.articles.find(params[:ids], :include => [:authors, :mediafiles, :section])
+        
+        # This is the primary way of finding tagged articles
+      elsif params[:tagged_with]
+        @articles = @account.articles.tagged_with(params[:tagged_with], :on => :tags).by_date_published.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ) )
+        
         # This split ona blank search query is important, even though thinking-sphinx will return ordered search
         # results on a blank query. Sphinx delta index isn't ordered with the regular index, so the ordering just
         # doesn't work.
