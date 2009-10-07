@@ -9,7 +9,7 @@ class ArticlesController < ApplicationController
   def index
       # If the request if for secific ids, don't mess around, just return them
       if params[:ids]
-        @articles = @account.articles.find(params[:ids], :include => [:authors, :mediafiles, :section])
+        @articles = @account.articles.find_all_by_id(params[:ids], :include => [:authors, :mediafiles, :section])
       # This split ona blank search query is important, even though thinking-sphinx will return ordered search
       # results on a blank query. Sphinx delta index isn't ordered with the regular index, so the ordering just
       # doesn't work.
