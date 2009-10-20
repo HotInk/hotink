@@ -29,7 +29,7 @@
 							});
 	}
 
-    var author_list = new Autocompleter.LocalTokenizer('article_authors_list', 'autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
+    var author_list = new Autocompleter.LocalTokenizer('entry_authors_list', 'autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
         frequency: 0.1,
 		parent_model: "entry",
         search_field: "name",
