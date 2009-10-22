@@ -10,6 +10,11 @@ class ArticlesController < ApplicationController
       if params[:ids]
         @articles = @account.articles.find_all_by_id(params[:ids], :include => [:authors, :mediafiles, :section])
         
+        # check whether we're looking for section articles
+      elsif params[:section_id]
+        @category = @account.categories.find(params[:section_id])
+        @articles = @category.articles.by_date_published.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ) )
+        
         # This is the primary way of finding tagged articles
       elsif params[:tagged_with]
         @articles = @account.articles.tagged_with(params[:tagged_with], :on => :tags).by_date_published.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ) )
@@ -20,13 +25,7 @@ class ArticlesController < ApplicationController
       elsif params[:search].blank? 
         
         conditions = { :status => "published" }
-      
-        # check whether we're looking for section articles
-        unless params[:section_id].blank?
-          conditions[:section_id] = params[:section_id]
-        end
   
-        # TODO: do something similar for issues      
         @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "published_at DESC", :include => [:authors, :mediafiles, :section], :conditions => conditions)
         @drafts = @account.articles.find( :all, :conditions => { :status => nil }, :include => [:authors, :mediafiles, :section] ).reject{ |draft| draft.created_at == draft.updated_at } unless params[:page]
       else  
