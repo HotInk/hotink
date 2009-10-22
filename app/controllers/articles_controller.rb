@@ -13,7 +13,7 @@ class ArticlesController < ApplicationController
         # check whether we're looking for section articles
       elsif params[:section_id]
         @category = @account.categories.find(params[:section_id])
-        @articles = @category.articles.by_date_published.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ) )
+        @articles = @category.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :conditions => "status = 'published' AND published_at < '#{Time.now.utc.to_s(:db)}'", :order => "published_at DESC" )
         
         # This is the primary way of finding tagged articles
       elsif params[:tagged_with]
@@ -36,7 +36,7 @@ class ArticlesController < ApplicationController
       respond_to do |format|
         format.html # index.html.erb
         format.js
-        format.xml  { render :xml => @articles.delete_if{ |article| article.published_at > Time.now } }
+        format.xml  { render :xml => @articles.delete_if{ |article| article.published_at >= Time.now } }
       end
   end
 
