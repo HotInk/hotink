@@ -133,6 +133,7 @@ class Document < ActiveRecord::Base
      xml.article do
        xml.tag!( :id, self.id, :type => "integer")
        xml.tag!( :published_at, self.published_at ? self.published_at.to_formatted_s(:long) : "" )
+       xml.tag!( :updated_at, self.updated_at.to_formatted_s(:long) )
        xml.tag!( :title, self.title )
        xml.tag!( :subtitle, self.subtitle )
        xml.tag!( :authors_list, self.authors_list )
