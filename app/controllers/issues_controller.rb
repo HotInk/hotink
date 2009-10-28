@@ -40,7 +40,7 @@ class IssuesController < ApplicationController
     if params[:section_id]
       @articles = @issue.articles.find_all_by_section_id(params[:section_id], :conditions => "status = 'published' AND published_at < '#{Time.now.utc.to_s(:db)}'", :order => "published_at DESC" )
     else
-      @articles = @issue.articles.find( :all, :conditions => { :status => 'published' } )
+      @articles = @issue.articles.find( :all, :conditions => "status = 'published' AND published_at < '#{Time.now.utc.to_s(:db)}'", :order => "published_at DESC" )
     end
         
     respond_to do |format|
