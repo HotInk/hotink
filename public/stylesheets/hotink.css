@@ -130,7 +130,7 @@ dl.faq dt {font-weight: bold;}
 #navigation div { display: inline-block; margin: 0.25em; margin-top: 0.3em; padding: 0.25em; }
 #navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; margin-left: 0.5em; }
 #navigation #links { float: left; padding: 0; margin: 0; margin-left: 3%; margin-top: 0.85em; }
-#navigation #links ol { margin: 0; padding: 0; font-size: 1.2em; list-style: none;}
+#navigation #links ol { margin: 0; padding: 0; font-size: 1.2em; list-style: none;  }
 #navigation #links ol li { display: inline; margin: 0; padding: 0.2em 0.5em; background-color: #FFF6DD; }
 #navigation #links ol li a { color: #000; }
 #navigation #links ol li.current { background-color: #FFF; color: #515151; margin:0; }
