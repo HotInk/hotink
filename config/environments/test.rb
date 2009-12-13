@@ -22,9 +22,8 @@ config.action_controller.allow_forgery_protection    = false
 config.action_mailer.delivery_method = :test
 
 # Test environment gems
-config.gem "thoughtbot-factory_girl",
-           :lib    => "factory_girl",
-           :source => "http://gems.github.com"
+config.gem "factory_girl", :source => "http://gemcutter.org"
+config.gem "shoulda", :source => "http://gemcutter.org"
 config.gem "webrat", :lib => false, :version => ">= 0.4.3"
 config.gem "nokogiri", :lib => false, :version => ">= 1.2.3"
 

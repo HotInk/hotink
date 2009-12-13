@@ -23,7 +23,7 @@ class Document < ActiveRecord::Base
   accepts_nested_attributes_for :sortings, :allow_destroy => true     
   accepts_nested_attributes_for :authorships, :allow_destroy => true
   
-  validates_presence_of :account, :message => "Must have an account"
+  validates_presence_of :account, :message => "must have an account"
   validates_associated :account, :message => "Account must be valid"
 
   define_index do

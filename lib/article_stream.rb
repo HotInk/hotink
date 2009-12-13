@@ -1,0 +1,1 @@
+require 'article_stream/app'
