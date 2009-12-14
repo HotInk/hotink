@@ -6,6 +6,7 @@
 	<ol id="stream_articles">
 		<% for article in @articles %>
 		<li id="article_<%= article.id %>">
+			<small><%= article.published_at.to_s(:standard) %></small>
 			<h1><a href="/stream/articles/<%= article.id %>"><%= article.title %></a></h1>
 			<p class="account"><%= article.account.formal_name.blank? ? article.account.name : article.account.formal_name %></p>
 			<p class="authors"><%= article.authors_list %></p>

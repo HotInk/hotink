@@ -15,6 +15,11 @@ Factory.define :basic_article, :parent => :article do |ba|
   ba.title   { Factory.next(:article_title) }
 end
 
+Factory.define :published_article, :parent => :basic_article do |ba|
+  ba.status         "published"
+  ba.published_at   Time.now
+end
+
 Factory.define :detailed_article, :parent => :article do |da|
   da.title          { Factory.next(:article_title) }
   da.subtitle       "Get a detailed look (subtitle)"

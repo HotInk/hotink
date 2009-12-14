@@ -15,6 +15,8 @@ describe ArticleStream do
       last_response.body.should have_selector("#article_#{visible_article.id}")
       last_response.body.should_not have_selector("#article_#{invisible_article.id}")
     end
+    
+    it "should display most recent articles first"
   end
   
   describe "GET to /stream/articles/:id" do
