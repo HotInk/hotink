@@ -33,3 +33,8 @@ Factory.define :author do |a|
   a.sequence(:name) { |n| "Author ##{n}" }
   a.account { Factory(:account) }
 end
+
+Factory.define :checkout do |c|
+  c.original_article { Factory(:article) }
+  c.duplicate_article { Factory(:article) }
+end

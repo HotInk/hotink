@@ -4,5 +4,8 @@
 	<h2><%= @article.subtitle %></h2>
 	<p class="date"><span  style="color: green"><%= @article.published_at.to_s(:standard)%> </span> (<%= time_ago_in_words(@article.published_at)%> ago)</p>
 	<p style="font-weight: bold"><%= @article.authors_list %></p>
+	<div id="article_checkout">
+		
+	</div>
 	<%= markdown @article.bodytext %>
 </div>
