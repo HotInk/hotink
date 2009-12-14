@@ -1,0 +1,8 @@
+<div id="article_<%= @article.id %>" class="article">
+	<p><a href="/stream"><-- Back to the stream</a></p>
+	<h1><%= @article.title %></h1>
+	<h2><%= @article.subtitle %></h2>
+	<p class="date"><span  style="color: green"><%= @article.published_at.to_s(:standard)%> </span> (<%= time_ago_in_words(@article.published_at)%> ago)</p>
+	<p style="font-weight: bold"><%= @article.authors_list %></p>
+	<%= markdown @article.bodytext %>
+</div>

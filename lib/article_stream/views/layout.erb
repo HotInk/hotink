@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <style type="text/css" media="screen">
+  	body{ font-size: 12px; font-family: "lucida grande", Verdana, Helvetica, Arial, sans-serif; }
+	ol { list-style-type: none; float: left; padding: 0; margin-top: 0;}
+	ol li { padding: 5px 10px; }
+	a { text-decoration: none; }
+	a:hover { text-decoration: underline; }
+	
+	ol#choices { width: 100px; background-color: #FFF6DD; }
+	div.colour_wrapper { width: 800px; float: left; border: 3px solid #FFF6DD; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
+	ol#stream_articles { width: 100%;}
+	ol#stream_articles li+li { border-top: 1px dotted #999; }
+	ol#stream_articles h1 { font-size: 16px; font-weight: 200; }
+	ol#stream_articles p { display: inline; }
+	
+	div.article { width: 700px; }
+  </style>
+</head>
+<body>
+<%= yield %>
+</body>
+</html>

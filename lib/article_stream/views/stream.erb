@@ -1,0 +1,16 @@
+<h1>CUP News-stream</h1>
+<ol id="choices">
+	<li>All articles</li>
+</ol>
+<div class="colour_wrapper">
+	<ol id="stream_articles">
+		<% for article in @articles %>
+		<li id="article_<%= article.id %>">
+			<h1><a href="/stream/articles/<%= article.id %>"><%= article.title %></a></h1>
+			<p class="account"><%= article.account.formal_name.blank? ? article.account.name : article.account.formal_name %></p>
+			<p class="authors"><%= article.authors_list %></p>
+		</li>
+		<% end %>
+	</ol>
+</div>
+

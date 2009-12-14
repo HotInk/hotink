@@ -50,8 +50,9 @@ Rails::Initializer.run do |config|
   config.gem "oauth"
   config.gem "mime-types", :lib=>"mime/types"
   config.gem "bcrypt-ruby", :lib => "bcrypt"
+  config.gem 'pacecar', :source => 'http://gemcutter.org'
   
-  config.gem 'bluecloth'
+  config.gem 'bluecloth', :version => "2.0.5"
   config.gem 'sinatra'
   
   # Only load the plugins named here, in the order given. By default, all plugins 
