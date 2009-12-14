@@ -17,6 +17,7 @@ module ArticleStream
     
     get '/stream/articles/:id' do
       @article = Article.find(params[:id])
+      @checkout = Checkout.find(:first, :conditions => { :original_article_id => @article.id })
       erb :article
     end
     
