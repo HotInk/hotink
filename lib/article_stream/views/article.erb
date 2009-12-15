@@ -2,18 +2,30 @@
 	<p><a href="/stream"><-- Back to the stream</a></p>
 	<h1><%= @article.title %></h1>
 	<h2><%= @article.subtitle %></h2>
-	<p class="date"><span  style="color: green"><%= @article.published_at.to_s(:standard)%> </span> (<%= time_ago_in_words(@article.published_at)%> ago)</p>
+	<p><span  style="color: green"><%= @article.published_at.to_s(:standard)%> </span> (<%= time_ago_in_words(@article.published_at)%> ago)</p>
 	<p style="font-weight: bold"><%= @article.authors_list %></p>
 	<div id="article_checkout">
-		<% unless @checkout %>
-			To check out this article for editing
-			<form method="POST" action="/checkouts">
+		<% if @checkout %>
+			<h4>Already checked out</h4>
+			<p>To edit your copy of this article, <a href="/accounts/3/articles/<%= @checkout.duplicate_article.id %>/edit">click here</a></p>
+			<p>If you checked this article out by mistake, just delete the draft created in <a href="/accounts/3/articles">your account</a>.</p>
+		<% else %>
+			<h4>Checkout this article</h4>
+			<p>To check out this article for editing in the CUPwire account:</p>
+			<form method="POST" action="/stream/articles/<%= @article.id %>/checkout">
 				<div>
-					<input type="hidden" name="checkout[original_article_id]" value="<%= @article.id %>" id="checkout_original_article_id" />
-					<button type="submit">Click here</button>
+					<input name="commit" onclick="if (!confirm('Are you sure you want to check out this article? Press \'OK\' to check this article into the CUPwire as a draft.')) return false; return true;" type="submit" value="Click here" />
 				</div>
 			</form>
 		<% end %>
 	</div>
+	<% unless @article.images.blank? %>
+		<div class="media_thumbs">
+			<h3>Attached media</h3>
+			<% for image in @article.images %>
+					<%= link_to_function "<img src=\"#{image.file.url(:system_thumb)}\" border=\"1\" />", "page_overlay.render( '<div class=\"small_top_button clearfix\"><a href=\"#\" class=\"close_window\" onclick=\"page_overlay.end();return false;\"> <img src=\"/images/window_x.png\" /> </a></div><img src=\"#{image.file.url(:large)}\" style=\"position:relative;z-index: 300;\" />' );" %>
+			<% end %>
+		</div>
+	<% end %>
 	<%= markdown @article.bodytext %>
 </div>

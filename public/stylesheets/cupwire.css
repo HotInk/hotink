@@ -1,0 +1,47 @@
+body{ font-size: 12px; font-family: "lucida grande", Verdana, Helvetica, Arial, sans-serif; }
+ol { list-style-type: none; float: left; padding: 0; margin: 0;}
+ol li { padding: 10px; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.yourstream { background-color: #CEE4F3; }
+.allarticles { background-color: #FFF6DD; }
+.recommended { background-color: #DEFFDB; }
+
+ol#choices { width: 120px; }
+div.colour_wrapper { width: 800px; float: left; border: 3px solid #FFF6DD; -moz-border-radius: 2px; -webkit-border-radius: 2px; position: relative; }
+
+ol#stream_articles { width: 100%; font-size: 11px; }
+ol#stream_articles li+li { border-top: 1px dotted #999; }
+ol#stream_articles li.pickedup { background-color: #FFDBDB; }
+ol#stream_articles h1 { font-size: 16px; padding-bottom: 5px; font-weight: 200; margin: 0; }
+ol#stream_articles h2 { font-size: 13px; padding-bottom: 5px; font-weight: 200; margin: 0;}
+ol#stream_articles p { margin: 2px; }
+ol#stream_articles p.account { background: #EFEFEE; }
+
+ol#stream_articles p.date { float: right; font-size: 20px; color: #AAA; }
+ol#stream_articles p.date small { display: block; font-size: 11px; }
+
+div#statusbar { width: 930px; margin-bottom: 3px; }
+div.pagination { text-align: right; }
+div.pagination a { padding: 2px 5px; }
+
+div.article { width: 700px; }
+div#article_checkout, div.media_thumbs { float:right; clear: right; width: 240px; padding: 10px; margin: 5px 0; border: 1px solid #515151; -moz-border-radius: 2px; -webkit-border-radius: 2px;}
+div#article_checkout h4 { margin: 0; }
+div.article .media_thumbs h3 { margin-top:0;}
+
+.footer { float:left; width: 960px; margin-top: 20px; margin-bottom: 10px; text-align: right; font-size: 0.8em;}
+
+/* Overlay css */
+
+#overlay{ position: absolute; top: 0; left: 0; z-index: 900; width: 100%; height: 500px; background-color: #000; }
+#overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; }
+#loading{ position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0;}
+#overlay_container{ position: relative; width: 250px; height: 250px; background-color: #fff; margin: 0 auto;}
+#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 5px; background-color: #fff; border: 1px solid #515151;}
+.close_button  { float: right; background-image: url('/images/token_x_red.gif'); width: 10px; height: 10px; margin: 0; margin-right: 0.125em; display: inline-block; font-size: 1em; }
+.close_button a { color: #FFF; display: inline-block; width: 100%;height: 100%;}
+div.small_top_button { display: block; position: relative; top: -13px; left: 17px; clear:left; float: right; height: 0px; overflow: visible; }
+div.small_top_button a { padding: 5px; }
+div.small_top_button a img { width: 18px; border: none; }

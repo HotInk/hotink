@@ -105,7 +105,7 @@ class Document < ActiveRecord::Base
       end
      else
       list = String.new
-      (0..(self.authors.count - 3)).each{ |i| list += authors[i].name + ", " }
+      (0..(self.authors.length - 3)).each{ |i| list += authors[i].name + ", " }
       list += authors[self.authors.length-2].name + " and " + authors[self.authors.length-1].name # last two authors get special formatting
       return list
     end         
@@ -114,7 +114,7 @@ class Document < ActiveRecord::Base
   #Breaks up a human readable list of authors and creates each one and adds it to self.authors.
   def authors_list=(list)
     if list
-      list.split(/, and | and |,/).each do |name| 
+      list.split(/,|, and | and /).each do |name| 
         author = Author.find_or_create_by_name_and_account_id(name.strip, self.account.id)
         self.authors << author unless self.authors.member?(author) || author.nil?
       end

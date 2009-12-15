@@ -1,15 +1,20 @@
-<h1>CUP News-stream</h1>
+<h1><a href="/stream">CUP News-stream</a></h1>
+<div id="statusbar">
+	<%= paginate(@articles) %>
+</div>
 <ol id="choices">
-	<li>All articles</li>
+	<li class="yourstream">Your stream</li>
+	<li class="allarticles">All articles</li>
+	<li class="recommended">Recommended</li>
 </ol>
 <div class="colour_wrapper">
 	<ol id="stream_articles">
 		<% for article in @articles %>
-		<li id="article_<%= article.id %>">
-			<small><%= article.published_at.to_s(:standard) %></small>
+		<li id="article_<%= article.id %>"<%= "class=\"pickedup\"" if article.pickup %>>
+			<p class="date"><%= article.published_at.to_s(:standard) %><small>(<%= time_ago_in_words(article.published_at)%> ago)</small></p>
 			<h1><a href="/stream/articles/<%= article.id %>"><%= article.title %></a></h1>
-			<p class="account"><%= article.account.formal_name.blank? ? article.account.name : article.account.formal_name %></p>
-			<p class="authors"><%= article.authors_list %></p>
+			<% unless article.subtitle.blank? %><h2><%= article.subtitle %></h2><% end %>
+			<p class="authors"><%= article.authors_list %> (<span class="account"><%= article.account.formal_name.blank? ? article.account.name : article.account.formal_name %></span>)</p>
 		</li>
 		<% end %>
 	</ol>
