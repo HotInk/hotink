@@ -1,3 +1,7 @@
 <h1>Create a new mailout</h1>
 <form action="/accounts/<%= @account.id %>/mailouts" method="POST">
+	<div><label>From email <input type="text" name="mailout[from_email]" id="mailout_from_email" /></label></div>
+	<div><label>From name <input type="text" name="mailout[name]" id="mailout_name" /></label></div>
+	<div><label>Subject <input type="text" name="mailout[subject]" id="mailout_subject" /></label></div>
+	<div><label>To email <input type="text" name="mailout[to_email]" id="mailout_to_email" /></label></div>
 </form>

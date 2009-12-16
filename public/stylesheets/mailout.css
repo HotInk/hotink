@@ -1,0 +1,28 @@
+body{ font-size: 12px; font-family: "lucida grande", Verdana, Helvetica, Arial, sans-serif; }
+h1, h2 { padding-bottom: 5px; font-weight: 200; margin: 0; }
+ol { list-style-type: none; float: left; padding: 0; margin: 0;}
+ol li { padding: 8px 10px; }
+a { color: #222; text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:visited { color: #777; }
+
+.footer { float:left; width: 960px; margin-top: 20px; margin-bottom: 10px; text-align: right; font-size: 0.8em;}
+
+/* Overlay css */
+
+#overlay{ position: absolute; top: 0; left: 0; z-index: 900; width: 100%; height: 500px; background-color: #000; }
+#overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; }
+#loading{ position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0;}
+#overlay_container{ position: relative; width: 250px; height: 250px; background-color: #fff; margin: 0 auto;}
+#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 5px; background-color: #fff; border: 1px solid #515151;}
+.close_button  { float: right; background-image: url('/images/token_x_red.gif'); width: 10px; height: 10px; margin: 0; margin-right: 0.125em; display: inline-block; font-size: 1em; }
+.close_button a { color: #FFF; display: inline-block; width: 100%;height: 100%;}
+div.small_top_button { display: block; position: relative; top: -13px; left: 17px; clear:left; float: right; height: 0px; overflow: visible; }
+div.small_top_button a { padding: 5px; }
+div.small_top_button a img { width: 18px; border: none; }
+
+/* Clearfix */
+.clearfix:after { clear: both; content: ' '; display: block; font-size: 0; line-height: 0; visibility: hidden; width: 0; height: 0; }
+.clearfix { display: inline-block; }
+* html .clearfix { height: 1%; }
+.clearfix {display: block; }
