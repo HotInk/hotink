@@ -3,6 +3,7 @@ require 'sinatra/base'
 module ArticleStream 
   class App < Sinatra::Base
     set :views, File.dirname(__FILE__) + '/views'
+    
     helpers do
       include ActionView::Helpers::DateHelper
       include ActionView::Helpers::JavaScriptHelper
@@ -44,7 +45,7 @@ module ArticleStream
       
       @duplicate_article = @article.clone
       @duplicate_article.authors_list = @article.authors_list
-      @duplicate_article.account_id = 3
+      @duplicate_article.account_id = options.owner_account_id
       @duplicate_article.status = nil
       @duplicate_article.section = nil
       

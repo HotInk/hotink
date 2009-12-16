@@ -7,8 +7,8 @@
 	<div id="article_checkout">
 		<% if @checkout %>
 			<h4>Already checked out</h4>
-			<p>To edit your copy of this article, <a href="/accounts/3/articles/<%= @checkout.duplicate_article.id %>/edit">click here</a></p>
-			<p>If you checked this article out by mistake, just delete the draft created in <a href="/accounts/3/articles">your account</a>.</p>
+			<p>To edit your copy of this article, <a href="/accounts/<%= @checkout.duplicate_article.account_id %>/articles/<%= @checkout.duplicate_article.id %>/edit">click here</a></p>
+			<p>If you checked this article out by mistake, just delete the draft created in <a href="/accounts/<%= @checkout.duplicate_article.account_id %>/articles">your account</a>.</p>
 		<% else %>
 			<h4>Checkout this article</h4>
 			<p>To check out this article for editing in the CUPwire account:</p>

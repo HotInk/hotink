@@ -1,4 +1,5 @@
 body{ font-size: 12px; font-family: "lucida grande", Verdana, Helvetica, Arial, sans-serif; }
+h1, h2 { padding-bottom: 5px; font-weight: 200; margin: 0; }
 ol { list-style-type: none; float: left; padding: 0; margin: 0;}
 ol li { padding: 10px; }
 a { text-decoration: none; }
@@ -14,8 +15,8 @@ div.colour_wrapper { width: 800px; float: left; border: 3px solid #FFF6DD; -moz-
 ol#stream_articles { width: 100%; font-size: 11px; }
 ol#stream_articles li+li { border-top: 1px dotted #999; }
 ol#stream_articles li.pickedup { background-color: #FFDBDB; }
-ol#stream_articles h1 { font-size: 16px; padding-bottom: 5px; font-weight: 200; margin: 0; }
-ol#stream_articles h2 { font-size: 13px; padding-bottom: 5px; font-weight: 200; margin: 0;}
+ol#stream_articles h1 { font-size: 16px; }
+ol#stream_articles h2 { font-size: 13px; }
 ol#stream_articles p { margin: 2px; }
 ol#stream_articles p.account { background: #EFEFEE; }
 
