@@ -1,1 +1,6 @@
-<h1>Welcome home</h1><%= @campaigns.inspect %>
+<h1>Mailouts</h1>
+<ol id="mailouts">
+	<% for campaign in @campaigns %>
+		<li><a href="/accounts/3/mailouts/<%=campaign["id"]%>"><%= campaign["title"] %></a></li>
+	<% end %>
+</ol>
