@@ -31,6 +31,14 @@ Factory.define :detailed_article, :parent => :article do |da|
 end
 ###
 
+Factory.define :user do |u|
+  u.sequence(:name)  { |n| "User ##{n}" }
+  u.sequence(:email) { |n| "user#{n}@example.com"}
+  u.sequence(:login) { |n| "user#{n}" }
+  u.password "password_1"
+  u.password_confirmation "password_1"
+end
+
 Factory.define :author do |a|
   a.sequence(:name) { |n| "Author ##{n}" }
   a.account { Factory(:account) }

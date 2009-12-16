@@ -2,6 +2,9 @@ require 'sinatra/base'
 
 module ArticleStream 
   class App < Sinatra::Base
+    include Authlogic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
+    
+    set :owner_account_id, Proc.new { Account.find(:first).id }
     set :views, File.dirname(__FILE__) + '/views'
     
     helpers do
@@ -28,32 +31,41 @@ module ArticleStream
       
     end
     
+    def load_session 
+        @account = Account.find(options.owner_account_id)
+        @current_user_session = UserSession.find
+        @current_user = @current_user_session.nil? ? nil : @current_user_session.user 
+        unless @current_user && (@current_user.has_role?("staff", @account) || @current_user.has_role?("admin"))
+          redirect '/user_session/new'
+        end
+    end
+    
     get '/stream/?' do
+      load_session
       @articles = Article.status_matches('published').by_published_at(:desc).paginate(:page => params[:page] || 1, :per_page => params[:per_page] || 15 )
       erb :stream
     end
     
     get '/stream/by_account' do
+      load_session
       @accounts = Account.all
       erb :stream_by_account
     end
         
     get '/stream/articles/:id' do
+      load_session
       @article = Article.find(params[:id])
       @checkout = @article.pickup
       erb :article
     end
     
     post '/stream/articles/:id/checkout' do
+      load_session
       @article = Article.find(params[:id])
       @checkout = Checkout.new
       @checkout.original_article = @article
       
-      @duplicate_article = @article.clone
-      @duplicate_article.authors_list = @article.authors_list
-      @duplicate_article.account_id = options.owner_account_id
-      @duplicate_article.status = nil
-      @duplicate_article.section = nil
+      @duplicate_article = @article.photocopy
       
       Checkout.transaction do
         @duplicate_article.save
@@ -63,6 +75,12 @@ module ArticleStream
       
       redirect "/stream/articles/#{@article.id}"
     end  
+    
+    get '/team' do
+      load_session
+      @users = @account.has_staff
+      erb :team
+    end
     
   end
 end

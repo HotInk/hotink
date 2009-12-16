@@ -3,6 +3,6 @@
 Paperclip.options[:swallow_stderr] = false
 
 #Load custom Paperclip interpolation
-Paperclip::Attachment.interpolations[:account] = proc do |attachment, style|
+Paperclip.interpolates :account do |attachment, style|
   attachment.instance.account.name
 end

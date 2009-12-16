@@ -1,5 +1,6 @@
 <h1>CUP News-stream</h1>
 <div id="statusbar">
+	<%= @current_user.email %>
 	<%= paginate(@articles) %>
 </div>
 <ol id="choices">

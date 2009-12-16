@@ -28,7 +28,8 @@ class User < ActiveRecord::Base
   
   # Validations
   validates_presence_of :name
-  validates_uniqueness_of :email, :message => "Email must be unique"
+  validates_presence_of :email
+  validates_uniqueness_of :email
   
   def self.find_by_login_or_email(login)
     find_by_login(login) || find_by_email(login)

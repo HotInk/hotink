@@ -24,7 +24,7 @@ ol#stream_articles p { margin: 2px; }
 ol#stream_articles p.account { background: #EFEFEE; }
 
 ol#stream_articles p.date { position: absolute; top: 5px; right: 5px; font-size: 20px; width: 85px; color: #AAA; }
-ol#stream_articles p.date small { display: block; font-size: 11px; }
+ol#stream_articles p.date small { display: block; font-size: 9px; color: #777; }
 
 div#statusbar { width: 930px; margin-bottom: 3px; }
 div.pagination { text-align: right; }
@@ -33,6 +33,7 @@ div.pagination a { padding: 2px 5px; }
 div.article { width: 700px; }
 div#article_checkout, div.media_thumbs { float:right; clear: right; width: 240px; padding: 10px; margin: 5px 0; border: 1px solid #515151; -moz-border-radius: 2px; -webkit-border-radius: 2px;}
 div#article_checkout h4 { margin: 0; }
+div#article_checkout a { background-color: #FFF6DD; color: puce; }
 div.article .media_thumbs h3 { margin-top:0;}
 
 .footer { float:left; width: 960px; margin-top: 20px; margin-bottom: 10px; text-align: right; font-size: 0.8em;}
