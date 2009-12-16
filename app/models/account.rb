@@ -1,4 +1,5 @@
 class Account < ActiveRecord::Base
+  include Pacecar
   
   # Main data models (and STI subclasses)
   has_many :mediafiles, :dependent => :delete_all
@@ -12,6 +13,8 @@ class Account < ActiveRecord::Base
   has_many :sections, :order => "parent_id, position", :dependent => :delete_all
   has_many :blogs, :dependent => :delete_all
   has_many :issues, :dependent => :delete_all, :order => "date desc"
+  
+  has_recent_records :articles
   
   # Authentication
   has_many :users, :dependent => :delete_all

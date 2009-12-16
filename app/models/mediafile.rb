@@ -16,7 +16,7 @@ class Mediafile < ActiveRecord::Base
   has_many :photocredits
   has_many :authors, :through => :photocredits
   
-  validates_presence_of :account, :message => "Must have an account"
+  validates_presence_of :account, :message => "must have an account"
   validates_associated :account, :message => "Account must be valid"
   
   accepts_nested_attributes_for :photocredits, :allow_destroy => true
@@ -68,7 +68,7 @@ class Mediafile < ActiveRecord::Base
        return self.authors.first.name + " and " + self.authors.second.name
      else
       list = String.new
-      (0..(self.authors.count - 3)).each{ |i| list += authors[i].name + ", " }
+      (0..(self.authors.length - 3)).each{ |i| list += authors[i].name + ", " }
       list += authors[self.authors.length-2].name + " and " + authors[self.authors.length-1].name # last two authors get special formatting
       return list
     end         
