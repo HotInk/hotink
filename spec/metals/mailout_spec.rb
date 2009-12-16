@@ -18,10 +18,6 @@ describe Mailout do
     it "should display all campaigns from Mailchimp" do
       @mailer.should_receive(:campaigns)
       get "/accounts/#{@account.id}/mailouts"
-    end
-    
-    it "should render a mailouts page" do
-      get "/accounts/#{@account.id}/mailouts"
       last_response.should be_ok
     end
   end
@@ -43,6 +39,5 @@ describe Mailout do
     it "should send an unsent mailout"
     it "should not resend an already sent mailout"
   end
-  
   
 end
