@@ -1,4 +1,5 @@
 class Checkout < ActiveRecord::Base
+  belongs_to :user
   belongs_to :original_article, :class_name => "Article"
   belongs_to :duplicate_article, :class_name => "Article"
   

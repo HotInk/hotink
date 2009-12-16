@@ -1,6 +1,5 @@
 <h1>CUP News-stream</h1>
 <div id="statusbar">
-	<%= @current_user.email %>
 	<%= paginate(@articles) %>
 </div>
 <ol id="choices">
@@ -11,11 +10,16 @@
 <div class="colour_wrapper">
 	<ol id="stream_articles">
 		<% for article in @articles %>
-		<li id="article_<%= article.id %>" class="<%= cycle("odd", "even") %><%= " pickedup" if article.pickup %>">
+		<li id="article_<%= article.id %>" class="clearfix <%= cycle("odd", "even") %><%= " pickedup" if article.pickup %>">
 			<p class="date"><%= article.published_at.to_s(:standard) %><small>(<%= time_ago_in_words(article.published_at)%> ago)</small></p>
 			<h1><a href="/stream/articles/<%= article.id %>"><%= article.title %></a></h1>
-			<% unless article.subtitle.blank? %><h2><%= article.subtitle %></h2><% end %>
+			<% unless article.subtitle.blank? %>
+				<h2><%= article.subtitle %></h2>
+			<% end %>
 			<p class="authors"><%= article.authors_list %> (<span class="account"><%= article.account.formal_name.blank? ? article.account.name : article.account.formal_name %></span>)</p>
+			<% if article.pickup %>
+			<p class="checkout_notice">checked out <%= article.pickup.created_at.to_s(:standard) %> by <%= article.pickup.user.name %></p>
+			<% end %>
 		</li>
 		<% end %>
 	</ol>

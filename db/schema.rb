@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091214051115) do
+ActiveRecord::Schema.define(:version => 20091216035603) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20091214051115) do
     t.integer  "duplicate_article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "checkouts", ["duplicate_article_id"], :name => "index_checkouts_on_duplicate_article_id"
@@ -121,14 +122,14 @@ ActiveRecord::Schema.define(:version => 20091214051115) do
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.string   "name"
-    t.boolean  "processing"
+    t.boolean  "processing",     :default => false
   end
 
   create_table "mediafiles", :force => true do |t|
     t.string   "title"
     t.text     "description"
     t.string   "link_alternate"
-    t.date     "date"
+    t.datetime "date"
     t.integer  "account_id"
     t.string   "type"
     t.datetime "created_at"
@@ -232,15 +233,15 @@ ActiveRecord::Schema.define(:version => 20091214051115) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",               :default => "", :null => false
-    t.string   "email",               :default => "", :null => false
-    t.string   "crypted_password",    :default => "", :null => false
-    t.string   "password_salt",       :default => "", :null => false
-    t.string   "persistence_token",   :default => "", :null => false
-    t.string   "single_access_token", :default => "", :null => false
-    t.string   "perishable_token",    :default => "", :null => false
-    t.integer  "login_count",         :default => 0,  :null => false
-    t.integer  "failed_login_count",  :default => 0,  :null => false
+    t.string   "login",                              :null => false
+    t.string   "email",                              :null => false
+    t.string   "crypted_password",                   :null => false
+    t.string   "password_salt",                      :null => false
+    t.string   "persistence_token",                  :null => false
+    t.string   "single_access_token"
+    t.string   "perishable_token"
+    t.integer  "login_count",         :default => 0, :null => false
+    t.integer  "failed_login_count",  :default => 0, :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"

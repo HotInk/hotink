@@ -66,10 +66,12 @@ module ArticleStream
       @checkout.original_article = @article
       
       @duplicate_article = @article.photocopy
+      @duplicate_article.account = @account
       
       Checkout.transaction do
         @duplicate_article.save
         @checkout.duplicate_article = @duplicate_article
+        @checkout.user = @current_user
         @checkout.save 
       end
       
