@@ -51,6 +51,7 @@ Rails::Initializer.run do |config|
   config.gem "mime-types", :lib=>"mime/types"
   config.gem "bcrypt-ruby", :lib => "bcrypt"
   config.gem 'pacecar', :source => 'http://gemcutter.org'
+  config.gem "paperclip", :source => "http://gemcutter.org"
   
   config.gem 'bluecloth', :version => "2.0.5"
   config.gem 'sinatra'

@@ -5,6 +5,7 @@ module ArticleStream
     set :views, File.dirname(__FILE__) + '/views'
     
     helpers do
+      include ActionView::Helpers::TextHelper
       include ActionView::Helpers::DateHelper
       include ActionView::Helpers::JavaScriptHelper
       include ActionView::Helpers::TagHelper
@@ -32,6 +33,11 @@ module ArticleStream
       erb :stream
     end
     
+    get '/stream/by_account' do
+      @accounts = Account.all
+      erb :stream_by_account
+    end
+        
     get '/stream/articles/:id' do
       @article = Article.find(params[:id])
       @checkout = @article.pickup

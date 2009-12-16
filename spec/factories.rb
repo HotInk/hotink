@@ -3,6 +3,7 @@ Factory.define :account do |a|
   a.time_zone "What time?"
 end
 
+### Article factories
 Factory.define :article do |a|
   a.account { Factory(:account) }
 end
@@ -28,6 +29,7 @@ Factory.define :detailed_article, :parent => :article do |da|
   da.status         "published"
   da.published_at   Time.now
 end
+###
 
 Factory.define :author do |a|
   a.sequence(:name) { |n| "Author ##{n}" }
@@ -37,4 +39,8 @@ end
 Factory.define :checkout do |c|
   c.original_article { Factory(:article) }
   c.duplicate_article { Factory(:article) }
+end
+
+Factory.define :mediafile do |a|
+  a.account { Factory(:account) }
 end

@@ -1,9 +1,10 @@
 body{ font-size: 12px; font-family: "lucida grande", Verdana, Helvetica, Arial, sans-serif; }
 h1, h2 { padding-bottom: 5px; font-weight: 200; margin: 0; }
 ol { list-style-type: none; float: left; padding: 0; margin: 0;}
-ol li { padding: 10px; }
-a { text-decoration: none; }
+ol li { padding: 8px 10px; }
+a { color: #222; text-decoration: none; }
 a:hover { text-decoration: underline; }
+a:visited { color: #777; }
 
 .yourstream { background-color: #CEE4F3; }
 .allarticles { background-color: #FFF6DD; }
@@ -13,6 +14,8 @@ ol#choices { width: 120px; }
 div.colour_wrapper { width: 800px; float: left; border: 3px solid #FFF6DD; -moz-border-radius: 2px; -webkit-border-radius: 2px; position: relative; }
 
 ol#stream_articles { width: 100%; font-size: 11px; }
+ol#stream_articles li { position: relative; }
+ol#stream_articles li.even { background-color: #EFEFEF; }
 ol#stream_articles li+li { border-top: 1px dotted #999; }
 ol#stream_articles li.pickedup { background-color: #FFDBDB; }
 ol#stream_articles h1 { font-size: 16px; }
@@ -20,7 +23,7 @@ ol#stream_articles h2 { font-size: 13px; }
 ol#stream_articles p { margin: 2px; }
 ol#stream_articles p.account { background: #EFEFEE; }
 
-ol#stream_articles p.date { float: right; font-size: 20px; color: #AAA; }
+ol#stream_articles p.date { position: absolute; top: 5px; right: 5px; font-size: 20px; width: 85px; color: #AAA; }
 ol#stream_articles p.date small { display: block; font-size: 11px; }
 
 div#statusbar { width: 930px; margin-bottom: 3px; }

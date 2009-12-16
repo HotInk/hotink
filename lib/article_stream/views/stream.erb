@@ -10,7 +10,7 @@
 <div class="colour_wrapper">
 	<ol id="stream_articles">
 		<% for article in @articles %>
-		<li id="article_<%= article.id %>"<%= "class=\"pickedup\"" if article.pickup %>>
+		<li id="article_<%= article.id %>" class="<%= cycle("odd", "even") %><%= " pickedup" if article.pickup %>">
 			<p class="date"><%= article.published_at.to_s(:standard) %><small>(<%= time_ago_in_words(article.published_at)%> ago)</small></p>
 			<h1><a href="/stream/articles/<%= article.id %>"><%= article.title %></a></h1>
 			<% unless article.subtitle.blank? %><h2><%= article.subtitle %></h2><% end %>
