@@ -5,7 +5,8 @@ module Mailout
     include Authlogic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
 
     set :views, File.dirname(__FILE__) + '/views'
-
+    enable :methodoverride
+    
     API_KEY = 'e03757750894d3afb19d93edf0bf9421-us1'
     
     def load_session 
@@ -43,6 +44,7 @@ module Mailout
     
     get '/accounts/:id/mailouts/new' do
       initialize_mailchimp
+      @articles = @account.articles.status_matches("published").by_published_at(:desc).paginate(:page => 1, :per_page => 25)
       erb :new_mailout
     end
     
@@ -50,6 +52,12 @@ module Mailout
       initialize_mailchimp
       @campaign = @mailchimp.find_campaign_by_id(params[:mailout])
       erb :mailout
+    end
+    
+    delete '/accounts/:id/mailouts/:mailout' do
+      initialize_mailchimp
+      @mailchimp.delete(params[:mailout])
+      redirect "/accounts/#{@account.id}/mailouts"
     end
     
     post '/accounts/:id/mailouts/:mailout/send' do

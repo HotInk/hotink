@@ -1,12 +1,8 @@
-require 'spec_helper'
-require "authlogic/test_case" # include at the top of test_helper.rb
-   # run before tests are executed
-  
+require 'spec_helper'  
 
 describe Mailout do
   include Rack::Test::Methods
   include Webrat::Matchers
-  include Authlogic::TestCase
   
   before do
     @account = Factory(:account)
@@ -35,10 +31,20 @@ describe Mailout do
   end
   
   describe "GET to /accounts/:id/mailouts/new" do
-    it "should display the mailout form" do
+    before do
+      @articles = (1..5).collect { Factory(:published_article, :account => @account) }
       get "/accounts/#{@account.id}/mailouts/new"
+    end
+    it "should display the mailout form" do
       last_response.should be_ok
       last_response.body.should have_selector("form[action=\"/accounts/#{@account.id}/mailouts\"]")
+    end
+    
+    it "should display most recently published articles for mailout inclusion" do
+      last_response.body.should have_selector("ol#recent_articles")
+      for article in @articles
+        last_response.body.should have_selector("li#article_#{article.id}")
+      end
     end
   end
   
@@ -69,21 +75,32 @@ describe Mailout do
   end
   
   describe "POST to /accounts/:id/mailouts/:mailout/send" do
-    it "should send an unsent mailout" do
+    before do
       @campaign = mock("campaign")
+    end
+    
+    it "should send an unsent mailout" do
       @campaign.stub!(:[])
       @mailer.should_receive(:find_campaign_by_id).with("sample_id").and_return(@campaign)
       @mailer.should_receive(:send)
       
       post "/accounts/#{@account.id}/mailouts/sample_id/send"      
     end
+    
     it "should not resend an already sent mailout" do
-      @campaign = mock("campaign")
       @campaign.stub!(:[]).and_return(1)
       @mailer.should_receive(:find_campaign_by_id).with("sample_id").and_return(@campaign)
       @mailer.should_not_receive(:send)
       
       post "/accounts/#{@account.id}/mailouts/sample_id/send"
+    end
+  end
+  
+  describe "Delete to /accounts/:id/mailouts/:mailout" do    
+    it "should delete the mailout" do
+      @mailer.should_receive(:delete).with("sample_id").and_return(true)
+      delete "/accounts/#{@account.id}/mailouts/sample_id"
+      last_response.should be_redirect
     end
   end
   

@@ -8,6 +8,9 @@
 	<% for campaign in @campaigns %>
 		<li class="clearfix <%= cycle("even", "odd") %>">
 			<h1><a href="/accounts/<%= @account.id %>/mailouts/<%=campaign["id"]%>"><%= campaign["title"] %></a></h1>
+			<div class="delete transparent">
+					<a href="/accounts/<%= @account.id %>/mailouts/<%=campaign["id"]%>" onclick="if (confirm('You are about to delete this mailout:\n\n Click \'OK\' to delete or \'Cancel\' to return to the page.')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'delete'); f.appendChild(m);f.submit(); };return false;">&nbsp;&nbsp;&nbsp;</a>
+			</div>
 			<p class="date">
 			<% if campaign["emails_sent"] > 0 %>
 				<%= Time.parse(campaign["send_time"]).to_s(:standard) %><small>(<%= time_ago_in_words(Time.parse(campaign["send_time"]))%> ago)</small></p>
