@@ -31,13 +31,18 @@ describe Mailout do
   end
   
   describe "POST to /accounts/:id/mailouts" do
-    it "should create an unsent mailout"
+    it "should create an unsent mailout" do
+      # This is long, but it's the Hominid api spec
+      @mailer.should_receive(:create_campaign).with(  'regular', { :list_id => 'c18292dd69', :from_email => "test@example.com", :from_name => "test name", :subject => "A test", :to_email => "totest@example.com" }, { :html => "<h1>Test email</h1>" , :test =>"Test email" })
+      post "/accounts/#{@account.id}/mailouts", :mailout => { :from_email => "test@example.com", :name => "test name", :subject => "A test", :to_email => "totest@example.com" }
+      last_response.should be_redirect
+    end
   end
   
   describe "GET to /accounts/:id/mailouts/:mailout" do
     before do
       @campaign = mock("campaign")
-      @campaign.stub!(:[]).and_return("stubbed_info")
+      @campaign.stub!(:[])
       @mailer.should_receive(:find_campaign_by_id).with("sample_id").and_return(@campaign)
       get "/accounts/#{@account.id}/mailouts/sample_id"
     end
@@ -45,12 +50,29 @@ describe Mailout do
     it "should display a preview of the mailout" do
       last_response.body.should have_selector("iframe[src=\"#{@campaign['archive_url']}\"]")
     end
-    it "should display a send button for unsent mailout"
+    it "should display a send button for unsent mailout" do
+      @campaign['send_time'].to_s.should == ""
+      last_response.body.should have_selector("input[value=\"Send\"]")
+    end
   end
   
   describe "POST to /accounts/:id/mailouts/:mailout/send" do
-    it "should send an unsent mailout"
-    it "should not resend an already sent mailout"
+    it "should send an unsent mailout" do
+      @campaign = mock("campaign")
+      @campaign.stub!(:[])
+      @mailer.should_receive(:find_campaign_by_id).with("sample_id").and_return(@campaign)
+      @mailer.should_receive(:send)
+      
+      post "/accounts/#{@account.id}/mailouts/sample_id/send"      
+    end
+    it "should not resend an already sent mailout" do
+      @campaign = mock("campaign")
+      @campaign.stub!(:[]).and_return(1)
+      @mailer.should_receive(:find_campaign_by_id).with("sample_id").and_return(@campaign)
+      @mailer.should_not_receive(:send)
+      
+      post "/accounts/#{@account.id}/mailouts/sample_id/send"
+    end
   end
   
 end

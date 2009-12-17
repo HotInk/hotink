@@ -1,4 +1,8 @@
 <h1>Mailout</h1>
-<p>Sent on <%= @campaign["send_time"] %></p>
-<iframe src="<%= @campaign["archive_url"]%>" style="height: 500px; width: 500px;">
+<% if @campaign["emails_sent"].to_i > 0 %>
+	<p>Sent on <%= @campaign["send_time"] %></p>
+<% else %>
+	<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign["id"] %>/send" method="post"><input type="submit" value="Send" /></form>
+<% end %>
+<iframe src="<%= @campaign["archive_url"]%>" style="height: 500px; width: 700px; overflow: auto;">
 </iframe>

@@ -6,6 +6,14 @@ a { color: #222; text-decoration: none; }
 a:hover { text-decoration: underline; }
 a:visited { color: #777; }
 
+form>fieldset { float: left; width: 700px; }
+form>fieldset>legend { font-size: 22px; }
+form legend { font-size: 16px; }
+form label { font-size: 15px; font-weight: bold; }
+form ol { width: 100%; }
+form li { margin: 10px 0;  }
+form input[type="text"] { font-size: 14px; width:83%; float: right;}
+
 .footer { float:left; width: 960px; margin-top: 20px; margin-bottom: 10px; text-align: right; font-size: 0.8em;}
 
 /* Overlay css */

@@ -1,6 +1,7 @@
 <h1>Mailouts</h1>
+<a href="/accounts/<%= @account.id %>/mailouts/new">New mailout</a>
 <ol id="mailouts">
 	<% for campaign in @campaigns %>
-		<li><a href="/accounts/3/mailouts/<%=campaign["id"]%>"><%= campaign["title"] %></a></li>
+		<li><a href="/accounts/<%= @account.id %>/mailouts/<%=campaign["id"]%>"><%= campaign["title"] %></a></li>
 	<% end %>
 </ol>

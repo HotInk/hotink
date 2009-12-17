@@ -1,4 +1,5 @@
 Time::DATE_FORMATS[:time] = "%l:%M %p"
+Time::DATE_FORMATS[:simple] = "%b %e, %Y"
 
 Time::DATE_FORMATS[:standard] = lambda do |date|
     if Time.zone.now <= date

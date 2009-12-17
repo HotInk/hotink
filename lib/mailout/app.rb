@@ -20,6 +20,12 @@ module Mailout
       erb :mailouts
     end
     
+    post '/accounts/:id/mailouts' do
+      initialize_mailchimp
+      @mailchimp.create_campaign('regular', { :list_id => 'c18292dd69', :from_email => params[:mailout][:from_email], :from_name => params[:mailout][:name], :subject => params[:mailout][:subject], :to_email => params[:mailout][:to_email] }, { :html => "<h1>Test email</h1>" , :test =>"Test email" })
+      redirect "/accounts/#{@account.id}/mailouts"
+    end
+    
     get '/accounts/:id/mailouts/new' do
       initialize_mailchimp
       erb :new_mailout
@@ -30,6 +36,16 @@ module Mailout
       @campaign = @mailchimp.find_campaign_by_id(params[:mailout])
       erb :mailout
     end
-
+    
+    post '/accounts/:id/mailouts/:mailout/send' do
+      begin
+        initialize_mailchimp
+        @campaign = @mailchimp.find_campaign_by_id(params[:mailout])
+        @mailchimp.send(@campaign['id']) unless @campaign['emails_sent'].to_i > 0
+      rescue
+      ensure
+        redirect "/accounts/#{@account.id}/mailouts"
+      end
+    end
   end
 end

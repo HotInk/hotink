@@ -1,7 +1,17 @@
-<h1>Create a new mailout</h1>
 <form action="/accounts/<%= @account.id %>/mailouts" method="POST">
-	<div><label>From email <input type="text" name="mailout[from_email]" id="mailout_from_email" /></label></div>
-	<div><label>From name <input type="text" name="mailout[name]" id="mailout_name" /></label></div>
-	<div><label>Subject <input type="text" name="mailout[subject]" id="mailout_subject" /></label></div>
-	<div><label>To email <input type="text" name="mailout[to_email]" id="mailout_to_email" /></label></div>
+  <fieldset>
+	<legend>Create a new mailout</legend>
+	<p>You can create a new mailout here. Once you've created it, you'll get a chance to preview it before it's delivered.</p>
+	<fieldset>
+		<legend>From</legend>
+		<ol>
+			<li><label>Email: <input type="text" name="mailout[from_email]" id="mailout_from_email" value="national@cup.ca" /></label></li>
+			<li><label>Name: <input type="text" name="mailout[name]" id="mailout_name" value="Canadian University Press" /></label></li>
+		</ol>
+	</fieldset>
+	<ol>
+		<li><label>Subject: <input type="text" name="mailout[subject]" id="mailout_subject" value="CUP Newswire top stories for <%= Time.now.to_s(:simple) %>" /></label></li>
+		<li><label>To: <input type="text" name="mailout[to_email]" id="mailout_to_email" value="national@cup.ca" /></label></li>
+	</ol>
+  </fieldset>
 </form>
