@@ -6,6 +6,18 @@ a { color: #222; text-decoration: none; }
 a:hover { text-decoration: underline; }
 a:visited { color: #777; }
 
+.button_link { outline: none; display: block; float: left; font-size: 15px; padding: 3px; margin: 0 10px; color: black; background-color: #FFF6DD; border: 1px solid #333;-moz-border-radius: 3px; -webkit-border-radius: 3px; }
+.button_link:visited { color: black; }
+.button_link:hover { background-color: #CEE4F3; }
+.button_link:active { background-color: #EEF4FF; }
+
+
+ol#mailouts { width: 700px; font-size: 11px; float: left; clear: left; margin: 10px 0; }
+ol#mailouts li { position: relative; }
+ol#mailouts li.even { background-color: #EFEFEF; }
+ol#mailouts li+li { border-top: 1px dotted #999; }
+ol#mailouts h1 { font-size: 16px; }
+	
 form>fieldset { float: left; width: 700px; }
 form>fieldset>legend { font-size: 22px; }
 form legend { font-size: 16px; }

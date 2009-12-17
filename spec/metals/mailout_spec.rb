@@ -1,11 +1,23 @@
 require 'spec_helper'
+require "authlogic/test_case" # include at the top of test_helper.rb
+   # run before tests are executed
+  
 
 describe Mailout do
   include Rack::Test::Methods
   include Webrat::Matchers
+  include Authlogic::TestCase
   
   before do
     @account = Factory(:account)
+    
+    # Use test doubles for authlogic
+    @user = mock("user")
+    @user.should_receive(:has_role?).with("staff", @account).and_return(true)
+    @session = mock("user_session")
+    @session.stub!(:user).and_return(@user)
+    UserSession.stub!(:find).and_return(@session)
+    
     @mailer = mock("mailer")
     Hominid::Base.stub!(:new).and_return(@mailer)
   end

@@ -23,6 +23,10 @@ module Mailout
       load_session
       @mailchimp = Hominid::Base.new({:api_key => API_KEY })
     end
+    
+    helpers do
+      include ActionView::Helpers::TextHelper
+    end
 
     get '/accounts/:id/mailouts' do
       initialize_mailchimp

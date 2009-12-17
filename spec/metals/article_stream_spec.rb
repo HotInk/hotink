@@ -4,6 +4,18 @@ describe ArticleStream do
   include Rack::Test::Methods
   include Webrat::Matchers
   
+  before do
+    @account = Factory(:account)      
+    set :owner_account_id, @account.id
+    
+    # Use test doubles for authlogic
+    @user = mock("user")
+    @user.should_receive(:has_role?).with("staff", @account).and_return(true)
+    @session = mock("user_session")
+    @session.stub!(:user).and_return(@user)
+    UserSession.stub!(:find).and_return(@session)
+  end
+  
   def app
     ArticleStream::App
   end
@@ -35,8 +47,6 @@ describe ArticleStream do
   
   describe "GET to /team" do
     before(:each) do
-      @account = Factory(:account)      
-      set :owner_account_id, @account.id
       @users = (1..3).collect do 
         user = Factory(:user)
         user.has_role "staff", @account

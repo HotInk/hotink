@@ -1,7 +1,12 @@
-<h1>Mailouts</h1>
-<p><a href="/accounts/<%= @account.id %>/mailouts/new">New mailout</a></p>
+<h1>Recent mailouts</h1>
+<p>Mailouts are email blasts sent to all your publications's subscribers. You can include a selection of your most recent articles in each
+	mailout, or send a themed mailout for a special occasion.</p>
+<p>In order to send a mailout, you must have a <a href="http://mailchimp.com">Mailchimp</a> account.<p> 
+<a href="/accounts/<%= @account.id %>/mailouts/new" class="button_link">Create a new mailout</a>
 <ol id="mailouts">
 	<% for campaign in @campaigns %>
-		<li><a href="/accounts/<%= @account.id %>/mailouts/<%=campaign["id"]%>"><%= campaign["title"] %></a></li>
+		<li class="<%= cycle("even", "odd") %>">
+			<h1><a href="/accounts/<%= @account.id %>/mailouts/<%=campaign["id"]%>"><%= campaign["title"] %></a></h1>
+		</li>
 	<% end %>
 </ol>
