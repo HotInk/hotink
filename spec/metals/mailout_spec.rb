@@ -61,12 +61,14 @@ describe Mailout do
     before do
       @campaign = mock("campaign")
       @campaign.stub!(:[])
+      @sample_content = {"html" => "<h1>HTML sample email test</h1>"}
       @mailer.should_receive(:find_campaign_by_id).with("sample_id").and_return(@campaign)
+      @mailer.should_receive(:content).and_return(@sample_content)
       get "/accounts/#{@account.id}/mailouts/sample_id"
     end
     
     it "should display a preview of the mailout" do
-      last_response.body.should have_selector("iframe[src=\"#{@campaign['archive_url']}\"]")
+      last_response.body.should include(@sample_content["html"])
     end
     it "should display a send button for unsent mailout" do
       @campaign['send_time'].to_s.should == ""

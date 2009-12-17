@@ -51,6 +51,7 @@ module Mailout
     get '/accounts/:id/mailouts/:mailout' do
       initialize_mailchimp
       @campaign = @mailchimp.find_campaign_by_id(params[:mailout])
+      @content = @mailchimp.content(@campaign["id"])
       erb :mailout
     end
     
