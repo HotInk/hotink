@@ -8,9 +8,19 @@ module Mailout
 
     API_KEY = 'e03757750894d3afb19d93edf0bf9421-us1'
     
+    def load_session 
+        @account = Account.find(params[:id])
+        halt 404 unless @account
+        
+        @current_user_session = UserSession.find
+        @current_user = @current_user_session.nil? ? nil : @current_user_session.user 
+        unless @current_user && (@current_user.has_role?("staff", @account) || @current_user.has_role?("admin"))
+          redirect '/user_session/new'
+        end
+    end
+    
     def initialize_mailchimp
-      @account = Account.find(params[:id])
-      halt 404 unless @account
+      load_session
       @mailchimp = Hominid::Base.new({:api_key => API_KEY })
     end
 
