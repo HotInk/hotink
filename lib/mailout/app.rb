@@ -26,6 +26,7 @@ module Mailout
     
     helpers do
       include ActionView::Helpers::TextHelper
+      include ActionView::Helpers::DateHelper
     end
 
     get '/accounts/:id/mailouts' do

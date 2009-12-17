@@ -1,12 +1,20 @@
-<h1>Recent mailouts</h1>
+<h1>Mailouts</h1>
 <p>Mailouts are email blasts sent to all your publications's subscribers. You can include a selection of your most recent articles in each
 	mailout, or send a themed mailout for a special occasion.</p>
 <p>In order to send a mailout, you must have a <a href="http://mailchimp.com">Mailchimp</a> account.<p> 
-<a href="/accounts/<%= @account.id %>/mailouts/new" class="button_link">Create a new mailout</a>
+<br />
+<h2>Recent mailouts</h2><a href="/accounts/<%= @account.id %>/mailouts/new" class="button_link">Create a new mailout</a>
 <ol id="mailouts">
 	<% for campaign in @campaigns %>
-		<li class="<%= cycle("even", "odd") %>">
+		<li class="clearfix <%= cycle("even", "odd") %>">
 			<h1><a href="/accounts/<%= @account.id %>/mailouts/<%=campaign["id"]%>"><%= campaign["title"] %></a></h1>
+			<p class="date">
+			<% if campaign["emails_sent"] > 0 %>
+				<%= Time.parse(campaign["send_time"]).to_s(:standard) %><small>(<%= time_ago_in_words(Time.parse(campaign["send_time"]))%> ago)</small></p>
+			<% else %>
+				Unsent
+			<% end %>
+			</p>
 		</li>
 	<% end %>
 </ol>
