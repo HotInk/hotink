@@ -31,7 +31,8 @@ ol#mailouts li .delete a { background: url('/images/token_x_red.gif') no-repeat;
 ol#mailouts li .delete a:hover { text-decoration: none; }
 ol#mailouts li div.delete { float: right; width: 10px; height: 1.2em; margin-right: 0; }
 
-div#articles_header, ol#articles { width: 700px; }
+div#articles_wrapper {float: left}
+div#articles_header, ol#articles { width: 480px; }
 div#articles_header h2 { font-weight: bold; }
 ol#articles { border: 1px dotted #777; }
 ol#articles li { padding: 5px; background-color: #CEE4F3; }
@@ -42,10 +43,10 @@ ol#articles li .article, ol#articles li .section {  border: 1px dotted #9cf; bac
 ol#articles li .article h1, ol#articles li .section, ol#articles li .date { color: #515151; }
 ol#articles li .section, ol#articles li .date, 
 ol#articles li .article h1, ol#articles li .article .article_details { padding: 5px; }
-ol#articles li .article h1 { font-size: 15px; border-bottom: 1px solid #DDD;  }
+ol#articles li .article h1 { font-size: 13px; border-bottom: 1px solid #DDD;  }
 ol#articles li .article .article_details { min-height: 18px; }
 ol#articles li .section { width: 15%; font-size: 15px; margin: 0 5px; overflow: hidden; }
-ol#articles li .date { width: 12%; font-size: 18px; float: right; text-align: right; }
+ol#articles li .date { width: 12%; font-size: 15px; float: right; text-align: right; }
 
 .pagination { float: right; position: relative; }
 .pagination img { position: relative; top: 4px; }
@@ -61,7 +62,7 @@ form>fieldset input[type="text"] { font-size: 14px; width:83%; float: right;}
 
 h2, h2+p, ol#articles { float: left; clear: both; }	
 
-.footer { float:left; width: 960px; margin-top: 20px; margin-bottom: 10px; text-align: right; font-size: 0.8em;}
+p.footer { float:left; clear: both; max-width: 960px; width: 960px; margin-top: 20px; margin-bottom: 10px; text-align: right; font-size: 0.8em;}
 
 /* Overlay css */
 
