@@ -1,5 +1,5 @@
 body{ font-size: 12px; font-family: "lucida grande", Verdana, Helvetica, Arial, sans-serif; }
-h1, h2 { padding-bottom: 5px; font-weight: 200; margin: 0; }
+h1, h2, h3 { padding-bottom: 5px; font-weight: 200; margin: 0; }
 ol { list-style-type: none; float: left; padding: 0; margin: 0;}
 ol li { padding: 8px 10px; }
 a { color: #222; text-decoration: none; }
@@ -9,29 +9,48 @@ a:visited { color: #777; }
 body>p { max-width: 700px; }
 body>ol { width: 700px;}
 
-.button_link { outline: none; display: block; float: left; font-size: 13px; padding: 3px; margin: 0 10px; color: black; background-color: #FFF6DD; border: 1px solid #333;-moz-border-radius: 3px; -webkit-border-radius: 3px; }
+.button_link { outline: none; font-size: 11px; padding: 3px; color: black; background-color: #FFF6DD; border: 1px solid #333;-moz-border-radius: 3px; -webkit-border-radius: 3px; }
 .button_link:visited { color: black; }
 .button_link:hover { background-color: #CEE4F3; }
 .button_link:active { background-color: #EEF4FF; }
 
-ol#recent_articles li.selected_card { background-color: #CDFBDC; }
-
-h2 { float: left; clear: left; font-weight: bold; padding: 3px 7px; text-decoration: underline; border: 2px solid #CEE4F3; border-bottom-width: 0; 
+h3 { float: left; clear: left; font-weight: bold; padding: 3px 7px; text-decoration: underline; border: 2px solid #CEE4F3; border-bottom-width: 0; 
 	-moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px; -webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px; }
-h2+p { padding: 10px 7px 0 7px; width: 679px; margin: 0; float: left; clear: left; background-color: #CEE4F3; -moz-border-radius-topright: 3px; -webkit-border-top-right-radius: 3px; }
-ol { border: 2px solid #CEE4F3; border-top-width: 10px; font-size: 11px; float: left; clear: left; margin-bottom: 10px; }
-ol li { position: relative; }
-ol li.even { background-color: #EFEFEF; }
-ol li+li { border-top: 1px dotted #999; }
-ol h1 { font-size: 16px; width: 550px; padding-left: 10px; float: left; }
-ol input { float: left; }
-ol p { margin: 2px; float: left; }
-ol p.date { float: right; font-size: 17px; width: 85px; color: #AAA; }
-ol p.date small { display: block; font-size: 8px; color: #777; }
-ol li .delete a { background: url('/images/token_x_red.gif') no-repeat; }
-ol li .delete a:hover { text-decoration: none; }
-ol li div.delete { float: right; width: 10px; height: 1.2em; margin-right: 0; }
-	
+h3+a { float: left; margin: 0 10px; }
+h3+p { padding: 10px 7px 0 7px; width: 679px; margin: 0; float: left; clear: left; background-color: #CEE4F3; -moz-border-radius-topright: 3px; -webkit-border-top-right-radius: 3px; }
+ol#mailouts { border: 2px solid #CEE4F3; border-top-width: 10px; font-size: 11px; float: left; clear: left; margin-bottom: 10px; }
+ol#mailouts li { position: relative; }
+ol#mailouts li.even { background-color: #EFEFEF; }
+ol#mailouts li+li { border-top: 1px dotted #999; }
+ol#mailouts h1 { font-size: 16px; width: 550px; padding-left: 10px; float: left; }
+ol#mailouts input { float: left; }
+ol#mailouts p { margin: 2px; float: left; }
+ol#mailouts p.date { float: right; font-size: 17px; width: 85px; color: #AAA; }
+ol#mailouts p.date small { display: block; font-size: 8px; color: #777; }
+ol#mailouts li .delete a { background: url('/images/token_x_red.gif') no-repeat; }
+ol#mailouts li .delete a:hover { text-decoration: none; }
+ol#mailouts li div.delete { float: right; width: 10px; height: 1.2em; margin-right: 0; }
+
+div#articles_header, ol#articles { width: 700px; }
+div#articles_header h2 { font-weight: bold; }
+ol#articles { border: 1px dotted #777; }
+ol#articles li { padding: 5px; background-color: #CEE4F3; }
+ol#articles li+li { border-top: 1px dotted #777; }
+ol#articles li div { float: left; }
+ol#articles li .article { width: 65%; }
+ol#articles li .article, ol#articles li .section {  border: 1px dotted #9cf; background-color: white; }
+ol#articles li .article h1, ol#articles li .section, ol#articles li .date { color: #515151; }
+ol#articles li .section, ol#articles li .date, 
+ol#articles li .article h1, ol#articles li .article .article_details { padding: 5px; }
+ol#articles li .article h1 { font-size: 15px; border-bottom: 1px solid #DDD;  }
+ol#articles li .article .article_details { min-height: 18px; }
+ol#articles li .section { width: 15%; font-size: 15px; margin: 0 5px; overflow: hidden; }
+ol#articles li .date { width: 12%; font-size: 18px; float: right; text-align: right; }
+
+.pagination { float: right; position: relative; }
+.pagination img { position: relative; top: 3px; }
+
+form { float: left; clear: both; }	
 form>fieldset { float: left; width: 684px; margin-bottom: 20px; border: none;  }
 form>fieldset legend { font-size: 17px; border-bottom: 1px solid #222; }
 form>fieldset>legend { font-size: 22px; font-weight: bold;  }
@@ -39,6 +58,8 @@ form>fieldset label { font-size: 15px; font-weight: bold; }
 form>fieldset ol { border: none; width: 100%; }
 form>fieldset li { margin: 10px 0; border: none; }
 form>fieldset input[type="text"] { font-size: 14px; width:83%; float: right;}
+
+h2, h2+p, ol#articles { float: left; clear: both; }	
 
 .footer { float:left; width: 960px; margin-top: 20px; margin-bottom: 10px; text-align: right; font-size: 0.8em;}
 

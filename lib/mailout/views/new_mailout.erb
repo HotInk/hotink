@@ -15,72 +15,8 @@
 		<li><label>To: <input type="text" name="mailout[to_email]" id="mailout_to_email" value="national@cup.ca" /></label></li>
 	</ol>
   </fieldset>
-
-<h2>Recently published articles</h2>
-<p>To include and article in this mailout, select it here.</p>
-<ol id="recent_articles">
-	<% for article in @articles %>
-	<li id="article_<%= article.id %>" class="clearfix <%= cycle("even", "odd") %>">
-		<input type="checkbox" value="<%= article.id %>" name="article_ids[]"/>
-		<h1><%= article.title %></h1>
-		<p class="date"><%= article.published_at.to_s(:standard) %><small>(<%= time_ago_in_words(article.published_at)%> ago)</small></p>
-	</li>
-	<% end %>
-</ol>
 <fieldset><input type="submit" value="Create new mailout" onclick ="if (confirm('Are you sure you want to creat this mailout including only the articles you selected?\n\nIf you change your mind you\'ll have to delete this mailout and recreate it.\n\nPress \'OK\' to create the mailout or \'Cancel\' to continue working on it.')) {return true}; return false;"></fieldset>
 </form>
-
-<script type="text/javascript" charset="utf-8">
-	/* Index page "card" functionality */
-
-	var Card = Class.create({
-		initialize: function(element, selected) {
-			this.element = $(element);
-			this.document_link = this.element.select('.document_link')[0];
-			this.selected = selected;
-			this.element.card = this;
-			this.checkbox = this.element.select('input[type="checkbox"]')[0];
-			Event.observe(this.element, 'click', this.onclick.bindAsEventListener(this));
-			Event.observe(this.element, 'mouseover', this.onmouseover.bindAsEventListener(this));	    
-			Event.observe(this.element, 'mouseout', this.onmouseout.bindAsEventListener(this));	    
-
-		},
-
-		onclick: function( e ) {
-			var eventTarget = e.target ? e.target: e.srcElement;
-	    	skipped_elements = this.element.select('a, img');
-
-			if (!skipped_elements.include(eventTarget)) {
-				if (this.selected) {
-					this.deselect();
-				} else { 
-					this.select();
-				}
-			}
-		},
-
-		select: function() {
-			this.checkbox.checked = true;
-			this.element.addClassName("selected_card");
-			this.selected = true;
-		},
-
-		deselect: function() {
-			this.checkbox.checked = null;
-			this.element.removeClassName("selected_card");
-			this.selected = false;
-		},
-
-		onmouseover: function() {
-			this.element.addClassName('highlighted_card');
-		},
-
-		onmouseout: function() {
-			this.element.removeClassName('highlighted_card');
-		}
-
-	});
-
-	$('recent_articles').select('li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });
-	
-</script>
+<div id="articles_wrapper">
+	<%= erb :articles, :layout => :false %>
+</div>

@@ -1,0 +1,35 @@
+<div id="articles_header">
+	<h2>Recently published articles</h2>
+	<div class="pagination">
+		<% if params[:page]&&params[:page].to_i>1 %>
+			<a class="button_link" href="#" onclick="; new Ajax.Request('/accounts/<%= @account.id %>/mailouts/articles?page=<%= params[:page].to_i-1 %>', {asynchronous:true, evalScripts:true, method:'get', onSuccess: function(response) { $('articles_wrapper').update(response.responseText); } }); $(this).next().setStyle({visibility: 'visible'}); $('articles').addClassName('transparent'); return false;">&laquo;</a>
+		<% end %>
+		<img src="/images/loading_small_white.gif" style="visibility: hidden;" />
+		<a class="button_link" href="#" onclick="; new Ajax.Request('/accounts/<%= @account.id %>/mailouts/articles?page=<%= params[:page].nil? ? "2" : params[:page].to_i+1 %>', {asynchronous:true, evalScripts:true, method:'get', onSuccess: function(response) { $('articles_wrapper').update(response.responseText); } }); $(this).previous().setStyle({visibility: 'visible'}); $('articles').addClassName('transparent'); return false;">&raquo;</a>
+	</div>
+</div>
+<ol id="articles">
+<% for article in @articles %>
+	<li id="article_<%= article.id %>" class="clearfix">
+		<div class="article clearfix">	
+			<h1><%= article.title %></h1>
+			<div class="article_details clearfix">
+				<div class="authors">
+					<%= article.authors_list %>
+				</div>
+				<div class="media">
+					<% article.mediafiles.each do | i | %>
+							<%= image_tag(i.file.url(:system_icon), :border => 1) %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<%= article.section.blank? ? "<span style=\"color: #BBB\">No section</span>" : article.section.name %>
+		</div>
+		<div class="date">
+			<%= article.published_at.to_s(:standard) %>
+		</div>
+	</li>
+<% end %>
+</ol>

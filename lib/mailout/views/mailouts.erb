@@ -2,8 +2,7 @@
 <p>Mailouts are email blasts sent to all your publications's subscribers. You can include a selection of your most recent articles in each
 	mailout, or send a themed mailout for a special occasion.</p>
 <p>In order to send a mailout, you must have a <a href="http://mailchimp.com">Mailchimp</a> account.<p> 
-<br />
-<h2>Recent mailouts</h2><a href="/accounts/<%= @account.id %>/mailouts/new" class="button_link">Create a new mailout</a>
+<h3>Recent mailouts</h3><a href="/accounts/<%= @account.id %>/mailouts/new" class="button_link">Create a new mailout</a>
 <ol id="mailouts">
 	<% for campaign in @campaigns %>
 		<li class="clearfix <%= cycle("even", "odd") %>">

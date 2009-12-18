@@ -41,7 +41,7 @@ describe Mailout do
     end
     
     it "should display most recently published articles for mailout inclusion" do
-      last_response.body.should have_selector("ol#recent_articles")
+      last_response.body.should have_selector("ol#articles")
       for article in @articles
         last_response.body.should have_selector("li#article_#{article.id}")
       end

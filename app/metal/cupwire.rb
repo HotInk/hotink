@@ -2,5 +2,5 @@
 require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
 
 class Cupwire < ArticleStream::App
-  set :owner_account_id, 3
+  set :owner_account_id, 2
 end
