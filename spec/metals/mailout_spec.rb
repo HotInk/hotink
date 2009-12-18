@@ -89,19 +89,33 @@ describe Mailout do
     end
     
     it "should send an unsent mailout" do
-      @campaign.stub!(:[])
+      @campaign.should_receive(:[]).with('id').and_return("sample_id")
+      @campaign.should_receive(:[]).with('emails_sent').and_return(0)
       @mailer.should_receive(:find_campaign_by_id).with("sample_id").and_return(@campaign)
       @mailer.should_receive(:send)
       
       post "/accounts/#{@account.id}/mailouts/sample_id/send"      
     end
-    
+        
     it "should not resend an already sent mailout" do
       @campaign.stub!(:[]).and_return(1)
       @mailer.should_receive(:find_campaign_by_id).with("sample_id").and_return(@campaign)
       @mailer.should_not_receive(:send)
       
       post "/accounts/#{@account.id}/mailouts/sample_id/send"
+    end
+  end
+  
+  describe "POST to /accounts/:id/mailouts/:mailout/send_test" do
+    it "should send a test email for an unsent mailout" do
+      @campaign = mock("campaign")
+      @campaign.should_receive(:[]).with('id').twice.and_return("sample_id")
+      @campaign.should_receive(:[]).with('emails_sent').and_return(0)
+      
+      @mailer.should_receive(:find_campaign_by_id).with("sample_id").and_return(@campaign)
+      @mailer.should_receive(:send_test).with("sample_id", ["test@test.com", "retest@retest.org"], "html")
+      
+      post "/accounts/#{@account.id}/mailouts/sample_id/send_test", :emails => "test@test.com,retest@retest.org"
     end
   end
     

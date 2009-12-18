@@ -4,7 +4,19 @@
 	<p>Sent on <%= @campaign["send_time"] %></p>
 <% else %>
 	<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign["id"] %>/send" method="post"><input type="submit" value="Send" /></form>
+	
+	<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign["id"] %>/send_test" method="post">
+		<label>Email address <input type="text" name="emails" /></label>
+		<input type="submit" value="Send test email" />
+	</form>	
 <% end %>
-<div style="width:700px; padding: 10px; border: 1px solid #666;">
+<h2>HTML Preview</h2>
+<div id="html_preview" style="width:700px; padding: 10px; border: 1px solid #666;">
 	<%= @content["html"] %>
+</div>
+<h2>Text Preview</h2>
+<div id="text_preview" style="width:700px; padding: 10px; border: 1px solid #666;">
+<pre>
+<%= @content["text"] %>
+</pre>
 </div>

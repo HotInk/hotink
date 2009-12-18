@@ -80,5 +80,12 @@ module Mailout
         redirect "/accounts/#{@account.id}/mailouts"
       end
     end
+    
+    post '/accounts/:id/mailouts/:mailout/send_test' do
+        initialize_mailchimp
+        @campaign = @mailchimp.find_campaign_by_id(params[:mailout])
+        @mailchimp.send_test(@campaign['id'], params[:emails].split(","), "html") unless @campaign['emails_sent'].to_i > 0
+        redirect "/accounts/#{@account.id}/mailouts/#{@campaign['id']}"
+    end
   end
 end
