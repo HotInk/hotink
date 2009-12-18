@@ -11,7 +11,7 @@ body>ol { width: 700px;}
 
 .button_link { outline: none; font-size: 11px; padding: 3px; color: black; background-color: #FFF6DD; border: 1px solid #333;-moz-border-radius: 3px; -webkit-border-radius: 3px; }
 .button_link:visited { color: black; }
-.button_link:hover { background-color: #CEE4F3; }
+.button_link:hover { text-decoration: none; background-color: #CEE4F3; }
 .button_link:active { background-color: #EEF4FF; }
 
 h3 { float: left; clear: left; font-weight: bold; padding: 3px 7px; text-decoration: underline; border: 2px solid #CEE4F3; border-bottom-width: 0; 
