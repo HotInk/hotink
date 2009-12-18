@@ -97,8 +97,8 @@ describe Mailout do
       post "/accounts/#{@account.id}/mailouts/sample_id/send"
     end
   end
-  
-  describe "Delete to /accounts/:id/mailouts/:mailout" do    
+    
+  describe "DELETE to /accounts/:id/mailouts/:mailout" do    
     it "should delete the mailout" do
       @mailer.should_receive(:delete).with("sample_id").and_return(true)
       delete "/accounts/#{@account.id}/mailouts/sample_id"

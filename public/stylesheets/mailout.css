@@ -48,7 +48,7 @@ ol#articles li .section { width: 15%; font-size: 15px; margin: 0 5px; overflow: 
 ol#articles li .date { width: 12%; font-size: 18px; float: right; text-align: right; }
 
 .pagination { float: right; position: relative; }
-.pagination img { position: relative; top: 3px; }
+.pagination img { position: relative; top: 4px; }
 
 form { float: left; clear: both; }	
 form>fieldset { float: left; width: 684px; margin-bottom: 20px; border: none;  }
