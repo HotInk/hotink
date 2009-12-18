@@ -1,2 +1,7 @@
 <h1>This is the mailout template</h1>
 <p>This is just a test, it doesn't mean anything.</p>
+
+<% for article in @articles %>
+<h1><%= article.title %></h1>
+<br />
+<% end %>

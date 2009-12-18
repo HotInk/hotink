@@ -49,10 +49,17 @@ describe Mailout do
   end
   
   describe "POST to /accounts/:id/mailouts" do
+    before do
+      @articles = (1..5).collect { Factory(:published_article, :account => @account) }
+      @article_ids = @articles.collect { |a| a.id.to_s }
+    end
+    
     it "should create an unsent mailout" do
+      Article.should_receive(:find).with(@article_ids).and_return(@articles)
+      
       # This is long, but it's the Hominid api spec
-      @mailer.should_receive(:create_campaign).with(  'regular', { :list_id => 'c18292dd69', :from_email => "test@example.com", :from_name => "test name", :subject => "A test", :to_email => "totest@example.com" }, { :html => "<h1>Test email</h1>" , :test =>"Test email" })
-      post "/accounts/#{@account.id}/mailouts", :mailout => { :from_email => "test@example.com", :name => "test name", :subject => "A test", :to_email => "totest@example.com" }
+      @mailer.should_receive(:create_campaign).with('regular', { :list_id => 'c18292dd69', :from_email => "test@example.com", :from_name => "test name", :subject => "A test", :to_email => "totest@example.com" }, an_instance_of(Hash) )
+      post "/accounts/#{@account.id}/mailouts", :mailout => { :from_email => "test@example.com", :name => "test name", :subject => "A test", :to_email => "totest@example.com", :articles => @article_ids }
       last_response.should be_redirect
     end
   end

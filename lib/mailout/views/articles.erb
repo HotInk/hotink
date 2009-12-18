@@ -2,10 +2,10 @@
 	<h2>Recently published articles</h2>
 	<div class="pagination">
 		<% if params[:page]&&params[:page].to_i>1 %>
-			<a class="button_link" href="#" onclick="; new Ajax.Request('/accounts/<%= @account.id %>/mailouts/articles?page=<%= params[:page].to_i-1 %>', {asynchronous:true, evalScripts:true, method:'get', onSuccess: function(response) { $('articles_wrapper').update(response.responseText); } }); $(this).next().setStyle({visibility: 'visible'}); $('articles').addClassName('transparent'); return false;">&laquo;</a>
+			<a class="button_link" href="#" onclick="; new Ajax.Request('/accounts/<%= @account.id %>/mailouts/articles?page=<%= params[:page].to_i-1 %>', {asynchronous:true, evalScripts:true, method:'get', onSuccess: function(response) { $('articles_wrapper').update(response.responseText); } }); $(this).next().setStyle({visibility: 'visible'}); $('articles').addClassName('transparent'); return false;">&laquo; prev</a>
 		<% end %>
 		<img src="/images/loading_small_white.gif" style="visibility: hidden;" />
-		<a class="button_link" href="#" onclick="; new Ajax.Request('/accounts/<%= @account.id %>/mailouts/articles?page=<%= params[:page].nil? ? "2" : params[:page].to_i+1 %>', {asynchronous:true, evalScripts:true, method:'get', onSuccess: function(response) { $('articles_wrapper').update(response.responseText); } }); $(this).previous().setStyle({visibility: 'visible'}); $('articles').addClassName('transparent'); return false;">&raquo;</a>
+		<a class="button_link" href="#" onclick="; new Ajax.Request('/accounts/<%= @account.id %>/mailouts/articles?page=<%= params[:page].nil? ? "2" : params[:page].to_i+1 %>', {asynchronous:true, evalScripts:true, method:'get', onSuccess: function(response) { $('articles_wrapper').update(response.responseText); } }); $(this).previous().setStyle({visibility: 'visible'}); $('articles').addClassName('transparent'); return false;">next &raquo;</a>
 	</div>
 </div>
 <ol id="articles">
@@ -33,3 +33,8 @@
 	</li>
 <% end %>
 </ol>
+<script type="text/javascript" charset="utf-8">
+	$('articles').childElements().each( function(li){ 
+		new Draggable(li.down(), { revert: true }); 
+	});
+</script>

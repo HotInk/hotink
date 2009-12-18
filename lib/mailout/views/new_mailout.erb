@@ -22,7 +22,7 @@
 	<ol class="clearfix">
 	  <li>
 		<input name="mailout[articles][]" type="hidden" />
-		<a class="empty_link" href="#" onclick="empty_schema_position($(this).up()); return false;">x</a>	
+		<a class="empty_link" href="#" onclick="empty_article_slot($(this).up()); return false;">x</a>	
 		<div class="clearfix">
 			<p>Nothing in this position</p>
 		</div>
@@ -41,17 +41,40 @@
 </form>
 
 <script type="text/javascript" charset="utf-8">
+
 	// Insert additional mailout article slot
 	add_article_slot = function(container) {
-	  container.insert( Builder.node('li', [ 
-			Builder.node('input', {name:'mailout[articles][]', type:'hidden'}),
-			Builder.node('a', {className:'empty_link', href:'#', onclick:'empty_schema_position($(this).up()); return false;'}, 'x'),
-			Builder.node('div', {className: 'clearfix'}, Builder.node('p', 'Nothing in this position'))])
-	  );
+	  new_element = Builder.node('li', [ 
+				Builder.node('input', {name:'mailout[articles][]', type:'hidden'}),
+				Builder.node('a', {className:'empty_link', href:'#', onclick:'empty_article_slot($(this).up()); return false;'}, 'x'),
+				Builder.node('div', {className: 'clearfix'}, Builder.node('p', 'Nothing in this position'))
+	  ])
+	  container.insert(new_element);
+	  build_article_slot_droppable(new_element);
 	}
 	// Remove last mailout article slot
 	remove_article_slot = function(container) {
 		$(container).select("li:last-child")[0].remove();
-	} 
+	}
+	
+	// Build a scriptaculous droppable
+	build_article_slot_droppable = function(article_slot) {
+			Droppables.add(article_slot, { onDrop: function( new_article, spec_holder ){
+				 	var new_article_id = new_article.up().id.split('_').pop();
+					var spec_holder_id = spec_holder.id.split('_').pop();
+					spec_holder.down().value = new_article_id;
+					spec_holder.down().next().next().innerHTML = new_article.innerHTML;
+					//alert('Dropped \n\n' + new_article_id + "\n\non\n\n" + spec_holder_id ); 
+			}});
+	}
+	
+	
+	empty_article_slot = function( article_slot ) {
+		article_slot.down().value = "";
+		article_slot.down().next().next().remove();
+		article_slot.insert( Builder.node('div', {className: 'clearfix'}, Builder.node('p', 'Nothing in this position')) );
+	}
+	
+	$('mailout_articles').select("li").each(function(element){ build_article_slot_droppable(element)});
 	
 </script>

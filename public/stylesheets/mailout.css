@@ -59,6 +59,11 @@ ol#articles li .date { width: 12%; font-size: 15px; float: right; text-align: ri
 #mailout_articles ol { min-height: 15px; border: 1px solid #DEDEDE; background-color: #FFF6DD;}
 #mailout_articles ol li { padding: 10px; margin: 10px; background: #FDFDFD; border: 1px solid #DEDEDE; }
 #mailout_articles ol li .empty_link { float: right; color: red; text-decoration: none; margin-right: 5px; font-size: 0.9em; }
+#mailout_articles ol li h1 { font-size: 12px;  }
+#mailout_articles ol li .authors { float: left; font-size: 10px; font-weight: bold; }
+#mailout_articles ol li .media { float: right; margin-right: 20px; }
+
+
 #mailout_articles ul { clear: left; }
 #mailout_articles ul li { margin: 10px; width: 150px; float: left; }
 #mailout_articles ul li a { display:block; text-align: center; font-weight: bold; width: 100%; color: #333; }

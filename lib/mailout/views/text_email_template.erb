@@ -2,3 +2,10 @@ This is the mailout template
 ----------------------------
 
 This is just a test, it doesn't mean anything.
+
+Articles
+--------
+<% for article in @articles %>
+<%= article.title %>
+
+<% end %>

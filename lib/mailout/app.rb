@@ -40,7 +40,8 @@ module Mailout
     
     post '/accounts/:id/mailouts' do
       initialize_mailchimp
-      @mailchimp.create_campaign('regular', { :list_id => 'c18292dd69', :from_email => params[:mailout][:from_email], :from_name => params[:mailout][:name], :subject => params[:mailout][:subject], :to_email => params[:mailout][:to_email] }, { :html => "<h1>Test email</h1>" , :test =>"Test email" })
+      @articles = Article.find(params[:mailout][:articles])
+      @mailchimp.create_campaign('regular', { :list_id => 'c18292dd69', :from_email => params[:mailout][:from_email], :from_name => params[:mailout][:name], :subject => params[:mailout][:subject], :to_email => params[:mailout][:to_email] }, { :html => erb(:html_email_template, :layout => false), :text => erb(:text_email_template, :layout => false)  })
       redirect "/accounts/#{@account.id}/mailouts"
     end
     
