@@ -16,7 +16,42 @@
 	</ol>
   </fieldset>
 <fieldset><input type="submit" value="Create new mailout" onclick ="if (confirm('Are you sure you want to creat this mailout including only the articles you selected?\n\nIf you change your mind you\'ll have to delete this mailout and recreate it.\n\nPress \'OK\' to create the mailout or \'Cancel\' to continue working on it.')) {return true}; return false;"></fieldset>
-</form>
+
+<div id="mailout_articles">
+	<h2>Mailout articles</h2>
+	<ol class="clearfix">
+	  <li>
+		<input name="mailout[articles][]" type="hidden" />
+		<a class="empty_link" href="#" onclick="empty_schema_position($(this).up()); return false;">x</a>	
+		<div class="clearfix">
+			<p>Nothing in this position</p>
+		</div>
+	  </li>
+	</ol>
+	<ul>
+		<li><a class="button_link" href="#" onclick="add_article_slot($('mailout_articles').down().next()); return false;">Add article slot</a></li>
+		<li><a class="button_link" href="#" onclick="remove_article_slot($('mailout_articles').down().next()); return false;">Remove article slot</a></li>
+	</ul>
+</div>
+
 <div id="articles_wrapper">
 	<%= erb :articles, :layout => :false %>
 </div>
+
+</form>
+
+<script type="text/javascript" charset="utf-8">
+	// Insert additional mailout article slot
+	add_article_slot = function(container) {
+	  container.insert( Builder.node('li', [ 
+			Builder.node('input', {name:'mailout[articles][]', type:'hidden'}),
+			Builder.node('a', {className:'empty_link', href:'#', onclick:'empty_schema_position($(this).up()); return false;'}, 'x'),
+			Builder.node('div', {className: 'clearfix'}, Builder.node('p', 'Nothing in this position'))])
+	  );
+	}
+	// Remove last mailout article slot
+	remove_article_slot = function(container) {
+		$(container).select("li:last-child")[0].remove();
+	} 
+	
+</script>

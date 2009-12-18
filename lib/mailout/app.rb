@@ -28,6 +28,8 @@ module Mailout
     helpers do
       include ActionView::Helpers::TextHelper
       include ActionView::Helpers::DateHelper
+      include ActionView::Helpers::TagHelper
+      include ActionView::Helpers::AssetTagHelper
     end
 
     get '/accounts/:id/mailouts' do
@@ -44,13 +46,13 @@ module Mailout
     
     get '/accounts/:id/mailouts/new' do
       initialize_mailchimp
-      @articles = @account.articles.status_matches("published").by_published_at(:desc).paginate(:page => 1, :per_page => 5)
+      @articles = @account.articles.status_matches("published").by_published_at(:desc).paginate(:page => 1, :per_page => 10)
       erb :new_mailout
     end
 
     get '/accounts/:id/mailouts/articles' do
       load_session
-      @articles = @account.articles.status_matches("published").by_published_at(:desc).paginate(:page => params[:page], :per_page => 5)
+      @articles = @account.articles.status_matches("published").by_published_at(:desc).paginate(:page => params[:page], :per_page => 10)
       erb :articles, :layout => false
     end
     
