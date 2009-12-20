@@ -20,6 +20,15 @@
 				<option value="<%= template.id %>"><%= template.name %></option>
 			<% end %>
 			</select>
+			<li>
+				<label for="mailout_list_id">Send to which list?</label>
+				<select name="mailout[list_id]" id="mailout_list_id">
+				<% @lists.each do |list| %>
+					<option value="<%= list['id'] %>"><%= list['name'] %></option>
+				<% end %>
+				</select>
+			</li>
+		</li>
 	</ol>
   </fieldset>
 <fieldset>

@@ -1,0 +1,27 @@
+<h1>Mailouts</h1>
+<p>Mailouts are email blasts sent to all your publications's subscribers. You can include a selection of your most recent articles in each
+	mailout, or send a themed mailout for a special occasion.</p>
+<p>In order to send a mailout, you must have a <a href="http://mailchimp.com">Mailchimp</a> account. Getting one is easy and comes will all
+	sorts of benefits, like tracking what happens to your emails after they've been sent. 
+<p>Mailchimp will let you send <strong>3000 messages per month</strong> to a maximum of <strong>500 different email addresses</strong> for free.
+	If you decide that isn't enough for you, you add additional email capacity at very little cost. Check out the 
+	<a href="http://mailchimp.com">Mailchimp</a> website for more information on pricing. It's well worth the cost.
+<p>In order to send mailouts from your account, all you need to do is:</p>
+<ol> 
+	<li>Sign up for a <a href="http://mailchimp.com">Mailchimp</a> account</li>
+	<li>Log in</li>
+	<li>Follow the "Account" link in the upper right corner any page</li>
+	<li>Select "API Keys & Info"</li>
+	<li>Under "Valid API Keys" press "add a key"</li>
+	<li>Enter the key that's created into the form below</li>
+</ol>
+
+<% if flash[:notice] %>
+	<p id="notice"><%= flash[:notice] %></p>
+<% end %>
+
+<form action="/accounts/<%= @account.id %>/mailouts/activate" method="post">
+	<legend>Enter a Mailchimp API key</legend>
+	<label>API key <input type="text" name="mailchimp_api_key" /></label>
+	<input type="submit" value="Activate Hot Ink Mailouts" />
+</form>

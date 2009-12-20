@@ -1,4 +1,5 @@
-<h1>Mailout template</h1>
+<p><a href="/accounts/<%= @account.id %>/mailouts"><-- Back to mailouts</a></p>
+<h1>Mailout templates</h1>
 <p>In order to format your mailouts, you need mailout templates. Each template has both an HTML and plain text component.</p>
 <% if flash[:notice] %>
 	<p id="notice"><%= flash[:notice] %></p>
@@ -12,7 +13,6 @@
 					<a href="/accounts/<%= @account.id %>/mailouts/templates/<%= email_template.id %>" onclick="if (confirm('You are about to delete this template:\n\n Click \'OK\' to delete or \'Cancel\' to return to the page.')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'delete'); f.appendChild(m);f.submit(); };return false;">&nbsp;&nbsp;&nbsp;</a>
 			</div>
 			<p class="date">
-			
 				<%= email_template.created_at.to_s(:standard) %><small>(<%= time_ago_in_words(email_template.created_at)%> ago)</small></p>
 			</p>
 		</li>

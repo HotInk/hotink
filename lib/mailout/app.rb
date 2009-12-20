@@ -9,23 +9,23 @@ module Mailout
 
     set :views, File.dirname(__FILE__) + '/views'
     enable :methodoverride
-    
-    API_KEY = 'e03757750894d3afb19d93edf0bf9421-us1'
-    
+        
     def load_session 
         @account = Account.find(params[:id])
         halt 404 unless @account
         
         @current_user_session = UserSession.find
         @current_user = @current_user_session.nil? ? nil : @current_user_session.user 
-        unless @current_user && (@current_user.has_role?("staff", @account) || @current_user.has_role?("admin"))
+        unless @current_user && (@current_user.has_role?("staff", @account) || @current_user.has_role?('admin'))
           redirect '/user_session/new'
         end
     end
     
     def initialize_mailchimp
       load_session
-      @mailchimp = Hominid::Base.new({:api_key => API_KEY })
+      api_key = @account.settings['mailchimp_api_key']
+      halt 200, erb(:activate) unless api_key
+      @mailchimp = Hominid::Base.new({:api_key => api_key })
     end
     
     helpers do
@@ -86,6 +86,26 @@ module Mailout
       flash[:notice] = "Template destroyed."
       redirect "/accounts/#{@account.id}/mailouts/templates"
     end
+    
+    ## Activation
+    
+    post '/accounts/:id/mailouts/activate' do
+      begin
+        load_session
+        @mailchimp = Hominid::Base.new({:api_key => params[:mailchimp_api_key] })
+        
+        # Key check will raise RuntimeError (404) if the api key is invalid
+        key_check = @mailchimp.account_details
+        @account.settings['mailchimp_api_key'] = params[:mailchimp_api_key]
+        @account.save
+        
+        flash[:notice] = "Account successfully activated"
+        redirect "/accounts/#{@account.id}/mailouts"
+      rescue RuntimeError => e
+        flash[:notice] = "Sorry, that wasn't a valid api key. Mailchimp couldn't recognize it. Of course, It's possible that Mailchimp is temporarily unavailable. If you're sure you have a valid key, try activating again later. Mailchimp should be back to normal soon."
+        erb :activate
+      end
+    end
 
     ## Mailouts
 
@@ -113,7 +133,15 @@ module Mailout
     
     get '/accounts/:id/mailouts/new' do
       initialize_mailchimp
+      
+      # Check for lists
+      @lists = @mailchimp.lists
+      halt 200, erb(:create_list) if @lists.empty?
+
+      # Check for templates
       @email_templates = @account.email_templates
+      halt 200, erb(:create_email_template) if @email_templates.empty?
+      
       @articles = @account.articles.status_matches("published").by_published_at(:desc).paginate(:page => 1, :per_page => 6)
       erb :new_mailout
     end
