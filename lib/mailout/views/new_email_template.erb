@@ -1,0 +1,19 @@
+<p><a href="/accounts/<%= @account.id %>/mailouts/templates"><-- Back to email templates</a></p>
+<form class="template_form" action="/accounts/<%= @account.id %>/mailouts/templates" method="POST">
+  <fieldset>
+	<legend>New email template</legend>
+	<% if flash[:notice] %><p class="notice" style="color: red;"><%= flash[:notice] %><p><% end %>
+	<ol>
+		<li><label>Name <input type="text" name="template[name]" id="template_name" /></label></li>
+		<li>
+			<label for="template_html">HTML template</label>
+			<textarea name="template[html]" id="template_html" rows="30" cols="125"> </textarea>
+		</li>
+		<li>
+			<label for="template_plaintext">Plain text template</label>
+			<textarea name="template[plaintext]" id="template_plaintext" rows="30" cols="125"> </textarea>
+		</li>
+	</ol>
+  </fieldset>
+  <input type="submit" value="Create template" />
+</form>

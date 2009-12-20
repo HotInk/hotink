@@ -17,4 +17,8 @@ class Article < Document
     
     copy
   end
+  
+  def to_liquid
+    {'title' => title, 'subtitle' => subtitle, 'authors_list' => authors_list, 'bodytext' => bodytext}
+  end
 end

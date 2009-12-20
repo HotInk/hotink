@@ -13,9 +13,18 @@
 	<ol>
 		<li><label>Subject: <input type="text" name="mailout[subject]" id="mailout_subject" value="CUP Newswire top stories for <%= Time.now.to_s(:simple) %>" /></label></li>
 		<li><label>To: <input type="text" name="mailout[to_email]" id="mailout_to_email" value="national@cup.ca" /></label></li>
+		<li>
+			<label for="mailout_template_id">Email template</label>
+			<select name="mailout[template_id]" id="mailout_template_id">
+			<% @email_templates.each do |template| %>
+				<option value="<%= template.id %>"><%= template.name %></option>
+			<% end %>
+			</select>
 	</ol>
   </fieldset>
-<fieldset><input type="submit" value="Create new mailout" onclick ="if (confirm('Are you sure you want to creat this mailout including only the articles you selected?\n\nIf you change your mind you\'ll have to delete this mailout and recreate it.\n\nPress \'OK\' to create the mailout or \'Cancel\' to continue working on it.')) {return true}; return false;"></fieldset>
+<fieldset>
+	<input type="submit" value="Create new mailout" onclick ="if (confirm('Are you sure you want to creat this mailout including only the articles you selected?\n\nIf you change your mind you\'ll have to delete this mailout and recreate it.\n\nPress \'OK\' to create the mailout or \'Cancel\' to continue working on it.')) {return true}; return false;">
+</fieldset>
 <div id="mailout_articles">
 	<h2>Mailout articles</h2>
 	<ol class="clearfix">

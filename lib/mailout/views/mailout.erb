@@ -1,22 +1,56 @@
 <p><a href="/accounts/<%= @account.id %>/mailouts"><-- Back to mailouts</a></p>
 <h1>Mailout</h1>
-<% if @campaign["emails_sent"].to_i > 0 %>
-	<p>Sent on <%= @campaign["send_time"] %></p>
-<% else %>
-	<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign["id"] %>/send" method="post"><input type="submit" value="Send" /></form>
-	
-	<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign["id"] %>/send_test" method="post">
-		<label>Email address <input type="text" name="emails" /></label>
-		<input type="submit" value="Send test email" />
-	</form>	
-<% end %>
-<h2>HTML Preview</h2>
-<div id="html_preview" style="width:700px; padding: 10px; border: 1px solid #666;">
-	<%= @content["html"] %>
+<div id="details">
+	<div id="sent" class="clearfix">
+	<% if @campaign["emails_sent"].to_i > 0 %>
+		<p>This mailout was <strong>sent</strong> on<br /><strong><%= Time.parse(@campaign['send_time']).to_s(:long) %></strong></p>
+	<% else %>
+		<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign['id'] %>/send" method="post">
+			<div>This email <strong>has not yet been sent</strong></div>
+			<div><input type="submit" value="Send" /></form></div>
+	<% end %>
+	</div>
+	<% if @campaign["emails_sent"].to_i == 0 %>
+	<h2>Send test email</h2>
+	<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign['id'] %>/send_test" method="post">
+		<div>
+			<label for="emails">Email address</label>
+			<input id="emails" type="text" name="emails" />
+		</div>
+		<div>
+			<input type="submit" value="Send test email" />
+		</div>
+		<% if flash[:test_email_notice] %>
+			<p id="test_email_notice"><%= flash[:test_email_notice] %></p>
+		<% end %>
+	</form>
+	<% end %>
+	<h2>Details</h2>
+	<dl>
+		<dt>From</dt>
+		<dd><dl>
+				<dt>Name</dt>
+				<dd><%= @campaign['from_name'] %></dd>
+				<dt>Email</dt>
+				<dd><%= @campaign['from_email'] %></dt>
+		</dl></dd>
+		<dt>To</dt>
+		<dd><%= @campaign['to_email'] %></dd>
+		<dt>Subject</dt>
+		<dd><%= @campaign['subject'] %></dd>
+	</dl>
 </div>
-<h2>Text Preview</h2>
-<div id="text_preview" style="width:700px; padding: 10px; border: 1px solid #666;">
+<div id="previews">
+	<h1>Previews</h1>
+	<h2>HTML preview</h2>
+	<div id="html_preview">
+		<%= @content["html"] %>
+	</div>
+
+	<h2>Plain-text preview</h2>
+	<div id="text_preview">
 <pre>
 <%= @content["text"] %>
 </pre>
+	</div>
 </div>

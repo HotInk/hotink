@@ -54,8 +54,12 @@ Rails::Initializer.run do |config|
   config.gem "paperclip", :source => "http://gemcutter.org"
   
   config.gem 'bluecloth', :version => "2.0.5"
+  
+  # Gems for Mailout
   config.gem 'sinatra'
   config.gem 'hominid'
+  config.gem 'rack-flash'
+  config.gem 'liquid', :source => "http://gemcutter.org"
   
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.

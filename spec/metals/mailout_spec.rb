@@ -1,5 +1,9 @@
 require 'spec_helper'  
 
+class TestMailoutApp < Mailout::App
+  enable :sessions
+end
+
 describe Mailout do
   include Rack::Test::Methods
   include Webrat::Matchers
@@ -19,8 +23,80 @@ describe Mailout do
   end
   
   def app
-    Mailout::App
+    TestMailoutApp
   end
+  
+  ## Mailout templates
+  
+  describe "GET to /account/:id/mailouts/templates" do
+    before do
+      @email_templates = (1..3).collect{ Factory(:email_template, :account => @account) }
+      get "/accounts/#{@account.id}/mailouts/templates"
+    end
+    
+    it "should display a list of email templates" do
+      last_response.should be_ok
+      @email_templates.each do |template|
+        last_response.body.should include(template.name)
+      end
+    end 
+  end
+
+  describe "GET to /accounts/:id/mailouts/templates/new" do
+    it "should display the mailout form" do
+      get "/accounts/#{@account.id}/mailouts/templates/new"
+
+      last_response.should be_ok
+      last_response.body.should have_selector("form[action=\"/accounts/#{@account.id}/mailouts/templates\"]")
+    end
+  end
+  
+  describe "POST to /accounts/:id/mailouts/templates" do
+    it "should create a template with valid attributes" do
+      template_attributes = { :name => "Test template" }
+      
+      post "/accounts/#{@account.id}/mailouts/templates", :template => template_attributes
+      last_response.should be_redirect
+    end
+    
+    it "should not create a template if vaild attributes aren't supplied" do
+      post "/accounts/#{@account.id}/mailouts/templates"
+      last_response.body.should include("Error saving this template. Maybe it needs a name?")
+    end
+  end
+  
+  describe "GET to /accounts/:id/mailouts/templates/:template/edit" do
+    it "should display the template edit form" do
+      @email_template = Factory(:email_template, :account => @account)
+      get "/accounts/#{@account.id}/mailouts/templates/#{@email_template.id}/edit"
+
+      last_response.should be_ok
+      last_response.body.should have_selector("form[action=\"/accounts/#{@account.id}/mailouts/templates/#{@email_template.id}\"]")
+    end
+  end
+  
+  describe "PUT to /accounts/:id/mailouts/templates/:template" do
+    before do
+      @email_template = Factory(:email_template, :account => @account) 
+    end
+    
+    it "should update a template with valid attributes" do
+      template_attributes = { :name => "Test template" }
+      
+      put "/accounts/#{@account.id}/mailouts/templates/#{@email_template.id}", :template => template_attributes
+      last_response.should be_redirect
+    end
+  end
+  
+  describe "DELETE to /accounts/:id/mailouts/templates/:template" do
+    it "should delete the template" do
+      @email_template = Factory(:email_template, :account => @account )
+      delete "/accounts/#{@account.id}/mailouts/templates/#{@email_template.id}"
+      @account.email_templates.should be_empty
+    end
+  end
+  
+  ## Mailouts 
   
   describe "GET to /accounts/:id/mailouts" do
     it "should display all campaigns from Mailchimp" do
@@ -33,6 +109,7 @@ describe Mailout do
   describe "GET to /accounts/:id/mailouts/new" do
     before do
       @articles = (1..5).collect { Factory(:published_article, :account => @account) }
+      @email_templates = (1..3).collect { Factory(:email_template, :account => @account) }
       get "/accounts/#{@account.id}/mailouts/new"
     end
     it "should display the mailout form" do
@@ -46,20 +123,32 @@ describe Mailout do
         last_response.body.should have_selector("li#article_#{article.id}")
       end
     end
+    
+    it "should display email template names for selection" do
+      @email_templates.each { |e| last_response.body.should have_selector("option[value=\"#{e.id}\"]") }
+    end
   end
   
   describe "POST to /accounts/:id/mailouts" do
     before do
       @articles = (1..5).collect { Factory(:published_article, :account => @account) }
       @article_ids = @articles.collect { |a| a.id.to_s }
+      @email_template = Factory(:email_template_with_articles, :account => @account)
     end
     
     it "should create an unsent mailout" do
       Article.should_receive(:find).with(@article_ids).and_return(@articles)
       
       # This is long, but it's the Hominid api spec
-      @mailer.should_receive(:create_campaign).with('regular', { :list_id => 'c18292dd69', :from_email => "test@example.com", :from_name => "test name", :subject => "A test", :to_email => "totest@example.com" }, an_instance_of(Hash) )
-      post "/accounts/#{@account.id}/mailouts", :mailout => { :from_email => "test@example.com", :name => "test name", :subject => "A test", :to_email => "totest@example.com", :articles => @article_ids }
+      @mailer.should_receive(:create_campaign).with('regular', {
+              :list_id => 'c18292dd69', 
+              :from_email => "test@example.com", 
+              :from_name => "test name", 
+              :subject => "A test", 
+              :to_email => "totest@example.com" }, { 
+              :html => @email_template.render_html('account' => @account, 'articles' => @articles), 
+              :text => @email_template.render_plaintext('account' => @account, 'articles' => @articles) })
+      post "/accounts/#{@account.id}/mailouts", :mailout => { :from_email => "test@example.com", :name => "test name", :subject => "A test", :to_email => "totest@example.com", :articles => @article_ids, :template_id => @email_template.id }
       last_response.should be_redirect
     end
   end
@@ -82,6 +171,16 @@ describe Mailout do
       last_response.body.should have_selector("input[value=\"Send\"]")
     end
   end
+  
+  describe "DELETE to /accounts/:id/mailouts/:mailout" do    
+    it "should delete the mailout" do
+      @mailer.should_receive(:delete).with("sample_id").and_return(true)
+      delete "/accounts/#{@account.id}/mailouts/sample_id"
+      last_response.should be_redirect
+    end
+  end
+  
+  ## Mailout - sending
   
   describe "POST to /accounts/:id/mailouts/:mailout/send" do
     before do
@@ -116,14 +215,6 @@ describe Mailout do
       @mailer.should_receive(:send_test).with("sample_id", ["test@test.com", "retest@retest.org"], "html")
       
       post "/accounts/#{@account.id}/mailouts/sample_id/send_test", :emails => "test@test.com,retest@retest.org"
-    end
-  end
-    
-  describe "DELETE to /accounts/:id/mailouts/:mailout" do    
-    it "should delete the mailout" do
-      @mailer.should_receive(:delete).with("sample_id").and_return(true)
-      delete "/accounts/#{@account.id}/mailouts/sample_id"
-      last_response.should be_redirect
     end
   end
   

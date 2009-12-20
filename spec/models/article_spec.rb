@@ -38,4 +38,9 @@ describe Article do
     photocopy.status.should be_nil
     photocopy.authors_list.should == original.authors_list
   end
+  
+  it "should generate liquid variables for templates" do
+    article = Factory(:detailed_article)
+    article.to_liquid.should == {'title' => article.title, 'subtitle' => article.subtitle, 'authors_list' => article.authors_list, 'bodytext' => article.bodytext}
+  end
 end
