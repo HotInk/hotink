@@ -6,7 +6,7 @@ describe ArticleStream do
   
   before do
     @account = Factory(:account)      
-    set :owner_account_id, @account.id
+    Account.stub!(:find).and_return(@account)
     
     # Use test doubles for authlogic
     @user = mock("user")
@@ -47,11 +47,14 @@ describe ArticleStream do
   
   describe "GET to /team" do
     before(:each) do
-      @users = (1..3).collect do 
-        user = Factory(:user)
-        user.has_role "staff", @account
+      @users = (1..3).collect do |n|
+        user = mock("team member")
+        user.should_receive(:id).twice.and_return(n)
+        user.should_receive(:name).and_return("Team Member ##{n}")
+        user.should_receive(:email).and_return("team#{n}@testemail.com")
         user
       end
+      @account.should_receive(:has_staff).and_return(@users)
       get "/team"
     end
     

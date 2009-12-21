@@ -27,5 +27,19 @@ describe Mediafile do
     @mediafile.authors_list = "Lilly, Marshall and Robin"
     @mediafile.authors.length.should == 3
   end
+  
+  it "should create account-neutral photocopies of itself" do
+    original = Factory(:detailed_mediafile)
+    new_account = Factory(:account)
+    photocopy = original.photocopy(new_account)
+    
+    photocopy.should_not be_new_record
+    photocopy.account.should == new_account
+    photocopy.authors_list.should == original.authors_list
+
+    photocopy.file.should_not be_nil
+    photocopy.file_content_type.should == original.file_content_type
+    photocopy.file_file_size.should == original.file_file_size
+  end
 
 end

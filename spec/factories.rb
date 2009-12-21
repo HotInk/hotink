@@ -31,8 +31,25 @@ Factory.define :detailed_article, :parent => :article do |a|
 end
 
 Factory.define :detailed_article_with_mediafiles, :parent => :detailed_article do |a|
-  a.mediafiles { (1..3).collect{ Factory(:mediafile_with_attachment)  } }
+  a.mediafiles { (1..3).collect{ Factory(:detailed_mediafile)  } }
 end
+###
+
+### Mediafile factories
+Factory.define :mediafile do |a|
+  a.account { Factory(:account) }
+end
+
+Factory.define :mediafile_with_attachment, :parent => :mediafile do |m|
+  m.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-jpg.jpg')) }
+end
+
+Factory.define :detailed_mediafile, :parent => :mediafile_with_attachment do |m|
+  m.sequence(:title)    { |n| "Test title ##{n}" }
+  m.description         "Test description of this mediafile."
+  m.date                Time.now.to_date
+end
+
 ###
 
 Factory.define :user do |u|
@@ -51,14 +68,6 @@ end
 Factory.define :checkout do |c|
   c.original_article { Factory(:article) }
   c.duplicate_article { Factory(:article) }
-end
-
-Factory.define :mediafile do |a|
-  a.account { Factory(:account) }
-end
-
-Factory.define :mediafile_with_attachment, :parent => :mediafile do |m|
-  m.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-jpg.jpg')).read }
 end
 
 Factory.define :email_template do |et|

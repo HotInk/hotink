@@ -32,17 +32,17 @@ describe Article do
   
   it "should create photocopies of itself for wire distribution" do
     original = Factory(:detailed_article_with_mediafiles)
-    photocopy = original.photocopy
+    new_account = Factory(:account)
+    photocopy = original.photocopy(new_account)
     
-    photocopy.account.should be_nil
+    photocopy.should_not be_new_record
+    photocopy.account.should == new_account
     photocopy.section.should be_nil
     photocopy.status.should be_nil
     
     photocopy.authors_list.should == original.authors_list
     
-    original.mediafiles.each do |mediafile|
-      photocopy.mediafiles.should include(mediafile.photocopy)
-    end
+    photocopy.mediafiles.length.should == original.mediafiles.length
   end
   
   it "should generate liquid variables for templates" do

@@ -4,18 +4,24 @@ class Article < Document
   has_one :pickup, :class_name => "Checkout", :foreign_key => :original_article_id
   
   # A photocopy is an account neutral version of an article, used to transfer between accounts
-  def photocopy
+  def photocopy(new_account)
     copy = clone
     
-    # Copy over associations
-    authors.each { |a| copy.authors << a }
-
     # Remove account-specific attributes
-    copy.account = nil
+    copy.account = new_account
     copy.section = nil
     copy.status = nil
     
-    copy
+    copy.save
+    
+    # has_many :through assocaitions can't be applied until the new record has been saved
+    authors.each { |a| copy.authors << a }
+    mediafiles.each do |m| 
+      mediafile = m.photocopy(new_account)
+      copy.mediafiles << mediafile 
+    end
+    
+    copy.new_record? ? false : copy
   end
   
   def to_liquid

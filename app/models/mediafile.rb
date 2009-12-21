@@ -102,4 +102,15 @@ class Mediafile < ActiveRecord::Base
      end
   end
   
+  # A photocopy is an account neutral version of an mediafile, used to transfer between accounts
+  def photocopy(new_account)
+    copy = clone
+    copy.account = new_account
+    
+    # Copy over associations
+    authors.each { |a| copy.authors << a }
+    copy.file = file
+      
+    copy.save ? copy : false
+  end
 end

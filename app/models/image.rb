@@ -21,8 +21,15 @@ class Image < Mediafile
       
   validates_attachment_presence :file
   
-  attr_accessor :settings
-    
+  def settings
+    account.settings["image"]
+  end
+  
+  def settings= (new_settings)
+    account.settings["image"] = new_settings
+    save
+  end
+  
   def save_dimensions 
         self.width = Paperclip::Geometry.from_file(file.to_file(:original)).width 
         self.height = Paperclip::Geometry.from_file(file.to_file(:original)).height  
