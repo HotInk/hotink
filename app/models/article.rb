@@ -9,6 +9,7 @@ class Article < Document
     
     # Copy over associations
     authors.each { |a| copy.authors << a }
+    mediafiles.each { |m| copy.mediafiles << m.photocopy }
 
     # Remove account-specific attributes
     copy.account = nil

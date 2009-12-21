@@ -21,13 +21,17 @@ Factory.define :published_article, :parent => :basic_article do |ba|
   ba.published_at   Time.now
 end
 
-Factory.define :detailed_article, :parent => :article do |da|
-  da.title          { Factory.next(:article_title) }
-  da.subtitle       "Get a detailed look (subtitle)"
-  da.authors        { (1..3).collect{ Factory(:author) } }
-  da.bodytext       "Wow. I **cannot** believe *the truth*."
-  da.status         "published"
-  da.published_at   Time.now
+Factory.define :detailed_article, :parent => :article do |a|
+  a.title          { Factory.next(:article_title) }
+  a.subtitle       "Get a detailed look (subtitle)"
+  a.authors        { (1..3).collect{ Factory(:author) } }
+  a.bodytext       "Wow. I **cannot** believe *the truth*."
+  a.status         "published"
+  a.published_at   Time.now
+end
+
+Factory.define :detailed_article_with_mediafiles, :parent => :detailed_article do |a|
+  a.mediafiles { (1..3).collect{ Factory(:mediafile_with_attachment)  } }
 end
 ###
 
@@ -51,6 +55,10 @@ end
 
 Factory.define :mediafile do |a|
   a.account { Factory(:account) }
+end
+
+Factory.define :mediafile_with_attachment, :parent => :mediafile do |m|
+  m.file  { File.new(File.join(RAILS_ROOT, 'public', 'IMG_7106.jpg')).read }
 end
 
 Factory.define :email_template do |et|
