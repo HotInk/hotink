@@ -58,7 +58,7 @@ Factory.define :mediafile do |a|
 end
 
 Factory.define :mediafile_with_attachment, :parent => :mediafile do |m|
-  m.file  { File.new(File.join(RAILS_ROOT, 'public', 'IMG_7106.jpg')).read }
+  m.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-jpg.jpg')).read }
 end
 
 Factory.define :email_template do |et|

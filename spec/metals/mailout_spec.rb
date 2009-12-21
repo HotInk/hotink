@@ -156,12 +156,15 @@ describe Mailout do
 
       describe "GET to /accounts/:id/mailouts/:mailout" do
         before do
-          @campaign = mock("campaign")
-          @campaign.stub!(:[])
+          # Test doubles for API objects
+          @unsent_campaign = {'id' => 'test_id', 'list_id'=>'test_list_id', 'email_sent' => 0, 'send_time' => ""}          
           @sample_content = {"html" => "<h1>HTML sample email test</h1>"}
-          @mailer.should_receive(:find_campaign_by_id).with("sample_id").and_return(@campaign)
-          @mailer.should_receive(:content).and_return(@sample_content)
-          get "/accounts/#{@account.id}/mailouts/sample_id"
+          @list = { 'name' => 'Test list name'}
+          
+          @mailer.should_receive(:find_campaign_by_id).with('test_id').and_return(@unsent_campaign)
+          @mailer.should_receive(:find_list_by_id).with('test_list_id').and_return(@list)
+          @mailer.should_receive(:content).with('test_id').and_return(@sample_content)
+          get "/accounts/#{@account.id}/mailouts/test_id"
         end
 
         it "should display a preview of the mailout" do
@@ -169,7 +172,6 @@ describe Mailout do
         end
         
         it "should display a send button for unsent mailout" do
-          @campaign['send_time'].to_s.should == ""
           last_response.body.should have_selector("input[value=\"Send\"]")
         end
       end
