@@ -3,16 +3,22 @@
   <input type="hidden" name="_method" id="_method" value="put" />
   <fieldset>
 	<legend>Edit email template</legend>
+	<p>When creating your template you have access to the following variables:</p>
+	<p><strong>articles</strong> &ndash; a Liquid array of the articles in this mailout. Each article has the following pieces of accessible data:</p>
+		<p style="padding-left: 30px"><strong>article.title</strong> &ndash; the article's title/headline.<br /><strong>article.subtitle</strong> &ndash; the article's subtitle/subhead.<br />
+		<strong>article.authors_list</strong> &ndash; a nicely formatted list of the article's authors.<br /><strong>article.bodytext</strong> &ndash; the text of the article.<br />
+		<strong>article.id</strong> &ndash; the id of this article, necessary for building links to your site.</p>
+	<p><strong>note</strong> &ndash; the note supplied when creating the mailout.</p>
 	<% if flash[:notice] %><p class="notice" style="color: red;"><%= flash[:notice] %><p><% end %>
 	<ol>
 		<li><label>Name <input type="text" name="template[name]" id="template_name" value="<%= @email_template.name %>" /></label></li>
 		<li>
 			<label for="template_html">HTML template</label>
-			<textarea name="template[html]" id="template_html" rows="30" cols="80"><%= @email_template.html %></textarea>
+			<textarea name="template[html]" id="template_html"><%= @email_template.html %></textarea>
 		</li>
 		<li>
 			<label for="template_plaintext">Plain text template</label>
-			<textarea name="template[plaintext]" id="template_plaintext" rows="30" cols="80"><%= @email_template.plaintext %></textarea>
+			<textarea name="template[plaintext]" id="template_plaintext"><%= @email_template.plaintext %></textarea>
 		</li>
 	</ol>
 	<input type="submit" value="Update template" />

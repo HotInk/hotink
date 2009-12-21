@@ -120,13 +120,13 @@ module Mailout
       @email_template = @account.email_templates.find(params[:mailout][:template_id])
       @articles = Article.find(params[:mailout][:articles])
       @mailchimp.create_campaign('regular', 
-            { :list_id => 'c18292dd69', 
+            { :list_id => params[:mailout][:list_id], 
               :from_email => params[:mailout][:from_email], 
               :from_name => params[:mailout][:name], 
               :subject => params[:mailout][:subject], 
               :to_email => params[:mailout][:to_email] }, 
-            { :html => @email_template.render_html('account' => @account, 'articles' => @articles), 
-              :text => @email_template.render_plaintext('account' => @account, 'articles' => @articles) }
+            { :html => @email_template.render_html('account' => @account, 'articles' => @articles, 'note' => params[:mailout][:note]), 
+              :text => @email_template.render_plaintext('account' => @account, 'articles' => @articles, 'note' => params[:mailout][:note]) }
       )
       redirect "/accounts/#{@account.id}/mailouts"
     end
@@ -155,7 +155,8 @@ module Mailout
     get '/accounts/:id/mailouts/:mailout' do
       initialize_mailchimp
       @campaign = @mailchimp.find_campaign_by_id(params[:mailout])
-      @content = @mailchimp.content(@campaign["id"])
+      @list = @mailchimp.find_list_by_id(@campaign['list_id'])
+      @content = @mailchimp.content(@campaign['id'])
       erb :mailout
     end
     

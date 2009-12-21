@@ -25,6 +25,7 @@ ol#mailouts, ol#email_templates  { width: 954px; border: 2px solid #CEE4F3; bord
 ol#email_templates { background-color: #DEFFDB; border-color: #DEFFDB; }
 ol#mailouts li, ol#email_templates li { position: relative; }
 ol#mailouts li.even, ol#email_templates li.even  { background-color: #EFEFEF; }
+ol#mailouts li.unsent { background-color: #FFF6DD; }
 ol#mailouts li+li, ol#email_templates li+li { border-top: 1px dotted #999; }
 ol#mailouts h1, ol#email_templates h1 { font-size: 16px; width: 550px; padding-left: 10px; float: left; }
 ol#mailouts input, ol#email_templates input { float: left; }
@@ -35,11 +36,11 @@ ol#mailouts li .delete a, ol#email_templates li .delete a { background: url('/im
 ol#mailouts li .delete a:hover, ol#email_templates li .delete a:hover { text-decoration: none; }
 ol#mailouts li div.delete, ol#email_templates li div.delete { float: right; width: 10px; height: 1.2em; margin-right: 0; }
 
-div#articles_wrapper {float: left}
+div#articles_wrapper {float: left; }
 div#articles_header, ol#articles { width: 550px; }
 div#articles_header h2 { font-weight: bold; }
 ol#articles { border: 1px dotted #777; }
-ol#articles li { padding: 5px; background-color: #CEE4F3; }
+ol#articles li { padding: 5px; margin: 0; background-color: #CEE4F3; }
 ol#articles li+li { border-top: 1px dotted #777; }
 ol#articles li div { float: left; }
 ol#articles li .article { width: 65%; }
@@ -59,7 +60,7 @@ ol#articles li .date { width: 12%; font-size: 15px; float: right; text-align: ri
 
 #mailout_articles { float: left; clear: left; margin-right: 15px; }
 #mailout_articles h2 { float: none; font-weight: bold; }
-#mailout_articles ol, #mailout_articles ul { width: 350px; }
+#mailout_articles ol, #mailout_articles ul { width: 330px; }
 #mailout_articles ol { min-height: 15px; padding-left: 20px; list-style-type: decimal; border: 1px solid #DEDEDE; background-color: #FFF6DD;}
 #mailout_articles ol li { padding: 10px; margin: 10px; background: #FDFDFD; border: 1px solid #DEDEDE; }
 #mailout_articles ol li .empty_link { float: right; color: red; text-decoration: none; margin-right: 5px; font-size: 0.9em; }
@@ -68,33 +69,55 @@ ol#articles li .date { width: 12%; font-size: 15px; float: right; text-align: ri
 #mailout_articles ol li .media { float: right; margin-right: 20px; }
 
 #mailout_articles ul { clear: left; }
-#mailout_articles ul li { margin: 10px; width: 150px; float: left; }
+#mailout_articles ul li { margin: 10px; width: 145px; float: left; }
 #mailout_articles ul li a { display:block; text-align: center; font-weight: bold; width: 100%; color: #333; }
 #mailout_articles .button_link { background-color: #DEDEDE; }
 #mailout_articles .button_link:hover { background-color: #CEE4F3; }
 
-form { float: left; clear: both; }	
-form>fieldset { float: left; width: 920px; margin-bottom: 20px; border: none;  }
-form>fieldset legend { font-size: 17px; border-bottom: 1px solid #222; }
+form { float: left; clear: both; }
+form input, form select, form textarea { color: #333; }	
+form textarea  { width: 100%; height: 80px;}
+form input[type="text"], form textarea { border: 1px solid #DEDEDE; font-size: 16px; }
+form input[type="text"] { padding: 3px; }
+form select { font-size: 17px; margin-left: 25px; border:none; }
+form input[type="submit"] { font-size: 18px; }
+form>fieldset { float: left; width: 920px; margin-bottom: 20px; border: none; border: 1px solid #DEDEDE; }
+form>fieldset legend { border-bottom: 1px solid #222; }
 form>fieldset>legend { font-size: 22px; font-weight: bold;  }
+form>fieldset fieldset { border: none; background-color: #EFEFEF; }
+form>fieldset fieldset legend { font-size: 18px; padding: 5px 10px; margin-left: 10px; border: none; font-weight: bold; background-color: #EFEFEF; }
 form>fieldset label { font-size: 15px; font-weight: bold; }
 form>fieldset ol { border: none; width: 100%; }
 form>fieldset li { margin: 10px 0; border: none; }
-form>fieldset input[type="text"] { font-size: 14px; width:83%; float: right;}
+form>fieldset input[type="text"] {  width:83%; float: right; }
 form>fieldset input[type="submit"] { float: right; }
 
 form.template_form label { display: block; }
+form.template_form textarea { height: 350px; padding: 5px 0; font-family: courier, mono;}
+form.template_form input[type="text"] { width: 90%; }
 
 h2, h2+p, ol#articles { float: left; clear: both; }	
 
 #details { width: 300px; margin-right: 20px; float: left; }
 #details #sent { padding: 10px; background-color: #CEE4F3; border: 1px solid #DEDEDE; }
+#details #sent div { float: left; width: 96%; padding: 2%; background-color: white; border: 1px solid #DEDEDE; }
+#details #sent div+div { margin-top: 10px;}
+#details #sent h2 { font-size: 14px; font-weight: bold; text-decoration: underline; }
+#details #sent li { margin: 0; }
+#details #sent input[type="text"] { font-size: 13px; }
+#details #sent input[type="submit"] { font-size: 12px; float: right; margin-top: 5px; }
+#details #sent input#send_button { font-size: 20px; }
 #details>h2 { float: none; font-weight: bold; margin: 10px 0; padding:0; }
 #details>form { margin-bottom: 20px; }
 #details form div { margin: 10px 0; }
-#details dl { margin: 0; }
-#details dl dt { font-size: 13px; font-weight: bold; margin: 2px 0; }
-#details dl dd { margin-left: 10px; }
+
+#details dl { font-size: 15px; margin: 0; }
+#details dl, #details dl dt, #details dl dd { float: left; margin: 0; }
+#details dl dt { font-weight: bold; text-decoration: underline; }
+#details dl dd { margin: 5px 0 15px 0; }
+#details dl dt, #details dl dd { clear: left; }
+#details dl dl { margin-left: 20px; }
+
 #previews { font-size: 70%; width: 618px; float: left; padding: 10px; border: 1px solid #DEDEDE; background-color: #FFF6DD; }
 #details>h2, #previews>h1 { font-weight: bold; padding-bottom: 0px; border-bottom: 1px solid #DDD; margin-bottom: 10px; }
 #previews>div { float: left; font-size: 130%; height: 500px; width: 604px; padding: 5px; background-color: white; border: 2px solid #CEE4F3; overflow: auto; margin-bottom: 20px; }

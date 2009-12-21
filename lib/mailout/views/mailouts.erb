@@ -7,7 +7,7 @@
 <h3 class="mailouts">Recent mailouts</h3><a href="/accounts/<%= @account.id %>/mailouts/new" class="button_link">Create a new mailout</a><a href="/accounts/<%= @account.id %>/mailouts/templates" class="button_link">Mailout templates</a>
 <ol id="mailouts">
 	<% for campaign in @campaigns %>
-		<li class="clearfix <%= cycle("even", "odd") %>">
+		<li class="clearfix <%= cycle("even", "odd") %><% if campaign['emails_sent'] == 0 %> unsent<% end %>">
 			<h1><a href="/accounts/<%= @account.id %>/mailouts/<%=campaign["id"]%>"><%= campaign["title"] %></a></h1>
 			<div class="delete transparent">
 					<a href="/accounts/<%= @account.id %>/mailouts/<%=campaign["id"]%>" onclick="if (confirm('You are about to delete this mailout:\n\n Click \'OK\' to delete or \'Cancel\' to return to the page.')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'delete'); f.appendChild(m);f.submit(); };return false;">&nbsp;&nbsp;&nbsp;</a>

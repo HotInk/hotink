@@ -142,14 +142,14 @@ describe Mailout do
 
           # This is long, but it's the Hominid api spec
           @mailer.should_receive(:create_campaign).with('regular', {
-                  :list_id => 'c18292dd69', 
+                  :list_id => 'test_list_id', 
                   :from_email => "test@example.com", 
                   :from_name => "test name", 
                   :subject => "A test", 
                   :to_email => "totest@example.com" }, { 
-                  :html => @email_template.render_html('account' => @account, 'articles' => @articles), 
-                  :text => @email_template.render_plaintext('account' => @account, 'articles' => @articles) })
-          post "/accounts/#{@account.id}/mailouts", :mailout => { :from_email => "test@example.com", :name => "test name", :subject => "A test", :to_email => "totest@example.com", :articles => @article_ids, :template_id => @email_template.id }
+                  :html => @email_template.render_html('account' => @account, 'articles' => @articles, 'note' => "Test mailout note"), 
+                  :text => @email_template.render_plaintext('account' => @account, 'articles' => @articles, 'note' => "Test mailout note") })
+          post "/accounts/#{@account.id}/mailouts", :mailout => { :list_id => 'test_list_id', :from_email => "test@example.com", :note => "Test mailout note", :name => "test name", :subject => "A test", :to_email => "totest@example.com" , :articles => @article_ids, :template_id => @email_template.id }
           last_response.should be_redirect
         end
       end

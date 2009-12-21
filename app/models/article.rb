@@ -9,7 +9,6 @@ class Article < Document
     
     # Copy over associations
     authors.each { |a| copy.authors << a }
-    mediafiles.each { |m| copy.mediafiles << m.photocopy }
 
     # Remove account-specific attributes
     copy.account = nil
@@ -20,6 +19,6 @@ class Article < Document
   end
   
   def to_liquid
-    {'title' => title, 'subtitle' => subtitle, 'authors_list' => authors_list, 'bodytext' => bodytext}
+    {'title' => title, 'subtitle' => subtitle, 'authors_list' => authors_list, 'bodytext' => bodytext, 'id' => id.to_s}
   end
 end

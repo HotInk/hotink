@@ -5,26 +5,25 @@
 	<% if @campaign["emails_sent"].to_i > 0 %>
 		<p>This mailout was <strong>sent</strong> on<br /><strong><%= Time.parse(@campaign['send_time']).to_s(:long) %></strong></p>
 	<% else %>
-		<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign['id'] %>/send" method="post">
-			<div>This email <strong>has not yet been sent</strong></div>
-			<div><input type="submit" value="Send" /></form></div>
+		<div>
+			<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign['id'] %>/send" method="post">
+				This email <strong>has not yet been sent</strong><br />
+				<input type="submit" value="Send" id="send_button" />
+			</form>
+		</div>
+		<div>
+			<h2>Send test email</h2>
+			<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign['id'] %>/send_test" method="post">
+					<label for="emails">Email address</label>
+					<input id="emails" type="text" name="emails" />
+					<input type="submit" value="Send test email" />
+				<% if flash[:test_email_notice] %>
+					<p id="test_email_notice"><%= flash[:test_email_notice] %></p>
+				<% end %>
+			</form>
+		</div>
 	<% end %>
 	</div>
-	<% if @campaign["emails_sent"].to_i == 0 %>
-	<h2>Send test email</h2>
-	<form action="/accounts/<%= @account.id %>/mailouts/<%= @campaign['id'] %>/send_test" method="post">
-		<div>
-			<label for="emails">Email address</label>
-			<input id="emails" type="text" name="emails" />
-		</div>
-		<div>
-			<input type="submit" value="Send test email" />
-		</div>
-		<% if flash[:test_email_notice] %>
-			<p id="test_email_notice"><%= flash[:test_email_notice] %></p>
-		<% end %>
-	</form>
-	<% end %>
 	<h2>Details</h2>
 	<dl>
 		<dt>From</dt>
@@ -38,6 +37,8 @@
 		<dd><%= @campaign['to_email'] %></dd>
 		<dt>Subject</dt>
 		<dd><%= @campaign['subject'] %></dd>
+		<dt>List</dt>
+		<dd><%= @list['name'] %></dd>		
 	</dl>
 </div>
 <div id="previews">

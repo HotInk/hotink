@@ -47,6 +47,6 @@ describe Article do
   
   it "should generate liquid variables for templates" do
     article = Factory(:detailed_article)
-    article.to_liquid.should == {'title' => article.title, 'subtitle' => article.subtitle, 'authors_list' => article.authors_list, 'bodytext' => article.bodytext}
+    article.to_liquid.should == {'title' => article.title, 'subtitle' => article.subtitle, 'authors_list' => article.authors_list, 'bodytext' => article.bodytext, 'id' => article.id.to_s }
   end
 end
