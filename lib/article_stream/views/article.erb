@@ -1,5 +1,5 @@
 <div id="article_<%= @article.id %>" class="article">
-	<p><a href="/stream"><-- Back to the stream</a></p>
+	<p style="margin-top: 0;"><a href="/stream"><-- Back to the stream</a></p>
 	<h1><%= @article.title %></h1>
 	<h2><%= @article.subtitle %></h2>
 	<% unless @article.images.blank? %>
@@ -19,7 +19,7 @@
 		<div id="article_checkout">
 			<form method="POST" action="/stream/articles/<%= @article.id %>/checkout">
 				<div>
-					<input name="commit" onclick="if (!confirm('Are you sure you want to check out this article? Press \'OK\' to check this article into the CUPwire as a draft.')) return false; return true;" type="submit" value="Check out this article" />
+					<%= button_link_to_submit "Check out this article", :class=> "save large", :confirm => 'Are you sure you want to check out this article? Press \'OK\' to check this article into the CUPwire as a draft.' %>
 				</div>
 			</form>
 			<p>If you want to edit and/or republish this article, just check it out. It'll be added to your account as a draft and any attached mediafiles will be copied into your archive.</p>

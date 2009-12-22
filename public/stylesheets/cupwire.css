@@ -1,10 +1,21 @@
-body{ font-size: 12px; font-family: "lucida grande", Verdana, Helvetica, Arial, sans-serif; }
+@import "hotink/buttons.css";
+@import "hotink/helpers.css";
+@import "hotink/navigation.css";
+@import "hotink/modal.css";
+
+body{ font-size: 13.34px; margin: 0; font-family: "lucida grande", Verdana, Helvetica, Arial, sans-serif; }
+
 h1, h2 { padding-bottom: 5px; font-weight: 200; margin: 0; }
 ol { list-style-type: none; float: left; padding: 0; margin: 0;}
 ol li { padding: 6px 10px; }
 a { color: #222; text-decoration: none; }
 a:hover { text-decoration: underline; }
 a:visited { color: #777; }
+
+div#page_wrapper { min-height: 100%; height: auto !important; height: 100%; margin-bottom: -30px; /* the bottom margin is the negative value of the footer's height */}
+div#page_container { background-color: #FFF; margin: 0 auto; width: 960px; padding: 1em; text-align: left; padding-bottom: 0;  }
+
+div#page_container>h1 { float: left; }
 
 .yourstream { background-color: #CEE4F3; }
 .allarticles { background-color: #FFF6DD; }
@@ -29,6 +40,7 @@ ol#stream_articles p.word_count { float: right; clear: right; width: 75px; }
 ol#stream_articles p.date { float: right; font-size: 20px; height: 100%; width: 75px; color: #999; }
 ol#stream_articles p.date+p+p { float: none; font-size: 9px; color: green; margin-bottom: 3px; }
 ol#stream_articles p.authors, ol#stream_articles p.checkout_notice { padding: 2px 0; }
+
 ol#stream_articles p.account { float: left; color: white; padding: 2px 3px; font-weight: 400; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
 .color_0 { background-color: #7991FF; }
 .color_1 { background-color: #FF7C41; }
@@ -83,8 +95,8 @@ div.small_top_button { display: block; position: relative; top: -13px; left: 17p
 div.small_top_button a { padding: 5px; }
 div.small_top_button a img { width: 18px; border: none; }
 
-/* Clearfix */
-.clearfix:after { clear: both; content: ' '; display: block; font-size: 0; line-height: 0; visibility: hidden; width: 0; height: 0; }
-.clearfix { display: inline-block; }
-* html .clearfix { height: 1%; }
-.clearfix {display: block; }
+
+#footer_push { height: 30px; /* #footer_push must be the same height as #footer */  }
+#footer { width: 99%; height: 30px; float:left; margin-left: 0.5em; font-size: 1em; color: #FFF6DD; font-weight: normal; padding-right: 1%;background-color: #222; text-align: right; border-right: 1px solid #DDD;}
+#footer p { margin: 0.7em 0; float: right;}
+

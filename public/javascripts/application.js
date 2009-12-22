@@ -302,9 +302,6 @@ var Card = Class.create({
 });
 
 /* tab window */
-
-
-
 var Tab = Class.create({
 	initialize: function(element, selected, window_name){
 		this.element = $(element);

@@ -13,6 +13,9 @@ module ArticleStream
       include ActionView::Helpers::JavaScriptHelper
       include ActionView::Helpers::TagHelper
       include ActionView::Helpers::AssetTagHelper
+      include ActionView::Helpers::UrlHelper      
+      include ApplicationHelper
+      
       
       def markdown(text)
         Markdown.new(text).to_html
@@ -30,7 +33,14 @@ module ArticleStream
           html_output += "</div>"
         end
       end
-      
+    
+      def current_user
+        @current_user
+      end
+    end
+    
+    def protect_against_forgery?
+      false
     end
     
     def load_session 

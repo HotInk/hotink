@@ -8,13 +8,34 @@
   <script src="/javascripts/prototype.js" type="text/javascript"></script>
   <script src="/javascripts/effects.js" type="text/javascript"></script>
   <script src="/javascripts/overlay.js" type="text/javascript"></script>
+  <script src="/javascripts/application.js" type="text/javascript"></script>
 
   <link rel="stylesheet" href="/stylesheets/cupwire.css" type="text/css" media="screen" charset="utf-8">
   <title><% if @article %><%= @article.title %> | <%= @article.published_at.to_s(:standard) %><% else %>CUP wire article stream<% end %></title>
 </head>
 <body>
+	<div id="navigation" class="clearfix">
+		<div id="logo"><%= image_tag '/images/logo_tiny.png' %></div>
+		<div id="links">
+			<ol>
+				<%= render_applications(@account, current_user) %><li><%= link_to "Articles", "/accounts/#{@account.id}/articles" %></li><li><%= link_to "Media", "/accounts/#{@account.id}/mediafiles" %></li><li><%= link_to "Issues", "/accounts/#{@account.id}/issues" %></li><li><%= link_to "Blogs", "/accounts/#{@account.id}/blogs" %></li>
+			</ol>
+		</div>
+		<div id="user_details"><p>Logged in as: <%= link_to_remote current_user.login, :url=> "/users/#{current_user.id}/edit", :method => :get, :html => { :class=>"weblink" } %>  <%= button_link_to "Logout", '/user_session', :method=>:delete, :class=>"micro", :id=>"user_logout_button" %></p></div>
+		<% if current_user.has_role?("manager", @account) || current_user.has_role?("admin") %>
+			<div id="account_details">
+				<img src="/loading_small_222.gif" style="float:left;margin-right:0.5em;margin-top:0.25em;display:none;" class="spinner"/>
+				<%= button_link_to_remote "Manage account", :url=>"/accounts/#{@account.id}/edit.js", :method=>:get, :after=>"$(this).up().select('.spinner')[0].show();", :html=>{:class=>"tiny"} %> 
+			</div>
+		<% end %>
+	</div>
+<div id="page_container" class="clearfix">	
 <%= yield %>
-<p class="footer">&copy; 2009 Canadian University Press Media Services</p>
+<div class="footer">
+	<p>&copy; 2009 Canadian University Press Media Services</p>
+</div>
+</div><!-- #page_container -->
+
 <script type="text/javascript" charset="utf-8">
 	//Initialize Overlay
 	var page_overlay = new Overlay ();

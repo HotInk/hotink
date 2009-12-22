@@ -101,7 +101,7 @@ module ApplicationHelper
    end
    
   # This method is a hack to display applications only to users we select on accounts we select
-  def render_applications( account, user )
+  def render_applications( account, user, controller_name = nil )
     case account.name
     when 'root', 'manit', 'fulcrum', 'sput', 'Muse', 'peak', 'martlet', 'mcgilldaily', 'ubcophoenix', 'tutorial', 'userguide', 'Nexus', 'Xav', 'cord', 'campusfreepress', 'intercamp', 'otherpress' , 'CUP Wire', 'Quill', 'Sheaf1912', 'thestethoscope', 'naturalselection', 'varsity', 'capertimes', 'omega'
       if user.has_role?('admin') || user.has_role?('manager', account)

@@ -9,7 +9,11 @@ module Mailout
 
     set :views, File.dirname(__FILE__) + '/views'
     enable :methodoverride
-        
+    
+    def protect_against_forgery?
+      false
+    end
+    
     def load_session 
         @account = Account.find(params[:id])
         halt 404 unless @account
@@ -33,6 +37,12 @@ module Mailout
       include ActionView::Helpers::DateHelper
       include ActionView::Helpers::TagHelper
       include ActionView::Helpers::AssetTagHelper
+      include ActionView::Helpers::UrlHelper
+      include ApplicationHelper
+      
+      def current_user
+        @current_user
+      end
     end
     
     ## Mailout templates

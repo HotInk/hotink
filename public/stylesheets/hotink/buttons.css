@@ -1,0 +1,63 @@
+/* Start of custom button CSS
+---------------------------------------- */
+.btn { display:inline-block !important; background:none; margin:0; padding:3px 0; border-width:0; overflow:visible; font:100%/1.2; text-decoration:none; color:#333; }
+* html button.btn { padding-bottom:1px; }
+.btn span { background:#ddd url('/images/bg-button.gif') repeat-x 0 0; margin:0; padding:3px 0; border-left:1px solid #bbb; border-right:1px solid #aaa; }
+* html .btn span {  padding-top:0; }
+.btn span span { position:relative; padding:3px .4em; border-width:0; border-top:1px solid #bbb; border-bottom:1px solid #aaa; }
+.btn:hover span, .btn:hover span span, .btn:focus span, .btn:focus span span { cursor:pointer; border-color:#9cf !important; color:#000; }
+.btn:active span { background-position:0 -400px; outline:none; }
+.btn:focus, .btn:active { outline:none; /* doesn't seem to be respected for <button>, only <a> */ }
+ 
+/* pill classes only needed if using pill style buttons ( LEFT | CENTER | RIGHT ) */
+.pill-l span { border-right-width:0; }
+.pill-l span span { border-right:1px solid #bbb; }
+.pill-c span { border-right-style:none; border-left-color:#fff; }
+.pill-c span span { border-right:1px solid #bbb; }
+.pill-r span { border-left-color:#fff; }
+
+/* tab classes only needed if using tab style buttons ( TOP | BOTTOM ) */
+.tab-t { padding: 1px 0px; }
+.tab-t span { border-bottom: 1px solid #DEDEDE; }
+.tab-t span span { border-bottom-width:0; padding: 1px .4em; }
+
+.tab-b { padding: 1px 0px; }
+.tab-b span { border-top: 1px solid #DEDEDE; } 
+.tab-b span span { border-top-width:0; padding: 1px .5em; }
+
+/* use if one button should be the 'primary' button */
+.primary { font-weight:bold; color:#000; }
+	
+/* Save buttons use a blue background, as opposed to a grey one.*/
+.save { color: #FFF; }
+.save:hover span, .save:hover span span, .save:focus span, .save:focus span span  { color: #CCC; }
+.save:active span { background-position:0 -398px; outline:none; }
+.save span{ background:#699DE3 url('/images/bg-button-blue.gif') repeat-x 0 0; }
+	
+/* Cancel buttons use a red background, as opposed to a grey one.*/
+.cancel { color: #FFF; }
+.cancel:hover span, .cancel:hover span span, .cancel:focus span, .cancel:focus span span{ color: #CCC; }
+.cancel:active span { background-position:0 -395px; color: #FFF; outline:none; }
+.cancel span{ background:#E62424 url('/images/bg-button-red.gif') repeat-x 0 -4px; }
+	
+.selected span { color:#FFF; background-image: none; background-color:  #6A6A6A;/*#75AAF1;*/ }
+.selected:hover span, .selected:hover span span, .selected:focus span, .selected:focus span span { cursor:pointer; border-color:#9cf !important; color:#FFF; }
+
+.publish { color: white; }
+.publish span, .publish span span { border-color:#999 !important; }
+.publish:hover span, .publish:hover span span, .publish:focus span, .publish:focus span span{ color: #EEE; border-color:#9cf !important;}
+.publish:active span { color: #FFF; outline:none; background-position:0 -398px;}
+.publish span{ background: #00af2e url('/images/bg-button-green.gif') repeat-x 0 0px; }
+
+
+/* Button size classes */
+.larger { font-size: 1.2em; line-height: 1.1; }
+.large { font-size: 1em; line-height: 1.2em; }
+.large:active span{ background-position:0 -390px;}
+.small { font-size: 0.85em; line-height: 1; }
+.small span{ background-position: 0px -3px; }
+.tiny { font-size: 0.775em; line-height: 1;  }
+.micro { font-size: 0.75em; line-height: 1em; }
+	
+/* End of custom button CSS
+---------------------------------------- */
