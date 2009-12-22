@@ -67,7 +67,7 @@ module ArticleStream
     get '/stream/articles/:id' do
       load_session
       @article = Article.find(params[:id])
-      @checkout = @article.pickup
+      @checkout = nil# @article.pickup
       erb :article
     end
     
