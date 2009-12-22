@@ -9,6 +9,7 @@ module Mailout
 
     set :views, File.dirname(__FILE__) + '/views'
     enable :methodoverride
+    enable :logging
     
     def protect_against_forgery?
       false

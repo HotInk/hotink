@@ -6,6 +6,7 @@ module ArticleStream
     
     set :owner_account_id, Proc.new { Account.find(:first).id }
     set :views, File.dirname(__FILE__) + '/views'
+    enable :logging
     
     helpers do
       include ActionView::Helpers::TextHelper
@@ -67,7 +68,7 @@ module ArticleStream
     get '/stream/articles/:id' do
       load_session
       @article = Article.find(params[:id])
-      @checkout = nil# @article.pickup
+      @checkout = @article.pickup
       erb :article
     end
     
