@@ -48,13 +48,14 @@ div.pagination { text-align: right; margin: 8px 0; }
 div.article { width: 700px; font-size: 14px; padding: 0 5px; color: #222; line-height: 1.5; }
 div.article h1 { font-weight: bold; }
 div.article h2 { font-size: 140%; }
+div.article p.authors { font-weight: bold; }
 div.article p.account { font-size: 15px; font-weight: bold; }
 div#article_checkout p, div.media_thumbs p { font-size: 11px; }
 div#article_checkout, div.media_thumbs { float:right; clear: right; width: 400px; padding: 10px; margin: 5px 0 5px 15px; background-color: #CEE4F3; border: 1px solid #DEDEDE;  -moz-border-radius: 3px; -webkit-border-radius: 3px;}
 div#article_checkout h4 { margin: 0; }
 div#article_checkout a { font-weight: bold; text-decoration: underline; }
 div#article_checkout.checked_out { background-color: #DEFFDB; }
-div#article_checkout input[type="submit"] { font-size: 20px; display: inline; }
+div#article_checkout input[type="submit"] { font-size: 17px; margin-right: 20px; margin-bottom: 5px; }
 div.article .media_thumbs h3 { margin-top:0;}
 
 #dash30 { font-weight: bold; text-align: center; }

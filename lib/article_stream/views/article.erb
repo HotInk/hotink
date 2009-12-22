@@ -17,13 +17,12 @@
 			<p>If you checked this article out by mistake, just delete the draft created in <a href="/accounts/<%= @account.id %>/articles">your account</a>.</p>
 		<% else %>
 		<div id="article_checkout">
-			<h4>Checkout this article</h4>
-			<p>If you want to edit and/or republish this article, just check it out. It'll be added to your account as a draft and any attached mediafiles will be copied into your archive.</p>
 			<form method="POST" action="/stream/articles/<%= @article.id %>/checkout">
 				<div>
 					<input name="commit" onclick="if (!confirm('Are you sure you want to check out this article? Press \'OK\' to check this article into the CUPwire as a draft.')) return false; return true;" type="submit" value="Check out this article" />
 				</div>
 			</form>
+			<p>If you want to edit and/or republish this article, just check it out. It'll be added to your account as a draft and any attached mediafiles will be copied into your archive.</p>
 		<% end %>
 	</div>
 	<p><span  style="color: green"><%= @article.published_at.to_s(:standard)%> </span> (<%= time_ago_in_words(@article.published_at)%> ago)</p>

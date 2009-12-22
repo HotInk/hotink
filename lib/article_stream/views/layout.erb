@@ -10,6 +10,7 @@
   <script src="/javascripts/overlay.js" type="text/javascript"></script>
 
   <link rel="stylesheet" href="/stylesheets/cupwire.css" type="text/css" media="screen" charset="utf-8">
+  <title><% if @article %><%= @article.title %> | <%= @article.published_at.to_s(:standard) %><% else %>CUP wire article stream<% end %></title>
 </head>
 <body>
 <%= yield %>
