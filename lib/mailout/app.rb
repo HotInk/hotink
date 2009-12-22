@@ -9,7 +9,6 @@ module Mailout
 
     set :views, File.dirname(__FILE__) + '/views'
     enable :methodoverride
-    set :dump_errors, true   
      
     def protect_against_forgery?
       false

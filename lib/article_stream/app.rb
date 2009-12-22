@@ -6,7 +6,6 @@ module ArticleStream
     
     set :owner_account_id, Proc.new { Account.find(:first).id }
     set :views, File.dirname(__FILE__) + '/views'
-    set :dump_errors, true
         
     helpers do
       include ActionView::Helpers::TextHelper
@@ -19,7 +18,7 @@ module ArticleStream
       
       
       def markdown(text)
-        Markdown.new(text).to_html
+        BlueCloth.new(text).to_html
       end
       
       def paginate(articles)
