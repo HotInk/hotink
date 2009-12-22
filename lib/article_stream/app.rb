@@ -6,8 +6,8 @@ module ArticleStream
     
     set :owner_account_id, Proc.new { Account.find(:first).id }
     set :views, File.dirname(__FILE__) + '/views'
-    enable :logging
-    
+    set :dump_errors, true
+        
     helpers do
       include ActionView::Helpers::TextHelper
       include ActionView::Helpers::DateHelper
