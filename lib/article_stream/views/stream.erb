@@ -11,15 +11,22 @@
 	<ol id="stream_articles">
 		<% for article in @articles %>
 		<li id="article_<%= article.id %>" class="clearfix <%= cycle("odd", "even") %><%= " pickedup" if article.pickup %>">
-			<p class="date"><%= article.published_at.to_s(:standard) %><small>(<%= time_ago_in_words(article.published_at)%> ago)</small></p>
+			<p class="date"><%= article.published_at.to_s(:standard) %></p>
+			<p><%= time_ago_in_words(article.published_at)%> ago</p>
 			<h1><a href="/stream/articles/<%= article.id %>"><%= article.title %></a></h1>
 			<% unless article.subtitle.blank? %>
 				<h2><%= article.subtitle %></h2>
 			<% end %>
-			<p class="authors"><%= article.authors_list %> (<span class="account"><%= article.account.formal_name.blank? ? article.account.name : article.account.formal_name %></span>)</p>
+			<% unless article.authors.empty? %><p class="authors"><%= article.authors_list %></p><% end %>
+			<p class="account color_<%= article.account.id % 4 %>"><%= article.account.formal_name.blank? ? article.account.name : article.account.formal_name %></p>
 			<% if article.pickup %>
-			<p class="checkout_notice">checked out <%= article.pickup.created_at.to_s(:standard) %> by <%= article.pickup.user.name %></p>
+			<p class="checkout_notice"><a href="/accounts/<%= @account.id %>/articles/<%= article.pickup.duplicate_article.id %>/edit">checked out <%= article.pickup.created_at.to_s(:standard) %> by <%= article.pickup.user.name %></a></p>
 			<% end %>
+			<div class="media">
+				<% article.mediafiles.each do | i | %>
+					<%= link_to_function "<img src=\"#{i.file.url(:system_icon)}\" border=\"1\" />", "page_overlay.render( '<div class=\"small_top_button clearfix\"><a href=\"#\" class=\"close_window\" onclick=\"page_overlay.end();return false;\"> <img src=\"/images/window_x.png\" /> </a></div><img src=\"#{i.file.url(:large)}\" style=\"position:relative;z-index: 300;\" />' );" %>
+				<% end %>
+			</div>
 		</li>
 		<% end %>
 	</ol>

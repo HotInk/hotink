@@ -17,7 +17,7 @@ describe Mailout do
     
     # Test doubles for authlogic
     @user = mock("user")
-    @user.should_receive(:has_role?).with("staff", @account).and_return(true)
+    @user.should_receive(:has_role?).with("manager", @account).and_return(true)
     @session = mock("user_session")
     @session.stub!(:user).and_return(@user)
     UserSession.stub!(:find).and_return(@session)

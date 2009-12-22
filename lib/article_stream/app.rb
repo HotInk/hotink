@@ -12,6 +12,8 @@ module ArticleStream
       include ActionView::Helpers::DateHelper
       include ActionView::Helpers::JavaScriptHelper
       include ActionView::Helpers::TagHelper
+      include ActionView::Helpers::AssetTagHelper
+      
       def markdown(text)
         Markdown.new(text).to_html
       end
@@ -35,14 +37,14 @@ module ArticleStream
         @account = Account.find(options.owner_account_id)
         @current_user_session = UserSession.find
         @current_user = @current_user_session.nil? ? nil : @current_user_session.user 
-        unless @current_user && (@current_user.has_role?("staff", @account) || @current_user.has_role?("admin"))
+        unless @current_user && (@current_user.has_role?("manager", @account) || @current_user.has_role?("admin"))
           redirect '/user_session/new'
         end
     end
     
     get '/stream/?' do
       load_session
-      @articles = Article.status_matches('published').by_published_at(:desc).paginate(:page => params[:page] || 1, :per_page => params[:per_page] || 15 )
+      @articles = Article.status_matches('published').by_published_at(:desc).paginate(:page => params[:page] || 1, :per_page => params[:per_page] || 25 )
       erb :stream
     end
     

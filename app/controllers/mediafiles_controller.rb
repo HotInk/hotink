@@ -63,12 +63,13 @@ class MediafilesController < ApplicationController
         
     case params[:mediafile][:file].content_type
     # Images
-    when %r"jpe?g", %r"tiff?", %r"png", %r"gif", %r"bmp"    then @mediafile = @account.images.build(params[:mediafile].merge(:settings => @account.settings["image"]))
+    when %r"jpe?g", %r"tiff?", %r"png", %r"gif", %r"bmp"    then @mediafile = @account.images.build
     # mp3s/Audiofiles
-    when  %r"audio\/mpeg", %r"audio\/mpg"                   then @mediafile = @account.audiofiles.build(params[:mediafile])
+    when  %r"audio\/mpeg", %r"audio\/mpg"                   then @mediafile = @account.audiofiles.build
     # Catch-all for generic file attachments
-    else @mediafile = @account.mediafiles.build(params[:mediafile])
+    else @mediafile = @account.mediafiles.build
     end
+    @mediafile.attributes = params[:mediafile]
     @mediafile.date = Time.now
     
 
