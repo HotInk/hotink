@@ -53,7 +53,7 @@ Rails::Initializer.run do |config|
   config.gem 'pacecar', :source => 'http://gemcutter.org'
   config.gem "paperclip", :source => "http://gemcutter.org"
   
-  config.gem 'bluecloth', :version => "2.0.5"
+  config.gem 'rdiscount'
   
   # Gems for Mailout
   config.gem 'sinatra'

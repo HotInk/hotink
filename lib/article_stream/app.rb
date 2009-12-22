@@ -16,11 +16,6 @@ module ArticleStream
       include ActionView::Helpers::UrlHelper      
       include ApplicationHelper
       
-      
-      def markdown(text)
-        BlueCloth.new(text).to_html
-      end
-      
       def paginate(articles)
         unless articles.total_entries <= articles.per_page
           html_output = "<div class=\"pagination\">"
@@ -54,7 +49,7 @@ module ArticleStream
     
     get '/stream/?' do
       load_session
-      @articles = Article.status_matches('published').by_published_at(:desc).paginate(:page => params[:page] || 1, :per_page => params[:per_page] || 25 )
+      @articles = Article.status_matches('published').published_at_in_past.by_published_at(:desc).paginate(:page => params[:page] || 1, :per_page => params[:per_page] || 25 )
       erb :stream
     end
     
