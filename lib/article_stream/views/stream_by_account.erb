@@ -1,0 +1,18 @@
+<h1><a href="/stream">CUP News-stream</a></h1>
+<div id="statusbar">
+</div>
+<ol id="choices">
+	<li class="yourstream">Your stream</li>
+	<li class="allarticles">All articles</li>
+	<li class="recommended">Recommended</li>
+</ol>
+<div class="colour_wrapper">
+	<ol id="stream_articles">
+		<% for account in @accounts %>
+		<li id="account_<%= account.id %>" class="<%= cycle("odd", "even") %>">
+			<h1><%= account.name %></a></h1>
+		</li>
+		<% end %>
+	</ol>
+</div>
+

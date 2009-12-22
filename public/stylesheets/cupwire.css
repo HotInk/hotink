@@ -54,7 +54,7 @@ ol#stream_articles p.account { float: left; color: white; padding: 2px 3px; font
 .color_9 { background-color: #AAE0DE; color: #0F2458; }
 
 
-div#statusbar { float: left; width: 930px; margin-bottom: 3px; }
+div#statusbar, div#footerbar { float: left; width: 930px; margin-bottom: 3px; }
 div.pagination { text-align: right; margin: 8px 0; }
 
 div.article { width: 700px; font-size: 14px; padding: 0 5px; color: #222; line-height: 1.5; }

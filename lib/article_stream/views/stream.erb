@@ -20,7 +20,7 @@
 				<h2><%= article.subtitle %></h2>
 			<% end %>
 			<% unless article.authors.empty? %><p class="authors"><%= article.authors_list %></p><% end %>
-			<p class="account color_<%= article.account.id % 4 %> translucent"><%= article.account.formal_name.blank? ? article.account.name : article.account.formal_name %></p>
+			<p class="account color_<%= article.account.id % 10 %> translucent"><%= article.account.formal_name.blank? ? article.account.name : article.account.formal_name %></p>
 			<% if article.pickup %>
 			<p class="checkout_notice"><a href="/accounts/<%= @account.id %>/articles/<%= article.pickup.duplicate_article.id %>/edit">checked out <%= article.pickup.created_at.to_s(:standard) %> by <%= article.pickup.user.name %></a></p>
 			<% end %>
@@ -33,4 +33,6 @@
 		<% end %>
 	</ol>
 </div>
-
+<div id="footerbar">
+	<%= paginate(@articles) %>
+</div>
