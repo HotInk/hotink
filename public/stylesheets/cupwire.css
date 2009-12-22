@@ -26,17 +26,17 @@ ol#stream_articles p { margin: 2px; float: left; }
 ol#stream_articles div.media { float: right; margin: 0 100px 0 25px;  }
 
 ol#stream_articles p.authors, ol#stream_articles p.checkout_notice { padding: 2px 0; }
-ol#stream_articles p.account { float: left; padding: 2px 3px; font-weight: 400; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
-ol#stream_articles p.account.color_0 { background-color: #7991FF; }
-ol#stream_articles p.account.color_1 { background-color: #FF7C41; }
-ol#stream_articles p.account.color_2 { background-color: #2A6328; }
-ol#stream_articles p.account.color_3 { background-color: #E0526A; }
-ol#stream_articles p.account.color_4 { background-color: #402013; color: #FFF569; }
-ol#stream_articles p.account.color_5 { background-color: #6C3CC2; }
-ol#stream_articles p.account.color_6 { background-color: #D50700; }
-ol#stream_articles p.account.color_7 { background-color: #D2D5CB; color: #07099A; }
-ol#stream_articles p.account.color_8 { background-color: #FFF569; color: #402013; }
-ol#stream_articles p.account.color_9 { background-color: #AAE0DE; color: #0F2458; }
+ol#stream_articles p.account { float: left; color: white; padding: 2px 3px; font-weight: 400; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
+.color_0 { background-color: #7991FF; }
+.color_1 { background-color: #FF7C41; }
+.color_2 { background-color: #2A6328; }
+.color_3 { background-color: #E0526A; }
+.color_4 { background-color: #402013; color: #FFF569; }
+.color_5 { background-color: #6C3CC2; }
+.color_6 { background-color: #D50700; }
+.color_7 { background-color: #D2D5CB; color: #07099A; }
+.color_8 { background-color: #FFF569; color: #402013; }
+.color_9 { background-color: #AAE0DE; color: #0F2458; }
 
 ol#stream_articles p.date { float: right; font-size: 20px; height: 100%; width: 75px; color: #AAA; }
 ol#stream_articles p.date+p { float: none; font-size: 9px; color: green; margin-bottom: 3px; }
@@ -47,6 +47,7 @@ div.pagination { text-align: right; margin: 8px 0; }
 div.article { width: 700px; font-size: 14px; padding: 0 5px; color: #222; line-height: 1.5; }
 div.article h1 { font-weight: bold; }
 div.article h2 { font-size: 140%; }
+div.article p.account { font-size: 15px; font-weight: bold; }
 div#article_checkout p, div.media_thumbs p { font-size: 12px; }
 div#article_checkout, div.media_thumbs { float:right; clear: right; width: 400px; padding: 10px; margin: 5px 0 5px 15px; background-color: #CEE4F3; border: 1px solid #DEDEDE;  -moz-border-radius: 3px; -webkit-border-radius: 3px;}
 div#article_checkout h4 { margin: 0; }

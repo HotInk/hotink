@@ -28,6 +28,6 @@
 	</div>
 	<p><span  style="color: green"><%= @article.published_at.to_s(:standard)%> </span> (<%= time_ago_in_words(@article.published_at)%> ago)</p>
 	<p class="account"><%= @article.account.formal_name == "" ? @article.account.name : @article.account.formal_name %></p>
-	<p style="font-weight: bold"><%= @article.authors_list %></p>
+	<p class="authors"><%= @article.authors_list %></p>
 	<%= markdown @article.bodytext %>
 </div>
