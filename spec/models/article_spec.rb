@@ -49,4 +49,13 @@ describe Article do
     article = Factory(:detailed_article)
     article.to_liquid.should == {'title' => article.title, 'subtitle' => article.subtitle, 'authors_list' => article.authors_list, 'bodytext' => article.bodytext, 'id' => article.id.to_s }
   end
+  
+  it "should know its bodytext word count" do
+    article = Factory(:article)
+    article.bodytext = "this short article has a grand total of ten words"
+    article.word_count.should == 10
+    
+    article.bodytext = ""
+    article.word_count.should == 0
+  end
 end

@@ -49,7 +49,7 @@
 		<% end %>
 		
 		<% if article.bodytext %>
-			<p><%= article.bodytext.scan(/\w+/).size %> words</p>
+			<p><%= pluralize(article.word_count, "word") %></p>
 		<% else %>
 			<p>No bodytext</p>
 		<% end %>

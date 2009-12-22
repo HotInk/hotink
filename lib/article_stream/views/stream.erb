@@ -6,12 +6,14 @@
 	<li class="yourstream">Your stream</li>
 	<li class="allarticles">All articles</li>
 	<li class="recommended">Recommended</li>
+	<li class="team"><a href="/team">Manage team</a></li>
 </ol>
 <div class="colour_wrapper">
 	<ol id="stream_articles">
 		<% for article in @articles %>
 		<li id="article_<%= article.id %>" class="clearfix <%= cycle("odd", "even") %><%= " pickedup" if article.pickup %>">
 			<p class="date"><%= article.published_at.to_s(:standard) %></p>
+			<p class="word_count"><%= pluralize(article.word_count, "word") %></p>
 			<p><%= time_ago_in_words(article.published_at)%> ago</p>
 			<h1><a href="/stream/articles/<%= article.id %>"><%= article.title %></a></h1>
 			<% unless article.subtitle.blank? %>
