@@ -5,6 +5,26 @@ class Article < Document
   
   named_scope :and_related_items, :include => [:authors, :mediafiles, :section]
   
+  named_scope :drafts, :conditions => "status is null AND created_at != updated_at"
+  named_scope :scheduled, lambda { {:conditions => ["status = 'Published' AND published_at > ?", Time.now.utc]} }
+  named_scope :published, lambda { {:conditions => ["status = 'Published' AND published_at <= ?", Time.now.utc]} }
+  
+  def published?
+    (self.status=='Published') && (self.published_at <= Time.now)
+  end
+  
+  def draft?
+    self.status.nil? && (self.updated_at != self.created_at)
+  end
+  
+  def scheduled?
+    (self.status=='Published') && (self.published_at > Time.now)
+  end
+  
+  def untouched?
+     self.status.nil? && (self.updated_at == self.created_at)
+  end
+  
   # A photocopy is an account neutral version of an article, used to transfer between accounts
   def photocopy(new_account)
     copy = clone

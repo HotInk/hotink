@@ -43,6 +43,9 @@
 	fade_flash.delay(1.5);
 	
 	resizeIframe();
+	window.onresize = function() {
+	   resizeIframe();
+	};
 </script>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

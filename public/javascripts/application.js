@@ -15,12 +15,6 @@ theField.value = theField.defaultValue;
 }
 
 // Application Iframe resizing
-
-window.onresize = function() {
-   resizeIframe();
-};
-
-
 function resizeIframe()
 {
 	$("application_frame").setStyle({ height: ( WindowHeight() - getObjHeight(document.getElementById("navigation"))) + "px" });

@@ -17,7 +17,7 @@ Factory.define :basic_article, :parent => :article do |ba|
 end
 
 Factory.define :published_article, :parent => :basic_article do |ba|
-  ba.status         "published"
+  ba.status         "Published"
   ba.published_at   Time.now
 end
 
@@ -26,7 +26,7 @@ Factory.define :detailed_article, :parent => :article do |a|
   a.subtitle       "Get a detailed look (subtitle)"
   a.authors        { (1..3).collect{ Factory(:author) } }
   a.bodytext       "Wow. I **cannot** believe *the truth*."
-  a.status         "published"
+  a.status         "Published"
   a.published_at   Time.now
 end
 

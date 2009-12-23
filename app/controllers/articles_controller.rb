@@ -9,14 +9,14 @@ class ArticlesController < ApplicationController
       page = params[:page] || 1
       per_page = params[:per_page] || 20
       
-        # If the request if for secific ids, don't mess around, just return them
+        # If the request is for specific ids, don't mess around, just return them
       if params[:ids]
-        @articles = @account.articles.find_all_by_id(params[:ids], :include => [:authors, :mediafiles, :section])
+        @articles = @account.articles.and_related_items.all(:conditions => { :id => params[:ids] })
         
         # check whether we're looking for section articles
       elsif params[:section_id]
         @category = @account.categories.find(params[:section_id])
-        @articles = @category.articles.status_matches('published').published_at_in_past.by_published_at(:desc).paginate( :page => page, :per_page => per_page)
+        @articles = @category.articles.published.by_published_at(:desc).paginate( :page => page, :per_page => per_page)
         
         # This is the primary way of finding tagged articles
       elsif params[:tagged_with]
@@ -25,15 +25,16 @@ class ArticlesController < ApplicationController
         @search_query = params[:search]
         @articles = @account.articles.and_related_items.search( @search_query, :page => page, :per_page => per_page)
       else  
-        @articles = @account.articles.and_related_items.status_matches('published').published_at_in_past.by_published_at(:desc).paginate( :page => page, :per_page => per_page)
-        if page.to_i == 1
-          @drafts = @account.articles.find( :all, :conditions => { :status => nil }, :include => [:authors, :mediafiles, :section] ).reject{ |draft| draft.created_at == draft.updated_at }
-          @scheduled = @account.articles.and_related_items.status_matches('published').published_at_in_future.by_published_at(:desc).all
-        end
+        @articles = @account.articles.published.and_related_items.by_published_at(:desc).paginate( :page => page, :per_page => per_page)
       end
     
       respond_to do |format|
-        format.html # index.html.erb
+        format.html do
+          if page.to_i == 1
+            @drafts = @account.articles.drafts.and_related_items
+            @scheduled = @account.articles.scheduled.and_related_items.by_published_at(:desc)
+          end
+        end
         format.js
         format.xml  { render :xml => @articles }
       end

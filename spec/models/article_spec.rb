@@ -11,6 +11,65 @@ describe Article do
   it { should have_one(:checkout) }
   it { should have_one(:pickup) }
   
+  
+  describe "publication status" do
+    before(:each) do
+      @untouched = Factory(:article)
+      @draft = Factory(:article, :created_at => 1.day.ago)
+      @published = Factory(:published_article)
+      @scheduled = Factory(:published_article, :published_at => Time.now + 1.day)
+    end
+    
+    it "should identify drafts" do
+      Article.drafts.should_not include(@untouched)
+      Article.drafts.should include(@draft)
+      Article.drafts.should_not include(@published)
+      Article.drafts.should_not include(@scheduled)
+    end
+
+    it "should identify articles scheduled to publish" do   
+      Article.scheduled.should_not include(@untouched)
+      Article.scheduled.should_not include(@draft)
+      Article.scheduled.should_not include(@published)
+      Article.scheduled.should include(@scheduled)
+    end
+
+    it "should identify articles already published" do
+      Article.published.should_not include(@untouched)
+      Article.published.should_not include(@draft)
+      Article.published.should include(@published)
+      Article.published.should_not include(@scheduled)
+    end
+    
+    it "should know it's publication status" do
+      @untouched.published?.should be_false
+      @draft.published?.should be_false
+      @published.published?.should be_true
+      @scheduled.published?.should be_false
+    end
+    
+    it "should know it's scheduled status" do
+      @untouched.scheduled?.should be_false
+      @draft.scheduled?.should be_false
+      @published.scheduled?.should be_false
+      @scheduled.scheduled?.should be_true
+    end
+    
+    it "should know it's draft status" do
+      @untouched.draft?.should be_false
+      @draft.draft?.should be_true
+      @published.draft?.should be_false
+      @scheduled.draft?.should be_false
+    end
+    
+    it "should know it's untouched status" do
+      @untouched.untouched?.should be_true
+      @draft.untouched?.should be_false
+      @published.untouched?.should be_false
+      @scheduled.untouched?.should be_false
+    end
+  end
+  
   it "should create a human readable list of authors' names" do
     @article.authors = [Factory(:author, :name => "Lilly")]
     @article.authors_list.should == "Lilly"

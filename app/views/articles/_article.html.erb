@@ -1,13 +1,18 @@
 <% unless article.created_at == article.updated_at %>
-  <li id="article_<%= article.id %>" class="<%= cycle("even-row", "odd-row") %> <%= article.status=="Published" ? (article.published_at > Time.now ? "scheduled" : "published") : "unpublished" %> clearfix">
+  <li id="article_<%= article.id %>" class="<%= cycle("even-row", "odd-row") %> <% if article.published? %>published<% elsif article.scheduled? %>scheduled<% elsif article.draft? %>unpublished<% end %> clearfix">
 				
 	<div class="status">
 		<input type="checkbox" value="<%= article.id %>" name="article_ids[]"/>
 	</div>
 	
 	<div class="article clearfix">
-		<h1> &ldquo;<%=link_to h(article.display_title.strip), edit_account_article_url(@account, article), :class=>"document_link" %>&rdquo;
-			<%= article.status=="Published" ? (article.published_at > Time.now ? "<small>Scheduled</small>" : "<small></small>") : "<small>Draft</small>" %>
+		<h1>
+				&ldquo;<%=link_to h(article.display_title.strip), edit_account_article_url(@account, article), :class=>"document_link" %>&rdquo;
+			<% if article.draft? %>
+				<small>Draft</small>
+			<% elsif article.scheduled? %>
+				<small>Scheduled</small>
+			<% end %>
 		</h1>
 		<div class="article_details clearfix">
 			<div class="authors">
