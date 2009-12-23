@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
   # GET /articles.xml
   def index
       page = params[:page] || 1
-      per_page = params[:per_page] || 5
+      per_page = params[:per_page] || 20
       
         # If the request if for secific ids, don't mess around, just return them
       if params[:ids]
