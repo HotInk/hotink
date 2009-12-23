@@ -10,7 +10,10 @@ describe ArticleStream do
     
     # Use test doubles for authlogic
     @user = mock("user")
-    @user.should_receive(:has_role?).with("manager", @account).and_return(true)
+    @user.stub!(:has_role?).and_return(true)
+    @user.stub!(:login).and_return("Test")
+    @user.stub!(:id).and_return(1)
+    
     @session = mock("user_session")
     @session.stub!(:user).and_return(@user)
     UserSession.stub!(:find).and_return(@session)
@@ -22,7 +25,7 @@ describe ArticleStream do
   
   describe "GET to /stream" do
     it "should only display published articles" do
-      visible_article = Factory(:published_article)
+      visible_article = Factory(:published_article, :published_at => 1.day.ago, :bodytext => "")
       invisible_article = Factory(:article)
       get '/stream'
       last_response.body.should have_selector("#article_#{visible_article.id}")

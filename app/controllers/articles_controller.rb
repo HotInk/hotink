@@ -6,6 +6,9 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
+      page = params[:page] || 1
+      per_page = params[:per_page] || 5
+      
         # If the request if for secific ids, don't mess around, just return them
       if params[:ids]
         @articles = @account.articles.find_all_by_id(params[:ids], :include => [:authors, :mediafiles, :section])
@@ -13,37 +16,33 @@ class ArticlesController < ApplicationController
         # check whether we're looking for section articles
       elsif params[:section_id]
         @category = @account.categories.find(params[:section_id])
-        @articles = @category.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :conditions => "status = 'published' AND published_at < '#{Time.now.utc.to_s(:db)}'", :order => "published_at DESC" )
+        @articles = @category.articles.status_matches('published').published_at_in_past.by_published_at(:desc).paginate( :page => page, :per_page => per_page)
         
         # This is the primary way of finding tagged articles
       elsif params[:tagged_with]
-        @articles = @account.articles.tagged_with(params[:tagged_with], :on => :tags).by_date_published.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ) )
-        
-        # This split ona blank search query is important, even though thinking-sphinx will return ordered search
-        # results on a blank query. Sphinx delta index isn't ordered with the regular index, so the ordering just
-        # doesn't work.
-      elsif params[:search].blank? 
-        
-        conditions = { :status => "published" }
-  
-        @articles = @account.articles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "published_at DESC", :include => [:authors, :mediafiles, :section], :conditions => conditions)
-        @drafts = @account.articles.find( :all, :conditions => { :status => nil }, :include => [:authors, :mediafiles, :section] ).reject{ |draft| draft.created_at == draft.updated_at } unless params[:page]
-      else  
+        @articles = @account.articles.tagged_with(params[:tagged_with], :on => :tags).status_matches("published").by_published_at(:desc).paginate( :page=>(params[:page] || 1), :per_page => per_page )
+      elsif params[:search]
         @search_query = params[:search]
-        @articles = @account.articles.search( @search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :include => [:authors, :mediafiles, :section])
+        @articles = @account.articles.and_related_items.search( @search_query, :page => page, :per_page => per_page)
+      else  
+        @articles = @account.articles.and_related_items.status_matches('published').published_at_in_past.by_published_at(:desc).paginate( :page => page, :per_page => per_page)
+        if page.to_i == 1
+          @drafts = @account.articles.find( :all, :conditions => { :status => nil }, :include => [:authors, :mediafiles, :section] ).reject{ |draft| draft.created_at == draft.updated_at }
+          @scheduled = @account.articles.and_related_items.status_matches('published').published_at_in_future.by_published_at(:desc).all
+        end
       end
     
       respond_to do |format|
         format.html # index.html.erb
         format.js
-        format.xml  { render :xml => @articles.delete_if{ |article| article.published_at >= Time.now } }
+        format.xml  { render :xml => @articles }
       end
   end
 
   # GET /articles/1
   # GET /articles/1.xml
   def show
-    @article = @account.articles.find(params[:id], :include=>:authors)
+    @article = @account.articles.find(params[:id])
 
     expires_in 3.minutes, :private => false
     respond_to do |format|

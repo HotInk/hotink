@@ -3,6 +3,8 @@ class Article < Document
   has_one :checkout, :foreign_key => :duplicate_article_id, :dependent => :destroy
   has_one :pickup, :class_name => "Checkout", :foreign_key => :original_article_id
   
+  named_scope :and_related_items, :include => [:authors, :mediafiles, :section]
+  
   # A photocopy is an account neutral version of an article, used to transfer between accounts
   def photocopy(new_account)
     copy = clone

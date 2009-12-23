@@ -32,15 +32,15 @@
 			<%= select_tag("article[section_id]", options_for_category_select(@account.categories, @article.section ), :class => :text_input)%>
 		</div>
 	  </div>
-	  <div id="bodytext" class="clearfix">
-		<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
-	    <%= f.label :bodytext, "Body text" %><br />
-	    <%= f.text_area :bodytext %>
-	  </div>
 	  <p>
-	    <%= f.label :summary %><br />
-	    <%= f.text_area :summary, :class=>"text_input user" %>
+	    <%= f.label :summary, "Excerpt" %> <small>Short summary or teaser</small><br />
+   	    <%= f.text_area :summary, :class=>"text_input user" %>
 	  </p>
+	  <div id="bodytext" class="clearfix">
+	    <%= f.label :bodytext, "Body text" %><br />
+	  	<div id="wmd-button-bar"></div>
+	    <%= f.text_area :bodytext, :id => 'wmd-input' %>
+	  </div>
 	  <div id="categories_hidden">
 	  	<% @account.categories.each do |cat| %>
 			<input type="hidden" name="article[categories_attributes][<%= cat.id %>]" value="<%= "1" if @article.categories.member?(cat) %>" id="article_categories_attributes_<%= cat.id %>" />
@@ -113,14 +113,5 @@
 	reload_media = function() {
 		new Ajax.Request('/accounts/<%= @account.id %>/articles/<%= @article.id %>/mediafiles', {method:'get'});
 	}
-	
- 	// WMD Editor Configuration script
-    // Set this *before* you load wmd.js
-    wmd_options = {
-					output: "Markdown",
-					lineLength: 40,
-					buttons: "bold italic heading | link blockquote image | ol ul hr ",
-					autostart: true 
-				  };
 </script>
-<%= javascript_include_tag 'wmd/wmd.js' %>
+<%= javascript_include_tag 'wmd.min' %>
