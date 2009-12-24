@@ -6,7 +6,7 @@ require 'spec/autorun'
 require 'spec/rails'
 require 'rack/test'
 require 'shoulda'
-
+ 
 Spec::Runner.configure do |config|
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false

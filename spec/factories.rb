@@ -30,6 +30,23 @@ Factory.define :detailed_article, :parent => :article do |a|
   a.published_at   Time.now
 end
 
+Factory.define :draft_article, :parent => :article do |a|
+  a.title          { Factory.next(:article_title) }
+  a.subtitle       "Get a detailed look (subtitle)"
+  a.authors        { (1..3).collect{ Factory(:author) } }
+  a.bodytext       "Wow. I **cannot** believe *the truth*."
+  a.created_at      1.day.ago
+end
+
+Factory.define :scheduled_article, :parent => :article do |a|
+  a.title          { Factory.next(:article_title) }
+  a.subtitle       "Get a detailed look (subtitle)"
+  a.authors        { (1..3).collect{ Factory(:author) } }
+  a.bodytext       "Wow. I **cannot** believe *the truth*."
+  a.status         "Published"
+  a.published_at   Time.now + 1.week
+end
+
 Factory.define :detailed_article_with_mediafiles, :parent => :detailed_article do |a|
   a.mediafiles { (1..3).collect{ Factory(:detailed_mediafile)  } }
 end
@@ -51,6 +68,11 @@ Factory.define :detailed_mediafile, :parent => :mediafile_with_attachment do |m|
 end
 
 ###
+
+Factory.define :category do |c|
+  c.sequence(:name)  { |n| "Category ##{n}" }
+  c.account { Factory(:account) }
+end
 
 Factory.define :user do |u|
   u.sequence(:name)  { |n| "User ##{n}" }

@@ -9,34 +9,20 @@ class ArticlesController < ApplicationController
       page = params[:page] || 1
       per_page = params[:per_page] || 20
       
-        # If the request is for specific ids, don't mess around, just return them
-      if params[:ids]
-        @articles = @account.articles.and_related_items.all(:conditions => { :id => params[:ids] })
-        
-        # check whether we're looking for section articles
-      elsif params[:section_id]
-        @category = @account.categories.find(params[:section_id])
-        @articles = @category.articles.published.by_published_at(:desc).paginate( :page => page, :per_page => per_page)
-        
-        # This is the primary way of finding tagged articles
-      elsif params[:tagged_with]
-        @articles = @account.articles.tagged_with(params[:tagged_with], :on => :tags).status_matches("published").by_published_at(:desc).paginate( :page=>(params[:page] || 1), :per_page => per_page )
-      elsif params[:search]
+      if params[:search]
         @search_query = params[:search]
         @articles = @account.articles.and_related_items.search( @search_query, :page => page, :per_page => per_page)
       else  
+        if page.to_i == 1
+          @drafts = @account.articles.drafts.and_related_items
+          @scheduled = @account.articles.scheduled.and_related_items.by_published_at(:desc)
+        end
         @articles = @account.articles.published.and_related_items.by_published_at(:desc).paginate( :page => page, :per_page => per_page)
       end
     
       respond_to do |format|
-        format.html do
-          if page.to_i == 1
-            @drafts = @account.articles.drafts.and_related_items
-            @scheduled = @account.articles.scheduled.and_related_items.by_published_at(:desc)
-          end
-        end
+        format.html
         format.js
-        format.xml  { render :xml => @articles }
       end
   end
 
@@ -46,10 +32,6 @@ class ArticlesController < ApplicationController
     @article = @account.articles.find(params[:id])
 
     expires_in 3.minutes, :private => false
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @article }
-    end
   end
 
   # GET /articles/new
@@ -75,7 +57,6 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       flash[:notice] = "New article"
       format.html { redirect_to edit_account_article_path(@account, @article) }
-      format.xml  { render :xml => @article }
     end
   end
 
@@ -86,23 +67,6 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.js
       format.html # new.html.erb
-      format.xml  { render :xml => @article }
-    end
-  end
-
-  # POST /articles
-  # POST /articles.xml
-  def create
-    @article = @account.articles.build(params[:article])
-    
-    respond_to do |format|
-      if @article.save
-        format.html { redirect_to(account_article_path(@account, @article)) }
-        format.xml  { render :xml => @article, :status => :created, :location => [@account, @article] }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @article.errors, :status => :unprocessable_entity }
-      end
     end
   end
 
@@ -130,10 +94,8 @@ class ArticlesController < ApplicationController
         @article.categories << @article.section unless @article.categories.member?(@article.section) || @article.section.nil? #Create sorting for current section, if necessary        
         format.js
         format.html { redirect_to(edit_account_article_path(@account, @article)) }
-        format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @article.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -143,11 +105,8 @@ class ArticlesController < ApplicationController
   def destroy
     @article = @account.articles.find(params[:id])
     @article.destroy
-
-    respond_to do |format|
-      flash[:notice] = "Article trashed"
-      format.html { redirect_to(account_articles_url(@account)) }
-      format.xml  { head :ok }
-    end
+    
+    flash[:notice] = "Article trashed"
+    redirect_to(account_articles_url(@account))
   end
 end
