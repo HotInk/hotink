@@ -69,9 +69,27 @@ end
 
 ###
 
+### Issues
+
+Factory.define :issue do |i|
+  i.account { Factory(:account) }
+  i.date { Time.now.to_date }
+end
+
+Factory.define :issue_being_processed, :parent => :issue do |i|
+  i.processing true
+end
+
+###
+
 Factory.define :category do |c|
   c.sequence(:name)  { |n| "Category ##{n}" }
   c.account { Factory(:account) }
+  c.active true
+end
+
+Factory.define :inactive_category, :parent => :category do |c|
+  c.active false
 end
 
 Factory.define :user do |u|

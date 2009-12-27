@@ -5,6 +5,9 @@ class Article < Document
   
   named_scope :and_related_items, :include => [:authors, :mediafiles, :section]
   
+  named_scope :in_section, lambda { |section| { :conditions => { :section_id => section.id } } }
+  
+  # Article statuses
   named_scope :drafts, :conditions => "status is null AND created_at != updated_at"
   named_scope :scheduled, lambda { {:conditions => ["status = 'Published' AND published_at > ?", Time.now.utc]} }
   named_scope :published, lambda { {:conditions => ["status = 'Published' AND published_at <= ?", Time.now.utc]} }

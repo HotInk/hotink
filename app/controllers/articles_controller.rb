@@ -11,13 +11,13 @@ class ArticlesController < ApplicationController
       
       if params[:search]
         @search_query = params[:search]
-        @articles = @account.articles.and_related_items.search( @search_query, :page => page, :per_page => per_page)
+        @articles = @account.articles.search( @search_query, :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
       else  
         if page.to_i == 1
           @drafts = @account.articles.drafts.and_related_items
           @scheduled = @account.articles.scheduled.and_related_items.by_published_at(:desc)
         end
-        @articles = @account.articles.published.and_related_items.by_published_at(:desc).paginate( :page => page, :per_page => per_page)
+        @articles = @account.articles.published.by_published_at(:desc).paginate( :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
       end
     
       respond_to do |format|

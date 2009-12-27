@@ -15,7 +15,7 @@ class Document < ActiveRecord::Base
   has_many :mediafiles, :through => :waxings
   has_many :images, :through => :waxings, :source=>'mediafile', :conditions => { :type => 'Image'}
   
-  named_scope :by_date_published, :conditions => { :status => "published" }, :order => "published_at DESC"
+  named_scope :by_date_published, :order => "published_at DESC"
   
   acts_as_taggable_on :tags
   

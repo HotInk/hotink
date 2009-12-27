@@ -4,6 +4,8 @@ class Issue < ActiveRecord::Base
   has_many :printings, :dependent => :destroy
   has_many :articles, :through => :printings
 
+  named_scope :processed, :conditions => { :processing => false }
+
   has_attached_file :pdf,
       :styles => {
         :screen_quality => { :quality=>'screen', :processors => [:pdf_quality_filter]},
@@ -24,7 +26,7 @@ class Issue < ActiveRecord::Base
       :url => "/system/:account/:class/:id_partition/:basename_:style.:extension"
   
   
-  validates_presence_of :account, :message => "must be attached"
+  validates_presence_of :account
   validates_associated :account, :message => "must be valid"
   validates_date :date, :format => "yyyy-mm-dd", :invalid_date_message => "must be formattted 'YYYY-MM-DD' style"
   

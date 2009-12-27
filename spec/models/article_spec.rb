@@ -8,9 +8,12 @@ describe Article do
   it { should belong_to(:account) }
   it { should validate_presence_of(:account).with_message(/must have an account/) }
   
+  it { should belong_to(:section) }
+  
   it { should have_one(:checkout) }
   it { should have_one(:pickup) }
   
+  it { should have_many(:issues).through(:printings) }
   
   describe "publication status" do
     before(:each) do
@@ -40,7 +43,7 @@ describe Article do
       Article.published.should include(@published)
       Article.published.should_not include(@scheduled)
     end
-    
+        
     it "should know it's publication status" do
       @untouched.published?.should be_false
       @draft.published?.should be_false
@@ -68,6 +71,25 @@ describe Article do
       @published.untouched?.should be_false
       @scheduled.untouched?.should be_false
     end
+  end
+  
+  it "should return articles by date published" do
+    first_article = Factory(:detailed_article, :published_at => 1.day.ago)
+    second_article = Factory(:detailed_article, :published_at => 3.days.ago)
+    
+    Article.published.by_date_published.first.should == first_article
+    Article.published.by_date_published.second.should == second_article
+  end
+  
+  it "should return articles by section" do
+    section = Factory(:category)
+    articles = (1..3).collect { Factory(:detailed_article, :section => section) }
+    other_section_article = Factory(:detailed_article, :section => Factory(:category))
+    
+    articles.each do |article|
+      Article.in_section(section).should include(article)
+    end
+    Article.in_section(section).should_not include(other_section_article)
   end
   
   it "should create a human readable list of authors' names" do

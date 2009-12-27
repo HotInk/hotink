@@ -8,17 +8,12 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.xml
   def index 
+    page = (params[:page] || 1).to_i
+    per_page = (params[:per_page] || 15 ).to_i
+    @issues = @account.issues.paginate( :page=>page, :per_page =>per_page, :order => "date DESC")
+    
     respond_to do |format|
-      page = (params[:page] || 1).to_i
-      per_page = (params[:per_page] || 15 ).to_i
-      
-      format.html do 
-        @issues = @account.issues.paginate( :page=>page, :per_page =>per_page, :order => "date DESC")
-      end # index.html.erb
-      format.xml do
-        @issues = @account.issues.paginate(  :page=>page, :per_page =>per_page, :conditions => { :processing => false }, :order => "date DESC")   
-        render :xml => @issues 
-      end
+      format.html
     end
   end
 
@@ -29,22 +24,6 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @issue }
-    end
-  end
-  
-  #Return an issue's articles in the api
-  def articles
-    @issue = @account.issues.find(params[:id])
-    
-    if params[:section_id]
-      @articles = @issue.articles.find_all_by_section_id(params[:section_id], :conditions => "status = 'published' AND published_at < '#{Time.now.utc.to_s(:db)}'", :order => "published_at DESC" )
-    else
-      @articles = @issue.articles.find( :all, :conditions => "status = 'published' AND published_at < '#{Time.now.utc.to_s(:db)}'", :order => "published_at DESC" )
-    end
-        
-    respond_to do |format|
-      format.xml  { render :xml => @articles }
     end
   end
 
@@ -69,10 +48,8 @@ class IssuesController < ApplicationController
       @issue.save
     end
     
-
     respond_to do |format|
       format.html { redirect_to edit_account_issue_url(@account, @issue ) }
-      format.xml  { render :xml => @issue }
     end
   end
 
@@ -96,10 +73,8 @@ class IssuesController < ApplicationController
       if @issue.save
         flash[:notice] = 'Issue was successfully created.'
         format.html { redirect_to account_issues_url(@account) }
-        format.xml  { render :xml => @issue, :status => :created, :location => [@account, @issue] }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @issue.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -114,11 +89,9 @@ class IssuesController < ApplicationController
       if @issue.update_attributes(params[:issue])
         flash[:notice] = 'Issue was successfully updated.'
         format.html { redirect_to account_issues_url(@account) }
-        format.xml  { head :ok }
       else
         @issue.date = date
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @issue.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -131,7 +104,6 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(account_issues_url(@account)) }
-      format.xml  { head :ok }
     end
   end
     

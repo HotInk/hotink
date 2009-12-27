@@ -45,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
       entry.resources :waxings
       entry.resources :tags
     end
-    account.resources :issues, :member => { :upload_pdf => :post, :articles => :get } do |issue|
+    account.resources :issues, :member => { :upload_pdf => :post } do |issue|
     end
     account.resources :authors
     account.resources :sections do |section|

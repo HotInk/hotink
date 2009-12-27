@@ -10,6 +10,11 @@ class Category < ActiveRecord::Base
   validates_presence_of :account, :message => "must have an account"
   validates_presence_of :name
   
+  named_scope :active, :conditions => { :active => true }
+  named_scope :inactive, :conditions => { :active => false }
+  
+  named_scope :sections, :conditions => { :parent_id => nil }
+  
   acts_as_list
     
   def scope_condition
