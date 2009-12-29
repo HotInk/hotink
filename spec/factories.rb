@@ -52,6 +52,11 @@ Factory.define :detailed_article_with_mediafiles, :parent => :detailed_article d
 end
 ###
 
+Factory.define :detailed_entry, :class => "Entry", :parent => :detailed_article do |e|
+  e.blogs { |f| [Factory(:blog, :account => f.account)] }
+end
+
+
 ### Mediafile factories
 Factory.define :mediafile do |a|
   a.account { Factory(:account) }
@@ -103,6 +108,11 @@ end
 Factory.define :author do |a|
   a.sequence(:name) { |n| "Author ##{n}" }
   a.account { Factory(:account) }
+end
+
+Factory.define :blog do |b|
+  b.sequence(:title)  { |n| "Blog ##{n}" }
+  b.account { Factory(:account)}
 end
 
 Factory.define :checkout do |c|

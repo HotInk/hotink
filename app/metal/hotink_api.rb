@@ -96,4 +96,34 @@ class HotinkApi < Sinatra::Base
     content_type "text/xml"
     @sections.to_xml
   end
+
+  get "/accounts/:account_id/blogs.xml" do
+    load_account
+    
+    @blogs = @account.blogs
+    
+    content_type "text/xml"
+    @blogs.to_xml
+  end
+  
+  get "/accounts/:account_id/query.xml" do
+    load_account
+    
+    @results = []
+    num_records = params[:count] || 5
+
+    case params[:group_by]
+    when "section"
+      for section in @account.main_categories
+         @results += @account.articles.find(:all, :conditions => { :section_id => section.id, :status => 'published' }, :limit => num_records, :order => "published_at DESC" )
+      end  
+    when "blog"
+      for blog in @account.blogs
+         @results += blog.entries.find(:all, :conditions => { :status => 'published' }, :limit => num_records, :order => "published_at DESC" )
+      end
+    end
+
+    content_type "text/xml"
+    @results.to_xml
+  end
 end

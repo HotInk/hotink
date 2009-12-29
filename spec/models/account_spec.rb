@@ -11,6 +11,7 @@ describe Account do
   
   it { should have_many(:articles) }
   it { should have_many(:email_templates) }
+  it { should have_many(:blogs) }
   
   it "should find accounts in order of most recently published articles" #do
     #recent_account = Factory(:account)

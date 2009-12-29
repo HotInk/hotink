@@ -145,7 +145,7 @@ class Document < ActiveRecord::Base
        
        xml.tag!( :account_id, self.account.id, :type => "integer")
        xml.tag!( :account_name, self.account.formal_name.blank? ? self.account.name.capitalize : self.account.formal_name )
-       
+       xml.<< self.account.to_xml(:skip_instruct => true)
 
        # to get the mediafiles' caption, we need to loop over the waxings 
        xml.mediafiles :type => "array" do
@@ -185,11 +185,7 @@ class Document < ActiveRecord::Base
            xml.<< issue.to_xml(:skip_instruct => true)
          end
        end
-       
-       xml.account :type => "array" do
-         xml.<< self.account.to_xml(:skip_instruct => true)
-       end
-              
+                     
      end
   end
   

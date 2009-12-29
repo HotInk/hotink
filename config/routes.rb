@@ -66,7 +66,6 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :actions
     
     account.resource :search
-    account.resource :query
   end
   
   # You can search or query anything, regardless of account.

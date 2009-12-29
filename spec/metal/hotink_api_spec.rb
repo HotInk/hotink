@@ -12,7 +12,7 @@ describe HotinkApi do
       @account = Factory(:account)
     end
       
-    describe "GET to /accounts/:account_id/articles/:id.xml" do      
+    describe "GET to /accounts/:account_id/articles/:id.xml" do
       it "should return an XML representation of a published article" do
         @article = Factory(:detailed_article, :account => @account)
         get "/accounts/#{@account.id}/articles/#{@article.to_param}.xml"
@@ -170,6 +170,49 @@ describe HotinkApi do
         last_response.body.should == @sections.to_xml
       end        
     end
+
+    describe "GET to /accounts/:account_id/blogs.xml" do
+      it "should return an array of blogs" do
+        @blogs = (1..4).collect{ Factory(:blog, :account => @account) }
+        get "/accounts/#{@account.id}/blogs.xml"
+        
+        last_response.should be_ok
+        last_response.headers['Content-Type'].should == "text/xml"
+        last_response.body.should == @account.blogs.to_xml
+      end
+    end
+
+    describe "GET to /accounts/:account_id/query.xml" do
+      
+      it "should return latest articles by section" do
+        section_one = Factory(:category, :account => @account)
+        section_two = Factory(:category, :account => @account)
+        section_one_articles = (1..5).collect{ Factory(:article, :account => @account, :section => section_one) }
+        section_two_articles = (1..5).collect{ Factory(:article, :account => @account, :section => section_two) }
+        
+        get "/accounts/#{@account.id}/query.xml", :group_by => "section"
+        
+        last_response.should be_ok
+        last_response.headers['Content-Type'].should == "text/xml"
+        last_response.body.should == (@account.articles.in_section(section_one).published.by_date_published.limited(5) + @account.articles.in_section(section_two).published.by_date_published.limited(5)).to_xml
+      end
+      
+      it "should return latest entries by blog" do
+        blog_one = Factory(:blog, :account => @account)
+        blog_two = Factory(:blog, :account => @account)
+        blog_one_entries = (1..5).collect{ Factory(:detailed_entry, :account => @account, :blogs => [blog_one]) }
+        blog_two_entries = (1..5).collect{ Factory(:detailed_entry, :account => @account, :blogs => [blog_two]) }
+        
+        get "/accounts/#{@account.id}/query.xml", :group_by => "blog"
+        
+        last_response.should be_ok
+        last_response.headers['Content-Type'].should == "text/xml"
+        
+        options = { :conditions => { :status => 'published' }, :limit => 5, :order => "published_at DESC" }
+        last_response.body.should == (blog_one.entries.all(options) + blog_two.entries.all(options)).to_xml  
+      end
+    end
+    
   end
   
 end

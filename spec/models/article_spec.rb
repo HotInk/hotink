@@ -5,9 +5,6 @@ describe Article do
     @article = Article.create!(Factory.attributes_for(:article))
   end
   
-  it { should belong_to(:account) }
-  it { should validate_presence_of(:account).with_message(/must have an account/) }
-  
   it { should belong_to(:section) }
   
   it { should have_one(:checkout) }

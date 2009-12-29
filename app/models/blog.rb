@@ -1,5 +1,8 @@
 class Blog < ActiveRecord::Base
   belongs_to :account
+  validates_presence_of :account
+  
+  validates_presence_of :title
   
   has_many :entries, :through => :postings, :order => "created_at DESC"
   
