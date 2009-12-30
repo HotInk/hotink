@@ -12,7 +12,6 @@ class SectionsController < ApplicationController
   # GET /sections/1
   # GET /sections/1.xml
   def show
-    
     begin
       @section = @account.categories.find(params[:id])
     rescue ActiveRecord::RecordNotFound
@@ -22,7 +21,6 @@ class SectionsController < ApplicationController
     
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @section }
     end
   end
 

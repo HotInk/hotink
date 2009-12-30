@@ -20,7 +20,10 @@ class HotinkApi < Sinatra::Base
     elsif params[:tagged_with]
       @articles = @account.articles.published.by_published_at(:desc).tagged_with(params[:tagged_with], :on => :tags).paginate( :page=> page, :per_page => per_page )
     elsif params[:search]
-      @articles = @account.articles.published.search( params[:search], :page => page, :per_page => per_page)
+      articles = @account.articles.published.search( params[:search], :page => page)
+      @articles = WillPaginate::Collection.create(articles.current_page, articles.per_page, articles.total_entries) do |pager|
+       pager.replace(articles.to_a)
+      end
     else
       @articles = @account.articles.published.by_date_published(:desc).paginate(:page => page, :per_page => per_page)
     end
@@ -97,6 +100,18 @@ class HotinkApi < Sinatra::Base
     @sections.to_xml
   end
 
+  get "/accounts/:account_id/sections/:id.xml" do
+    load_account    
+    begin
+      @section = @account.categories.active.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      @section = @account.categories.active.find_by_name(params[:id])
+      halt 404, "Record not found or unavailable." unless @section
+    end
+    content_type "text/xml"
+    @section.to_xml
+  end
+
   get "/accounts/:account_id/blogs.xml" do
     load_account
     
@@ -104,6 +119,43 @@ class HotinkApi < Sinatra::Base
     
     content_type "text/xml"
     @blogs.to_xml
+  end
+
+  get "/accounts/:account_id/blogs/:id.xml" do
+    load_account
+    begin
+      @blog = @account.blogs.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      halt 404, "Record not found or unavailable."
+    end
+    content_type "text/xml"
+    @blog.to_xml
+  end
+
+  get "/accounts/:account_id/entries.xml" do
+    load_account
+    page = params[:page] || 1
+    per_page = params[:per_page] || 20
+    
+    content_type "text/xml"
+    if params[:blog_id]
+      @blog = @account.blogs.find(params[:blog_id])
+      @blog.entries.paginate(:page => page, :per_page => per_page, :order => "published_at DESC", :conditions => { :status => "published" }).to_xml
+    else
+      @account.entries.paginate(:page => page, :per_page => per_page, :order => "published_at DESC", :conditions => { :status => "published" }).to_xml
+    end
+  end
+  
+  get "/accounts/:account_id/entries/:id.xml" do
+    load_account    
+    begin
+      @entry = @account.entries.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      halt 404, "Record not found or unavailable."
+    end
+
+    content_type "text/xml"
+    @entry.to_xml
   end
   
   get "/accounts/:account_id/query.xml" do

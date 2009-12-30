@@ -26,16 +26,16 @@
 	  <div id ="author_list" class="field">
 			<%=  render :partial => 'authors_form' 	%>
 	  </div><!-- /author_list -->
-	
+	  <p>
+	    <%= f.label :summary, "Excerpt" %> <small>Short summary or teaser</small><br />
+   	    <%= f.text_area :summary, :class=>"text_input user" %>
+	  </p>
 	  <div id="bodytext" class="clearfix">
 		<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
 	    <%= f.label :bodytext, "Body text" %><br />
-	    <%= f.text_area :bodytext %>
+	  	<div id="wmd-button-bar"></div>
+	    <%= f.text_area :bodytext, :id => 'wmd-input' %>
 	  </div>
-	  <p>
-	    <%= f.label :summary %><br />
-	    <%= f.text_area :summary, :class=>"text_input user" %>
-	  </p>
 	  <div id="categories_hidden">
 	  	<% @account.categories.each do |cat| %>
 			<input type="hidden" name="entry[categories_attributes][<%= cat.id %>]" value="<%= "1" if @entry.categories.member?(cat) %>" id="entry_categories_attributes_<%= cat.id %>" />
@@ -120,4 +120,4 @@
 					autostart: true 
 				  };
 </script>
-<%= javascript_include_tag 'wmd/wmd.js' %>
+<%= javascript_include_tag 'wmd.min' %>

@@ -41,13 +41,14 @@ class EntriesController < ApplicationController
   
   
   def index    
-
-    conditions = {:account_id => @account.id, :status => "published" }
+    page = params[:page] || 1
+    per_page = params[:per_page] || 20
+    conditions = { :account_id => @account.id, :status => "published" }
     
     if @blog
-      @entries = @blog.entries.paginate(:page => (params[:page] || 1), :per_page => (params[:per_page] || 20), :order => "published_at DESC", :conditions => conditions)
+      @entries = @blog.entries.paginate(:page => page, :per_page => per_page, :order => "published_at DESC", :conditions => conditions)
     else
-      @entries = Entry.paginate(:page => (params[:page] || 1), :per_page => (params[:per_page] || 20), :order => "published_at DESC", :conditions => conditions)
+      @entries = Entry.paginate(:page => page, :per_page => per_page, :order => "published_at DESC", :conditions => conditions)
     end
     
     respond_to do |format|

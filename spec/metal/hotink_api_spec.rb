@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe HotinkApi do
   include Rack::Test::Methods
+
+  before do
+    Account.delete_all
+  end
   
   def app
     HotinkApi
@@ -11,7 +15,7 @@ describe HotinkApi do
     before do
       @account = Factory(:account)
     end
-      
+    
     describe "GET to /accounts/:account_id/articles/:id.xml" do
       it "should return an XML representation of a published article" do
         @article = Factory(:detailed_article, :account => @account)
@@ -90,6 +94,56 @@ describe HotinkApi do
       end
     end
     
+  end
+  
+  describe "Sections API" do
+    before do
+      @account = Factory(:account)
+    end
+    
+    describe "GET to /accounts/:account_id/sections.xml" do
+      before do
+        @sections = (1..5).collect { Factory(:category, :account => @account) }
+        @inactive_section = Factory(:category, :account => @account, :active => false)
+        @subsection = Factory(:category, :account => @account, :parent => @sections.first)
+      end
+      
+      it "should return a list of active sections" do
+        get "/accounts/#{@account.id}/sections.xml"
+        
+        last_response.should be_ok
+        last_response.headers['Content-Type'].should == "text/xml"
+        last_response.body.should == @sections.to_xml
+      end        
+    end 
+
+    describe "GET to /accounts/:account_id/sections/:id.xml" do
+      it "should find section by id" do
+        @section = Factory(:category, :account => @account)
+        get "/accounts/#{@account.id}/sections/#{@section.id}.xml"
+        
+        last_response.should be_ok
+        last_response.headers['Content-Type'].should == "text/xml"
+        last_response.body.should == @section.to_xml
+      end
+      
+      it "should find section by name" do
+        @section = Factory(:category, :name => "News", :account => @account)
+        get "/accounts/#{@account.id}/sections/#{@section.name}.xml"
+        
+        last_response.should be_ok
+        last_response.headers['Content-Type'].should == "text/xml"
+        last_response.body.should == @section.to_xml
+      end
+    end
+  
+  end
+  
+  describe "Issues API" do
+    before do
+      @account = Factory(:account)
+    end
+    
     describe "GET to /accounts/:account_id/issues.xml" do
       before do
         @issues = (1..5).collect { |n| Factory(:issue, :date => n.days.ago,:account => @account) }
@@ -108,7 +162,7 @@ describe HotinkApi do
     end
     
     describe "GET to /accounts/:account_id/issues/id.xml" do
-      it "should return an XML respresentation of the article" do
+      it "should return an XML respresentation of the issue" do
         @issue = Factory(:issue, :account => @account)
         get "/accounts/#{@account.id}/issues/#{@issue.id}.xml"
         
@@ -154,23 +208,14 @@ describe HotinkApi do
         last_response.body.should == @issue.articles.in_section(category).by_date_published.to_xml  
       end
     end
-    
-    describe "GET to /accounts/:account_id/sections.xml" do
-      before do
-        @sections = (1..5).collect { Factory(:category, :account => @account) }
-        @inactive_section = Factory(:category, :account => @account, :active => false)
-        @subsection = Factory(:category, :account => @account, :parent => @sections.first)
-      end
-      
-      it "should return a list of active sections" do
-        get "/accounts/#{@account.id}/sections.xml"
-        
-        last_response.should be_ok
-        last_response.headers['Content-Type'].should == "text/xml"
-        last_response.body.should == @sections.to_xml
-      end        
+     
+  end
+  
+  describe "Blogs API" do
+    before do
+      @account = Factory(:account)
     end
-
+    
     describe "GET to /accounts/:account_id/blogs.xml" do
       it "should return an array of blogs" do
         @blogs = (1..4).collect{ Factory(:blog, :account => @account) }
@@ -182,6 +227,60 @@ describe HotinkApi do
       end
     end
 
+    describe "GET to /accounts/:account_id/blogs/:id.xml" do
+      it "should return an xml representation of the blog" do
+        @blog = Factory(:blog, :account => @account)
+        get "/accounts/#{@account.id}/blogs/#{@blog.id}.xml"
+      
+        last_response.should be_ok
+        last_response.headers['Content-Type'].should == "text/xml"
+        last_response.body.should == @blog.to_xml
+      end
+    end
+
+    describe "GET to /accounts/:account_id/entries.xml" do
+      before do
+        @blog_one = Factory(:blog, :account => @account)
+        @blog_two = Factory(:blog, :account => @account)
+        @blog_one_entries = (1..3).collect{ |n| Factory(:detailed_entry, :account => @account, :blogs => [@blog_one]) }
+        @blog_two_entries = (1..3).collect{ |n|  Factory(:detailed_entry, :account => @account, :blogs => [@blog_two]) }
+      end
+      
+      it "should return an array of the most recent entries from any blog" do
+        get "/accounts/#{@account.id}/entries.xml"
+        
+        last_response.should be_ok
+        last_response.headers['Content-Type'].should == "text/xml"
+        last_response.body.should == @account.entries.paginate(:page => 1, :per_page => 20, :order => "published_at DESC", :conditions => { :status => "published" }).to_xml
+      end
+      
+      it "should return entries by blog" do
+        get "/accounts/#{@account.id}/entries.xml", :blog_id => @blog_one.id
+        
+        last_response.should be_ok
+        last_response.headers['Content-Type'].should == "text/xml" 
+        last_response.body.should == @blog_one.entries.paginate(:page => 1, :per_page => 20, :order => "published_at DESC", :conditions => { :status => "published" }).to_xml       
+      end 
+    end
+
+    describe "GET to /accounts/:account_id/entries/id.xml" do
+      it "should return an XML representation of the entry" do
+        @entry = Factory(:detailed_entry, :account => @account)
+        get "/accounts/#{@account.id}/entries/#{@entry.id}.xml"
+      
+        last_response.should be_ok
+        last_response.headers['Content-Type'].should == "text/xml"
+        last_response.body.should == @entry.to_xml
+      end
+    end
+    
+  end
+  
+  describe "Query API" do
+    before do
+      @account = Factory(:account)
+    end
+    
     describe "GET to /accounts/:account_id/query.xml" do
       
       it "should return latest articles by section" do
