@@ -9,7 +9,7 @@ require 'shoulda'
 require 'openid_matchers'
  
 def sso_login_as(user)
-   post '/sso/login', :email => user.login, :password => user.password
+   post '/sso/login', :login => user.login, :password => user.password
 end
  
 Spec::Runner.configure do |config|

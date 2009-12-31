@@ -1,7 +1,7 @@
 class UserActivationsController < ApplicationController
   
   skip_before_filter :find_account, :except => [:create]
-  skip_before_filter :login_or_oauth_required, :only => [:edit, :update]
+  skip_before_filter :login_required, :only => [:edit, :update]
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
   before_filter :check_user_qualifications, :only => [:edit, :update]
   

@@ -2,7 +2,7 @@ class PasswordResetsController < ApplicationController
   
   layout 'login'
   
-  skip_before_filter :login_or_oauth_required #This is fine, since all the functions here are protected by email-address
+  skip_before_filter :login_required #This is fine, since all the functions here are protected by email-address
   before_filter :load_user_using_perishable_token, :only => [ :edit, :update ]
     
    def create  

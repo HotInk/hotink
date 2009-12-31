@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :login_url, :logout_url
   
   before_filter :find_account
-  before_filter :login_or_oauth_required
+  before_filter :login_required
 
 
   # See ActionController::RequestForgeryProtection for details

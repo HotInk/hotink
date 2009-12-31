@@ -75,9 +75,8 @@ module OpenidMatchers
     
     def matches?(target)
       target.should have_selector("form[action='/sso/login'][method='POST']")
-      target.should have_selector("form[action='/sso/login'][method='POST'] input[type='text'][name='email']")
+      target.should have_selector("form[action='/sso/login'][method='POST'] input[type='text'][name='login']")
       target.should have_selector("form[action='/sso/login'][method='POST'] input[type='password'][name='password']")
-      target.should have_selector("form[action='/sso/login'][method='POST'] input[type='submit'][value='Log in']")
       true
     end
     def failure_message

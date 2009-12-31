@@ -5,11 +5,24 @@ require 'haml'
 require 'openid'
 require 'openid/store/filesystem'
 require 'openid/extensions/sreg'
+require 'rack/flash'
 
 class HotinkSso < Sinatra::Base
  include Authlogic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
-  
+ 
+ use Rack::Flash
+ 
  helpers do
+    include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::AssetTagHelper
+    include ActionView::Helpers::FormTagHelper
+    include ActionView::Helpers::UrlHelper
+    include ApplicationHelper
+    
+    def protect_against_forgery?
+      false
+    end
+    
     def sign_in(user)
       if user.nil?
         session.delete(:checkpoint_user_id)
@@ -30,7 +43,10 @@ class HotinkSso < Sinatra::Base
          forbidden!
        end
      end
-     throw(:halt, [401, haml(:login_form)]) unless current_user
+     unless current_user
+       flash[:notice] = "You need to log in to access that page"
+       throw(:halt, [401, erb(:login_form)])
+     end 
    end
    
     def forbidden!
@@ -122,7 +138,7 @@ class HotinkSso < Sinatra::Base
           session[:checkpoint_return_to] = oidreq.return_to
         
           # Authenticate user AND consumer
-          throw(:halt, [401, haml(:login_form)]) unless current_user
+          throw(:halt, [401, erb(:login_form)]) unless current_user
           unless oidreq.identity == url_for_user
              forbidden!
           end
@@ -149,7 +165,7 @@ class HotinkSso < Sinatra::Base
   end
   
   post '/sso/login' do
-    session = UserSession.new(:login => params['email'], :password => params['password'], :remember_me => false)
+    session = UserSession.new(:login => params['login'], :password => params['password'], :remember_me => false)
     if session.save
       sign_in(session.user)
     end
