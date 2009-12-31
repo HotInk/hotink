@@ -3,6 +3,14 @@ Factory.define :account do |a|
   a.time_zone "What time?"
 end
 
+Factory.define :user do |u|
+  u.sequence(:name)  { |n| "User ##{n}" }
+  u.sequence(:email) { |n| "user#{n}@example.com"}
+  u.sequence(:login) { |n| "user#{n}" }
+  u.password "password_1"
+  u.password_confirmation "password_1"
+end
+
 ### Article factories
 Factory.define :article do |a|
   a.account { Factory(:account) }
@@ -97,14 +105,6 @@ Factory.define :inactive_category, :parent => :category do |c|
   c.active false
 end
 
-Factory.define :user do |u|
-  u.sequence(:name)  { |n| "User ##{n}" }
-  u.sequence(:email) { |n| "user#{n}@example.com"}
-  u.sequence(:login) { |n| "user#{n}" }
-  u.password "password_1"
-  u.password_confirmation "password_1"
-end
-
 Factory.define :author do |a|
   a.sequence(:name) { |n| "Author ##{n}" }
   a.account { Factory(:account) }
@@ -128,4 +128,9 @@ end
 Factory.define :email_template_with_articles, :parent => :email_template do |et|
   et.html "<h1>Test</h1><p>{{ note }}</p><ol>{% for article in articles %}<li>{{ article.title }}</li>{% endfor %}</ol>"
   et.plaintext "Test\n====\n\n{{ note }}\n\n{% for article in articles %}-- {{ article.title }}\n{% endfor %}"
+end
+
+Factory.define :sso_consumer do |consumer|
+  consumer.sequence(:name) { |n| "Consumer #{n}" }
+  consumer.sequence(:url) { |n| "http://sso#{n}.consumerapp.com/sso"}
 end

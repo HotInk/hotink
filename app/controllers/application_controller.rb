@@ -3,7 +3,7 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  helper_method :current_user_session, :current_user
+  helper_method :current_user, :login_url, :logout_url
   
   before_filter :find_account
   before_filter :login_or_oauth_required
@@ -20,14 +20,16 @@ class ApplicationController < ActionController::Base
   
   protected
   
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-  end
-
   def current_user
-    return @current_user if defined?(@current_user)&&@current_user # Only returns a user if it's defined and not nil
-    @current_user = current_user_session && current_user_session.user
+    session[:checkpoint_user_id].nil? ? nil : User.find(session[:checkpoint_user_id])
+  end
+  
+  def login_url
+    '/sso/login'
+  end
+  
+  def logout_url
+    '/sso/logout'
   end
   
   private
@@ -88,7 +90,7 @@ class ApplicationController < ActionController::Base
         format.xml  { head :unauthorized  }
         format.html do
           flash[:notice] = "You must be logged in to access this page"
-          redirect_to new_user_session_url
+          redirect_to login_url
         end
       end
       

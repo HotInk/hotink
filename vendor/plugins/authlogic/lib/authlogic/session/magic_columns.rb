@@ -58,7 +58,7 @@ module Authlogic
           
             if record.respond_to?(:current_login_ip)
               record.last_login_ip = record.current_login_ip if record.respond_to?(:last_login_ip)
-              record.current_login_ip = controller.request.remote_ip
+              record.current_login_ip = controller.request.ip
             end
           end
           

@@ -60,6 +60,9 @@ Rails::Initializer.run do |config|
   config.gem 'hominid'
   config.gem 'rack-flash'
   config.gem 'liquid', :source => "http://gemcutter.org"
+
+  config.gem 'ruby-openid', :lib => 'openid'
+  config.gem 'haml'
   
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -88,7 +91,7 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_massdata_session',
+    :session_key => '_hotink_session',
     :secret      => '22c45fa11a301f15f2b366a8f5dabc05c7a3f8bbc0e3bcb437a22527ddbfeeada8586bffa9b5bb1ab04510bea59977c5d9e5f5a234705d4d2f9db28d1cdeb8fd'
   }
 

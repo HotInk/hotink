@@ -6,8 +6,15 @@ require 'spec/autorun'
 require 'spec/rails'
 require 'rack/test'
 require 'shoulda'
+require 'openid_matchers'
+ 
+def sso_login_as(user)
+   post '/sso/login', :email => user.login, :password => user.password
+end
  
 Spec::Runner.configure do |config|
+  config.include(OpenidMatchers)
+  
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
 end

@@ -1,0 +1,15 @@
+-if session[:notice]
+  %p= session[:notice]
+
+%fieldset
+  %legend You need to log in, buddy.
+  %form{:action => "/sso/login", :method => 'POST'}
+    %label{:for => 'email'} 
+      Login:
+      %input{:type => 'text', :name => 'email', :id => 'email'}
+      %br
+    %label{:for => 'password'} 
+      Password:
+      %input{:type => 'password', :name => 'password', :id => 'password'}
+      %br
+    %input{:type => 'submit', :value => 'Log in'}
