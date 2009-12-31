@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Hot Ink</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  
+  <%= stylesheet_link_tag 'hotink' %>
+  <%= stylesheet_link_tag 'login' %>
+
+</head>
+<body>
+<div id="page_container" class="clearfix">
+	<%= yield  %>
+</div>
+<script type="text/javascript" charset="utf-8">
+	//This is a quick hack to fix button display in firefox
+	load_button_fix();
+</script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8512183-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>

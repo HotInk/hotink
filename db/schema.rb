@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091230161233) do
+ActiveRecord::Schema.define(:version => 20091231181304) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(:version => 20091230161233) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "landing_url"
   end
 
   create_table "taggings", :force => true do |t|

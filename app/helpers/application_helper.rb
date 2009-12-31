@@ -106,7 +106,7 @@ module ApplicationHelper
     when 'root', 'manit', 'fulcrum', 'sput', 'Muse', 'peak', 'martlet', 'mcgilldaily', 'ubcophoenix', 'tutorial', 'userguide', 'Nexus', 'Xav', 'cord', 'campusfreepress', 'intercamp', 'otherpress' , 'CUP Wire', 'Quill', 'Sheaf1912', 'thestethoscope', 'naturalselection', 'varsity', 'capertimes', 'omega'
       if user.has_role?('admin') || user.has_role?('manager', account)
         if controller_name == "apps"
-          "<li class=\"selected\">" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
+          "<li class=\"current\">" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
         else
           "<li>" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
         end
