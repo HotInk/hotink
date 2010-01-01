@@ -114,6 +114,15 @@ module ApplicationHelper
       end
     end
     
+    if user.has_role?('admin') || (account.name=="CUP wire" && user.has_role?('manager', account))
+      if controller_name == "article_stream"
+        html += "<li class=\"current\">"
+      else
+        html += "<li>"
+      end
+      html += link_to("Stream", "/stream") + "</li>"
+    end
+    
     if user.has_role?('admin')  
         if (controller_name == "mailouts") && (account.name=="CUP wire"||account.name=="root")
           html += "<li class=\"current\">"
@@ -123,6 +132,7 @@ module ApplicationHelper
         html += link_to("Mailouts", "/accounts/#{account.id.to_s}/mailouts") + "</li>"
     end
     
+    html
   end
   
 end

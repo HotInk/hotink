@@ -18,7 +18,7 @@
 		<div id="logo"><%= image_tag '/images/logo_tiny.png' %></div>
 		<div id="links">
 			<ol>
-				<%= render_applications(@account, current_user) %><li><%= link_to "Articles", "/accounts/#{@account.id}/articles" %></li><li><%= link_to "Media", "/accounts/#{@account.id}/mediafiles" %></li><li><%= link_to "Issues", "/accounts/#{@account.id}/issues" %></li><li><%= link_to "Blogs", "/accounts/#{@account.id}/blogs" %></li>
+				<%= render_applications(@account, current_user, "article_stream") %><li><%= link_to "Articles", "/accounts/#{@account.id}/articles" %></li><li><%= link_to "Media", "/accounts/#{@account.id}/mediafiles" %></li><li><%= link_to "Issues", "/accounts/#{@account.id}/issues" %></li><li><%= link_to "Blogs", "/accounts/#{@account.id}/blogs" %></li>
 			</ol>
 		</div>
 		<div id="user_details"><p>Logged in as: <%= link_to_remote current_user.login, :url=> "/users/#{current_user.id}/edit", :method => :get, :html => { :class=>"weblink" } %>  <%= button_link_to "Logout", '/user_session', :method=>:delete, :class=>"micro", :id=>"user_logout_button" %></p></div>
