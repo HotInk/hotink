@@ -102,16 +102,27 @@ module ApplicationHelper
    
   # This method is a hack to display applications only to users we select on accounts we select
   def render_applications( account, user, controller_name = nil )
+    html = ""
     case account.name
     when 'root', 'manit', 'fulcrum', 'sput', 'Muse', 'peak', 'martlet', 'mcgilldaily', 'ubcophoenix', 'tutorial', 'userguide', 'Nexus', 'Xav', 'cord', 'campusfreepress', 'intercamp', 'otherpress' , 'CUP Wire', 'Quill', 'Sheaf1912', 'thestethoscope', 'naturalselection', 'varsity', 'capertimes', 'omega'
       if user.has_role?('admin') || user.has_role?('manager', account)
         if controller_name == "apps"
-          "<li class=\"current\">" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
+         html += "<li class=\"current\">" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
         else
-          "<li>" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
+         html += "<li>" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
         end
       end
     end
+    
+    if user.has_role?('admin')  
+        if (controller_name == "mailouts") && (account.name=="CUP wire"||account.name=="root")
+          html += "<li class=\"current\">"
+        else
+          html += "<li>"
+        end
+        html += link_to("Mailouts", "/accounts/#{account.id.to_s}/mailouts") + "</li>"
+    end
+    
   end
   
 end

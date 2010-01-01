@@ -10,7 +10,7 @@ describe HotinkSso do
   it "should display login form to unauthenticated user" do
     get '/sso/login'
     last_response.status.should == 401
-    last_response.body.should include("log in")
+    last_response.body.should include("Welcome to Hot Ink")
   end
   
   it "should login user with valid credentials" do

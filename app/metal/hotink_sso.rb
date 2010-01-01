@@ -44,7 +44,7 @@ class HotinkSso < Sinatra::Base
        end
      end
      unless current_user
-       flash[:notice] = "You need to log in to access that page"
+       flash[:notice] = "You must be logged in order to access that page"
        throw(:halt, [401, erb(:login_form)])
      end 
    end
@@ -147,9 +147,16 @@ class HotinkSso < Sinatra::Base
           oidresp = oidreq.answer(true, nil, oidreq.identity)
         
           # Add in Sreg data
+          authorizations = {}
+          current_user.roles_for(Account).each do |role|
+            authorizations.merge!({"account_#{role.authorizable.id}_#{role.name}" => 'true'})
+          end
+
           sreg_data = {
-            'email' => current_user.email
-          }
+            'email' => current_user.email,
+            'is_admin?' => current_user.is_admin? ? 'true' : 'false'
+          }.merge(authorizations)
+          
           oidresp.add_extension(OpenID::SReg::Response.new(sreg_data))
         else
           oidresp = server.handle_request(oidreq)
@@ -167,7 +174,11 @@ class HotinkSso < Sinatra::Base
   post '/sso/login' do
     session = UserSession.new(:login => params['login'], :password => params['password'], :remember_me => false)
     if session.save
+      flash[:notice] = nil
       sign_in(session.user)
+    else
+      flash[:notice] = "Sorry, that login/password combination didn't match"
+      throw(:halt, [401, erb(:login_form)])
     end
     ensure_authenticated
     redirect session_return_to || absolute_url("/")
