@@ -21,7 +21,7 @@ module Mailout
         @current_user_session = UserSession.find
         @current_user = @current_user_session.nil? ? nil : @current_user_session.user 
         unless @current_user && (@current_user.has_role?("manager", @account) || @current_user.has_role?('admin'))
-          redirect '/user_session/new'
+          redirect '/sso/login'
         end
     end
     
