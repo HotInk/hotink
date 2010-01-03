@@ -1,7 +1,6 @@
 # Allow the metal piece to run in isolation
 require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
 require 'sinatra/base'
-require 'haml'
 require 'openid'
 require 'openid/store/filesystem'
 require 'openid/extensions/sreg'
