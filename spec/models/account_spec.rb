@@ -24,4 +24,42 @@ describe Account do
     #accounts.last.should == less_recent_account 
   #end
     
+  describe "role manager" do
+    before do
+      @user = Factory(:user)
+    end
+  
+    it "should promote user on account, if applicable" do
+      @user.has_role?('staff', @account).should be_false
+      
+      @account.promote(@user)
+      @user.has_role?('staff', @account).should be_true
+      
+      @account.promote(@user)      
+      @user.has_role?('editor', @account).should be_true
+      
+      @account.promote(@user)      
+      @user.has_role?('manager', @account).should be_true
+      @user.has_role?('editor', @account).should be_false
+      
+      @user.has_role?('staff', @account).should be_true
+    end
+    
+    it "should demote user on account, if applicable" do
+      @user.has_role('staff', @account)
+      @user.has_role('manager', @account)
+      
+      @account.demote(@user)
+      @user.has_role?('editor', @account).should be_true
+      @user.has_role?('manager', @account).should be_false
+      
+      @account.demote(@user)
+      @user.has_role?('editor', @account).should be_false
+      @user.has_role?('staff', @account).should be_true
+      
+      @account.demote(@user)
+      @user.has_role?('staff', @account).should be_false
+    end
+  end
+  
 end

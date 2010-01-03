@@ -100,6 +100,31 @@ class Account < ActiveRecord::Base
      end
   end
   
+  # Account user management
+  def promote(user)
+    if user.has_role?('staff', self)
+      if user.has_role?('editor', self)
+          user.has_no_role('editor', self)
+          user.has_role('manager', self)
+      else
+        user.has_role('editor', self)
+      end
+    else
+      user.has_role('staff', self)
+    end
+  end
+  
+  def demote(user)
+    if user.has_role?('manager', self)
+      user.has_no_role('manager', self)
+      user.has_role('editor', self)
+    elsif user.has_role?('editor', self)
+      user.has_no_role('editor', self)
+    elsif user.has_role?('staff', self)
+      user.has_no_role('staff', self)
+    end
+  end
+  
   private
   
   def set_default_settings

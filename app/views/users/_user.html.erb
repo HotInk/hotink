@@ -9,7 +9,13 @@
 			<% if permit?("admin") || user==current_user %>
 				<%= button_link_to_remote "Demote", :url => demote_user_url(user, :account_id=>@account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>		
 			<% end %>
-		<% else %>
+		<% elsif user.has_role? 'editor', @account  %>
+			<p>Editor</p>
+			<% if permit?('manager of account') || permit?('admin') %>
+				<%= button_link_to_remote "Promote", :url => promote_user_url(user, :account_id=>@account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>
+				<%= button_link_to_remote "Demote", :url => demote_user_url(user, :account_id=>@account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>
+			<% end %>
+		<% elsif user.has_role? 'staff', @account %>
 			<% if permit?("manager of account") || permit?("admin") %>
 				<%= button_link_to_remote "Promote", :url => promote_user_url(user, :account_id=>@account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>		
 			<% end %>
