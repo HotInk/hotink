@@ -5,78 +5,10 @@ describe Article do
     @article = Article.create!(Factory.attributes_for(:article))
   end
   
-  it { should belong_to(:section) }
-  
+  it { should belong_to(:section) }  
   it { should have_one(:checkout) }
   it { should have_one(:pickup) }
-  
   it { should have_many(:issues).through(:printings) }
-  
-  describe "publication status" do
-    before(:each) do
-      @untouched = Factory(:article)
-      @draft = Factory(:article, :created_at => 1.day.ago)
-      @published = Factory(:published_article)
-      @scheduled = Factory(:published_article, :published_at => Time.now + 1.day)
-    end
-    
-    it "should identify drafts" do
-      Article.drafts.should_not include(@untouched)
-      Article.drafts.should include(@draft)
-      Article.drafts.should_not include(@published)
-      Article.drafts.should_not include(@scheduled)
-    end
-
-    it "should identify articles scheduled to publish" do   
-      Article.scheduled.should_not include(@untouched)
-      Article.scheduled.should_not include(@draft)
-      Article.scheduled.should_not include(@published)
-      Article.scheduled.should include(@scheduled)
-    end
-
-    it "should identify articles already published" do
-      Article.published.should_not include(@untouched)
-      Article.published.should_not include(@draft)
-      Article.published.should include(@published)
-      Article.published.should_not include(@scheduled)
-    end
-        
-    it "should know it's publication status" do
-      @untouched.published?.should be_false
-      @draft.published?.should be_false
-      @published.published?.should be_true
-      @scheduled.published?.should be_false
-    end
-    
-    it "should know it's scheduled status" do
-      @untouched.scheduled?.should be_false
-      @draft.scheduled?.should be_false
-      @published.scheduled?.should be_false
-      @scheduled.scheduled?.should be_true
-    end
-    
-    it "should know it's draft status" do
-      @untouched.draft?.should be_false
-      @draft.draft?.should be_true
-      @published.draft?.should be_false
-      @scheduled.draft?.should be_false
-    end
-    
-    it "should know it's untouched status" do
-      @untouched.untouched?.should be_true
-      @draft.untouched?.should be_false
-      @published.untouched?.should be_false
-      @scheduled.untouched?.should be_false
-    end
-  end
-  
-  it "should return articles by date published" do
-    first_article = Factory(:detailed_article, :published_at => 1.day.ago)
-    second_article = Factory(:detailed_article, :published_at => 3.days.ago)
-    
-    Article.published.by_date_published.first.should == first_article
-    Article.published.by_date_published.second.should == second_article
-  end
   
   it "should return articles by section" do
     section = Factory(:category)
@@ -87,6 +19,23 @@ describe Article do
       Article.in_section(section).should include(article)
     end
     Article.in_section(section).should_not include(other_section_article)
+  end
+  
+  describe "owner management" do
+    before do
+      @user = Factory(:user)
+      @user.has_role('owner', @article)
+    end
+    
+    it "should identify its owner, the user who created it" do
+      @article.owner.should == @user
+    end
+    
+    it "should replace its owner, if requested" do
+      new_user = Factory(:user)
+      @article.owner = new_user
+      @article.owner.should == new_user   
+    end
   end
   
   it "should create a human readable list of authors' names" do
@@ -136,4 +85,80 @@ describe Article do
     article.bodytext = ""
     article.word_count.should == 0
   end
+
+  it "should know the appropriate permission string, based on its publication status" do
+    draft = Factory(:draft_article)
+    published = Factory(:published_article)
+    scheduled = Factory(:scheduled_article)
+    
+    draft.is_editable_by.should == "(owner of article) or (editor of account) or (manager of account) or admin"
+    published.is_editable_by.should == "(manager of account) or admin"
+    scheduled.is_editable_by.should == "(manager of account) or admin"
+  end
+  
+  describe "staff member sign-off" do
+    before do
+      @draft = Factory(:draft_article)
+      @published = Factory(:detailed_article)
+      
+      @user = Factory(:user)
+    end
+    
+    it { should have_many(:sign_offs) }
+    
+    it "should allow staff members to sign off on articles" do
+      @draft.sign_off(@user)
+      @draft.save
+      
+      @draft.status.should == "Awaiting attention"
+      @draft.signed_off_by?(@user).should be_true
+    end
+    
+    it "should identify articles that have been signed off but are not published" do
+      @draft.sign_off(@user)
+      @draft.save
+      Article.awaiting_attention.all.should include(@draft)
+      
+      @draft.revoke_sign_off(@user)
+      @draft.save
+      Article.awaiting_attention.all.should_not include(@draft)      
+
+      @draft.publish
+      @draft.save
+      Article.awaiting_attention.all.should_not include(@draft)
+    end
+    
+    it "should know whether its been signed off on and is awaiting attention from another user" do
+      @draft.sign_off(@user)
+      @draft.save
+      
+      @draft.awaiting_attention?.should be_true
+      @published.awaiting_attention?.should be_false
+    end
+    
+    it "should only allow sign-off on draft articles" do
+      @draft.sign_off(@user)
+      @draft.signed_off_by?(@user).should be_true
+      
+      @published.sign_off(@user)
+      @published.signed_off_by?(@user).should be_false
+    end
+
+    it "should allow a user to revoke sign-off" do
+      @draft.sign_off(@user)
+      @draft.save
+      @draft.signed_off_by?(@user).should be_true
+      
+      @new_user = Factory(:user)
+      @draft.sign_off(@new_user)
+      @draft.revoke_sign_off(@new_user)
+      @draft.signed_off_by?(@new_user).should be_false
+      Article.awaiting_attention.should include(@draft)
+      
+      @draft.revoke_sign_off(@user)
+      @draft.signed_off_by?(@user).should be_false
+      Article.awaiting_attention.should_not include(@draft)
+    end
+  end
+  
 end

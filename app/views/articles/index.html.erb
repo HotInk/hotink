@@ -38,6 +38,7 @@
 		</div>
 		<ol id="articles_list">			
 			<% if (@articles.length > 0) || (@drafts && @drafts.length > 0) %>
+			<%= render @awaiting_attention if @awaiting_attention %>
 				<%= render @drafts if @drafts %>
 				<%= render @scheduled if @scheduled %>
 				<% for article in @articles %>

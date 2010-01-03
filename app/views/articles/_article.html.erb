@@ -1,5 +1,5 @@
 <% unless article.created_at == article.updated_at %>
-  <li id="article_<%= article.id %>" class="<%= cycle("even-row", "odd-row") %> <% if article.published? %>published<% elsif article.scheduled? %>scheduled<% elsif article.draft? %>unpublished<% end %> clearfix">
+  <li id="article_<%= article.id %>" class="<%= cycle("even-row", "odd-row") %> <% if article.published? %>published<% elsif article.scheduled? %>scheduled<% elsif article.draft? %>unpublished<% elsif article.awaiting_attention? %>awaiting_attention<% end %> clearfix">
 				
 	<div class="status">
 		<input type="checkbox" value="<%= article.id %>" name="article_ids[]"/>
@@ -7,11 +7,17 @@
 	
 	<div class="article clearfix">
 		<h1>
+			<% if permit? (article.is_editable_by, :article => article)%>
 				&ldquo;<%=link_to h(article.display_title.strip), edit_account_article_url(@account, article), :class=>"document_link" %>&rdquo;
+			<% else %>
+				&ldquo;<%=link_to h(article.display_title.strip), account_article_url(@account, article), :class=>"document_link" %>&rdquo;
+			<% end %>
 			<% if article.draft? %>
 				<small>Draft</small>
 			<% elsif article.scheduled? %>
 				<small>Scheduled</small>
+			<% elsif article.awaiting_attention? %>
+				<small>Signed off by <strong><% if article.sign_offs.last.user == current_user %><em>you</em><% else %><%= article.sign_offs.last.user.name %><% end %></strong>, <strong><%= article.sign_offs.last.created_at.to_s(:date) %></strong> at <strong><%= article.sign_offs.last.created_at.to_s(:time) %></strong></small>
 			<% end %>
 		</h1>
 		<div class="article_details clearfix">

@@ -7,10 +7,61 @@
 
 	<h2><%=h @article.subtitle %></h2>
 	
+	<% if @article.section %><h3><%= @article.section.name %></h3><% end %>
+	<% unless @article.images.blank? %>
+		<div class="media_thumbs">
+			<h3>Attached media</h3>
+			<% for image in @article.images %>
+					<%= link_to_function "<img src=\"#{image.file.url(:system_thumb)}\" border=\"1\" />", "page_overlay.render( '<div class=\"small_top_button clearfix\"><a href=\"#\" class=\"close_window\" onclick=\"page_overlay.end();return false;\"> <img src=\"/images/window_x.png\" /> </a></div><img src=\"#{image.file.url(:large)}\" style=\"position:relative;z-index: 300;\" />' );" %>
+			<% end %>
+		</div>
+	<% end %>
+	
 	<p class="date"><%= @article.status=="Published" ? @article.published_at.to_formatted_s(:long) : "Last saved " + @article.updated_at.to_formatted_s(:long) %></p>
 	<p class="byline"><%=h @article.authors_list%></p>
 	
 	<%= markdown @article.bodytext %>
 
 </div>
+<div id="tools">
+	<div class="toolbox">
+		<div class="toolbox_border"></div>
+		<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Status</h2></div>
+		<div class="toolbox_border"></div>
+		<div class="toolbox_body clearfix">
+			<%= render :partial=>'status' %>
+			<%= render :partial=>'printing' %>
+		</div>
+		<div class="toolbox_border"></div>
+	</div><!-- /toolbox - tools -->
 
+	<div class="toolbox">
+		<div class="toolbox_border"></div>
+		<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Categories</h2></div>
+		<div class="toolbox_border"></div>
+		<div class="toolbox_body clearfix">
+			<p>This article is filed under:</p>
+			<ul>
+				<% @article.categories.each	do |category| %>
+				<li><%= category.name %></li>
+				<% end %>
+			</ul>	
+		</div>
+		<div class="toolbox_border"></div>
+	</div><!-- /toolbox - tools -->
+	
+	<div class="toolbox">
+		<div class="toolbox_border"></div>
+		<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tags</h2></div>
+		<div class="toolbox_border"></div>
+		<div class="toolbox_body clearfix">
+			<% if @article.tag_list.blank? %>
+				<p>This article is not tagged.</p>
+			<% else %>
+				<p>This article is tagged:</p>
+				<h4><%= @article.tag_list %></h4>
+			<% end %>	
+		</div>
+		<div class="toolbox_border"></div>
+	</div><!-- /toolbox - tools -->
+</div>

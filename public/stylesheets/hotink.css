@@ -10,7 +10,7 @@ html, body { height: 100%; }
 body { background-color: #FFF; color: #333; margin: 0 auto; text-algin: center;}
 body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
 div#page_wrapper { min-height: 100%; height: auto !important; height: 100%; margin-bottom: -30px; /* the bottom margin is the negative value of the footer's height */}
-div#page_container { background-color: #FFF; margin: 0; max-width: 74em; padding: 1em 1.5em; text-align: left; padding-bottom: 0;  }
+div#page_container { background-color: #FFF; margin: 0 auto; max-width: 74em; padding: 1em 1.5em; text-align: left; padding-bottom: 0;  }
 
 /* Font families */
 #account .letgo { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
@@ -59,11 +59,16 @@ dl.faq dt {font-weight: bold;}
 h2.unpublished { color: #EDBE00; font-weight: bold; }
 h2.published { color: #00DD00; font-weight: bold; }
 h2.scheduled { color: #699DE3; font-weight: bold; }
+h2.awaiting_attention { color: #00AF2E; font-weight: bold; }
+
+ol.awaiting_attention { color: #00AF2E; }
 
 li.scheduled { background-color: #CEE4F3; }
 li.scheduled h1>small { color: #699DE3; }
 li.unpublished { background-color: #FFF6DD; }
 li.unpublished h1>small { color: #EDBE00; }
+li.awaiting_attention { background-color: #FFF6DD; }
+li.awaiting_attention h1>small { color: #00AF2E; }
 
 
 
@@ -251,9 +256,10 @@ li.unpublished h1>small { color: #EDBE00; }
 #tools .newtag { width: 80%; margin-right: 4px; }
 
 #tools #status { float:left; background-color: #FFF6DD; border: 1px solid #CEE4F3; width: 96.5%; padding: 0.3em 1.5%; }
-#tools .box { width: 95.5%; background-color:white; padding: 0.25em 2%; border: 1px solid #CEE4F3; }
+#tools .box { width: 95.5%; background-color:white; padding: 0.25em 2%; border: 1px solid #CEE4F3; overflow: hidden; }
 #tools #status h2 { float:left; font-size: 1em; line-height: 1.4; }
 #tools #status button { margin-top: 0.5em; margin-bottom: 0; }
+#tools #status ol { list-style-type: none; margin : 5px 0;}
 #tools #status .selected span span { border-bottom-color: #CEE4F3; }
 #tools #schedule select { border: 1px solid #CCC; margin: 0.5em 0;} 
 #tools #schedule label { font-size: 0.9em;}
@@ -280,12 +286,14 @@ li.unpublished h1>small { color: #EDBE00; }
 
 
 /* Article#show styles */
-#article { font-family:georgia,"times new roman",times, serif; width: 45em; margin-bottom: 25px; }
+#article { float: left; font-family:georgia,"times new roman",times, serif; width: 68%; margin-bottom: 25px; }
 #article h1 { font-size: 2.5em; margin: 0.25em 0; }
 #article h2 { font-weight: 400; }
 #article p { font-size: 1.2em; line-height: 1.35; font-family:georgia,"times new roman",times, serif; }
 #article p.date { font-variant: small-caps; }
 #article p.byline, #article p.date { font-weight: 600; font-size: 1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
+#article div.media_thumbs { float:right; clear: right; width: 400px; padding: 10px; margin: 5px 0 5px 15px; background-color: #CEE4F3; border: 1px solid #DEDEDE;  -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+
 
 /* Attach media modal styles */
 #overlay_content #upload_media_container { width: 565px; min-height: 50px; margin-bottom:0px;}

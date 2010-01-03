@@ -1,24 +1,35 @@
 <div id="status">
 	<div class="box clearfix">
 		<h2 class="four_tenths_column">Article status:</h2>
-		<% if @article.status == "Published" %>
-			<% if @article.published_at <= Time.now %>
+		<% if @article.published? %>
 				<h2 class="six_tenths_column published">
 					Published on <strong><%= @article.published_at.to_formatted_s(:standard_date_only) %></strong><br />
 					at <strong><%= @article.published_at.to_formatted_s(:time) %></strong><br />
 					<small>(<%= distance_of_time_in_words_to_now(@article.published_at) %> ago)</small>
 				</h2>
-			<% else %>
+		<% elsif @article.scheduled? %>
 				<h2 class="six_tenths_column scheduled">
 					Scheduled for <strong><%= @article.published_at.to_formatted_s(:standard_date_only) %></strong><br />
 					at <strong><%= @article.published_at.to_formatted_s(:time) %></strong><br />
 					<small>(<%= distance_of_time_in_words_to_now(@article.published_at) %> from now)</small>
 				</h2>
+		<% elsif @article.awaiting_attention? %>
+			<% last_sign_off = @article.sign_offs.last %>
+			<h2 class="six_tenths_column awaiting_attention">Signed off by <strong><%= last_sign_off.user.name %></strong>, 
+			 	<strong><%=last_sign_off.created_at.to_s(:date) %></strong> at <%= last_sign_off.created_at.to_s(:time) %></h2>
+			<% if @article.sign_offs.size > 1 %>
+			<h2 class="three_quarters_column"><small>Also signed off:</small></h2>
+			<ol class="three_quarters_column  awaiting_attention">
+				<% @article.sign_offs.all(:order => 'created_at desc').each do |sign_off| %>
+					<% unless sign_off == last_sign_off %><li><%= sign_off.user.name %></li><% end %>
+				<% end %>
+			</ol>
 			<% end %>
 		<% else %>
 			<h2 class="six_tenths_column unpublished">Unpublished</h2>
 		<% end %>
 	</div>
+<% if permit? ('(manager of account) or admin') %>
 	<% remote_form_for [@account, @article] do |f| -%>
 		<% if @article.status == "Published" -%>
 			<%= f.hidden_field :status, :value =>"" %>
@@ -36,4 +47,22 @@
 			<%= button_link_to_submit "Set publish date", :class => "publish" %>
 		<% end %>
 	</div>
+<% else %>
+	<% if @article.draft? %>
+		<% remote_form_for [@account, @article] do |f| -%>
+			<%= f.hidden_field :status, :value =>"Awaiting attention" %>
+			<%= button_link_to_submit "Sign off on this article", :class=>"publish" %>
+		<% end %>
+	<% elsif @article.awaiting_attention? && @article.signed_off_by?(current_user) %>
+		<% remote_form_for [@account, @article] do |f| -%>
+			<input type="hidden" id="article_revoke_sign_off" name="article[revoke_sign_off]" value="true" />
+			<%= button_link_to_submit "Revoke your sign off", :class=>"cancel" %>
+		<% end %>
+	<% elsif @article.awaiting_attention? && !@article.signed_off_by?(current_user) && permit?("editor of account") %>
+		<% remote_form_for [@account, @article] do |f| -%>
+			<%= f.hidden_field :status, :value =>"Awaiting attention" %>
+			<%= button_link_to_submit "Add your sign off", :class=>"publish" %>
+		<% end %>
+	<% end %>
+<% end %>
 </div>

@@ -27,6 +27,7 @@ end
 Factory.define :published_article, :parent => :basic_article do |ba|
   ba.status         "Published"
   ba.published_at   Time.now
+  ba.created_at     1.day.ago
 end
 
 Factory.define :detailed_article, :parent => :article do |a|
@@ -36,6 +37,7 @@ Factory.define :detailed_article, :parent => :article do |a|
   a.bodytext       "Wow. I **cannot** believe *the truth*."
   a.status         "Published"
   a.published_at   Time.now
+  a.created_at     1.day.ago
 end
 
 Factory.define :draft_article, :parent => :article do |a|
@@ -53,6 +55,7 @@ Factory.define :scheduled_article, :parent => :article do |a|
   a.bodytext       "Wow. I **cannot** believe *the truth*."
   a.status         "Published"
   a.published_at   Time.now + 1.week
+  a.created_at     1.day.ago
 end
 
 Factory.define :detailed_article_with_mediafiles, :parent => :detailed_article do |a|

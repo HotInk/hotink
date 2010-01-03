@@ -17,7 +17,29 @@ class Document < ActiveRecord::Base
   
   named_scope :by_date_published, :order => "published_at DESC"
   
+  # Publication statuses
+  named_scope :drafts, :conditions => "status is null AND created_at != updated_at"
+  named_scope :scheduled, lambda { {:conditions => ["status = 'Published' AND published_at > ?", Time.now.utc]} }
+  named_scope :published, lambda { {:conditions => ["status = 'Published' AND published_at <= ?", Time.now.utc]} }
+  
+  def published?
+    (self.status=='Published') && (self.published_at <= Time.now)
+  end
+  
+  def draft?
+    self.status.nil? && (self.updated_at != self.created_at)
+  end
+  
+  def scheduled?
+    (self.status=='Published') && (self.published_at > Time.now)
+  end
+  
+  def untouched?
+     self.updated_at == self.created_at
+  end
+  
   acts_as_taggable_on :tags
+  acts_as_authorizable
   
   accepts_nested_attributes_for :mediafiles
   accepts_nested_attributes_for :sortings, :allow_destroy => true     
@@ -57,19 +79,20 @@ class Document < ActiveRecord::Base
   end
   
   # This method handles the public availability of a Document
-  def publish(status=nil, time = Time.now)
-    case status
-    when "Published"
-      self.status = "Published"
-      self.published_at = time
-    else
-      self.status = nil
-    end
+  def publish
+    self.status = "Published"
+    self.published_at = Time.now
+  end
+  
+  def schedule(date)
+    self.status = "Published"
+    self.published_at = date
   end
   
   # Logical alias used for unpublishing an article
   def unpublish
-    publish
+    self.status = nil
+    self.published_at = nil
   end
   
   # Categories are set in a checkbox style, and that's reflected in this attribute method.
