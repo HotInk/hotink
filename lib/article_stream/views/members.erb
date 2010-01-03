@@ -1,0 +1,22 @@
+<p style="margin-top: 0;"><a href="/stream"><-- Back to the stream</a></p>
+<h1>CUP member accounts</h1>
+<br />
+<br />
+<p>This is where you keep track of which Hot Ink accounts belong to CUP members and which don't. Only members indicated on this page
+	will have their articles included in your news-stream.</p>
+<p>It's important to keep this up to date so that you don't publish a non-CUP article accidentally.</p>
+<h2 style="text-decoration:underline;">Accounts</h2>
+<form action="/cupwire/members" method="POST">
+	<input type="submit" value="Save member list" />
+<ol id="accounts">
+	<% @accounts.each do |account| %>
+		<li>
+			<h1><%= account.formal_name || account.name %></h1>
+			<div>	
+				<label for="account_<%= account.id %>_cup_member_yes">CUP member <input <% if account.membership %>checked="checked"<% end %> id="account_<%= account.id %>_cup_member_yes" name="account[<%= account.id %>][cup_member]" type="radio" value="yes" /></label><br />
+				<label for="account_<%= account.id %>_cup_member_yes">Non-member <input <% unless account.membership %>checked="checked"<% end %> id="account_<%= account.id %>_cup_member_no" name="account[<%= account.id %>][cup_member]" type="radio" value="no" /></label>
+			</div>
+		</li>
+	<% end %>
+</ol>
+</form>

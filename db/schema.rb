@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100101230553) do
+ActiveRecord::Schema.define(:version => 20100103044518) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -151,6 +151,12 @@ ActiveRecord::Schema.define(:version => 20100101230553) do
     t.integer  "height"
     t.boolean  "delta",             :default => true,        :null => false
     t.string   "status",            :default => "published", :null => false
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "oauth_nonces", :force => true do |t|

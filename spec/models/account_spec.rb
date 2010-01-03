@@ -13,16 +13,19 @@ describe Account do
   it { should have_many(:email_templates) }
   it { should have_many(:blogs) }
   
-  it "should find accounts in order of most recently published articles" #do
-    #recent_account = Factory(:account)
-    #less_recent_account = Factory(:account)
-    #recent_article = Factory(:published_article, :title => "Most recent", :account => recent_account)
-    #less_recent_article = Factory(:published_article, :title => "Less recent", :published_at => 1.day.ago, :account => less_recent_account)
+  it { should have_one(:membership) }
+  
+  it "should find accounts in order of most recently published articles" do
+    pending
+    recent_account = Factory(:account)
+    less_recent_account = Factory(:account)
+    recent_article = Factory(:published_article, :title => "Most recent", :account => recent_account)
+    less_recent_article = Factory(:published_article, :title => "Less recent", :published_at => 1.week.ago, :account => less_recent_account)
     
-    #accounts = Account.by_most_recent_article
-    #accounts.first.should == recent_account
-    #accounts.last.should == less_recent_account 
-  #end
+    accounts = Account.by_most_recently_published
+    accounts.first.should == recent_account
+    accounts.last.should == less_recent_account 
+  end
     
   describe "role manager" do
     before do

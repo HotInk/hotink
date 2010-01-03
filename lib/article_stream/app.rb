@@ -4,6 +4,7 @@ module ArticleStream
   class App < Sinatra::Base
     include Authlogic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
     
+    enable :sessions
     set :owner_account_id, Proc.new { Account.find(:first).id }
     set :views, File.dirname(__FILE__) + '/views'
         
@@ -30,7 +31,7 @@ module ArticleStream
       end
     
       def current_user
-        @current_user
+        session[:checkpoint_user_id].nil? ? nil : User.find(session[:checkpoint_user_id])
       end
     end
     
@@ -40,8 +41,8 @@ module ArticleStream
     
     def load_session 
         @account = Account.find(options.owner_account_id)
-        @current_user_session = UserSession.find
-        @current_user = @current_user_session.nil? ? nil : @current_user_session.user 
+        Time.zone = @account.time_zone
+        @current_user = current_user
         unless @current_user && (@current_user.has_role?("manager", @account) || @current_user.has_role?("admin"))
           redirect '/sso/login'
         end
@@ -49,7 +50,8 @@ module ArticleStream
     
     get '/stream/?' do
       load_session
-      @articles = Article.status_matches('published').published_at_in_past.by_published_at(:desc).paginate(:page => params[:page] || 1, :per_page => params[:per_page] || 25 )
+      @memberships = Membership.all
+      @articles = Article.published.by_date_published.paginate(:page => params[:page] || 1, :per_page => params[:per_page] || 25, :conditions => { :account_id => @memberships.collect{ |x| x.account_id } } )
       erb :stream
     end
     

@@ -22,8 +22,8 @@ div#page_container>h1 { float: left; }
 .recommended { background-color: #DEFFDB; }
 .team a, .team a:visited  { color: #515151; }
 
-ol#choices { width: 120px; float: left; clear: left; }
-div.colour_wrapper { width: 800px; float: left; border: 3px solid #FFF6DD; -moz-border-radius: 3px; -webkit-border-radius: 3px; position: relative; }
+ol#choices { width: 135px; float: left; clear: left; }
+div.colour_wrapper { width: 785px; float: left; border: 3px solid #FFF6DD; -moz-border-radius: 3px; -webkit-border-radius: 3px; position: relative; }
 
 ol#stream_articles { width: 100%; font-size: 11px; }
 ol#stream_articles li { position: relative; }
@@ -71,6 +71,9 @@ div#article_checkout input[type="submit"] { font-size: 17px; margin-right: 20px;
 div.article .media_thumbs h3 { margin-top:0;}
 
 #dash30 { font-weight: bold; text-align: center; }
+
+
+#accounts li h1 { font-size: 18px; }
 
 .footer { float:left; width: 960px; margin-top: 20px; margin-bottom: 10px; text-align: right; font-size: 0.8em;}
 

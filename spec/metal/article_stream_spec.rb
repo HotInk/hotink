@@ -13,10 +13,7 @@ describe ArticleStream do
     @user.stub!(:has_role?).and_return(true)
     @user.stub!(:login).and_return("Test")
     @user.stub!(:id).and_return(1)
-    
-    @session = mock("user_session")
-    @session.stub!(:user).and_return(@user)
-    UserSession.stub!(:find).and_return(@session)
+    User.should_receive(:find).with(1).and_return(@user)
   end
   
   def app
@@ -58,7 +55,7 @@ describe ArticleStream do
         user
       end
       @account.should_receive(:has_staff).and_return(@users)
-      get "/team"
+      get "/team", {}, :checkpoint_user_id => 1
     end
     
     it "should show each team member" do

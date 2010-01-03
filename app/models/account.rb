@@ -15,7 +15,10 @@ class Account < ActiveRecord::Base
   has_many :issues, :dependent => :delete_all, :order => "date desc"
   has_many :email_templates
   
+  has_one :membership
+  
   has_recent_records :articles
+  named_scope :by_most_recently_published,lambda { {:joins => 'INNER JOIN documents ON documents.account_id=accounts.id', :group => 'accounts.id', :order => 'documents.updated_at', :conditions => ["documents.status = 'Published' AND documents.published_at <= ?", Time.now.utc]} }
   
   # Authentication
   has_many :users, :dependent => :delete_all
@@ -49,7 +52,7 @@ class Account < ActiveRecord::Base
   }
   
   before_create :set_default_settings
-  
+    
   def image_settings= (new_settings)
     raise ArgumentError unless new_settings.is_a? Hash
     new_settings.each do |key, value|

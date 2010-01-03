@@ -6,7 +6,7 @@
 	<!-- <li class="yourstream">Your stream</li>-->
 	<li class="allarticles">All articles</li>
 	<!--<li class="recommended">Recommended</li>-->
-	<li class="team"><a href="/team">Manage team</a></li>
+	<li class="team"><a href="/cupwire/members">Manage members</a></li>
 </ol>
 <div class="colour_wrapper">
 	<ol id="stream_articles">
@@ -25,7 +25,7 @@
 			<p class="checkout_notice"><a href="/accounts/<%= @account.id %>/articles/<%= article.pickup.duplicate_article.id %>/edit">checked out <%= article.pickup.created_at.to_s(:standard) %> by <%= article.pickup.user.name %></a></p>
 			<% end %>
 			<div class="media">
-				<% article.mediafiles.each do | i | %>
+				<% article.images.each do | i | %>
 					<%= link_to_function "<img src=\"#{i.file.url(:system_icon)}\" border=\"1\" />", "page_overlay.render( '<div class=\"small_top_button clearfix\"><a href=\"#\" class=\"close_window\" onclick=\"page_overlay.end();return false;\"> <img src=\"/images/window_x.png\" /> </a></div><img src=\"#{i.file.url(:large)}\" style=\"position:relative;z-index: 300;\" />' );" %>
 				<% end %>
 			</div>
