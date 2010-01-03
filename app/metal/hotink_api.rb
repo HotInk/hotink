@@ -25,7 +25,7 @@ class HotinkApi < Sinatra::Base
        pager.replace(articles.to_a)
       end
     else
-      @articles = @account.articles.published.by_date_published(:desc).paginate(:page => page, :per_page => per_page)
+      @articles = @account.articles.published.by_date_published.paginate(:page => page, :per_page => per_page)
     end
     
     content_type "text/xml"
@@ -140,16 +140,16 @@ class HotinkApi < Sinatra::Base
     content_type "text/xml"
     if params[:blog_id]
       @blog = @account.blogs.find(params[:blog_id])
-      @blog.entries.paginate(:page => page, :per_page => per_page, :order => "published_at DESC", :conditions => { :status => "published" }).to_xml
+      @blog.entries.published.by_date_published.paginate(:page => page, :per_page => per_page, :order => "published_at DESC").to_xml
     else
-      @account.entries.paginate(:page => page, :per_page => per_page, :order => "published_at DESC", :conditions => { :status => "published" }).to_xml
+      @account.entries.published.by_date_published.paginate(:page => page, :per_page => per_page, :order => "published_at DESC").to_xml
     end
   end
   
   get "/accounts/:account_id/entries/:id.xml" do
     load_account    
     begin
-      @entry = @account.entries.find(params[:id])
+      @entry = @account.entries.published.find(params[:id])
     rescue ActiveRecord::RecordNotFound => e
       halt 404, "Record not found or unavailable."
     end
