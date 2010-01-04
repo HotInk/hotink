@@ -39,6 +39,6 @@ class Circulation < ActionMailer::Base
     from          "Hot Ink Circulation Dept <circulation@hotink.net>"  
     recipients    invite.email  
     sent_on       Time.now  
-    body          :account => account, :invite => invite
+    body          :account_name => (account.formal_name || account.name), :user_name => invite.user.name, :user_email => invite.user.email, :account_url => account_articles_url(account)
   end
 end
