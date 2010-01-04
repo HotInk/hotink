@@ -16,7 +16,7 @@ describe Account do
   it { should have_one(:membership) }
   
   it "should keep track of users invited to have access to the account" do
-    should have_many(:invitations)
+    should have_many(:user_invitations)
   end
   
   it "should find accounts in order of most recently published articles" do

@@ -26,12 +26,20 @@ class Circulation < ActionMailer::Base
     body          :edit_user_activation_url => edit_user_activation_url(user.perishable_token)  
   end
   
-  def invitation(account, invite)
+  def user_invitation(account, invite)
     subject       "You've been invited to use Hot Ink"  
     from          "Hot Ink Circulation Dept <circulation@hotink.net>"  
     recipients    invite.email  
     sent_on       Time.now  
     body          :edit_invitation_url => edit_account_invitation_url(account, invite)  
+  end
+  
+  def account_invitation(invite)
+    subject       "Hey, boss! Welcome to Hot Ink."  
+    from          "Hot Ink Circulation Dept <circulation@hotink.net>"  
+    recipients    invite.email  
+    sent_on       Time.now  
+    body          :edit_invitation_url => edit_invitation_url(invite)  
   end
   
   def account_access_notification(account, invite)

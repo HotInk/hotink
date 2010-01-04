@@ -16,8 +16,8 @@ class Account < ActiveRecord::Base
   has_many :email_templates
   
   has_one :membership
-  has_many :invitations
-  has_many :active_invitations, :class_name => 'Invitation', :conditions => { :redeemed => false }
+  has_many :user_invitations
+  has_many :active_user_invitations, :class_name => 'UserInvitation', :conditions => { :redeemed => false }
   
   has_recent_records :articles
   named_scope :by_most_recently_published,lambda { {:joins => 'INNER JOIN documents ON documents.account_id=accounts.id', :group => 'accounts.id', :order => 'documents.updated_at', :conditions => ["documents.status = 'Published' AND documents.published_at <= ?", Time.now.utc]} }

@@ -1,2 +1,0 @@
-page.replace_html 'flash', :text =>render_flash(flash[:notice])
-page << "fade_flash();"

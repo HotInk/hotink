@@ -8,12 +8,8 @@ describe ArticleStream do
     @account = Factory(:account)      
     Account.stub!(:find).and_return(@account)
     
-    # Use test doubles for authlogic
-    @user = mock("user")
-    @user.stub!(:has_role?).and_return(true)
-    @user.stub!(:login).and_return("Test")
-    @user.stub!(:id).and_return(1)
-    User.should_receive(:find).with(1).and_return(@user)
+    @user = Factory(:user)
+    @user.has_role('manager', @account)
   end
   
   def app
@@ -55,7 +51,7 @@ describe ArticleStream do
         user
       end
       @account.should_receive(:has_staff).and_return(@users)
-      get "/team", {}, :checkpoint_user_id => 1
+      get "/team"
     end
     
     it "should show each team member" do

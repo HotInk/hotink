@@ -1,9 +1,15 @@
 Factory.define :invitation do |i|
   i.sequence(:email)  { |n| "invite#{n}@invitation.ca"  }
   i.user  { Factory(:user) }
-  i.account { Factory(:account) }
   i.redeemed  false
-  i.token { |j|  Digest::SHA1.hexdigest("--#{j.email}--#{Time.now.to_s}--") }
+end
+
+Factory.define :user_invitation, :class => "UserInvitation", :parent => :invitation do |i|
+  i.account { Factory(:account) }
+end
+
+Factory.define :account_invitation, :class => "AccountInvitation", :parent => :invitation do |i|
+  
 end
 
 Factory.define :account do |a|

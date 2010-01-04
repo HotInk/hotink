@@ -178,4 +178,5 @@ class HotinkApi < Sinatra::Base
     content_type "text/xml"
     @results.to_xml
   end
+
 end

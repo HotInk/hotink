@@ -1,23 +1,25 @@
-<div id="user_activation_form">
-	<h1>Hey compadre!</h1>
-	<p>Congratulations, you've been given access to a Hot Ink content management account.</p>
-	<p>Keep in mind that this installation is under heavy development
-		and some features may be unstable. Feel free to test out any link, upload any file or save any article you'd like. If you've got questions
-		or requests, email chris@hotink.net.</p> 
+<div id="account_activation_form">
+	<h1>Hey, Boss!</h1>
+	<p>Congratulations, looks like you're in charge of a brand-new Hot Ink content management account.</p> 
+	<p>Keep in mind that this installation is under heavy development and some features may be unstable. 
+		Feel free to test out any link, upload any file or save any article you'd like. If you've got questions
+		or requests, email chris@hotink.net.</p>
 	<p> To get the ball rolling you'll need to create a username
-	and password for yourself.</p>
+	and password for yourself and set up some basic account details.</p>
 	<br />
-	<%= error_messages_for 'user' %>
-	<% form_tag user_activation_url(@user.perishable_token), :method => :put do %>
+	<%= error_messages_for 'account', 'user' %>
+	<% form_tag invitation_url(@invite), :method => :put do %>
+		
+	<% if @user.new_record? %>
 	<fieldset>
-		<legend>Your details</legend>
-		<p>Don't worry, you can adjust all these after activation.</p>
+		<legend>Account manager</legend>
+		<p>Don't worry, you can additional account managers after activation.</p>
 		<div class="column_holder clearfix">
 			<div class="third_column left_column">
 				<%= label_tag "user[login]", "Login" %>
 			</div>
 			<div class="two_thirds_column right_column">
-				<%= text_field_tag "user[login]", @user.login, :class=>"text_input" %>
+				<%= text_field_tag "user[login]", (@user.login.blank? ? @invite.email.split('@')[0] : @user.login ), :class=>"text_input" %>
 				<small>Your login is a short name used to identify yourself to the system. It should contain only letters and numbers&mdash;no punctuation, please.</small>
 			</div>
 		</div>
@@ -55,7 +57,32 @@
 				<small>Try to make your password as secure as possible. Remember, there's no reason to ever give out a Hot Ink password to anyone.</small>
 			</div>
 		</div>
-	</fieldset>	
+	</fieldset>
+	<% else %>
+		<%= hidden_field_tag 'user_id', @user.id %>
+	<% end %>
+	
+	<fieldset>
+		<legend>Account details</legend>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+				<%= label_tag  "account[name]", "Account name" %>
+			</div>
+			<div class="two_thirds_column right_column">
+				<%= text_field_tag "account[name]", @account.blank? ? nil : @account.name, :class=>"text_input" %>
+				<small>This is a short name used to refer to your account. It's best kept as a simplified form of your paper name <br />(i.e. <cite>the Varsity</cite> as <strong>varsity</strong> or <cite>the BCIT Link</cite> as <strong>bcitlink</strong>).</small>
+			</div>
+		</div>
+		<div class="column_holder clearfix">
+			<div class="third_column left_column">
+		    	<%= label_tag "account[time_zone]", "Time zone" %>
+			</div>
+			<div class="two_thirds_column right_column">
+		    	<%= time_zone_select "account", "time_zone", /Canada|Newfoundland|Saskatchewan/, :include_blank => true  %>
+			</div>
+		</div>
+	</fieldset>
+	
 	<%= button_link_to_submit "Start using Hot Ink", :class=>"save very_big_button"%>
 		
 	<% end %>
