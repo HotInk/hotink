@@ -16,7 +16,7 @@ class HotinkApi < Sinatra::Base
     if params[:ids]
       @articles = @account.articles.published.all(:conditions => { :id => params[:ids] })
     elsif params[:section_id]
-      @articles = @account.articles.by_published_at(:desc).paginate(:page => page, :per_page => per_page, :conditions => { :section_id => params[:section_id] }) 
+      @articles = @account.articles.published.by_published_at(:desc).paginate(:page => page, :per_page => per_page, :conditions => { :section_id => params[:section_id] }) 
     elsif params[:tagged_with]
       @articles = @account.articles.published.by_published_at(:desc).tagged_with(params[:tagged_with], :on => :tags).paginate( :page=> page, :per_page => per_page )
     elsif params[:search]

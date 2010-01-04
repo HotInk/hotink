@@ -78,7 +78,7 @@ module ArticleStream
       Checkout.transaction do
         @checkout.duplicate_article = @article.photocopy(@account)        
         @checkout.user = @current_user
-        @checkout.save 
+        @checkout.save!
       end
       
       redirect "/stream/articles/#{@article.id}"

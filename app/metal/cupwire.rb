@@ -2,7 +2,7 @@
 require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
 
 class Cupwire < ArticleStream::App
-  set :owner_account_id, 24
+  set :owner_account_id, 2
   
   get '/cupwire/members' do
     load_session
@@ -36,4 +36,30 @@ class Cupwire < ArticleStream::App
     
     redirect '/stream'
   end
+  
+  # Public user checkout url
+  post '/cupwire/checkout_article/:id' do
+    @current_user = current_user
+    
+    @account = current_user.account
+    Time.zone = @account.time_zone
+    
+    @article = Article.find(params[:id])
+    
+    unless @current_user && @account
+      redirect "/sso/login?return_to=#{params[:return_to]}"
+    end
+    
+    @checkout = Checkout.new
+    @checkout.original_article = @article
+          
+    Checkout.transaction do
+      @checkout.duplicate_article = @article.photocopy(@account)        
+      @checkout.user = @current_user
+      @checkout.save
+    end
+    
+    redirect params[:return_to] || "http://cup.ca"
+  end
+  
 end

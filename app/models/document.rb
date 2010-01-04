@@ -7,7 +7,7 @@ class Document < ActiveRecord::Base
   has_many :printings, :dependent => :destroy
   has_many :issues, :through => :printings
   
-  belongs_to :section, :class_name => "Category"
+  belongs_to :section, :class_name => "Category", :foreign_key => 'section_id'
   has_many :sortings, :dependent => :destroy
   has_many :categories, :through => :sortings
   

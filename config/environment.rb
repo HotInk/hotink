@@ -47,6 +47,7 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
+  config.gem 'composite_primary_keys'
   config.gem "mime-types", :lib=>"mime/types"
   config.gem "bcrypt-ruby", :lib => "bcrypt"
   config.gem 'pacecar', :source => 'http://gemcutter.org'

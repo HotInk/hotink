@@ -4,7 +4,7 @@ class Category < ActiveRecord::Base
   has_many :sortings, :dependent => :destroy
   has_many :articles, :through => :sortings
   
-  belongs_to :parent, :class_name => "Category"
+  belongs_to :parent, :class_name => "Category", :foreign_key=>:parent_id
   has_many :children, :class_name => "Category", :foreign_key=>:parent_id, :order => "position"
   
   validates_presence_of :account, :message => "must have an account"
