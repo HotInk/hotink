@@ -65,6 +65,10 @@ class User < ActiveRecord::Base
     save!(validate)
   end
   
+  def account
+    is_staff_for_what.first
+  end
+  
   private
   
   # This method takes care of making sure "blank" login fields still pass validation, without forcing users to select a login.

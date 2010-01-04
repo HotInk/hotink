@@ -15,6 +15,10 @@ describe Account do
   
   it { should have_one(:membership) }
   
+  it "should keep track of users invited to have access to the account" do
+    should have_many(:invitations)
+  end
+  
   it "should find accounts in order of most recently published articles" do
     pending
     recent_account = Factory(:account)

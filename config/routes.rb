@@ -2,6 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.root :controller => "accounts", :action =>"new"
   
+  
   map.resources :user_activations
   map.resources :password_resets
   map.resources :users, :member => { :promote => :put, :demote => :put, :deputize => :put, :letgo => :delete }
@@ -9,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   # No content exists in Hot Ink without belonging to an account, routing reflects this fact.
   map.resources :account_activations
   map.resources :accounts do |account|
+    account.resources :invitations, :only => [:new, :create, :edit, :update, :destroy]
     account.resources :documents do |document|
       document.resources :mediafiles
       document.resources :waxings

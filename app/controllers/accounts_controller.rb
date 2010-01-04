@@ -52,7 +52,7 @@ class AccountsController < ApplicationController
     else
       #This action isn't used to create accounts, so we forward curious users away.
       respond_to do |format|
-        format.html { redirect_to account_articles_url(current_user.account )}
+        format.html { redirect_to account_articles_url(current_user.is_staff_for_what.first )}
       end
     end
   end

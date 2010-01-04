@@ -1,6 +1,6 @@
 <h2>Users</h2>
 <ol id="users">
 	<%= render @account.has_staff %>
-	<%= render :partial => 'accounts/user_invitation', :collection => @user_activations %>
+	<%= render @account.active_invitations %>
 </ol>
-<%= render :partial => 'user_activations/new_activation_form' %>
+<%= render :partial => 'invitations/new' %>

@@ -1,3 +1,11 @@
+Factory.define :invitation do |i|
+  i.sequence(:email)  { |n| "invite#{n}@invitation.ca"  }
+  i.user  { Factory(:user) }
+  i.account { Factory(:account) }
+  i.redeemed  false
+  i.token { |j|  Digest::SHA1.hexdigest("--#{j.email}--#{Time.now.to_s}--") }
+end
+
 Factory.define :account do |a|
   a.sequence(:name) { |n| "Account \##{n}" }
   a.time_zone "What time?"
