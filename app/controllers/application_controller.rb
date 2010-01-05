@@ -24,6 +24,18 @@ class ApplicationController < ActionController::Base
     session[:checkpoint_user_id].nil? ? nil : User.find(session[:checkpoint_user_id])
   end
   
+  # This method determines whether an OAuth request is kosher. 
+  # A request is alright if:
+  #   - There's no attached account
+  #   - The user is staff on this account
+  # If neither is true, then the request will fail.
+  def authorized?
+    return true unless @account
+    return true if @account && @account.accepts_role?("staff", current_user)
+    return true if current_user.has_role? "admin"
+    false
+  end
+  
   def login_url
     '/sso/login'
   end
@@ -31,6 +43,7 @@ class ApplicationController < ActionController::Base
   def logout_url
     '/sso/logout'
   end
+  
   
   private
   
@@ -106,18 +119,6 @@ class ApplicationController < ActionController::Base
       redirect_to root_url
       return false
     end
-  end
-  
-  # This method determines whether an OAuth request is kosher. 
-  # A request is alright if:
-  #   - There's no attached account
-  #   - The user is staff on this account
-  # If neither is true, then the request will fail.
-  def authorized?
-    return true unless @account
-    return true if @account && @account.accepts_role?("staff", current_user)
-    return true if current_user.has_role? "admin"
-    false
   end
   
   def store_location
