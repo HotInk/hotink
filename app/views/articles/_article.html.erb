@@ -17,7 +17,7 @@
 			<% elsif article.scheduled? %>
 				<small>Scheduled</small>
 			<% elsif article.awaiting_attention? %>
-				<small>Signed off by <strong><% if article.sign_offs.last.user == current_user %><em>you</em><% else %><%= article.sign_offs.last.user.name %><% end %></strong>, <strong><%= article.sign_offs.last.created_at.strftime("%b %e") %></strong> at <strong><%= article.sign_offs.last.created_at.to_s(:time) %></strong></small>
+				<small>Signed off by <strong><% if article.sign_offs.last.user == current_user %><em>you</em><% else %><%= article.sign_offs.last.user.name %><% end %></strong>, <strong><%= article.sign_offs.last.created_at.to_s(:date) %></strong> at <strong><%= article.sign_offs.last.created_at.to_s(:time) %></strong></small>
 			<% end %>
 		</h1>
 		<div class="article_details clearfix">

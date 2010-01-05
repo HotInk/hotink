@@ -5,7 +5,7 @@ Time::DATE_FORMATS[:date] = lambda { |date|
       "Today" 
     else 
       if (Time.zone.now.beginning_of_year <= date) && (Time.zone.now.end_of_year >= date)
-        "%b %e"
+        "#{date.month} #{date.day}"
       else 
         "#{date.month}/#{date.day}/#{date.strftime('%y')}"
       end
