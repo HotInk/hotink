@@ -4,7 +4,6 @@ module ArticleStream
   class App < Sinatra::Base
     include Authlogic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
     
-    enable :sessions
     set :owner_account_id, Proc.new { Account.find(:first).id }
     set :views, File.dirname(__FILE__) + '/views'
         

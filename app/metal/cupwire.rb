@@ -56,7 +56,7 @@ class Cupwire < ArticleStream::App
     Checkout.transaction do
       @checkout.duplicate_article = @article.photocopy(@account)        
       @checkout.user = @current_user
-      @checkout.save
+      @checkout.save!
     end
     
     redirect params[:return_to] || "http://cup.ca"
