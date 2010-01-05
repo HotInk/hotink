@@ -78,7 +78,11 @@ class Article < Document
   
   def is_editable_by
     if published? || scheduled?
-      "(manager of account) or admin"
+      if published_at < 3.weeks.ago
+        "(manager of account) or admin"
+      else
+        "(manager of account) or (editor of account) or admin"
+      end
     else
       "(owner of article) or (editor of account) or (manager of account) or admin"
     end
