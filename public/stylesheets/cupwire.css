@@ -37,7 +37,7 @@ ol#stream_articles h2 { font-size: 13px; }
 ol#stream_articles p { margin: 2px; float: left; }
 ol#stream_articles div.media { float: right; margin: 0 100px 0 25px;  }
 ol#stream_articles p.word_count { float: right; clear: right; width: 75px; }
-ol#stream_articles p.date { float: right; font-size: 16px; height: 100%; width: 75px; color: #999; }
+ol#stream_articles p.date { float: right; font-size: 15px; height: 100%; width: 75px; color: #999; }
 ol#stream_articles p.date+p+p { float: none; font-size: 9px; color: green; margin-bottom: 3px; }
 ol#stream_articles p.authors, ol#stream_articles p.checkout_notice { padding: 2px 0; }
 
