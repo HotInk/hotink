@@ -1,7 +1,7 @@
 class IssuesController < ApplicationController
   
   skip_before_filter :verify_authenticity_token
-  
+  skip_before_filter :login_required, :only => :upload_pdf
   
   layout 'hotink'
   
@@ -107,16 +107,26 @@ class IssuesController < ApplicationController
     end
   end
     
+  # As a limitation of SWFUpload, this action has to skip authntication an reinstitute its own. 
   def upload_pdf
-    @issue = @account.issues.find(params[:id])
-    @issue.swfupload_file = params[:Filedata]
-    flash[:notice] = "PDF uploaded" if @issue.save
-    respond_to do |format|
-        format.html do # After an image upload, reload the page with javascript          
-          render :update do |page|
-              page.replace  'issue', :partial => 'issue_form'
-          end         
-        end
+    user = User.find_by_single_access_token(params['user_credentials'])
+    if user
+      session[:checkpoint_user_id] = user.id 
+      user.reset_single_access_token!
+    end
+    if authorized?
+      @issue = @account.issues.find(params[:id])
+      @issue.swfupload_file = params[:Filedata]
+      flash[:notice] = "PDF uploaded" if @issue.save
+      respond_to do |format|
+          format.html do # After an image upload, reload the page with javascript          
+            render :update do |page|
+                page.replace  'issue', :partial => 'issue_form'
+            end         
+          end
+      end
+    else
+      render :text => "unauthorized", :status => 401
     end
   end
   
