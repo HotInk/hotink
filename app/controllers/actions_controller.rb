@@ -33,7 +33,13 @@ class ActionsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to account_articles_url(@account) }
+      format.html do
+          if params[:content_types].first=="mediafile"
+            redirect_to account_mediafiles_url(@account)
+          else
+            redirect_to account_articles_url(@account)
+          end
+       end
     end
       
   end

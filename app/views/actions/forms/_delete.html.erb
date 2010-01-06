@@ -1,2 +1,2 @@
 <p>Permanently delete the <%= pluralize(@records[@action.content_types.first].length, @action.content_types.first) %> selected?</p>
-<%= button_link_to_submit "Delete", :class=>"large cancel", :onclick=>"confirm( 'Are you sure you want to permanently delete the selected #{pluralize(@records.length, @action.content_types.first)}? This action cannot be undone.');" %>
+<%= button_link_to_submit "Delete", :class=>"large cancel", :onclick=>"confirm( 'Are you sure you want to permanently delete the #{pluralize(@records.length, @action.content_types.first)} selected? This action cannot be undone.');" %>
