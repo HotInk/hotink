@@ -6,6 +6,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :password_resets
   map.resources :users, :member => { :promote => :put, :demote => :put, :deputize => :put, :letgo => :delete }
   
+  # Old invitation route support
+  map.connect 'user_activations/:id/edit', :controller => 'invitations'
+  map.connect 'account_activations/:id/edit', :controller => 'invitations'
+  
   map.resources :accounts do |account|
     account.resources :invitations, :only => [:new, :create, :edit, :update, :destroy]
     
