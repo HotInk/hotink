@@ -33,12 +33,16 @@ class InvitationsController < ApplicationController
       @invite = AccountInvitation.find_by_token(params[:id])
       @account = Account.new
     end
-    @user = User.find_or_initialize_by_email(:email => @invite.email) 
-    
-    if @invite.is_a?(AccountInvitation)
-      render :action => '../account_invitations/edit', :layout => 'login'
+    if @invite.redeemed?
+      redrect_to login_url
     else
-      render :action => '../user_invitations/edit', :layout => 'login'
+      @user = User.find_or_initialize_by_email(:email => @invite.email) 
+    
+      if @invite.is_a?(AccountInvitation)
+        render :template => 'account_invitations/edit', :layout => 'login'
+      else
+        render :template => 'user_invitations/edit', :layout => 'login'
+      end
     end
   end
   
@@ -80,7 +84,7 @@ class InvitationsController < ApplicationController
       end
     
     else
-      redirect_to "/"
+      redirect_to login_url
     end
   end
   
