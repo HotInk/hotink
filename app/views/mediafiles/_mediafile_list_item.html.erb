@@ -39,7 +39,7 @@
 	</div>
 	
 	<div class="date">
-		<%= h mediafile_list_item.date.to_s(:date) %>
+		<%= h mediafile_list_item.date.to_time.to_s(:date) %>
 	</div>
 	
 </li>
