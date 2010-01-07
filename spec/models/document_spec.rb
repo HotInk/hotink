@@ -5,6 +5,22 @@ describe Document do
   it { should belong_to(:account) }
   it { should validate_presence_of(:account).with_message(/must have an account/) }
   
+  it { should have_many(:authorships).dependent(:destroy) }
+  it { should have_many(:authors).through(:authorships) }
+
+  it { should have_many(:printings).dependent(:destroy) }
+  it { should have_many(:issues).through(:printings) }
+  
+  it { should belong_to(:section) }
+  
+  it { should have_many(:sortings).dependent(:destroy) }
+  it { should have_many(:categories).through(:sortings) }
+
+  it { should have_many(:waxings).dependent(:destroy) }
+  it { should have_many(:mediafiles).through(:waxings) }
+  it { should have_many(:images).through(:waxings) }
+
+  
   describe "publication status" do
     before(:each) do
       @untouched = Factory(:article)

@@ -88,12 +88,16 @@ describe Article do
 
   it "should know the appropriate permission string, based on its publication status" do
     draft = Factory(:draft_article)
-    published = Factory(:published_article)
+    recently_published = Factory(:published_article)
     scheduled = Factory(:scheduled_article)
+
+    published_a_while_ago - Factory(:published_article, :published_at => 22.days.ago)
     
     draft.is_editable_by.should == "(owner of article) or (editor of account) or (manager of account) or admin"
-    published.is_editable_by.should == "(manager of account) or admin"
-    scheduled.is_editable_by.should == "(manager of account) or admin"
+    recently_published.is_editable_by.should == "(manager of account) or (editor of account) or admin"
+    scheduled.is_editable_by.should == "(manager of account) or (editor of account) or admin"
+    
+    published_a_while_ago.is_editable_by.should == "(manager of account) or admin"
   end
   
   describe "staff member sign-off" do
