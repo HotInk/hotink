@@ -31,16 +31,12 @@ theses three provided scripts: `script/delayed_job start|restart|stop`. Print is
 Ghostscript has built a screen-quality PDF version, which can take several minutes, depending on CPU power. Issue sizes can easily float
 above 50MB per file.
 
-## API
-
-Hot Ink is implmented as
-
-== Hot Ink Publisher
+## Hot Ink Publisher
 
 [Hot Ink Publisher](http://github.com/HotInk/hotink-publisher) is a system designed to help Hot Ink users build and manage
 complex websites publishing content stored in a Hot Ink archive.
 
-== Note on Patches/Pull Requests
+## Note on Patches/Pull Requests
  
 * Very much encouraged.
 * Fork the project.
