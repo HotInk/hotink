@@ -1,7 +1,7 @@
 require 'vendor/plugins/thinking-sphinx/recipes/thinking_sphinx'
 
 set :application, "hotink"
-set :branch, "0.2"
+set :branch, "master"
 set :repository,  "git://github.com/HotInk/hotink.git"
 
 
