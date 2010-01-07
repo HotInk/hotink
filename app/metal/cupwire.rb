@@ -2,7 +2,7 @@
 require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
 
 class Cupwire < ArticleStream::App
-  set :owner_account_id, 24
+  set :owner_account_id, Settings.cup_wire_account
   
   get '/cupwire/members' do
     load_session

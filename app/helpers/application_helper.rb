@@ -103,8 +103,7 @@ module ApplicationHelper
   # This method is a hack to display applications only to users we select on accounts we select
   def render_applications( account, user, controller_name = nil )
     html = ""
-    case account.name
-    when 'root', 'manit', 'fulcrum', 'sput', 'Muse', 'peak', 'martlet', 'mcgilldaily', 'ubcophoenix', 'tutorial', 'userguide', 'Nexus', 'Xav', 'cord', 'campusfreepress', 'intercamp', 'otherpress' , 'CUP Wire', 'Quill', 'Sheaf1912', 'thestethoscope', 'naturalselection', 'varsity', 'capertimes', 'omega'
+    if Settings.publisher_accounts.include?(account.name)
       if user.has_role?('admin') || user.has_role?('manager', account)
         if controller_name == "apps"
          html += "<li class=\"current\">" +  link_to("Publisher", "/accounts/#{account.id.to_s}/apps/1") + "</li>"
@@ -114,7 +113,7 @@ module ApplicationHelper
       end
     end
     
-    if user.has_role?('admin') || (account.name=="CUP wire" && user.has_role?('manager', account)) || (account.name=="CUP wire" && user.has_role?('editor', account))
+    if (account.id==Settings.cup_wire_account) && (user.has_role?('manager', account) || user.has_role?('editor', account) || user.has_role?('admin'))
       if controller_name == "article_stream"
         html += "<li class=\"current\">"
       else

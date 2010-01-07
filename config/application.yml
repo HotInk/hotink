@@ -1,0 +1,42 @@
+defaults: &defaults
+
+development:
+    <<: *defaults
+    cup_wire_account: 1 
+    publisher_accounts:
+        - root
+    
+test:
+    <<: *defaults
+
+production:
+    <<: *defaults
+    cup_wire_account: 24
+    publisher_accounts: 
+        - root
+        - manit
+        - fulcrum
+        - sput
+        - Muse
+        - peak
+        - martlet
+        - mcgilldaily
+        - ubcophoenix
+        - tutorial
+        - userguide
+        - Nexus
+        - Xav
+        - cord
+        - campusfreepress
+        - intercamp
+        - otherpress
+        - CUP Wire
+        - Quill
+        - Sheaf1912
+        - thestethoscope
+        - naturalselection
+        - varsity
+        - capertimes
+        - omega
+        
+    

@@ -33,6 +33,10 @@ module ArticleStream
         puts session.inspect
         session[:checkpoint_user_id].nil? ? nil : User.find(session[:checkpoint_user_id])
       end
+      
+      def allowed?(user)
+        (user.has_role?("manager", @account) || user.has_role?("editor", @account) || user.has_role?("admin"))
+      end
     end
     
     def protect_against_forgery?
@@ -43,7 +47,7 @@ module ArticleStream
         @account = Account.find(options.owner_account_id)
         Time.zone = @account.time_zone
         @current_user = current_user
-        unless @current_user && (@current_user.has_role?("manager", @account) || @current_user.has_role?("editor", account) || @current_user.has_role?("admin"))
+        unless @current_user && allowed?(@current_user)
           redirect '/sso/login'
         end
     end
