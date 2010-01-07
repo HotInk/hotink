@@ -1,21 +1,56 @@
 # Hot Ink
 
-**Hot Ink** is a RESTful, cross-media, content management and distribution pplatform created by [CUP](http://www.cup.ca) and [Campus Plus](http://www.campusplus.com) 
-to facilitate online publishing and content distribution for campus newspapers or other small publishers.
+**Hot Ink** is a multi-account content management application built by [Canadian University Press](http://www.cup.ca) 
+and [Campus Plus](http://www.campusplus.com) to help small publishers organize content for online publication. It provides 
+a management interface for the upload and storage of articles, images, audiofiles, and print issue PDF files. It publishers
+a public XML API (with JSON support coming soon) that's used by client applications to publish or distribute archived content.
 
-**Hot Ink** handles data upload, storage and organization. It will include all the necessary interface components for posting new content, editing of existing content, 
-searching for specific content, user authentication and authorization, and publisher account management. Additional functionality, such as web-publishing, content 
-sharing and email distribution will be handled by separate applications that interface with **Hot Ink** using an easy-to-use extension interface.
+Hot Ink is built using Ruby on Rails (v2.3.5) using Rails controllers for upload and management. Hot Ink also uses four small
+Sintra apps implmented as Rails metal:
 
-**Hot Ink** will make it possible for other content management systems to easily and RESTfully post their content to **Hot Ink** (and the CUP newswire) using a 
-clear API. As well, papers wishing to use **Hot Ink** as a data storage and management application are free to build their own view applications around the API, 
-allowing developers the freedom to focus on developing a customized view application while avoiding low-level concerns like database, filesystem and user authentication management.
+* a single sign on server that's essentially a rework of [Hancock](http://github.com/atmos/hancock/).
+* the Hot Ink API, the main public interface of the site.
+* Mailout, a [Mailchimp](http://www.mailchimp.com) powered mass-email application that builds mass-email messages dynamically 
+filled with Hot Ink content using a simple template system.
+* ArticleStream, a simple Hot Ink archive surfing application that allows users to 'checkout' content published by other accounts
+for easy republication. This is the engine behind the [CUP newswire](http://cup.ca).
 
-Volunteers interested in getting involved in the development of the system are encouraged to create a branch and begin working. After database config, this applciation 
-should work fine for testing and development purposes. 
+## Important dependencies
 
-**KEEP IN MIND**: This project is still under development and NOT ready for general use. Hang in there, though. The first public release should be arriving **May <del>10th</del>20th**.
+Search index and server are supplied by [thinking-sphinx](http://github.com/freelancing-god/thinking-sphinx/). Be sure your search
+server is running properly and the necessary indexing crontab configured before attempting to upload articles or mediafiles into
+the archive.
 
-## HotInk Publisher
+Hot Ink image processing relies on [ImageMagick](http://www.imagemagick.org/). Be sure ImageMagick is installed and in your 
+application's path before attempting to upload an image.
 
-[HotInk Publisher](http://github.com/HotInk/hotink-publisher) is a publishing system designed for newspapers that will fetch and display content from **Hot Ink**. 
+Hot Ink PDF processing is supplied by [Ghostscript](pages.cs.wisc.edu/~ghost/). Be sure Ghostscript is also installed and in your
+application's path before attempting to process an issue PDF. Actual PDF-processing is handled in the background using 
+[delayed_job](http://tobi.github.com/delayed_job). Running the background jobs requires a rake task that's conveniently handled by
+theses three provided scripts: `script/delayed_job start|restart|stop`. Print issue PDFs will appear to be "processing" until 
+Ghostscript has built a screen-quality PDF version, which can take several minutes, depending on CPU power. Issue sizes can easily float
+above 50MB per file.
+
+## API
+
+Hot Ink is implmented as
+
+== Hot Ink Publisher
+
+[Hot Ink Publisher](http://github.com/HotInk/hotink-publisher) is a system designed to help Hot Ink users build and manage
+complex websites publishing content stored in a Hot Ink archive.
+
+== Note on Patches/Pull Requests
+ 
+* Very much encouraged.
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add specs for it. This is important so I don't break it in a
+  future version unintentionally.
+* Commit, do not mess with rakefile, version, or history.
+  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
+* Send me a pull request. Bonus points for topic branches.
+
+== Copyright
+
+Copyright (c) 2009 Canadian University Press Media Services Ltd. See LICENSE for details.
