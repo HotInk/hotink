@@ -114,7 +114,7 @@ module ApplicationHelper
       end
     end
     
-    if user.has_role?('admin') || (account.name=="CUP wire" && user.has_role?('manager', account))
+    if user.has_role?('admin') || (account.name=="CUP wire" && user.has_role?('manager', account)) || (account.name=="CUP wire" && user.has_role?('editor', account))
       if controller_name == "article_stream"
         html += "<li class=\"current\">"
       else

@@ -43,7 +43,7 @@ module ArticleStream
         @account = Account.find(options.owner_account_id)
         Time.zone = @account.time_zone
         @current_user = current_user
-        unless @current_user && (@current_user.has_role?("manager", @account) || @current_user.has_role?("admin"))
+        unless @current_user && (@current_user.has_role?("manager", @account) || @current_user.has_role?("editor", account) || @current_user.has_role?("admin"))
           redirect '/sso/login'
         end
     end

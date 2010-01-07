@@ -10,8 +10,8 @@ Sintra apps implmented as Rails metal:
 
 * a single sign on server that's essentially a rework of [Hancock](http://github.com/atmos/hancock/).
 * the Hot Ink API, the main public interface of the site.
-* Mailout, a [Mailchimp](http://www.mailchimp.com)-API powered mass-email application that builds messages dynamically, 
-filled them with Hot Ink content using a simple but flexible template system. It also handles sending to **lists** you manaage using
+* Mailout, a [Mailchimp](http://www.mailchimp.com)-API powered mass-email application that builds dynamic messages, 
+filled with Hot Ink content using a simple but flexible template system. It also handles sending to **lists** you manaage using
 a Mailchimp account.
 * ArticleStream, a simple Hot Ink archive surfing application that allows users to 'checkout' content published by other accounts
 for easy republication. This is the engine behind the [CUP newswire](http://cup.ca).
