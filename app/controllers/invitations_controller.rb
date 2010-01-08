@@ -67,7 +67,7 @@ class InvitationsController < ApplicationController
           
         rescue ActiveRecord::RecordInvalid
           @user = load_user # Errors on @account in transaction will leave @user thinking it was saved
-          render :action => '../account_invitations/edit', :layout => 'login'
+          render :template => 'account_invitations/edit', :layout => 'login'
 
         end
       else
@@ -78,8 +78,8 @@ class InvitationsController < ApplicationController
           redirect_to login_url
           
         else
-          render :action => '../user_invitations/edit', :layout => 'login'
-          
+          render :template => 'user_invitations/edit', :layout => 'login'
+
         end    
       end
     
