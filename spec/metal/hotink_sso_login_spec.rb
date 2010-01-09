@@ -1,10 +1,14 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+class App < HotinkSso
+  enable :sessions
+end
+
 describe HotinkSso do
   include Rack::Test::Methods    
   
   def app
-    HotinkSso
+    App
   end
   
   it "should display login form to unauthenticated user" do
@@ -13,9 +17,15 @@ describe HotinkSso do
     last_response.body.should include("Welcome to Hot Ink")
   end
   
-  it "should login user with valid credentials" do
+  it "should allow users to log in using login" do
     user = Factory(:user, :password => "sesh_path", :password_confirmation => "sesh_path", :skip_session_maintenance => true)
     post '/sso/login', :login => user.login, :password => "sesh_path"
+    last_response.status.should == 302
+  end
+  
+  it "should allow users to log in using email address" do
+    user = Factory(:user, :password => "sesh_path", :password_confirmation => "sesh_path", :skip_session_maintenance => true)
+    post '/sso/login', :login => user.email, :password => "sesh_path"
     last_response.status.should == 302
   end
   
