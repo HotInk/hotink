@@ -30,7 +30,7 @@ class HotinkSso < Sinatra::Base
       end
     end
     
-    def ensure_authenticated
+  def ensure_authenticated
      if trust_root = session_return_to || params['return_to']
        if SsoConsumer.allowed?(trust_root)
          if current_user
@@ -46,7 +46,7 @@ class HotinkSso < Sinatra::Base
        flash[:notice] = "You must be logged in order to access that page"
        throw(:halt, [401, erb(:login_form)])
      end 
-   end
+  end
    
     def forbidden!
       throw :halt, [403, 'Forbidden']
@@ -102,7 +102,6 @@ class HotinkSso < Sinatra::Base
 
   end
   
-  enable :sessions
   enable :methodoverride
   set :views, File.dirname(__FILE__) + '/../views/sso'
   
