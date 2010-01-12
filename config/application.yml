@@ -1,8 +1,8 @@
 defaults: &defaults
+    cup_wire_account: 1 
 
 development:
     <<: *defaults
-    cup_wire_account: 1 
     publisher_accounts:
         - root
     

@@ -8,7 +8,6 @@ require 'rack/flash'
 
 class HotinkSso < Sinatra::Base
  include Authlogic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
- 
  use Rack::Flash
  
  helpers do
@@ -31,7 +30,7 @@ class HotinkSso < Sinatra::Base
     end
     
     def ensure_authenticated
-     if trust_root = session_return_to || params['return_to']
+      if trust_root = session_return_to || params['return_to']
        if SsoConsumer.allowed?(trust_root)
          if current_user
            redirect "#{trust_root}?id=#{current_user.id}"
@@ -42,11 +41,11 @@ class HotinkSso < Sinatra::Base
          forbidden!
        end
      end
-     unless current_user
-       flash[:notice] = "You must be logged in order to access that page"
-       throw(:halt, [401, erb(:login_form)])
-     end 
-   end
+      unless current_user
+        flash[:notice] = "You must be logged in order to access that page"
+        throw(:halt, [401, erb(:login_form)])
+      end 
+    end
    
     def forbidden!
       throw :halt, [403, 'Forbidden']
@@ -57,8 +56,8 @@ class HotinkSso < Sinatra::Base
     end
    
     def signed_in?
-     !current_user.nil?
-   end
+      !current_user.nil?
+    end
    
     def session_return_to
      session[:checkpoint_return_to]
@@ -102,7 +101,6 @@ class HotinkSso < Sinatra::Base
 
   end
   
-  enable :sessions
   enable :methodoverride
   set :views, File.dirname(__FILE__) + '/../views/sso'
   

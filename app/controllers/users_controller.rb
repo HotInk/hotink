@@ -28,6 +28,7 @@ class UsersController < ApplicationController
         format.js   { head :ok }
       end
     else
+      flash[:notice] = "Sorry, user update not valid"
       render :action => :edit
     end
   end
