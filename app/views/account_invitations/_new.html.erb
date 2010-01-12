@@ -1,4 +1,4 @@
-<% form_remote_tag :url => account_invitations_url(@account), :after=>"$(this).disable();$(this).select('.spinner')[0].show();", :update=>'accounts-window', :confirm => "You're about to issue a whole new account. Once activated, this account will represent a whole new publisher.\n\nAre you sure you want to do this? Are you sure you got the email address right?\n\nPress 'OK' to send an invitation.", :html=>{:class=>"activation_form"} do %>
+<% form_remote_tag :url => invitations_url, :after=>"$(this).disable();$(this).select('.spinner')[0].show();", :update=>'accounts-window', :confirm => "You're about to issue a whole new account. Once activated, this account will represent a whole new publisher.\n\nAre you sure you want to do this? Are you sure you got the email address right?\n\nPress 'OK' to send an invitation.", :html=>{:class=>"activation_form"} do %>
 <fieldset>
 	<legend>Add an account</legend>
 	<p>To create a new Hot Ink account enter the <strong>email address</strong> of the first manager below.</p>
