@@ -133,6 +133,10 @@ class Document < ActiveRecord::Base
       return list
     end         
   end
+
+  def word_count
+    bodytext.scan(/\w+/).size
+  end
   
   #Breaks up a human readable list of authors and creates each one and adds it to self.authors.
   def authors_list=(list)
@@ -162,6 +166,7 @@ class Document < ActiveRecord::Base
        xml.tag!( :authors_list, self.authors_list )
        xml.tag!( :summary, self.summary )
        xml.tag!( :bodytext, self.bodytext )
+       xml.tag!( :wordcount, self.word_count )
        
        self.section.nil? ? xml.section("") : xml.section(self.section.name)
        xml.tag!( :tag_list, self.tag_list )

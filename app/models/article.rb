@@ -28,10 +28,6 @@ class Article < Document
     copy.new_record? ? false : copy
   end
   
-  def word_count
-    bodytext.scan(/\w+/).size
-  end
-  
   def to_liquid
     {'title' => title, 'subtitle' => subtitle, 'authors_list' => authors_list, 'bodytext' => bodytext, 'id' => id.to_s}
   end

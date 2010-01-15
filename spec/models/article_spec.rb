@@ -76,22 +76,13 @@ describe Article do
     article = Factory(:detailed_article)
     article.to_liquid.should == {'title' => article.title, 'subtitle' => article.subtitle, 'authors_list' => article.authors_list, 'bodytext' => article.bodytext, 'id' => article.id.to_s }
   end
-  
-  it "should know its bodytext word count" do
-    article = Factory(:article)
-    article.bodytext = "this short article has a grand total of ten words"
-    article.word_count.should == 10
-    
-    article.bodytext = ""
-    article.word_count.should == 0
-  end
 
   it "should know the appropriate permission string, based on its publication status" do
     draft = Factory(:draft_article)
     recently_published = Factory(:published_article)
     scheduled = Factory(:scheduled_article)
 
-    published_a_while_ago - Factory(:published_article, :published_at => 22.days.ago)
+    published_a_while_ago = Factory(:published_article, :published_at => 22.days.ago)
     
     draft.is_editable_by.should == "(owner of article) or (editor of account) or (manager of account) or admin"
     recently_published.is_editable_by.should == "(manager of account) or (editor of account) or admin"
