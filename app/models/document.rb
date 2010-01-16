@@ -166,7 +166,7 @@ class Document < ActiveRecord::Base
        xml.tag!( :authors_list, self.authors_list )
        xml.tag!( :summary, self.summary )
        xml.tag!( :bodytext, self.bodytext )
-       xml.tag!( :wordcount, self.word_count )
+       xml.tag!( :word_count, self.word_count )
        
        self.section.nil? ? xml.section("") : xml.section(self.section.name)
        xml.tag!( :tag_list, self.tag_list )
