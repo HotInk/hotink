@@ -58,6 +58,7 @@ class Image < Mediafile
          xml.tag!(:system_icon, self.file.url(:system_icon) )
        end
        xml.tag!( :content_type, self.file_content_type )
+       xml.tag!( :original_file_size, number_to_human_size(self.file_file_size) )
        xml.tag!( :id, self.id )
        xml.tag!( :width, self.width)
        xml.tag!( :height, self.height)       
