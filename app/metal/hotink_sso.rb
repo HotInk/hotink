@@ -178,7 +178,9 @@ class HotinkSso < Sinatra::Base
       throw(:halt, [401, erb(:login_form)])
     end
     ensure_authenticated
-    redirect session_return_to || absolute_url("/")
+    return_url = session_return_to
+    session[:checkpoint_return_to] = nil
+    redirect return_url || absolute_url("/")
   end
   
   get '/sso/logout' do
