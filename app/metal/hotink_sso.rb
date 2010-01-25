@@ -9,6 +9,7 @@ require 'rack/flash'
 class HotinkSso < Sinatra::Base
  include Authlogic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
  use Rack::Flash
+ enable :logging
  
  helpers do
     include ActionView::Helpers::TagHelper
@@ -164,6 +165,7 @@ class HotinkSso < Sinatra::Base
   end
       
   get '/sso/login' do
+    session[:checkpoint_return_to] = nil
     ensure_authenticated
     redirect absolute_url("/")
   end
