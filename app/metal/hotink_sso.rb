@@ -169,8 +169,8 @@ class HotinkSso < Sinatra::Base
   end
   
   post '/sso/login' do
-    session = UserSession.new(:login => params['login'], :password => params['password'], :remember_me => false)
-    if session.save
+    user_session = UserSession.new(:login => params['login'], :password => params['password'], :remember_me => false)
+    if user_session.save
       flash[:notice] = nil
       sign_in(session.user)
     else
