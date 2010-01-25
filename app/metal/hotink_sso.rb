@@ -172,7 +172,7 @@ class HotinkSso < Sinatra::Base
     user_session = UserSession.new(:login => params['login'], :password => params['password'], :remember_me => false)
     if user_session.save
       flash[:notice] = nil
-      sign_in(session.user)
+      sign_in(user_session.user)
     else
       flash[:notice] = "Sorry, that login/password combination didn't match"
       throw(:halt, [401, erb(:login_form)])
