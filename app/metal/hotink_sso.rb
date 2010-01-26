@@ -9,6 +9,7 @@ require 'rack/flash'
 class HotinkSso < Sinatra::Base
  include Authlogic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
  use Rack::Flash
+ enable :logging
  
  helpers do
     include ActionView::Helpers::TagHelper
@@ -164,21 +165,24 @@ class HotinkSso < Sinatra::Base
   end
       
   get '/sso/login' do
+    session[:checkpoint_return_to] = nil
     ensure_authenticated
     redirect absolute_url("/")
   end
   
   post '/sso/login' do
-    session = UserSession.new(:login => params['login'], :password => params['password'], :remember_me => false)
-    if session.save
+    user_session = UserSession.new(:login => params['login'], :password => params['password'], :remember_me => false)
+    if user_session.save
       flash[:notice] = nil
-      sign_in(session.user)
+      sign_in(user_session.user)
     else
       flash[:notice] = "Sorry, that login/password combination didn't match"
       throw(:halt, [401, erb(:login_form)])
     end
     ensure_authenticated
-    redirect session_return_to || absolute_url("/")
+    return_url = session_return_to
+    session[:checkpoint_return_to] = nil
+    redirect return_url || absolute_url("/")
   end
   
   get '/sso/logout' do

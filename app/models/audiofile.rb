@@ -18,6 +18,7 @@ class Audiofile < Mediafile
          xml.tag!(:original, self.file.url)
        end
        xml.tag!( :content_type, self.file_content_type )
+       xml.tag!( :original_file_size, number_to_human_size(self.file_file_size) )
        xml.tag!( :id, self.id )
      end
   end  

@@ -8,6 +8,8 @@
 # work just fine.
 
 class Mediafile < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
+  
   belongs_to :account
   
   has_many :waxings, :dependent => :destroy
@@ -98,6 +100,7 @@ class Mediafile < ActiveRecord::Base
        xml.tag!( :authors_list, self.authors_list )
        xml.tag!( :url, self.file.url )
        xml.tag!( :content_type, self.file_content_type )
+       xml.tag!( :original_file_size, number_to_human_size(self.file_file_size) )
        xml.tag!( :id, self.id )
      end
   end

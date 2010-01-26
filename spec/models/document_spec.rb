@@ -104,5 +104,13 @@ describe Document do
       Document.drafts.all.should_not include(article)
     end
   end
-  
+
+  it "should know its bodytext word count" do
+    article = Factory(:article)
+    article.bodytext = "this short article has a grand total of ten words"
+    article.word_count.should == 10
+    
+    article.bodytext = ""
+    article.word_count.should == 0
+  end
 end
