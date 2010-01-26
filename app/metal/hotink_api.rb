@@ -167,11 +167,11 @@ class HotinkApi < Sinatra::Base
     case params[:group_by]
     when "section"
       for section in @account.main_categories
-         @results += @account.articles.find(:all, :conditions => { :section_id => section.id, :status => 'published' }, :limit => num_records, :order => "published_at DESC" )
+         @results += @account.articles.published.find(:all, :conditions => { :section_id => section.id, :status => 'published' }, :limit => num_records, :order => "published_at DESC" )
       end  
     when "blog"
       for blog in @account.blogs
-         @results += blog.entries.find(:all, :conditions => { :status => 'published' }, :limit => num_records, :order => "published_at DESC" )
+         @results += blog.entries.published.find(:all, :conditions => { :status => 'published' }, :limit => num_records, :order => "published_at DESC" )
       end
     end
 

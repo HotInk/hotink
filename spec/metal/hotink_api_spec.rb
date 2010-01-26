@@ -288,6 +288,7 @@ describe HotinkApi do
         section_two = Factory(:category, :account => @account)
         section_one_articles = (1..5).collect{ Factory(:article, :account => @account, :section => section_one) }
         section_two_articles = (1..5).collect{ Factory(:article, :account => @account, :section => section_two) }
+        section_two_scheduled = Factory(:scheduled_article, :account => @account, :section => section_two)
         
         get "/accounts/#{@account.id}/query.xml", :group_by => "section"
         
@@ -301,6 +302,7 @@ describe HotinkApi do
         blog_two = Factory(:blog, :account => @account)
         blog_one_entries = (1..5).collect{ Factory(:detailed_entry, :account => @account, :blogs => [blog_one]) }
         blog_two_entries = (1..5).collect{ Factory(:detailed_entry, :account => @account, :blogs => [blog_two]) }
+        blog_one_scheduled = Factory(:scheduled_entry, :account => @account, :blogs => [blog_one])
         
         get "/accounts/#{@account.id}/query.xml", :group_by => "blog"
         
@@ -308,7 +310,7 @@ describe HotinkApi do
         last_response.headers['Content-Type'].should == "text/xml"
         
         options = { :conditions => { :status => 'published' }, :limit => 5, :order => "published_at DESC" }
-        last_response.body.should == (blog_one.entries.all(options) + blog_two.entries.all(options)).to_xml  
+        last_response.body.should == (blog_one.entries.published.all(options) + blog_two.entries.published.all(options)).to_xml  
       end
     end
     

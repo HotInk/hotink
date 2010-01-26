@@ -81,6 +81,9 @@ Factory.define :detailed_entry, :class => "Entry", :parent => :detailed_article 
   e.blogs { |f| [Factory(:blog, :account => f.account)] }
 end
 
+Factory.define :scheduled_entry, :class => "Entry", :parent => :scheduled_article do |e|
+  e.blogs { |f| [Factory(:blog, :account => f.account)] }
+end
 
 ### Mediafile factories
 Factory.define :mediafile do |a|
