@@ -135,7 +135,7 @@ class Document < ActiveRecord::Base
   end
 
   def word_count
-    bodytext.scan(/\w+/).size
+    bodytext.nil? ? 0 : bodytext.scan(/\w+/).size
   end
   
   #Breaks up a human readable list of authors and creates each one and adds it to self.authors.

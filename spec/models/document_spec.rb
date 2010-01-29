@@ -112,5 +112,8 @@ describe Document do
     
     article.bodytext = ""
     article.word_count.should == 0
+    
+    article.bodytext = nil
+    article.word_count.should == 0
   end
 end
