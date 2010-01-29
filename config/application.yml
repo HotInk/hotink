@@ -41,5 +41,6 @@ production:
         - capertimes
         - omega
         - beagle
+        - watch
         - ubyssey       
     
