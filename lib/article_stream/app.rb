@@ -30,7 +30,6 @@ module ArticleStream
       end
     
       def current_user
-        puts session.inspect
         session[:checkpoint_user_id].nil? ? nil : User.find(session[:checkpoint_user_id])
       end
       

@@ -1,11 +1,16 @@
 require 'spec_helper'
 
+class TestApp < Sinatra::Base
+  enable :sessions
+  use HotinkSso
+end
+
 describe HotinkSso do
   include Rack::Test::Methods    
   include Webrat::Matchers
 
   def app
-    HotinkSso
+    TestApp
   end
   
   describe "visiting /sso" do

@@ -8,6 +8,8 @@ development:
     
 test:
     <<: *defaults
+    publisher_accounts:
+        - root
 
 production:
     <<: *defaults
