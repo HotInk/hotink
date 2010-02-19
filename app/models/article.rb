@@ -1,5 +1,7 @@
 class Article < Document
   include Pacecar
+  include ApplicationHelper
+  
   has_one :checkout, :foreign_key => :duplicate_article_id, :dependent => :destroy
   has_one :pickup, :class_name => "Checkout", :foreign_key => :original_article_id
     
@@ -29,7 +31,12 @@ class Article < Document
   end
   
   def to_liquid
-    {'title' => title, 'subtitle' => subtitle, 'authors_list' => authors_list, 'bodytext' => bodytext, 'id' => id.to_s}
+    {'title' => title, 'subtitle' => subtitle, 'authors_list' => authors_list, 'bodytext' => bodytext, 'excerpt' => excerpt, 'id' => id.to_s}
+  end
+  
+  def excerpt
+    return summary if summary
+    truncate_words(bodytext)
   end
 
   # Article sign-off

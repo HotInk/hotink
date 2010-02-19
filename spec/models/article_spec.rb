@@ -52,6 +52,31 @@ describe Article do
     @article.authors_list.should == "Lilly, Marshall, Robin and Barney"
   end
   
+  it "should create an excerpt in none is set" do
+    article = Factory(:article, :summary => "this article is summary")
+    article.excerpt.should == "this article is summary"
+    
+    bodytext = <<-LONGTEXT
+    Breaking into Toronto’s very well-established arts scene can present a huge challenge for even the gutsiest BFA graduate. There’s the intimidation that comes from approaching well-known artists and galleries, the fight to get noticed in a competitive field, and rents that rise whenever the New York Times declares your once-affordable neighbourhood “the next big thing.”
+
+    So, what’s a twentysomething artist to do? Band together with others in the same predicament, of course. Three new collective-run artist spaces in Kensington Market prove that they can tough it out with a little help from their friends.
+
+    ###The venue: Double Double Land (209 Augusta Ave.)
+
+    “Did I mention I can bring big propane burners?” Julia makes notes to her sketchbook using a thick marker.
+
+    “Yeah, that would be great,” Dan replies.
+
+    “Good, because I want to cook with them in the back room.”
+
+    Julia Kennedy is planning a barbeque soirée, the first in a series of themed culinary events that Double Double Land is hosting this year. She’s discussing her proposal in the kitchen of the combined performance space/apartment with residents Jon McCurley, Daniel Vila, Rob Gordon, and Steve Thomas. The room’s industrial appliances and vents, relics of a past life, are softened in the presence of tattered cookbooks and Craigslist lamps.
+
+    The loft space atop La Rosa Bakery used to be an office, then an after-hours club. It was Vila who discovered it after being kicked out of Jamie’s Ar")
+  LONGTEXT
+    article = Factory(:article, :bodytext => bodytext, :summary => nil)
+    article.excerpt.should == "Breaking into Toronto’s very well-established arts scene can present a huge challenge for even the gutsiest BFA graduate. There’s the intimidation that comes from approaching well-known artists and galleries, the fight to get noticed in a competitive field, and rents that rise whenever the New York Times declares your once-affordable neighbourhood “the next big thing.” So, what’s a twentysomething artist to do? Band together with others in the same predicament, of course. Three new collective-run artist spaces in Kensington Market prove that they can tough it out with a little help from their friends. ###The venue: Double Double Land (209 Augusta Ave.) “Did I mention I can bring big propane burners?” Julia makes notes to her sketchbook using a thick..."
+  end
+  
   it "should break up a comma (with 'and') seperated string of authors' names to create authors array" do
     @article.authors_list = "Lilly, Marshall and Robin"
     @article.authors.length.should == 3
@@ -74,7 +99,7 @@ describe Article do
   
   it "should generate liquid variables for templates" do
     article = Factory(:detailed_article)
-    article.to_liquid.should == {'title' => article.title, 'subtitle' => article.subtitle, 'authors_list' => article.authors_list, 'bodytext' => article.bodytext, 'id' => article.id.to_s }
+    article.to_liquid.should == {'title' => article.title, 'subtitle' => article.subtitle, 'authors_list' => article.authors_list, 'bodytext' => article.bodytext, 'excerpt' => article.excerpt, 'id' => article.id.to_s }
   end
 
   it "should know the appropriate permission string, based on its publication status" do

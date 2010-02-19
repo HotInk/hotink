@@ -4,7 +4,6 @@ require 'rack-flash'
 module Mailout 
   class App < Sinatra::Base
     use Rack::Flash
-    
     include Authlogic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
 
     set :views, File.dirname(__FILE__) + '/views'

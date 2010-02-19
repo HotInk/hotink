@@ -134,4 +134,11 @@ module ApplicationHelper
     html
   end
   
+  def truncate_words(long_string, words = 120, truncate_string = "...")
+    if long_string.nil? then return end
+    wordlist = long_string.to_s.split
+    l = words.to_i - 1
+    l = 0 if l < 0
+    wordlist.length > l ? wordlist[0..l].join(" ") + truncate_string : long_string
+  end
 end
