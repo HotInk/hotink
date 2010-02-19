@@ -7,7 +7,7 @@
 	<p><strong>articles</strong> &ndash; a Liquid array of the articles in this mailout. Each article has the following pieces of accessible data:</p>
 		<p style="padding-left: 30px"><strong>article.title</strong> &ndash; the article's title/headline.<br /><strong>article.subtitle</strong> &ndash; the article's subtitle/subhead.<br />
 		<strong>article.authors_list</strong> &ndash; a nicely formatted list of the article's authors.<br /><strong>article.bodytext</strong> &ndash; the text of the article.<br />
-		<strong>article.id</strong> &ndash; the id of this article, necessary for building links to your site.</p>
+		<br /><strong>article.excerpt</strong> &ndash; the article's excerpt, a short summary or teaser.<br /><strong>article.id</strong> &ndash; the id of this article, necessary for building links to your site.</p>
 	<p><strong>note</strong> &ndash; the note supplied when creating the mailout.</p>
 	<% if flash[:notice] %><p class="notice" style="color: red;"><%= flash[:notice] %><p><% end %>
 	<ol>
