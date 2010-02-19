@@ -4,7 +4,6 @@ class ArticlesController < ApplicationController
   skip_before_filter :verify_authenticity_token
   
   # GET /articles
-  # GET /articles.xml
   def index
       page = params[:page] || 1
       per_page = params[:per_page] || 20
@@ -28,13 +27,11 @@ class ArticlesController < ApplicationController
   end
 
   # GET /articles/1
-  # GET /articles/1.xml
   def show
     @article = @account.articles.find(params[:id])
   end
 
   # GET /articles/new
-  # GET /articles/new.xml
   def new
     @article = @account.articles.build    
     
@@ -74,7 +71,6 @@ class ArticlesController < ApplicationController
   end
 
   # PUT /articles/1
-  # PUT /articles/1.xml
   def update
     @article = @account.articles.find(params[:id])
     
@@ -122,7 +118,6 @@ class ArticlesController < ApplicationController
   end
 
   # DELETE /articles/1
-  # DELETE /articles/1.xml
   def destroy
     @article = @account.articles.find(params[:id])
     permit @article.is_editable_by do
