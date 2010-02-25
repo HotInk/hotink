@@ -40,6 +40,7 @@ ol#stream_articles p.word_count { float: right; clear: right; width: 75px; }
 ol#stream_articles p.date { float: right; font-size: 15px; height: 100%; width: 75px; color: #999; }
 ol#stream_articles p.date+p+p { float: none; font-size: 9px; color: green; margin-bottom: 3px; }
 ol#stream_articles p.authors, ol#stream_articles p.checkout_notice { padding: 2px 0; }
+ol#stream_articles p.section { padding: 2px 0; }
 
 ol#stream_articles p.account { float: left; padding: 2px 3px; font-weight: 400; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
 .color_0 { background-color: #7991FF; color: white; }

@@ -42,6 +42,7 @@ describe ArticleStream do
       last_response.body.should include(@article.title)
       last_response.body.should include(@article.subtitle)
       last_response.body.should include(@article.authors_list)
+      last_response.body.should include(@article.section)
       last_response.body.should include(@article.published_at.to_s(:standard))
       last_response.body.should include(Markdown.new(@article.bodytext).to_html)
     end
