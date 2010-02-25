@@ -1,5 +1,4 @@
-<% unless article.created_at == article.updated_at %>
-  <li id="article_<%= article.id %>" class="<%= cycle("even-row", "odd-row") %> <% if article.published? %>published<% elsif article.scheduled? %>scheduled<% elsif article.draft? %>unpublished<% elsif article.awaiting_attention? %>awaiting_attention<% end %> clearfix">
+<li id="article_<%= article.id %>" class="<%= cycle("even-row", "odd-row") %> <% if article.published? %>published<% elsif article.scheduled? %>scheduled<% elsif article.draft? %>unpublished<% elsif article.awaiting_attention? %>awaiting_attention<% end %> clearfix">
 				
 	<div class="status">
 		<input type="checkbox" value="<%= article.id %>" name="article_ids[]"/>
@@ -66,5 +65,4 @@
 		<% end %>
 	</div>
 		
-  </li>
-<% end %>
+</li>

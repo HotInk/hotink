@@ -31,7 +31,7 @@ describe Account do
     accounts.last.should == less_recent_account 
   end
     
-  describe "role manager" do
+  describe "role management" do
     before do
       @user = Factory(:user)
     end

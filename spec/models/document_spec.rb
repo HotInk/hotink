@@ -30,7 +30,7 @@ describe Document do
     end
     
     it "should identify drafts" do
-      Document.drafts.should_not include(@untouched)
+      Document.drafts.should include(@untouched)
       Document.drafts.should include(@draft)
       Document.drafts.should_not include(@published)
       Document.drafts.should_not include(@scheduled)
@@ -65,7 +65,7 @@ describe Document do
     end
     
     it "should know it's draft status" do
-      @untouched.draft?.should be_false
+      @untouched.draft?.should be_true
       @draft.draft?.should be_true
       @published.draft?.should be_false
       @scheduled.draft?.should be_false

@@ -28,31 +28,13 @@ class ArticlesController < ApplicationController
   end
 
   # GET /articles/1
-  # GET /articles/1.xml
   def show
     @article = @account.articles.find(params[:id])
   end
 
   # GET /articles/new
-  # GET /articles/new.xml
   def new
-    @article = @account.articles.build    
-    
-    #Check to see if the last article created is exists and is blank.
-    #If so, redate it and serve it up instead of a new article, to prevent
-    #the data from becoming cluttered with abandoned articles.
-    #
-    #If the last article was legit, save the fresh article so it can have relationships 
-    if last_article = @account.articles.find(:last)
-      if last_article.created_at == last_article.updated_at
-         @article = last_article
-      else
-        @article.save
-      end
-    else
-      @article.save
-    end
-    
+    @article = @account.articles.create 
     @article.owner = current_user
     
     respond_to do |format|
@@ -74,7 +56,6 @@ class ArticlesController < ApplicationController
   end
 
   # PUT /articles/1
-  # PUT /articles/1.xml
   def update
     @article = @account.articles.find(params[:id])
     
@@ -122,7 +103,6 @@ class ArticlesController < ApplicationController
   end
 
   # DELETE /articles/1
-  # DELETE /articles/1.xml
   def destroy
     @article = @account.articles.find(params[:id])
     permit @article.is_editable_by do

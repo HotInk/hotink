@@ -160,7 +160,7 @@ describe Mailout do
       describe "GET to /accounts/:id/mailouts/:mailout" do
         before do
           # Test doubles for API objects
-          @unsent_campaign = {'id' => 'test_id', 'list_id'=>'test_list_id', 'email_sent' => 0, 'send_time' => ""}          
+          @unsent_campaign = {'id' => 'test_id', 'list_id'=>'test_list_id', 'email_sent' => 0, 'archive_url' => "http://somearchive.test.com",'send_time' => ""}          
           @sample_content = {"html" => "<h1>HTML sample email test</h1>"}
           @list = { 'name' => 'Test list name'}
           
@@ -171,7 +171,7 @@ describe Mailout do
         end
 
         it "should display a preview of the mailout" do
-          last_response.body.should include(@sample_content["html"])
+          last_response.body.should have_selector("iframe[src=\"#{@unsent_campaign['archive_url']}\"]")
         end
         
         it "should display a send button for unsent mailout" do
