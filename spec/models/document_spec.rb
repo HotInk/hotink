@@ -94,14 +94,28 @@ describe Document do
       article.save
       Document.published.all.should include(article)
       Document.drafts.all.should_not include(article)
+    
+      article = Factory(:draft_article)
+      article.publish(nil)
+      article.save
+      Document.published.all.should include(article)
+      Document.drafts.all.should_not include(article)
     end
     
     it "should schedule documents, as requested" do
-      article = Factory(:draft_article)
-      article.schedule(Time.now + 1.day)
-      article.save
-      Document.scheduled.all.should include(article)
-      Document.drafts.all.should_not include(article)
+      #Old, deprecated way
+      article1 = Factory(:draft_article)
+      article1.schedule(Time.now + 1.day)
+      article1.save
+      Document.scheduled.all.should include(article1)
+      Document.drafts.all.should_not include(article1)
+    
+      #Better way
+      article2 = Factory(:draft_article)
+      article2.publish(Time.now + 1.day)
+      article2.save
+      Document.scheduled.all.should include(article2)
+      Document.drafts.all.should_not include(article2)
     end
   end
 
@@ -115,5 +129,18 @@ describe Document do
     
     article.bodytext = nil
     article.word_count.should == 0
+  end
+
+  it "should return a default headline if none is set" do
+    article = Factory(:article)
+    article.title = ""
+    article.display_title.should == "(no headline)"
+    
+    article.title = "A real title"
+    article.display_title.should == "A real title"
+  end
+  
+  it "should have a default per-page value for pagination" do
+    Document.per_page.should == 10
   end
 end

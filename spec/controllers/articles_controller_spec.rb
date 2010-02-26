@@ -122,11 +122,132 @@ describe ArticlesController do
     
     context "by user prohibited from updating article" do
       before do
-        post :update, :account_id => @account.id, :id => @article.id, :article => { :title => "Whoa there. Title time." }
+        put :update, :account_id => @account.id, :id => @article.id, :article => { :title => "Whoa there. Title time." }
       end
       
       it { should assign_to(:article).with(@article) }
       it { should respond_with(:redirect) }
+    end
+    
+    context "by article's owner" do
+      before do
+        @user = Factory(:user)
+        @article.owner = @user
+        controller.stub!(:current_user).and_return(@user)
+      end
+      
+      context "with valid parameters" do
+        context "as an HTML request" do
+          before do
+            put :update, :account_id => @account.id, :id => @article.id, :article => { :title => "Whoa there. Title time." }
+          end
+
+          it { should assign_to(:article).with(@article) }
+          it { should set_the_flash.to("Article saved") }
+          it { should respond_with(:redirect) }
+          it "should update the article" do
+            @article.reload.title.should == "Whoa there. Title time."
+          end
+        end
+
+        context "as an XHR request" do
+          before do
+            xhr :put, :update, :account_id => @account.id, :id => @article.id, :article => { :title => "Whoa there. Title time." }
+          end
+
+          it { should assign_to(:article).with(@article) }
+          it { should set_the_flash.to("Article saved") }
+          it { should respond_with(:success) }
+          it { should respond_with_content_type(:js) }
+          it "should update the article" do
+            @article.reload.title.should == "Whoa there. Title time."
+          end
+        end
+      end
+      
+      context "with invalid parameters" do
+        before do
+          put :update, :account_id => @account.id, :id => @article.id, :article => { :account => nil }
+        end
+
+        it { should assign_to(:article).with(@article) }
+        it { should respond_with(:bad_request) }
+        it { should render_template(:edit) }
+      end
+    end
+    
+    describe "publishing article" do
+      before do
+        @user = Factory(:user)
+        @user.has_role("manager", @account)
+        controller.stub!(:current_user).and_return(@user)
+        
+        put :update, :account_id => @account.id, :id => @article.id, :article => { :status => "Published" }
+      end
+      
+      it "should publish the article" do
+        @article.reload.should be_published
+      end
+    end
+    
+    describe "scheduling article" do
+      before do
+        @user = Factory(:user)
+        @user.has_role("manager", @account)
+        controller.stub!(:current_user).and_return(@user)
+        
+        schedule = { :year => "2015", :month => "3", :day => "4", :hour => "12", :minute => "35" }
+        put :update, :account_id => @account.id, :id => @article.id, :article => { :status => "Published", :schedule => schedule }
+      end
+      
+      it "should schedule the article" do
+        @article.reload.should be_scheduled
+      end
+    end
+    
+    describe "unpublishing article" do
+      before do
+        @user = Factory(:user)
+        @article.owner = @user
+        controller.stub!(:current_user).and_return(@user)
+        
+        @article.publish
+        put :update, :account_id => @account.id, :id => @article.id, :article => { :status => "" }
+      end
+      
+      it "should unpublished the article" do
+        @article.reload.should be_draft
+      end
+    end
+    
+    describe "signing off on article" do
+      before do
+        @user = Factory(:user)
+        @article.owner = @user
+        controller.stub!(:current_user).and_return(@user)
+        
+        put :update, :account_id => @account.id, :id => @article.id, :article => { :status => "Awaiting attention" }
+      end
+      
+      it "should apply current user's sign off the article" do
+        @article.should be_signed_off_by(@user)
+        @article.reload.should be_awaiting_attention
+      end
+    end
+    
+    describe "revoking signing off on article" do
+      before do
+        @user = Factory(:user)
+        @article.owner = @user
+        controller.stub!(:current_user).and_return(@user)
+        
+        put :update, :account_id => @account.id, :id => @article.id, :article => { :status => "Awaiting attention" }
+        put :update, :account_id => @account.id, :id => @article.id, :article => { :revoke_sign_off => "true" }
+      end
+      
+      it "should revoke current user's sign off the article" do
+        @article.should_not be_signed_off_by(@user)
+      end
     end
   end
 

@@ -79,9 +79,9 @@ class Document < ActiveRecord::Base
   end
   
   # This method handles the public availability of a Document
-  def publish
+  def publish(time_to_publish = nil)
     self.status = "Published"
-    self.published_at = Time.now
+    self.published_at = time_to_publish.kind_of?(Time) ? time_to_publish : Time.now
   end
   
   def schedule(date)

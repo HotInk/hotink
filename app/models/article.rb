@@ -90,4 +90,11 @@ class Article < Document
       "(owner of article) or (editor of account) or (manager of account) or admin"
     end
   end
+  
+  def add_section_to_categories
+    if section && !categories.include?(section)
+      categories << section
+    end
+  end
+  before_save :add_section_to_categories
 end
