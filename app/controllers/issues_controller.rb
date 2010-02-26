@@ -6,7 +6,6 @@ class IssuesController < ApplicationController
   layout 'hotink'
   
   # GET /issues
-  # GET /issues.xml
   def index 
     page = (params[:page] || 1).to_i
     per_page = (params[:per_page] || 15 ).to_i
@@ -18,7 +17,6 @@ class IssuesController < ApplicationController
   end
 
   # GET /issues/1
-  # GET /issues/1.xml
   def show
     @issue = @account.issues.find(params[:id])
 
@@ -28,25 +26,8 @@ class IssuesController < ApplicationController
   end
 
   # GET /issues/new
-  # GET /issues/new.xml
   def new
-    @issue = @account.issues.build(:date => Time.now )
-        
-    #Check to see if the last issue created is exists and is untouched.
-    #If so, redate it and serve it up instead of a new article, to prevent
-    #the data from becoming cluttered with abandoned articles.
-    #
-    #If the last article was legit, save the fresh article so it can have relationships 
-    if last_issue = @account.issues.find(:last)
-      if last_issue.created_at == last_issue.updated_at
-         @issue = last_issue
-         @issue.date = Time.now #Give it the current time, without saving.
-      else
-        @issue.save
-      end
-    else
-      @issue.save
-    end
+    @issue = @account.issues.create(:date => Time.now)
     
     respond_to do |format|
       format.html { redirect_to edit_account_issue_url(@account, @issue ) }
@@ -55,7 +36,7 @@ class IssuesController < ApplicationController
 
   # GET /issues/1/edit
   def edit
-    @issue = Issue.find(params[:id])
+    @issue = @account.issues.find(params[:id])
  
     respond_to do |format|
       format.html # edit.html.erb
@@ -63,41 +44,23 @@ class IssuesController < ApplicationController
     end
   end
 
-  # POST /issues
-  # POST /issues.xml
-  def create
-    @issue = Issue.new(params[:issue])
-    @issue.account = @account
-
-    respond_to do |format|
-      if @issue.save
-        flash[:notice] = 'Issue was successfully created.'
-        format.html { redirect_to account_issues_url(@account) }
-      else
-        format.html { render :action => "edit" }
-      end
-    end
-  end
-
   # PUT /issues/1
-  # PUT /issues/1.xml
   def update
     @issue = @account.issues.find(params[:id])
-    date= @issue.date
+    #date= @issue.date
 
     respond_to do |format|
       if @issue.update_attributes(params[:issue])
-        flash[:notice] = 'Issue was successfully updated.'
+        flash[:notice] = 'Issue saved.'
         format.html { redirect_to account_issues_url(@account) }
       else
-        @issue.date = date
-        format.html { render :action => "edit" }
+        #@issue.date = date
+        format.html { render :action => "edit", :status => :bad_request }
       end
     end
   end
 
   # DELETE /issues/1
-  # DELETE /issues/1.xml
   def destroy
     @issue = @account.issues.find(params[:id])
     @issue.destroy

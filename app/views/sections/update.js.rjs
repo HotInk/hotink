@@ -1,1 +1,0 @@
-page.replace "section_#{@section.id}", :partial => 'categories/category', :object => @section
