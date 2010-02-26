@@ -38,10 +38,11 @@ describe ArticlesController do
       before do
         @searched_articles = (1..3).collect{ Factory(:detailed_article, :account => @account) }
         @other_articles = (1..3).collect{ Factory(:detailed_article, :account => @account) }
-        Article.should_receive(:search).with( "test query", :with=>{ :account_id => @account.id }, :page => 1, :per_page => 20, :include => [:authors, :mediafiles, :section]).and_return(@articles)
+        Article.should_receive(:search).with( "test query", :with=>{ :account_id => @account.id }, :page => 1, :per_page => 20, :include => [:authors, :mediafiles, :section]).and_return(@searched_articles)
         get :index, :account_id => @account.id, :search => "test query"
       end
       
+      it { should assign_to(:articles).with(@searched_articles) }
       it { should respond_with(:success) }
     end
   end

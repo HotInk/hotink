@@ -4,9 +4,8 @@ class MediafilesController < ApplicationController
   before_filter :find_article, :find_entry, :find_document
   
   # GET /mediafiles
-  # GET /mediafiles.xml
   def index
-
+    
     if params[:search].blank?
       @mediafiles = @account.mediafiles.paginate( :page=>(params[:page] || 1), :per_page => (params[:per_page] || 20 ), :order => "date DESC", :include => [:authors])
     else
@@ -15,25 +14,21 @@ class MediafilesController < ApplicationController
     end
 
     respond_to do |format|
-      format.js
       format.html # index.html.erb
-      format.xml  { render :xml => @mediafiles.to_xml(:root => "mediafiles") }
+      format.js
     end
   end
 
   # GET /mediafiles/1
-  # GET /mediafiles/1.xml
   def show
-    @mediafile = Mediafile.find(params[:id])
+    @mediafile = @account.mediafiles.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @mediafile }
     end
   end
 
   # GET /mediafiles/new
-  # GET /mediafiles/new.xml
   def new
     @mediafile = @account.mediafiles.build
 
@@ -42,7 +37,6 @@ class MediafilesController < ApplicationController
       if @document
         format.js
       end
-      format.xml  { render :xml => @mediafile }
     end
   end
 
@@ -50,13 +44,12 @@ class MediafilesController < ApplicationController
   def edit
     @mediafile = @account.mediafiles.find(params[:id])
      respond_to do |format|
-        format.js
-        format.html # new.html.erb
+       format.html # new.html.erb
+       format.js
      end
   end
 
   # POST /mediafiles
-  # POST /mediafiles.xml
   def create
     
     # Catch various content types and build the appropriate media type
@@ -89,17 +82,14 @@ class MediafilesController < ApplicationController
             end
         format.html { redirect_to(edit_account_mediafile_path(@account, @mediafile)) }
         format.js { redirect_to(account_mediafiles_path(@account)) }
-        format.xml  { render :xml => @mediafile, :status => :created, :location => @mediafile }
      else
         format.html { head :bad_request }
         format.js { head :bad_request }
-        format.xml  { render :xml => @mediafile.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # PUT /mediafiles/1
-  # PUT /mediafiles/1.xml
   def update
     @mediafile = @account.mediafiles.find(params[:id])
    	 
@@ -108,11 +98,9 @@ class MediafilesController < ApplicationController
         flash[:notice] = 'Media updated'      
         format.js
         format.html { redirect_to(account_mediafiles_path(@account))}
-        format.xml  { head :ok }
       else
         flash[:notice] = 'Error! Media NOT updated'      
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @mediafile.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -127,7 +115,6 @@ class MediafilesController < ApplicationController
       flash[:notice] = 'Media trashed'
       format.html { redirect_to(account_mediafiles_path(@account)) }
       format.js   { head :ok }
-      format.xml  { head :ok }
     end
   end
 end
