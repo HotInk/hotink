@@ -1,4 +1,4 @@
-# An Action is a group update of a number of Hot Ink records with one API call.
+# An Action is a group update of a number of Hot Ink records with HTTP request.
 # An action takes at least 4 parameters:
 #   1. The action id (a string passed via url)
 #   2. Action parameters (a hash with a params key equal to the action id)
@@ -8,11 +8,9 @@ class ActionsController < ApplicationController
   
   
   def new
-    @action = Action.new
-    @action.name = params[:name]
-    @action.content_types = params[:content_types]
+    @action = Action.new(:name => params[:name], :content_types => params[:content_types])
     @records = Hash.new
-    params[:content_types].each do |content_type|
+    @action.content_types.each do |content_type|
       @records[content_type] = content_type.camelize.constantize.find(params[(content_type+"_ids").to_sym])
     end
     respond_to do |format|
@@ -26,26 +24,31 @@ class ActionsController < ApplicationController
     function_options = params[function] || {}   
 
     params[:content_types].each do |content_type|
-          klass = content_type.tableize          
-          params[content_type.downcase+"_ids"].each do |id|
-                send(function, klass, id, function_options)
-          end      
+      klass = content_type.tableize          
+      params[content_type.downcase+"_ids"].each do |id|
+            send(function, klass, id, function_options)
+      end      
     end
     
     respond_to do |format|
       format.html do
-          if params[:content_types].first=="mediafile"
-            redirect_to account_mediafiles_url(@account)
-          else
-            redirect_to account_articles_url(@account)
-          end
-       end
+        if params[:content_types].first=="mediafile"
+          redirect_to account_mediafiles_url(@account)
+        else
+          redirect_to account_articles_url(@account)
+        end
+      end
     end
-      
   end
   
   
   private
+  
+  def delete( klass, id, options = {} )
+    record = @account.send(klass).find(id)
+    record.destroy
+    flash[:notice] = "Trashed"
+  end
   
   def publish( klass, id, options = {} )
     raise ArgumentError unless klass=="articles"
@@ -65,15 +68,6 @@ class ActionsController < ApplicationController
     end
   end
   
-  def delete( klass, id, options = {} )
-    record = @account.send(klass).find(id)
-    begin
-      record.destroy
-      flash[:notice] = "Trashed"
-    rescue
-    end
-  end
-  
   def unpublish( klass, id, options = {} )
     raise ArgumentError unless klass=="articles"
     record = @account.send(klass).find(id)
@@ -85,12 +79,8 @@ class ActionsController < ApplicationController
   def add_tag( klass, id, options = {} )
     raise ArgumentError unless klass=="articles"||klass=="mediafiles"
     record = @account.send(klass).find(id)
-    if record.tag_list
-      record.tag_list = record.tag_list.to_s + ", #{options[:new_tag_list]}"
-    else
-      record.tag_list = options[:new_tag_list]
-    end
-    record.save
+    record.tag(options[:new_tag_list])
+    record.save!
     flash[:notice] = "Articles tagged"
   end
   

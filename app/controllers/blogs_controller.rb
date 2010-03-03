@@ -7,9 +7,7 @@ class BlogsController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.js
     end
-    
   end
   
   def new
@@ -17,7 +15,6 @@ class BlogsController < ApplicationController
     
     respond_to do |format|
       format.html 
-      format.xml  { render :xml => @blog }
     end
   end
   
@@ -31,10 +28,8 @@ class BlogsController < ApplicationController
         
         flash[:notice] = 'New blog created'
         format.html { redirect_to([@account, @blog]) }
-        format.xml  { render :xml => @blog, :status => :created, :location => @blog }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @blog.errors, :status => :unprocessable_entity }
+        format.html { render :action => "new", :status => :bad_request }
       end
     end
   end
@@ -59,10 +54,8 @@ class BlogsController < ApplicationController
       if @blog.update_attributes(params[:blog])
         flash[:notice] = 'Blog details updated'
         format.html { redirect_to([@account, @blog]) }
-        format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @blog.errors, :status => :unprocessable_entity }
+        format.html { render :action => "edit", :status => :bad_request }
       end
     end
   end
@@ -79,23 +72,20 @@ class BlogsController < ApplicationController
     respond_to do |format|
       format.js
     end
-
   end
   
   def remove_user
     @blog = @account.blogs.find(params[:id])
     @user = User.find(params[:user])
     
-    
-      if @user.has_role?( "contributor", @blog)
-        @user.has_no_role("contributor", @blog)
-        @user.has_no_role("editor", @blog)      
-      end
+    if @user.has_role?( "contributor", @blog)
+      @user.has_no_role("contributor", @blog)
+      @user.has_no_role("editor", @blog)      
+    end
     
     respond_to do |format|
       format.js
     end
-
   end
   
   def promote_user
@@ -111,7 +101,6 @@ class BlogsController < ApplicationController
     respond_to do |format|
       format.js
     end
-
   end
   
 end

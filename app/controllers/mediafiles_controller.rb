@@ -51,23 +51,18 @@ class MediafilesController < ApplicationController
 
   # POST /mediafiles
   def create
-    
-    # Catch various content types and build the appropriate media type
-        
-    case params[:mediafile][:file].content_type
-    # Images
-    when %r"jpe?g", %r"tiff?", %r"png", %r"gif", %r"bmp"    then @mediafile = @account.images.build
-    # mp3s/Audiofiles
-    when  %r"audio\/mpeg", %r"audio\/mpg"                   then @mediafile = @account.audiofiles.build
-    # Catch-all for generic file attachments
-    else @mediafile = @account.mediafiles.build
-    end
-    @mediafile.attributes = params[:mediafile]
-    @mediafile.date = Time.now
-    
+    if params[:mediafile][:file].respond_to?(:content_type)    
+      # Catch various content types and build the appropriate media type
+      case params[:mediafile][:file].content_type
+      # Images
+      when %r"jpe?g", %r"tiff?", %r"png", %r"gif", %r"bmp"    then @mediafile = @account.images.create(params[:mediafile].merge(:settings => @account.settings["image"]))
+      # mp3s/Audiofiles
+      when  %r"audio\/mpeg", %r"audio\/mpg"                   then @mediafile = @account.audiofiles.create(params[:mediafile])
+      # Catch-all for generic file attachments
+      else @mediafile = @account.mediafiles.create(params[:mediafile])
+      end    
 
-    respond_to do |format|
-      if @mediafile.save!
+      respond_to do |format|
         flash[:notice] = 'Media added'
             #Special behaviour to mimic ajax file-upload on article & entry form, if it's an iframe
             if params[:iframe_post] && @document
@@ -81,26 +76,24 @@ class MediafilesController < ApplicationController
               return
             end
         format.html { redirect_to(edit_account_mediafile_path(@account, @mediafile)) }
-        format.js { redirect_to(account_mediafiles_path(@account)) }
+      end  
      else
-        format.html { head :bad_request }
-        format.js { head :bad_request }
-      end
+       render :text => "Mediafile NOT uplaoded", :status => :bad_request
     end
   end
 
   # PUT /mediafiles/1
   def update
     @mediafile = @account.mediafiles.find(params[:id])
-   	 
+   	
     respond_to do |format|
-      if @mediafile.update_attributes(params[:mediafile]) 
+      if @mediafile.update_attributes(params[@mediafile.class.name.downcase.to_sym]) 
         flash[:notice] = 'Media updated'      
-        format.js
         format.html { redirect_to(account_mediafiles_path(@account))}
+        format.js
       else
         flash[:notice] = 'Error! Media NOT updated'      
-        format.html { render :action => "edit" }
+        format.html { render :action => "edit", :status => :bad_request }
       end
     end
   end

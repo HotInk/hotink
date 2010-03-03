@@ -78,6 +78,24 @@ describe MediafilesController do
     end
   end
 
+  describe "POST to create" do
+    context "with valid HTML request and a Mediafile" do
+      before do
+        post :create, :account_id => @account.id, :mediafile => { :file => fixture_file_upload('/test-txt.txt') }
+      end
+      it { should assign_to(:mediafile).with_kind_of(Mediafile) }
+      it { should respond_with(:redirect) }
+    end
+    
+    context "with invalid HTML request" do
+      before do
+        post :create, :account_id => @account.id, :mediafile => { :file => "heheheheh" }
+      end
+      
+      it { should respond_with(:bad_request) }
+    end
+  end
+
   describe "GET to edit" do
     context "with HTML request" do
       before do
@@ -99,6 +117,74 @@ describe MediafilesController do
       it { should assign_to(:mediafile).with(@mediafile) }
       it { should respond_with(:success) }
       it { should respond_with_content_type(:js) }
+    end
+  end
+  
+  describe "PUT to update" do
+    context "with valid HTML request" do
+      context "when updating mediafile" do
+        before do
+          @mediafile = Factory(:mediafile, :account => @account)
+          put :update, :account_id => @account.id, :id => @mediafile.id, :mediafile => { :title => "Some mediafile" }
+        end
+      
+        it { should assign_to(:mediafile).with(@mediafile) }
+        it { should respond_with(:redirect) }
+        it "should update the mediafile" do
+          @mediafile.reload.title.should == "Some mediafile"
+        end
+      end
+      
+      context "when updating image" do
+        before do
+          @mediafile = Factory(:image, :account => @account)
+          put :update, :account_id => @account.id, :id => @mediafile.id, :image => { :title => "Some mediafile" }
+        end
+      
+        it { should assign_to(:mediafile).with(@mediafile) }
+        it { should respond_with(:redirect) }
+        it "should update the mediafile" do
+          @mediafile.reload.title.should == "Some mediafile"
+        end
+      end
+      
+      context "when updating audiofile" do
+        before do
+          @mediafile = Factory(:audiofile, :account => @account)
+          put :update, :account_id => @account.id, :id => @mediafile.id, :audiofile => { :title => "Some mediafile" }
+        end
+      
+        it { should assign_to(:mediafile).with(@mediafile) }
+        it { should respond_with(:redirect) }
+        it "should update the mediafile" do
+          @mediafile.reload.title.should == "Some mediafile"
+        end
+      end
+    end
+    
+    context "with valid XHR request" do
+      before do
+        @mediafile = Factory(:mediafile, :account => @account)
+        xhr :put, :update, :account_id => @account.id, :id => @mediafile.id, :mediafile => { :title => "Some mediafile" }
+      end
+      
+      it { should assign_to(:mediafile).with(@mediafile) }
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:js) }
+      it "should update the mediafile" do
+        @mediafile.reload.title.should == "Some mediafile"
+      end
+    end
+    
+    context "with invalid request" do
+      before do
+         @mediafile = Factory(:mediafile, :account => @account)
+         put :update, :account_id => @account.id, :id => @mediafile.id, :mediafile => { :account_id => "" }
+       end
+
+       it { should assign_to(:mediafile).with(@mediafile) }
+       it { should respond_with(:bad_request) }
+       it { should render_template(:edit) }
     end
   end
   

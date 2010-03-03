@@ -1,5 +1,5 @@
 <div id="mediafile_form" class="form">
-	<% form_for([@account, @mediafile]) do |f| %>
+	<% form_for [@account, @mediafile], :url => account_mediafile_url(@account, @mediafile) do |f| %>
 	<div id="buttons">
 		<%= button_link_to_submit "Save", :class=>"save large" %>	
 		<p id="last_saved">
@@ -75,7 +75,8 @@
 		<div id="description" class="clearfix">
 			<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
 	    	<%= f.label :description, "Description" %><br />
-	    	<%= f.text_area :description %>
+		  	<div id="wmd-button-bar"></div>
+	    	<%= f.text_area :description, :id => 'wmd-input' %>
 	  	</div>
 	
 		<div id="media" class="clearfix">
@@ -116,15 +117,6 @@
 	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
 	
 	load_button_fix();
-	
-	// WMD Editor Configuration script
-    // Set this *before* you load wmd.js
-    wmd_options = {
-					output: "Markdown",
-					lineLength: 40,
-					buttons: "bold italic heading | link blockquote image | ol ul hr ",
-					autostart: true 
-				  };
 </script>
 
-<%= javascript_include_tag 'wmd/wmd.js' %>
+<%= javascript_include_tag 'wmd.min' %>

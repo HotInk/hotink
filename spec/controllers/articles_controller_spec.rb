@@ -116,7 +116,7 @@ describe ArticlesController do
     it { should respond_with(:redirect) }
   end
   
-  describe "POST to update" do
+  describe "PUT to update" do
     before do
       @article = Factory(:article, :account => @account)
     end

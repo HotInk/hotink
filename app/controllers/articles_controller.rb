@@ -70,7 +70,7 @@ class ArticlesController < ApplicationController
       elsif params[:article][:status]=="Awaiting attention"
         @article.sign_off(current_user)
       elsif params[:article][:status]==""
-        params[:article][:status]=nil #To make sure an article is upublished properly
+        params[:article][:status]=nil #To make sure an article is unpublished properly
       end
 
       if params[:article][:revoke_sign_off]

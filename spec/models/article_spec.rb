@@ -189,4 +189,10 @@ describe Article do
     @article.categories.should include(category)
   end
   
+  it "should add tags" do
+    @article.tag("testing, one, two, three")
+    @article.tag_list.to_s.should == "testing, one, two, three"
+    @article.tag("four")
+    @article.tag_list.to_s.should == "testing, one, two, three, four"
+  end
 end

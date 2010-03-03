@@ -3,31 +3,8 @@ class WaxingsController < ApplicationController
   layout 'hotink'
   
   helper_method :plural_class_name
-  
-  # GET /waxings
-  # GET /waxings.xml
-  def index
-    @waxings = Waxing.find(:all)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @waxings }
-    end
-  end
-
-  # GET /waxings/1
-  # GET /waxings/1.xml
-  def show
-    @waxing = Waxing.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @waxing }
-    end
-  end
 
   # GET /waxings/new
-  # GET /waxings/new.xml
   def new
     @waxing = @account.waxings.build
     
@@ -40,7 +17,6 @@ class WaxingsController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.js
-      format.xml  { render :xml => @waxing }
     end
   end
 
@@ -53,7 +29,6 @@ class WaxingsController < ApplicationController
   end
 
   # POST /waxings
-  # POST /waxings.xml
   # This is a split behaviour method, handling create-one and create-many based
   # on which parameters it receives. 
   def create
@@ -90,7 +65,6 @@ class WaxingsController < ApplicationController
   end
 
   # PUT /waxings/1
-  # PUT /waxings/1.xml
   def update
     @waxing = Waxing.find(params[:id])
 
@@ -98,16 +72,13 @@ class WaxingsController < ApplicationController
       if @waxing.update_attributes(params[:waxing])
         format.js
         format.html { redirect_to(@waxing) }
-        format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @waxing.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # DELETE /waxings/1
-  # DELETE /waxings/1.xml
   def destroy
     @waxing = @account.waxings.find(params[:id])
     
@@ -115,7 +86,6 @@ class WaxingsController < ApplicationController
       if @waxing.destroy
         flash[:notice] = "Media detached"
         format.js
-        format.xml  { head :ok }
       end
     end
   end

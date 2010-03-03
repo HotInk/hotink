@@ -84,7 +84,7 @@ class Account < ActiveRecord::Base
      when 1
        return "#{managers.first.name} <#{managers.first.email}>"
      when 2
-       return "#{managers.first.name} <#{managers.first.email}>" + " and " + "#{managers.second.login} <#{managers.second.email}>"
+       return "#{managers.first.name} <#{managers.first.email}>" + " and " + "#{managers.second.name} <#{managers.second.email}>"
      else
       list = String.new
       (0..(managers.length - 3)).each{ |i| list += "#{managers[i].name} <#{managers[i].email}>, " }

@@ -97,4 +97,12 @@ class Article < Document
     end
   end
   before_save :add_section_to_categories
+  
+  def tag(new_tags)
+    if self.tag_list.empty?
+      self.tag_list = new_tags
+    else
+      self.tag_list = self.tag_list.to_s + ", #{new_tags}"
+    end
+  end
 end
