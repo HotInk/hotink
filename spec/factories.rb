@@ -80,6 +80,7 @@ end
 
 Factory.define :entry do |e|
   e.account { Factory(:account) }
+  e.blogs { |f| [Factory(:blog, :account => f.account)] }
 end
 
 Factory.define :detailed_entry, :class => "Entry", :parent => :detailed_article do |e|
@@ -114,6 +115,11 @@ Factory.define :audiofile, :parent => :mediafile, :class => "Audiofile" do |a|
   a.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-mp3.mp3')) }
 end
 ###
+
+Factory.define :waxing do |w|
+  w.document { Factory(:article) }
+  w.mediafile { Factory(:mediafile) }
+end
 
 ### Issues
 

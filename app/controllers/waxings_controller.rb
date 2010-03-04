@@ -6,11 +6,10 @@ class WaxingsController < ApplicationController
 
   # GET /waxings/new
   def new
-    @waxing = @account.waxings.build
+    document = @document || @article || @entry
     
-    @waxing.document = @document
-
-    #@mediafiles = @account.mediafiles.search(@search_query, :page=>(params[:page] || 1), :per_page => (params[:per_page] || 10 ), :order => :date, :sort_mode => :desc, :include => [:authors])
+    @waxing = document.waxings.build
+    
     @mediafiles = @account.mediafiles.paginate(:page=>(params[:page] || 1), :per_page => (params[:per_page] || 10 ), :order => 'date DESC', :include => [:authors])
     @waxing.document.mediafiles.each { |m| @mediafiles.delete(m) } # Scrub out already attached files
 
@@ -22,45 +21,25 @@ class WaxingsController < ApplicationController
 
   # GET /waxings/1/edit
   def edit
-    @waxing = @account.waxings.find(params[:id])
+    @waxing = Waxing.find(params[:id], :include => :document, :conditions => { :documents => { :account_id => @account.id }})
     respond_to do |format|
       format.js
     end
   end
 
   # POST /waxings
-  # This is a split behaviour method, handling create-one and create-many based
-  # on which parameters it receives. 
   def create
-    if params[:waxing]
-      @waxing = @account.waxings.build(params[:waxing])
-      respond_to do |format|
-        if @waxing.save
-          flash[:notice] = 'Media attached'
-          format.html { redirect_to(@waxing) }
-          format.xml  { render :xml => @waxing, :status => :created, :location => @waxing }
-        else
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @waxing.errors, :status => :unprocessable_entity }
-        end
-      end
-    elsif params[:mediafile_ids]
-      
-      
-      # Set behaviour based on document type
-      if @document.is_a? Article
-        redirect_path = edit_account_article_url(@account, @document)
-      elsif @document.is_a? Entry
-        redirect_path = edit_account_blog_entry_url(@account, @document.blogs.first, @document)
-      end
-      
-      params[:mediafile_ids].each { |k, v| @account.waxings.create(:document_id => @document.id, :mediafile_id => k)  }
-      
-      respond_to do |format|
-        flash[:notice] = "Media attached"
-        format.html { redirect_to(redirect_path) }
-        format.js
-      end
+    # Set behaviour based on document type
+    if @document.is_a? Article
+      redirect_path = edit_account_article_url(@account, @document)
+    elsif @document.is_a? Entry
+      redirect_path = edit_account_blog_entry_url(@account, @document.blogs.first, @document)
+    end
+    params[:mediafile_ids].each { |k, v| @document.waxings.create(:mediafile_id => k)  }
+    respond_to do |format|
+      flash[:notice] = "Media attached"
+      format.html { redirect_to(redirect_path) }
+      format.js
     end
   end
 
@@ -71,16 +50,13 @@ class WaxingsController < ApplicationController
     respond_to do |format|
       if @waxing.update_attributes(params[:waxing])
         format.js
-        format.html { redirect_to(@waxing) }
-      else
-        format.html { render :action => "edit" }
       end
     end
   end
 
   # DELETE /waxings/1
   def destroy
-    @waxing = @account.waxings.find(params[:id])
+    @waxing = Waxing.find(params[:id], :include => :document, :conditions => { :documents => { :account_id => @account.id }})
     
     respond_to do |format|
       if @waxing.destroy

@@ -119,6 +119,10 @@ class Mediafile < ActiveRecord::Base
     copy.save ? copy : false
   end
   
+  def date
+    read_attribute(:date).to_date
+  end
+  
   private
   
   def set_date

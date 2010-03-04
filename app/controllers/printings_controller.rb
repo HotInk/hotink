@@ -1,18 +1,15 @@
 class PrintingsController < ApplicationController
   
-  before_filter :find_article, :only => [ :create, :destroy ]
+  before_filter :find_article
 
   # POST /printings
   def create
-    @printing = @account.printings.build(params[:printing])
-    @printing.document = @article
-
+    @printing = @account.printings.create(params[:printing].merge(:document => @article))
+    flash[:notice] = 'Printing recorded'
+    
     respond_to do |format|
-      if @printing.save
-        flash[:notice] = 'Printing recorded'
         format.html { redirect_to( edit_account_article_url(@account, @article) ) }
         format.js 
-      end
     end
   end
 
