@@ -53,7 +53,10 @@ class EntriesController < ApplicationController
     @entry.destroy
     
     flash[:notice] = "Entry trashed"
-    redirect_to(account_blog_url(@account, @blog))
+    respond_to do |format|
+      format.html { redirect_to(account_blog_url(@account, @blog)) }
+      format.js
+    end
   end
   
   private

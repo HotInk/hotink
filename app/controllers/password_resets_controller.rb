@@ -13,7 +13,7 @@ class PasswordResetsController < ApplicationController
         render :action => :success
       else  
         flash[:notice] = "No user was found with that email address"  
-        render :status => 404
+        render :new, :status => 404
       end  
    end
    
@@ -24,7 +24,7 @@ class PasswordResetsController < ApplicationController
        flash[:notice] = "Password successfully updated"
        redirect_to root_url
      else
-       render :action => :edit
+       render :action => :edit, :status => :bad_request
      end
    end
    

@@ -127,12 +127,30 @@ describe EntriesController do
     before do
       @blog = Factory(:blog, :account => @account)
       @entry = Factory(:entry, :blogs => [@blog], :account => @account)
-      delete :destroy, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+    end    
+  
+    context "with XHR request" do
+      before do
+        xhr :delete, :destroy, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+      end
+      
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:js) }
+      it { should render_template('destroy') }
+      it "should delete the entry" do
+        lambda { Entry.find(@entry.id) }.should raise_error(ActiveRecord::RecordNotFound)
+      end      
     end
-
-    it { should respond_with(:redirect) }
-    it "should delete the article" do
-      lambda { Entry.find(@entry.id) }.should raise_error(ActiveRecord::RecordNotFound)
+    
+    context "with HTML request" do
+      before do
+        delete :destroy, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+      end
+      
+      it { should respond_with(:redirect) }
+      it "should delete the entry" do
+        lambda { Entry.find(@entry.id) }.should raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 

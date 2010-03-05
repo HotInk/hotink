@@ -45,4 +45,11 @@ describe Mediafile do
   it "should set date when created" do
     @mediafile.date.should be_kind_of(Date)
   end
+  
+  it "should add tags" do
+    @mediafile.tag("testing, one, two, three")
+    @mediafile.tag_list.to_s.should == "testing, one, two, three"
+    @mediafile.tag("four")
+    @mediafile.tag_list.to_s.should == "testing, one, two, three, four"
+  end
 end

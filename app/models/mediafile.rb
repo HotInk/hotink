@@ -123,6 +123,14 @@ class Mediafile < ActiveRecord::Base
     read_attribute(:date).to_date
   end
   
+  def tag(new_tags)
+    if self.tag_list.empty?
+      self.tag_list = new_tags
+    else
+      self.tag_list = self.tag_list.to_s + ", #{new_tags}"
+    end
+  end
+  
   private
   
   def set_date
