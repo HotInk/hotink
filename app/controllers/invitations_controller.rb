@@ -34,7 +34,7 @@ class InvitationsController < ApplicationController
       @account = Account.new
     end
     if @invite.redeemed?
-      redrect_to login_url
+      redirect_to login_url
     else
       @user = User.find_or_initialize_by_email(:email => @invite.email) 
     
@@ -49,9 +49,7 @@ class InvitationsController < ApplicationController
   def update
     @invite = Invitation.find_by_token(params[:id])
     if !@invite.redeemed?
-      
       @user = load_user
-      
       if @invite.is_a?(AccountInvitation)
         @account = Account.new(params[:account])
         begin
@@ -64,11 +62,12 @@ class InvitationsController < ApplicationController
           @user.has_role('manager', @account)
           flash[:notice] = "Your account has been created! Please login to confirm your user credentials."
           redirect_to account_url(@account)
-          
         rescue ActiveRecord::RecordInvalid
-          @user = load_user # Errors on @account in transaction will leave @user thinking it was saved
+          unless @user.new_record?
+            @user.destroy
+            @user = load_user # Errors on @account in transaction will leave @user thinking it was saved
+          end
           render :template => 'account_invitations/edit', :layout => 'login'
-
         end
       else
         if @user.save
@@ -76,10 +75,8 @@ class InvitationsController < ApplicationController
           @user.has_role('staff', @account)
           flash[:notice] = "Please login to confirm your credentials."
           redirect_to login_url
-          
         else
           render :template => 'user_invitations/edit', :layout => 'login'
-
         end    
       end
     

@@ -1,30 +1,20 @@
-class UsersController < ApplicationController
-  layout 'login'
-  
+class UsersController < ApplicationController  
   permit "admin", :only => :deputize
   permit "(manager of account) or admin", :only => [:promote, :demote, :letgo ]
     
-  # Users are created via activations, so no "new" or "create" methods exist in this controller.
-  # This also helps thwart smart users who try parameter hacking to create their own user.
-
-  def show
-    @user = current_user
-  end
-
   def edit
     @user = current_user
     respond_to do |format|  
-      format.html 
       format.js
     end
   end
 
   def update
-    @user = current_user # makes our views "cleaner" and more consistent
+    @user = current_user
     if @user.update_attributes(params[:user])
       flash[:notice] = "User updated."
       respond_to do |format|  
-        format.html { redirect_to root_url }
+        format.html { redirect_to account_url(@user.is_staff_for_what.first) }
         format.js   { head :ok }
       end
     else
@@ -34,19 +24,19 @@ class UsersController < ApplicationController
   end
   
   def promote
-    @user = @account.users.find(params[:id])
+    @user = User.find(params[:id])
     @account.promote(@user)
     render @user
   end
   
   def demote
-    @user = @account.users.find(params[:id])
+    @user = User.find(params[:id])
     @account.demote(@user)
     render @user
   end
   
   def letgo
-    @user = @account.users.find(params[:id])
+    @user = User.find(params[:id])
     if @user
       @account.accepts_no_role "staff", @user
     end

@@ -156,6 +156,7 @@ describe HotinkSso do
 
   describe "Requesting a user's xrds" do
     before(:each) do
+      User.delete_all
       @user = User.create!(Factory.attributes_for(:user))
     end
 

@@ -1,2 +1,0 @@
-page << "categories_editing = false;"
-page.replace 'account_article_sorting_list', :partial => 'article_sortings'

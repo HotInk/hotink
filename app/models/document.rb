@@ -18,7 +18,7 @@ class Document < ActiveRecord::Base
   named_scope :by_date_published, :order => "published_at DESC"
   
   # Publication statuses
-  named_scope :drafts, :conditions => "status is null AND created_at != updated_at"
+  named_scope :drafts, :conditions => "status is null"
   named_scope :scheduled, lambda { {:conditions => ["status = 'Published' AND published_at > ?", Time.now.utc]} }
   named_scope :published, lambda { {:conditions => ["status = 'Published' AND published_at <= ?", Time.now.utc]} }
   
@@ -27,7 +27,7 @@ class Document < ActiveRecord::Base
   end
   
   def draft?
-    self.status.nil? && (self.updated_at != self.created_at)
+    self.status.nil?
   end
   
   def scheduled?
@@ -79,9 +79,9 @@ class Document < ActiveRecord::Base
   end
   
   # This method handles the public availability of a Document
-  def publish
+  def publish(time_to_publish = nil)
     self.status = "Published"
-    self.published_at = Time.now
+    self.published_at = time_to_publish.kind_of?(Time) ? time_to_publish : Time.now
   end
   
   def schedule(date)

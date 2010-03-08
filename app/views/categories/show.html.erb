@@ -1,8 +1,0 @@
-<h1>Show category</h1>
-<p>
-	Name: <%= @category.name %>
-</p>
-
-<%= link_to 'Delete section', [@account, @category], :confirm => 'Are you sure?', :method => :delete %>
-<%= link_to 'Edit', edit_account_section_path(@account, @category) %> |
-<%= link_to 'Back', account_sections_path(@account) %>

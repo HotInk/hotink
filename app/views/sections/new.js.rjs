@@ -1,1 +1,0 @@
-page.replace 'new_account_section', :partial => 'account_section_form'

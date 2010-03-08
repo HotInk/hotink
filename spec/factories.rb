@@ -76,6 +76,12 @@ Factory.define :detailed_article_with_mediafiles, :parent => :detailed_article d
   a.mediafiles { (1..3).collect{ Factory(:detailed_mediafile)  } }
 end
 ###
+### Article factories
+
+Factory.define :entry do |e|
+  e.account { Factory(:account) }
+  e.blogs { |f| [Factory(:blog, :account => f.account)] }
+end
 
 Factory.define :detailed_entry, :class => "Entry", :parent => :detailed_article do |e|
   e.blogs { |f| [Factory(:blog, :account => f.account)] }
@@ -100,7 +106,20 @@ Factory.define :detailed_mediafile, :parent => :mediafile_with_attachment do |m|
   m.date                Time.now.to_date
 end
 
+Factory.define :image, :parent => :mediafile, :class => "Image" do |i|
+  i.settings { |j| j.account.settings["image"] }
+  i.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-jpg.jpg')) }
+end 
+
+Factory.define :audiofile, :parent => :mediafile, :class => "Audiofile" do |a|
+  a.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-mp3.mp3')) }
+end
 ###
+
+Factory.define :waxing do |w|
+  w.document { Factory(:article) }
+  w.mediafile { Factory(:mediafile) }
+end
 
 ### Issues
 

@@ -53,7 +53,7 @@ Rails::Initializer.run do |config|
   config.gem "bcrypt-ruby", :lib => "bcrypt"
   config.gem 'pacecar', :source => 'http://gemcutter.org'
   config.gem "paperclip", :source => "http://gemcutter.org"
-  
+  config.gem "acts-as-taggable-on", :source => "http://gemcutter.org"
   config.gem 'rdiscount'
   config.gem 'rack-flash'
   config.gem 'sinatra'

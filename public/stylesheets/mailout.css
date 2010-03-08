@@ -127,7 +127,7 @@ ol#mailouts li div.delete, ol#email_templates li div.delete { float: right; widt
 
 #previews { font-size: 70%; width: 618px; float: left; padding: 10px; border: 1px solid #DEDEDE; background-color: #FFF6DD; }
 #details>h2, #previews>h1 { font-weight: bold; padding-bottom: 0px; border-bottom: 1px solid #DDD; margin-bottom: 10px; }
-#previews>div { float: left; font-size: 130%; height: 500px; width: 604px; padding: 5px; background-color: white; border: 2px solid #CEE4F3; overflow: auto; margin-bottom: 20px; }
+#previews>div, #previews>iframe { float: left; font-size: 130%; height: 500px; width: 604px; padding: 5px; background-color: white; border: 2px solid #CEE4F3; overflow: auto; margin-bottom: 20px; }
 
 .footer { float:left; width: 960px; margin-top: 20px; margin-bottom: 10px; text-align: right; font-size: 0.8em;}
 

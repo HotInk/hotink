@@ -144,14 +144,14 @@ ActiveRecord::Schema.define(:version => 20100104035609) do
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.string   "name"
-    t.boolean  "processing", :default => false
+    t.boolean  "processing",     :default => false
   end
 
   create_table "mediafiles", :force => true do |t|
     t.string   "title"
     t.text     "description"
     t.string   "link_alternate"
-    t.date     "date"
+    t.datetime "date"
     t.integer  "account_id"
     t.string   "type"
     t.datetime "created_at"

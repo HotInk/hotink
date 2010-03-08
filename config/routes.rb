@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   
-  map.root :controller => "accounts", :action =>"new"
+  map.root :controller => "accounts", :action =>"index"
   
   map.resources :invitations, :only => [:new, :create, :edit, :update, :destroy]
   map.resources :password_resets
@@ -21,7 +21,6 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :articles do |article|
       article.resources :mediafiles
       article.resources :authors
-      article.resources :sortings
       article.resources :tags
       article.resources :waxings
       article.resources :printings
@@ -37,7 +36,7 @@ ActionController::Routing::Routes.draw do |map|
         entry.resources :tags
       end
     end
-    account.resources :entries do |entry|
+    account.resources :entries, :only => [:new, :edit, :update, :destroy] do |entry|
       entry.resources :mediafiles
       entry.resources :waxings
       entry.resources :tags
@@ -49,14 +48,11 @@ ActionController::Routing::Routes.draw do |map|
       section.resources :articles do |article|
         article.resources :mediafiles
         article.resources :authors
-        article.resources :sortings
         article.resources :tags
         article.resources :waxings
       end
     end
     account.resources :categories, :member => { :deactivate => :put, :reactivate => :put }
-    account.resources :images
-    account.resources :audiofiles
     account.resources :waxings
     
     account.resources :apps

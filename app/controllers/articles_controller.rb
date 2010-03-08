@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  include DocumentsHelper
   
   layout 'hotink'
   skip_before_filter :verify_authenticity_token
@@ -33,23 +34,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/new
   def new
-    @article = @account.articles.build    
-    
-    #Check to see if the last article created is exists and is blank.
-    #If so, redate it and serve it up instead of a new article, to prevent
-    #the data from becoming cluttered with abandoned articles.
-    #
-    #If the last article was legit, save the fresh article so it can have relationships 
-    if last_article = @account.articles.find(:last)
-      if last_article.created_at == last_article.updated_at
-         @article = last_article
-      else
-        @article.save
-      end
-    else
-      @article.save
-    end
-    
+    @article = @account.articles.create 
     @article.owner = current_user
     
     respond_to do |format|
@@ -78,24 +63,15 @@ class ArticlesController < ApplicationController
       
       # Only touch published status if status is passed
       if params[:article][:status]=="Published"
-        
         if permit?("(manager of account) or admin")
-          # Should we schedule publishing on a custom date or immediately?
-          # Rely on a "schedule" parameter to determine which.
-          if params[:article][:schedule] 
-            schedule = params[:article].delete(:schedule)
-            @article.schedule(Time.local(schedule[:year].to_i, schedule[:month].to_i, schedule[:day].to_i, schedule[:hour].to_i, schedule[:minute].to_i))
-          else
-            @article.publish
-          end
+          @article.publish extract_time(params[:article].delete(:schedule))
         end
-        
       elsif params[:article][:status]=="Awaiting attention"
         @article.sign_off(current_user)
       elsif params[:article][:status]==""
-        params[:article][:status]=nil #To make sure an article is upublished properly
+        params[:article][:status]=nil #To make sure an article is unpublished properly
       end
-      
+
       if params[:article][:revoke_sign_off]
         params[:article].delete(:revoke_sign_off)
         @article.revoke_sign_off(current_user)
@@ -105,12 +81,10 @@ class ArticlesController < ApplicationController
       respond_to do |format|
         if @article.update_attributes(params[:article])
           flash[:notice] = "Article saved"
-          @article = @account.articles.find(params[:id])
-          @article.categories << @article.section unless @article.categories.member?(@article.section) || @article.section.nil? #Create sorting for current section, if necessary        
-          format.js
           format.html { redirect_to(edit_account_article_path(@account, @article)) }
+          format.js
         else
-          format.html { render :action => "edit" }
+          format.html { render :action => "edit", :status => :bad_request }
         end
       end
       

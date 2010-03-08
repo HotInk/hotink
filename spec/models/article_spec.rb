@@ -102,7 +102,7 @@ describe Article do
     article.to_liquid.should == {'title' => article.title, 'subtitle' => article.subtitle, 'authors_list' => article.authors_list, 'bodytext' => article.bodytext, 'excerpt' => article.excerpt, 'id' => article.id.to_s }
   end
 
-  it "should know the appropriate permission string, based on its publication status" do
+  it "should know who has permission to make changes, based on its publication status" do
     draft = Factory(:draft_article)
     recently_published = Factory(:published_article)
     scheduled = Factory(:scheduled_article)
@@ -180,5 +180,19 @@ describe Article do
       Article.awaiting_attention.should_not include(@draft)
     end
   end
+
+  it "should make sure the site is always sorted (categorized) into it's primary section" do
+    category = Factory(:category, :account => @article.account)
+    @article.categories.should_not include(category)
+    @article.section = category
+    @article.save
+    @article.categories.should include(category)
+  end
   
+  it "should add tags" do
+    @article.tag("testing, one, two, three")
+    @article.tag_list.to_s.should == "testing, one, two, three"
+    @article.tag("four")
+    @article.tag_list.to_s.should == "testing, one, two, three, four"
+  end
 end

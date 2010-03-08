@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Mediafile do
 
   before(:each) do
-    @mediafile = Article.create!(Factory.attributes_for(:mediafile))
+    @mediafile = Mediafile.create!(Factory.attributes_for(:mediafile))
   end
   
   it { should belong_to(:account) }
@@ -42,4 +42,14 @@ describe Mediafile do
     photocopy.file_file_size.should == original.file_file_size
   end
 
+  it "should set date when created" do
+    @mediafile.date.should be_kind_of(Date)
+  end
+  
+  it "should add tags" do
+    @mediafile.tag("testing, one, two, three")
+    @mediafile.tag_list.to_s.should == "testing, one, two, three"
+    @mediafile.tag("four")
+    @mediafile.tag_list.to_s.should == "testing, one, two, three, four"
+  end
 end

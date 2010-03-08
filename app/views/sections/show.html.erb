@@ -1,8 +1,0 @@
-<h1>Show section</h1>
-<p>
-	Name: <%= @section.name %>
-</p>
-
-<%= link_to 'Delete section', [@account, @section], :confirm => 'Are you sure?', :method => :delete %>
-<%= link_to 'Edit', edit_account_section_path(@account, @section) %> |
-<%= link_to 'Back', account_sections_path(@account) %>

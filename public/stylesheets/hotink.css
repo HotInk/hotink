@@ -239,7 +239,9 @@ li.awaiting_attention h1>small { color: #00AF2E; }
 #wmd-button-bar ul { margin: 0; padding: 7px 0; }
 #wmd-button-bar ul li { -moz-border-radius: 2px; -webkit-border-radius: 2px; }
 .wmd-button {border: 1px solid #AAAAAA;}
-#wmd-input { width:99%; border: 1px solid #999; margin-bottom: 30px; background-color: #F9F9F9; height: 550px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
+#wmd-input { width:99%; border: 1px solid #999; margin-bottom: 30px; background-color: #F9F9F9; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
+#article_form #wmd-input { height: 550px; }
+#mediafile_form #wmd-input { height: 140px; }
 
 /* Tool box styles */
 

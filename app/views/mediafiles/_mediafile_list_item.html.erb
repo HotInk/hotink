@@ -35,7 +35,7 @@
 	</div>
 	
 	<div class="icons">
-		<%= link_to "&nbsp;&nbsp;&nbsp;", [@account, mediafile_list_item], :confirm => "You are about to delete the mediafile: \n \n &quot;" + h(mediafile_list_item.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete_link", :style=>"display:none;" %>
+		<%= link_to "&nbsp;&nbsp;&nbsp;", account_mediafile_path(@account, mediafile_list_item), :confirm => "You are about to delete the mediafile: \n \n &quot;" + h(mediafile_list_item.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete_link", :style=>"display:none;" %>
 	</div>
 	
 	<div class="date">

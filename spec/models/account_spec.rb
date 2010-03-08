@@ -18,20 +18,30 @@ describe Account do
   it "should keep track of users invited to have access to the account" do
     should have_many(:user_invitations)
   end
-  
-  it "should find accounts in order of most recently published articles" do
-    pending
-    recent_account = Factory(:account)
-    less_recent_account = Factory(:account)
-    recent_article = Factory(:published_article, :title => "Most recent", :account => recent_account)
-    less_recent_article = Factory(:published_article, :title => "Less recent", :published_at => 1.week.ago, :account => less_recent_account)
+
+  it "should know a human-readable list of its managers" do
+    managers = (1..3).collect{ Factory(:user) }
+    @account.managers_list.should == nil
     
-    accounts = Account.by_most_recently_published
-    accounts.first.should == recent_account
-    accounts.last.should == less_recent_account 
+    managers[0].has_role('manager', @account)
+    @account.managers_list.should == "#{managers[0].name} <#{managers[0].email}>"
+    
+    managers[1].has_role('manager', @account)
+    @account.managers_list.should == "#{managers[0].name} <#{managers[0].email}> and #{managers[1].name} <#{managers[1].email}>"
+    
+    
+    managers[2].has_role('manager', @account)
+    @account.managers_list.should == "#{managers[0].name} <#{managers[0].email}>, #{managers[1].name} <#{managers[1].email}> and #{managers[2].name} <#{managers[2].email}>"
   end
-    
-  describe "role manager" do
+  
+  it "should update convert its image settings from HTML-form friendly format into ImageMagick friendly format" do
+    @account.image_settings = {"small"=>{:height=>"", :width=>"218"}, "medium"=>{:height=>"458", :width=>""}, "thumb"=>{:height=>"190", :width=>"100"}}
+    @account.settings["image"]["small"].should ==  ["218>", "jpg"]
+    @account.settings["image"]["medium"].should ==  ["x458>", "jpg"]
+    @account.settings["image"]["thumb"].should ==  ["100x190>", "jpg"]
+  end
+  
+  describe "role management" do
     before do
       @user = Factory(:user)
     end

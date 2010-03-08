@@ -20,17 +20,6 @@ describe ArticleStream do
     TestApp
   end
   
-  describe "GET to /stream" do
-    it "should only display published articles" do
-      pending
-      visible_article = Factory(:published_article, :published_at => 1.day.ago, :bodytext => "")
-      invisible_article = Factory(:article)
-      get '/stream'
-      last_response.body.should have_selector("#article_#{visible_article.id}")
-      last_response.body.should_not have_selector("#article_#{invisible_article.id}")
-    end
-  end
-  
   describe "GET to /stream/articles/:id" do
     before(:each) do
       @article = Factory(:detailed_article)
@@ -42,6 +31,7 @@ describe ArticleStream do
       last_response.body.should include(@article.title)
       last_response.body.should include(@article.subtitle)
       last_response.body.should include(@article.authors_list)
+      last_response.body.should include(@article.section)
       last_response.body.should include(@article.published_at.to_s(:standard))
       last_response.body.should include(Markdown.new(@article.bodytext).to_html)
     end
