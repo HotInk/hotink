@@ -19,117 +19,15 @@ end
 
 Factory.define :user do |u|
   u.sequence(:name)  { |n| "User ##{n}" }
-  u.sequence(:email) { |n| "user#{n}@example.com"}
+  u.sequence(:email) { |n| "useremail#{n}@example.com"}
   u.sequence(:login) { |n| "user#{n}" }
   u.password "password_1"
   u.password_confirmation "password_1"
 end
 
-### Article factories
-Factory.define :article do |a|
-  a.account { Factory(:account) }
-end
-
-Factory.sequence :article_title do |n|
-  "The truth about \##{n}"
-end
-
-Factory.define :basic_article, :parent => :article do |ba|
-  ba.title   { Factory.next(:article_title) }
-end
-
-Factory.define :published_article, :parent => :basic_article do |ba|
-  ba.status         "Published"
-  ba.published_at   Time.now
-  ba.created_at     1.day.ago
-end
-
-Factory.define :detailed_article, :parent => :article do |a|
-  a.title          { Factory.next(:article_title) }
-  a.subtitle       "Get a detailed look (subtitle)"
-  a.authors        { (1..3).collect{ Factory(:author) } }
-  a.bodytext       "Wow. I **cannot** believe *the truth*."
-  a.status         "Published"
-  a.published_at   Time.now
-  a.created_at     1.day.ago
-end
-
-Factory.define :draft_article, :parent => :article do |a|
-  a.title          { Factory.next(:article_title) }
-  a.subtitle       "Get a detailed look (subtitle)"
-  a.authors        { (1..3).collect{ Factory(:author) } }
-  a.bodytext       "Wow. I **cannot** believe *the truth*."
-  a.created_at      1.day.ago
-end
-
-Factory.define :scheduled_article, :parent => :article do |a|
-  a.title          { Factory.next(:article_title) }
-  a.subtitle       "Get a detailed look (subtitle)"
-  a.authors        { (1..3).collect{ Factory(:author) } }
-  a.bodytext       "Wow. I **cannot** believe *the truth*."
-  a.status         "Published"
-  a.published_at   Time.now + 1.week
-  a.created_at     1.day.ago
-end
-
-Factory.define :detailed_article_with_mediafiles, :parent => :detailed_article do |a|
-  a.mediafiles { (1..3).collect{ Factory(:detailed_mediafile)  } }
-end
-###
-### Article factories
-
-Factory.define :entry do |e|
-  e.account { Factory(:account) }
-  e.blogs { |f| [Factory(:blog, :account => f.account)] }
-end
-
-Factory.define :detailed_entry, :class => "Entry", :parent => :detailed_article do |e|
-  e.blogs { |f| [Factory(:blog, :account => f.account)] }
-end
-
-Factory.define :scheduled_entry, :class => "Entry", :parent => :scheduled_article do |e|
-  e.blogs { |f| [Factory(:blog, :account => f.account)] }
-end
-
-### Mediafile factories
-Factory.define :mediafile do |a|
-  a.account { Factory(:account) }
-end
-
-Factory.define :mediafile_with_attachment, :parent => :mediafile do |m|
-  m.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-jpg.jpg')) }
-end
-
-Factory.define :detailed_mediafile, :parent => :mediafile_with_attachment do |m|
-  m.sequence(:title)    { |n| "Test title ##{n}" }
-  m.description         "Test description of this mediafile."
-  m.date                Time.now.to_date
-end
-
-Factory.define :image, :parent => :mediafile, :class => "Image" do |i|
-  i.settings { |j| j.account.settings["image"] }
-  i.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-jpg.jpg')) }
-end 
-
-Factory.define :audiofile, :parent => :mediafile, :class => "Audiofile" do |a|
-  a.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-mp3.mp3')) }
-end
-###
-
 Factory.define :waxing do |w|
   w.document { Factory(:article) }
   w.mediafile { Factory(:mediafile) }
-end
-
-### Issues
-
-Factory.define :issue do |i|
-  i.account { Factory(:account) }
-  i.date { Time.now.to_date }
-end
-
-Factory.define :issue_being_processed, :parent => :issue do |i|
-  i.processing true
 end
 
 ###
