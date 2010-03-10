@@ -12,4 +12,7 @@ describe Cupwire do
   def app
     Cupwire
   end
+  
+  
+  
 end

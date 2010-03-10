@@ -16,7 +16,7 @@
 	</div>
 	
 	<div class="category_form clearfix" style="visibility: hidden;">
-			<% remote_form_for [@account, category], :after=>"$(this).disable();$(this).up().select('.spinner')[0].show();" do |f|%>
+			<% remote_form_for category, :url =>account_category_url(@account, category), :after=>"$(this).disable();$(this).up().select('.spinner')[0].show();" do |f|%>
 				<%= f.text_field :name, :class => "text_input" %>
 				<div class="save_button clearfix">
 					<%= button_link_to_submit "Save", :class=>"save tiny" %>
