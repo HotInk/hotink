@@ -68,17 +68,29 @@ class MediafilesController < ApplicationController
             if params[:iframe_post] && @document
               @waxing = @account.waxings.create(:document_id => @document.id, :mediafile_id=> @mediafile.id);
               responds_to_parent do
-              			render :update do |page|
-              			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'
-              				page.replace_html 'mediafiles_list', :partial => 'waxings/waxing', :collection => @document.waxings
-              			end
+          			render :update do |page|
+          			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'
+          				page.replace_html 'mediafiles_list', :partial => 'waxings/waxing', :collection => @document.waxings
+          			end
               end
               return
             end
         format.html { redirect_to(edit_account_mediafile_path(@account, @mediafile)) }
       end  
      else
-       render :text => "Mediafile NOT uplaoded", :status => :bad_request
+       render :text => "Mediafile NOT uploaded", :status => :bad_request
+    end
+  rescue NoMethodError # Raised in the case that there's no file supplied (on line 54 `params[:mediafile]` will be nil, hence `params[:mediafile][:file]` raises error)
+   if @document
+      responds_to_parent do
+  			render :update do |page|
+  			  page << 'trigger_flash(\'<p style="color:yellow;">No mediafile uploaded</p>\');'
+  				page.replace_html 'mediafiles_list', :partial => 'waxings/waxing', :collection => @document.waxings
+  			end
+      end
+    else
+      flash[:notice] = "No mediafile uploaded"
+      redirect_to new_account_mediafile_url(@account)
     end
   end
 
