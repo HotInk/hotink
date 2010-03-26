@@ -50,6 +50,7 @@ end
 Factory.define :blog do |b|
   b.sequence(:title)  { |n| "Blog ##{n}" }
   b.account { Factory(:account)}
+  b.sequence(:slug) { |i| "slug #{i}" }
 end
 
 Factory.define :checkout do |c|

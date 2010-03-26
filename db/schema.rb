@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100104035609) do
+ActiveRecord::Schema.define(:version => 20100326182455) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -42,7 +42,10 @@ ActiveRecord::Schema.define(:version => 20100104035609) do
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
+
+  add_index "blogs", ["slug"], :name => "index_blogs_on_slug"
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -151,7 +154,7 @@ ActiveRecord::Schema.define(:version => 20100104035609) do
     t.string   "title"
     t.text     "description"
     t.string   "link_alternate"
-    t.datetime "date"
+    t.date     "date"
     t.integer  "account_id"
     t.string   "type"
     t.datetime "created_at"
