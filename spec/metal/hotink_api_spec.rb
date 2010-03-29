@@ -218,12 +218,13 @@ describe HotinkApi do
     
     describe "GET to /accounts/:account_id/blogs.xml" do
       it "should return an array of blogs" do
-        @blogs = (1..4).collect{ Factory(:blog, :account => @account) }
+        @blogs = (1..4).collect{ Factory(:blog, :account => @account, :status => true) }
+        @inactive_blogs = (1..4).collect{ Factory(:blog, :account => @account, :status => false) }        
         get "/accounts/#{@account.id}/blogs.xml"
         
         last_response.should be_ok
         last_response.headers['Content-Type'].should == "text/xml"
-        last_response.body.should == @account.blogs.to_xml
+        last_response.body.should == @account.blogs.active.to_xml
       end
     end
 

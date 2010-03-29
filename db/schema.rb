@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100326182455) do
+ActiveRecord::Schema.define(:version => 20100329204839) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -43,6 +43,11 @@ ActiveRecord::Schema.define(:version => 20100326182455) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.boolean  "status",             :default => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "blogs", ["slug"], :name => "index_blogs_on_slug"

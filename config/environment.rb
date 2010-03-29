@@ -58,6 +58,7 @@ Rails::Initializer.run do |config|
   config.gem 'rack-flash'
   config.gem 'sinatra'
   config.gem 'ruby-openid', :lib => 'openid'
+  config.gem "formtastic"
 
     # Gems for Mailout
   config.gem 'hominid'

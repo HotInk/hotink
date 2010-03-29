@@ -8,11 +8,14 @@ describe BlogsController do
   
   describe "GET to index" do
     before do
-      @blogs = (1..3).collect{ Factory(:blog, :account => @account) }
+      @active_blogs = (1..3).collect{ Factory(:blog, :account => @account, :status => true) }
+      @inactive_blogs = (1..3).collect{ Factory(:blog, :account => @account, :status => false) }  
+      
       get :index, :account_id => @account.id
     end
     
-    it { should assign_to(:blogs).with(@blogs) }
+    it { should assign_to(:active_blogs).with(@active_blogs) }
+    it { should assign_to(:active_blogs).with(@active_blogs) }    
     it { should respond_with(:success) }
     it { should respond_with_content_type(:html) }
   end

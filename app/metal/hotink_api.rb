@@ -115,7 +115,7 @@ class HotinkApi < Sinatra::Base
   get "/accounts/:account_id/blogs.xml" do
     load_account
     
-    @blogs = @account.blogs
+    @blogs = @account.blogs.active
     
     content_type "text/xml"
     @blogs.to_xml

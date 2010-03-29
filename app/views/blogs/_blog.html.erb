@@ -1,5 +1,5 @@
-<li class="clearfix">
-	<h2><%= link_to blog.title, account_blog_url(@account, blog) %></h2>
+<li class="clearfix <%= blog.active? ? "active_blog" : "inactive_blog" %>">
+	<h2><%= link_to blog.title, account_blog_url(@account, blog) %> <% unless blog.active? %><span class="blog_status">(Inactive)</span><% end %></h2>
 	<div class="actions"> <%= button_link_to "New post", new_account_blog_entry_url(@account, blog)%></div>
 	<div class="column_holder full_column">
 			<div class="third_column">

@@ -3,7 +3,7 @@
 @import "hotink/navigation.css";
 @import "hotink/modal.css";
 @import "hotink/wmd.css";
-
+@import "hotink/formtastic.css";
 
 /* Main style */
 html, body { height: 100%; }
@@ -488,6 +488,7 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blogs >ol>li { margin-bottom: 1em;}
 #blogs li div { margin: 0; padding:0;}
 #blogs h2 { margin: 0.75em 0; float: left; width: 80%; font-weight: normal; font-size: 2.0em; font-family: georgia, "Times New Roman", times, serif;}
+#blogs h2 .blog_status {font-size: .6em; color: #dd0000;}
 #blogs h3 { margin: 1em 0; margin-bottom: 0.125em;}
 #blogs h4 { margin: 1em 0; margin-bottom: 0.125em;}
 #blogs .contributors { min-height: 3.5em;  }

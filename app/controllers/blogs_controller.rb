@@ -3,7 +3,8 @@ class BlogsController < ApplicationController
   layout 'hotink'
   
   def index
-    @blogs = @account.blogs
+    @active_blogs = @account.blogs.active
+    @inactive_blogs = @account.blogs.inactive    
     
     respond_to do |format|
       format.html # index.html.erb

@@ -1,27 +1,13 @@
 <div id="blog" class="clearfix form">
-	<% form_for [@account, @blog] do |f| %>
-	<div class="column_holder full_column">
-		<div class="third_column">
-			<h1><%= @blog.new_record? ? "New blog" : "Manage blog" %></h1>
-		</div>
-		<div class="two_thirds_column left_column">
-			<%= button_link_to_submit "Save", :class=>"large save" %>
-		</div>
-		<fieldset>
-			<legend>Blog details</legend>
-			<div class="tenth_column left_column">
-				<%= f.label :title %>
-			</div>
-			<div class="nine_tenths_column right_column">
-				<%= f.text_field :title, :class => :text_input %>
-			</div>
-			<div class="tenth_column left_column">
-				<%= f.label :description %>
-			</div>
-			<div class="nine_tenths_column right_column">
-				<%= f.text_area :description, :class=>:text_input %>
-			</div>
-		</fieldset>
-	</div>
-	<% end %>
+<h1><%= @blog.new_record? ? "New blog" : "Manage blog" %></h1>
 </div>
+
+<% semantic_form_for [@account, @blog] do |form| %>
+	<% form.inputs do %>
+		<%= form.input :title %>
+		<%= form.input :slug, :hint => "Leave this blank to have a slug auto-generated for you." %>
+		<%= form.input :status, :hint => "Is this blog active?" %>		
+		<%= form.input :description %>
+	<% end %>
+	<%= form.buttons %>
+<% end %>
