@@ -42,5 +42,6 @@ production:
         - omega
         - beagle
         - watch
-        - ubyssey       
+        - ubyssey
+        - bruns       
     
