@@ -50,13 +50,17 @@ end
 
 Factory.define :entry do |e|
   e.account { Factory(:account) }
-  e.blogs { |f| [Factory(:blog, :account => f.account)] }
+  e.blog { |f| Factory(:blog, :account => f.account) }
+end
+
+Factory.define :draft_entry, :parent => :entry do |e|
+  e.title { Factory.next(:article_title) }
 end
 
 Factory.define :detailed_entry, :class => "Entry", :parent => :detailed_article do |e|
-  e.blogs { |f| [Factory(:blog, :account => f.account)] }
+  e.blog { |f| Factory(:blog, :account => f.account) }
 end
 
 Factory.define :scheduled_entry, :class => "Entry", :parent => :scheduled_article do |e|
-  e.blogs { |f| [Factory(:blog, :account => f.account)] }
+  e.blog { |f| Factory(:blog, :account => f.account) }
 end

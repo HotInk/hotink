@@ -1,5 +1,4 @@
 class Article < Document
-  include Pacecar
   include ApplicationHelper
   
   has_one :checkout, :foreign_key => :duplicate_article_id, :dependent => :destroy
@@ -66,17 +65,6 @@ class Article < Document
       self.sign_offs.find_by_user_id(user.id).destroy
     end
     self.status = nil if self.sign_offs.reload.empty?
-  end
-
-  def owner
-    has_owners.blank? ? nil : has_owners.first
-  end
-  
-  def owner=(user)
-    has_owners.each do |owner|
-      owner.has_no_role('owner', self)
-    end
-    user.has_role('owner', self)
   end
   
   def is_editable_by

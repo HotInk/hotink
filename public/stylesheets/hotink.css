@@ -1,9 +1,11 @@
-@import "hotink/buttons.css";
+@import "hotink/reset.css";
 @import "hotink/helpers.css";
 @import "hotink/navigation.css";
 @import "hotink/modal.css";
 @import "hotink/wmd.css";
 @import "hotink/formtastic.css";
+@import "hotink/960.css";
+@import "hotink/ui.css";
 
 /* Main style */
 html, body { height: 100%; }
@@ -11,6 +13,14 @@ body { background-color: #FFF; color: #333; margin: 0 auto; text-algin: center;}
 body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
 div#page_wrapper { min-height: 100%; height: auto !important; height: 100%; margin-bottom: -30px; /* the bottom margin is the negative value of the footer's height */}
 div#page_container { background-color: #FFF; margin: 0 auto; max-width: 74em; padding: 1em 1.5em; text-align: left; padding-bottom: 0;  }
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; margin: 0.83em 0;}
+h3 { font-size: 1.17em; margin: 1em 0; }
+p { margin-bottom: 1em; }
+
+small { font-size: 80%; }
+strong { font-weight: bold; }
+em { font-style: italic; }
 
 /* Font families */
 #account .letgo { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
@@ -287,14 +297,14 @@ li.awaiting_attention h1>small { color: #00AF2E; }
 #mediafile #upload_media_form p { font-size: 13px; }
 
 
-/* Article#show styles */
-#article { float: left; font-family:georgia,"times new roman",times, serif; width: 68%; margin-bottom: 25px; }
-#article h1 { font-size: 2.5em; margin: 0.25em 0; }
-#article h2 { font-weight: 400; }
-#article p { font-size: 1.2em; line-height: 1.35; font-family:georgia,"times new roman",times, serif; }
-#article p.date { font-variant: small-caps; }
-#article p.byline, #article p.date { font-weight: 600; font-size: 1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
-#article div.media_thumbs { float:right; clear: right; width: 400px; padding: 10px; margin: 5px 0 5px 15px; background-color: #CEE4F3; border: 1px solid #DEDEDE;  -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+/* Article#show/Entry#show styles */
+#article, #entry { float: left; font-family:georgia,"times new roman",times, serif; width: 68%; margin-bottom: 25px; }
+#article h1, #entry h1 { font-size: 2.5em; margin: 0.25em 0; }
+#article h2, #entry h2 { font-weight: 400; }
+#article p, #entry p { font-size: 1.2em; line-height: 1.35; font-family:georgia,"times new roman",times, serif; }
+#article p.date, #entry p.date { font-variant: small-caps; }
+#article p.byline, #article p.date, #entry p.date, #entry p.byline { font-weight: 600; font-size: 1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
+#article div.media_thumbs, #entry div.media_thumbs { float:right; clear: right; width: 400px; padding: 10px; margin: 5px 0 5px 15px; background-color: #CEE4F3; border: 1px solid #DEDEDE;  -moz-border-radius: 3px; -webkit-border-radius: 3px;}
 
 
 /* Attach media modal styles */
@@ -438,7 +448,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #issue legend { padding-left: 2em;}
 #issue label { font-size: 1.2em; color: #333; }
 #issue .details { width:55%; margin-right: 2%;float: left;}
-#issue .cover { width:43%;float: right; }
+/*#issue .cover { width:43%;float: right; }*/
 #issue .cover img { margin: 0em 1.5em; border:1px solid #AAA; }
 #issue .column_holder>div { margin-bottom: 0.75em; min-height: 2.5em;}
 #issue #issue_date { font-size: 1.6em; padding: 0.1em; font-family: georgia, "Times New Roman", times, serif;  color: #333;}
@@ -486,22 +496,16 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 
 #blogs ol { border: none; }
 #blogs >ol>li { margin-bottom: 1em;}
-#blogs li div { margin: 0; padding:0;}
-#blogs h2 { margin: 0.75em 0; float: left; width: 80%; font-weight: normal; font-size: 2.0em; font-family: georgia, "Times New Roman", times, serif;}
+#blogs h2 { margin: 0.75em 0; float: left;font-weight: normal; font-size: 2.0em; font-family: georgia, "Times New Roman", times, serif;}
 #blogs h2 .blog_status {font-size: .6em; color: #dd0000;}
 #blogs h3 { margin: 1em 0; margin-bottom: 0.125em;}
 #blogs h4 { margin: 1em 0; margin-bottom: 0.125em;}
 #blogs .contributors { min-height: 3.5em;  }
 #blogs li p { font-size: 0.9em; margin: 0.5em 0; margin-top: 0; }
-#blogs li .actions { float: left; width: 20%; padding-top: 0.9em;}
+#blogs li .actions { float: right; width: 20%; padding-top: 0.9em;}
 #blogs li .actions a { float: right;}
 #blogs .third_column { margin-right: 1%;}
 
-#blog h1 { font-size: 2.2em; margin: 0; margin-bottom: 0.1em;}
-#blog label { font-size: 1em; color: #333; padding: 0.5em; margin: 0 0.25em; display: block; text-decoration: underline;}
-#blog p.label { font-size: 1em; color: #333; padding: 0.5em; margin: 0 0.25em; display: block; text-decoration: underline;}
-#blog fieldset { width: 98.75%; border: 1px solid #DDD; padding: 0; float: left; margin-bottom: 0.5em; }
-#blog .text_input { font-size: 1.2em; padding: 0.2em; margin: 0.25em 0; color:#000; font-family: georgia, "Times New Roman", times, serif; width:95%;}
 #blog div.column_holder>div { margin-bottom: 1em; }
 #blog #blog_title { font-size: 1.4em; }
 #blog .title { font-size: 1.4em; margin: 0.3em 0; }
@@ -530,7 +534,7 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blog_entries h3 { margin-top:0; }
 #blog_entries ol { margin-top: 0.25em; min-height:120px; width: 100%; padding-left: 0; list-style-type: none; border: 1px dotted #515151; }
 #blog_entries li { width: 99%; padding: 3px 0.5%; border:none; }
-#blog_entries li .entry { width: 84%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
+#blog_entries li .entry { width: 80%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
 #blog_entries li .entry h1 { font-size: 1.2em; line-height: 1.2; margin: 0; padding: 0.25em; color: #666; vertical-align: middle; font-weight: normal; /* font-style: italic; */ font-family: georgia,"times new roman",times, serif;}
 #blog_entries li .entry div { font-size: .9em; }
 #blog_entries li .entry .entry_details { width: 100%; min-height: 24px;}
@@ -541,8 +545,8 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #blog_entries li .kill_link {float: right; margin: 0.5em 1%; width: 1.5%;} 
 #blog_entries li .kill_link a{ color: #E62424; }
 
-#blog_users { float: left; clear: left; width: 99.5%; margin-bottom: 1em;}
-#blog_users h2 { margin: 0.25em 0; margin-bottom: 0;}
+#blog_users h2 { margin: 0;  }
+#blog_users h2+p { clear: both; }
 #blog_users .add_blog_user { float: left; width: 100%; clear: right; margin-bottom: 0.125em; }
 #blog_users .add_blog_user p { margin: 0.5em 0;}
 #blog_users .add_blog_user p.flash { margin: 0.125em 0;}

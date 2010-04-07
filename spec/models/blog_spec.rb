@@ -11,6 +11,8 @@ describe Blog do
   it { should belong_to(:account) }
   it { should validate_presence_of(:account) }
   
+  it { should have_many(:entries) }
+  
   it { should validate_presence_of(:title) }
   it { should validate_uniqueness_of(:title).scoped_to(:account_id) }
   

@@ -15,6 +15,10 @@ class EntriesController < ApplicationController
     @entry = @blog.entries.find(params[:id])
   end
   
+  def show
+    @entry = @blog.entries.find(params[:id])
+  end
+  
   def update
     @entry = @blog.entries.find(params[:id])
       
@@ -33,6 +37,7 @@ class EntriesController < ApplicationController
       end
 
     elsif params[:entry][:status]==""
+      @entry.unpublish
       params[:entry][:status]=nil #To make sure an entry is unpublished properly
     end
   

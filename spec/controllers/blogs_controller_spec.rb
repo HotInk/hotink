@@ -18,6 +18,7 @@ describe BlogsController do
     it { should assign_to(:active_blogs).with(@active_blogs) }    
     it { should respond_with(:success) }
     it { should respond_with_content_type(:html) }
+    
   end
   
   describe "GET to new" do
@@ -61,18 +62,40 @@ describe BlogsController do
   end
   
   describe "GET to show" do
+
     before do
       @blog = Factory(:blog, :account => @account)
-      @entries = (1..3).collect{ Factory(:detailed_entry, :blogs=>[@blog]) }
-      get :show, :account_id => @account.id, :id => @blog.id
     end
+
+    context "no search query sepcified" do
+      before do
+        @published = (1..3).collect{ Factory(:detailed_entry, :blog => @blog) }
+        @drafts = (1..3).collect{ Factory(:draft_entry, :account => @account, :blog => @blog) }
+        @scheduled = (1..3).collect{ Factory(:scheduled_entry, :account => @account, :blog => @blog) }
+        get :show, :account_id => @account.id, :id => @blog.id
+      end
     
-    it { should assign_to(:blog).with(@blog) }
-    it "should assign the appropriate entries" do
-      should assign_to(:entries).with_kind_of(WillPaginate::Collection)
-      assigns(:entries).to_a.should == @entries
+      it { should assign_to(:blog).with(@blog) }
+      it "should assign the appropriate entries" do
+        should assign_to(:entries).with_kind_of(WillPaginate::Collection)
+        assigns(:entries).to_a.should == @published
+        assigns(:drafts).to_a.should == @drafts
+        assigns(:scheduled).to_a.should == @scheduled
+      end    
+      it { should respond_with(:success) }
     end    
-    it { should respond_with(:success) }
+    
+    context "searching for specific entries" do
+      before do
+        @searched_entries = (1..3).collect{ Factory(:detailed_entry, :account => @account, :blog => @blog) }
+        @other_entries = (1..3).collect{ Factory(:detailed_entry, :account => @account, :blog => @blog) }
+        Entry.should_receive(:search).with( "test query", :with=>{ :account_id => @account.id, :blog_id => @blog.id }, :page => 1, :per_page => 20, :include => [:authors, :mediafiles]).and_return(@searched_entries)
+        get :show, :account_id => @account.id, :id => @blog.id, :search => "test query"
+      end
+      
+      it { should assign_to(:entries).with(@searched_entries) }
+      it { should respond_with(:success) }
+    end
   end
   
   describe "GET to edit" do

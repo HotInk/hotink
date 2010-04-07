@@ -1,54 +1,95 @@
-<div id="blog" class="clearfix form">
-	<div class="column_holder full_column">
-		<div class="third_column">
-			<h1><%= @blog.new_record? ? "New blog" : "Manage blog" %></h1>
+<div id="blog" class="clearfix index">
+	<div class="title_bar clearfix">
+		<div id="top_links">
+			<%= link_to "&#171; Back to blogs list", account_blogs_url(@account), :class=>"weblink" %>
 		</div>
-		<div class="two_thirds_column left_column">
-			<%= button_link_to "Edit", edit_account_blog_url(@account, @blog) %>
+		<h2><%= @blog.title %></h2> <%= button_link_to "Edit blog details", edit_account_blog_url(@account, @blog), :class => "pill-l" -%><%= button_link_to "New entry", new_account_blog_entry_url(@account, @blog), :class => "pill-r" %>
+
+		<div class="search">
+			<form method="GET">
+				<input type="text" id="entries_search" name="search" class="text_input user" onclick="if(this.value=='Search entries') clearText(this);" value="<%=h( @search_query || "Search entries") %>" />
+				<%= button_link_to_submit "Go" %>
+			</form>
 		</div>
-		<fieldset>
-			<legend>Blog details</legend>
-			<div class="tenth_column left_column">
-				<%= label_tag :title %>
-			</div>
-			<div class="nine_tenths_column right_column">
-				<p class="title user"><%= @blog.title %></p>
-			</div>
-			<div class="tenth_column left_column">
-				<%= label_tag :description, "Description" %>
-			</div>
-			<div class="nine_tenths_column right_column">
-				<p class="description user"><%= @blog.description %></p>
-			</div>
-		</fieldset>
 	</div>
+
+<div class="select_all_wrap clearfix">
+	<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
 </div>
-<div class="column_holder full_column">
-	<div class="two_thirds_column">
-		<div id="entries" class="index clearfix">
-			<h2>Entries</h2> <%= button_link_to "New entry", new_account_blog_entry_url(@account, @blog), :class=>"small" %>
-			
-			<div class="top_pagination clearfix">
-				<div id="entries_page_info" class="page_entries_info">
-					<%= page_entries_info @entries %>
-				</div>
-			</div>
-			<%= will_paginate(@entries, :inner_window => 1, :outer_window => 1) %>
-				
-			<ol class="clearfix">
-				<% if @blog.entries.size > 0 -%>
-					<%= render @entries %>
-				<% else -%>
-				<li>
-					<div class="entry">
-						<h1><small><em>No entries in this blog, yet</em></small></h1>
-					</div>
-				</li>
-				<% end -%>
-			</ol>
+
+<% form_remote_tag :url=>new_account_action_url(@account), :method => :get do %>
+<%= hidden_field_tag "content_types[]", 'entry'%>
+<%= hidden_field_tag "name", '', :id=>"entry_action_name"%>
+<%= hidden_field_tag "blog_id", @blog.id, :id=>"entry_blog_id"%>
+
+	<div id="actions" class="clearfix">
+		<%= button_link_to_submit "Publish", :onclick => "$('entry_action_name').value='publish';return true;", :class => "pill-l" %>
+		<%= button_link_to_submit "Schedule", :onclick => "$('entry_action_name').value='schedule';return true;", :class => "pill-c" %>
+		<%= button_link_to_submit "Delete",  :onclick => "$('entry_action_name').value='delete';return true;", :class => "pill-r" %>
+		<div class="batch_actions">
+			<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
+			<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
+				<%= submit_tag "Unpublish", :onclick => "$('entry_action_name').value='unpublish';return true;", :class => "menubutton" %>
+				<%= submit_tag "Add tag", :onclick => "$('entry_action_name').value='add_tag';return true;", :class => "menubutton" %>																				
+			</div> 
 		</div>
 	</div>
-	<div class="third_column">
-		<%= render :partial => 'blog_users' %>
+	<div class="top_pagination clearfix">
+		<%= render :partial=>'pagination' %>
 	</div>
+	<ol id="entries_list">			
+		<% if !(@entries.empty? && @drafts.blank? && @scheduled.blank? ) %>
+			<%= render @drafts if @drafts %>
+			<%= render @scheduled if @scheduled %>
+			<%= render @entries %>
+		<% elsif @search_query %>
+			<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No blog entries matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
+		<% else %>
+			<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No entries.</em></p>
+		<% end %>
+	</ol>
+<% end %>
+
+
+	
 </div>
+
+
+
+
+
+<script type="text/javascript" charset="utf-8">
+	//Load each entry <li> as a Card and check to see if any checkboxes are pre-checked and need to be pre-selected 
+	$('blog').select('ol#entries_list>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });
+	
+
+	// Activate table header checkboxes select_all functionality
+	$$('.select_all').each(	function(element) { 
+			Event.observe(element, 'click', function( event ) { 
+					if (element.checked){ 
+						$$('ol#entries_list>li').each(
+								function(el){ 
+									el.card.select(); 
+								}
+						); 
+						$$('.select_all').each(
+							function(el) {
+								el.checked = true;
+							}
+						);						
+					} else {
+						$$('ol#entries_list>li').each( 	
+							function(el){ 
+								el.card.deselect(); 
+							}
+						); 
+						$$('.select_all').each(
+							function(el) {
+								el.checked = null;
+							}
+						);
+					} 
+			})
+	});
+	
+</script>

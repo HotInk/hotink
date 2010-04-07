@@ -12,17 +12,15 @@ class Blog < ActiveRecord::Base
   before_validation :autoset_slug
   
   has_attached_file :image,
-      :styles => { :small => "360>", :large => "580>" },
+      :styles => { :thumb => "100x100>", :small => "360>", :large => "580>" },
       :convert_options => { :all => "-colorspace RGB -strip"},
       :path => ":rails_root/public/system/:account/:class/:id/:basename_:style.:extension",
       :url => "/system/:account/:class/:id/:basename_:style.:extension"
       
   validates_attachment_content_type :image, :content_type => ['image/png', 'image/jpeg', 'image/gif']
 
-  has_many :entries, :through => :postings, :order => "created_at DESC"
+  has_many :entries, :order => "created_at DESC"
   
-  has_many :postings
-
   named_scope :active, :conditions => {:status => true}
   named_scope :inactive, :conditions => {:status => false}  
   

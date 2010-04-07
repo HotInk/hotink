@@ -21,23 +21,6 @@ describe Article do
     Article.in_section(section).should_not include(other_section_article)
   end
   
-  describe "owner management" do
-    before do
-      @user = Factory(:user)
-      @user.has_role('owner', @article)
-    end
-    
-    it "should identify its owner, the user who created it" do
-      @article.owner.should == @user
-    end
-    
-    it "should replace its owner, if requested" do
-      new_user = Factory(:user)
-      @article.owner = new_user
-      @article.owner.should == new_user   
-    end
-  end
-  
   it "should create a human readable list of authors' names" do
     @article.authors = [Factory(:author, :name => "Lilly")]
     @article.authors_list.should == "Lilly"

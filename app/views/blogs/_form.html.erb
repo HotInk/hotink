@@ -1,11 +1,13 @@
-<div id="blog" class="clearfix form">
-<h1><%= @blog.new_record? ? "New blog" : "Manage blog" %></h1>
-</div>
-
-<% semantic_form_for [@account, @blog] do |form| %>
+<% semantic_form_for [@account, @blog], :html => { :multipart => true, :class => "grid_8" } do |form| %>
 	<% form.inputs do %>
 		<%= form.input :title %>
 		<%= form.input :slug, :hint => "Leave this blank to have a slug auto-generated for you." %>
+		<% if !@blog.image_file_name.blank? %>
+			<%= form.input :image, :as => :file, :required => false, :label => "Replace image?" %>
+			<li><%= image_tag @blog.image.url(:thumb), :style => "margin-left: 25%" %></li>
+		<% else %>
+			<%= form.input :image, :as => :file, :required => false %>
+		<% end %>
 		<%= form.input :status, :hint => "Is this blog active?" %>		
 		<%= form.input :description %>
 	<% end %>

@@ -1,0 +1,18 @@
+@import "buttons.css";
+
+
+#blog h2 { margin: 0.75em 0; float: left; font-weight: normal; font-size: 2.0em; font-family: georgia, "Times New Roman", times, serif;}
+
+#blog h2+a { margin: 25px 0 0 10px; }
+
+.index li .entry { width: 61%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf;}
+.index li .entry h1 { font-size: 1.2em !important; line-height: 1.2; margin: 0; padding: 0.25em; color: #666; border-bottom: 1px solid #DDD; vertical-align: middle; font-weight: normal; font-style: normal !important; font-family: georgia,"times new roman",times, serif;}
+.index li .entry div { font-size: .9em; }
+.index li .entry .entry_details { width: 100%; min-height: 24px;}
+.index li .entry .authors { float: left; padding: 0.5em;}
+.index li .entry .media { float: right; text-align: right; padding: 0.25em; }
+.index li .entry .media img{ float: right; margin: 0 0.125em;}
+.index li div.section { width: 7.5em; overflow: hidden; background-color: #FFF; padding: 0.5em 0; border: 1px dotted #9cf; }
+.index li div.section p { padding: 0px 0px 0px 5px; color: #333; margin: 0;}
+.index li div.tags { width: 7.5em; padding: 0.5em; overflow: hidden; height: 100%; background-color: #FFF; border: 1px dotted #9cf; }
+.index li div.tags p { font-size: 0.8em; margin: 0; padding-top: 0.25em; color: #515151;}

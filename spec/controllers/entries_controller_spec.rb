@@ -3,12 +3,12 @@ require 'spec_helper'
 describe EntriesController do
   before do
     @account = Factory(:account)
+    @blog = Factory(:blog, :account => @account)
     controller.stub!(:login_required).and_return(true)
   end
   
   describe "GET to new" do
     before do
-      @blog = Factory(:blog, :account => @account)
       get :new, :account_id => @account.id, :blog_id => @blog.id
     end
     
@@ -19,8 +19,7 @@ describe EntriesController do
   
   describe "GET to edit" do
     before do
-      @blog = Factory(:blog, :account => @account)
-      @entry = Factory(:entry, :blogs => [@blog], :account => @account)
+      @entry = Factory(:entry, :blog => @blog, :account => @account)
       get :edit, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
     end
     
@@ -29,10 +28,19 @@ describe EntriesController do
     it { should respond_with(:success) }
   end
   
+  describe "GET to show" do
+    before do
+      @entry = Factory(:entry, :blog => @blog, :account => @account)
+      get :show, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+    end
+    
+    it { should respond_with(:success) }
+    it { should assign_to(:entry).with(@entry) }
+  end
+  
   describe "PUT to update" do
     before do
-      @blog = Factory(:blog, :account => @account)
-      @entry = Factory(:entry, :blogs => [@blog], :account => @account)    
+      @entry = Factory(:entry, :blog => @blog, :account => @account)    
     end
     
     context "with valid parameters" do
@@ -122,11 +130,9 @@ describe EntriesController do
     end
   end
   
-  
   describe "DELETE to destory" do
     before do
-      @blog = Factory(:blog, :account => @account)
-      @entry = Factory(:entry, :blogs => [@blog], :account => @account)
+      @entry = Factory(:entry, :blog => @blog, :account => @account)
     end    
   
     context "with XHR request" do

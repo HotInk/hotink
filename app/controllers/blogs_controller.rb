@@ -36,8 +36,21 @@ class BlogsController < ApplicationController
   end
   
   def show
+    page = params[:page] || 1
+    per_page = params[:per_page] || 20
+    
     @blog = @account.blogs.find(params[:id])
-    @entries = @blog.entries.paginate( :page => params[:page], :per_page => params[:per_page])
+    
+    if params[:search]
+      @search_query = params[:search]
+      @entries = @blog.entries.search( @search_query, :page => page, :per_page => per_page, :include => [:authors, :mediafiles], :with => { :account_id => @account.id })
+    else
+      @entries = @blog.entries.published.paginate( :page => page, :per_page => per_page)
+      if page.to_i == 1
+        @drafts = @blog.entries.drafts.all(:include => [:authors, :mediafiles])
+        @scheduled = @blog.entries.scheduled.by_published_at(:desc).all(:include => [:authors, :mediafiles])
+      end
+    end
     
     respond_to do |format|
       format.html # show.html.erb
