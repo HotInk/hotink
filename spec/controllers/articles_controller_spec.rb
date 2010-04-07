@@ -114,6 +114,9 @@ describe ArticlesController do
     
     it { should assign_to(:article).with_kind_of(Article) }
     it { should respond_with(:redirect) }
+    it "should assign the correct article owner" do
+      assigns(:article).owner.should eql(@user)
+    end
   end
   
   describe "PUT to update" do

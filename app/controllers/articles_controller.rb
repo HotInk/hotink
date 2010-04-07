@@ -51,7 +51,7 @@ class ArticlesController < ApplicationController
     permit @article.is_editable_by do
       respond_to do |format|
         format.js
-        format.html # new.html.erb
+        format.html
       end
     end
   end
@@ -70,7 +70,7 @@ class ArticlesController < ApplicationController
       elsif params[:article][:status]=="Awaiting attention"
         @article.sign_off(current_user)
       elsif params[:article][:status]==""
-        params[:article][:status]=nil #To make sure an article is unpublished properly
+        @article.unpublish
       end
 
       if params[:article][:revoke_sign_off]

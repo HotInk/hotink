@@ -20,6 +20,8 @@ class Document < ActiveRecord::Base
   named_scope :by_date_published, :order => "published_at DESC"
   
   # Publication statuses
+  attr_protected :status
+  
   named_scope :drafts, :conditions => "status is null"
   named_scope :scheduled, lambda { {:conditions => ["status = 'Published' AND published_at > ?", Time.now.utc]} }
   named_scope :published, lambda { {:conditions => ["status = 'Published' AND published_at <= ?", Time.now.utc]} }
@@ -29,7 +31,7 @@ class Document < ActiveRecord::Base
   end
   
   def draft?
-    self.status.nil?
+    self.status.nil? && self.published_at.nil?
   end
   
   def scheduled?
@@ -111,7 +113,6 @@ class Document < ActiveRecord::Base
     unpublish
     save
   end
-  
   
   # Categories are set in a checkbox style, and that's reflected in this attribute method.
   # 

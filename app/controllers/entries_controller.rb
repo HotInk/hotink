@@ -5,7 +5,8 @@ class EntriesController < ApplicationController
   
   def new
     @entry = @blog.entries.create(:account => @account) 
-       
+    @entry.owner = current_user
+    
     respond_to do |format|
       format.html { redirect_to edit_account_blog_entry_url(@account, @blog, @entry) }
     end
@@ -13,6 +14,7 @@ class EntriesController < ApplicationController
   
   def edit
     @entry = @blog.entries.find(params[:id])
+    permit @entry.is_editable_by
   end
   
   def show
@@ -21,34 +23,37 @@ class EntriesController < ApplicationController
   
   def update
     @entry = @blog.entries.find(params[:id])
+    
+    permit @entry.is_editable_by do
+    
+      # Only touch published status if status is passed
+      if params[:entry][:status]=="Published"
       
-    # Only touch published status if status is passed
-    if params[:entry][:status]=="Published"
-      
-      if permit?("(manager of account) or (editor of blog) or (contributor to blog) or admin")
-        # Should we schedule publishing on a custom date or immediately?
-        # Rely on a "schedule" parameter to determine which.
-        if params[:entry][:schedule] 
-          schedule = params[:entry].delete(:schedule)
-          @entry.schedule(Time.local(schedule[:year].to_i, schedule[:month].to_i, schedule[:day].to_i, schedule[:hour].to_i, schedule[:minute].to_i))
+        if permit?("(owner of entry) or (manager of account) or (editor of blog) or admin")
+          # Should we schedule publishing on a custom date or immediately?
+          # Rely on a "schedule" parameter to determine which.
+          if params[:entry][:schedule] 
+            schedule = params[:entry].delete(:schedule)
+            @entry.schedule(Time.local(schedule[:year].to_i, schedule[:month].to_i, schedule[:day].to_i, schedule[:hour].to_i, schedule[:minute].to_i))
+          else
+            @entry.publish
+          end
+        end
+
+      elsif params[:entry][:status]==""
+        @entry.unpublish
+      end
+  
+      respond_to do |format|
+        if @entry.update_attributes(params[:entry])
+          flash[:notice] = "Entry saved"
+          format.html { redirect_to(edit_account_blog_entry_path(@account, @blog, @entry)) }
+          format.js
         else
-          @entry.publish
+          format.html { render :action => "edit", :status => :bad_request }
         end
       end
-
-    elsif params[:entry][:status]==""
-      @entry.unpublish
-      params[:entry][:status]=nil #To make sure an entry is unpublished properly
-    end
-  
-    respond_to do |format|
-      if @entry.update_attributes(params[:entry])
-        flash[:notice] = "Entry saved"
-        format.html { redirect_to(edit_account_blog_entry_path(@account, @blog, @entry)) }
-        format.js
-      else
-        format.html { render :action => "edit", :status => :bad_request }
-      end
+      
     end
   end
   
