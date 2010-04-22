@@ -50,4 +50,4 @@ complex websites publishing content stored in a Hot Ink archive.
 
 == Copyright
 
-Copyright (c) 2009 Canadian University Press Media Services Ltd. See LICENSE for details.
+Copyright (c) 2010 Canadian University Press Media Services Ltd. See LICENSE for details.
