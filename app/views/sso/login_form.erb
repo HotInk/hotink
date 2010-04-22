@@ -6,7 +6,7 @@
 		<%= label_tag :login, "Login/Email" %>
 	</div>
 	<div class="two_thirds_column right_column">
-  		<%= text_field_tag :login, "", :class => "text_input" %>
+  		<%= text_field_tag :login, "", :class => "text_input", :tabindex => 1 %>
 	</div>
 </div>
 <div class="column_holder clearfix">  
@@ -14,13 +14,13 @@
   		<%= label_tag :password %>
 	</div>
 	<div class="two_thirds_column right_column">
-  		<%= password_field_tag :password, "", :class => "text_input" %>
+  		<%= password_field_tag :password, "", :class => "text_input", :tabindex => 2  %>
 		
   	</div>
 </div>
 <div class="column_holder clearfix">  
 	<div class="third_column left_column">
-		<%= check_box_tag :remember_me %>
+		<%= check_box_tag :remember_me, "1", false, :tabindex => 3 %>
 	</div>
 	<div class="third_column right_column">
 	  	<%= label_tag :remember_me %>
@@ -32,7 +32,7 @@
 <div class="column_holder clearfix">  
 	<div class="third_column left_column"> </div>
 	<div class="two_thirds_column right_column">
-  		<%= button_link_to_submit "Login", :class => "large" %>
+  		<%= button_link_to_submit "Login", :class => "large", :tabindex => 4 %>
 	</div>
 </div>
 </form>
