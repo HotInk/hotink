@@ -44,14 +44,6 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :issues, :member => { :upload_pdf => :post } do |issue|
     end
     account.resources :authors
-    account.resources :sections do |section|
-      section.resources :articles do |article|
-        article.resources :mediafiles
-        article.resources :authors
-        article.resources :tags
-        article.resources :waxings
-      end
-    end
     account.resources :categories, :member => { :deactivate => :put, :reactivate => :put }
     account.resources :waxings
     

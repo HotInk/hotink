@@ -129,11 +129,10 @@ class Account < ActiveRecord::Base
       user.has_no_role('staff', self)
     end
   end
-  
+    
   private
   
   def set_default_settings
     write_attribute(:settings, { "image" => IMAGE_DEFAULT_SETTINGS } )
   end
-  
 end

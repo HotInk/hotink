@@ -1,0 +1,66 @@
+<div id="entry">
+	<p id="top_links">	
+		<%= link_to "&#171; Back to blog", account_blog_url(@account, @blog), :class=>"weblink" %>
+	</p>
+ 	
+	<h1><%=h @entry.title %></h1>
+
+	<h2><%=h @entry.subtitle %></h2>
+	
+	<% if @entry.section %><h3><%= @entry.section.name %></h3><% end %>
+	<% unless @entry.images.blank? %>
+		<div class="media_thumbs">
+			<h3>Attached media</h3>
+			<% for image in @entry.images %>
+					<%= link_to_function "<img src=\"#{image.file.url(:system_thumb)}\" border=\"1\" />", "page_overlay.render( '<div class=\"small_top_button clearfix\"><a href=\"#\" class=\"close_window\" onclick=\"page_overlay.end();return false;\"> <img src=\"/images/window_x.png\" /> </a></div><img src=\"#{image.file.url(:large)}\" style=\"position:relative;z-index: 300;\" />' );" %>
+			<% end %>
+		</div>
+	<% end %>
+	
+	<p class="date"><%= @entry.status=="Published" ? @entry.published_at.to_formatted_s(:long) : "Last saved " + @entry.updated_at.to_formatted_s(:long) %></p>
+	<p class="byline"><%=h @entry.authors_list%></p>
+	
+	<%= markdown @entry.bodytext %>
+
+</div>
+<div id="tools">
+	<div class="toolbox">
+		<div class="toolbox_border"></div>
+		<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Status</h2></div>
+		<div class="toolbox_border"></div>
+		<div class="toolbox_body clearfix">
+			<%= render :partial=>'status' %>
+		</div>
+		<div class="toolbox_border"></div>
+	</div><!-- /toolbox - tools -->
+
+	<div class="toolbox">
+		<div class="toolbox_border"></div>
+		<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Categories</h2></div>
+		<div class="toolbox_border"></div>
+		<div class="toolbox_body clearfix">
+			<p>This entry is filed under:</p>
+			<ul>
+				<% @entry.categories.each	do |category| %>
+				<li><%= category.name %></li>
+				<% end %>
+			</ul>	
+		</div>
+		<div class="toolbox_border"></div>
+	</div><!-- /toolbox - tools -->
+	
+	<div class="toolbox">
+		<div class="toolbox_border"></div>
+		<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tags</h2></div>
+		<div class="toolbox_border"></div>
+		<div class="toolbox_body clearfix">
+			<% if @entry.tag_list.blank? %>
+				<p>This entry is not tagged.</p>
+			<% else %>
+				<p>This entry is tagged:</p>
+				<h4><%= @entry.tag_list %></h4>
+			<% end %>	
+		</div>
+		<div class="toolbox_border"></div>
+	</div><!-- /toolbox - tools -->
+</div>

@@ -19,7 +19,6 @@ describe Document do
   it { should have_many(:waxings).dependent(:destroy) }
   it { should have_many(:mediafiles).through(:waxings) }
   it { should have_many(:images).through(:waxings) }
-
   
   describe "publication status" do
     before(:each) do
@@ -142,5 +141,23 @@ describe Document do
   
   it "should have a default per-page value for pagination" do
     Document.per_page.should == 10
+  end
+  
+  describe "owner management" do
+    before do
+      @article = Factory(:article)
+      @user = Factory(:user)
+      @user.has_role('owner', @article)
+    end
+    
+    it "should identify its owner, the user who created it" do
+      @article.owner.should == @user
+    end
+    
+    it "should replace its owner, if requested" do
+      new_user = Factory(:user)
+      @article.owner = new_user
+      @article.owner.should == new_user   
+    end
   end
 end

@@ -4,7 +4,8 @@
 	
 		<%= render :partial=>"actions/forms/#{@action.name}"%>
 
-		<%= hidden_field_tag 'name', @action.name %>	
+		<%= hidden_field_tag 'name', @action.name %>
+		<%= hidden_field_tag 'blog_id', params[:blog_id] if params[:blog_id] %>
 		<% for content_type in @action.content_types %>
 			<%= hidden_field_tag 'content_types[]', content_type %>
 			<% for record in @records[content_type] %>

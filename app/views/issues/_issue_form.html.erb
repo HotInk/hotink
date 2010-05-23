@@ -1,7 +1,7 @@
 <div id="issue" class="form">
 	<% form_for([@account, @issue], :html=>{:multipart=>true}) do |f| %>
 	<div class="column_holder clearfix">
-		<div class="details">
+		<div class="details grid_7">
 		    	<div class="column_holder clearfix">
 						<div class="half_column">
 							<h1><%= @issue.new_record? ? "New" : "Edit" %> issue </h1>
@@ -33,7 +33,7 @@
 				</div>	
 		</div>
 		<% end %>
-		<div class="cover">
+		<div class="cover grid_5">
 			<%= javascript_include_tag 'swfupload.js' %>
 			<%= javascript_include_tag 'issue_uploader.js' %>
 			<script type="text/javascript">

@@ -10,13 +10,15 @@ class HotinkSso < Sinatra::Base
  include Authlogic::ControllerAdapters::SinatraAdapter::Adapter::Implementation
  use Rack::Flash
  enable :logging
+ enable :methodoverride
+ set :views, File.dirname(__FILE__) + '/../views/sso'
  
  helpers do
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::AssetTagHelper
     include ActionView::Helpers::FormTagHelper
     include ActionView::Helpers::UrlHelper
-    include ApplicationHelper
+    include ApplicationHelper   
     
     def protect_against_forgery?
       false
@@ -101,9 +103,6 @@ class HotinkSso < Sinatra::Base
     end
 
   end
-  
-  enable :methodoverride
-  set :views, File.dirname(__FILE__) + '/../views/sso'
   
   get '/sso/xrds' do
     response.headers['Content-Type'] = 'application/xrds+xml'

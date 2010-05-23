@@ -111,15 +111,6 @@ class ApplicationController < ActionController::Base
     end
     logger.info "Current user: #{current_user.email} at #{request.remote_ip}"
   end
-
-  def login_forbidden
-    if current_user
-      store_location
-      flash[:notice] = "You must be logged out to access this page"
-      redirect_to root_url
-      return false
-    end
-  end
   
   def store_location
     session[:return_to] = request.request_uri

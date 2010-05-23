@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100104035609) do
+ActiveRecord::Schema.define(:version => 20100407161849) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -42,7 +42,15 @@ ActiveRecord::Schema.define(:version => 20100104035609) do
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
+    t.boolean  "status",             :default => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
+
+  add_index "blogs", ["slug"], :name => "index_blogs_on_slug"
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -108,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20100104035609) do
     t.string   "type"
     t.string   "status"
     t.datetime "published_at"
+    t.integer  "blog_id"
   end
 
   create_table "email_templates", :force => true do |t|
@@ -151,7 +160,7 @@ ActiveRecord::Schema.define(:version => 20100104035609) do
     t.string   "title"
     t.text     "description"
     t.string   "link_alternate"
-    t.datetime "date"
+    t.date     "date"
     t.integer  "account_id"
     t.string   "type"
     t.datetime "created_at"
@@ -199,14 +208,6 @@ ActiveRecord::Schema.define(:version => 20100104035609) do
     t.integer  "mediafile_id"
     t.integer  "author_id"
     t.integer  "account_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "postings", :force => true do |t|
-    t.integer  "account_id"
-    t.integer  "entry_id"
-    t.integer  "blog_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

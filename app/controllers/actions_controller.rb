@@ -6,7 +6,6 @@
 #   4. Content ids arrays (one array for each content type, with the params key "{content_type}_ids")
 class ActionsController < ApplicationController
   
-  
   def new
     @action = Action.new(:name => params[:name], :content_types => params[:content_types])
     @records = Hash.new
@@ -33,7 +32,10 @@ class ActionsController < ApplicationController
     respond_to do |format|
       format.html do
         if params[:content_types].first=="mediafile"
-          redirect_to account_mediafiles_url(@account)
+          redirect_to account_mediafiles_url(@account)        
+        elsif params[:content_types].first=="entry"
+          blog = @account.blogs.find(params[:blog_id])
+          redirect_to account_blog_url(@account, blog)        
         else
           redirect_to account_articles_url(@account)
         end
@@ -51,50 +53,52 @@ class ActionsController < ApplicationController
   end
   
   def publish( klass, id, options = {} )
-    raise ArgumentError unless klass=="articles"
     record = @account.send(klass).find(id)
+    raise ArgumentError unless record&&record.kind_of?(Document)
     
-    unless record.status=="Published"
-      flash[:notice] = "Articles published" if record.update_attributes({:status => "Published", :published_at => Time.now })
+    unless record.published?
+      flash[:notice] = "Successfully published" if record.publish!
     end
     
   end
   
   def schedule( klass, id, options = {} )
-    raise ArgumentError unless klass=="articles"
     record = @account.send(klass).find(id)
-    unless record.status=="Published"
-        flash[:notice] = "Articles scheduled" if record.update_attributes({:status => "Published", :published_at => Time.local(options[:year].to_i, options[:month].to_i, options[:day].to_i, options[:hour].to_i, options[:minute].to_i) })
+    raise ArgumentError unless record&&record.kind_of?(Document)
+    if record.published?
+      flash[:notice] = "Sorry, you can only schedule drafts, not published documents" 
+    else
+      flash[:notice] = "Successfully scheduled" if record.schedule!(Time.local(options[:year].to_i, options[:month].to_i, options[:day].to_i, options[:hour].to_i, options[:minute].to_i))
     end
   end
   
   def unpublish( klass, id, options = {} )
-    raise ArgumentError unless klass=="articles"
     record = @account.send(klass).find(id)
-    if record.status=="Published"
-      flash[:notice] = "Articles unpublished" if record.update_attributes({:status => nil, :published_at => nil })
+    raise ArgumentError unless record&&record.kind_of?(Document)
+    if record.published?
+      flash[:notice] = "Articles unpublished" if record.unpublish!
     end
   end
   
   def add_tag( klass, id, options = {} )
-    raise ArgumentError unless klass=="articles"||klass=="mediafiles"
+    raise ArgumentError unless klass=="articles"||klass=="mediafiles"||klass=="entries"
     record = @account.send(klass).find(id)
     record.tag(options[:new_tag_list])
     record.save!
-    flash[:notice] = "Articles tagged"
+    flash[:notice] = "Successfully tagged"
   end
   
   def add_issue( klass, id, options = {} )
-    raise ArgumentError unless klass=="articles"||klass=="mediafiles"
     record = @account.send(klass).find(id)
+    raise ArgumentError unless record&&record.kind_of?(Article)
     record.issues << Issue.find(options[:issue])
     record.save
     flash[:notice] = "Articles attached to issue"
   end  
   
   def set_primary_section( klass, id, options = {} )
-    raise ArgumentError unless klass=="articles"
     record = @account.send(klass).find(id)
+    raise ArgumentError unless record&&record.kind_of?(Article)
     record.section_id = options[:section_id]
     record.save
   end

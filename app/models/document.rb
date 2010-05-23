@@ -1,4 +1,6 @@
 class Document < ActiveRecord::Base
+  include Pacecar
+  
   belongs_to :account
   
   has_many :authorships, :dependent => :destroy
@@ -18,6 +20,8 @@ class Document < ActiveRecord::Base
   named_scope :by_date_published, :order => "published_at DESC"
   
   # Publication statuses
+  attr_protected :status
+  
   named_scope :drafts, :conditions => "status is null"
   named_scope :scheduled, lambda { {:conditions => ["status = 'Published' AND published_at > ?", Time.now.utc]} }
   named_scope :published, lambda { {:conditions => ["status = 'Published' AND published_at <= ?", Time.now.utc]} }
@@ -27,7 +31,7 @@ class Document < ActiveRecord::Base
   end
   
   def draft?
-    self.status.nil?
+    self.status.nil? && self.published_at.nil?
   end
   
   def scheduled?
@@ -59,6 +63,7 @@ class Document < ActiveRecord::Base
 
     has created_at
     has account_id
+    has blog_id
     has type
 
     where "status = 'published'"
@@ -78,10 +83,15 @@ class Document < ActiveRecord::Base
     end
   end
   
-  # This method handles the public availability of a Document
+  # Methods for managing document publication status 
   def publish(time_to_publish = nil)
     self.status = "Published"
     self.published_at = time_to_publish.kind_of?(Time) ? time_to_publish : Time.now
+  end
+  
+  def publish!(time_to_publish = nil)
+    publish(time_to_publish)
+    save
   end
   
   def schedule(date)
@@ -89,10 +99,19 @@ class Document < ActiveRecord::Base
     self.published_at = date
   end
   
-  # Logical alias used for unpublishing an article
+  def schedule!(date)
+    schedule(date)
+    save
+  end
+  
   def unpublish
     self.status = nil
     self.published_at = nil
+  end
+  
+  def unpublish!
+    unpublish
+    save
   end
   
   # Categories are set in a checkbox style, and that's reflected in this attribute method.
@@ -148,6 +167,18 @@ class Document < ActiveRecord::Base
     end
   end
   
+  def owner
+    has_owners.blank? ? nil : has_owners.first
+  end
+  
+  def owner=(user)
+    has_owners.each do |owner|
+      owner.has_no_role('owner', self)
+    end
+    user.has_role('owner', self)
+  end
+  
+  # Returns true or false, depending on whether the article has any attached media at all
   def has_attached_media?
     self.mediafiles ? true : false
   end
@@ -200,11 +231,9 @@ class Document < ActiveRecord::Base
          end
        end
        
-      if self.is_a?(Entry)
+      if self.is_a?(Entry) && self.blog
         xml.blogs :type => "array" do
-          self.blogs.each do |blog|
-            xml.<< blog.to_xml(:skip_instruct => true)
-          end
+          xml.<< self.blog.to_xml(:skip_instruct => true)
         end
       end
        

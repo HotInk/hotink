@@ -33,7 +33,7 @@ class WaxingsController < ApplicationController
     if @document.is_a? Article
       redirect_path = edit_account_article_url(@account, @document)
     elsif @document.is_a? Entry
-      redirect_path = edit_account_blog_entry_url(@account, @document.blogs.first, @document)
+      redirect_path = edit_account_blog_entry_url(@account, @document.blog, @document)
     end
     params[:mediafile_ids].each { |k, v| @document.waxings.create(:mediafile_id => k)  }
     respond_to do |format|

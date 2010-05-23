@@ -47,9 +47,7 @@ module CategoriesHelper
     end
 
   end
-  
-  private
-  
+    
   #Recursive function for displaying select tag options for categories while preserving the relationship visually.
   #This function is sure not to display the category currently under consideration, as one category
   #cannot be its own child or parent.
@@ -64,7 +62,7 @@ module CategoriesHelper
   end
   
   #Recursive function for displaying select tag options for subcategories while preserving their parent/child relationship visually.
-  def indent_child_options_for_category_select(parent, category, child_indent = "&nbsp;&nbsp;&nbsp;")
+  def indent_child_options_for_category_select(parent, category=nil, child_indent = "&nbsp;&nbsp;&nbsp;")
     html_code = ""
     parent.children.each do |child|
       options = {:value => child.id}
