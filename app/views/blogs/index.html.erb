@@ -1,10 +1,6 @@
-<div id="blogs" class="index">
-	<div class="title_bar clearfix">
-		<div class="actions">
-			<h1>Blogs</h1>
-			<%= button_link_to 'Start a new blog', new_account_blog_path(@account) %>
-		</div>
-	</div>
+<div id="blogs">
+	<h1>Blogs</h1>
+	<%= button_link_to 'Start a new blog', new_account_blog_path(@account) %>
 	
 	<ol>
 		<%= render @active_blogs %>

@@ -75,9 +75,10 @@ class Document < ActiveRecord::Base
       10
   end
   
-  def display_title
-    if self.title and self.title.strip != ""
-      return self.title
+  def title
+    title = read_attribute :title
+    if title and title.strip != ""
+      return title
     else 
       return "(no headline)"
     end
@@ -112,6 +113,14 @@ class Document < ActiveRecord::Base
   def unpublish!
     unpublish
     save
+  end
+  
+  def date
+    if published?||scheduled?
+      published_at
+    else
+      updated_at
+    end
   end
   
   # Categories are set in a checkbox style, and that's reflected in this attribute method.

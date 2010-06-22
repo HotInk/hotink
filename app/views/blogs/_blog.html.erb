@@ -23,30 +23,9 @@
 			<div class="grid_9 omega">
 				<div id="blog_entries" class="index">
 					<h3>Recent entries</h3>
-					<ol>
+					<ol class="entries documents small">
 						<% if blog.entries.size > 0 -%>
-							<% blog.entries.find(:all, :limit=>4).each do |entry| %>
-								<li id="entry_<%= entry.id %>" class="<%= cycle("even-row", "odd-row") %> <%= entry.status=="Published" ? (entry.published_at > Time.now ? "scheduled" : "published") : "unpublished" %> clearfix">
-
-									<div class="entry clearfix">
-										<h1>&ldquo;<%=link_to h(entry.display_title.strip), edit_account_blog_entry_url(@account, entry.blog, entry), :class=>"document_link" %>&rdquo;<%= entry.status=="Published" ? (entry.published_at > Time.now ? "<small>Scheduled</small>" : "") : "<small>Draft</small>" %></h1>
-
-									</div>
-
-									<div class="kill_link">
-									<%= link_to_remote 	"x", 
-														:url=>account_blog_entry_url(@account, entry.blog, entry), 
-														:method => :delete, 
-														:confirm => "You're about to delete the entry: \n\n\"#{entry.display_title}\" \n\nPress OK to delete this entry.",
-														:after=>"$(this).up().addClassName('transparent');" 
-									%>
-									</div>
-
-									<div class="date">
-										<%= h entry.published_at.to_formatted_s(:standard_date_only) if entry.published_at  %>
-									</div>
-								</li>
-							<% end %>
+							<%= render blog.entries.find(:all, :limit=>4) %>
 						<% else -%>
 						<li>
 							<div class="entry">

@@ -243,8 +243,8 @@ describe HotinkApi do
       before do
         @blog_one = Factory(:blog, :account => @account)
         @blog_two = Factory(:blog, :account => @account)
-        @blog_one_entries = (1..3).collect{ |n| Factory(:detailed_entry, :account => @account, :blogs => [@blog_one]) }
-        @blog_two_entries = (1..3).collect{ |n|  Factory(:detailed_entry, :account => @account, :blogs => [@blog_two]) }
+        @blog_one_entries = (1..3).collect{ |n| Factory(:detailed_entry, :account => @account, :blog => @blog_one) }
+        @blog_two_entries = (1..3).collect{ |n|  Factory(:detailed_entry, :account => @account, :blog => @blog_two) }
       end
       
       it "should return an array of the most recent entries from any blog" do
@@ -301,9 +301,9 @@ describe HotinkApi do
       it "should return latest entries by blog" do
         blog_one = Factory(:blog, :account => @account)
         blog_two = Factory(:blog, :account => @account)
-        blog_one_entries = (1..5).collect{ Factory(:detailed_entry, :account => @account, :blogs => [blog_one]) }
-        blog_two_entries = (1..5).collect{ Factory(:detailed_entry, :account => @account, :blogs => [blog_two]) }
-        blog_one_scheduled = Factory(:scheduled_entry, :account => @account, :blogs => [blog_one])
+        blog_one_entries = (1..5).collect{ Factory(:detailed_entry, :account => @account, :blog => blog_one) }
+        blog_two_entries = (1..5).collect{ Factory(:detailed_entry, :account => @account, :blog => blog_two) }
+        blog_one_scheduled = Factory(:scheduled_entry, :account => @account, :blog => blog_one)
         
         get "/accounts/#{@account.id}/query.xml", :group_by => "blog"
         

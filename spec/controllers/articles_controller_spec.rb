@@ -21,7 +21,7 @@ describe ArticlesController do
     context "with draft, scheduled and published articles" do
       before do
         @drafts = (1..3).collect{ Factory(:draft_article, :account => @account) }
-        @scheduled = (1..3).collect{ Factory(:scheduled_article, :account => @account) }
+        @scheduled = (1..3).collect{ |n| Factory(:scheduled_article, :published_at => (Time.now + 1.day - n.minutes), :account => @account) }
         @published = (1..3).collect{ Factory(:detailed_article, :account => @account) }
         
         get :index, :account_id => @account.id

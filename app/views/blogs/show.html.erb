@@ -1,5 +1,4 @@
 <div id="blog" class="clearfix index">
-	<div class="title_bar clearfix">
 		<div id="top_links">
 			<%= link_to "&#171; Back to blogs list", account_blogs_url(@account), :class=>"weblink" %>
 		</div>
@@ -11,7 +10,6 @@
 				<%= button_link_to_submit "Go" %>
 			</form>
 		</div>
-	</div>
 
 <div class="select_all_wrap clearfix">
 	<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
@@ -37,7 +35,7 @@
 	<div class="top_pagination clearfix">
 		<%= render :partial=>'pagination' %>
 	</div>
-	<ol id="entries_list">			
+	<ol class="entries documents">			
 		<% if !(@entries.empty? && @drafts.blank? && @scheduled.blank? ) %>
 			<%= render @drafts if @drafts %>
 			<%= render @scheduled if @scheduled %>
@@ -60,7 +58,7 @@
 
 <script type="text/javascript" charset="utf-8">
 	//Load each entry <li> as a Card and check to see if any checkboxes are pre-checked and need to be pre-selected 
-	$('blog').select('ol#entries_list>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });
+	$('blog').select('ol.entries>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });
 	
 
 	// Activate table header checkboxes select_all functionality

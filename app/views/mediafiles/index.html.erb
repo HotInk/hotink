@@ -1,9 +1,6 @@
-<div id="mediafiles" class="index">
-<div class="title_bar clearfix">
-	<div class="actions">	
-		<h1>Media </h1>
-		<%= button_link_to 'Upload media', new_account_mediafile_path(@account), :class=>"" %>
-	</div>
+<div id="mediafiles">
+	<h1>Media </h1>
+	<%= button_link_to 'Upload media', new_account_mediafile_path(@account), :class=>"" %>
 	<div class="search">
 		<form method="GET">
 			<input type="text" id="mediafiles_search" name="search" class="text_input user" onclick="if(this.value=='Search media') clearText(this);" value="<%=h( @search_query || "Search media") %>" />
@@ -12,7 +9,6 @@
 		<%= #observe_field :mediafiles_search, :url => account_mediafiles_url(@account), :with => "search", :frequency=>0.5, :method=>:get, :after =>"$('mediafiles_list').select('li').invoke('addClassName', 'transparent');" 
 		%>
 	</div>
-</div>
 	
 	<div class="select_all_wrap clearfix">
 		<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
@@ -22,21 +18,21 @@
 	<%= hidden_field_tag "content_types[]", 'mediafile'%>
 	<%= hidden_field_tag "name", '', :id=>"mediafile_action_name"%>
 	
-		<div id="actions" class="clearfix">
-			<%= button_link_to_submit "Delete",  :onclick => "$('mediafile_action_name').value='delete';return true;" %>
-			<div class="batch_actions">
-				<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
-				<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
-					<%= submit_tag "Add tag", :onclick => "$('mediafile_action_name').value='add_tag';return true;", :class => "menubutton" %>																				
-				</div> 
-			</div>
+	<div id="actions" class="clearfix">
+		<%= button_link_to_submit "Delete",  :onclick => "$('mediafile_action_name').value='delete';return true;" %>
+		<div class="batch_actions">
+			<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
+			<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
+				<%= submit_tag "Add tag", :onclick => "$('mediafile_action_name').value='add_tag';return true;", :class => "menubutton" %>																				
+			</div> 
 		</div>
+	</div>
 
-	<div class="top_pagination"><%= render :partial=>'pagination' %></div>
-
-	<ol id="mediafiles_list">
+	<%= render :partial=>'pagination' %>
+	
+	<ol id="mediafiles_list" class="mediafiles selectable">
 			<% if @mediafiles.length > 0 %>
-				<%= render :partial => 'mediafile_list_item', :collection => @mediafiles %>
+				<%= render :partial => 'mediafile', :collection => @mediafiles %>
 			<% elsif @search_query %>
 				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No media matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
 			<% else %>
@@ -44,11 +40,8 @@
 			<% end %>
 	</ol>
 	<% end %>
-<div class="function_bar clearfix">
 	<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
 	<div id="bottom_pagination"><%= render :partial=>'pagination' %></div>
-</div>
-<br />
 
 <script type="text/javascript" charset="utf-8">
 	//Load each article <li> as a Card and check to see if any checkboxes are pre-checked and need to be pre-selected 

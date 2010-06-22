@@ -10,7 +10,7 @@ class WaxingsController < ApplicationController
     
     @waxing = document.waxings.build
     
-    @mediafiles = @account.mediafiles.paginate(:page=>(params[:page] || 1), :per_page => (params[:per_page] || 10 ), :order => 'date DESC', :include => [:authors])
+    @mediafiles = @account.mediafiles.paginate(:page=>(params[:page] || 1), :per_page => 6, :order => 'date DESC', :include => [:authors])
     @waxing.document.mediafiles.each { |m| @mediafiles.delete(m) } # Scrub out already attached files
 
     respond_to do |format|

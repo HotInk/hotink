@@ -199,7 +199,7 @@ describe MediafilesController do
       end
     
       it { should respond_with(:redirect) }
-      it "should delete the article" do
+      it "should delete the mediafile" do
         lambda { Article.find(@mediafile.id) }.should raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -212,7 +212,7 @@ describe MediafilesController do
       it { should respond_with(:ok) }
       it { should set_the_flash.to('Media trashed') }
       it "should delete the article" do
-        lambda { Article.find(@mediafile.id) }.should raise_error(ActiveRecord::RecordNotFound)
+        lambda { Mediafile.find(@mediafile.id) }.should raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

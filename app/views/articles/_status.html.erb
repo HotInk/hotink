@@ -29,7 +29,7 @@
 			<h2 class="six_tenths_column unpublished">Unpublished</h2>
 		<% end %>
 	</div>
-<% if permit? ('(manager of account) or admin') %>
+<% if permit?(@article.is_publishable_by) %>
 	<% remote_form_for [@account, @article] do |f| -%>
 		<% if @article.status == "Published" -%>
 			<%= f.hidden_field :status, :value =>"" %>

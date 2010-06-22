@@ -58,9 +58,11 @@ Factory.define :draft_entry, :parent => :entry do |e|
 end
 
 Factory.define :detailed_entry, :class => "Entry", :parent => :detailed_article do |e|
+  e.account { Factory(:account) }
   e.blog { |f| Factory(:blog, :account => f.account) }
 end
 
 Factory.define :scheduled_entry, :class => "Entry", :parent => :scheduled_article do |e|
+  e.account { Factory(:account) }
   e.blog { |f| Factory(:blog, :account => f.account) }
 end

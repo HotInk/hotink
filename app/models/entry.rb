@@ -8,5 +8,9 @@ class Entry < Document
       "(owner of entry) or (editor of blog) or (manager of account) or admin"
     end
   end
+  
+  def is_publishable_by
+    "(owner of entry) or (manager of account) or (editor of blog) or admin"
+  end
 
 end

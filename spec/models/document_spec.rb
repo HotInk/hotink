@@ -86,6 +86,38 @@ describe Document do
     Document.published.by_date_published.second.should == second_article
   end
   
+  describe "attributes" do
+    it "should return a default headline if none is set" do
+      article = Factory(:article)
+      article.title = ""
+      article.title.should == "(no headline)"
+    
+      article.title = "A real title"
+      article.title.should == "A real title"
+    end
+  
+    it "should return an appropriate date, depending on its publication status" do
+      article = Factory(:article)
+      article.date.should == article.updated_at
+      article.publish!(Time.now - 1.day)
+      article.date.should == article.published_at
+      article.publish!(Time.now + 1.day)
+      article.date.should == article.published_at
+    end
+    
+    it "should know its bodytext word count" do
+      article = Factory(:article)
+      article.bodytext = "this short article has a grand total of ten words"
+      article.word_count.should == 10
+
+      article.bodytext = ""
+      article.word_count.should == 0
+
+      article.bodytext = nil
+      article.word_count.should == 0
+    end
+  end
+  
   describe "publishing a document" do
     it "should publish documents, as requested" do
       article = Factory(:draft_article)
@@ -116,27 +148,6 @@ describe Document do
       Document.scheduled.all.should include(article2)
       Document.drafts.all.should_not include(article2)
     end
-  end
-
-  it "should know its bodytext word count" do
-    article = Factory(:article)
-    article.bodytext = "this short article has a grand total of ten words"
-    article.word_count.should == 10
-    
-    article.bodytext = ""
-    article.word_count.should == 0
-    
-    article.bodytext = nil
-    article.word_count.should == 0
-  end
-
-  it "should return a default headline if none is set" do
-    article = Factory(:article)
-    article.title = ""
-    article.display_title.should == "(no headline)"
-    
-    article.title = "A real title"
-    article.display_title.should == "A real title"
   end
   
   it "should have a default per-page value for pagination" do

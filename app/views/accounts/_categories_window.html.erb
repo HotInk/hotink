@@ -14,7 +14,7 @@
 	<%= render :partial=>'categories/category', :collection => @account.main_categories %>
 </ol>
 
-<div id="new_category_form">
+<div id="new_category_form" style="margin-top: 15px;">
 	<% form_remote_tag :url=>account_categories_url(@account), :method => :post do %>
 	<fieldset>
 		<legend>New category</legend>

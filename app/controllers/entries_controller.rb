@@ -29,7 +29,7 @@ class EntriesController < ApplicationController
       # Only touch published status if status is passed
       if params[:entry][:status]=="Published"
       
-        if permit?("(owner of entry) or (manager of account) or (editor of blog) or admin")
+        if permit?(@entry.is_publishable_by)
           # Should we schedule publishing on a custom date or immediately?
           # Rely on a "schedule" parameter to determine which.
           if params[:entry][:schedule] 
@@ -57,15 +57,16 @@ class EntriesController < ApplicationController
     end
   end
   
-  # DELETE /articles/1
   def destroy
     @entry = @blog.entries.find(params[:id])
-    @entry.destroy
+    permit @entry.is_editable_by do
+      @entry.destroy
     
-    flash[:notice] = "Entry trashed"
-    respond_to do |format|
-      format.html { redirect_to(account_blog_url(@account, @blog)) }
-      format.js
+      flash[:notice] = "Entry trashed"
+      respond_to do |format|
+        format.html { redirect_to(account_blog_url(@account, @blog)) }
+        format.js
+      end
     end
   end
   
