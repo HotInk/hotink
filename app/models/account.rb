@@ -44,6 +44,10 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name, :message => "Account name must be unique"
   
   serialize :settings
+  serialize :lead_article_ids
+  
+  has_many  :designs
+  belongs_to :current_design, :class_name => "Design", :foreign_key => :current_design_id
   
   # Settings defaults
   IMAGE_DEFAULT_SETTINGS = { 

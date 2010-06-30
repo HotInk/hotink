@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100407161849) do
+ActiveRecord::Schema.define(:version => 20100630132853) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(:version => 20100407161849) do
     t.datetime "updated_at"
     t.string   "time_zone"
     t.text     "settings"
+    t.string   "lead_article_ids"
+    t.integer  "current_design_id"
   end
 
   create_table "authors", :force => true do |t|
@@ -98,6 +100,16 @@ ActiveRecord::Schema.define(:version => 20100407161849) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "designs", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "default_layout_id"
+    t.integer  "current_front_page_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -274,6 +286,31 @@ ActiveRecord::Schema.define(:version => 20100407161849) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "template_files", :force => true do |t|
+    t.integer  "design_id"
+    t.string   "type"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "templates", :force => true do |t|
+    t.integer  "design_id"
+    t.string   "name"
+    t.text     "description"
+    t.text     "code"
+    t.binary   "parsed_code"
+    t.integer  "layout_id"
+    t.string   "type"
+    t.text     "title_code"
+    t.binary   "parsed_title_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

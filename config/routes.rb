@@ -9,15 +9,23 @@ ActionController::Routing::Routes.draw do |map|
   # Old invitation route support
   map.connect '/user_activations/:id/edit', :controller => 'invitations'
   map.connect '/account_activations/:id/edit', :controller => 'invitations'
+  map.current_design '/accounts/:account_id/current_design', :controller => :designs, :action => :current_design
   
   map.resources :accounts do |account|
     account.resources :invitations, :only => [:new, :create, :edit, :update, :destroy]
     
-    # No content exists in Hot Ink without belonging to an account, routing reflects this fact.
+    account.resource :front_page, :only => [:edit, :update]
+    
+    account.resources :designs do |design|
+      design.resources :templates
+      design.resources :template_files
+    end
+    
     account.resources :documents do |document|
       document.resources :mediafiles
       document.resources :waxings
     end
+    
     account.resources :articles do |article|
       article.resources :mediafiles
       article.resources :authors
@@ -25,10 +33,12 @@ ActionController::Routing::Routes.draw do |map|
       article.resources :waxings
       article.resources :printings
     end
+    
     account.resources :mediafiles do |mediafile|
       mediafile.resources :authors
       mediafile.resources :tags
     end
+    
     account.resources :blogs, :member => { :add_user => :put, :remove_user => :put, :promote_user => :put } do |blog|
       blog.resources :entries do |entry|
         entry.resources :mediafiles
@@ -36,17 +46,17 @@ ActionController::Routing::Routes.draw do |map|
         entry.resources :tags
       end
     end
+    
     account.resources :entries, :only => [:new, :edit, :update, :destroy] do |entry|
       entry.resources :mediafiles
       entry.resources :waxings
       entry.resources :tags
     end
-    account.resources :issues, :member => { :upload_pdf => :post } do |issue|
-    end
+    
+    account.resources :issues, :member => { :upload_pdf => :post } 
     account.resources :authors
     account.resources :categories, :member => { :deactivate => :put, :reactivate => :put }
     account.resources :waxings
-    
     account.resources :apps
     account.resources :actions
     

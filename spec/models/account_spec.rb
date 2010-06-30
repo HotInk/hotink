@@ -79,4 +79,14 @@ describe Account do
     end
   end
   
+  it { should have_many(:designs) }
+  
+  it "should keep track of whcih design is currently being shown to users" do
+    @account.current_design.should be_nil
+    @design = Factory(:design, :account => @account)
+    @account.current_design = @design
+
+    @account.current_design.should == @design
+  end
+  
 end

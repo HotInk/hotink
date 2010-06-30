@@ -28,6 +28,13 @@
 .tab_window>div { float: left; width: 79.25%; padding: 0 1.5%;  height: 99.25%; overflow:auto;  }
 .tab_window>div h2 { font-family: georgia, "Times New Roman", times, serif; color: #333; font-size: 1.5em; margin:0.5em 0; font-weight: normal; }
 
+
+/*Basic coloured links */
+.link 			{ border: 1px solid #AAA; color: white; padding: 4px 5px; font-size: 12px; 
+					-webkit-border-radius: 4px; -moz-border-radius: 4px; }
+.link:hover 	{ background-color: #999; text-decoration: none;  }
+.link.small		{ padding: 2px 3px 3px 3px; font-size: 11px; }
+
 /* Columns */
 .column_holder { float: none; }
 .third_column { float: left; width: 33%; }

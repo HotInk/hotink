@@ -43,6 +43,14 @@ class User < ActiveRecord::Base
     is_staff_for_what.first
   end
   
+  def admin?
+    has_role? "admin"
+  end
+  
+  def promote_to_admin
+    has_role "admin"
+  end
+  
   private
   
   # This method takes care of making sure "blank" login fields still pass validation, without forcing users to select a login.

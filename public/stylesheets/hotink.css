@@ -119,12 +119,23 @@ ol.documents li.highlighted_card {  }
 
 /* Documents - small */
 ol.documents.small .select { display: none; }
-ol.documents.small .details { margin-left: 1%; width: 75%; } 
-ol.documents.small .details h1 { font-size: 1.2em; margin-bottom: 5px; }
+ol.documents.small .details { margin-left: 1%; width: 60%; } 
+ol.documents.small .details h1 { font-size: 1.1em; margin-bottom: 5px; line-height: 1.2; }
 ol.documents.small .details p { font-size: 0.85em; }
-ol.documents.small .date { width: 20%; font-size: 1.2em; margin-top: 0; }
-ol.documents.small .date p { font-size: 1.2em; }
+ol.documents.small .section p { font-size: 0.85em; }
+ol.documents.small .tags { display: none; }
+ol.documents.small .date { width: 20%; font-size: 1.1em; margin-top: 0; }
+ol.documents.small .date p { font-size: 1.1em; }
 ol.documents.small .destroy_link { display: none; }
+
+ol.documents.droppable 						{ list-style: decimal inside; border: none; }
+ol.documents.droppable li 					{ margin: 2px 0.25%; padding: 6px 0 4px 1%; min-height: 57px; border: none; background-color: #d2f1c2; }
+ol.documents.droppable li.drop				{ background-color: #EBFFE1; } 
+ol.documents.droppable li.scheduled.drop	{ background-color: #E1EBF7; } 
+ol.documents.droppable li.scheduled 		{ background-color: #CEE4F3; }
+ol.documents.droppable li.updated 			{ background-color: #FFF1FA; }
+ol.documents.droppable li.updated.drop		{ background-color: #FFF8FC; }
+ol.documents.droppable li > div 			{  width: 94%; float: right; margin-right: 0; float: right; }
 
 /* Documents - entries */
 ol.documents.entries li .details { width: 68.75%; }

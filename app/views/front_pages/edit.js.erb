@@ -1,0 +1,8 @@
+$('#articles').html('<%= escape_javascript render(@articles) %>')
+$('.pagination.remote').html('<%= escape_javascript will_paginate(@articles, :inner_window => 1, :outer_window => 0, :class => "pagination remote") %>')
+$(".image_icon").fancybox({
+	'titlePosition'		: 'inside',
+	'transitionIn'		: 'none',
+	'transitionOut'		: 'none'
+});
+$('#articles li').draggable({ revert: true, containment: "#page_container" });

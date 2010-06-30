@@ -49,6 +49,13 @@ describe Document do
       Document.published.should_not include(@scheduled)
     end
 
+    it "should identify articles that are either published or scheduled" do
+      Document.published_or_scheduled.should_not include(@untouched)
+      Document.published_or_scheduled.should_not include(@draft)
+      Document.published_or_scheduled.should include(@published)
+      Document.published_or_scheduled.should include(@scheduled)
+    end
+
     it "should know it's publication status" do
       @untouched.published?.should be_false
       @draft.published?.should be_false

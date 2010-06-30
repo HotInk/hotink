@@ -24,6 +24,14 @@ class ApplicationController < ActionController::Base
     session[:checkpoint_user_id].nil? ? nil : User.find(session[:checkpoint_user_id])
   end
   
+  def current_lead_articles
+    if @account.lead_article_ids.blank?
+      []
+    else
+      @account.lead_article_ids.collect{ |id| @account.articles.find_by_id(id) }
+    end
+  end
+  
   # This method determines whether an OAuth request is kosher. 
   # A request is alright if:
   #   - There's no attached account

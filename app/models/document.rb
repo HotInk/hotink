@@ -25,6 +25,7 @@ class Document < ActiveRecord::Base
   named_scope :drafts, :conditions => "status is null"
   named_scope :scheduled, lambda { {:conditions => ["status = 'Published' AND published_at > ?", Time.now.utc]} }
   named_scope :published, lambda { {:conditions => ["status = 'Published' AND published_at <= ?", Time.now.utc]} }
+  named_scope :published_or_scheduled, :conditions => {:status => 'Published'}, :order => 'published_at desc'   
   
   def published?
     (self.status=='Published') && (self.published_at <= Time.now)

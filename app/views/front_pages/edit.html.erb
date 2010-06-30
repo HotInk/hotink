@@ -1,0 +1,91 @@
+<div id="front_page_form" class="grid_12">
+	<% form_tag(account_front_page_path(@account), :method => :put) do%>	
+		<h1 class="grid_4 alpha">Update front page</h1>
+	
+		<div class="grid_8 omega" style="padding: 10px 0;text-align:right;">
+			<!-- template select -->
+			&nbsp;&nbsp;<%= submit_tag "Update front page", :style => "font-size: 100%;" %>
+		</div>
+	
+		<p class="grid_12 alpha" style="padding: 5px 0;">Find the articles you'd like to feature on the right, and simply click and drag them to the appropriate location on the left</p>
+	
+		<div class="grid_6 alpha">
+			<h2 style="margin:0 0 5px 0;">Lead articles</h2>
+	
+				<ol id="lead_articles" class="documents droppable small clearfix">
+					<%= render @lead_articles %>
+				</ol>
+				<%= link_to "+ Add slot", "#", :class=>"add_lead_article_slot link blue" %>
+				<%= link_to "– Remove slot", "#", :class=>"remove_lead_article_slot link red" %>
+		</div>
+
+		<div class="grid_6 omega">
+			<h2 style="margin:0 0 5px 0;float: left;">Articles</h2>
+			<div class="clearfix">
+				<%= will_paginate(@articles, :inner_window => 1, :outer_window => 0, :class => "pagination remote") %>
+			</div>
+			<ol id="articles" class="documents articles draggable small clearfix">
+				<%= render @articles %>
+			</ol>
+		</div>
+	<% end %>
+	
+	<!-- Preview form -->
+</div>
+
+<% content_for :javascript do %>
+	<script type="text/javascript" charset="utf-8">		
+		insert_hidden_id_element = function(element, value){
+			$(element).append('<input type="hidden" name="lead_article_ids[]" value="' + value + '" />');
+		}
+		
+		init_lead_article_hidden_id_elements = function(){
+			$("#lead_articles li").each(function(){
+					insert_hidden_id_element(this, $(this).find('.select input').val())
+			});
+		}
+		
+		init_articles_droppable = function(){
+			$("ol.documents.droppable li").droppable({
+						drop: function(event, ui) {
+							$(this).html(ui.draggable.html());
+							if (ui.draggable.hasClass('scheduled')) { $(this).addClass('scheduled'); }
+							$(this).addClass('updated');
+							$(this).removeClass('drop');
+							insert_hidden_id_element(this, ui.draggable.find('.select input').val());
+						},
+						over: function(event, ui) {
+							$(this).addClass('drop');
+						},
+						out: function(event, ui) {
+							$(this).removeClass('drop');
+						}
+			});
+		}
+		
+		$(function(){ 
+			init_articles_droppable();
+			init_lead_article_hidden_id_elements();
+						
+			$('a.add_lead_article_slot').click(function(){
+				$('#lead_articles').append('<li></li>');
+				init_articles_droppable();
+				return false;
+			});
+
+			$('a.remove_lead_article_slot').click(function(){
+				$('#lead_articles li:last').remove();
+				return false;
+			});
+			
+			$('form#front_page_preview_form').submit(function(event){
+				console.log(event);
+				$('#front_page_preview_form input[type="hidden"]').remove();
+				$('#lead_articles input[type="hidden"]').each(function(){
+					insert_hidden_id_element($('#front_page_preview_form'), $(this).val())
+				});
+			});
+
+		} );
+	</script>
+<% end %>
