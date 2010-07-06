@@ -19,15 +19,16 @@
 }
 
 /* Tab Window UI-Control */ 
-.tab_window { width: 100%; height: 31em; position: relative; z-index: 501;}
-.tab_window>ol { list-style-type: none;}
-.tab_window>ol li { padding: 0.35em 0.25em; font-size: 1.2em; color: #333; font-family: georgia, "Times New Roman", times, serif; text-align: center; cursor: pointer;}
-.tab_window>ol li.selected { background-color: #3D9BDF; color: white; cursor: pointer; }
-.tab_window ol.left, .tab_window>div {  border: 1px solid #DDD; background-color: #FFF;  }
-.tab_window ol.left { float: left; width: 16%; margin: 0; margin-right: 1%; padding: 0; height: 99.25%; overflow:hidden;}
-.tab_window>div { float: left; width: 79.25%; padding: 0 1.5%;  height: 99.25%; overflow:auto;  }
-.tab_window>div h2 { font-family: georgia, "Times New Roman", times, serif; color: #333; font-size: 1.5em; margin:0.5em 0; font-weight: normal; }
-
+.ui-tabs { width: 100%; height: 31em; position: relative; z-index: 501;}
+.ui-tabs>ul { list-style-type: none;}
+.ui-tabs>ul li { padding: 0.35em 0.25em; font-size: 1.2em; color: #333; font-family: georgia, "Times New Roman", times, serif; text-align: center; cursor: pointer;}
+.ui-tabs>ul li.ui-tabs-selected { background-color: #3D9BDF; cursor: pointer; }
+.ui-tabs>ul li.ui-tabs-selected a { color: white; }
+.ui-tabs ul {  border: 1px solid #DDD; background-color: #FFF;  }
+.ui-tabs ul { float: left; width: 16%; margin: 0; margin-right: 1%; padding: 0; height: 99.25%; overflow:hidden;}
+.ui-tabs>div { float: left; width: 79.25%; padding: 0 1.5%;  height: 99.25%; overflow:auto;  }
+.ui-tabs>div h2 { font-family: georgia, "Times New Roman", times, serif; color: #333; font-size: 1.5em; margin:0.5em 0; font-weight: normal; }
+.ui-tabs .ui-tabs-hide { display: none;}
 
 /*Basic coloured links */
 .link 			{ border: 1px solid #AAA; color: white; padding: 4px 5px; font-size: 12px; 

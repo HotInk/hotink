@@ -28,7 +28,7 @@
 		<% if permit?("(manager of account)") || permit?("admin") %>
 			<div id="account_details">
 				<img src="/loading_small_222.gif" style="float:left;margin-right:0.5em;margin-top:0.25em;display:none;" class="spinner"/>
-				<%= button_link_to "Manage account", edit_account_url(@account, :format => :js ), :class=>"tiny remote" %> 
+				<%= button_link_to "Manage account", edit_account_url(@account), :class=>"tiny modal" %> 
 			</div>
 		<% end %>
 		<div id="flash"><%= render_flash(flash[:notice])%></div>

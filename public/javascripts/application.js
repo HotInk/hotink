@@ -32,6 +32,8 @@ $(function(){
 		'transitionIn'		: 'none',
 		'transitionOut'		: 'none'
 	});
+	
+	$("a.modal").fancybox();
 });
 
 

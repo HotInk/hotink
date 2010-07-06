@@ -128,19 +128,15 @@ describe AccountsController do
         @user = Factory(:user)
         @user.has_role("manager", @account)
         controller.stub!(:current_user).and_return(@user)
-      end
-      
-      context "with XHR request" do
-        before do
-          @user_invitations = (1..3).collect{ Factory(:user_invitation, :account => @account) }
-          xhr :get, :edit, :id => @account.id
-        end
         
-        it { should assign_to(:account).with(@account) }
-        it { should_not assign_to(:accounts) }
-        it { should respond_with(:success) }
-        it { should respond_with_content_type(:js) }
+        @user_invitations = (1..3).collect{ Factory(:user_invitation, :account => @account) }
+        get :edit, :id => @account.id
       end
+
+      it { should assign_to(:account).with(@account) }
+      it { should_not assign_to(:accounts) }
+      it { should respond_with(:success) }
+      it { should respond_with_content_type(:html) }
     end
     
     context "as admin" do
@@ -151,7 +147,7 @@ describe AccountsController do
         controller.stub!(:current_user).and_return(@user)
         3.times { Factory(:account) }
         
-        xhr :get, :edit, :id => @account.id
+        get :edit, :id => @account.id
       end
       
       it { should assign_to(:accounts).with(Account.all) }
@@ -180,35 +176,13 @@ describe AccountsController do
       end
       
       context "with valid parameters" do
-        context "with HTML request" do
-          before do
-            put :update, :id => @account.id, :account => { :time_zone => "Pacific Time (US & Canada)" }
-          end
-        
-          it { should set_the_flash.to("Account updated") }
-          it { should assign_to(:account).with(@account) }
-          it { should respond_with(:redirect) }
-        end
-        
-        context "with XHR request" do
-          before do
-            xhr :put, :update, :id => @account.id, :account => { :time_zone => "Pacific Time (US & Canada)" }
-          end
-        
-          it { should set_the_flash.to("Account updated") }
-          it { should assign_to(:account).with(@account) }
-          it { should respond_with(:ok) }
-        end
-      end
-      
-      context "with invalid parameters" do
         before do
-          put :update, :id => @account.id, :account => { :name => nil }
+          put :update, :id => @account.id, :account => { :time_zone => "Pacific Time (US & Canada)" }
         end
-        
+      
+        it { should set_the_flash.to("Account updated") }
         it { should assign_to(:account).with(@account) }
-        it { should respond_with(:bad_request) }
-        it { should render_template(:edit) }
+        it { should respond_with(:success) }
       end
     end
   end

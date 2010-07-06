@@ -11,7 +11,7 @@ class AccountsController < ApplicationController
   # Root account creation
   # ---------------------
   # Both the #new and #create actions are reserved for creating the root account
-  # during installation
+  # during installation. 
   def new
     @account = Account.new
     @user = User.new
@@ -54,7 +54,7 @@ class AccountsController < ApplicationController
     redirect_to account_articles_url( @account )
   end
   
-  # Loads the account management tab
+  # Loads the account management tabs
   def edit
     @account = Account.find(params[:id])
     permit "manager of :account or admin" do    
@@ -63,7 +63,7 @@ class AccountsController < ApplicationController
       end
       
       respond_to do |format|
-        format.js
+        format.html
       end
     end
   end
@@ -72,14 +72,8 @@ class AccountsController < ApplicationController
   def update
     @account = Account.find(params[:id])
     permit "manager of :account or admin" do  
-      respond_to do |format|
-        if @account.update_attributes(params[:account])
-          flash[:notice] = "Account updated"
-          format.html { redirect_to(account_articles_url(@account)) }
-          format.js   { head :ok }
-        else
-          format.html { render :action => "edit", :status => :bad_request }
-        end
+      if @account.update_attributes(params[:account])
+        flash[:notice] = "Account updated"
       end
     end
   end
