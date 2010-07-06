@@ -603,6 +603,35 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #form_categories li { padding: 0.25em 0.125em; }
 
 /*-----------------------------------
+/*		Design and template styles
+/*---------------------------------------*/
+
+#templates { margin-bottom: 30px; }
+#templates h2, #template_files h2 { margin: 0 0 15px 0; }
+#templates h3, #template_files h3 { float: left; clear: left; font-size: 16px; font-weight: normal; margin: 0px 10px 5px 0;   }
+#templates h3+a, #template_files h3+a { padding: 2px 3px; font-size: 11px; position: relative; top: 3px; }
+#templates ul, #template_files ul { clear:left; border: 1px dotted #999; margin-bottom: 20px; }
+#templates ul li, #template_files ul li { padding: 5px; }
+#templates ul li+li, #template_files ul li+li { border-top: 1px dotted #999; }
+#templates .last_updated, #template_files .last_updated { float: right; font-size: 80%; padding: 0 10px; }
+#templates .destroy_link, #template_files .destroy_link { float: right;  }
+
+form.template #template_info_preview 							{ display:none; }
+form.template.use_preview .preview					 			{ display: none; }
+form.template.use_preview #template_info_preview 				{ display: block; font-size: 1.1em; margin-bottom: 20px; }
+form.template.use_preview #template_info_preview h2				{ font-weight: 200; }
+form.template.use_preview #template_info_preview p				{ width: 70%; line-height: 1.3; margin-bottom: 10px; }
+form.template.use_preview #template_info_preview strong			{ font-size: 90%; }
+
+ol#designs { }
+ol#designs { float: left; clear: left; width: 100%; border: 1px dotted #999; margin-bottom: 5px; }
+ol#designs li { padding: 10px; position:relative; background-color: #F0F0F0; }
+ol#designs li+li { border-top: 1px dotted #999; }
+ol#designs li a.destroy_link { position: absolute; top: 2px; right: 4px; line-height: 0.8;}
+ol#designs h2, ol#designs p { float:left; margin-bottom: 0; margin-top: 0;  }
+ol#designs p { padding: 7px 10px 0 10px; }
+
+/*-----------------------------------
 /*		Application iFrame styles
 /*---------------------------------------*/
 
@@ -621,3 +650,48 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 #footer_push { height: 30px; /* #footer_push must be the same height as #footer */  }
 #footer { width: 99%; height: 30px; padding-right: 1%;background-color: #222; text-align: right; border-right: 1px solid #DDD;}
 #footer p { margin: 0.7em 0; float: right;}
+
+
+
+/* -------------------------------------------------------------------------------------------------
+
+Formtastic changes
+
+Load this stylesheet after formtastic.css in your layouts to override the CSS to suit your needs.
+This will allow you to update formtastic.css with new releases without clobbering your own changes.
+
+For example, to make the inline hint paragraphs a little darker in color than the standard #666:
+
+form.formtastic fieldset > ol > li p.inline-hints { color:#333; }
+
+--------------------------------------------------------------------------------------------------*/
+
+form.formtastic h1 { margin-bottom: 0px; }
+
+form.formtastic fieldset > ol > li { display: block; }
+form.formtastic fieldset > ol > li label { width: 100%; padding-bottom: 3px; }
+
+form.formtastic fieldset > ol > li label abbr { display: none; }
+
+form.formtastic fieldset > ol > li.string input { width:100%; max-width: 100%; }
+form.formtastic fieldset > ol > li.password input { width:100%; }
+form.formtastic fieldset > ol > li.numeric input { width:100%; }
+form.formtastic fieldset > ol > li.text textarea { width:100%; }
+
+form.formtastic fieldset > ol > li.text .wmd-button-bar { float:left; width: 98.55%; padding: 0px 1%; border: 1px solid #DEDEDE; background-color: #EFEFEF; border-width: 1px 1px 0 1px; }
+form.formtastic fieldset > ol > li.text .wmd-button-bar {  -moz-border-radius-topleft:3px;-moz-border-radius-topright:3px;-webkit-border-top-left-radius:3px;-webkit-border-top-right-radius:3px;}
+form.formtastic fieldset > ol > li.text .wmd-button-bar ul { padding: 3px 0 5px 0; }
+form.formtastic fieldset > ol > li.text .wmd-button-bar ul li { -moz-border-radius: 2px; -webkit-border-radius: 2px; }
+form.formtastic fieldset > ol > li.text .wmd-button-bar .wmd-button { border: 1px solid #AAAAAA; }
+
+form.formtastic fieldset > ol > li.boolean label { padding: 0; }
+
+form.formtastic fieldset > ol > li.string input { padding: 0.3em 0.1em; font-size: 1.2em; border: 1px solid #DEDEDE; background-color: #FDFDFD; }
+form.formtastic fieldset > ol > li.password input { padding: 0.3em 0.1em; font-size: 1.2em; border: 1px solid #DEDEDE; background-color: #FDFDFD; }
+form.formtastic fieldset > ol > li.text textarea { padding: 0.1em; font-size: 1.2em; line-height: 1.4; border: 1px solid #DEDEDE; background-color: #FDFDFD; }
+
+form.formtastic fieldset > ol > li p.inline-errors { margin: 0; }
+
+form.formtastic fieldset > ol > li.commit { text-align: right; margin-bottom: 0; }
+
+form.formtastic fieldset.buttons { padding-left: 0; float: right; }

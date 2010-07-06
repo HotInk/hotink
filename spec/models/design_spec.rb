@@ -55,6 +55,17 @@ describe FrontPageTemplate do
   it { should validate_presence_of(:name) }
 end
 
+describe Layout do  
+  it "should ensure code include page contents" do
+    layout = Factory(:layout)
+    layout.should allow_value("{{ page_contents }}").for(:code)
+    layout.should allow_value("{{ page_contents }}").for(:code)
+    layout.should allow_value("{{ page_contents }}").for(:code)
+    
+    layout.should_not allow_value("<h1>No contents</h1>").for(:code)    
+  end
+end
+
 require 'timecop'
 
 describe TemplateFile do

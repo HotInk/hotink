@@ -1,0 +1,30 @@
+<h1>Edit <%= @tplate.class.name.tableize.humanize.singularize.downcase %></h1>
+<% semantic_form_for(@tplate, :url => account_design_template_path(@account, @design, @tplate), :html => { :class => "template use_preview" }) do |form| %>
+	<% form.inputs :class => "grid_12" do %>
+		<% if form.object.kind_of?(ViewTemplate) %>
+			<%= form.input :layout, :collection => @design.layouts, :include_blank => "No layout", :wrapper_html => { :class => "grid_8 preview" } %>
+		<% else %>
+			<%= form.input :name, :wrapper_html => { :class => "grid_8 preview" }, :input_html => { :style => "width: 90%;" } %>
+		<% end %>
+		<div id="template_info_preview" class="grid_8 alpha">
+			<% unless form.object.name.blank? %><h2><%= form.object.name %></h2><% end %>
+			<% if form.object.kind_of?(ViewTemplate) %><p><strong>Layout:</strong> <%= form.object.layout.nil? ? "No layout" : form.object.layout.name %></p><% end %>
+			<p><%= form.object.description %> <a class="hide_preview link yellow small" href="#">Edit details</a></p>
+		</div>
+		<%= form.commit_button :class => "grid_4", :label => "Save" %>
+		<%= form.input :description, :input_html => { :rows => 2 }, :wrapper_html => { :class => "preview" } %>
+		<% if form.object.kind_of?(ViewTemplate) %>
+			<%= form.input :title_code, :input_html => { :rows => 1 } %>
+		<% end %>
+		<%= form.input :code, :label => "Body code <span id=\"liquid_error\">#{ flash[:syntax_error] }</a>" %>
+	<% end %>
+<% end %>
+
+<% content_for :javascript do %>
+	<script type="text/javascript" charset="utf-8">
+			$('#template_info_preview .hide_preview').click(function(){
+				$('form.template').removeClass('use_preview');
+				return false;
+			});
+	</script>
+<% end %>

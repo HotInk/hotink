@@ -34,6 +34,12 @@
 					-webkit-border-radius: 4px; -moz-border-radius: 4px; }
 .link:hover 	{ background-color: #999; text-decoration: none;  }
 .link.small		{ padding: 2px 3px 3px 3px; font-size: 11px; }
+.blue 			{ background-color: #5886D1; }
+.yellow 		{ background-color: #FFF6DD; color: #666; }
+.yellow:hover 	{ color: white; }
+.green 			{ background-color: #79A988; }
+.red 			{ background-color: #BC6765; }
+.grey 			{ background-color: #B0AAB7; }
 
 /* Columns */
 .column_holder { float: none; }

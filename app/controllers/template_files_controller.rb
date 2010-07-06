@@ -1,6 +1,8 @@
 class TemplateFilesController < ApplicationController
   permit "admin"
   
+  layout 'hotink'
+  
   def new
     @design = @account.designs.find(params[:design_id])
     @template_file = @design.template_files.build

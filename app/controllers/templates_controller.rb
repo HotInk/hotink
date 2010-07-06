@@ -2,6 +2,8 @@ class TemplatesController < ApplicationController
   
   permit "admin"
   
+  layout 'hotink'
+  
   # GET /templates/new
   def new
     @design = @account.designs.find(params[:design_id])

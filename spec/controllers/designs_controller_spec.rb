@@ -16,6 +16,7 @@ describe DesignsController do
     end
     
     it { should assign_to(:designs).with(@designs) }
+    it { should render_with_layout(:hotink) }
     it { should respond_with(:success) }
     it { should respond_with_content_type(:html) }
   end

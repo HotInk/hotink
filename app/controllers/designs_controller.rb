@@ -2,6 +2,8 @@ class DesignsController < ApplicationController
   
   permit "admin"
   
+  layout 'hotink'
+  
   # GET /designs
   def index
     @designs = @account.designs.all

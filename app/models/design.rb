@@ -69,6 +69,17 @@ class Template < ActiveRecord::Base
 end
 
 class Layout < Template
+  validates_presence_of :name
+  validates_format_of :code, :with => /\{\{\s*page_contents\s*\}\}/, :message => "must contain 'page_contents', to load the rendered template's contents"
+
+  def description
+    stored_description = read_attribute(:description)
+    if stored_description.blank?
+       "This template contains a shared top and bottom for other templates. Be sure to include the 'page_contents' variable somewhere inside."
+    else
+      stored_description
+    end
+  end
 end
 
 class PartialTemplate < Template

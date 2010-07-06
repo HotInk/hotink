@@ -18,6 +18,7 @@ describe TemplatesController do
       get :new, :account_id => @account.id, :design_id => @design.id, :role => 'layout'
       should assign_to(:tplate).with_kind_of(Layout)
       should render_template(:new)
+      should render_with_layout(:hotink)
     end
     
     it "should build partial template" do

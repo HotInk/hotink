@@ -15,6 +15,7 @@ describe TemplateFilesController do
        should respond_with(:success)
        should assign_to(:design).with(@design)
        should respond_with_content_type(:html)
+       should render_with_layout(:hotink)
      end
   end
    

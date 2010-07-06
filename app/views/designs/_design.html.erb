@@ -1,0 +1,5 @@
+<li id="design_<%= design.id %>">
+	<div class="clearfix">
+		<h2><%= link_to design.name, [@account, design] %></h2> <p>Last updated <%= time_ago_in_words(design.updated_at) %> ago <%= link_to "x", [@account,design], :method => :delete, :confirm => "Are you sure you want to delete this design? Once deleted it can't be recovered.", :class=>"destroy_link" %> 
+	</div>
+</li>
