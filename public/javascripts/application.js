@@ -24,7 +24,7 @@ $('.pagination.remote a').live('click', function (e) {
 
 $(function(){
 	// Create draggable articles, if present
-	$('.articles.draggable li').draggable({ revert: true, containment: "#page_container" });
+	$('.documents.draggable li').draggable({ revert: true, containment: "#page_container" });
 	
 	// Create image preview fancybox
 	$(".image_icon").fancybox({

@@ -53,6 +53,8 @@ ActionController::Routing::Routes.draw do |map|
       entry.resources :tags
     end
     
+    account.resources :lists, :except => :show
+    
     account.resources :issues, :member => { :upload_pdf => :post } 
     account.resources :authors
     account.resources :categories, :member => { :deactivate => :put, :reactivate => :put }

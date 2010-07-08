@@ -1,0 +1,86 @@
+<% semantic_form_for [@account, @list], :html => { :class => @list.new_record? ? "" : "use_preview" } do |form| %>
+	<div class="grid_4 alpha" style="font-size: 85%;line-height: 1.1;">
+		<h1 style="margin-bottom: 20px;"><%= form.object.new_record? ? "New" : "Update" %> list</h1>
+		<p style="margin-bottom: 20px;width: 90%;">Find the articles you'd like to include on the right, and simply click and drag them to the appropriate location in the list on the left. You can add as many articles as you'd like.</p>
+	</div>
+	<%= form.buttons :class => "grid_6 prefix_2 omega" %>
+	<% form.inputs :class => "grid_6 prefix_2 omega" do %>
+		<%= form.input :name %>
+		<%= form.input :description, :input_html => { :rows => 2 } %>
+	<% end %>
+	<div id="list_preview" class="grid_6 prefix_2 omega">
+		<h2><%= form.object.name %></h2>
+		<p><%= form.object.description %> <a class="hide_preview link yellow small" href="#">Edit details</a></p>
+	</div>
+	<div class="grid_6 alpha">
+		<h2 style="margin-bottom:5px;">List items</h2>
+			<ol id="list_items" class="documents droppable small clearfix">
+				<%= render form.object.documents %>
+			</ol>
+			<%= link_to "+ Add slot", "#", :class=>"add_list_item_slot link blue" %>
+			<%= link_to "– Remove slot", "#", :class=>"remove_list_item_slot link red" %>
+	</div>
+	<div class="grid_6 omega">
+		<h2 style="margin-bottom:5px;float: left;">Articles</h2>
+		<div class="clearfix">
+			<%= will_paginate(@articles, :inner_window => 1, :outer_window => 0, :class => "pagination remote") %>
+		</div>
+		<ol id="articles" class="documents draggable small clearfix">
+			<%= render @articles %>
+		</ol>
+	</div>
+<% end %>
+<% content_for :javascript do %>
+	<script type="text/javascript" charset="utf-8">
+	
+	insert_hidden_id_element = function(element, value){
+		$(element).append('<input type="hidden" name="list[document_ids][]" value="' + value + '" />');
+	}
+	
+	init_document_hidden_id_elements = function(){
+		$("#list_items li").each(function(){
+				insert_hidden_id_element(this, $(this).find('.select input').val())
+		});
+	}
+	
+	init_articles_droppable = function(){
+		$("ol.documents.droppable li").droppable({
+					drop: function(event, ui) {
+						$(this).html(ui.draggable.html());
+						if (ui.draggable.hasClass('scheduled')) { $(this).addClass('scheduled'); }
+						$(this).addClass('updated');
+						$(this).removeClass('drop');
+						insert_hidden_id_element(this, ui.draggable.find('.select input').val());
+					},
+					over: function(event, ui) {
+						$(this).addClass('drop');
+					},
+					out: function(event, ui) {
+						$(this).removeClass('drop');
+					}
+		});
+	}
+	
+	$(function(){ 
+		init_articles_droppable();
+		init_document_hidden_id_elements();
+					
+		$('a.add_list_item_slot').click(function(){
+			$('#list_items').append('<li></li>');
+			init_articles_droppable();
+			return false;
+		});
+
+		$('a.remove_list_item_slot').click(function(){
+			$('#list_items li:last').remove();
+			return false;
+		});
+		
+		$('#list_preview .hide_preview').click(function(){
+			$('form.list').removeClass('use_preview');
+			return false;
+		});
+
+	} );
+	</script>
+<% end %>

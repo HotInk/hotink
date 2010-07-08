@@ -148,7 +148,6 @@ ol.documents li.selected_card { background-color: #CDFBDC; }
 ol.documents li.highlighted_card {  }
 
 /* Documents - small */
-ol.documents.small .select { display: none; }
 ol.documents.small .details { margin-left: 1%; width: 60%; } 
 ol.documents.small .details h1 { font-size: 1.1em; margin-bottom: 5px; line-height: 1.2; }
 ol.documents.small .details p { font-size: 0.85em; }
@@ -159,13 +158,21 @@ ol.documents.small .date p { font-size: 1.1em; }
 ol.documents.small .destroy_link { display: none; }
 
 ol.documents.tiny,
-ol.documents.tiny li 					{ border-color: #AAA; }
-ol.documents.tiny li .details			{ min-height: 0; }
+ol.documents.tiny li 						{ border-color: #AAA; }
+ol.documents.tiny li .details				{ min-height: 0; }
 ol.documents.tiny li .details h1			{ font-size: 0.9em; margin: 0; line-height: 1.2; }
 ol.documents.tiny li .mediafiles img		{ height: 16px; }
 ol.documents.tiny li .mediafiles object 	{ display: none; }
 ol.documents.tiny li .details p,	
 ol.documents.tiny li .date p + p			{ display: none; }
+
+ol.documents.small .select, 		ol.documents.tiny .select,
+ol.documents.small .tags,			ol.documents.tiny .tags	 			{ display: none; }
+ol.documents.small .details h1, 	ol.documents.tiny .details h1 		{ font-size: 1em; margin-bottom: 5px; }
+ol.documents.small .details p, 		ol.documents.tiny .details p 		{ font-size: 0.85em; }
+ol.documents.small .date, 			ol.documents.tiny .date 			{ width: 20%; font-size: 1em; }
+ol.documents.small .date p, 		ol.documents.tiny .date p 			{ font-size: 1em; }
+ol.documents.small .destroy_link, 	ol.documents.tiny .destroy_link 	{ display: none; }
 
 ol.documents.droppable 						{ list-style: decimal inside; border: none; }
 ol.documents.droppable li 					{ margin: 2px 0.25%; padding: 6px 0 4px 1%; min-height: 57px; border: none; background-color: #d2f1c2; }
@@ -178,7 +185,7 @@ ol.documents.droppable li > div 			{  width: 94%; float: right; margin-right: 0;
 
 ol.documents.listed 						{ list-style: decimal inside; border: none; }
 ol.documents.listed li 						{ font-size: 17px; padding: 6px 0 4px 1%; margin: 2px 0.25%; border: 1px solid #CACACA; }
-ol.documents.listed li > div 				{ width: 94%; float: right; margin-top: -2px; font-size: 15px;}
+ol.documents.listed li > div 				{ width: 93%; float: right; margin-top: -2px; font-size: 15px;}
 ol.documents.listed li .details 			{ margin: 0; }
 
 /* Documents - entries */
@@ -617,6 +624,30 @@ ol.blogs.small ol.articles li .date p + p			{ display: none; }
 /*\*/ * html .tokenizer_input_borderless #article_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
 #entry_form #autocomplete_populate{ width: 450px;}
 #entry_form #author_list { margin-bottom: 1.5em; line-height: 1.6; }
+
+/*-----------------------------------
+/*		Lists styles
+/*---------------------------------------*/
+ol.lists 						{ float: left; clear: left; width: 100%; border: 1px dotted #999; margin-bottom: 5px; }
+ol.lists > li 					{ padding: 10px; position:relative; background-color: #FBFBFB; }
+ol.lists > li + li 					{ border-top: 1px dotted #999; }
+ol.lists h3					 	{ float: left; font-size: 23px; margin: 0 10px 0 0; font-weight: normal; }
+ol.lists h3 + a 				{ float: left; padding-top: 4px;}
+ol.lists ol.documents 			{ margin-top: 10px; margin-left: 5%; width: 90%; }
+ol.lists li a.destroy_link 		{ position: absolute; top: 2px; right: 4px; line-height: 0.8;}
+ol.lists .updated_at 			{ float:right;padding: 5px 0 0 0; font-size: 13px; }
+
+ol.lists.small h3				{ font-size: 19px; }
+ol.lists.small a.destroy_link 	{ display:none; }
+
+form.list h2					{ margin-top: 0; }
+form.list #list_preview 							{ display:none; }
+form.list.use_preview #list_name_input,
+form.list.use_preview #list_description_input 		{ display: none; }
+form.list.use_preview #list_preview 				{ display: block; min-height: 140px; font-size: 1.1em; }
+form.list.use_preview #list_preview p				{ width: 70%; line-height: 1.3; }
+
+#list_items { margin-bottom: 5px; clear:left; }
 
 /*-----------------------------------
 /*		Categories styles
