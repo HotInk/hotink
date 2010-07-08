@@ -39,7 +39,7 @@ ActionController::Routing::Routes.draw do |map|
       mediafile.resources :tags
     end
     
-    account.resources :blogs, :member => { :add_user => :put, :remove_user => :put, :promote_user => :put } do |blog|
+    account.resources :blogs, :member => { :manage_contributors => :get, :add_contributor => :put, :remove_contributor => :put, :promote_contributor => :put, :demote_contributor => :put } do |blog|
       blog.resources :entries do |entry|
         entry.resources :mediafiles
         entry.resources :waxings
@@ -61,6 +61,7 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :actions
     
     account.resource :search
+    account.resource :dashboard
   end
   
   # You can search or query anything, regardless of account.

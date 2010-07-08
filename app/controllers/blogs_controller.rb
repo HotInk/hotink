@@ -74,47 +74,54 @@ class BlogsController < ApplicationController
     end
   end
   
-  def add_user
+  def manage_contributors
     @blog = @account.blogs.find(params[:id])
+    respond_to do |format|
+      format.html 
+    end
+  end
+
+  def add_contributor
     @user = User.find(params[:user])
     
-    # Only account staff can contribute to a blog
-    if @user.has_role?("staff", @account)
-      @user.has_role( "contributor", @blog)
-    end
+    @blog = @account.blogs.find(params[:id])
+    @blog.add_contributor @user
     
     respond_to do |format|
-      format.js
+      format.html { redirect_to(manage_contributors_account_blog_url(@account, @blog)) }
     end
   end
   
-  def remove_user
-    @blog = @account.blogs.find(params[:id])
+  def remove_contributor
     @user = User.find(params[:user])
     
-    if @user.has_role?( "contributor", @blog)
-      @user.has_no_role("contributor", @blog)
-      @user.has_no_role("editor", @blog)      
-    end
+    @blog = @account.blogs.find(params[:id])
+    @blog.remove_contributor @user
     
     respond_to do |format|
-      format.js
+      format.html { redirect_to(manage_contributors_account_blog_url(@account, @blog)) }
     end
   end
   
-  def promote_user
-    @blog = @account.blogs.find(params[:id])
+  def promote_contributor
     @user = User.find(params[:user])
     
-    # Only staff can post to or edit a blog
-    if @user.has_role?( "staff", @account)
-      @user.has_role("contributor", @blog)
-      @user.has_role("editor", @blog)      
-    end
+    @blog = @account.blogs.find(params[:id])
+    @blog.make_editor(@user)
     
     respond_to do |format|
-      format.js
+      format.html { redirect_to(manage_contributors_account_blog_url(@account, @blog)) }
     end
   end
   
+  def demote_contributor
+    @user = User.find(params[:user])
+    
+    @blog = @account.blogs.find(params[:id])
+    @blog.demote_editor(@user)
+    
+    respond_to do |format|
+      format.html { redirect_to(manage_contributors_account_blog_url(@account, @blog)) }
+    end
+  end
 end

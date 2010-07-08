@@ -132,51 +132,73 @@ describe BlogsController do
     end
   end
   
-  describe "PUT to add_user" do
+  describe "GET to manage_contributors" do
     before do
       @blog = Factory(:blog, :account => @account)
-      @user = Factory(:user)
-      @user.has_role('staff', @account)
-      xhr :put, :add_user, :account_id => @account.id, :id => @blog.id, :user => @user.id
+      get :manage_contributors, :account_id => @account.id, :id => @blog.id
     end
     
-    it "should make the current user both editor and contributor" do
-      @user.should have_role('contributor', assigns(:blog))
-    end
-    it { should respond_with_content_type(:js) }
+    it { should respond_with(:success) }
+    it { should assign_to(:blog).with(@blog) }
+    it { should respond_with_content_type(:html) }
   end
-  
-  describe "PUT to remove_user" do
+
+  describe "PUT to add_contributor" do
     before do
       @blog = Factory(:blog, :account => @account)
       @user = Factory(:user)
-      @user.has_role('staff', @account)
-      @user.has_role('contributor', @blog)
-      @user.has_role('editor', @blog)
+      xhr :put, :add_contributor, :account_id => @account.id, :id => @blog.id, :user => @user.id
+    end
+    
+    it "should make the current user a contributor" do
+      @blog.contributors.should include(@user)
+    end
+    it { should respond_with(:redirect) }
+  end
+  
+  describe "PUT to remove_contributor" do
+    before do
+      @blog = Factory(:blog, :account => @account)
+      @user = Factory(:user)
+      @blog.make_editor(@user)
       
-      xhr :put, :remove_user, :account_id => @account.id, :id => @blog.id, :user => @user.id
+      xhr :put, :remove_contributor, :account_id => @account.id, :id => @blog.id, :user => @user.id
     end
     
     it "should remove the user from the blog" do
-      @user.should_not have_role('contributor', assigns(:blog))
-      @user.should_not have_role('editor', assigns(:blog))
+      @blog.contributors.should_not include(@user)
     end
-    it { should respond_with_content_type(:js) }
+    it { should respond_with(:redirect) }
   end
   
-  describe "PUT to promote_user" do
+  describe "PUT to promote_contributor" do
     before do
       @blog = Factory(:blog, :account => @account)
       @user = Factory(:user)
-      @user.has_role('staff', @account)
-      @user.has_role('contributor', @blog)
+      @blog.contributors << @user
       
-      xhr :put, :promote_user, :account_id => @account.id, :id => @blog.id, :user => @user.id
+      xhr :put, :promote_contributor, :account_id => @account.id, :id => @blog.id, :user => @user.id
     end
     
     it "should make the user an editor of the blog" do
-      @user.should have_role('editor', assigns(:blog))
+      @blog.editors.should include(@user)
     end
-    it { should respond_with_content_type(:js) }
+    it { should respond_with(:redirect) }
+  end
+  
+  describe "PUT to demote_contributor" do
+    before do
+      @blog = Factory(:blog, :account => @account)
+      @user = Factory(:user)
+      @blog.make_editor(@user)
+      
+      xhr :put, :demote_contributor, :account_id => @account.id, :id => @blog.id, :user => @user.id
+    end
+    
+    it "should make editor of the blog into a contributor" do
+      @blog.editors.should_not include(@user)
+      @blog.contributors.should include(@user)
+    end
+    it { should respond_with(:redirect) }
   end
 end

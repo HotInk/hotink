@@ -2,11 +2,13 @@
 	<% form.inputs do %>
 		<%= form.input :title %>
 		<%= form.input :slug, :hint => "Leave this blank to have a slug auto-generated for you." %>
-		<% if !@blog.image_file_name.blank? %>
-			<%= form.input :image, :as => :file, :required => false, :label => "Replace image?" %>
-			<li><%= image_tag @blog.image.url(:thumb), :style => "margin-left: 25%" %></li>
-		<% else %>
-			<%= form.input :image, :as => :file, :required => false %>
+		<% form.inputs :title => "Blog image" do %>
+			<% if !@blog.image_file_name.blank? %>
+				<li><%= image_tag @blog.image.url(:thumb) %></li>
+				<%= form.input :image, :as => :file, :required => false, :label => "Replace image?" %>
+			<% else %>
+				<%= form.input :image, :as => :file, :required => false %>
+			<% end %>
 		<% end %>
 		<%= form.input :status, :hint => "Is this blog active?" %>		
 		<%= form.input :description %>

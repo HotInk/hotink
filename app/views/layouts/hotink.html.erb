@@ -15,7 +15,7 @@
   <%= javascript_include_tag 'application.js' %>
 
 </head>
-<body>
+<body class="<%= controller_name %> <% action_name %>">
 <div id="page_wrapper"><!-- This wrapper keeps the footer at the bottom of the page. -->
 	<div id="navigation" class="clearfix">
 		<div id="logo"><%= image_tag '/images/logo_tiny.png' %></div>
