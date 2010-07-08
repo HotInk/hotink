@@ -1,3 +1,7 @@
+Factory.define :document do |d|
+  d.account { Factory(:account) }
+end
+
 Factory.define :article do |a|
   a.account { Factory(:account) }
 end

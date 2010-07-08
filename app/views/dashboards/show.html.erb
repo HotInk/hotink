@@ -1,0 +1,96 @@
+<h1>Dashboard</h1>
+
+<a href="/" id="site_link" class="link blue" target="_blank">View site</a>
+<%= link_to "New article", new_account_article_path(@account), :class => "link green" %>
+
+<div id="current_lead_articles" class="list grid_12 alpha">
+	<div class="grid_12 alpha">
+		<div class="grid_4 alpha">
+			<h2>Current front page</h2> 
+			<div class="visibility_controls">
+				<a href="#" class="hide link grey">Hide</a>
+				<a href="#" class="show link grey">Show</a>
+			</div>
+		</div>
+		<% if @account.current_design %>
+			<p class="grid_8 omega front_page_controls" style="margin-bottom: 4px; margin-top: 7px; font-size: 110%;text-align:right;">
+				<strong>Current template:</strong> <%= link_to @current_front_page_template.name, edit_account_design_template_path(@account, @account.current_design, @current_front_page_template), :style => "text-decoration: underline;" %>
+				&nbsp;&nbsp;
+		<% else %>
+			<p style="margin-bottom: 4px; margin-top: 7px; font-size: 110%;text-align:right;">This site is currently offline.
+		<% end %>
+			 <% if permit? "admin or manager of account" %> 
+				<%= link_to "Update front page &raquo;", edit_account_front_page_path(@account), :class=>"link yellow", :style=>"margin-bottom: 0; font-size: 90%;" %>
+			 <% end %>
+			</p>
+	</div>
+	<div class="grid_12 alpha">
+		<% if @lead_articles.blank? %>
+		<h2 style="float:left; margin-bottom: 10px;">No lead articles</h2>
+		<% if can? :update, Settings %><p style="float:right; margin-top: 5px; margin-bottom: 0;"><%= link_to "Set lead articles &raquo;", edit_front_page_path %></p><% end %>
+		<% else %>
+			<h3>Lead articles</h3>
+			<div class="grid_12 alpha">
+				<% if @lead_articles.length.even? %>
+					<ol class="documents tiny listed left small">
+						<%= render @lead_articles[0..((@lead_articles.length/2) - 1)] %>
+					</ol>
+					<ol class="documents tiny listed right small" start="<%= ((@lead_articles.length/2)+1) %>">
+						<%= render @lead_articles[((@lead_articles.length/2))..-1] %>
+					</ol>
+				<% else %>
+					<ol class="documents tiny listed left small">
+						<%= render @lead_articles[0..((@lead_articles.length/2))] %>
+					</ol>
+					<ol class="documents tiny listed right small" start="<%= ((@lead_articles.length/2)+2) %>">
+						<%= render @lead_articles[((@lead_articles.length/2)+1)..-1] %>
+					</ol>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+</div>
+<div id="recently_updated_lists" class="grid_6 alpha">
+	<% unless @lists.blank? %>
+		<h2>Recently updated lists</h2>
+		<ol class="lists small">
+			<%= render @lists %>
+		</ol>
+	<% end %>
+	<% if List.count > 3 %><p class="grid_6 alpha" style="text-align:right"><%= link_to "View all lists &raquo", lists_path %></p><% end %>
+</div>
+<% unless @blogs.blank? %>
+	<div id="user_blogs" class="grid_6 omega">
+		<h2>Your blogs</h2>
+		<ol class="blogs small">
+			<%= render @blogs[0..2] %>
+		</ol>
+		<p class="grid_6 alpha" style="text-align:right"><%= link_to "View all blogs &raquo", account_blogs_path(@account) %></p>
+	</div>
+<% end %>
+<hr>
+<div id="owned_articles" class="grid_6 alpha">
+	<% unless @owned_articles.blank? %>
+		<h2>Your recent uploads</h2>
+		<%= will_paginate(@owned_articles, :inner_window => 1, :outer_window => 0, :class => "pagination remote") %>
+		<ol class="articles tiny">
+			<%= render @owned_articles %>
+		</ol>
+	<% end %>
+</div>
+
+<% content_for :javascript do %>
+	<script type="text/javascript" charset="utf-8">
+		$('#current_lead_articles .visibility_controls .show').live('click', function(){
+			$('#current_lead_articles').removeClass('hidden', 350);
+			return false;
+		});
+		
+		$('#current_lead_articles .visibility_controls .hide').live('click', function(){		
+			$('#current_lead_articles').addClass('hidden', 350);
+			return false;
+		});
+	</script>
+<% end %>
+
+
