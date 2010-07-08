@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100630132853) do
+ActiveRecord::Schema.define(:version => 20100707202155) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -166,6 +166,25 @@ ActiveRecord::Schema.define(:version => 20100630132853) do
     t.datetime "pdf_updated_at"
     t.string   "name"
     t.boolean  "processing",     :default => false
+  end
+
+  create_table "list_items", :force => true do |t|
+    t.integer "list_id"
+    t.integer "position"
+    t.integer "document_id"
+  end
+
+  add_index "list_items", ["document_id"], :name => "index_list_items_on_document_id"
+  add_index "list_items", ["list_id"], :name => "index_list_items_on_list_id"
+
+  create_table "lists", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.string   "slug"
+    t.text     "description"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "mediafiles", :force => true do |t|
