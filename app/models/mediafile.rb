@@ -60,6 +60,10 @@ class Mediafile < ActiveRecord::Base
       return "No file"
     end
   end
+  
+  def url(style_name = :system_default)
+    file.url(style_name)
+  end
       
   # Returns list of article's author names as a readable list, separated by commas and the word "and".
   def authors_list

@@ -13,7 +13,12 @@ Factory.define :detailed_mediafile, :parent => :mediafile_with_attachment do |m|
 end
 
 Factory.define :image, :parent => :mediafile, :class => "Image" do |i|
-  i.settings { |j| j.account.settings["image"] }
+  i.settings { { 
+            "thumb" => ['100>', 'jpg'],  
+            "small" => ['250>', 'jpg'],
+            "medium" => ['440>', 'jpg'],
+            "large" => ['800>', 'jpg']
+  } }
   i.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-jpg.jpg')) }
 end 
 

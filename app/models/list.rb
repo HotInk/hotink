@@ -9,13 +9,14 @@ class List < ActiveRecord::Base
   validates_format_of :name, :with => /^[a-zA-Z][-a-zA-Z ]+$/i, :message => 'can only contain letters, spaces and hyphens'
   validates_uniqueness_of :name
   
+  validates_presence_of :slug
+  def validate
+    errors.add("name", "is reserved, choose another") if ContentDrop.instance_methods.include?(slug)
+  end
   before_validation :generate_slug
   
-  belongs_to :owner, :class_name => "User"
   
-  #def owner=(new_owner)
-  #  update_attribute :owner_id, new_owner.id
-  #end
+  belongs_to :owner, :class_name => "User"
   
   def documents=(new_documents)
     new_documents.each_index do |i|

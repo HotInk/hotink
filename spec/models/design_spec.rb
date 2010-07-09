@@ -49,6 +49,14 @@ describe Design do
     design.account.current_design = design
     design.should be_current_design
   end
+  
+  it "should be able to make itself the current design" do
+    design = Factory(:design)
+    design.should_not be_current_design
+    
+    design.make_current
+    design.account.current_design.should eql(design)
+  end
 end
 
 describe FrontPageTemplate do

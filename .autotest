@@ -1,0 +1,22 @@
+Autotest.add_hook :initialize do |at|
+  at.add_mapping(%r%^spec/drops/.*rb$%) { |filename, _|
+    filename
+  }
+  at.add_mapping(%r{^app/drops/.*rb$}) do |f, _|
+      at.files_matching(%r%^spec/drops/.*rb$%)
+  end
+  
+  at.add_mapping(%r%^spec/filters/.*rb$%) { |filename, _|
+     filename
+  }
+  at.add_mapping(%r{^app/filters/.*rb$}) do |f, _|
+      at.files_matching(%r%^spec/filters/.*rb$%)
+  end
+  
+  at.add_mapping(%r%^spec/tags/.*rb$%) { |filename, _|
+     filename
+  }
+  at.add_mapping(%r{^app/tags/.*rb$}) do |f, _|
+      at.files_matching(%r%^spec/filters/.*rb$%)
+  end  
+end

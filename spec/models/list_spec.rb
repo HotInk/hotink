@@ -33,7 +33,6 @@ describe List do
   end
   
   it "should not allow any slugs that match content drop instance methods" do
-    pending "addition of ContentDrop"
     list = Factory(:list)
     ContentDrop.instance_methods.each do |method_name|
       list.slug = method_name

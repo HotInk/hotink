@@ -27,6 +27,10 @@ class Design < ActiveRecord::Base
     self==account.current_design
   end
   
+  def make_current
+    account.update_attribute :current_design, self
+  end
+  
   def create_view_templates
     self.create_article_template
     self.create_blog_template

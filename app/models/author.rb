@@ -11,4 +11,8 @@ class Author < ActiveRecord::Base
   validates_associated :account, :message => "Account must be valid"
   validates_presence_of :name, :message => "must have a name"
   validates_uniqueness_of :name, :scope => :account_id
+  
+  def to_liquid
+    { 'name' => name, 'id' => id }
+  end
 end
