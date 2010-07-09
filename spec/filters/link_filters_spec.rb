@@ -108,9 +108,6 @@ describe LinkFilters do
    end
   
    describe "link to page" do
-     before do
-       pending "Addition of pages"
-     end
       context "when viewing current design" do
          before do
            @design.make_current

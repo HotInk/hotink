@@ -13,6 +13,7 @@ describe Account do
   it { should have_many(:email_templates) }
   it { should have_many(:blogs) }
   it { should have_many(:lists) }
+  it { should have_many(:pages) }
   
   it { should have_one(:membership) }
   

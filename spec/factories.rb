@@ -54,3 +54,8 @@ Factory.define :list_item do |li|
   li.document { Factory(:document) }
   li.list { Factory(:list) }
 end
+
+Factory.define :page do |p|
+  p.sequence(:name) { |n| "Page-#{n}" }
+  p.account { Factory(:account) }
+end

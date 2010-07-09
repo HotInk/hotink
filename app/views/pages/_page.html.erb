@@ -1,0 +1,8 @@
+<li class="clearfix">
+	<p class="name"><%= link_to page.url, edit_account_page_path(@account, page) %> <%= link_to "x", [@account, page], :confirm => "You are about to delete the page: \n \n &quot;" + h(page.name) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return.", :method => :delete, :class=>"destroy_link" %></p>
+	<% unless page.child_pages.blank?%>
+		<ol class="children">
+			<%= render page.child_pages %>
+		</ol>
+	<% end %>
+</li>

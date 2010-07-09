@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100707202155) do
+ActiveRecord::Schema.define(:version => 20100709152112) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -234,6 +234,16 @@ ActiveRecord::Schema.define(:version => 20100707202155) do
   end
 
   add_index "oauth_tokens", ["token"], :name => "index_oauth_tokens_on_token", :unique => true
+
+  create_table "pages", :force => true do |t|
+    t.string   "name"
+    t.text     "contents"
+    t.integer  "template_id"
+    t.integer  "parent_id"
+    t.integer  "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "photocredits", :force => true do |t|
     t.integer  "mediafile_id"

@@ -1,0 +1,9 @@
+<h1>New page</h1>
+<% semantic_form_for([@account, @page]) do |form| %>
+	<% form.inputs :class => "grid_12" do %>
+		<%= form.input :name, :label => (form.object.parent_url + "/"), :wrapper_html => { :class => "grid_8" } %>
+		<%= form.commit_button :class => "grid_4" %>
+		<%= form.input :parent, :collection => page_form_options_collection(@account).collect{ |page| [page.url, page.id] }, :include_blank => "None", :wrapper_html => { :class => "grid_12 alpha"} %>
+		<%= form.input :contents %>	
+	<% end %>
+<% end %>

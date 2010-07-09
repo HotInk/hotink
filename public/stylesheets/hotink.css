@@ -658,6 +658,23 @@ form.list.use_preview #list_preview p				{ width: 70%; line-height: 1.3; }
 #form_categories li { padding: 0.25em 0.125em; }
 
 /*-----------------------------------
+/*		Page styles
+/*---------------------------------------*/
+
+#pages { float: left; clear: left; width: 100%; border: 1px dotted #999; background-color: #F0F0F0; margin-bottom: 5px; }
+#pages li { padding: 10px; position:relative; }
+#pages > li+li { border-top: 1px dotted #999; }
+#pages .name { font-size: 20px; margin-bottom: 5px; }
+#pages .name a { margin-right: 7px; }
+#pages ol { margin: 0; padding-left: 15px; }
+#pages ol .name { font-size: 17px; line-height: 1.4; }
+#pages ol.children { float: left; clear: left; }
+#pages ol li { float: left; clear: left; padding: 0 0 0px 0; }
+
+#page_name_input label { float: left; width: auto; margin-right: 5px; line-height: 1.5; }
+#page_name_input input { width: 35%; }
+
+/*-----------------------------------
 /*		Design and template styles
 /*---------------------------------------*/
 

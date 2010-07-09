@@ -15,6 +15,7 @@ class Account < ActiveRecord::Base
   has_many :issues, :dependent => :delete_all, :order => "date desc"
   has_many :email_templates
   has_many :lists
+  has_many :pages
   
   has_one :membership
   has_many :user_invitations
