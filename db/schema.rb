@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100709152112) do
+ActiveRecord::Schema.define(:version => 20100712163715) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20100709152112) do
     t.text     "settings"
     t.string   "lead_article_ids"
     t.integer  "current_design_id"
+    t.string   "site_url"
   end
 
   create_table "authors", :force => true do |t|

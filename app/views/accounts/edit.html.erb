@@ -54,7 +54,16 @@
 						<%= f.select :current_design_id, options_from_collection_for_select(@account.designs.all, :id, :name, @account.current_design_id), :include_blank => "No design" %>
 						<small>Changes to your site's design will take effect immediately.</small>
 					</div>
-				</div>				
+				</div>	
+				<div class="column_holder clearfix">
+					<div class="quarter_column left_column">
+					    <%= f.label :site_url, "Site url" %>
+					</div>
+					<div class="three_quarters_column right_column">
+						<%= f.text_field :site_url, :class =>"text_input" %>
+						<small>This is url you use to access your site.</small>
+					</div>
+				</div>			
 			</fieldset>
 			
 			<% end %>	

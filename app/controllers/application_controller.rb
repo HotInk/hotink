@@ -103,6 +103,15 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # Determines which design to render, either the current design or one passed in as <tt>params[:design_id]</tt> 
+  def design_to_render
+    if params[:design_id]&&current_user&&(current_user.has_role("manager", @account)||current_user.has_role("admin"))
+      @account.designs.find(params[:design_id])
+    else
+      @account.current_design
+    end
+  end
+  
   def login_required
     unless current_user && authorized?
       store_location
