@@ -111,6 +111,12 @@ li.awaiting_attention h1>small { color: #00AF2E; }
 #current_lead_articles ol.documents.left 			{ clear: left; width: 48%; padding-right: 1%; }
 #current_lead_articles ol.documents.right 			{ clear: none; width: 48%; padding-left: 1%; }
 
+/* Front page form */
+
+#front_page_form .preview 				{ margin: 30px 0 20px 0; background-color: #E1EBF7; }
+#front_page_form .preview > div			{ padding: 15px; }
+#front_page_form .preview  h2			{ margin:0; }
+#front_page_form .preview .preview_form { float:right; }
 
 /* Documents */
 ol.documents { float: left; clear: left; width: 100%; border: 1px dotted #999; margin-bottom: 5px; }

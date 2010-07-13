@@ -3,7 +3,7 @@ class ContentDrop < Drop
   alias_method :account, :source # for readability
   
   def before_method(method)
-    if list = List.find_by_slug(method)
+    if list = account.lists.find_by_slug(method)
        ListDrop.new list
     else
       super(method)
@@ -11,12 +11,12 @@ class ContentDrop < Drop
   end
   
   def blogs
-    Blog.all.collect{ |blog| BlogDrop.new(blog) }
+    account.blogs.collect{ |blog| BlogDrop.new(blog) }
   end
   
   def blog
    blogs = {}
-    Blog.all.each do |blog|
+    account.blogs.each do |blog|
       blogs[blog.slug] = BlogDrop.new(blog)
     end
     blogs
@@ -35,7 +35,8 @@ class ContentDrop < Drop
   end
   
   def lead_articles
-    articles = account.lead_article_ids.collect{ |id| account.articles.published.find_by_id(id) }
+    article_ids = options[:preview_lead_article_ids] || account.lead_article_ids
+    articles = article_ids.collect{ |id| account.articles.published.find_by_id(id) }
     articles.compact.collect{ |article| ArticleDrop.new(article) }
   end
 end

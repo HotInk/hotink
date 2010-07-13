@@ -102,7 +102,6 @@ describe PublicFrontPagesController do
     
       it { should respond_with(:success) }
       it { should assign_to(:front_page_template).with(@template) }
-      it { should assign_to(:lead_articles).with(@lead_articles) }
       it { should assign_to(:design).with(@design) }    
     end
     

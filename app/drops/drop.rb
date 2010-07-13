@@ -1,9 +1,10 @@
 class Drop < Liquid::Drop
   
-  attr_reader :source
+  attr_reader :source, :options
   
-  def initialize(source = nil)
+  def initialize(source = nil, options = {})
     @source = source
+    @options = options
   end
   
   def before_method(method)

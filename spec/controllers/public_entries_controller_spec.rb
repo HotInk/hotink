@@ -15,7 +15,7 @@ describe PublicEntriesController do
           @template = mock('entry template')
           @design.stub!(:entry_template).and_return(@template)
 
-          @content_drop = ContentDrop.new
+          @content_drop = ContentDrop.new(@account)
           @site_drop = SiteDrop.new(@account)
           SiteDrop.stub!(:new).and_return(@site_drop)
           ContentDrop.stub!(:new).and_return(@content_drop)

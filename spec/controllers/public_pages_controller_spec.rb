@@ -15,7 +15,7 @@ describe PublicPagesController do
           @template = mock('page template')
           @design.stub!(:page_template).and_return(@template)
         
-          @content_drop = ContentDrop.new
+          @content_drop = ContentDrop.new(@account)
           @site_drop = SiteDrop.new(@account)
           SiteDrop.stub!(:new).and_return(@site_drop)
           ContentDrop.stub!(:new).and_return(@content_drop)

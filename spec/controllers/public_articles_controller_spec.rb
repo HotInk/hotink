@@ -15,7 +15,7 @@ describe PublicArticlesController do
         @template = mock('article template')
         @design.stub!(:article_template).and_return(@template)
         
-        @content_drop = ContentDrop.new
+        @content_drop = ContentDrop.new(@account)
         @site_drop = SiteDrop.new(@account)
         ContentDrop.stub!(:new).and_return(@content_drop)
         SiteDrop.stub!(:new).and_return(@site_drop)

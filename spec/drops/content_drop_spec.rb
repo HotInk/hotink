@@ -54,6 +54,13 @@ describe ContentDrop do
       output = Liquid::Template.parse( ' {% for article in content.lead_articles %} {{ article.title }} {% endfor %} '  ).render('content' => ContentDrop.new(@account))
       output.should == "  #{ @lead_articles[1..-1].collect{ |a| a.title }.join('  ') }  "
     end
+    
+    it "should return an alternate set of lead articles for previewing, if supplied" do
+      preview_lead_articles = (1..2).collect{ |n| Factory(:published_article, :title => "Title ##{n}", :account => @account) }
+      
+      output = Liquid::Template.parse( ' {% for article in content.lead_articles %} {{ article.title }} {% endfor %} '  ).render('content' => ContentDrop.new(@account, :preview_lead_article_ids => preview_lead_articles.collect{ |a| a.id }))
+      output.should == "  #{ preview_lead_articles.collect{ |a| a.title }.join('  ') }  "
+    end
   end
   
   describe "list support" do    
