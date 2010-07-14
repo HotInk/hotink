@@ -1,117 +1,153 @@
-<div id="article_form" class="form">
-	<% remote_form_for([@account, @article], :html=>{:autocomplete=>"off"}) do |f| %>
-	  <div id="buttons">
-		<%= button_link_to_submit "Save", :class=>"save large" %>	
-		<p id="last_saved">
-		  <% if @article.created_at == @article.updated_at %>
-		  	Never saved
-		  <% else %>
-		  	Last modified <%= time_ago_in_words(@article.updated_at) %> ago
-		  <% end %>
-		</p>
-	  </div>
-	<p id="top_links">	
-		<%= link_to "&#171; Back to articles list", account_articles_url(@account), :class=>"weblink" %> <%= link_to "Add a new article", new_account_article_url(@account), :class => "weblink", :style => "margin-left:10px;" %>
-	</p>
-	<h1>Edit article</h1>
-	  <%= f.error_messages %>
-	  <div class="field_element">
-	    <%= f.label :title, "Headline"%><br />
-	    <%= f.text_field :title , :class => "user" %>
-	  </div>
-	  <div class="field_element">
-		    <%= f.label :subtitle, "Subhead"%><br />
-		    <%= f.text_field :subtitle, :class => "user"  %>
-	  </div>
-	  <div class="column_holder clearfix">
-	  	<div id ="author_list" class="field_element three_quarters_column">
-				<%= render :partial => 'article_author_form' %>
-	  	</div><!-- /author_list -->
-		<div class="field_element quarter_column">
-			<%= f.label :section_id, "Primary section"%><br />
-			<%= select_tag("article[section_id]", options_for_category_select(@account.categories, @article.section ), :class => :text_input)%>
+<%= stylesheet_link_tag 'wmd' %>
+<%= stylesheet_link_tag 'token_input' %>
+
+<% semantic_form_for [@account, @article] do |form| %>	
+<% form.buttons :class => "grid_8" do %>
+	<li class="grid_4 alpha"><h1>Edit article</h1></li>
+ 	<li class="grid_4 omega" style="float:right;text-align:right;margin-right: -10px;"><%= link_to @article.published? ? "View on site" : "Preview on site", account_public_article_url(@account, @article), :target => "_blank", :style=>"line-height: 1.2;" %>&nbsp;&nbsp;&nbsp;<%= form.submit "Save article" %></li>
+<% end %>
+	<div class="toolbox grid_4">
+		<h4>Status</h4>
+		<div>
+			<% if @article.published? %>
+			<p id="status" class="published">
+				Published<br />
+				<small><strong><%= @article.published_at.to_s(:date) %></strong> at <strong><%= @article.published_at.to_s(:time) %></strong>
+				(<%= distance_of_time_in_words_to_now(@article.published_at) %> ago)</small>
+			<% elsif @article.scheduled? %>
+			<p id="status" class="scheduled">
+				Scheduled<br />
+				<small><strong><%= @article.published_at.to_s(:date) %></strong> at <strong><%= @article.published_at.to_s(:time) %></strong>
+				(<%= distance_of_time_in_words_to_now(@article.published_at) %> from now)</small>
+			<% else %>
+			<p id="status" class="draft">
+				Draft
+			<% end %>
+			</p>
+			<div id="publish">
+				<% if @article.status == "Published" -%>
+					<%= form.submit "Unpublish", :class => "article_unpublish" %> <input type="button" value="Reschedule" class="show_schedule" />
+				<% else -%>
+					<%= form.submit "Publish", :class => "article_publish" %> <input type="button" value="Specify date" class="show_schedule" />
+				<% end %>
+			</div>
+			<%= form.hidden_field :status %>
+			<div id="schedule" style="display:none;">
+				<label for="article[schedule][year]">Publish this article on:</label><br />
+				<%= select_datetime (@article.published_at.nil? ? Time.now : @article.published_at), :order => [:month, :day, :year], :datetime_separator => "<br /> at ", :time_separator => ": ", :prefix => "article[schedule]" %>
+				<%= form.submit "Schedule", :class => "article_publish" %>
+			</div>
 		</div>
-	  </div>
-	  <p>
-	    <%= f.label :summary, "Excerpt" %> <small>Short summary or teaser</small><br />
-   	    <%= f.text_area :summary, :class=>"text_input user" %>
-	  </p>
-	  <div id="bodytext" class="clearfix">
-	    <%= f.label :bodytext, "Body text" %><br />
-	  	<div id="wmd-button-bar"></div>
-	    <%= f.text_area :bodytext, :id => 'wmd-input' %>
-	  </div>
-	  <div id="categories_hidden">
-	  	<% @account.categories.each do |cat| %>
-			<input type="hidden" name="article[categories_attributes][<%= cat.id %>]" value="<%= "1" if @article.categories.member?(cat) %>" id="article_categories_attributes_<%= cat.id %>" />
-		<% end %>
-	  </div>
+		
+		<%= render :partial => 'printing' %>
+	</div>
+	
+	<% form.inputs :class => "grid_8", :style => "clear:left;" do %>
+		<%= form.input :title, :as => :string %>
+		<%= form.input :subtitle, :as => :string %>
+		<%= form.input :author_ids, :label => "Authors", :as => :string, :input_html => { :value => "" } %>
+		<%= form.input :summary, :as => :text, :input_html => { :rows => 2 }, :label => "Excerpt" %>
+		<%= form.input :bodytext, :label => "Bodytext <a id=\"bodytext_preview_link\" href=\"#bodytext_preview\" style=\"float:right\">Preview formatting</a>" %>
 	<% end %>
-</div><!-- /article_form -->
-		<div id="tools">
-			<div class="toolbox">
-				<div class="toolbox_border"></div>
-				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Status</h2></div>
-				<div class="toolbox_border"></div>
-				<div class="toolbox_body clearfix">
-					<%= render :partial=>'status' %>
-					<%= render :partial=>'printing' %>
-				</div>
-				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - tools -->
-			
-			<div class="toolbox">
-				<div class="toolbox_border"></div>
-				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Media</h2></div>
-				<div class="toolbox_border"></div>
-				<div class="toolbox_body clearfix">	
-					<div id="mediafiles_list" class="media_list">
-						<% unless @article.waxings %>
-							<p class="no_media">
-								No media attached.
-							</p>
-						<% else %>
-							<%= render @article.waxings %>
+	
+	<div class="toolbox grid_4">
+		<h4>Categories</h4>
+		<div id="article_categories">
+			<% for category in @account.categories.sections.all %>
+		  		<%= check_box_tag "article[category_ids][]", category.id, @article.categories.include?(category) %>
+		  		<%= category.name %><br />
+				<% unless category.subcategories.blank? %>
+					<% category.subcategories.each do |subcategory| %>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "article[category_ids][]", subcategory.id, @article.categories.include?(subcategory) %>
+			  		<%= subcategory.name %><br />
+						<% unless subcategory.subcategories.blank? %>
+							<% subcategory.subcategories.each do |subsubsubcategory| %>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "article[category_ids][]", subsubsubcategory.id, @article.categories.include?(subsubsubcategory) %>
+					  		<%= subsubsubcategory.name %><br />
+							<% end %>
 						<% end %>
-					</div>
-					<%= button_link_to_remote "Attach Media", :url=>new_account_document_mediafile_url(@account, @article, :format=>:js), :method=>:get %>
-					<iframe name="upload_frame" style="display: none"></iframe>
-				</div>
-				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - media -->	
+					<% end %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+	
+	<div class="toolbox grid_4">
+		<h4>Media</h4>
+		<div>
+			<ol id="article_mediafiles">
+				<%= render :partial => 'article_mediafile', :collection => @article.mediafiles %>
+			</ol>
+			<a id="attach_mediafile_link" href="<%= new_account_document_mediafile_path(@account, @article) %>" title="Attach media">Attach media</a>
+			<iframe name="upload_frame" style="display: none"></iframe>
+		</div>
+	</div>
+	
+	<div class="toolbox grid_4">
+		<h4>Tags</h4>
+		<div>
+			<% form.inputs do %>
+				<%= form.input :tag_list, :as => :text, :input_html => { :rows => 3 }, :wrapper_html => { :style => "margin-bottom: 0;width: 99%;" } %>
+			<% end %>
+		</div>
+	</div>
+	
+<% end %>
+
+<div style="display: none;">
+	<div id="bodytext_preview">
+		<h1>Bodytext preview</h1>
+		<div id="toggle_preview" class="state_control"><a href="#" class="formatted selected">Formatted</a><a href="#" class="raw_html">Raw HTML</a></div>
+		<hr>
+		<div id="wmd-preview">
+		</div>
+		<div id="wmd-output" style="display:none">
+		</div>
+	</div>
+</div>
+
+<% content_for :javascript do %>
+	<%= javascript_include_tag 'jquery.tokeninput' %>
+	<%= javascript_include_tag 'jquery.wmd' %>
+	<script type="text/javascript">
+		$().ready(function() {			
+           	$("#article_bodytext").wmd({'preview':"wmd-preview"}); 
+
+			$('#create_printing').live('click', function(event){
+				$.ajax({ 
+					'data': { 'printing[issue_id]' : $('#printing_issue_id').val() }, 
+					'type' : 'POST', 
+					'url' : '<%= account_article_printings_url(@account, @article)%>',
+					'beforeSend' : function(){ 
+						$('#printings .spinner').show();
+					} 
+				});
+				event.preventDefault();
+			});
 			
-			<div class="toolbox">
-				<div class="toolbox_border"></div>
-				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Categories</h2></div>
-				<div class="toolbox_border"></div>
-				<div class="toolbox_body clearfix">	
-					<div id="form_categories">
-						<ol>
-							<%= render :partial => "categories/form_category", :collection => @account.main_categories, :locals => { :document => @article } %>
-						</ol>
-					</div>				</div>
-				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - categories -->
-
-			<div class="toolbox">
-				<div class="toolbox_border"></div>
-				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tags</h2></div>
-				<div class="toolbox_border"></div>
-				<div class="toolbox_body">	
-					<script id="article_tags_form" type="text/javascript" src="<%= new_account_article_tag_url(@account, @article, :format=>:js ) %>"></script>
-				</div>
-				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - tags -->		
-		</div><!-- /tools -->
-
-<script type="text/javascript">
-	//Load toolbox functionality
-	$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
-	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
-
-	//Shortcut function to reload media list
-	reload_media = function() {
-		new Ajax.Request('/accounts/<%= @account.id %>/articles/<%= @article.id %>/mediafiles', {method:'get'});
-	}
-</script>
-<%= javascript_include_tag 'wmd.min' %>
+			$('#upload_media_form form').live('submit', function(){
+				$('#article_mediafiles').append('<li><img class=\"mediafile_loading\" style=\"margin: 1em 1.5em;\" src=\"/loading.gif\" /></li>');
+			});
+			
+			
+			$("#article_author_ids").tokenInput("<%= account_authors_path(@account, :format => :json) %>", {
+				initialValues: <%= @article.authors_json %>,
+				canCreate: true,
+				createText: "New author",
+				hintText: "Add an author",
+		        classes: {
+		            tokenList: "token-input-list",
+		            token: "token-input-token",
+		            tokenDelete: "token-input-delete-token",
+		            selectedToken: "token-input-selected-token",
+		            highlightedToken: "token-input-highlighted-token",
+		            dropdown: "token-input-dropdown",
+		            dropdownItem: "token-input-dropdown-item",
+		            dropdownItem2: "token-input-dropdown-item2",
+		            selectedDropdownItem: "token-input-selected-dropdown-item",
+		            inputToken: "token-input-input-token"
+		        }
+		   });	
+        });
+	</script>
+<% end %>

@@ -9,6 +9,8 @@ describe Category do
   it { should validate_presence_of(:account).with_message(/must have an account/) }
   it { should validate_presence_of(:name) }
   
+  it { should have_many(:subcategories) }
+  
   it "should return active and inactive categories" do
     active_category = Factory(:category)
     inactive_category = Factory(:inactive_category)

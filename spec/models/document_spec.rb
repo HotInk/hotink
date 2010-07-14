@@ -7,6 +7,14 @@ describe Document do
   
   it { should have_many(:authorships).dependent(:destroy) }
   it { should have_many(:authors).through(:authorships) }
+  
+  it "should generate appropriate authors JSON" do
+    lilly = Factory(:author, :name => "Lilly Aldrin")
+    barney = Factory(:author, :name => "Barney Stinson")
+    document = Factory(:document, :authors => [lilly, barney])
+    
+    document.authors_json.should eql([{ "id" => lilly.id, "name" => lilly.name },{ "id" => barney.id, "name" => barney.name }].to_json)
+  end
 
   it { should have_many(:printings).dependent(:destroy) }
   it { should have_many(:issues).through(:printings) }
@@ -156,7 +164,7 @@ describe Document do
       Document.drafts.all.should_not include(article2)
     end
   end
-  
+
   it "should have a default per-page value for pagination" do
     Document.per_page.should == 10
   end

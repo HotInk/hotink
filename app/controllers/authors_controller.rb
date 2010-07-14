@@ -1,27 +1,15 @@
 class AuthorsController < ApplicationController
-  # GET /authors
-  # GET /authors.xml
-  def index
-    if @article = find_article
-      @authors = @article.authors
+
+  # GET /authors.json
+  def index    
+    if params[:q]
+      @authors = @account.authors.search_for(params[:q], :on => [:name])
     else 
       @authors = @account.authors.find(:all)
     end
     
     respond_to do |format|
-      format.json { render :json => @authors }
-    end
-  end
-
-  # POST /authors
-  # POST /authors.xml
-  def create
-    @author = @account.authors.find_or_initialize_by_name(params[:author])
-        
-    respond_to do |format|
-      if @author.save
-        format.json { render :json => @author, :status => :created }
-      end
+      format.json { render :json => @authors.collect{ |a| { "id" => a.id, "name" => a.name } }.to_json }
     end
   end
 

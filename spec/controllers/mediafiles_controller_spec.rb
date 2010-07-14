@@ -54,27 +54,29 @@ describe MediafilesController do
   describe "GET to new" do
     before do
       @mediafile = Factory(:mediafile, :account => @account)
-    end
-    
-    context "with XHR request" do
-      context "relative to document" do
-        before do
-          @article = Factory(:article, :account => @account)
-          xhr :get, :new, :account_id => @account.id, :document_id => @article.id
-        end
-
-        it { should assign_to(:mediafile).with_kind_of(Mediafile) }
-        it { should respond_with_content_type(:js) }
+    end    
+  
+    context "relative to document" do
+      before do
+        @article = Factory(:article, :account => @account)
+        xhr :get, :new, :account_id => @account.id, :document_id => @article.id
       end
+
+      it { should assign_to(:mediafile).with_kind_of(Mediafile) }
+      it { should assign_to(:document).with_kind_of(Document) }
+      it { should respond_with_content_type(:html) }
+      it { should_not render_with_layout(:hotink) }
     end
     
-    context "with HTML request" do
+    context "without document" do
       before do
         get :new, :account_id => @account.id
       end
       
       it { should assign_to(:mediafile).with_kind_of(Mediafile) }
+      it { should_not assign_to(:document) }
       it { should respond_with_content_type(:html) }
+      it { should render_with_layout(:hotink) }
     end
   end
 

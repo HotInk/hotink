@@ -1,4 +1,6 @@
 class Author < ActiveRecord::Base
+  include Pacecar
+  
   belongs_to :account
 
   has_many :authorships, :dependent => :destroy

@@ -6,6 +6,7 @@ class Category < ActiveRecord::Base
   
   belongs_to :parent, :class_name => "Category", :foreign_key=>:parent_id
   has_many :children, :class_name => "Category", :foreign_key=>:parent_id, :order => "position"
+  has_many :subcategories, :class_name => "Category", :foreign_key=>:parent_id, :order => "position"  
   
   validates_presence_of :account, :message => "must have an account"
   validates_presence_of :name

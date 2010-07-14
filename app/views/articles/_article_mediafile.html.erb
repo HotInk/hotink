@@ -1,0 +1,50 @@
+<li class="<%= article_mediafile.class.name.downcase %>">
+	<% @waxing = @article.waxings.find_by_mediafile_id(article_mediafile.id) %>
+	<% 
+	#link_to "x", destroy_account_mediafile_article_path(@article, :mediafile_id => article_mediafile), :class=>"detach", "data-remote" => true, "data-method" => :delete, "data-confirm" => "Are you sure you want to delete this #{article_mediafile.class.name.downcase}?", "rel" =>"nofollow"
+	%>
+	
+	<% if article_mediafile.is_a?(Audiofile) %>
+		<object type="application/x-shockwave-flash" data="/player_mp3.swf" style="margin-bottom:10px;" width="258" height="20">
+		    <param name="movie" value="/player_mp3.swf" />
+		    <param name="bgcolor" value="#ffffff" />
+		    <param name="FlashVars" value="mp3=<%= article_mediafile.file.url %>&width=258" />
+		</object>
+	<% end %>
+	
+	<div id="waxing_<%= @waxing.id %>_caption" class="caption">
+		<% if @waxing.caption.blank? %>
+			<p>No caption</p>
+		<% else %>
+			<%= RDiscount.new(@waxing.caption).to_html %>
+		<% end %>
+	</div>
+	
+	<% if article_mediafile.is_a?(Image) %>
+		<%= image_tag article_mediafile.file.url(:thumb) %>
+	<% end %>
+	
+	<p class="edit_caption"><a id="edit_waxing_<%= @waxing.id %>" href="#waxing_<%= @waxing.id %>">Edit</a></p>	
+	
+	<script type="text/javascript" charset="utf-8">
+		$("#edit_waxing_<%= @waxing.id %>").fancybox({
+			'titlePosition'		: 'inside',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none'
+		});
+	</script>
+	
+	<div style="display:none">
+		<div id="waxing_<%= @waxing.id %>" style="height:210px;width:400px;">
+			<% semantic_form_for [@account, @waxing], :html => { "data-remote" => true } do |waxing| %>
+				<% waxing.inputs do %>
+					<%= waxing.input :caption, :as => :text, :input_html => { :rows => 4, :cols => 35 } %>
+				<% end %>
+				<% waxing.buttons do %>
+					<%= waxing.commit_button "Save caption" %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+
+</li>

@@ -89,7 +89,7 @@ class ApplicationController < ActionController::Base
     if params[:document_id]
       @document = @account.documents.find(params[:document_id])
     else
-      @document = false
+      @document = nil
     end
   end
   

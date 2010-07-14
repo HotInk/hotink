@@ -19,19 +19,19 @@ describe ArticlesController do
     end
     
     context "with draft, scheduled and published articles" do
-      before do
-        @drafts = (1..3).collect{ Factory(:draft_article, :account => @account) }
-        @scheduled = (1..3).collect{ |n| Factory(:scheduled_article, :published_at => (Time.now + 1.day - n.minutes), :account => @account) }
-        @published = (1..3).collect{ Factory(:detailed_article, :account => @account) }
-        
-        get :index, :account_id => @account.id
-      end
-      
-      it { should respond_with(:success) }
-      
-      it { should assign_to(:drafts).with(@drafts) }
-      it { should assign_to(:scheduled).with(@scheduled) }
-      it { should assign_to(:articles).with(@published) }
+       before do
+         @drafts = (1..3).collect{ |n| Factory(:draft_article, :updated_at => n.days.ago, :account => @account ) }
+         @scheduled = (1..3).collect{ |n| Factory(:scheduled_article, :published_at => (Time.now + 1.day - n.minutes), :account => @account ) } 
+         @published = (1..3).collect{ Factory(:published_article, :account => @account) }
+         get :index, :account_id => @account.id
+       end
+       
+       it { should respond_with(:success) }
+
+       it "should paginate published articles" do
+          should assign_to(:articles).with(@drafts + @scheduled + @published)
+          assigns(:articles).should be_kind_of(WillPaginate::Collection)
+       end      
     end
     
     context "searching for specific articles" do
@@ -221,6 +221,39 @@ describe ArticlesController do
       
       it "should unpublished the article" do
         @article.reload.should be_draft
+      end
+    end
+    
+    describe "categories" do
+      before do
+        @user = Factory(:user)
+        @article.owner = @user
+        controller.stub!(:current_user).and_return(@user)
+      end
+      
+      describe "attaching categories" do
+        before do
+          @category1 = Factory(:category)
+          @category2 = Factory(:category)
+          put :update, :account_id => @account.id, :id => @article.id, :article => { :category_ids => [@category1.id, @category2.id] }
+        end
+      
+        it "should attach categories" do
+          @article.reload.categories.should include(@category1)
+          @article.categories.should include(@category2)
+        end
+      end
+    
+      describe "detaching category" do
+        before do       
+          @category = Factory(:category)
+          @article.categories << @category
+          put :update, :account_id => @account.id,  :id => @article.id, :article => { :category_ids => [] }
+        end
+      
+        it "should attach category" do
+          @article.reload.categories.should_not include(@category)
+        end
       end
     end
     

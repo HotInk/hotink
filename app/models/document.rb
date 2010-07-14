@@ -163,6 +163,10 @@ class Document < ActiveRecord::Base
     end         
   end
 
+  def authors_json
+    authors.collect{ |a| { "id" => a.id, "name" => a.name } }.to_json
+  end
+
   def word_count
     bodytext.nil? ? 0 : bodytext.scan(/\w+/).size
   end

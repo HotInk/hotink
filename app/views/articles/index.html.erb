@@ -32,12 +32,8 @@
 		<%= render :partial=>'pagination' %>
 		<ol id="articles_list" class="documents">			
 			<% if (@articles.length > 0) || (@drafts && @drafts.length > 0) %>
-			<%= render @awaiting_attention if @awaiting_attention %>
-				<%= render @drafts if @drafts %>
-				<%= render @scheduled if @scheduled %>
-				<% for article in @articles %>
-					<%= render article %>
-				<% end %>
+				<%= render @awaiting_attention if @awaiting_attention %>
+				<%= render @articles %>
 			<% elsif @search_query %>
 				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
 			<% else %>

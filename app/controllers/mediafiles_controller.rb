@@ -31,12 +31,10 @@ class MediafilesController < ApplicationController
   # GET /mediafiles/new
   def new
     @mediafile = @account.mediafiles.build
-
-    respond_to do |format|
-      format.html # new.html.erb
-      if @document
-        format.js
-      end
+    if request.xhr?
+      render :template => 'mediafiles/new.html.erb', :layout => false
+    else
+      render :action => :new
     end
   end
 
@@ -66,11 +64,11 @@ class MediafilesController < ApplicationController
         flash[:notice] = 'Media added'
             #Special behaviour to mimic ajax file-upload on article & entry form, if it's an iframe
             if params[:iframe_post] && @document
+              @article = @document
               @waxing = @account.waxings.create(:document_id => @document.id, :mediafile_id=> @mediafile.id);
               responds_to_parent do
           			render :update do |page|
-          			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'
-          				page.replace_html 'mediafiles_list', :partial => 'waxings/waxing', :collection => @document.waxings
+          				page << "$.fancybox.close();$('#article_mediafiles').html('#{ escape_javascript(render(:partial => 'articles/article_mediafile', :collection => @document.mediafiles)) }')"
           			end
               end
               return
@@ -84,8 +82,7 @@ class MediafilesController < ApplicationController
    if @document
       responds_to_parent do
   			render :update do |page|
-  			  page << 'trigger_flash(\'<p style="color:yellow;">No mediafile uploaded</p>\');'
-  				page.replace_html 'mediafiles_list', :partial => 'waxings/waxing', :collection => @document.waxings
+  				page << "$.fancybox.close();$('#article_mediafiles').html('#{ escape_javascript(render(:partial => 'articles/article_mediafile', :collection => @document.mediafiles)) }')"
   			end
       end
     else

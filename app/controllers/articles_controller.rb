@@ -15,11 +15,9 @@ class ArticlesController < ApplicationController
         @articles = @account.articles.search( @search_query, :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
       else  
         if page.to_i == 1
-          @drafts = @account.articles.drafts.and_related_items
-          @scheduled = @account.articles.scheduled.and_related_items.by_published_at(:desc)
           @awaiting_attention = @account.articles.awaiting_attention.all
         end
-        @articles = @account.articles.published.by_published_at(:desc).paginate( :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
+        @articles = @account.articles.paginate(:page => page, :per_page => per_page, :order => 'status, published_at desc, updated_at desc', :include => [:authors, :mediafiles, :section])
       end
     
       respond_to do |format|
@@ -60,12 +58,13 @@ class ArticlesController < ApplicationController
   def update
     @article = @account.articles.find(params[:id])
     
+    publish_time = params[:article].delete(:schedule)
+    
     permit @article.is_editable_by do
-      
       # Only touch published status if status is passed
       if params[:article][:status]=="Published"
         if permit?("(manager of account) or admin")
-          @article.publish extract_time(params[:article].delete(:schedule))
+          @article.publish extract_time(publish_time)
         end
       elsif params[:article][:status]=="Awaiting attention"
         @article.sign_off(current_user)
@@ -80,7 +79,7 @@ class ArticlesController < ApplicationController
       end
         
       respond_to do |format|
-        if @article.update_attributes(params[:article])
+        if @article.update_attributes({'category_ids' => []}.merge(params[:article]))
           flash[:notice] = "Article saved"
           format.html { redirect_to(edit_account_article_path(@account, @article)) }
           format.js
