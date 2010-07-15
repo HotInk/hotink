@@ -64,7 +64,7 @@ class MediafilesController < ApplicationController
         flash[:notice] = 'Media added'
             #Special behaviour to mimic ajax file-upload on article & entry form, if it's an iframe
             if params[:iframe_post] && @document
-              @article = @document
+              @article = @document # articles/article_mediafile partial expects @article
               @waxing = @account.waxings.create(:document_id => @document.id, :mediafile_id=> @mediafile.id);
               responds_to_parent do
           			render :update do |page|
@@ -79,7 +79,8 @@ class MediafilesController < ApplicationController
        render :text => "Mediafile NOT uploaded", :status => :bad_request
     end
   rescue NoMethodError # Raised in the case that there's no file supplied (on line 54 `params[:mediafile]` will be nil, hence `params[:mediafile][:file]` raises error)
-   if @document
+   if @document 
+      @article = @document # articles/article_mediafile partial expects @article
       responds_to_parent do
   			render :update do |page|
   				page << "$.fancybox.close();$('#article_mediafiles').html('#{ escape_javascript(render(:partial => 'articles/article_mediafile', :collection => @document.mediafiles)) }')"

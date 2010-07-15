@@ -413,6 +413,15 @@ ol#article_mediafiles li.image .edit_caption { float: left; clear: left; width: 
 #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
 #upload_media_form p { font-size: 13px; }
 
+#attach_archive_media { width: 650px; padding: 5px; }
+#fancybox-inner #mediafiles.small { width: 49em; padding: 0 0.5em; }
+#fancybox-inner #mediafiles.small h1 { padding: 0.125em; }
+#fancybox-inner #mediafiles.small ol { clear: both; }
+#fancybox-inner #mediafiles.small ol li h1 { padding: 0.25em; }
+#fancybox-inner #mediafiles.small button.save { margin: 0.5em 0;}
+#fancybox-inner #mediafiles.small .pagination { font-size: 1.2em; }
+#fancybox-left-ico, #fancybox-right-ico { display: none; }
+
 /* New mediafile form styles */
 #mediafile { width: 50em; margin: 0 auto; min-height: 50px; }
 #mediafile #upload_media_form { float: left;}
@@ -431,24 +440,6 @@ ol#article_mediafiles li.image .edit_caption { float: left; clear: left; width: 
 #article p.byline, #article p.date, #entry p.date, #entry p.byline { font-weight: 600; font-size: 1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
 #article div.media_thumbs, #entry div.media_thumbs { float:right; clear: right; width: 400px; padding: 10px; margin: 5px 0 5px 15px; background-color: #CEE4F3; border: 1px solid #DEDEDE;  -moz-border-radius: 3px; -webkit-border-radius: 3px;}
 
-
-/* Attach media modal styles */
-#overlay_content #upload_media_container { width: 565px; min-height: 50px; margin-bottom:0px;}
-#overlay_content #upload_media_container .title_bar button { vertical-align: 0.5em; }
-#overlay_content #upload_media_container .title_bar h1 {  display:inline; margin: 0 0.25em;  margin-right: 0.5em; font-size: 2.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA;}
-#overlay_content #upload_media_tab {  border: 1px solid #AAA; padding: 5px; }
-#overlay_content #upload_media_container #upload_media_form {float: left;}
-#overlay_content #upload_media_form>div { margin: 1em;}
-#overlay_content #upload_media_form h4 { margin: 10px; padding-top:30px; font-size: 18px; }
-#overlay_content #upload_media_form p { font-size: 13px; }
-
-#overlay_content #mediafiles.small { width: 49em; padding: 0 0.5em; }
-#overlay_content #mediafiles.small h1 { padding: 0.125em; }
-#overlay_content #mediafiles.small ol { clear: both; }
-#overlay_content #mediafiles.small ol li h1 { padding: 0.25em; }
-#overlay_content #mediafiles.small button.save { margin: 0.5em 0;}
-#overlay_content #mediafiles.small .pagination { font-size: 1.2em; }
-#overlay_content .scroll_window { height: 400px; padding:0.25em; margin: 0.25em 0em;}
 
 
 /* Edit media modal styles 

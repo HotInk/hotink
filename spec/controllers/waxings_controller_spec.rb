@@ -23,8 +23,6 @@ describe WaxingsController do
       it { should respond_with(:success) }
       it { should respond_with_content_type(:html) }
     end
-    context "with an XHR request" do
-    end
   end
   
   describe "GET to edit with XHR request" do

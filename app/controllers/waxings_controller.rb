@@ -1,6 +1,6 @@
 class WaxingsController < ApplicationController
   before_filter :find_article, :find_mediafile, :find_entry, :find_document
-  layout 'hotink'
+  layout false
   
   helper_method :plural_class_name
 
@@ -12,11 +12,6 @@ class WaxingsController < ApplicationController
     
     @mediafiles = @account.mediafiles.paginate(:page=>(params[:page] || 1), :per_page => 6, :order => 'date DESC', :include => [:authors])
     @waxing.document.mediafiles.each { |m| @mediafiles.delete(m) } # Scrub out already attached files
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.js
-    end
   end
 
   # GET /waxings/1/edit
