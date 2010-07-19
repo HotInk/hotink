@@ -1,4 +1,4 @@
-$('ol#article_mediafiles .detach').live('ajax:success', function() { $(this).parent().fadeOut(); });	
+$('ol#document_mediafiles .detach').live('ajax:success', function() { $(this).parent().fadeOut(); });	
 
 // Remote pagination
 $('.pagination.remote a').live('click', function (e) {

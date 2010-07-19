@@ -53,7 +53,7 @@
 	
 	<div class="toolbox grid_4">
 		<h4>Categories</h4>
-		<div id="article_categories">
+		<div id="document_categories">
 			<% for category in @account.categories.sections.all %>
 		  		<%= check_box_tag "article[category_ids][]", category.id, @article.categories.include?(category) %>
 		  		<%= category.name %><br />
@@ -76,7 +76,7 @@
 	<div class="toolbox grid_4">
 		<h4>Media</h4>
 		<div>
-			<ol id="article_mediafiles">
+			<ol id="document_mediafiles">
 				<%= render @article.waxings %>
 			</ol>
 			<a id="attach_mediafile_link" href="<%= new_account_document_mediafile_path(@account, @article) %>" title="Attach media" class="link yellow">Attach media</a>

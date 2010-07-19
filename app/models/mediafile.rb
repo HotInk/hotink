@@ -1,12 +1,3 @@
-# Mediafile is an easy class to extend. But, if you do, rememeber to add support in:
-#  - _edit_media_form.html.erb
-#  - appropriate partials in app/views/mediafiles/article_form and app/views/mediafiles/entry_form
-#  - appropriate display selector in _article_mediafiles.html.erb
-#  - appropriate create selector in mediafiles_controller.rb
-# 
-# If support inserted in those for places, in addition to a new model file, it should
-# work just fine.
-
 class Mediafile < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   

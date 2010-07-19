@@ -1,4 +1,6 @@
 class EntriesController < ApplicationController
+  include DocumentsHelper
+  
   before_filter :find_blog
   
   layout 'hotink'
@@ -24,22 +26,14 @@ class EntriesController < ApplicationController
   def update
     @entry = @blog.entries.find(params[:id])
     
-    permit @entry.is_editable_by do
+    publish_time = params[:entry].delete(:schedule)
     
+    permit @entry.is_editable_by do
       # Only touch published status if status is passed
       if params[:entry][:status]=="Published"
-      
         if permit?(@entry.is_publishable_by)
-          # Should we schedule publishing on a custom date or immediately?
-          # Rely on a "schedule" parameter to determine which.
-          if params[:entry][:schedule] 
-            schedule = params[:entry].delete(:schedule)
-            @entry.schedule(Time.local(schedule[:year].to_i, schedule[:month].to_i, schedule[:day].to_i, schedule[:hour].to_i, schedule[:minute].to_i))
-          else
-            @entry.publish
-          end
+          @entry.publish extract_time(publish_time)
         end
-
       elsif params[:entry][:status]==""
         @entry.unpublish
       end

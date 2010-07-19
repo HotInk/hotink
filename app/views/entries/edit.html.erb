@@ -1,123 +1,146 @@
-<div id="entry_form" class="form">
-	<% remote_form_for([@account, @blog, @entry], :html=>{:autocomplete=>"off"}) do |f| %>
-	  <div id="buttons">
-		<%= button_link_to_submit "Save", :class=>"save larger" %>	
-		<p id="last_saved">
-		  <% if @entry.created_at == @entry.updated_at %>
-		  	Never saved
-		  <% else %>
-		  	Last modified <%= time_ago_in_words(@entry.updated_at) %> ago
-		  <% end %>
-		</p>
-	  </div>
-	<p id="top_links">
-		<%= link_to "&#171; Back to blog", account_blog_url(@account, @blog), :class=>"weblink" %>
-	</p>
-	<h1>Edit entry in &ldquo;<strong><%= @blog.title %></strong>&rdquo;</h1>
-	  <%= f.error_messages %>
-	  <div class="field_element">
-	    <%= f.label :title, "Headline"%><br />
-	    <%= f.text_field :title , :class => "user" %>
-	  </div>
-	  <div class="field_element">
-	    <%= f.label :subtitle, "Subhead"%><br />
-	    <%= f.text_field :subtitle, :class => "user"  %>
-	  </div>
-	  <div id ="author_list" class="field">
-			<%=  render :partial => 'authors_form' 	%>
-	  </div><!-- /author_list -->
-	  <p>
-	    <%= f.label :summary, "Excerpt" %> <small>Short summary or teaser</small><br />
-   	    <%= f.text_area :summary, :class=>"text_input user" %>
-	  </p>
-	  <div id="bodytext" class="clearfix">
-		<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
-	    <%= f.label :bodytext, "Body text" %><br />
-	  	<div id="wmd-button-bar"></div>
-	    <%= f.text_area :bodytext, :id => 'wmd-input' %>
-	  </div>
-	  <div id="categories_hidden">
-	  	<% @account.categories.each do |cat| %>
-			<input type="hidden" name="entry[categories_attributes][<%= cat.id %>]" value="<%= "1" if @entry.categories.member?(cat) %>" id="entry_categories_attributes_<%= cat.id %>" />
-		<% end %>
-	  </div>
+<%= stylesheet_link_tag 'wmd' %>
+<%= stylesheet_link_tag 'token_input' %>
+
+<% semantic_form_for [@account, @blog, @entry] do |form| %>
+	<% form.buttons :class => "grid_8" do %>
+		<li class="grid_7 alpha"><h1 class="blog_title"><%= @blog.title %></h1></li>
+		<li class="grid_4 alpha" style="margin-bottom:0"><h2>Edit entry</h2></li>
+		<li class="grid_4 omega" style="float:right;text-align:right;margin-right: -10px;"><%= link_to @entry.published? ? "View on site" : "Preview on site", account_public_blog_entry_url(@account, @entry.blog.slug, @entry), :target => "_blank", :style=>"line-height: 1.2;" %>&nbsp;&nbsp;&nbsp;<%= form.submit "Save entry" %></li>
 	<% end %>
-</div><!-- /entry_form -->
-
-		<div id="tools">
-				<div class="toolbox">
-					<div class="toolbox_border"></div>
-					<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tools</h2></div>
-					<div class="toolbox_border"></div>
-					<div class="toolbox_body clearfix">
-						<%= render :partial=>'status' %>
-					</div>
-					<div class="toolbox_border"></div>
-				</div><!-- /toolbox - tools -->
-				
-			<div class="toolbox">
-				<div class="toolbox_border"></div>
-				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Media</h2></div>
-				<div class="toolbox_border"></div>
-				<div class="toolbox_body clearfix">	
-					<div id="mediafiles_list" class="media_list">
-						<% unless @entry.waxings %>
-							<p class="no_media">
-								No media attached.
-							</p>
-						<% else %>
-							<%= render @entry.waxings %>
-						<% end %>
-					</div>
-					<%= button_link_to_remote "Attach Media", :url=>new_account_document_mediafile_url(@account, @entry, :format=>:js), :method=>:get %>
-					<iframe name="upload_frame" style="display: none"></iframe>
-				</div>
-				<div class="toolbox_border"></div>
-			</div> <!-- /toolbox - media -->
-			
-			<div class="toolbox">
-				<div class="toolbox_border"></div>
-				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tags</h2></div>
-				<div class="toolbox_border"></div>
-				<div class="toolbox_body">	
-					<script id="entry_tags_form" type="text/javascript" src="<%= new_account_blog_entry_tag_url(@account, @blog, @entry, :format=>:js ) %>"></script>
-				</div>
-				<div class="toolbox_border"></div>
-			</div><!-- /toolbox - tags	-->
-			
-			<div class="toolbox">
-				<div class="toolbox_border"></div>
-				<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Categories</h2></div>
-				<div class="toolbox_border"></div>
-				<div class="toolbox_body clearfix">
-					<div id="form_categories">
-						<ol>
-							<%= render :partial => "categories/form_category", :collection => @account.main_categories, :locals => { :document => @entry } %>
-						</ol>
-					</div>
-				</div>
-				<div class="toolbox_border"></div>
-			</div> <!-- /toolbox - media -->	
-					
-		</div><!-- /tools -->
-		
-<script type="text/javascript">
-	//Load toolbox functionality
-	$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
-	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
-
-	//Shortcut function to reload media list
-	reload_media = function() {
-		new Ajax.Request('<%= account_document_mediafiles_path(@account, @entry )%>', {method:'get'});
-	}
 	
- 	// WMD Editor Configuration script
-    // Set this *before* you load wmd.js
-    wmd_options = {
-					output: "Markdown",
-					lineLength: 40,
-					buttons: "bold italic heading | link blockquote image | ol ul hr ",
-					autostart: true 
-				  };
+	<div class="toolbox grid_4">
+		<h4>Status</h4>
+		<div>
+			<% if @entry.published? %>
+			<p id="status" class="published">
+				Published<br />
+				<small><strong><%= @entry.published_at.to_s(:date) %></strong> at <strong><%= @entry.published_at.to_s(:time) %></strong>
+				(<%= distance_of_time_in_words_to_now(@entry.published_at) %> ago)</small>
+			<% elsif @entry.scheduled? %>
+			<p id="status" class="scheduled">
+				Scheduled<br />
+				<small><strong><%= @entry.published_at.to_s(:date) %></strong> at <strong><%= @entry.published_at.to_s(:time) %></strong>
+				(<%= distance_of_time_in_words_to_now(@entry.published_at) %> from now)</small>
+			<% else %>
+			<p id="status" class="draft">
+				Draft
+			<% end %>
+			</p>
+			<div id="publish">
+				<% if @entry.status == "Published" -%>
+					<%= form.submit "Unpublish", :class => "entry_unpublish" %> <input type="button" value="Reschedule" class="show_schedule" />
+				<% else -%>
+					<%= form.submit "Publish", :class => "entry_publish" %> <input type="button" value="Specify date" class="show_schedule" />
+				<% end %>
+			</div>
+			<%= form.hidden_field :status %>
+			<div id="schedule" style="display:none;">
+				<label for="entry[schedule][year]">Publish this article on:</label><br />
+				<%= select_datetime (@entry.published_at.nil? ? Time.now : @entry.published_at), :order => [:month, :day, :year], :datetime_separator => "<br /> at ", :time_separator => ": ", :prefix => "entry[schedule]" %>
+				<%= form.submit "Schedule", :class => "entry_publish" %>
+			</div>
+		</div>
+	</div>
+	
+	<% form.inputs :class => "grid_8", :style => "clear:left;" do %>
+		<%= form.input :title, :as => :string %>
+		<%= form.input :subtitle, :as => :string %>
+		<%= form.input :author_ids, :label => "Authors", :as => :string, :input_html => { :value => "" } %>
+		<%= form.input :summary, :as => :text, :input_html => { :rows => 2 }, :label => "Excerpt" %>
+		<%= form.input :bodytext, :label => "Bodytext <a id=\"bodytext_preview_link\" href=\"#bodytext_preview\" style=\"float:right\">Preview formatting</a>" %>
+	<% end %>
+	
+	<div class="toolbox grid_4">
+		<h4>Categories</h4>
+		<div id="document_categories">
+			<% for category in @account.categories.sections.all %>
+		  		<%= check_box_tag "article[category_ids][]", category.id, @entry.categories.include?(category) %>
+		  		<%= category.name %><br />
+				<% unless category.subcategories.blank? %>
+					<% category.subcategories.each do |subcategory| %>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "article[category_ids][]", subcategory.id, @entry.categories.include?(subcategory) %>
+			  		<%= subcategory.name %><br />
+						<% unless subcategory.subcategories.blank? %>
+							<% subcategory.subcategories.each do |subsubsubcategory| %>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "article[category_ids][]", subsubsubcategory.id, @entry.categories.include?(subsubsubcategory) %>
+					  		<%= subsubsubcategory.name %><br />
+							<% end %>
+						<% end %>
+					<% end %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+	
+	<div class="toolbox grid_4">
+		<h4>Media</h4>
+		<div>
+			<ol id="document_mediafiles">
+				<%= render @entry.waxings %>
+			</ol>
+			<a id="attach_mediafile_link" href="<%= new_account_document_mediafile_path(@account, @entry) %>" title="Attach media" class="link yellow">Attach media</a>
+			<iframe name="upload_frame" style="display: none"></iframe>
+		</div>
+	</div>
+	
+	<div class="toolbox grid_4">
+		<h4>Tags</h4>
+		<div>
+			<% form.inputs do %>
+				<%= form.input :tag_list, :as => :text, :input_html => { :rows => 3 }, :wrapper_html => { :style => "margin-bottom: 0;width: 99%;" } %>
+			<% end %>
+		</div>
+	</div>
+<% end %>
+
+<% content_for :javascript do %>
+<%= javascript_include_tag 'jquery.tokeninput' %>
+<%= javascript_include_tag 'jquery.wmd' %>
+<script type="text/javascript">
+	$().ready(function() {			
+       	$("#entry_bodytext").wmd({'preview':"wmd-preview"}); 
+
+		$('#upload_media_form form').live('submit', function(){
+			$.fancybox.showActivity();
+		});
+		
+		$("#entry_author_ids").tokenInput("<%= account_authors_path(@account, :format => :json) %>", {
+			initialValues: <%= @entry.authors_json %>,
+			canCreate: true,
+			createText: "New author",
+			hintText: "Add an author",
+	        classes: {
+	            tokenList: "token-input-list",
+	            token: "token-input-token",
+	            tokenDelete: "token-input-delete-token",
+	            selectedToken: "token-input-selected-token",
+	            highlightedToken: "token-input-highlighted-token",
+	            dropdown: "token-input-dropdown",
+	            dropdownItem: "token-input-dropdown-item",
+	            dropdownItem2: "token-input-dropdown-item2",
+	            selectedDropdownItem: "token-input-selected-dropdown-item",
+	            inputToken: "token-input-input-token"
+	        }
+	   });	
+	
+		$(".edit_caption a").fancybox({
+			'titlePosition'		: 'inside',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none'
+		});
+    });
 </script>
-<%= javascript_include_tag 'wmd.min' %>
+<% end %>
+
+<div style="display: none;">
+	<div id="bodytext_preview">
+		<h1>Bodytext preview</h1>
+		<div id="toggle_preview" class="state_control"><a href="#" class="formatted selected">Formatted</a><a href="#" class="raw_html">Raw HTML</a></div>
+		<hr>
+		<div id="wmd-preview">
+			
+		</div>
+		<div id="wmd-output" style="display:none">
+		</div>
+	</div>
+</div>
