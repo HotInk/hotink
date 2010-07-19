@@ -26,7 +26,7 @@ ActionController::Routing::Routes.draw do |map|
       document.resources :waxings
     end
     
-    account.resources :articles do |article|
+    account.resources :articles, :collection => { :search => :get } do |article|
       article.resources :mediafiles
       article.resources :authors
       article.resources :tags

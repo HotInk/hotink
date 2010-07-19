@@ -1,8 +1,8 @@
 <div id="articles" class="clearfix">
-	<h1>Articles</h1>
+	<h1>Search for "<%= params[:q] %>"</h1>
 	<%= button_link_to 'New article', new_account_article_path(@account), :class=>"primary" %>
 	<div class="search">
-		<form action="/accounts/<%= @account.id %>/articles/search" method="GET">
+		<form method="GET">
 			<input type="text" id="articles_search" name="q" class="text_input user" onclick="if(this.value=='Search articles') clearText(this);" value="<%=h( @search_query || "Search articles") %>" />
 			<%= button_link_to_submit "Go" %>
 		</form>
@@ -31,13 +31,10 @@
 		</div>
 		<%= render :partial=>'pagination' %>
 		<ol id="articles_list" class="documents">			
-			<% if (@articles.length > 0) || (@drafts && @drafts.length > 0) %>
-				<%= render @awaiting_attention if @awaiting_attention %>
-				<%= render @articles %>
-			<% elsif @search_query %>
-				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
+			<% if (@articles.length > 0)  %>
+				<%= render :partial => "article", :collection => @articles %>
 			<% else %>
-				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles found.</em></p>
+				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
 			<% end %>
 		</ol>
 	<% end %> 

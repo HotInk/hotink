@@ -10,18 +10,25 @@ class ArticlesController < ApplicationController
     page = params[:page] || 1
     per_page = params[:per_page] || 20
     
-    if params[:search]
-      @search_query = params[:search]
-      @articles = @account.articles.search( @search_query, :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
-    else  
-      if page.to_i == 1
-        @awaiting_attention = @account.articles.awaiting_attention.all
-      end
-      @articles = @account.articles.paginate(:page => page, :per_page => per_page, :order => 'status, published_at desc, updated_at desc', :include => [:authors, :mediafiles, :section])
+    if page.to_i == 1
+      @awaiting_attention = @account.articles.awaiting_attention.all
     end
+    @articles = @account.articles.paginate(:page => page, :per_page => per_page, :order => 'status, published_at desc, updated_at desc', :include => [:authors, :mediafiles, :section])
   
     respond_to do |format|
       format.html
+    end
+  end
+  
+  # GET /articles/search
+  def search
+    if params[:q]
+      page = params[:page] || 1
+      per_page = params[:per_page] || 10  
+      @search_query = params[:q]
+      @articles = @account.articles.search( @search_query, :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
+    else
+      @articles = []
     end
   end
 

@@ -33,17 +33,36 @@ describe ArticlesController do
           assigns(:articles).should be_kind_of(WillPaginate::Collection)
        end      
     end
+  end
+
+  describe "GET to search" do
+    before do
+      @articles = (1..2).collect{ Factory(:published_article, :account => @account) }
+    end
     
-    context "searching for specific articles" do
+    context "with a query" do
       before do
-        @searched_articles = (1..3).collect{ Factory(:detailed_article, :account => @account) }
-        @other_articles = (1..3).collect{ Factory(:detailed_article, :account => @account) }
-        Article.should_receive(:search).with( "test query", :with=>{ :account_id => @account.id }, :page => 1, :per_page => 20, :include => [:authors, :mediafiles, :section]).and_return(@searched_articles)
-        get :index, :account_id => @account.id, :search => "test query"
+        @searched_articles = [Factory(:published_article, :title => "Experimental testing", :account => @account), Factory(:published_article, :bodytext => "Experimental testing", :account => @account)]
+        Article.should_receive(:search).and_return(@searched_articles)
+        get :search, :account_id => @account.id, :q => "Experimental testing"
+      end
+    
+       it { should respond_with(:success) }
+       it { should respond_with_content_type(:html) }
+       it { should render_template(:search) }
+       it { should render_with_layout(:hotink) }
+       it { should assign_to(:search_query).with("Experimental testing") }
+       it { should assign_to(:articles).with(@searched_articles) }
+    end
+    
+    context "with no query" do
+      before do
+        get :search, :account_id => @account.id
       end
       
-      it { should assign_to(:articles).with(@searched_articles) }
       it { should respond_with(:success) }
+      it { should render_template(:search) }
+      it { should assign_to(:articles).with([]) }
     end
   end
 
