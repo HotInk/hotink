@@ -33,6 +33,17 @@ describe CategoriesController do
     end
   end
   
+  describe "GET to edit with XHR request" do
+    before do
+      @category = Factory(:category, :name => "one thing", :account => @account)
+      xhr :get, :edit, :account_id => @account.id, :id => @category.id
+    end
+    
+    it { should respond_with(:success) }
+    it { should respond_with_content_type(:js) }
+    it { should assign_to(:category).with(@category) }
+  end
+  
   describe "PUT to update with XHR request" do
     before do
       @category = Factory(:category, :name => "one thing", :account => @account)

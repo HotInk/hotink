@@ -1,0 +1,9 @@
+<div class="category_form">
+		<% form_for [@account, @category], :html => { 'data-remote' => true, 'data-method' => :put } do |f|%>
+			<%= f.text_field :name, :class => "text_input" %>
+			<div class="save_button clearfix">
+				<%= button_link_to_submit "Save", :class=>"save tiny" %>
+			</div>
+		<% end %>
+		<div class="kill_link"><%= link_to 	"x", account_category_url(@account, @category), 'data-remote' => true, 'data-method' => :delete, 'data-confirm' => "Are you sure you want to delete the \"#{@category.name}\" category?\n\nThis delete cannot be undone. The documents filed in this category will not be deleted, but no record of their relationship with this category will remain.\n\nAny child categories will be orphaned, becoming children of this category's parent or main categories, as appropriate.\n\nTo permanently delete this category, press 'OK'." %></div>
+</div>

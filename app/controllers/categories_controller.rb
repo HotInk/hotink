@@ -1,6 +1,5 @@
 class CategoriesController < ApplicationController
 
-  # POST /categories
   def create
     @category = @account.categories.build(params[:category])
     if @category.save
@@ -13,7 +12,13 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # PUT /categories/1
+  def edit
+    @category = @account.categories.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def update
     @category = @account.categories.find(params[:id])
     respond_to do |format|
