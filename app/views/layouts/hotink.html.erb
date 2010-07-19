@@ -17,29 +17,14 @@
 </head>
 <body class="<%= controller_name %> <% action_name %>">
 <div id="page_wrapper"><!-- This wrapper keeps the footer at the bottom of the page. -->
-	<div id="navigation" class="clearfix">
-		<div id="logo"><%= image_tag '/images/logo_tiny.png' %></div>
-		<div id="links">
-			<ol>
-				<li <%= 'class="current"' if controller_name == "dashboards" %>><%= link_to "Dashboard", account_dashboard_url(@account) %></li><li <%= 'class="current"' if controller_name == "lists" %>><%= link_to "Lists", account_lists_url(@account) %></li><li <%= 'class="current"' if controller_name == "articles" %>><%= link_to "Articles", account_articles_url(@account) %></li><li <%= 'class="current"' if controller_name == "mediafiles" %>><%= link_to "Media", account_mediafiles_url(@account) %></li><li <%= 'class="current"' if controller_name == "issues" %>><%= link_to "Issues", account_issues_url(@account) %></li><li <%= 'class="current"' if (controller_name == "blogs") || (controller_name == "entries") %>><%= link_to "Blogs", account_blogs_url(@account) %></li><li <%= 'class="current"' if (controller_name=="designs"||controller_name=="templates"||controller_name=="template_files") %>><%= link_to "Design", current_design_url(@account) %></li><li <%= 'class="current"' if (controller_name=="pages") %>><%= link_to "Pages",account_pages_url(@account) %></li>
-			</ol>
-		</div>
-		<div id="user_details"><p>Logged in as: <%= link_to_remote current_user.login, :url=> edit_user_path(current_user), :method => :get, :html => { :class=>"weblink" } %>  <%= button_link_to "Logout", logout_url, :method=>:get, :class=>"micro", :id=>"user_logout_button" %></p></div>
-		<% if permit?("(manager of account)") || permit?("admin") %>
-			<div id="account_details">
-				<img src="/loading_small_222.gif" style="float:left;margin-right:0.5em;margin-top:0.25em;display:none;" class="spinner"/>
-				<%= button_link_to "Manage account", edit_account_url(@account), :class=>"tiny modal" %> 
-			</div>
-		<% end %>
-		<div id="flash"><%= render_flash(flash[:notice])%></div>
-	</div>
+	<%= render :partial => "layouts/navigation" %>
 <div id="page_container" class="clearfix container_12">
 	<%= yield  %>
 </div>
 <div id="footer_push"></div>
 </div><!-- /#page_wrapper -->
 <div id="footer">
-	<p style="float:left; margin-left: 0.5em; font-size: 1em; color: #FFF6DD; font-weight: normal;"><small>We appreciate your feedback! – <a href="http://github.com/HotInk/hotink/issues" target="_blank" class="weblink" style="color: #FFF6DD;">Report a bug?</a></small></p><p><small>&copy;2010 Canadian University Press Media Services Ltd.</p></small>
+	<p style="float:left; margin-left: 0.5em; font-size: 1em; color: #fff9e5; font-weight: normal;"><small>We appreciate your feedback! – <a href="http://github.com/HotInk/hotink/issues" target="_blank" class="weblink" style="color: #fff9e5;">Report a bug?</a></small></p><p><small>&copy;2010 Canadian University Press Media Services Ltd.</p></small>
 </div>
 <%= yield :javascript %>
 <script type="text/javascript">

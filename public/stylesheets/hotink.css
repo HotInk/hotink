@@ -9,10 +9,10 @@
 
 /* Main style */
 html, body { height: 100%; }
-body { background-color: #FFF; color: #333; margin: 0 auto; text-algin: center;}
+body { background-color: #FFF; color: #1A1A1A; margin: 0 auto; text-algin: center;}
 body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
 div#page_wrapper { min-height: 100%; height: auto !important; height: 100%; margin-bottom: -30px; /* the bottom margin is the negative value of the footer's height */}
-div#page_container { background-color: #FFF; margin: 0 auto; max-width: 74em; padding: 1em 1.5em; text-align: left; padding-bottom: 0;  }
+div#page_container { background-color: #FFF; margin: 0 auto; max-width: 74em; padding: 1.5em 1.5em 1em 1.5em; text-align: left; padding-bottom: 0;  }
 h1 { font-size: 2em; }
 h2 { font-size: 1.5em; margin: 0.83em 0;}
 h3 { font-size: 1.17em; margin: 1em 0; }
@@ -80,9 +80,9 @@ ol.awaiting_attention { color: #00AF2E; }
 
 li.scheduled { background-color: #CEE4F3; }
 li.scheduled h1>small { color: #699DE3; }
-li.unpublished { background-color: #FFF6DD; }
+li.unpublished { background-color: #fff9e5; }
 li.unpublished h1>small { color: #EDBE00; }
-li.awaiting_attention { background-color: #FFF6DD; }
+li.awaiting_attention { background-color: #fff9e5; }
 li.awaiting_attention h1>small { color: #00AF2E; }
 
 /* Dashboard styles */
@@ -141,11 +141,11 @@ ol.documents li .date p+p { margin: 0; }
 ol.documents li .date p.word_count { font-size: 80%; font-weight: 200; }
 ol.documents li a.destroy_link { position: absolute; top: 2px; right: 4px; line-height: 0.8;}
 
-ol.documents li.draft { background-color: #FFF6DD; }
+ol.documents li.draft { background-color: #fff9e5; }
 ol.documents li.draft .details h1>small { color: #EDBE00; }
 ol.documents li.scheduled { background-color: #CEE4F3; }
 ol.documents li.scheduled .details h1>small { color: #699DE3; }
-ol.documents li.awaiting_attention { background-color: #FFF6DD; }
+ol.documents li.awaiting_attention { background-color: #fff9e5; }
 ol.documents li.awaiting_attention h1>small { color: #00AF2E; }
 
 ol.documents li.selected_card { background-color: #CDFBDC; }
@@ -177,6 +177,8 @@ ol.documents.small .details p, 		ol.documents.tiny .details p 		{ font-size: 0.8
 ol.documents.small .date, 			ol.documents.tiny .date 			{ width: 20%; font-size: 1em; }
 ol.documents.small .date p, 		ol.documents.tiny .date p 			{ font-size: 1em; }
 ol.documents.small .destroy_link, 	ol.documents.tiny .destroy_link 	{ display: none; }
+
+ol.documents li.ui-draggable-dragging 		{ border: 1px dotted #999; }
 
 ol.documents.droppable 						{ list-style: decimal inside; border: none; }
 ol.documents.droppable li 					{ margin: 2px 0.25%; padding: 6px 0 4px 1%; min-height: 57px; border: none; background-color: #d2f1c2; }
@@ -320,12 +322,12 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 /*		Article/Entry form styles
 /*---------------------------------------*/
 
-.toolbox 		{ border: 1px solid #999999; float:right; clear: right; margin: 0 0 10px 0; 
+.toolbox 		{ border: 1px solid #666666; float:right; clear: right; margin: 0 0 10px 0; 
 					-moz-border-radius: 2px; -webkit-border-radius: 2px; }
-.toolbox>h4 	{ padding:0.3em; margin:0; font-weight: 200; letter-spacing: 0.03em; color: white; background-color: #999999;}
+.toolbox>h4 	{ padding:0.3em; margin:0; font-weight: 200; letter-spacing: 0.03em; color: white; background-color: #666666;}
 .toolbox>div 	{ padding: 2%; }
 
-#printings { background-color: #FFF6DD; border: 1px solid #CEE4F3; border-width: 1px 0 0 0; margin-top:0.5em; padding: 0.3em 1.5%; }
+#printings { background-color: #fff9e5; border: 1px solid #CEE4F3; border-width: 1px 0 0 0; margin-top:0.5em; padding: 0.3em 1.5%; }
 #printings h2 { font-weight: bold; text-decoration: underline; margin: 0 0 5px 0; font-size: 1.05em; line-height: 1.4; }
 #printings ul { margin: 0.5em 0; padding-left: 0em; list-style: none; }
 #printings ul li h3, #tools #printings ul li p { margin: 0; margin-bottom: 0.25em;}
@@ -579,7 +581,7 @@ div.media_list img.spinner{ vertical-align:bottom;margin-bottom: 0px;margin-left
 #issue #issue_name { font-size: 1.6em; width: 98%;}
 #issue #issue_description{ width:96.5%; height: 6em; padding: 0.5em; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
 #issue button.save { float: right; font-size: 1.3em; margin: 0.2em 0;}
-#issue #issue_pdf {  width: 94.5%; background-color: #FFF6DD; float: left; border:1px solid #AAA; margin: 0em 1.5em; margin-bottom: 1em; }
+#issue #issue_pdf {  width: 94.5%; background-color: #fff9e5; float: left; border:1px solid #AAA; margin: 0em 1.5em; margin-bottom: 1em; }
 #issue #issue_pdf_upload { margin: 0 1em; }
 #issue #issue_pdf_upload p.file { margin: 0 0.8em; margin-top: 0.5em; min-width: 60%; float: right; text-align: right; }
 #issue .upload_button { height: 28px; display: block; float: left; margin-top: 0.5em; margin-bottom: 0.5em; background:#ddd url('/images/bg-button.gif') repeat-x 0 0; border:1px solid #AAA; }
