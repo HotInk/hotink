@@ -16,6 +16,6 @@ class FrontPagesController < ApplicationController
     @account.lead_article_ids = params[:lead_article_ids]
     @account.current_design.update_attribute(:current_front_page_template_id, params[:current_front_page_template_id]) if @account.current_design
     @account.save
-    redirect_to account_articles_url(@account)
+    redirect_to account_dashboard_url(@account)
   end 
 end

@@ -66,7 +66,7 @@ ActionController::Routing::Routes.draw do |map|
     
     account.resources :public_articles
     account.resources :public_blogs
-    account.public_blog_entry '/public_blogs/:blog_slug/entries/:id', :controller => :public_entries, :action => :show
+    account.public_blog_entry '/public_blogs/:blog_slug/:id', :controller => :public_entries, :action => :show
     account.public_search '/search', :controller => :public_search, :action => :show
     account.public_front_page '/front_page', :controller => :public_front_pages, :action => :show
     account.front_page_preview '/front_page/preview', :controller => :public_front_pages, :action => :preview 

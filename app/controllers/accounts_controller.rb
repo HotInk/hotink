@@ -46,12 +46,12 @@ class AccountsController < ApplicationController
   
   # Simple redirect to account articles page
   def index
-    redirect_to account_articles_url( current_user.is_staff_for_what.first )
+    redirect_to account_dashboard_url( current_user.is_staff_for_what.first )
   end
 
   def show
     @account = Account.find(params[:id])    
-    redirect_to account_articles_url( @account )
+    redirect_to account_dashboard_url( @account )
   end
   
   # Loads the account management tabs
