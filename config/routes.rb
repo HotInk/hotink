@@ -59,7 +59,6 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :authors
     account.resources :categories, :member => { :deactivate => :put, :reactivate => :put }
     account.resources :waxings
-    account.resources :apps
     account.resources :actions
     
     account.resource :search
