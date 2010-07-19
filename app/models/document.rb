@@ -17,6 +17,10 @@ class Document < ActiveRecord::Base
   has_many :mediafiles, :through => :waxings
   has_many :images, :through => :waxings, :source=>'mediafile', :conditions => { :type => 'Image'}
   
+  def waxing_for(mediafile)
+    waxings.find_by_mediafile_id(mediafile.id)
+  end
+  
   named_scope :by_date_published, :order => "published_at DESC"
   
   # Publication statuses

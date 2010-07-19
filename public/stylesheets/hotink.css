@@ -350,6 +350,9 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 #entry_author_ids_input ul.token-input-list li.token-input-token 		{ padding: 5px; margin: 2px; }
 #article_author_ids_input input, #entry_author_ids_input input 			{ border:none; }
 
+#article_section_id_input					{ padding-left: 15px; }
+#article_section_id							{ font-size: 21px; background: none; border: 1px solid #AAA; width: 100%; }
+
 #bodytext_preview_link 						{ font-size: 90%; color: grey;}
 #bodytext_preview 							{ overflow:auto; height:600px; width: 600px; padding:15px; line-height: 1.2; font-size: 110%; }
 #bodytext_preview h1 						{ float: left; }
@@ -392,13 +395,16 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 #schedule { background-color: #EFEFEF; margin-top: 5px; font-size: 90%; padding: 5px; line-height: 1.5; }
 #schedule select { margin: 2px 0; }
 ol#article_mediafiles { margin:0;}
-ol#article_mediafiles li { position:relative; float: left; width: 258px; padding:10px 15px; background-color: #EFEFEF; margin-bottom: 5px;  -moz-border-radius: 2px; -webkit-border-radius: 2px; }
+ol#article_mediafiles li { position:relative; float: left; width: 258px; padding:10px 15px 15px 15px; background-color: #EFEFEF; margin-bottom: 5px;  -moz-border-radius: 2px; -webkit-border-radius: 2px; }
 ol#article_mediafiles li a.detach { position: absolute; top: 2px; right: 3px; font-size: 80%; color: red; text-decoration: none; line-height: 0.8;}
 ol#article_mediafiles li a.detach:hover { text-decoration: underline; }
 ol#article_mediafiles li img { float: right; border: 1px solid #666666;}
+ol#article_mediafiles li .caption { margin-bottom: 5px; }
 ol#article_mediafiles li.image .caption { float: left; width: 50%;  }
-ol#article_mediafiles li .edit_caption { font-size: 70%; }
+ol#article_mediafiles li .edit_caption { font-size: 70%; float: right; margin-top: 10px; }
 ol#article_mediafiles li.image .edit_caption { float: left; clear: left; width: 50%; }
+
+#attach_mediafile_link { display: block; float: left; margin-bottom: 5px; }
 
 #article_categories { line-height: 1.5; font-size: 105%; }
 #article_categories input { margin-bottom: 5px; margin-right: 5px; }

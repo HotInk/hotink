@@ -24,9 +24,23 @@ describe Document do
   it { should have_many(:sortings).dependent(:destroy) }
   it { should have_many(:categories).through(:sortings) }
 
-  it { should have_many(:waxings).dependent(:destroy) }
-  it { should have_many(:mediafiles).through(:waxings) }
-  it { should have_many(:images).through(:waxings) }
+  describe "attached media" do
+    it { should have_many(:waxings).dependent(:destroy) }
+    it { should have_many(:mediafiles).through(:waxings) }
+    it { should have_many(:images).through(:waxings) }
+  
+    it "should find the waxing that attaches a mediafile" do
+      document = Factory(:document)
+      mediafile = Factory(:mediafile, :account => document.account)
+      waxing = Waxing.create(:document => document, :mediafile => mediafile, :account => document.account)
+      
+      document.waxing_for(mediafile).should == waxing
+      
+      another_mediafile = Factory(:mediafile, :account => document.account)
+      document.waxing_for(another_mediafile).should be_nil
+    end
+  end
+  
   
   describe "publication status" do
     before(:each) do

@@ -68,7 +68,7 @@ class MediafilesController < ApplicationController
               @waxing = @account.waxings.create(:document_id => @document.id, :mediafile_id=> @mediafile.id);
               responds_to_parent do
           			render :update do |page|
-          				page << "$.fancybox.close();$('#article_mediafiles').html('#{ escape_javascript(render(:partial => 'articles/article_mediafile', :collection => @document.mediafiles)) }')"
+          				page << "$.fancybox.close();$('#article_mediafiles').html('#{ escape_javascript render(@document.waxings) }')"
           			end
               end
               return
@@ -83,7 +83,7 @@ class MediafilesController < ApplicationController
       @article = @document # articles/article_mediafile partial expects @article
       responds_to_parent do
   			render :update do |page|
-  				page << "$.fancybox.close();$('#article_mediafiles').html('#{ escape_javascript(render(:partial => 'articles/article_mediafile', :collection => @document.mediafiles)) }')"
+  				page << "$.fancybox.close();$('#article_mediafiles').html('#{ escape_javascript render(@document.waxings) }')"
   			end
       end
     else

@@ -25,15 +25,15 @@ describe WaxingsController do
     end
   end
   
-  describe "GET to edit with XHR request" do
+  describe "GET to edit" do
     before do
       @waxing = Factory(:waxing)
-      xhr :get, :edit, :account_id => @waxing.article.account.id, :id => @waxing.id
+      get :edit, :account_id => @waxing.article.account.id, :id => @waxing.id
     end
     
     it { should assign_to(:waxing).with(@waxing) }
     it { should respond_with(:success) }
-    it { should respond_with_content_type(:js) }
+    it { should respond_with_content_type(:html) }
   end
   
   describe "POST to create" do

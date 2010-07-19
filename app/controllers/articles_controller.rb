@@ -7,23 +7,22 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
-      page = params[:page] || 1
-      per_page = params[:per_page] || 20
-      
-      if params[:search]
-        @search_query = params[:search]
-        @articles = @account.articles.search( @search_query, :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
-      else  
-        if page.to_i == 1
-          @awaiting_attention = @account.articles.awaiting_attention.all
-        end
-        @articles = @account.articles.paginate(:page => page, :per_page => per_page, :order => 'status, published_at desc, updated_at desc', :include => [:authors, :mediafiles, :section])
-      end
+    page = params[:page] || 1
+    per_page = params[:per_page] || 20
     
-      respond_to do |format|
-        format.html
-        format.js
+    if params[:search]
+      @search_query = params[:search]
+      @articles = @account.articles.search( @search_query, :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
+    else  
+      if page.to_i == 1
+        @awaiting_attention = @account.articles.awaiting_attention.all
       end
+      @articles = @account.articles.paginate(:page => page, :per_page => per_page, :order => 'status, published_at desc, updated_at desc', :include => [:authors, :mediafiles, :section])
+    end
+  
+    respond_to do |format|
+      format.html
+    end
   end
 
   # GET /articles/1
@@ -82,7 +81,6 @@ class ArticlesController < ApplicationController
         if @article.update_attributes({'category_ids' => []}.merge(params[:article]))
           flash[:notice] = "Article saved"
           format.html { redirect_to(edit_account_article_path(@account, @article)) }
-          format.js
         else
           format.html { render :action => "edit", :status => :bad_request }
         end

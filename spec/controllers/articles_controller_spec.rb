@@ -153,20 +153,6 @@ describe ArticlesController do
             @article.reload.title.should == "Whoa there. Title time."
           end
         end
-
-        context "as an XHR request" do
-          before do
-            xhr :put, :update, :account_id => @account.id, :id => @article.id, :article => { :title => "Whoa there. Title time." }
-          end
-
-          it { should assign_to(:article).with(@article) }
-          it { should set_the_flash.to("Article saved") }
-          it { should respond_with(:success) }
-          it { should respond_with_content_type(:js) }
-          it "should update the article" do
-            @article.reload.title.should == "Whoa there. Title time."
-          end
-        end
       end
       
       context "with invalid parameters" do

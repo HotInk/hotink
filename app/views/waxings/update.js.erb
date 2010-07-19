@@ -1,0 +1,7 @@
+$.fancybox.close();
+<% if @waxing.caption.blank? %>
+	$('#waxing_<%= @waxing.id %> .caption').html('<%= escape_javascript(RDiscount.new("No caption").to_html) %>');
+<% else %>
+	$('#waxing_<%= @waxing.id %> .caption').html('<%= escape_javascript(RDiscount.new(@waxing.caption).to_html) %>');
+<% end %>
+$('#waxing_<%= @waxing.id %> .caption').append('<p class="edit_caption"><%= link_to "Edit", edit_account_waxing_path(@account, @waxing), :id => "edit_waxing_<%= @waxing.id", :class => "grey link small" %></p>');

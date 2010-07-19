@@ -1,0 +1,10 @@
+<div id="waxing_<%= @waxing.id %>" style="height:160px;width:375px; padding: 10px;">
+	<% semantic_form_for [@account, @waxing], :html => { "data-remote" => true } do |waxing| %>
+		<% waxing.inputs do %>
+			<%= waxing.input :caption, :as => :text, :input_html => { :rows => 4, :cols => 35 } %>
+		<% end %>
+		<% waxing.buttons do %>
+			<%= waxing.commit_button "Save caption" %>
+		<% end %>
+	<% end %>
+</div>
