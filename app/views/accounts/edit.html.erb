@@ -74,7 +74,7 @@
 		</div>
 		
 		<div id="images-window">
-			<% form_tag account_url(@account), :method=>:put do %>
+			<% form_tag account_path(@account), 'data-remote' => true, :method => :put do %>
 			<%= button_link_to_submit "Save changes", :class=>"save large" %>
 			<h2>Images</h2>
 			<fieldset>
