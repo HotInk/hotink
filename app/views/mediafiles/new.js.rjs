@@ -1,3 +1,0 @@
-page.assign "mediafiles_overlay", render(:partial => 'attach_media')
-page << "page_overlay.render( mediafiles_overlay );"
-

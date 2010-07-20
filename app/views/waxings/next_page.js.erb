@@ -1,0 +1,2 @@
+$('#attach_mediafiles_list').html('<%= escape_javascript render(:partial => "/mediafiles/mediafile", :collection => @mediafiles)  %>')
+$('.pagination.remote').replaceWith('<%= escape_javascript will_paginate(@mediafiles, :inner_window => 1, :outer_window => 0, :class => "pagination remote") %>')

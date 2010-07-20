@@ -7,6 +7,14 @@ describe Document do
   
   it { should have_many(:authorships).dependent(:destroy) }
   it { should have_many(:authors).through(:authorships) }
+  
+  it "should generate appropriate authors JSON" do
+    lilly = Factory(:author, :name => "Lilly Aldrin")
+    barney = Factory(:author, :name => "Barney Stinson")
+    document = Factory(:document, :authors => [lilly, barney])
+    
+    document.authors_json.should eql([{ "id" => lilly.id, "name" => lilly.name },{ "id" => barney.id, "name" => barney.name }].to_json)
+  end
 
   it { should have_many(:printings).dependent(:destroy) }
   it { should have_many(:issues).through(:printings) }
@@ -16,9 +24,23 @@ describe Document do
   it { should have_many(:sortings).dependent(:destroy) }
   it { should have_many(:categories).through(:sortings) }
 
-  it { should have_many(:waxings).dependent(:destroy) }
-  it { should have_many(:mediafiles).through(:waxings) }
-  it { should have_many(:images).through(:waxings) }
+  describe "attached media" do
+    it { should have_many(:waxings).dependent(:destroy) }
+    it { should have_many(:mediafiles).through(:waxings) }
+    it { should have_many(:images).through(:waxings) }
+  
+    it "should find the waxing that attaches a mediafile" do
+      document = Factory(:document)
+      mediafile = Factory(:mediafile, :account => document.account)
+      waxing = Waxing.create(:document => document, :mediafile => mediafile, :account => document.account)
+      
+      document.waxing_for(mediafile).should == waxing
+      
+      another_mediafile = Factory(:mediafile, :account => document.account)
+      document.waxing_for(another_mediafile).should be_nil
+    end
+  end
+  
   
   describe "publication status" do
     before(:each) do
@@ -47,6 +69,13 @@ describe Document do
       Document.published.should_not include(@draft)
       Document.published.should include(@published)
       Document.published.should_not include(@scheduled)
+    end
+
+    it "should identify articles that are either published or scheduled" do
+      Document.published_or_scheduled.should_not include(@untouched)
+      Document.published_or_scheduled.should_not include(@draft)
+      Document.published_or_scheduled.should include(@published)
+      Document.published_or_scheduled.should include(@scheduled)
     end
 
     it "should know it's publication status" do
@@ -86,6 +115,38 @@ describe Document do
     Document.published.by_date_published.second.should == second_article
   end
   
+  describe "attributes" do
+    it "should return a default headline if none is set" do
+      article = Factory(:article)
+      article.title = ""
+      article.title.should == "(no headline)"
+    
+      article.title = "A real title"
+      article.title.should == "A real title"
+    end
+  
+    it "should return an appropriate date, depending on its publication status" do
+      article = Factory(:article)
+      article.date.should == article.updated_at
+      article.publish!(Time.now - 1.day)
+      article.date.should == article.published_at
+      article.publish!(Time.now + 1.day)
+      article.date.should == article.published_at
+    end
+    
+    it "should know its bodytext word count" do
+      article = Factory(:article)
+      article.bodytext = "this short article has a grand total of ten words"
+      article.word_count.should == 10
+
+      article.bodytext = ""
+      article.word_count.should == 0
+
+      article.bodytext = nil
+      article.word_count.should == 0
+    end
+  end
+  
   describe "publishing a document" do
     it "should publish documents, as requested" do
       article = Factory(:draft_article)
@@ -118,27 +179,6 @@ describe Document do
     end
   end
 
-  it "should know its bodytext word count" do
-    article = Factory(:article)
-    article.bodytext = "this short article has a grand total of ten words"
-    article.word_count.should == 10
-    
-    article.bodytext = ""
-    article.word_count.should == 0
-    
-    article.bodytext = nil
-    article.word_count.should == 0
-  end
-
-  it "should return a default headline if none is set" do
-    article = Factory(:article)
-    article.title = ""
-    article.display_title.should == "(no headline)"
-    
-    article.title = "A real title"
-    article.display_title.should == "A real title"
-  end
-  
   it "should have a default per-page value for pagination" do
     Document.per_page.should == 10
   end

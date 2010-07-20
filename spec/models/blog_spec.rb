@@ -91,5 +91,65 @@ describe Blog do
      Blog.should have_attached_file(:image)
      Blog.should validate_attachment_content_type(:image).allowing('image/png', 'image/jpeg', 'image/gif').rejecting('text/plain', 'text/xml')
   end
+  
+  describe "contributors" do
+    before do
+      @user1 = Factory(:user)
+      @user2 = Factory(:user)
+    end
+    
+    it "should keep track of its contributors" do
+      @blog.add_contributor(@user1)
+      @blog.contributors.should == [@user1]
+      
+      @blog.add_contributor(@user2)
+      @blog.contributors.should == [@user1, @user2]
+    end
+    
+    it "should not add duplicate contributors" do
+      @blog.add_contributor(@user1)
+      @blog.add_contributor(@user2)
+      @blog.add_contributor(@user2)
+      @blog.contributors.should == [@user1, @user2]
+    end
+    
+    it "should keep track of its editors" do
+      @blog.make_editor(@user1)
+      @blog.contributors.should == [@user1]
+      @blog.editors.should == [@user1]
+      
+      @blog.make_editor(@user2)
+      @blog.contributors.should == [@user1, @user2]
+      @blog.editors.should == [@user1, @user2]
+    end
+    
+    it "should demote editor to contributor" do
+      @blog.make_editor(@user1)
+      @blog.editors.should include(@user1)
+      
+      @blog.demote_editor(@user1)
+      @blog.editors.should_not include(@user1)
+      @blog.contributors.should include(@user1)
+    end
+    
+    it "should generate a contributor list" do
+      @editor1 = Factory(:user, :name => "Lilly" )
+      @editor2 = Factory(:user, :name => "Marshall")
+      @contributor1 = Factory(:user, :name => "Robin")
+      @contributor2 = Factory(:user, :name => "Barney")
+  
+      @blog.add_contributor(@editor1)
+      @blog.contributors_list.should == "Lilly"
+      @blog.make_editor(@editor1)
+      @blog.contributors_list.should == "Lilly (Editor)"
+
+      @blog.add_contributor(@contributor1)
+      @blog.add_contributor(@contributor2)
+      @blog.contributors_list.should == "Lilly (Editor), Robin and Barney"
+
+      @blog.make_editor @editor2
+      @blog.contributors_list.should == "Lilly (Editor), Marshall (Editor), Robin and Barney"
+    end
+  end
 
 end

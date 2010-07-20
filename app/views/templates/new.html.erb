@@ -1,0 +1,15 @@
+<h1>New <%= @tplate.class.name.tableize.humanize.singularize.downcase %></h1>
+<% semantic_form_for(@tplate, :url => account_design_templates_path(@account, @design)) do |form| %>
+	<% form.buttons :class => "grid_4", :style => "float:right;margin: 10px 10px 0 0;" do %>
+		<%= form.commit_button "Create" %>
+	<% end %>
+	<% form.inputs :class => "grid_12" do %>
+		<% if form.object.kind_of?(ViewTemplate) %>
+			<%= form.input :layout, :include_blank => "No layout" %>
+		<% else %>
+			<%= form.input :name %>
+		<% end %>
+		<%= form.input :description, :input_html => { :rows => 2 } %>
+		<%= form.input :code %>
+	<% end %>
+<% end %>

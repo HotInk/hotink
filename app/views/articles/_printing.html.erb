@@ -13,17 +13,15 @@
 					<% if p.issue.date %>
 						<p class="issue_date"><%= p.issue.date.strftime("%b <span>%e, %Y</span>")%></p>
 					<% end %>
-					<% if permit? @article.is_editable_by %><div class="kill_link"><%= link_to_remote "x", :url=>account_article_printing_url(@account, @article, p), :method => :delete, :after=>"$(this).up().addClassName('transparent');" %></div><% end %>
+					<% if permit? @article.is_editable_by %><div class="kill_link"><%= link_to "x", account_article_printing_url(@account, @article, p), 'data-method' => :delete, 'data-remote' => true %></div><% end %>
 				</li>
 			<% end %>
 		</ul>
 		<% if permit? @article.is_editable_by %>
 			<%= link_to_function "+ Add an issue", "$(this).next().show();$(this).hide();", :class=>"weblink" %>
 			<div id="printing_form" style="display:none;">
-				<% remote_form_for [@account, @article, @account.printings.build ], :after=>"$(this).up().select('.spinner')[0].show();" do |f| %>
-					<%= f.select(:issue_id, (@account.issues - @article.issues).collect{|i| [ i.date.to_s(:long), i.id ] }) %>
-					<%= button_link_to_submit "Add", :class=>"tiny" %> <img src="/loading_small_white.gif" style="display:inline;position:relative;top: 0.3em;display:none;" class="spinner"/>
-				<% end %>
+				<%= select :printing, :issue_id, (@account.issues - @article.issues).collect{|i| [ i.date.to_s(:long), i.id ] } %>
+				<%= button_link_to "Add", "#", :id => "create_printing", :class=>"tiny" %> <img src="/images/loading_small_white.gif" style="display:inline;position:relative;top: 0.3em;display:none;" class="spinner"/>
 			</div>
 		<% end %>
 	</div>

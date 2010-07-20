@@ -64,6 +64,7 @@ Rails::Initializer.run do |config|
   config.gem 'hominid'
   config.gem 'liquid', :source => "http://gemcutter.org"
 
+
   
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -71,7 +72,9 @@ Rails::Initializer.run do |config|
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
   # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{RAILS_ROOT}/extras )
+  config.load_paths += %W( #{RAILS_ROOT}/app/drops )
+  config.load_paths += %W( #{RAILS_ROOT}/app/filters )
+  config.load_paths += %W( #{RAILS_ROOT}/app/tags )
 
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)

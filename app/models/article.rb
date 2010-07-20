@@ -79,6 +79,10 @@ class Article < Document
     end
   end
   
+  def is_publishable_by
+    "(manager of account) or admin"
+  end
+  
   def add_section_to_categories
     if section && !categories.include?(section)
       categories << section

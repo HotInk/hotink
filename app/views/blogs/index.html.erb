@@ -1,13 +1,14 @@
-<div id="blogs" class="index">
-	<div class="title_bar clearfix">
-		<div class="actions">
-			<h1>Blogs</h1>
-			<%= button_link_to 'Start a new blog', new_account_blog_path(@account) %>
-		</div>
-	</div>
-	
-	<ol>
-		<%= render @active_blogs %>
-		<%= render @inactive_blogs %>		
-	</ol>
-</div>
+<h1>Blogs</h1>
+<p><%= link_to 'New blog', new_account_blog_path(@account), :class => "link green" %></p>
+
+<% unless @active_blogs.blank? %>
+<ol id="active_blogs" class="blogs grid_12">
+	<%= render @active_blogs %>
+</ol>
+<% end %>
+
+<% unless @inactive_blogs.blank? %>
+<ol id="inactive_blogs" class="blogs grid_12">
+	<%= render @inactive_blogs %>
+</ol>
+<% end %>

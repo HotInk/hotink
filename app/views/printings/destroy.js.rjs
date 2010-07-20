@@ -1,1 +1,0 @@
-page.replace 'printings', :partial => "articles/printing"

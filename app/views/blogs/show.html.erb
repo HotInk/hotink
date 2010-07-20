@@ -1,95 +1,20 @@
-<div id="blog" class="clearfix index">
-	<div class="title_bar clearfix">
-		<div id="top_links">
-			<%= link_to "&#171; Back to blogs list", account_blogs_url(@account), :class=>"weblink" %>
-		</div>
-		<h2><%= @blog.title %></h2> <%= button_link_to "Edit blog details", edit_account_blog_url(@account, @blog), :class => "pill-l" -%><%= button_link_to "New entry", new_account_blog_entry_url(@account, @blog), :class => "pill-r" %>
 
-		<div class="search">
-			<form method="GET">
-				<input type="text" id="entries_search" name="search" class="text_input user" onclick="if(this.value=='Search entries') clearText(this);" value="<%=h( @search_query || "Search entries") %>" />
-				<%= button_link_to_submit "Go" %>
-			</form>
-		</div>
-	</div>
-
-<div class="select_all_wrap clearfix">
-	<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
+<div class="grid_4 alpha">
+		<h1><%= @blog.title %></h1> 
+		<% if @blog.image_file_name %><%= image_tag @blog.image.url(:thumb), :style => "border: 1px solid #AAA;" %><% end %>
 </div>
-
-<% form_remote_tag :url=>new_account_action_url(@account), :method => :get do %>
-<%= hidden_field_tag "content_types[]", 'entry'%>
-<%= hidden_field_tag "name", '', :id=>"entry_action_name"%>
-<%= hidden_field_tag "blog_id", @blog.id, :id=>"entry_blog_id"%>
-
-	<div id="actions" class="clearfix">
-		<%= button_link_to_submit "Publish", :onclick => "$('entry_action_name').value='publish';return true;", :class => "pill-l" %>
-		<%= button_link_to_submit "Schedule", :onclick => "$('entry_action_name').value='schedule';return true;", :class => "pill-c" %>
-		<%= button_link_to_submit "Delete",  :onclick => "$('entry_action_name').value='delete';return true;", :class => "pill-r" %>
-		<div class="batch_actions">
-			<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
-			<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
-				<%= submit_tag "Unpublish", :onclick => "$('entry_action_name').value='unpublish';return true;", :class => "menubutton" %>
-				<%= submit_tag "Add tag", :onclick => "$('entry_action_name').value='add_tag';return true;", :class => "menubutton" %>																				
-			</div> 
-		</div>
+<div class="grid_8 omega" style="padding-top:7px;" >
+	<% if permit? "admin or manager of account" %><%= link_to 'Delete blog', edit_account_blog_path(@account, @blog), :class => "link red", :style => "float:right;clear:right;margin-left:10px;", 'data-confirm' => "Are you REALLY sure you want to delete this blog?\n\nAll data will be lost and cannot be recovered.\n\nPress 'OK' to delete this blog or 'Cancel' to return." %> <% end %>
+	<% if permit? "admin or (manager of account) or (editor of blog)" %><%= link_to 'Edit blog info', edit_account_blog_path(@account, @blog), :class => "link blue", :style => "float:right;" %><% end %>
+	<div style="float:right;clear:right;padding:15px 0; line-height: 1.3; text-align: right;">
+		<strong>Contributors:</strong>
+		<%= @blog.contributors_list %>
+	 	<% if permit? "admin or (manager of account) or (editor of blog)" %><%= link_to 'Manage contributors', manage_contributors_account_blog_path(@account, @blog), :class => "link yellow", :style => "margin-left:10px;" %><% end %>
 	</div>
-	<div class="top_pagination clearfix">
-		<%= render :partial=>'pagination' %>
-	</div>
-	<ol id="entries_list">			
-		<% if !(@entries.empty? && @drafts.blank? && @scheduled.blank? ) %>
-			<%= render @drafts if @drafts %>
-			<%= render @scheduled if @scheduled %>
-			<%= render @entries %>
-		<% elsif @search_query %>
-			<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No blog entries matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
-		<% else %>
-			<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No entries.</em></p>
-		<% end %>
-	</ol>
-<% end %>
-
-
-	
 </div>
-
-
-
-
-
-<script type="text/javascript" charset="utf-8">
-	//Load each entry <li> as a Card and check to see if any checkboxes are pre-checked and need to be pre-selected 
-	$('blog').select('ol#entries_list>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });
-	
-
-	// Activate table header checkboxes select_all functionality
-	$$('.select_all').each(	function(element) { 
-			Event.observe(element, 'click', function( event ) { 
-					if (element.checked){ 
-						$$('ol#entries_list>li').each(
-								function(el){ 
-									el.card.select(); 
-								}
-						); 
-						$$('.select_all').each(
-							function(el) {
-								el.checked = true;
-							}
-						);						
-					} else {
-						$$('ol#entries_list>li').each( 	
-							function(el){ 
-								el.card.deselect(); 
-							}
-						); 
-						$$('.select_all').each(
-							function(el) {
-								el.checked = null;
-							}
-						);
-					} 
-			})
-	});
-	
-</script>
+<p class="grid_12 alpha"><%= link_to 'New entry', new_account_blog_entry_path(@account, @blog), :class => "link green", :style => "float:left;margin-top:10px;" %></p>
+<p class="grid_12 alpha"><%= @blog.description %></p>
+<%= will_paginate(@entries, :inner_window => 2, :outer_window => 1) %>
+<ol id ="blog_<%= @blog.id %>_entries" class="documents entries">
+	<%= render @entries %>
+</ol>

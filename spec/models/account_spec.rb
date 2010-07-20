@@ -12,6 +12,8 @@ describe Account do
   it { should have_many(:articles) }
   it { should have_many(:email_templates) }
   it { should have_many(:blogs) }
+  it { should have_many(:lists) }
+  it { should have_many(:pages) }
   
   it { should have_one(:membership) }
   
@@ -77,6 +79,16 @@ describe Account do
       @account.demote(@user)
       @user.has_role?('staff', @account).should be_false
     end
+  end
+  
+  it { should have_many(:designs) }
+  
+  it "should keep track of whcih design is currently being shown to users" do
+    @account.current_design.should be_nil
+    @design = Factory(:design, :account => @account)
+    @account.current_design = @design
+
+    @account.current_design.should == @design
   end
   
 end

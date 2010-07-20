@@ -1,18 +1,27 @@
-#navigation { width: 99%; min-height: 2.4em; padding-right: 1%;background-color: #222; border-bottom: 1px solid #CEE4F3; text-align: center; border-right: 1px solid #DDD;}
-#navigation.apps { overflow: hidden; }
-#navigation div { display: inline-block; margin: 0.25em; margin-top: 0.3em; padding: 0.25em; }
-#navigation #logo { float: left; width: 9em; margin: 0.125em; margin-bottom: 0; padding-bottom: 0.125em; margin-left: 0.5em; }
-#navigation #links { float: left; padding: 0; margin: 0; margin-left: 3%; margin-top: 0.85em; }
-#navigation #links ol { margin: 0; padding: 0; font-size: 1.2em; list-style: none;  }
-#navigation #links ol li { display: inline; margin: 0; padding: 0.2em 0.5em; background-color: #FFF6DD; }
-#navigation #links ol li a { color: #000; }
-#navigation #links ol li.current { background-color: #FFF; color: #515151; margin:0; }
-#navigation #links ol li.current a { color: #333; }
-#navigation #links ol li a:hover { color: #333; }
-#navigation #links ol li:hover { background-color: #CEE4F3; margin:0;}
-#navigation #user_details { float: right; padding: 0.2em 0.3em; padding-top: 0.3em; font-size: 0.8em; border: 1px solid #CEE4F3; background-color: #FFF6DD;}
-#navigation #user_details p { display: inline-block; font-size: 1.0em; margin: 0; padding: 0.125em; }
-#navigation #account_details{ float: right; font-size: 1.0em; padding: 0.25em; padding-top: 0.15em; }
-#navigation #flash { line-height:0; height: 1.1em; text-align: left; color: #F9F9F9; padding: 0.25em 0.5em; float: right;  margin-left: 1%; }
-#navigation #flash p { font-size: 0.9em; margin: 0.25em; display:inline;}
+#navigation { background-color: #1A1A1A; /* border-bottom: 1px solid #CEE4F3; */ padding-top: 10px; }
+
+#navigation > div { height: 60px; position: relative; }
+
+#navigation ol#links  { margin: 0; color: #1A1A1A; font-size: 14px; font-weight: 200; list-style: none; position: absolute; bottom: 0; left: 0; }
+#navigation ol#links li { 
+		float: left; margin: 0 7px 1px 0; padding: 1px 7px 2px 7px; background-color: #fff9e5; border: 1px solid #CCC; border-bottom-width: 0; 
+	 	-webkit-border-top-left-radius: 4px; -webkit-border-top-right-radius: 4px;
+		-moz-border-radius-topleft: 4px; -moz-border-radius-topright: 4px;
+}
+#navigation ol#links li a { color: #000; }
+#navigation ol#links li.current { background-color: #FFF; color: #515151; margin-bottom: 0px; padding-bottom: 3px; }
+#navigation ol#links li.current a { color: #333; }
+#navigation ol#links li a:hover { color: #333; }
+#navigation ol#links li:hover { background-color: #CEE4F3; }
+
+#navigation #user_details { 
+	float: right; padding: 5px; margin-left: 5px; text-align: center; border: 1px solid #CEE4F3; background-color: #fff9e5; 
+	-webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+#navigation #user_details p { display: inline-block; font-size: 0.85em; margin-bottom: 0; }
+
+#navigation #account_details{ float: right; font-size: 1.0em; padding: 5px; }
+
+#navigation #flash { padding: 5px; font-weight: 200; color: #F9F9F9; float: right; }
+
 #navigation .btn { margin-bottom: 0em; }

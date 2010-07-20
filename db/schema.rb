@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100407161849) do
+ActiveRecord::Schema.define(:version => 20100712163715) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -18,6 +18,9 @@ ActiveRecord::Schema.define(:version => 20100407161849) do
     t.datetime "updated_at"
     t.string   "time_zone"
     t.text     "settings"
+    t.string   "lead_article_ids"
+    t.integer  "current_design_id"
+    t.string   "site_url"
   end
 
   create_table "authors", :force => true do |t|
@@ -102,6 +105,16 @@ ActiveRecord::Schema.define(:version => 20100407161849) do
     t.datetime "updated_at"
   end
 
+  create_table "designs", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "default_layout_id"
+    t.integer  "current_front_page_template_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "documents", :force => true do |t|
     t.text     "title"
     t.string   "alternate_title"
@@ -156,6 +169,25 @@ ActiveRecord::Schema.define(:version => 20100407161849) do
     t.boolean  "processing",     :default => false
   end
 
+  create_table "list_items", :force => true do |t|
+    t.integer "list_id"
+    t.integer "position"
+    t.integer "document_id"
+  end
+
+  add_index "list_items", ["document_id"], :name => "index_list_items_on_document_id"
+  add_index "list_items", ["list_id"], :name => "index_list_items_on_list_id"
+
+  create_table "lists", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.string   "slug"
+    t.text     "description"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "mediafiles", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -203,6 +235,16 @@ ActiveRecord::Schema.define(:version => 20100407161849) do
   end
 
   add_index "oauth_tokens", ["token"], :name => "index_oauth_tokens_on_token", :unique => true
+
+  create_table "pages", :force => true do |t|
+    t.string   "name"
+    t.text     "contents"
+    t.integer  "template_id"
+    t.integer  "parent_id"
+    t.integer  "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "photocredits", :force => true do |t|
     t.integer  "mediafile_id"
@@ -274,6 +316,31 @@ ActiveRecord::Schema.define(:version => 20100407161849) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "template_files", :force => true do |t|
+    t.integer  "design_id"
+    t.string   "type"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "templates", :force => true do |t|
+    t.integer  "design_id"
+    t.string   "name"
+    t.text     "description"
+    t.text     "code"
+    t.binary   "parsed_code"
+    t.integer  "layout_id"
+    t.string   "type"
+    t.text     "title_code"
+    t.binary   "parsed_title_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

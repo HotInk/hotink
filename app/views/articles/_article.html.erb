@@ -1,68 +1,55 @@
-<li id="article_<%= article.id %>" class="<%= cycle("even-row", "odd-row") %> <% if article.published? %>published<% elsif article.scheduled? %>scheduled<% elsif article.draft? %>unpublished<% elsif article.awaiting_attention? %>awaiting_attention<% end %> clearfix">
-				
-	<div class="status">
-		<input type="checkbox" value="<%= article.id %>" name="article_ids[]"/>
-	</div>
+<li <% if article.draft?%>class="draft"<% elsif article.scheduled? %>class="scheduled"<% elsif article.awaiting_attention? %>class="awaiting_attention"<% end %>>
+	<div class="clearfix">
+		<div class="select">
+			<input type="checkbox" value="<%= article.id %>" name="article_ids[]"/>
+		</div>
 	
-	<div class="article clearfix">
-		<h1>
-			<% if permit? (article.is_editable_by, :article => article)%>
-				&ldquo;<%=link_to h(article.display_title.strip), edit_account_article_url(@account, article), :class=>"document_link" %>&rdquo;
-			<% else %>
-				&ldquo;<%=link_to h(article.display_title.strip), account_article_url(@account, article), :class=>"document_link" %>&rdquo;
-			<% end %>
-			<% if article.draft? %>
-				<small>Draft</small>
-			<% elsif article.scheduled? %>
-				<small>Scheduled</small>
-			<% elsif article.awaiting_attention? %>
-				<small>Signed off by <strong><% if article.sign_offs.last.user == current_user %><em>you</em><% else %><%= article.sign_offs.last.user.name %><% end %></strong>, <strong><%= article.sign_offs.last.created_at.to_s(:date) %></strong> at <strong><%= article.sign_offs.last.created_at.to_s(:time) %></strong></small>
-			<% end %>
-		</h1>
-		<div class="article_details clearfix">
-			<div class="authors">
-				<em><%= article.authors_list if article.authors_list %></em>
-			</div>
-			<div class="media">
-				<% article.mediafiles.each do | i | %>
-					<% if i.is_a?(Image) %>
-						<%= link_to_remote image_tag(i.file.url(:system_icon), :border=>1), :url=>edit_account_mediafile_url(@account, i, :format=>:js), :method=>:get %>
-					<% else %>
-						<%= image_tag('/images/blank_file_icon.png', :alt=>i.file_file_name) if i %>
+		<div class="details">
+			<h1><%= link_to article.title, document_url_for_user(article, current_user)  %> <small><%= publication_status_for(article) %></small></h1>
+			<div class="mediafiles">
+				<% if mediafile = article.mediafiles.first %>				
+					<% if mediafile.is_a?(Image) %>
+						<a class="image_icon first large" href="<%= mediafile.file.url(:large) %>"><%= image_tag(mediafile.file.url(:thumb)) %></a>
+						<a class="image_icon first small" href="<%= mediafile.file.url(:large) %>"><%= image_tag(mediafile.file.url(:system_icon)) %></a>
+					<% elsif mediafile.is_a?(Audiofile) %>
+						<object type="application/x-shockwave-flash" data="/player_mp3.swf" width="27" height="22">
+		                    <param name="movie" value="/player_mp3.swf" />
+		                    <param name="FlashVars" value="mp3=<%= mediafile.file.url %>&amp;showslider=0&amp;width=27&height=22" />
+		                </object>    
 					<% end %>
 				<% end %>
-			</div> 
+				<% if article.mediafiles.count > 1 %>
+					<% article.mediafiles[1..-1].each do |mediafile| %>
+						<% if mediafile.is_a?(Image) %>
+							<a class="image_icon" href="<%= mediafile.file.url(:large) %>"><%= image_tag(mediafile.file.url(:system_icon)) %></a>
+						<% elsif mediafile.is_a?(Audiofile) %>
+							<object type="application/x-shockwave-flash" data="/player_mp3.swf" width="27" height="22">
+			                    <param name="movie" value="/player_mp3.swf" />
+			                    <param name="FlashVars" value="mp3=<%= mediafile.file.url %>&amp;showslider=0&amp;width=27&height=22" />
+			                </object>    
+						<% end %>
+					<% end %>
+				<% end %>
+			</div>
+			<p><%= article.authors_list %></p>
 		</div>
-	</div>
-
-	<div class="section">
-		<p> <%= article.section.blank? ? "<span style=\"color: #BBB\">No section</span>" : article.section.name %></p>
-	</div>
 	
-	<div class="tags">
-		<% unless article.tag_list.blank? %>
-			<p><em> <%= article.tag_list %></em></p>
-		<% else %>
-			<p><em><span style="color: #BBB">No tags</span> </em></p>
-		<% end %>
-	</div>
+		<div class="section">
+			<p> <%= article.section.blank? ? "<span style=\"color: #BBB\">No section</span>" : article.section.name %></p>
+		</div>
 
-	<div class="icons transparent">
-		<%= link_to "&nbsp;&nbsp;&nbsp;", [@account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete_link", :style=>"display:none;" %>
-	</div>
-	
-	<div class="date">
-		<% if article.published_at %>
-			<%= h article.published_at.to_s(:standard) %>
-		<% else %>
-			<%= h article.updated_at.to_s(:standard) %>
-		<% end %>
+		<div class="tags">
+			<% unless article.tag_list.blank? %>
+				<p><em> <%= article.tag_list %></em></p>
+			<% else %>
+				<p><em><span style="color: #BBB">No tags</span> </em></p>
+			<% end %>
+		</div>
 		
-		<% if article.bodytext %>
-			<p><%= pluralize(article.word_count, "word") %></p>
-		<% else %>
-			<p>No bodytext</p>
-		<% end %>
+		<div class="date">
+			<p><%= h article.date.to_s(:standard) %></p>
+			<p class="word_count"><%= pluralize(article.word_count, "word") %></p>
+		</div>
+		<%= link_to "x", [article.account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %>
 	</div>
-		
 </li>

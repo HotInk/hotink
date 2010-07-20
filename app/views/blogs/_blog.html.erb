@@ -1,61 +1,28 @@
-<li class="grid_12 clearfix <%= blog.active? ? "active_blog" : "inactive_blog" %>">
-	<div class="actions"> <%= button_link_to "New post", new_account_blog_entry_url(@account, blog)%></div>
-	<h2><%= link_to blog.title, account_blog_url(@account, blog) %> <% unless blog.active? %><span class="blog_status">(Inactive)</span><% end %></h2>
-	<div class="column_holder full_column">
-			<div class="grid_3 alpha">
-				<p class="description"><%= blog.description %></p>
-				<h4>Contributors</h4>
-				<p class="contributors">
-					<% blog.has_editors.each do |e| -%>
-						<% if blog.has_contributors.length > 1 -%>
-							<%= "#{e.name} (Editor)," %>
-						<% else -%>
-							<%= "#{e.name} (Editor)" %>
-						<% end -%>	
-					<% end -%>
-					<% (blog.has_contributor - blog.has_editors).each do |c| -%>
-						<%= c.name %>
-					<% end -%>
-				</p>
-				<p><strong><%= "#{pluralize(blog.entries.size, 'entry')} in total" %> </strong></p>
-				<p><strong><%= "Last posting was #{blog.entries.last.created_at.to_s(:standard)}" if blog.entries.last %> </strong></p>
-			</div>
-			<div class="grid_9 omega">
-				<div id="blog_entries" class="index">
-					<h3>Recent entries</h3>
-					<ol>
-						<% if blog.entries.size > 0 -%>
-							<% blog.entries.find(:all, :limit=>4).each do |entry| %>
-								<li id="entry_<%= entry.id %>" class="<%= cycle("even-row", "odd-row") %> <%= entry.status=="Published" ? (entry.published_at > Time.now ? "scheduled" : "published") : "unpublished" %> clearfix">
-
-									<div class="entry clearfix">
-										<h1>&ldquo;<%=link_to h(entry.display_title.strip), edit_account_blog_entry_url(@account, entry.blog, entry), :class=>"document_link" %>&rdquo;<%= entry.status=="Published" ? (entry.published_at > Time.now ? "<small>Scheduled</small>" : "") : "<small>Draft</small>" %></h1>
-
-									</div>
-
-									<div class="kill_link">
-									<%= link_to_remote 	"x", 
-														:url=>account_blog_entry_url(@account, entry.blog, entry), 
-														:method => :delete, 
-														:confirm => "You're about to delete the entry: \n\n\"#{entry.display_title}\" \n\nPress OK to delete this entry.",
-														:after=>"$(this).up().addClassName('transparent');" 
-									%>
-									</div>
-
-									<div class="date">
-										<%= h entry.published_at.to_formatted_s(:standard_date_only) if entry.published_at  %>
-									</div>
-								</li>
-							<% end %>
-						<% else -%>
-						<li>
-							<div class="entry">
-								<h1><small><em>No entries in this blog, yet</em></small></h1>
-							</div>
-						</li>
-						<% end -%>
-					</ol>
-				</div>
-			</div>
+<li id="blog_<%= blog.id %>" class="<%= cycle('odd','even') %>">
+	<div class="left">
+		<h2><%= link_to blog.title, account_blog_path(@account, blog) %><% unless blog.active? %> <small>(Offline)</small><% end %></h2>
+		<% if blog.image_file_name %><%= image_tag blog.image.url(:thumb), :style => "border: 1px solid #AAA;margin-bottom: 10px;" %><% end %>
+		<div class="details">
+			<p class="description"><%= blog.description %></p>
+			<p class="contributors"><strong>Contributors:</strong> <%= blog.contributors_list %></p>
+			<% if blog.entries.blank? %>
+				<p><strong>No published entries for this blog</strong></p>
+			<% else %>
+				<p><strong>Updated:</strong> <%= time_ago_in_words(blog.updated_at) %> ago</p>
+			<% end %>
+		</div>
+	</div>
+	<div class="right">
+		<h5 style="margin-bottom:5px;">Recent entries</h5>
+		<ol id ="blog_<%= blog.id %>_entries" class="documents entries small">
+		<% if blog.entries.blank? %>
+			<li class="no_entries"><em>No entries in this blog</em></li>
+		<% else %>
+			<%= render blog.entries.find(:all, :limit => 4,:order => "status, published_at desc") %>
+		<% end %>
+		</ol>
+		<% if blog.entries.count > 4 %>
+			<p style="text-align:right; margin-bottom:0;"><%= link_to "View more &raquo", account_blog_path(@account, blog) %></p>
+		<% end %>
 	</div>
 </li>

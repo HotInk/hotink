@@ -1,7 +1,27 @@
-	<div id="mediafile" class="column_holder clearfix">
-		<div id="upload_media_form" class="two_thirds_column">
-					<h4>Upload media file</h4>
-				<div>
+<div id="mediafile" class="column_holder clearfix">
+	<% if @document %>
+		<div class="title_bar clearfix">
+			<div class="actions">	
+				<%= button_link_to 'Attach archive media &raquo;', new_account_document_waxing_url(@account, @document), :id => "attach_archive_media_link", :title => "Attach media from archive", :class=>'primary', :style => "float: right; margin: 5px 10px 15px 0;" %>
+				<h1>Attach media </h1>
+			</div>
+		</div>
+	<% end %>
+	<div id="upload_media_form" class="two_thirds_column">
+				<h4>Upload media file</h4>
+			<div>
+				<% if @document %>
+					<% form_tag account_document_mediafiles_url(@account, @document), :method => :post, :multipart=>true, :target=>"upload_frame" do %>
+						<p>
+							<%= label_tag 'mediafile[file]', "Media file" %><br />
+							<%= file_field_tag 'mediafile[file]', :class=>"text_input" %>			
+						</p>
+						<p style="text-align:left;padding-top:10px;">
+							<%= button_link_to_submit "Upload", :class=>"large save" %>
+						</p>
+						<%= hidden_field_tag 'iframe_post', true %>
+					<% end %>
+				<% else %>
 					<% form_for [@account, @mediafile], :html=>{:multipart=>true} do |f| %>
 						<%= f.error_messages %>
 						<p>
@@ -12,22 +32,31 @@
 							<%= button_link_to_submit "Upload", :class=>"large save" %>
 						</p>
 					<% end %>
-				</div>
-		</div>
-		<div class="third_column">
-				<p class="faq question">What types of file can I upload?</p>
-				<p class="faq answer">You can upload any type of file you want, but the system offers special support for a 
-					few file types. They are:</p>
-					<dl class="faq">
-						<dt>jpeg, jpg, png, gif, tiff, or bmp</dt>
-						<dd>Images will be displayed alongside your article.</dd>
-						<dt>mp3</dt>
-						<dd>Audio is playable in the browser window.</dd>
-					</dl>
-				<p class="faq answer">Other files can also be uploaded, attached and captioned alongside articles, but with no 
-					special consideration.</p>
+				<% end %>
 			</div>
 	</div>
+	<div class="third_column">
+			<p class="faq question">What types of file can I upload?</p>
+			<p class="faq answer">You can upload any type of file you want, but the system offers special support for a 
+				few file types. They are:</p>
+				<dl class="faq">
+					<dt>jpeg, jpg, png, gif, tiff, or bmp</dt>
+					<dd>Images will be displayed alongside your article.</dd>
+					<dt>mp3</dt>
+					<dd>Audio is playable in the browser window.</dd>
+				</dl>
+			<p class="faq answer">Other files can also be uploaded, attached and captioned alongside articles, but with no 
+				special consideration.</p>
+		</div>
+</div>
 <script type="text/javascript" charset="utf-8">
-	load_button_fix();
+	$().ready( function(){
+		$("#attach_archive_media_link").fancybox({
+			'titlePosition'		: 'inside',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'scrolling'			: 'no',
+			'showNavArrows'		: 'no'
+		});
+	});
 </script>

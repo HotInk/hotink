@@ -1,1 +1,160 @@
-<%= render :partial => 'form' %>
+<%= stylesheet_link_tag 'wmd' %>
+<%= stylesheet_link_tag 'token_input' %>
+
+<% semantic_form_for [@account, @article] do |form| %>	
+<% form.buttons :class => "grid_8" do %>
+	<li class="grid_4 alpha"><h1>Edit article</h1></li>
+ 	<li class="grid_4 omega" style="float:right;text-align:right;margin-right: -10px;"><%= link_to @article.published? ? "View on site" : "Preview on site", account_public_article_url(@account, @article), :target => "_blank", :style=>"line-height: 1.2;" %>&nbsp;&nbsp;&nbsp;<%= form.submit "Save article" %></li>
+<% end %>
+	<div class="toolbox grid_4">
+		<h4>Status</h4>
+		<div>
+			<% if @article.published? %>
+			<p id="status" class="published">
+				Published<br />
+				<small><strong><%= @article.published_at.to_s(:date) %></strong> at <strong><%= @article.published_at.to_s(:time) %></strong>
+				(<%= distance_of_time_in_words_to_now(@article.published_at) %> ago)</small>
+			<% elsif @article.scheduled? %>
+			<p id="status" class="scheduled">
+				Scheduled<br />
+				<small><strong><%= @article.published_at.to_s(:date) %></strong> at <strong><%= @article.published_at.to_s(:time) %></strong>
+				(<%= distance_of_time_in_words_to_now(@article.published_at) %> from now)</small>
+			<% else %>
+			<p id="status" class="draft">
+				Draft
+			<% end %>
+			</p>
+			<div id="publish">
+				<% if @article.status == "Published" -%>
+					<%= form.submit "Unpublish", :class => "article_unpublish" %> <input type="button" value="Reschedule" class="show_schedule" />
+				<% else -%>
+					<%= form.submit "Publish", :class => "article_publish" %> <input type="button" value="Specify date" class="show_schedule" />
+				<% end %>
+			</div>
+			<%= form.hidden_field :status %>
+			<div id="schedule" style="display:none;">
+				<label for="article[schedule][year]">Publish this article on:</label><br />
+				<%= select_datetime (@article.published_at.nil? ? Time.now : @article.published_at), :order => [:month, :day, :year], :datetime_separator => "<br /> at ", :time_separator => ": ", :prefix => "article[schedule]" %>
+				<%= form.submit "Schedule", :class => "article_publish" %>
+			</div>
+		</div>
+		
+		<%= render :partial => 'printing' %>
+	</div>
+	
+	<% form.inputs :class => "grid_8", :style => "clear:left;" do %>
+		<%= form.input :title, :as => :string %>
+		<%= form.input :subtitle, :as => :string %>
+		<%= form.input :author_ids, :label => "Authors", :as => :string, :input_html => { :value => "" }, :wrapper_html => { :class => "grid_6 " } %>
+		<%= form.input :section_id, :as => :select, :collection => @account.categories.sections.all, :label => "Section", :wrapper_html => { :class => "grid_2" } %>
+		<%= form.input :summary, :as => :text, :input_html => { :rows => 2 }, :label => "Excerpt" %>
+		<%= form.input :bodytext, :label => "Bodytext <a id=\"bodytext_preview_link\" href=\"#bodytext_preview\" style=\"float:right\">Preview formatting</a>" %>
+	<% end %>
+	
+	<div class="toolbox grid_4">
+		<h4>Categories</h4>
+		<div id="document_categories">
+			<% for category in @account.categories.sections.all %>
+		  		<%= check_box_tag "article[category_ids][]", category.id, @article.categories.include?(category) %>
+		  		<%= category.name %><br />
+				<% unless category.subcategories.blank? %>
+					<% category.subcategories.each do |subcategory| %>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "article[category_ids][]", subcategory.id, @article.categories.include?(subcategory) %>
+			  		<%= subcategory.name %><br />
+						<% unless subcategory.subcategories.blank? %>
+							<% subcategory.subcategories.each do |subsubsubcategory| %>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "article[category_ids][]", subsubsubcategory.id, @article.categories.include?(subsubsubcategory) %>
+					  		<%= subsubsubcategory.name %><br />
+							<% end %>
+						<% end %>
+					<% end %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+	
+	<div class="toolbox grid_4">
+		<h4>Media</h4>
+		<div>
+			<ol id="document_mediafiles">
+				<%= render @article.waxings %>
+			</ol>
+			<a id="attach_mediafile_link" href="<%= new_account_document_mediafile_path(@account, @article) %>" title="Attach media" class="link yellow">Attach media</a>
+			<iframe name="upload_frame" style="display: none"></iframe>
+		</div>
+	</div>
+	
+	<div class="toolbox grid_4">
+		<h4>Tags</h4>
+		<div>
+			<% form.inputs do %>
+				<%= form.input :tag_list, :as => :text, :input_html => { :rows => 3 }, :wrapper_html => { :style => "margin-bottom: 0;width: 99%;" } %>
+			<% end %>
+		</div>
+	</div>
+	
+<% end %>
+
+<div style="display: none;">
+	<div id="bodytext_preview">
+		<h1>Bodytext preview</h1>
+		<div id="toggle_preview" class="state_control"><a href="#" class="formatted selected">Formatted</a><a href="#" class="raw_html">Raw HTML</a></div>
+		<hr>
+		<div id="wmd-preview">
+		</div>
+		<div id="wmd-output" style="display:none">
+		</div>
+	</div>
+</div>
+
+<% content_for :javascript do %>
+	<%= javascript_include_tag 'jquery.tokeninput' %>
+	<%= javascript_include_tag 'jquery.wmd' %>
+	<script type="text/javascript">
+		$().ready(function() {			
+           	$("#article_bodytext").wmd({'preview':"wmd-preview"}); 
+
+			$('#create_printing').live('click', function(event){
+				$.ajax({ 
+					'data': { 'printing[issue_id]' : $('#printing_issue_id').val() }, 
+					'type' : 'POST', 
+					'url' : '<%= account_article_printings_url(@account, @article)%>',
+					'beforeSend' : function(){ 
+						$('#printings .spinner').show();
+					} 
+				});
+				event.preventDefault();
+			});
+			
+			$('#upload_media_form form').live('submit', function(){
+				$.fancybox.showActivity();
+			});
+			
+			
+			$("#article_author_ids").tokenInput("<%= account_authors_path(@account, :format => :json) %>", {
+				initialValues: <%= @article.authors_json %>,
+				canCreate: true,
+				createText: "New author",
+				hintText: "Add an author",
+		        classes: {
+		            tokenList: "token-input-list",
+		            token: "token-input-token",
+		            tokenDelete: "token-input-delete-token",
+		            selectedToken: "token-input-selected-token",
+		            highlightedToken: "token-input-highlighted-token",
+		            dropdown: "token-input-dropdown",
+		            dropdownItem: "token-input-dropdown-item",
+		            dropdownItem2: "token-input-dropdown-item2",
+		            selectedDropdownItem: "token-input-selected-dropdown-item",
+		            inputToken: "token-input-input-token"
+		        }
+		   });	
+		
+			$(".edit_caption a").fancybox({
+				'titlePosition'		: 'inside',
+				'transitionIn'		: 'none',
+				'transitionOut'		: 'none'
+			});
+        });
+	</script>
+<% end %>

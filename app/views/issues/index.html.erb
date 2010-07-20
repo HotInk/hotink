@@ -1,17 +1,12 @@
-<div id="issues" class="index">
-	<div class="title_bar clearfix">
-		<div class="actions">
-			<h1>Print issues</h1>
-		 	<%= button_link_to 'New issue', new_account_issue_path(@account) %>
-		</div>
-		
-		<div class="pagination">
-			<%= will_paginate(@issues, :inner_window => 1, :outer_window => 1) %>
-		</div>
+<div id="issues">
+	<h1>Print issues</h1>
+ 	<%= button_link_to 'New issue', new_account_issue_path(@account) %>
+	
+	<div class="pagination">
+		<%= will_paginate(@issues, :inner_window => 1, :outer_window => 1) %>
 	</div>
 
 	<ol>
 		<%= render @issues %>
 	</ol>
-
 </div>

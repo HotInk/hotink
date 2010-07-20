@@ -1,2 +1,1 @@
-<%= will_paginate(@mediafiles, :inner_window => 1, :outer_window => 1, :renderer => 'RemoteLinkRenderer' ) %>
-<p id="mediafiles_page_info" class="page_entries_info"><%= page_entries_info @mediafiles %></p>
+<%= will_paginate(@mediafiles, :inner_window => 1, :outer_window => 1, :class => "pagination remote" ) %>

@@ -19,31 +19,50 @@ describe ArticlesController do
     end
     
     context "with draft, scheduled and published articles" do
-      before do
-        @drafts = (1..3).collect{ Factory(:draft_article, :account => @account) }
-        @scheduled = (1..3).collect{ Factory(:scheduled_article, :account => @account) }
-        @published = (1..3).collect{ Factory(:detailed_article, :account => @account) }
-        
-        get :index, :account_id => @account.id
-      end
-      
-      it { should respond_with(:success) }
-      
-      it { should assign_to(:drafts).with(@drafts) }
-      it { should assign_to(:scheduled).with(@scheduled) }
-      it { should assign_to(:articles).with(@published) }
+       before do
+         @drafts = (1..3).collect{ |n| Factory(:draft_article, :updated_at => n.days.ago, :account => @account ) }
+         @scheduled = (1..3).collect{ |n| Factory(:scheduled_article, :published_at => (Time.now + 1.day - n.minutes), :account => @account ) } 
+         @published = (1..3).collect{ Factory(:published_article, :account => @account) }
+         get :index, :account_id => @account.id
+       end
+       
+       it { should respond_with(:success) }
+
+       it "should paginate published articles" do
+          should assign_to(:articles).with(@drafts + @scheduled + @published)
+          assigns(:articles).should be_kind_of(WillPaginate::Collection)
+       end      
+    end
+  end
+
+  describe "GET to search" do
+    before do
+      @articles = (1..2).collect{ Factory(:published_article, :account => @account) }
     end
     
-    context "searching for specific articles" do
+    context "with a query" do
       before do
-        @searched_articles = (1..3).collect{ Factory(:detailed_article, :account => @account) }
-        @other_articles = (1..3).collect{ Factory(:detailed_article, :account => @account) }
-        Article.should_receive(:search).with( "test query", :with=>{ :account_id => @account.id }, :page => 1, :per_page => 20, :include => [:authors, :mediafiles, :section]).and_return(@searched_articles)
-        get :index, :account_id => @account.id, :search => "test query"
+        @searched_articles = [Factory(:published_article, :title => "Experimental testing", :account => @account), Factory(:published_article, :bodytext => "Experimental testing", :account => @account)]
+        Article.should_receive(:search).and_return(@searched_articles)
+        get :search, :account_id => @account.id, :q => "Experimental testing"
+      end
+    
+       it { should respond_with(:success) }
+       it { should respond_with_content_type(:html) }
+       it { should render_template(:search) }
+       it { should render_with_layout(:hotink) }
+       it { should assign_to(:search_query).with("Experimental testing") }
+       it { should assign_to(:articles).with(@searched_articles) }
+    end
+    
+    context "with no query" do
+      before do
+        get :search, :account_id => @account.id
       end
       
-      it { should assign_to(:articles).with(@searched_articles) }
       it { should respond_with(:success) }
+      it { should render_template(:search) }
+      it { should assign_to(:articles).with([]) }
     end
   end
 
@@ -153,20 +172,6 @@ describe ArticlesController do
             @article.reload.title.should == "Whoa there. Title time."
           end
         end
-
-        context "as an XHR request" do
-          before do
-            xhr :put, :update, :account_id => @account.id, :id => @article.id, :article => { :title => "Whoa there. Title time." }
-          end
-
-          it { should assign_to(:article).with(@article) }
-          it { should set_the_flash.to("Article saved") }
-          it { should respond_with(:success) }
-          it { should respond_with_content_type(:js) }
-          it "should update the article" do
-            @article.reload.title.should == "Whoa there. Title time."
-          end
-        end
       end
       
       context "with invalid parameters" do
@@ -221,6 +226,39 @@ describe ArticlesController do
       
       it "should unpublished the article" do
         @article.reload.should be_draft
+      end
+    end
+    
+    describe "categories" do
+      before do
+        @user = Factory(:user)
+        @article.owner = @user
+        controller.stub!(:current_user).and_return(@user)
+      end
+      
+      describe "attaching categories" do
+        before do
+          @category1 = Factory(:category)
+          @category2 = Factory(:category)
+          put :update, :account_id => @account.id, :id => @article.id, :article => { :category_ids => [@category1.id, @category2.id] }
+        end
+      
+        it "should attach categories" do
+          @article.reload.categories.should include(@category1)
+          @article.categories.should include(@category2)
+        end
+      end
+    
+      describe "detaching category" do
+        before do       
+          @category = Factory(:category)
+          @article.categories << @category
+          put :update, :account_id => @account.id,  :id => @article.id, :article => { :category_ids => [] }
+        end
+      
+        it "should attach category" do
+          @article.reload.categories.should_not include(@category)
+        end
       end
     end
     

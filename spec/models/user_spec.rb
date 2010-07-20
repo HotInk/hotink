@@ -24,4 +24,18 @@ describe User do
     user.should be_new_record
     user.login.should == user.email.split('@').first
   end
+  
+  describe "role" do
+    it "should know if a user is an administator" do
+      @user.should_not be_admin
+      @user.has_role "admin"
+      @user.should be_admin
+    end
+    
+    it "should promote user to administrator as requested" do
+      @user.should_not be_admin
+      @user.promote_to_admin
+      @user.should be_admin
+    end
+  end
 end

@@ -1,0 +1,102 @@
+require 'spec_helper'
+
+describe PublicPagesController do
+  before do
+    @account = Factory(:account)
+    Account.stub!(:find).and_return(@account)
+  end
+  
+    describe "GET to show" do
+      context "with a current design" do
+        before do
+          @design = Factory(:design, :account => @account)
+          @account.stub!(:current_design).and_return(@design)
+
+          @template = mock('page template')
+          @design.stub!(:page_template).and_return(@template)
+        
+          @content_drop = ContentDrop.new(@account)
+          @site_drop = SiteDrop.new(@account)
+          SiteDrop.stub!(:new).and_return(@site_drop)
+          ContentDrop.stub!(:new).and_return(@content_drop)
+        end
+        
+        context "viewing with current design" do
+          context "for a top level page" do
+            before do
+              @page = Factory(:page, :account => @account)
+              @page_drop = PageDrop.new(@page)
+              PageDrop.stub!(:new).and_return(@page_drop)
+
+              @template.should_receive(:render).with({ 'page' => @page_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
+
+              get :show, :account_id => @account.id, :id => @page.name
+            end
+
+            it { should respond_with(:success) }
+            it { should assign_to(:page).with(@page) }
+            it { should assign_to(:design).with(@design) }
+          end
+          
+          context "for a child page" do
+            before do
+              @page = Factory(:page, :parent => Factory(:page, :account => @account), :account => @account )
+              @page_drop = PageDrop.new(@page)
+              PageDrop.stub!(:new).and_return(@page_drop)
+              @template.should_receive(:render).with({ 'page' => @page_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
+
+              get :show, :account_id => @account.id, :id => "#{@page.parent.name}/#{@page.name}"
+            end
+
+            it { should respond_with(:success) }
+            it { should assign_to(:page).with(@page) }
+            it { should assign_to(:design).with(@design) }
+          end
+        end
+        
+        describe "viewing with alternate design" do
+          before do
+            @alternate_design = Factory(:design, :account => @account)
+          end
+
+          context "as qualified user" do
+             before do
+               @current_user = Factory(:user)
+               @current_user.promote_to_admin
+               controller.stub!(:current_user).and_return(@current_user)
+
+               @page = Factory(:page, :account => @account)
+               @page_drop = PageDrop.new(@page)
+               PageDrop.stub!(:new).and_return(@page_drop)
+
+               get :show, :account_id => @account.id, :id => @page.name, :design_id => @alternate_design.id
+             end
+
+             it { should assign_to(:design).with(@alternate_design) }
+          end
+
+          context "as unqualified user" do
+             before do
+               @template.should_receive(:render)
+               @page = Factory(:page, :account => @account)
+
+               get :show, :account_id => @account.id, :id => @page.name, :design_id => @alternate_design.id
+             end
+
+             it { should assign_to(:design).with(@design) }
+           end
+        end
+      end
+    
+      context "without a current design" do
+        before do
+          @page = Factory(:page, :account => @account)
+          @account.stub!(:current_design).and_return(nil)
+          get :show, :account_id => @account.id, :id => @page.name
+        end
+    
+        it { should respond_with(:service_unavailable) }
+      end
+    end
+
+end

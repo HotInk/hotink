@@ -31,12 +31,10 @@ class MediafilesController < ApplicationController
   # GET /mediafiles/new
   def new
     @mediafile = @account.mediafiles.build
-
-    respond_to do |format|
-      format.html # new.html.erb
-      if @document
-        format.js
-      end
+    if request.xhr?
+      render :template => 'mediafiles/new.html.erb', :layout => false
+    else
+      render :action => :new
     end
   end
 
@@ -66,11 +64,11 @@ class MediafilesController < ApplicationController
         flash[:notice] = 'Media added'
             #Special behaviour to mimic ajax file-upload on article & entry form, if it's an iframe
             if params[:iframe_post] && @document
+              @article = @document # articles/article_mediafile partial expects @article
               @waxing = @account.waxings.create(:document_id => @document.id, :mediafile_id=> @mediafile.id);
               responds_to_parent do
           			render :update do |page|
-          			  page << 'trigger_flash(\'<p style="color:green;">Media added</p>\');'
-          				page.replace_html 'mediafiles_list', :partial => 'waxings/waxing', :collection => @document.waxings
+          				page << "$.fancybox.close();$('#document_mediafiles').html('#{ escape_javascript render(@document.waxings) }')"
           			end
               end
               return
@@ -81,11 +79,11 @@ class MediafilesController < ApplicationController
        render :text => "Mediafile NOT uploaded", :status => :bad_request
     end
   rescue NoMethodError # Raised in the case that there's no file supplied (on line 54 `params[:mediafile]` will be nil, hence `params[:mediafile][:file]` raises error)
-   if @document
+   if @document 
+      @article = @document # articles/article_mediafile partial expects @article
       responds_to_parent do
   			render :update do |page|
-  			  page << 'trigger_flash(\'<p style="color:yellow;">No mediafile uploaded</p>\');'
-  				page.replace_html 'mediafiles_list', :partial => 'waxings/waxing', :collection => @document.waxings
+  				page << "$.fancybox.close();$('#document_mediafiles').html('#{ escape_javascript render(@document.waxings) }')"
   			end
       end
     else

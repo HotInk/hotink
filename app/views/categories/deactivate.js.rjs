@@ -1,2 +1,0 @@
-page.replace_html 'categories-window', :partial => 'accounts/categories_window'
-page << "load_button_fix();"

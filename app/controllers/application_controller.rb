@@ -24,6 +24,14 @@ class ApplicationController < ActionController::Base
     session[:checkpoint_user_id].nil? ? nil : User.find(session[:checkpoint_user_id])
   end
   
+  def current_lead_articles
+    if @account.lead_article_ids.blank?
+      []
+    else
+      @account.lead_article_ids.collect{ |id| @account.articles.find_by_id(id) }
+    end
+  end
+  
   # This method determines whether an OAuth request is kosher. 
   # A request is alright if:
   #   - There's no attached account
@@ -81,7 +89,7 @@ class ApplicationController < ActionController::Base
     if params[:document_id]
       @document = @account.documents.find(params[:document_id])
     else
-      @document = false
+      @document = nil
     end
   end
   
@@ -92,6 +100,15 @@ class ApplicationController < ActionController::Base
     else
       @blog = false
       @entry = false
+    end
+  end
+  
+  # Determines which design to render, either the current design or one passed in as <tt>params[:design_id]</tt> 
+  def design_to_render
+    if params[:design_id]&&current_user&&(current_user.has_role("manager", @account)||current_user.has_role("admin"))
+      @account.designs.find(params[:design_id])
+    else
+      @account.current_design
     end
   end
   

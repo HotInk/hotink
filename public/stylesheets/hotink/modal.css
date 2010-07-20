@@ -1,28 +1,3 @@
-/* Basic modal overlay */
-
-#overlay{ position: absolute; top: 0; left: 0; z-index: 900; width: 100%; height: 500px; background-color: #000; }
-#overlaybox{ position: absolute; left: 0; width: 100%; z-index: 1000; text-align: center; }
-#loading{ position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0;}
-#overlay_container{ position: relative; width: 250px; height: 250px; background-color: #fff; margin: 0 auto;}
-#overlay_content { width: auto; margin-bottom: 0; text-align: left; padding: 5px; background-color: #fff; border: 1px solid #515151;}
-#overlay_content>img { margin: 5px; }
-.close_button  { float: right; background-image: url('/images/token_x_red.gif'); width: 10px; height: 10px; margin: 0; margin-right: 0.125em; display: inline-block; font-size: 1em; }
-.close_button a { color: #FFF; display: inline-block; width: 100%;height: 100%;}
-div.small_top_button { display: block; position: relative; top: -13px; left: 17px; clear:left; float: right; height: 0px; overflow: visible; }
-div.small_top_button a { padding: 5px; }
-div.small_top_button a img { width: 18px; border: none; }
-
-/* Modal forms */
-
-#overlay_content .form label { color: #515151; font-size:0.9em;}
-#overlay_content .form fieldset { border: none; margin: 0; padding-left: 0;}
-#overlay_content .form legend { font-size: 1.3em; padding-bottom: 0.5em; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #999; }
-#overlay_content .form h1 { font-size: 2.25em;line-height: 1.1; margin: 0.35em 0; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #999; }
-#overlay_content .form input[type="text"] { background: none; border: 1px solid #DEDEDE; background-color: #FDFDFD; color:#333;}
-#overlay_content .form div.field_element input { display: block; width: 100%; background-color: #F9F9F9;}
-#overlay_content .form #buttons { float: right; margin-botton: 0.2em; text-align: right;}
-#overlay_content .form #buttons button { float: right;}
-
 /*-----------------------------------
 /*
 /*		Account management interface
@@ -57,7 +32,6 @@ div.small_top_button a img { width: 18px; border: none; }
 #account .index >ol { height: 17.5em; border: 1px solid #DDD; overflow:auto;}
 #account .index >ol li { width: 98%; border-top: none; margin: 0.25em 1%;} 
 #account .index ol li h4 { padding: 0.25em 0.4em; margin:0; border-bottom: 1px solid #DDD; }
-#account .index li.inactive { color: #999; text-decoration: line-through; }
 #account .index .account { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
 #account .index .account h4 a{color:#ED1B8C;}
 #account .index .account p { padding: 0.5em 0.4em; margin: 0; min-height: 1.1em; }
@@ -73,31 +47,23 @@ div.small_top_button a img { width: 18px; border: none; }
 #account #categories-window h2 { float: left; }
 #account #categories-window #categories_order_form { width: 45%; float: right; margin: 0.75em; margin-right: none; }
 
-#account ol#categories { float: left;}
-#account ol#categories ol { border: none; clear: left;}
+#account ol#categories { float: left; padding: 3px 0; width: 100%; height: 17.5em; border: 1px solid #DDD; overflow:auto; }
+#account ol#categories li { width: 98%; padding: 5px 5px 10px 5px; }
+#account ol#categories li div { float: left; }
+#account ol#categories ol { border: none; clear: left; padding-left: 5%; width: 95%; padding-top: 5px; }
+#account ol#categories li.inactive { color: #999; text-decoration: line-through; }
+#account ol#categories .name { margin-right: 1em; }
 #account ol#categories .drop_hover { background: url('/images/drag.png') no-repeat bottom left; }
 #account ol#categories .drop_top {	background-position: top left; }
 #account ol#categories .drop_bottom { background-position: bottom left; }
 #account ol#categories .drop_insert { background-position: 65px 100%; }
-#account #new_category_form { float: left; width: 100%;}
-#account #new_category_form select { font-size: 0.9em; margin-bottom: 0.5em; background: none; width: 97%; background-color: #F9F9F9; padding: 0.125em 0em; height: 1.6em; color: #333; border: 1px solid #DEDEDE;	}
+#account ol#categories .text_input { float: left; width: 60%; margin-top: 0; padding-bottom: 1px; font-size: 1.1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
+#account ol#categories .save_button { margin: 0 1em; position: relative; top: 2px; }
+
+#account #new_category_form { float: left; width: 100%; margin-top: 10px; }
+#account #new_category_form select { height: 25px; font-size: 15px; margin-bottom: 0.5em; background: none; width: 97%; background-color: #F9F9F9; padding: 2px 0; color: #333; border: 1px solid #DEDEDE; }
 #account #new_category_form .column_holder>div { margin-bottom: 0.25em;  }
 
-
-#account .index .category div { float: left; }
-#account .index .category_form { margin-top:0;}
-#account .index .category_form .text_input { float: left; width: 60%; margin-top: 0; padding-bottom: 1px; font-size: 1.1em; font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
-#account .index .category_form button { position: relative; top: 2px; }
-#account .index .category_form .save_button { margin-left: 0.5em;float: left;}
-#account .index .category .name, #account .index .section .name { display: block; font-size: 1.2em;} 
-#account .index .category .edit, #account .index .section .edit { padding-left: 0.5em;}
-#account .index .subcategories { padding: 0; width: 95%; padding-left: 5%; padding-top: 0.25em;}
-#account .index .category_form { float: left; width: 50%;}
-#account .index .category { float: left; width: 42%;}
-#account .index .category_form { float: left; width: 50%;}
-#account .index .category_form .kill_link {float: right; margin-right: 1em;} 
-#account .index .category_form .kill_link a{ color: #E62424; }
-#account .category_form small { display: inline-block; margin-top: 2px;}
 
 /*-----------------------------------
 /*		User details form styles

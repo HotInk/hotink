@@ -17,6 +17,10 @@ class Document < ActiveRecord::Base
   has_many :mediafiles, :through => :waxings
   has_many :images, :through => :waxings, :source=>'mediafile', :conditions => { :type => 'Image'}
   
+  def waxing_for(mediafile)
+    waxings.find_by_mediafile_id(mediafile.id)
+  end
+  
   named_scope :by_date_published, :order => "published_at DESC"
   
   # Publication statuses
@@ -25,6 +29,7 @@ class Document < ActiveRecord::Base
   named_scope :drafts, :conditions => "status is null"
   named_scope :scheduled, lambda { {:conditions => ["status = 'Published' AND published_at > ?", Time.now.utc]} }
   named_scope :published, lambda { {:conditions => ["status = 'Published' AND published_at <= ?", Time.now.utc]} }
+  named_scope :published_or_scheduled, :conditions => {:status => 'Published'}, :order => 'published_at desc'   
   
   def published?
     (self.status=='Published') && (self.published_at <= Time.now)
@@ -75,9 +80,10 @@ class Document < ActiveRecord::Base
       10
   end
   
-  def display_title
-    if self.title and self.title.strip != ""
-      return self.title
+  def title
+    title = read_attribute :title
+    if title and title.strip != ""
+      return title
     else 
       return "(no headline)"
     end
@@ -112,6 +118,14 @@ class Document < ActiveRecord::Base
   def unpublish!
     unpublish
     save
+  end
+  
+  def date
+    if published?||scheduled?
+      published_at
+    else
+      updated_at
+    end
   end
   
   # Categories are set in a checkbox style, and that's reflected in this attribute method.
@@ -151,6 +165,10 @@ class Document < ActiveRecord::Base
       list += authors[self.authors.length-2].name + " and " + authors[self.authors.length-1].name # last two authors get special formatting
       return list
     end         
+  end
+
+  def authors_json
+    authors.collect{ |a| { "id" => a.id, "name" => a.name } }.to_json
   end
 
   def word_count

@@ -1,3 +1,7 @@
+Factory.define :document do |d|
+  d.account { Factory(:account) }
+end
+
 Factory.define :article do |a|
   a.account { Factory(:account) }
 end
@@ -57,10 +61,18 @@ Factory.define :draft_entry, :parent => :entry do |e|
   e.title { Factory.next(:article_title) }
 end
 
+Factory.define :published_entry, :parent => :entry do |e|
+  e.status         "Published"
+  e.published_at   Time.now
+  e.created_at     1.day.ago
+end
+
 Factory.define :detailed_entry, :class => "Entry", :parent => :detailed_article do |e|
+  e.account { Factory(:account) }
   e.blog { |f| Factory(:blog, :account => f.account) }
 end
 
 Factory.define :scheduled_entry, :class => "Entry", :parent => :scheduled_article do |e|
+  e.account { Factory(:account) }
   e.blog { |f| Factory(:blog, :account => f.account) }
 end

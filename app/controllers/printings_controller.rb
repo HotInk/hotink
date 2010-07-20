@@ -8,7 +8,6 @@ class PrintingsController < ApplicationController
     flash[:notice] = 'Printing recorded'
     
     respond_to do |format|
-        format.html { redirect_to( edit_account_article_url(@account, @article) ) }
         format.js 
     end
   end
@@ -19,7 +18,6 @@ class PrintingsController < ApplicationController
     @printing.destroy
 
     respond_to do |format|
-      format.html { redirect_to( edit_account_article_url(@account, @article) ) }
       format.js
     end
   end

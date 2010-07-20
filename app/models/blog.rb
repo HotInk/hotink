@@ -30,6 +30,44 @@ class Blog < ActiveRecord::Base
   def contributors
     has_contributors
   end
+  
+  def add_contributor(new_contributor)
+    new_contributor.has_role "contributor", self
+  end
+  
+  def remove_contributor(old_contributor)
+    old_contributor.has_no_role "contributor", self
+  end
+  
+  # Returns an array of editors
+  def editors
+    has_editors
+  end
+  
+  def make_editor(new_editor)
+    new_editor.has_role "contributor", self
+    new_editor.has_role "editor", self
+  end
+  
+  def demote_editor(editor)
+    editor.has_no_role "editor", self
+  end
+
+  # Returns a user-readable list fo contributors to this blog, with editors highlighted and listed first
+  def contributors_list
+     contributor_names = editors.collect{|e| e.name + " (Editor)" } + (contributors - editors).collect{|c| c.name }
+     
+     case contributor_names.length
+     when 0
+       nil
+     when 1
+       contributor_names.first
+     when 2
+       contributor_names.join(" and ")      
+     else
+       contributor_names[0..-2].join(", ") + " and #{contributor_names[-1]}"
+     end
+  end
 
   def active?
     read_attribute :status

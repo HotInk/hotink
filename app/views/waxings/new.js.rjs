@@ -1,2 +1,0 @@
-page.assign "waxings_overlay", render(:partial => 'new_waxing_form')
-page << "page_overlay.render( waxings_overlay );"

@@ -85,18 +85,25 @@ describe Article do
     article.to_liquid.should == {'title' => article.title, 'subtitle' => article.subtitle, 'authors_list' => article.authors_list, 'bodytext' => article.bodytext, 'excerpt' => article.excerpt, 'id' => article.id.to_s }
   end
 
-  it "should know who has permission to make changes, based on its publication status" do
-    draft = Factory(:draft_article)
-    recently_published = Factory(:published_article)
-    scheduled = Factory(:scheduled_article)
+  describe "permissions" do
+    it "should know who has permission to edit/update, based on its publication status" do
+      draft = Factory(:draft_article)
+      recently_published = Factory(:published_article)
+      scheduled = Factory(:scheduled_article)
 
-    published_a_while_ago = Factory(:published_article, :published_at => 22.days.ago)
+      published_a_while_ago = Factory(:published_article, :published_at => 22.days.ago)
     
-    draft.is_editable_by.should == "(owner of article) or (editor of account) or (manager of account) or admin"
-    recently_published.is_editable_by.should == "(manager of account) or (editor of account) or admin"
-    scheduled.is_editable_by.should == "(manager of account) or (editor of account) or admin"
+      draft.is_editable_by.should == "(owner of article) or (editor of account) or (manager of account) or admin"
+      recently_published.is_editable_by.should == "(manager of account) or (editor of account) or admin"
+      scheduled.is_editable_by.should == "(manager of account) or (editor of account) or admin"
     
-    published_a_while_ago.is_editable_by.should == "(manager of account) or admin"
+      published_a_while_ago.is_editable_by.should == "(manager of account) or admin"
+    end
+  
+    it "should know who has permission to publish" do
+      article = Factory(:article)
+      article.is_publishable_by.should eql("(manager of account) or admin")
+    end
   end
   
   describe "staff member sign-off" do

@@ -1,16 +1,12 @@
-<div id="articles" class="index">
-<div class="title_bar clearfix">
-	<div class="actions">
-		<h1>Articles</h1>
-		<%= button_link_to 'New article', new_account_article_path(@account), :class=>"primary" %>
-	</div>
+<div id="articles" class="clearfix">
+	<h1>Articles</h1>
+	<%= button_link_to 'New article', new_account_article_path(@account), :class=>"primary" %>
 	<div class="search">
-		<form method="GET">
-			<input type="text" id="articles_search" name="search" class="text_input user" onclick="if(this.value=='Search articles') clearText(this);" value="<%=h( @search_query || "Search articles") %>" />
+		<form action="/accounts/<%= @account.id %>/articles/search" method="GET">
+			<input type="text" id="articles_search" name="q" class="text_input user" onclick="if(this.value=='Search articles') clearText(this);" value="<%=h( @search_query || "Search articles") %>" />
 			<%= button_link_to_submit "Go" %>
 		</form>
 	</div>
-</div>
 	<div class="select_all_wrap clearfix">
 		<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
 	</div>
@@ -33,17 +29,11 @@
 				</div> 
 			</div>
 		</div>
-		<div class="top_pagination clearfix">
-			<%= render :partial=>'pagination' %>
-		</div>
-		<ol id="articles_list">			
+		<%= render :partial=>'pagination' %>
+		<ol id="articles_list" class="documents">			
 			<% if (@articles.length > 0) || (@drafts && @drafts.length > 0) %>
-			<%= render @awaiting_attention if @awaiting_attention %>
-				<%= render @drafts if @drafts %>
-				<%= render @scheduled if @scheduled %>
-				<% for article in @articles %>
-					<%= render article %>
-				<% end %>
+				<%= render @awaiting_attention if @awaiting_attention %>
+				<%= render @articles %>
 			<% elsif @search_query %>
 				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
 			<% else %>
@@ -51,11 +41,8 @@
 			<% end %>
 		</ol>
 	<% end %> 
-
-<div class="function_bar clearfix">
 	<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
 	<div id="bottom_pagination"><%= render :partial=>'pagination' %></div>
-</div>
 <br />
 
 <script type="text/javascript" charset="utf-8">

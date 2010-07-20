@@ -1,62 +1,51 @@
-<li id="entry_<%= entry.id %>" class="<%= cycle("even-row", "odd-row") %> <% if entry.published? %>published<% elsif entry.scheduled? %>scheduled<% elsif entry.draft? %>unpublished<% end %> clearfix">
-				
-	<div class="status">
-		<input type="checkbox" value="<%= entry.id %>" name="entry_ids[]"/>
-	</div>
+<li <% if entry.draft?%>class="draft"<% elsif entry.scheduled? %>class="scheduled"<% end %>>
+	<div class="clearfix">
+		<div class="select">
+			<input type="checkbox" value="<%= entry.id %>" name="entry_ids[]"/>
+		</div>
 	
-	<div class="entry clearfix">
-		<h1>
-			<% if permit? (entry.is_editable_by, :entry => entry)%>
-				&ldquo;<%=link_to h(entry.display_title.strip), edit_account_blog_entry_url(@account, @blog, entry), :class=>"document_link" %>&rdquo;
-			<% else %>
-				&ldquo;<%=link_to h(entry.display_title.strip), account_blog_entry_url(@account, @blog, entry), :class=>"document_link" %>&rdquo;
-			<% end %>
-			<% if entry.draft? %>
-				<small>Draft</small>
-			<% elsif entry.scheduled? %>
-				<small>Scheduled</small>
-			<% end %>
-		</h1>
-		<div class="entry_details clearfix">
-			<div class="authors">
-				<em><%= entry.authors_list if entry.authors_list %></em>
-			</div>
-			<div class="media">
-				<% entry.mediafiles.each do | i | %>
-					<% if i.is_a?(Image) %>
-						<%= link_to_remote image_tag(i.file.url(:system_icon), :border=>1), :url=>edit_account_mediafile_url(@account, i, :format=>:js), :method=>:get %>
-					<% else %>
-						<%= image_tag('/images/blank_file_icon.png', :alt=>i.file_file_name) if i %>
+		<div class="details">
+			<h1><%= link_to entry.title, document_url_for_user(entry, current_user)  %> <small><%= publication_status_for(entry) %></small></h1>
+			<div class="mediafiles">
+				<% if mediafile = entry.mediafiles.first %>				
+					<% if mediafile.is_a?(Image) %>
+						<a class="image_icon first large" href="<%= mediafile.file.url(:large) %>"><%= image_tag(mediafile.file.url(:thumb)) %></a>
+						<a class="image_icon first small" href="<%= mediafile.file.url(:large) %>"><%= image_tag(mediafile.file.url(:system_icon)) %></a>
+					<% elsif mediafile.is_a?(Audiofile) %>
+						<object type="application/x-shockwave-flash" data="/player_mp3.swf" width="27" height="22">
+		                    <param name="movie" value="/player_mp3.swf" />
+		                    <param name="FlashVars" value="mp3=<%= mediafile.file.url %>&amp;showslider=0&amp;width=27&height=22" />
+		                </object>    
 					<% end %>
 				<% end %>
-			</div> 
+				<% if entry.mediafiles.count > 1 %>
+					<% entry.mediafiles[1..-1].each do |mediafile| %>
+						<% if mediafile.is_a?(Image) %>
+							<a class="image_icon" href="<%= mediafile.file.url(:large) %>"><%= image_tag(mediafile.file.url(:system_icon)) %></a>
+						<% elsif mediafile.is_a?(Audiofile) %>
+							<object type="application/x-shockwave-flash" data="/player_mp3.swf" width="27" height="22">
+			                    <param name="movie" value="/player_mp3.swf" />
+			                    <param name="FlashVars" value="mp3=<%= mediafile.file.url %>&amp;showslider=0&amp;width=27&height=22" />
+			                </object>    
+						<% end %>
+					<% end %>
+				<% end %>
+			</div>
+			<p><%= entry.authors_list %></p>
 		</div>
-	</div>
 	
-	<div class="tags">
-		<% unless entry.tag_list.blank? %>
-			<p><em> <%= entry.tag_list %></em></p>
-		<% else %>
-			<p><em><span style="color: #BBB">No tags</span> </em></p>
-		<% end %>
-	</div>
-
-	<div class="icons transparent">
-		<%= link_to "&nbsp;&nbsp;&nbsp;", [@account, @blog, entry], :confirm => "You are about to delete the entry: \n \n &quot;" + h(entry.display_title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"delete_link", :style=>"display:none;" %>
-	</div>
+		<div class="tags">
+			<% unless entry.tag_list.blank? %>
+				<p><em> <%= entry.tag_list %></em></p>
+			<% else %>
+				<p><em><span style="color: #BBB">No tags</span> </em></p>
+			<% end %>
+		</div>
 	
-	<div class="date">
-		<% if entry.published_at %>
-			<%= h entry.published_at.to_s(:standard) %>
-		<% else %>
-			<%= h entry.updated_at.to_s(:standard) %>
-		<% end %>
-		
-		<% if entry.bodytext %>
-			<p><%= pluralize(entry.word_count, "word") %></p>
-		<% else %>
-			<p>No bodytext</p>
-		<% end %>
+		<div class="date">
+			<p><%= h entry.date.to_s(:standard) %></p>
+			<p class="word_count"><%= pluralize(entry.word_count, "word") %></p>
+		</div>
+		<%= link_to "x", [entry.account, entry.blog, entry], :confirm => "You are about to delete the entry: \n \n &quot;" + h(entry.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %>
 	</div>
-		
 </li>

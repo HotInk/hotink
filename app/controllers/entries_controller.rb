@@ -1,4 +1,6 @@
 class EntriesController < ApplicationController
+  include DocumentsHelper
+  
   before_filter :find_blog
   
   layout 'hotink'
@@ -24,22 +26,14 @@ class EntriesController < ApplicationController
   def update
     @entry = @blog.entries.find(params[:id])
     
-    permit @entry.is_editable_by do
+    publish_time = params[:entry].delete(:schedule)
     
+    permit @entry.is_editable_by do
       # Only touch published status if status is passed
       if params[:entry][:status]=="Published"
-      
-        if permit?("(owner of entry) or (manager of account) or (editor of blog) or admin")
-          # Should we schedule publishing on a custom date or immediately?
-          # Rely on a "schedule" parameter to determine which.
-          if params[:entry][:schedule] 
-            schedule = params[:entry].delete(:schedule)
-            @entry.schedule(Time.local(schedule[:year].to_i, schedule[:month].to_i, schedule[:day].to_i, schedule[:hour].to_i, schedule[:minute].to_i))
-          else
-            @entry.publish
-          end
+        if permit?(@entry.is_publishable_by)
+          @entry.publish extract_time(publish_time)
         end
-
       elsif params[:entry][:status]==""
         @entry.unpublish
       end
@@ -57,15 +51,16 @@ class EntriesController < ApplicationController
     end
   end
   
-  # DELETE /articles/1
   def destroy
     @entry = @blog.entries.find(params[:id])
-    @entry.destroy
+    permit @entry.is_editable_by do
+      @entry.destroy
     
-    flash[:notice] = "Entry trashed"
-    respond_to do |format|
-      format.html { redirect_to(account_blog_url(@account, @blog)) }
-      format.js
+      flash[:notice] = "Entry trashed"
+      respond_to do |format|
+        format.html { redirect_to(account_blog_url(@account, @blog)) }
+        format.js
+      end
     end
   end
   

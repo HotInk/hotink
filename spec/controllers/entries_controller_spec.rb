@@ -201,29 +201,48 @@ describe EntriesController do
   describe "DELETE to destory" do
     before do
       @entry = Factory(:entry, :blog => @blog, :account => @account)
-    end    
-  
-    context "with XHR request" do
-      before do
-        xhr :delete, :destroy, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
-      end
-      
-      it { should respond_with(:success) }
-      it { should respond_with_content_type(:js) }
-      it { should render_template('destroy') }
-      it "should delete the entry" do
-        lambda { Entry.find(@entry.id) }.should raise_error(ActiveRecord::RecordNotFound)
-      end      
     end
     
-    context "with HTML request" do
+    context "as blog editor" do
+      before do
+        @user = Factory(:user)
+        @user.has_role("editor", @blog)
+        controller.stub!(:current_user).and_return(@user)
+      end    
+  
+      context "with XHR request" do
+        before do
+          xhr :delete, :destroy, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+        end
+      
+        it { should respond_with(:success) }
+        it { should respond_with_content_type(:js) }
+        it { should render_template('destroy') }
+        it "should delete the entry" do
+          lambda { Entry.find(@entry.id) }.should raise_error(ActiveRecord::RecordNotFound)
+        end      
+      end
+    
+      context "with HTML request" do
+        before do
+          delete :destroy, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+        end
+      
+        it { should respond_with(:redirect) }
+        it "should delete the entry" do
+          lambda { Entry.find(@entry.id) }.should raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+    
+    context "as user unauthorized to delete entry" do
       before do
         delete :destroy, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
       end
-      
+    
       it { should respond_with(:redirect) }
-      it "should delete the entry" do
-        lambda { Entry.find(@entry.id) }.should raise_error(ActiveRecord::RecordNotFound)
+      it "should not delete the entry" do
+        lambda { Entry.find(@entry.id) }.should_not raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

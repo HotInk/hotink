@@ -51,13 +51,13 @@
 
 
 /* Button size classes */
-.larger { font-size: 1.2em; line-height: 1.1; }
-.large { font-size: 1em; line-height: 1.2em; }
-.large:active span{ background-position:0 -390px;}
-.small { font-size: 0.85em; line-height: 1; }
-.small span{ background-position: 0px -3px; }
-.tiny { font-size: 0.775em; line-height: 1;  }
-.micro { font-size: 0.75em; line-height: 1em; }
+.btn.larger { font-size: 1.2em; line-height: 1.1; }
+.btn.large { font-size: 1em; line-height: 1.2em; }
+.btn.large:active span{ background-position:0 -390px;}
+.btn.small { font-size: 0.85em; line-height: 1; }
+.btn.small span{ background-position: 0px -3px; }
+.btn.tiny { font-size: 0.775em; line-height: 1;  }
+.btn.micro { font-size: 0.75em; line-height: 1em; }
 	
 /* End of custom button CSS
 ---------------------------------------- */

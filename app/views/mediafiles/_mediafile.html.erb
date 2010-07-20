@@ -1,3 +1,38 @@
-<div class="file" style="background-color:#FFF;border: 1px solid #AAA;overflow:hidden;">
-	<%= link_to_remote image_tag("/file.png", :align=>"left", :style=>"border:none;"), :url=>edit_account_mediafile_url(@account, mediafile, :format=>:js), :method=>:get %><p style="margin-left:3em;"><strong><%= mediafile.file_content_type %></strong><br /><%= mediafile.file_file_name %></p>
-</div>
+<li id="mediafile_<%= mediafile.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
+	<div class="clearfix">
+		<div class="select">
+			<input type="checkbox" value="<%= mediafile.id %>" name="mediafile_ids[]"/>
+		</div>
+	
+			<% if mediafile.is_a?(Image) %>
+		<div class="file">
+				<%= image_tag(mediafile.file.url(:system_thumb)) %>
+			<% elsif mediafile.is_a?(Audiofile) %>
+		<div class="file blank_file">
+				<p><%= mediafile.file_file_name.split(".").last.upcase %></p>
+			<% else %>
+		<div class="file blank_file">
+				<p><%= mediafile.file_file_name.split(".").last.upcase %></p>			
+			<% end %>
+		</div>
+	
+		<div class="details">
+			<h1><%=link_to h(mediafile.title), edit_account_mediafile_url(@account, mediafile), :class=>"document_link" %></h1>
+			<p><%= mediafile.authors_list %></p>
+		</div>
+	
+		<div class="tags">
+			<% unless mediafile.tag_list.blank? %>
+				<p><em> <%= mediafile.tag_list %></em></p>
+			<% else %>
+				<p><em> <span style="color: #BBB">No tags</span> </em></p>
+			<% end %>
+		</div>
+	
+		<div class="date">
+			<p><%= h mediafile.date.to_time.to_s(:date) %></p>
+		</div>
+
+		<%= link_to "x", account_mediafile_path(mediafile.account, mediafile), :confirm => "You are about to delete the mediafile: \n \n &quot;" + h(mediafile.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %>
+	</div>
+</li>

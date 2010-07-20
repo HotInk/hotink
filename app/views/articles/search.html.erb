@@ -1,0 +1,94 @@
+<div id="articles" class="clearfix">
+	<h1>Search for "<%= params[:q] %>"</h1>
+	<%= button_link_to 'New article', new_account_article_path(@account), :class=>"primary" %>
+	<div class="search">
+		<form method="GET">
+			<input type="text" id="articles_search" name="q" class="text_input user" onclick="if(this.value=='Search articles') clearText(this);" value="<%=h( @search_query || "Search articles") %>" />
+			<%= button_link_to_submit "Go" %>
+		</form>
+	</div>
+	<div class="select_all_wrap clearfix">
+		<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
+	</div>
+	
+	<% form_remote_tag :url=>new_account_action_url(@account), :method => :get do %>
+	<%= hidden_field_tag "content_types[]", 'article'%>
+	<%= hidden_field_tag "name", '', :id=>"article_action_name"%>
+	
+		<div id="actions" class="clearfix">
+			<%= button_link_to_submit "Publish", :onclick => "$('article_action_name').value='publish';return true;", :class => "pill-l" %>
+			<%= button_link_to_submit "Schedule", :onclick => "$('article_action_name').value='schedule';return true;", :class => "pill-c" %>
+			<%= button_link_to_submit "Delete",  :onclick => "$('article_action_name').value='delete';return true;", :class => "pill-r" %>
+			<div class="batch_actions">
+				<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
+				<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
+					<%= submit_tag "Unpublish", :onclick => "$('article_action_name').value='unpublish';return true;", :class => "menubutton" %>
+					<%= submit_tag "Set primary section", :onclick => "$('article_action_name').value='set_primary_section';return true;", :class => "menubutton" %>																				
+					<%= submit_tag "Add tag", :onclick => "$('article_action_name').value='add_tag';return true;", :class => "menubutton" %>																				
+					<%= submit_tag "Attach to issue", :onclick => "$('article_action_name').value='add_issue';return true;", :class => "menubutton" %>																									
+				</div> 
+			</div>
+		</div>
+		<%= render :partial=>'pagination' %>
+		<ol id="articles_list" class="documents">			
+			<% if (@articles.length > 0)  %>
+				<%= render :partial => "article", :collection => @articles %>
+			<% else %>
+				<p style="border-top: 1px dotted #515151; margin: 0; padding: 1em 0.5em; font-size: 1.2em;color: #515151;" class="user"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p>
+			<% end %>
+		</ol>
+	<% end %> 
+	<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
+	<div id="bottom_pagination"><%= render :partial=>'pagination' %></div>
+<br />
+
+<script type="text/javascript" charset="utf-8">
+	//Load each article <li> as a Card and check to see if any checkboxes are pre-checked and need to be pre-selected 
+	$('articles').select('ol#articles_list>li').each( function (t) { a = new Card(t); if (a.checkbox.checked) a.select(); });
+	
+	//(for author creation in edit media overlay)
+	createNewAuthor = function( new_token_text, auto_complete ){
+		new_author_auto_complete = auto_complete;
+		new Ajax.Request( 	"<%= account_authors_url(@account, :format=>:json )%>", 
+							{	method: 'post', parameters: {"author[name]": new_token_text, "authenticity_token": "<%= form_authenticity_token %>"},
+								onSuccess: function(transport){
+												var json = transport.responseText.evalJSON(true);
+												new_author_auto_complete.addTokenToList( json.author.name, (new_author_auto_complete.options.array.push(json) - 1));
+												new_author_auto_complete.set_input_size();
+												}
+							});
+	}
+	
+	
+	// Activate table header checkboxes select_all functionality
+	$$('.select_all').each(	function(element) { 
+			Event.observe(element, 'click', function( event ) { 
+					if (element.checked){ 
+						$$('ol#articles_list>li').each(
+								function(el){ 
+									el.card.select(); 
+								}
+						); 
+						$$('.select_all').each(
+							function(el) {
+								el.checked = true;
+							}
+						);						
+					} else {
+						$$('ol#articles_list>li').each( 	
+							function(el){ 
+								el.card.deselect(); 
+							}
+						); 
+						$$('.select_all').each(
+							function(el) {
+								el.checked = null;
+							}
+						);
+					} 
+			})
+	});
+	
+</script>
+
+</div><!-- /articles -->

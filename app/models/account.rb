@@ -14,6 +14,8 @@ class Account < ActiveRecord::Base
   has_many :blogs, :dependent => :delete_all
   has_many :issues, :dependent => :delete_all, :order => "date desc"
   has_many :email_templates
+  has_many :lists
+  has_many :pages
   
   has_one :membership
   has_many :user_invitations
@@ -44,6 +46,10 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name, :message => "Account name must be unique"
   
   serialize :settings
+  serialize :lead_article_ids
+  
+  has_many  :designs
+  belongs_to :current_design, :class_name => "Design", :foreign_key => :current_design_id
   
   # Settings defaults
   IMAGE_DEFAULT_SETTINGS = { 

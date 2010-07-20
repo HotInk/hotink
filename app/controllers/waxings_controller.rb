@@ -1,6 +1,6 @@
 class WaxingsController < ApplicationController
   before_filter :find_article, :find_mediafile, :find_entry, :find_document
-  layout 'hotink'
+  layout false
   
   helper_method :plural_class_name
 
@@ -10,12 +10,14 @@ class WaxingsController < ApplicationController
     
     @waxing = document.waxings.build
     
-    @mediafiles = @account.mediafiles.paginate(:page=>(params[:page] || 1), :per_page => (params[:per_page] || 10 ), :order => 'date DESC', :include => [:authors])
-    @waxing.document.mediafiles.each { |m| @mediafiles.delete(m) } # Scrub out already attached files
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.js
+    page = params[:page] || 1
+    @mediafiles = @account.mediafiles.paginate(:page=> page, :per_page => 6, :order => 'date DESC', :include => [:authors])
+    
+      @waxing.document.mediafiles.each { |m| @mediafiles.delete(m) } # Scrub out already attached files
+    if params[:page]
+      render :action => :next_page
+    else
+      render :new
     end
   end
 
@@ -23,7 +25,7 @@ class WaxingsController < ApplicationController
   def edit
     @waxing = Waxing.find(params[:id], :include => :document, :conditions => { :documents => { :account_id => @account.id }})
     respond_to do |format|
-      format.js
+      format.html
     end
   end
 

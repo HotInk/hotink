@@ -18,12 +18,12 @@ div#page_container { background-color: #FFF; margin: 0 auto; width: 960px; paddi
 div#page_container>h1 { float: left; }
 
 .yourstream { background-color: #CEE4F3; }
-.allarticles { background-color: #FFF6DD; }
+.allarticles { background-color: #fff9e5; }
 .recommended { background-color: #DEFFDB; }
 .team a, .team a:visited  { color: #515151; }
 
 ol#choices { width: 135px; float: left; clear: left; }
-div.colour_wrapper { width: 785px; float: left; border: 3px solid #FFF6DD; -moz-border-radius: 3px; -webkit-border-radius: 3px; position: relative; }
+div.colour_wrapper { width: 785px; float: left; border: 3px solid #fff9e5; -moz-border-radius: 3px; -webkit-border-radius: 3px; position: relative; }
 
 ol#stream_articles { width: 100%; font-size: 11px; }
 ol#stream_articles li { position: relative; }
@@ -81,7 +81,7 @@ div.article .media_thumbs h3 { margin-top:0;}
 /* Pagination */
 
 .next_page { margin-left: 5px;}
-.next_page, .prev_page { outline: none; font-size: 11px; padding: 3px; color: #515151; background-color: #FFF6DD; border: 1px solid #515151;-moz-border-radius: 3px; -webkit-border-radius: 3px; }
+.next_page, .prev_page { outline: none; font-size: 11px; padding: 3px; color: #515151; background-color: #fff9e5; border: 1px solid #515151;-moz-border-radius: 3px; -webkit-border-radius: 3px; }
 .next_page:visited, .prev_page:visited { color: black; }
 .next_page:hover, .prev_page:hover { text-decoration: none; background-color: #CEE4F3; }
 .next_page:active, .prev_page:active { background-color: #EEF4FF; }
@@ -101,6 +101,6 @@ div.small_top_button a img { width: 18px; border: none; }
 
 
 #footer_push { height: 30px; /* #footer_push must be the same height as #footer */  }
-#footer { width: 99%; height: 30px; float:left; margin-left: 0.5em; font-size: 1em; color: #FFF6DD; font-weight: normal; padding-right: 1%;background-color: #222; text-align: right; border-right: 1px solid #DDD;}
+#footer { width: 99%; height: 30px; float:left; margin-left: 0.5em; font-size: 1em; color: #fff9e5; font-weight: normal; padding-right: 1%;background-color: #222; text-align: right; border-right: 1px solid #DDD;}
 #footer p { margin: 0.7em 0; float: right;}
 

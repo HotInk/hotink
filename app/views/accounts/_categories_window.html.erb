@@ -1,21 +1,11 @@
-<h2>Categories and Sections</h2>
-
-<div id="categories_order_form">
-	<% remote_form_for @account, :after=>"$(this).select('.spinner')[0].show();", :success => "toggle_category_reordering();" do |f| %>
-	<% f.fields_for :categories do |c| %>
-			<%= c.hidden_field :parent_id, :id=>"#{c.object.class.name.downcase}_#{c.object.id}_parent_id" %>
-			<%= c.hidden_field :position, :id=>"#{c.object.class.name.downcase}_#{c.object.id}_position" %>
-	<% end %>
-	<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.4em;" class="spinner"/><%= button_link_to_submit "Save order", :class =>"save", :id=>"categories_reorder_submit", :style=>"visibility:hidden;" %><%= button_link_to_function "Reorder categories", "toggle_category_reordering()", :id=>"categories_reorder_toggle" %>
-	<% end %>
-</div>
+<h2>Categories</h2>
 
 <ol id="categories">
 	<%= render :partial=>'categories/category', :collection => @account.main_categories %>
 </ol>
 
 <div id="new_category_form">
-	<% form_remote_tag :url=>account_categories_url(@account), :method => :post do %>
+	<% form_tag account_categories_url(@account), :method => :post, 'data-remote' => true do %>
 	<fieldset>
 		<legend>New category</legend>
 		<div class="column_holder clearfix">	
@@ -31,7 +21,7 @@
 				<small><%= flash[:categories_notice]%></small>
 			</div>
 			<div class="third_column">
-				<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.5em;" class="spinner"/><%= button_link_to_submit "Create category", :class=>"large save"%>
+				<%= button_link_to_submit "Create category", :class=>"large save"%>
 			</div>
 		</div>
 	</fieldset>
