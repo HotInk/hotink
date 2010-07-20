@@ -1,7 +1,5 @@
-<li id="invitation_<%= account_invitation.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
-	<div class="user clearfix">
-		<p class="email"><%= account_invitation.email %></p>
-		<p class="name">Invitation</p>
-		<p class="kill_link"><%= link_to_remote "x", :url=>invitation_url(account_invitation), :method => :delete, :update=>"accounts-window", :after=>"$(this).up().up().up().addClassName('transparent');" %></p>
-	</div>
+<li id="account_invitation_<%= account_invitation.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
+	<span class="email"><%= account_invitation.email %></span>
+	<span class="name">Invitation</span>
+	<%= link_to "x", account_invitation_url(account_invitation), 'data-remote' => true, 'data-method' => :delete,  :class => "kill_link" %>
 </li>

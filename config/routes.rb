@@ -2,17 +2,16 @@ ActionController::Routing::Routes.draw do |map|
   
   map.root :controller => "accounts", :action =>"index"
   
-  map.resources :invitations, :only => [:new, :create, :edit, :update, :destroy]
+  map.resources :account_invitations, :only => [:create, :edit, :update, :destroy]
+  
   map.resources :password_resets
   map.resources :users, :member => { :promote => :put, :demote => :put, :deputize => :put, :letgo => :delete }
   
-  # Old invitation route support
-  map.connect '/user_activations/:id/edit', :controller => 'invitations'
-  map.connect '/account_activations/:id/edit', :controller => 'invitations'
   map.current_design '/accounts/:account_id/current_design', :controller => :designs, :action => :current_design
-  
+
   map.resources :accounts do |account|
     account.resources :invitations, :only => [:new, :create, :edit, :update, :destroy]
+    account.resources :user_invitations, :only => [:create, :edit, :update, :destroy]
     
     account.resource :front_page, :only => [:edit, :update]
     

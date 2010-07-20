@@ -21,7 +21,7 @@
 /* Tab Window UI-Control */ 
 .ui-tabs { width: 100%; height: 31em; position: relative; z-index: 501;}
 .ui-tabs>ul { list-style-type: none;}
-.ui-tabs>ul li { padding: 0.35em 0.25em; font-size: 1.2em; color: #333; font-family: georgia, "Times New Roman", times, serif; text-align: center; cursor: pointer;}
+.ui-tabs>ul li { padding: 0.35em 0.25em; font-size: 1.2em; color: #333;  text-align: center; cursor: pointer;}
 .ui-tabs>ul li.ui-tabs-selected { background-color: #3D9BDF; cursor: pointer; }
 .ui-tabs>ul li.ui-tabs-selected a { color: white; }
 .ui-tabs ul {  border: 1px solid #DDD; background-color: #FFF;  }

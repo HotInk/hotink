@@ -37,7 +37,7 @@ describe UsersController do
         end
       
         it { should set_the_flash.to("Sorry, user update not valid") }
-        it { should assign_to(:user)}
+        it { should assign_to(:user)} 
         it { should render_template('edit') }
       end
       

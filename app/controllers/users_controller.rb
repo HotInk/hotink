@@ -26,13 +26,11 @@ class UsersController < ApplicationController
   def promote
     @user = User.find(params[:id])
     @account.promote(@user)
-    render @user
   end
   
   def demote
     @user = User.find(params[:id])
     @account.demote(@user)
-    render @user
   end
   
   def letgo
@@ -40,15 +38,11 @@ class UsersController < ApplicationController
     if @user
       @account.accepts_no_role "staff", @user
     end
-    head :ok
   end
     
   def deputize
     @user = User.find(params[:id])
-    if @user
-      @user.has_role 'admin'
-      render @user
-    end
+    @user.promote_to_admin
   end
   
 end

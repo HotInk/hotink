@@ -8,7 +8,7 @@
 	and password for yourself.</p>
 	<br />
 	<%= error_messages_for 'user' %>
-	<% form_tag account_invitation_url(@account, @invite), :method => :put do %>
+	<% form_tag account_user_invitation_url(@account, @invite), :method => :put do %>
 	<fieldset>
 		<legend>Your details</legend>
 		<p>Don't worry, you can adjust all these after activation.</p>
