@@ -69,5 +69,39 @@ module LinkFilters
       url = "/pages#{page.url}?design_id=#{@context.registers[:design].id}"
     end
     link_to title, url  
-  end  
+  end 
+  
+  def link_to_category(arg1, arg2=nil)
+    if arg1.is_a?(CategoryDrop)
+      category = arg1
+      title = arg2 || category.name
+    elsif arg1.is_a?(String)
+      title = arg1
+      category = arg2
+      return "<!-- No category to link to --> #{title}" unless category.is_a?(CategoryDrop)
+    end
+    if @context.registers[:design].current_design?
+      url = "/categories#{category.path}"
+    else
+      url = "/categories#{category.path}?design_id=#{@context.registers[:design].id}"
+    end
+    link_to title, url  
+  end
+  
+  def link_to_issue(arg1, arg2=nil)
+    if arg1.is_a?(IssueDrop)
+      issue = arg1
+      title = arg2 || issue.date.strftime(%"%B %e, %Y")
+    elsif arg1.is_a?(String)
+      title = arg1
+      issue = arg2
+      return "<!-- No issue to link to --> #{title}" unless issue.is_a?(IssueDrop)
+    end
+    if @context.registers[:design].current_design?
+      url = "/issues/#{issue.id}"
+    else
+      url = "/issues/#{issue.id}?design_id=#{@context.registers[:design].id}"
+    end
+    link_to title, url  
+  end 
 end

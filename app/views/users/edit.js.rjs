@@ -1,3 +1,0 @@
-page.assign "users_overlay", render(:partial => 'user_form')
-page << "if($('user')) $('user').remove();"
-page << "page_overlay.render( users_overlay );"

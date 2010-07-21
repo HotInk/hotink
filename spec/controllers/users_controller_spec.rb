@@ -6,13 +6,13 @@ describe UsersController do
     controller.stub!(:current_user).and_return(@user)
   end
   
-  describe "GET to edit with XHR request" do
+  describe "GET to edit" do
     before do
-      xhr :get, :edit, :id => @user.id
+      get :edit, :id => @user.id
     end
     
     it { should assign_to(:user).with(@user) }
-    it { should respond_with_content_type(:js) }
+    it { should respond_with_content_type(:html) }
   end
   
   describe "PUT to update" do
@@ -23,7 +23,6 @@ describe UsersController do
           xhr :put, :update, :id => @user.id, :user => { :email => "this-isa-new@add-ress.com" }
         end
     
-        it { should set_the_flash.to("User updated.") }
         it { should respond_with(:ok) }
         it "should update user" do
           should assign_to(:user)
@@ -36,7 +35,6 @@ describe UsersController do
           xhr :put, :update, :id => @user.id, :user => { :email => "" }
         end
       
-        it { should set_the_flash.to("Sorry, user update not valid") }
         it { should assign_to(:user)} 
         it { should render_template('edit') }
       end

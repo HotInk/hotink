@@ -18,9 +18,12 @@ describe Design do
   
   it { should have_one(:article_template) }
   it { should have_one(:page_template) }  
+  it { should have_one(:category_template) }
   it { should have_one(:search_results_template) }
-  it { should have_one(:blog_template) }
+  it { should have_one(:issue_index_template) }
+  it { should have_one(:issue_template) }
   it { should have_one(:blog_index_template) }
+  it { should have_one(:blog_template) }
   it { should have_one(:entry_template) }
 
   it { should have_many(:front_page_templates) }
@@ -30,9 +33,12 @@ describe Design do
     design =  Factory(:design)
     design.article_template.should be_kind_of(ArticleTemplate)
     design.page_template.should be_kind_of(PageTemplate)
+    design.category_template.should be_kind_of(CategoryTemplate)
     design.search_results_template.should be_kind_of(SearchResultsTemplate)
-    design.blog_template.should be_kind_of(BlogTemplate)
+    design.issue_index_template.should be_kind_of(IssueIndexTemplate)
+    design.issue_template.should be_kind_of(IssueTemplate)
     design.blog_index_template.should be_kind_of(BlogIndexTemplate)
+    design.blog_template.should be_kind_of(BlogTemplate)
     design.entry_template.should be_kind_of(EntryTemplate)
   end
   

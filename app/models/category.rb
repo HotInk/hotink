@@ -15,6 +15,7 @@ class Category < ActiveRecord::Base
   named_scope :inactive, :conditions => { :active => false }
   
   named_scope :sections, :conditions => { :parent_id => nil }
+  named_scope :main_categories, :conditions => { :parent_id => nil }
   
   acts_as_list
     
@@ -55,5 +56,56 @@ class Category < ActiveRecord::Base
      end
   end
 
+  # Slug
+  attr_protected :slug
+  validates_uniqueness_of :slug
+  validates_format_of :slug, :with => /^[-a-z0-9]+$/, :message => "should consist of letters, numbers and dashes only"
+  before_validation :autoset_slug
+
+  def path
+    "#{parent_path}/#{slug.downcase}"
+  end
+    
+  def parent_path
+    if parent
+      parent.path
+    else
+      ""
+    end
+  end
+  
+  # Find category using a path of parent-child category slugs (ie. "category-1/category2") 
+  # or an array of page names (ie ["category1", "category2"])
+  def self.find_by_path(path)
+    if path.is_a? Array
+      category_slugs = path
+    elsif path.is_a? String
+      category_slugs = path.split("/")
+    end
+    category = self.main_categories.find_by_slug(category_slugs.delete_at(0))
+    raise ActiveRecord::RecordNotFound unless category
+    unless category_slugs.blank?
+      category_slugs.each do |category_slug|
+        category = category.subcategories.find_by_slug(category_slug)
+        raise ActiveRecord::RecordNotFound unless category
+      end
+    end
+    category
+  end
+  
+  private
+  
+  def autoset_slug
+    self.slug = generate_slug(self.name) if self.slug.blank?
+  end
+  
+  def generate_slug(text)
+    return unless text
+    slug = text.downcase.strip
+    slug.gsub!('\'', "") #apostrophes
+    slug.gsub!(/[\W]+/, '-') #non-word characters
+    slug.gsub!(/^-+|-+$/, "") #leading/trailing dashes
+    slug
+  end
   
 end

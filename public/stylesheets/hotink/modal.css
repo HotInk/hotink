@@ -68,7 +68,7 @@
 /*		User details form styles
 /*---------------------------------------*/
 
-#overlay_content #user{ width: 35em; margin: 0.5em; margin-right: 1em; float: left;}
+#user { width: 35em; margin: 0.5em; margin-right: 1em; float: left;}
 #user .column_holder>div { margin-bottom: 1.5em; }
 #user label {margin-right: 0.5em;}
 #user button.save { float: right; }

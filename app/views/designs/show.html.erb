@@ -19,14 +19,20 @@
 	</ul>
 	<h3>View templates</h3>
 	<ul id="view_templates">
-	<% [@design.article_template, @design.page_template, @design.search_results_template,@design.blog_index_template, @design.blog_template, @design.entry_template].each do |template| -%>
+	<% [@design.article_template, @design.page_template, @design.category_template, @design.search_results_template, @design.issue_index_template, @design.issue_template, @design.blog_index_template, @design.blog_template, @design.entry_template].each do |template| -%>
 		<li class="<%= cycle 'even-row', 'odd-row' %>">
 			<% if template.is_a?(ArticleTemplate) %>	
 				<%= link_to "Article", edit_account_design_template_path(@account, @design, template) %>
 			<% elsif template.is_a?(PageTemplate) %>
 				<%= link_to "Page", edit_account_design_template_path(@account, @design, template) %> 
+			<% elsif template.is_a?(CategoryTemplate) %>
+				<%= link_to "Category", edit_account_design_template_path(@account, @design, template) %>
 			<% elsif template.is_a?(SearchResultsTemplate) %>
 				<%= link_to "Search results", edit_account_design_template_path(@account, @design, template) %>
+			<% elsif template.is_a?(IssueIndexTemplate) %>
+				<%= link_to "Issues index", edit_account_design_template_path(@account, @design, template) %>
+			<% elsif template.is_a?(IssueTemplate) %>
+				<%= link_to "Issue", edit_account_design_template_path(@account, @design, template) %>
 			<% elsif template.is_a?(BlogIndexTemplate) %>
 				<%= link_to "Blogs index", edit_account_design_template_path(@account, @design, template) %>
 			<% elsif template.is_a?(BlogTemplate) %>

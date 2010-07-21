@@ -5,7 +5,6 @@ class PrintingsController < ApplicationController
   # POST /printings
   def create
     @printing = @account.printings.create(params[:printing].merge(:document => @article))
-    flash[:notice] = 'Printing recorded'
     
     respond_to do |format|
         format.js 

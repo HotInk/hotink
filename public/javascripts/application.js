@@ -21,7 +21,8 @@ $(function(){
 	
 	$("a.modal").fancybox();
 	
-
+	$("#edit_current_user_link").fancybox();
+	
 	// Article and entry form stuff
 	$('.show_schedule').click(function(){
 		$('#schedule').slideToggle("fast");

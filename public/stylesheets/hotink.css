@@ -27,6 +27,13 @@ small { font-size: 80%; }
 strong { font-weight: bold; }
 em { font-style: italic; }
 
+.fieldWithErrors { padding: 2px; color: red; }
+#errorExplanation { float: left; width: 97%; border: 2px solid red; padding: 1%; padding-bottom: 0.5em; margin-bottom: 1.5em; background-color: #f0f0f0; }
+#errorExplanation h2 { float: none; text-align: left; font-weight: bold; padding: 5px 5px 5px 15px; font-size: 12px; margin: -7px; background-color: #c00; color: #fff;}
+#errorExplanation p {  color: #333; margin-bottom: 0; padding: 5px; }
+#errorExplanation ul { margin: 0; padding: 1%;}
+#errorExplanation ul li { font-size: 1em; margin-bottom: 0.2em; list-style-type:none;}
+
 /* Font families */
 #account .letgo { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; }
 
@@ -118,12 +125,13 @@ ol.documents li > div > div { float: left; }
 ol.documents li .select { width: 2.75%; text-align: center; }
 ol.documents li .details, ol.documents li .section, ol.documents li .tags { border: 1px solid #CCCCCC; background: white;  }
 ol.documents li .details { width: 59%; padding: 5px 0.5% 5px 1%; }
-ol.documents li .details h1 { float: left; font-size: 1.2em; margin: 0 0 8px 0; font-weight: normal;  }
+ol.documents li .details h1 { float: left; font-size: 1.1em; line-height: 1.15; margin: 0 0 8px 0; font-weight: normal;  }
 ol.documents li .details h1 a { color: #111; }
 ol.documents li .details h1 a:hover { text-decoration:underline; }
 ol.documents li .details p { min-height: 15px; margin-bottom: 0; padding: 3px 0; float: left; clear: left; }
 ol.documents li .details .mediafiles { padding: 0 5px; float: right; }
 ol.documents li .details .mediafiles .first.large { display: none; }
+ol.documents li .details .mediafiles img { margin-top: 3px; }
 ol.documents li .details img { border: 1px solid #999999; }
 ol.documents li .section, ol.documents li .tags { width: 10%; padding: 0.5%; margin-left: 1%; }
 ol.documents li .tags p { margin-bottom: 0; font-size: 0.85em; line-height: 1.2; }
