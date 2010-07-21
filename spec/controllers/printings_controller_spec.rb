@@ -16,7 +16,6 @@ describe PrintingsController do
       
       it { should respond_with(:success) }
       it { should respond_with_content_type(:js) }
-      it { should set_the_flash.to('Printing recorded') }
       it "should create a printing" do
         should assign_to(:printing).with_kind_of(Printing)
         assigns(:printing).should_not be_new_record

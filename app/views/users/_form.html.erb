@@ -1,0 +1,30 @@
+<% form_for @user, :url=>user_url(@user), :html => { 'data-remote' => true, 'data-method' => :put } do |f| %>
+	<h1>Edit your personal details</h1> <%= button_link_to_submit "Save", :onclick => "$('#user .topspinner').show();", :class=>"save large" %><img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.3em;" class="topspinner"/>
+	  <%= f.error_messages %>
+	  <div class="column_holder clearfix">
+		<div class="quarter_column left_column"><%= f.label :login %></div>
+		<div class="three_quarters_column right_column"><%= f.text_field :login, :class=>"text_input" %></div>
+
+		<div class="quarter_column left_column"><%= f.label :email %></div>
+		<div class="three_quarters_column right_column"><%= f.text_field :email, :class=>"text_input" %></div>
+		<div class="quarter_column left_column"><%= f.label :name %></div>
+		<div class="three_quarters_column right_column"><%= f.text_field :name, :class=>"text_input" %></div>
+	</div>
+<% end %>
+
+<% form_for @user, :url=>user_url(@user), :html => { 'data-remote' => true, 'data-method' => :put } do |f| %>
+<fieldset>
+	<legend>Change your password</legend>
+	<div class="column_holder clearfix">  
+		<div class="quarter_column left_column"><%= label_tag "user[password]", "New password" %></div>
+		<div class="three_quarters_column right_column"><%= password_field_tag "user[password]", nil, :class=>"text_input"%></div>  
+		<div class="quarter_column left_column">
+  			<%= label_tag "user[password_confirmation]", "Confirmation" %>
+		</div>
+		<div class="three_quarters_column right_column">
+  			<%= password_field_tag "user[password_confirmation]", nil, :class=>"text_input" %>
+		</div>
+  		<%= button_link_to_submit "Update password", :onclick => "$('#user .bottomspinner').show();", :class=>"large" %><img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.3em;" class="bottomspinner"/>
+	</div>
+</fieldset>
+<% end %>

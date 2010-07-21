@@ -2,7 +2,7 @@
 	<div class="container_12" class="clearfix">
 		<div id="logo" class="grid_2 alpha"><%= image_tag '/images/logo_tiny.png' %></div>
 		
-		<div id="user_details"><p>Logged in as: <%= link_to_remote current_user.login, :url=> edit_user_path(current_user), :method => :get, :html => { :class=>"weblink" } %>  <%= button_link_to "Logout", logout_url, :method=>:get, :class=>"micro", :id=>"user_logout_button" %></p></div>
+		<div id="user_details"><p>Logged in as: <%= link_to current_user.login, edit_user_path(current_user, :format => :html), :class=>"weblink", :id => "edit_current_user_link" %>  <%= button_link_to "Logout", logout_url, :method=>:get, :class=>"micro", :id=>"user_logout_button" %></p></div>
 	
 		<ol id="links" class="grid_12">
 			<li <%= 'class="current"' if controller_name == "dashboards" %>><%= link_to "Dashboard", account_dashboard_url(@account) %></li>

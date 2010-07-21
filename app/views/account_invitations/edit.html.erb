@@ -8,7 +8,7 @@
 	and password for yourself and set up some basic account details.</p>
 	<br />
 	<%= error_messages_for 'account', 'user' %>
-	<% form_tag invitation_url(@invite), :method => :put do %>
+	<% form_tag account_invitation_url(@invite), :method => :put do %>
 		
 	<% if @user.new_record? %>
 	<fieldset>

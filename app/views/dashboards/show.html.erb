@@ -27,7 +27,6 @@
 	<div class="grid_12 alpha">
 		<% if @lead_articles.blank? %>
 		<h2 style="float:left; margin-bottom: 10px;">No lead articles</h2>
-		<% if can? :update, Settings %><p style="float:right; margin-top: 5px; margin-bottom: 0;"><%= link_to "Set lead articles &raquo;", edit_front_page_path %></p><% end %>
 		<% else %>
 			<h3>Lead articles</h3>
 			<div class="grid_12 alpha">

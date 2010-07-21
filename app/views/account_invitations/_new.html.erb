@@ -1,16 +1,15 @@
-<% form_remote_tag :url => invitations_url, :after=>"$(this).disable();$(this).select('.spinner')[0].show();", :update=>'accounts-window', :confirm => "You're about to issue a whole new account. Once activated, this account will represent a whole new publisher.\n\nAre you sure you want to do this? Are you sure you got the email address right?\n\nPress 'OK' to send an invitation.", :html=>{:class=>"activation_form"} do %>
+<% form_tag account_invitations_url, 'data-remote' => true, 'data-confirm' => "You're about to issue a whole new account. Once activated, this account will represent a whole new publisher.\n\nAre you sure you want to do this? Are you sure you got the email address right?\n\nPress 'OK' to send an invitation.", :class=>"activation_form" do %>
 <fieldset>
 	<legend>Add an account</legend>
 	<p>To create a new Hot Ink account enter the <strong>email address</strong> of the first manager below.</p>
 	<div class="column_holder clearfix">	
 		<div class="two_thirds_column">
 			<%= text_field_tag "invitation[email]", nil, :class=>"text_input", :id=>"new_user_email" %>
-			<small><%= flash[:notice] %></small>
+			<small><%= flash[:account_invitation_notice] %></small>
 		</div>
 		<div class="third_column">
 			<img src="/loading_small_white.gif" style="display:none;float:right;margin-left:1em;margin-top:0.5em;" class="spinner"/><%= button_link_to_submit "Add user", :class=>"save large"%>
 		</div>
 	</div>
 </fieldset>
-<%= hidden_field_tag 'invitation[type]', 'AccountInvitation' %>
 <% end %>

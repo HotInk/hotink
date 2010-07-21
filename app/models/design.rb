@@ -15,9 +15,12 @@ class Design < ActiveRecord::Base
   
   has_one :article_template
   has_one :page_template
+  has_one :category_template
   has_one :search_results_template
-  has_one :blog_template
+  has_one :issue_index_template
+  has_one :issue_template
   has_one :blog_index_template
+  has_one :blog_template
   has_one :entry_template
 
   has_many :front_page_templates
@@ -33,11 +36,14 @@ class Design < ActiveRecord::Base
   
   def create_view_templates
     self.create_article_template
-    self.create_blog_template
-    self.create_blog_index_template
-    self.create_entry_template
     self.create_page_template
+    self.create_category_template
     self.create_search_results_template
+    self.create_issue_index_template
+    self.create_issue_template
+    self.create_blog_index_template
+    self.create_blog_template
+    self.create_entry_template
     
     self.front_page_templates.create(:name => 'Default front page')
   end
@@ -139,11 +145,55 @@ class ArticleTemplate < ViewTemplate
   end
 end
 
-class BlogTemplate < ViewTemplate
+class PageTemplate < ViewTemplate
   def description
     stored_description = read_attribute(:description)
     if stored_description.blank?
-      "Renders a blog's main page."
+       "Renders your static pages."
+    else
+      stored_description
+    end
+  end
+end
+
+class CategoryTemplate < ViewTemplate
+  def description
+    stored_description = read_attribute(:description)
+    if stored_description.blank?
+       "Renders a category."
+    else
+      stored_description
+    end
+  end
+end
+
+class SearchResultsTemplate < ViewTemplate
+  def description
+    stored_description = read_attribute(:description)
+    if stored_description.blank?
+       "Renders the results of a search."
+    else
+      stored_description
+    end
+  end
+end
+
+class IssueIndexTemplate < ViewTemplate
+  def description
+    stored_description = read_attribute(:description)
+    if stored_description.blank?
+       "Renders a list of issues."
+    else
+      stored_description
+    end
+  end
+end
+
+class IssueTemplate < ViewTemplate
+  def description
+    stored_description = read_attribute(:description)
+    if stored_description.blank?
+       "Renders the contents of an issue"
     else
       stored_description
     end
@@ -161,6 +211,17 @@ class BlogIndexTemplate < ViewTemplate
   end
 end
 
+class BlogTemplate < ViewTemplate
+  def description
+    stored_description = read_attribute(:description)
+    if stored_description.blank?
+      "Renders a blog's main page."
+    else
+      stored_description
+    end
+  end
+end
+
 class EntryTemplate < ViewTemplate
   def description
     stored_description = read_attribute(:description)
@@ -172,27 +233,6 @@ class EntryTemplate < ViewTemplate
   end
 end
 
-class PageTemplate < ViewTemplate
-  def description
-    stored_description = read_attribute(:description)
-    if stored_description.blank?
-       "Renders your static pages."
-    else
-      stored_description
-    end
-  end
-end
-
-class SearchResultsTemplate < ViewTemplate
-  def description
-    stored_description = read_attribute(:description)
-    if stored_description.blank?
-       "Renders the results of a search."
-    else
-      stored_description
-    end
-  end
-end
 
 
 class TemplateFile < ActiveRecord::Base

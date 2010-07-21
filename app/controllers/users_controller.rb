@@ -4,35 +4,37 @@ class UsersController < ApplicationController
     
   def edit
     @user = current_user
-    respond_to do |format|  
-      format.js
-    end
   end
 
   def update
     @user = current_user
     if @user.update_attributes(params[:user])
-      flash[:notice] = "User updated."
       respond_to do |format|  
-        format.html { redirect_to account_url(@user.is_staff_for_what.first) }
-        format.js   { head :ok }
+        format.html do
+          flash[:notice] = "User updated."
+          redirect_to account_dashboard_url(@user.is_staff_for_what.first)
+        end
+        format.js
       end
     else
-      flash[:notice] = "Sorry, user update not valid"
-      render :action => :edit
+      respond_to do |format|  
+        format.html do
+          flash[:notice] = "Sorry, user update not valid"
+          redirect_to account_dashboard_url(@user.is_staff_for_what.first)
+        end
+        format.js { render :action => :edit }
+      end
     end
   end
   
   def promote
     @user = User.find(params[:id])
     @account.promote(@user)
-    render @user
   end
   
   def demote
     @user = User.find(params[:id])
     @account.demote(@user)
-    render @user
   end
   
   def letgo
@@ -40,15 +42,11 @@ class UsersController < ApplicationController
     if @user
       @account.accepts_no_role "staff", @user
     end
-    head :ok
   end
     
   def deputize
     @user = User.find(params[:id])
-    if @user
-      @user.has_role 'admin'
-      render @user
-    end
+    @user.promote_to_admin
   end
   
 end

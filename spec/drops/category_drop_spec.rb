@@ -10,6 +10,16 @@ describe CategoryDrop do
     output.should == " #{@category.name } "
   end
   
+  it "should make slug available" do
+    output = Liquid::Template.parse( ' {{ category.slug }} '  ).render('category' => CategoryDrop.new(@category))
+    output.should == " #{@category.slug } "
+  end
+  
+  it "should make path available" do
+    output = Liquid::Template.parse( ' {{ category.path }} '  ).render('category' => CategoryDrop.new(@category))
+    output.should == " #{@category.path } "
+  end
+  
   describe "subcategories" do
     before do
       @child1 = Factory(:category)

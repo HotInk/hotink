@@ -140,4 +140,73 @@ describe LinkFilters do
          end
        end
    end
+   
+   describe "link to category" do
+      context "when viewing current design" do
+         before do
+           @design.make_current
+         end
+         
+         it "should return link to category with category as first parameters" do
+           category = Factory(:category)
+           output = Liquid::Template.parse( " {{ category | link_to_category }} "  ).render({'category' => CategoryDrop.new(category)}, :registers => { :design => @design })
+           output.should == " <a href=\"/categories#{category.path}\">#{category.name}</a> "
+         end
+         
+         it "should return link to category with string as first parameter and category as second" do
+           category = Factory(:category)
+           output = Liquid::Template.parse( " {{ \"A string to link\" | link_to_category: category }} "  ).render({'category' => CategoryDrop.new(category)}, :registers => { :design => @design })
+           output.should == " <a href=\"/categories#{category.path}\">A string to link</a> "
+         end
+
+         it "should return link to category with category as first parameter and string as second" do
+           category = Factory(:category)
+           output = Liquid::Template.parse( " {{ category | link_to_category:\"A string to link\" }} "  ).render({'category' => CategoryDrop.new(category)}, :registers => { :design => @design })
+           output.should == " <a href=\"/categories#{category.path}\">A string to link</a> "
+         end
+       end
+       
+       context "when previewing a design other than the current one" do
+         it "should insert design id into query string when building links" do
+           category = Factory(:category)
+           output = Liquid::Template.parse( " {{ category | link_to_category }} "  ).render({'category' => CategoryDrop.new(category)}, :registers => { :design => @design })
+           output.should == " <a href=\"/categories#{category.path}?design_id=#{@design.id}\">#{category.name}</a> "
+         end
+       end
+   end
+   
+   
+   describe "link to issue" do
+     context "when viewing current design" do
+       before do
+         @design.make_current
+       end
+       
+        it "should return link to issue with issue as first parameters" do
+          issue = Factory(:issue)
+          output = Liquid::Template.parse( " {{ issue | link_to_issue }} "  ).render({'issue' => IssueDrop.new(issue)}, :registers => { :design => @design })
+          output.should == " <a href=\"/issues/#{issue.id}\">#{issue.date.strftime(%"%B %e, %Y")}</a> "
+        end
+        
+        it "should return link to issue with string as first parameter and issue as second" do
+          issue = Factory(:issue)
+          output = Liquid::Template.parse( " {{ \"A string to link\" | link_to_issue: issue }} "  ).render({'issue' => IssueDrop.new(issue)}, :registers => { :design => @design })
+          output.should == " <a href=\"/issues/#{issue.id}\">A string to link</a> "
+        end
+        
+        it "should return link to article with article as first parameter and string as second" do
+          issue = Factory(:issue)
+          output = Liquid::Template.parse( " {{ issue | link_to_issue:\"A string to link\" }} "  ).render({'issue' => IssueDrop.new(issue)}, :registers => { :design => @design })
+          output.should == " <a href=\"/issues/#{issue.id}\">A string to link</a> "
+        end
+      end
+      
+      context "when previewing a design other than the current one" do
+        it "should insert design id into query string when building links" do
+          issue = Factory(:issue)
+          output = Liquid::Template.parse( " {{ issue | link_to_issue }} "  ).render({'issue' => IssueDrop.new(issue)}, :registers => { :design => @design })
+          output.should == " <a href=\"/issues/#{issue.id}?design_id=#{@design.id}\">#{issue.date.strftime(%"%B %e, %Y")}</a> "
+        end
+      end
+   end
 end

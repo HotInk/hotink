@@ -7,6 +7,7 @@
 #account { width: 51em; margin: 0 auto; }
 #account button { float: right; }
 #account h1 {  font-size: 1.75em; margin:0.25em 0.25em; margin-top:0; font-weight: normal; font-family: georgia, "Times New Roman", times, serif; font-style: italic; color: #AAA; }
+#account h2 { float: none; }
 #account h4 { font-size: 1.05em; }
 #account p { font-size: 0.9em; line-height: 1.45; margin: 0.5em 0; }
 #account fieldset { border: none; padding: 0; float: left; width: 100%; }
@@ -29,20 +30,18 @@
 #account .activation_form .third_column { width: auto; margin-left: 0.7em;}
 #account .activation_form input[type="text"] { width: 98%; padding: 0.125em 1%;}
 
-#account .index >ol { height: 17.5em; border: 1px solid #DDD; overflow:auto;}
-#account .index >ol li { width: 98%; border-top: none; margin: 0.25em 1%;} 
+#account .index >ol { height: 16.5em; border: 1px solid #DDD; overflow:auto;}
+#account .index >ol li { width: 98%; border-top: none; margin: 0.25em 1%; } 
 #account .index ol li h4 { padding: 0.25em 0.4em; margin:0; border-bottom: 1px solid #DDD; }
 #account .index .account { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
 #account .index .account h4 a{color:#ED1B8C;}
 #account .index .account p { padding: 0.5em 0.4em; margin: 0; min-height: 1.1em; }
-#account .index .user { width: 98%; height: 100%; line-height: 1.2em; background-color: #FFF; border: 1px dotted #9cf; }
-#account .index .user p.email { font-weight: bolder; max-width: 32%; overflow: hidden; }
-#account .index .user p.name { max-width: 20%;}
-#account .index .user p { font-size: 0.8em; margin: 0.7em 0.3em; display:inline-block; vertical-align: top;}
-#account .index .user .admin { color:#ED1B8C;}
-#account .index .user button { float: none; margin: 0 0.25em; position: relative; top: 0.45em; }
-#account .index .user .kill_link { width: 12px; margin-right: 0.5em;}
-#account .index .user .kill_link a { color: red;}
+
+#account ol#users { height: 16.5em; border: 1px solid #DDD; margin-bottom: 20px; overflow:auto; }
+#account ol#users li { width: 98%; border-top: none; font-size: 90%; padding: 10px 1%; }
+#account ol#users li > span { margin-right: 5px; }
+#account ol#users li .email { font-weight: bolder; }
+#account ol#users li .kill_link { color: red; }
 
 #account #categories-window h2 { float: left; }
 #account #categories-window #categories_order_form { width: 45%; float: right; margin: 0.75em; margin-right: none; }
@@ -69,7 +68,7 @@
 /*		User details form styles
 /*---------------------------------------*/
 
-#overlay_content #user{ width: 35em; margin: 0.5em; margin-right: 1em; float: left;}
+#user { width: 35em; margin: 0.5em; margin-right: 1em; float: left;}
 #user .column_holder>div { margin-bottom: 1.5em; }
 #user label {margin-right: 0.5em;}
 #user button.save { float: right; }

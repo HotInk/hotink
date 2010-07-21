@@ -1,34 +1,29 @@
 <li id="user_<%= user.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
-	<div class="user clearfix">
-		
-		<p class="name"><%= user.name %></p>
-		<p class="email"><%= user.email %></p>
+	<span class="name"><%= user.name %></span>
+	<span class="email"><%= user.email %></span>
+
+	<% if user.has_role? 'manager', @account %>
+		<span>Manager</span>
+		<% if permit?("admin") || user==current_user %>
+			<%= button_link_to "Demote", demote_user_url(user, :account_id=>@account.id), 'data-remote' => true, 'data-method' => :put, :class=> 'micro' %>		
+		<% end %>
+	<% elsif user.has_role? 'editor', @account  %>
+		<span>Editor</span>
+		<%= button_link_to "Promote", promote_user_url(user, :account_id=>@account.id), 'data-remote' => true, 'data-method' => :put, :class=> 'micro' %>
+		<%= button_link_to "Demote", demote_user_url(user, :account_id=>@account.id), 'data-remote' => true, 'data-method' => :put, :class=> 'micro' %>
+	<% elsif user.has_role? 'staff', @account %>
+		<%= button_link_to "Promote", promote_user_url(user, :account_id=>@account.id), 'data-remote' => true, 'data-method' => :put, :class=> 'micro' %>
+	<% end %>
+					
+	<% if user.has_role? "admin" %>
+		<span class="admin">Administrator</span>
+	<% else %>
+		<% if permit? "admin" %>
+			<%= button_link_to "Deputize", deputize_user_url(user, :account_id=>user.account.id),  'data-remote' => true, 'data-method' => :put, :class=> 'micro', :style=>"color: #ED1B8C;", 'data-confirm' => "Are you sure you want to make #{user.name} an account administrator? This can't be undone, once you approve they're also in charge.\n\nPress 'OK' to confirm this prestigious promotion." unless user.has_role? "admin" %>
+		<% end %>
+	<% end %>
 	
-		<% if user.has_role? 'manager', @account %>
-			<p>Manager</p>
-			<% if permit?("admin") || user==current_user %>
-				<%= button_link_to_remote "Demote", :url => demote_user_url(user, :account_id=>@account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>		
-			<% end %>
-		<% elsif user.has_role? 'editor', @account  %>
-			<p>Editor</p>
-			<%= button_link_to_remote "Promote", :url => promote_user_url(user, :account_id=>@account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>
-			<%= button_link_to_remote "Demote", :url => demote_user_url(user, :account_id=>@account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>
-		<% elsif user.has_role? 'staff', @account %>
-			<%= button_link_to_remote "Promote", :url => promote_user_url(user, :account_id=>@account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro'} %>		
-		<% end %>
-						
-		<% if user.has_role? "admin" %>
-			<p class="admin">Administrator</p>
-		<% else %>
-			<% if permit? "admin" %>
-				<%= button_link_to_remote "Deputize", :url => deputize_user_url(user, :account_id=>user.account.id), :update=>"user_#{user.id}", :method => :put, :html =>{ :class=> 'micro', :style=>"color: #ED1B8C;"}, :confirm=>"Are you sure you want to make #{user.name} an account administrator? This can't be undone, once you approve they're also in charge.\n\nPress 'OK' to confirm this prestigious promotion." unless user.has_role? "admin" %>
-			<% end %>
-		<% end %>
-		
-		<% if permit?("manager of account or admin")&&user!=current_user&&(!user.has_role?("manager", @account))&&(!user.has_role?("admin"))  %>
-			<p class="kill_link">
-				<%= link_to_remote "x", :url => letgo_user_url(user, :account_id=>@account.id), :method => :delete, :after=>"$(this).up().up().up().addClassName('transparent');", :success=>"$('user_#{user.id.to_s}').remove();", :confirm=>"Are you sure you want to prevent the user at email:\n\n#{user.email.to_s}\n\nfrom accessing your account? You can give this user access again easily by adding their email. Press OK to remove this user's account access." , :html => { :class=>'kill_link' } %>
-			</p>
-		<% end %>
-	</div>
+	<% if permit?("manager of account or admin")&&user!=current_user&&(!user.has_role?("manager", @account))&&(!user.has_role?("admin"))  %>
+		<%= link_to "x", letgo_user_url(user, :account_id=>@account.id),  'data-remote' => true, 'data-method' => :delete, 'data-confirm' => "Are you sure you want to prevent the user at email:\n\n#{user.email.to_s}\n\nfrom accessing your account? You can give this user access again easily by adding their email. Press OK to remove this user's account access." , :class=>'kill_link'  %>
+	<% end %>
 </li>

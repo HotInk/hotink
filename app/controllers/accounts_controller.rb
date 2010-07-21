@@ -59,7 +59,7 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
     permit "manager of :account or admin" do    
       if permit? "admin" 
-        @accounts = Account.find(:all) 
+        @accounts = Account.find(:all, :order => "name asc") 
       end
       
       respond_to do |format|

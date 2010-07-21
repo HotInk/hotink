@@ -84,7 +84,7 @@ class IssuesController < ApplicationController
       respond_to do |format|
           format.html do # After an image upload, reload the page with javascript          
             render :update do |page|
-                page.replace  'issue', :partial => 'issue_form'
+                page.replace  'issue', :partial => 'form'
             end         
           end
       end
