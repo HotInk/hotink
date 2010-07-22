@@ -11,7 +11,7 @@ class Audiofile < Mediafile
      xml.mediafile do
        xml.tag!( :title, self.title )
        xml.tag!( :caption, caption)
-       xml.tag!( :mediafile_type, self.type || "Mediafile" )
+       xml.tag!( :mediafile_type, self.class.name || "Mediafile" )
        xml.tag!( :date, self.date )
        xml.tag!( :authors_list, self.authors_list )
        xml.url do

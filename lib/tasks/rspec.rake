@@ -1,3 +1,4 @@
+gem 'test-unit', '1.2.3' if RUBY_VERSION.to_f >= 1.9
 rspec_gem_dir = nil
 Dir["#{RAILS_ROOT}/vendor/gems/*"].each do |subdir|
   rspec_gem_dir = subdir if subdir.gsub("#{RAILS_ROOT}/vendor/gems/","") =~ /^(\w+-)?rspec-(\d+)/ && File.exist?("#{subdir}/lib/spec/rake/spectask.rb")
@@ -9,7 +10,7 @@ if rspec_gem_dir && (test ?d, rspec_plugin_dir)
 end
 
 if rspec_gem_dir
-  $LOAD_PATH.unshift("#{rspec_gem_dir}/lib") 
+  $LOAD_PATH.unshift("#{rspec_gem_dir}/lib")
 elsif File.exist?(rspec_plugin_dir)
   $LOAD_PATH.unshift("#{rspec_plugin_dir}/lib")
 end
@@ -26,7 +27,7 @@ rescue MissingSourceFile
         def initialize(name)
           task name do
             # if rspec-rails is a configured gem, this will output helpful material and exit ...
-            require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
+            require File.expand_path(File.join(File.dirname(__FILE__),"..","..","config","environment"))
 
             # ... otherwise, do this:
             raise <<-MSG
@@ -82,7 +83,7 @@ namespace :spec do
     t.spec_files = FileList['vendor/plugins/**/spec/**/*/*_spec.rb'].exclude('vendor/plugins/rspec/*')
   end
 
-  [:models, :controllers, :views, :helpers, :lib].each do |sub|
+  [:models, :controllers, :drops, :filters, :metal, :tags, :views, :helpers, :lib].each do |sub|
     desc "Run the code examples in spec/#{sub}"
     Spec::Rake::SpecTask.new(sub => spec_prereq) do |t|
       t.spec_opts = ['--options', "\"#{RAILS_ROOT}/spec/spec.opts\""]

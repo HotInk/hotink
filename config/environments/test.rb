@@ -21,12 +21,6 @@ config.action_controller.allow_forgery_protection    = false
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
 
-# Test environment gems
-config.gem "factory_girl", :source => "http://gemcutter.org"
-config.gem "shoulda", :source => "http://gemcutter.org"
-config.gem "webrat", :lib => false, :version => ">= 0.4.3"
-config.gem "nokogiri", :lib => false, :version => ">= 1.2.3"
-
 # Test configuration requires some environment variables
 ENV['AUTOFEATURE'] = "true"
 ENV['RSPEC'] = "true"

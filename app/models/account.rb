@@ -61,7 +61,13 @@ class Account < ActiveRecord::Base
   
   before_create :set_default_settings
     
-  def image_settings= (new_settings)
+  def settings
+    read_attribute(:settings)
+  end
+  
+  def image_settings=(new_settings)
+    account_settings = read_attribute(:settings)
+    account_settings["image"] = {} if settings["image"].nil?
     raise ArgumentError unless new_settings.is_a? Hash
     new_settings.each do |key, value|
       
@@ -77,8 +83,9 @@ class Account < ActiveRecord::Base
         new_width= value[:width]
       end
       
-      settings["image"].update( key => [new_width + new_height + ">", "jpg"]) unless new_height.blank?&&new_width.blank?
+      account_settings["image"].update( key => [new_width + new_height + ">", "jpg"]) unless new_height.blank?&&new_width.blank?
     end
+    write_attribute(:settings, account_settings)
   end
   
   # Human readable list of account manager

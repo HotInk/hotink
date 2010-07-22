@@ -80,8 +80,6 @@ describe Layout do
   end
 end
 
-require 'timecop'
-
 describe TemplateFile do
   before do
     @template_file = Factory(:template_file)

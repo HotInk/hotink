@@ -1,10 +1,11 @@
 .DS_Store
+.bundle
 db/*.sqlite3
 doc/api
 doc/app
 log/*.log
+log/*.pid
 doc/app
-log/*.log
 tmp/*
 public/sounds
 public/images

@@ -48,7 +48,7 @@ class BlogsController < ApplicationController
       @entries = @blog.entries.published.paginate( :page => page, :per_page => per_page)
       if page.to_i == 1
         @drafts = @blog.entries.drafts.all(:include => [:authors, :mediafiles])
-        @scheduled = @blog.entries.scheduled.by_published_at(:desc).all(:include => [:authors, :mediafiles])
+        @scheduled = @blog.entries.scheduled.find(:all, :order => "published_at asc", :include => [:authors, :mediafiles])
       end
     end
     
