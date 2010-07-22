@@ -143,6 +143,9 @@ class Account < ActiveRecord::Base
     end
   end
     
+  # Network
+  has_many :network_memberships, :class_name => "Membership", :foreign_key => :network_owner_id 
+    
   private
   
   def set_default_settings

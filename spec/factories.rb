@@ -59,3 +59,8 @@ Factory.define :page do |p|
   p.sequence(:name) { |n| "Page-#{n}" }
   p.account { Factory(:account) }
 end
+
+Factory.define :membership do |m|
+  m.account { Factory(:account) }
+  m.network_owner { Fcatory(:account) }
+end

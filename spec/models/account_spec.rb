@@ -91,4 +91,8 @@ describe Account do
     @account.current_design.should == @design
   end
   
+  describe "network" do
+    it { should have_many(:network_memberships) }
+  end
+  
 end
