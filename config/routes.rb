@@ -63,6 +63,8 @@ ActionController::Routing::Routes.draw do |map|
     account.resource :search
     account.resource :dashboard
     
+    account.resource :network
+    
     account.resources :public_articles
     account.resources :public_blogs
     account.resources :public_issues
