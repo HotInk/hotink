@@ -39,6 +39,17 @@ describe Document do
       another_mediafile = Factory(:mediafile, :account => document.account)
       document.waxing_for(another_mediafile).should be_nil
     end
+    
+    it "should find the caption for an attached mediafile" do
+      document = Factory(:document)
+      mediafile = Factory(:mediafile, :account => document.account)
+      waxing = Waxing.create(:caption => "Some test you got here", :document => document, :mediafile => mediafile, :account => document.account)
+      
+      document.caption_for(mediafile).should == "Some test you got here"
+      
+      another_mediafile = Factory(:mediafile, :account => document.account)
+      document.caption_for(another_mediafile).should be_nil
+    end
   end
   
   

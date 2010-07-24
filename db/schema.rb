@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100722143132) do
+ActiveRecord::Schema.define(:version => 20100723020601) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20100722143132) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "account_id"
   end
 
   add_index "checkouts", ["duplicate_article_id"], :name => "index_checkouts_on_duplicate_article_id"

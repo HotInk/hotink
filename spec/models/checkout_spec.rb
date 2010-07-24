@@ -6,6 +6,9 @@ describe Checkout do
   end
   it { should belong_to(:user) }
 
+  it { should belong_to(:account) }
+  it { should validate_presence_of(:account) }
+
   it { should belong_to(:original_article) }
   it { should validate_presence_of(:original_article) }
   

@@ -11,8 +11,10 @@
 			<li <%= 'class="current"' if controller_name == "lists" %>><%= link_to "Lists", account_lists_url(@account) %></li>
 			<li <%= 'class="current"' if controller_name == "mediafiles" %>><%= link_to "Media", account_mediafiles_url(@account) %></li>
 			<li <%= 'class="current"' if controller_name == "issues" %>><%= link_to "Issues", account_issues_url(@account) %></li>
-			<li <%= 'class="current"' if (controller_name=="designs"||controller_name=="templates"||controller_name=="template_files") %>><%= link_to "Design", current_design_url(@account) %></li>
 			<li <%= 'class="current"' if (controller_name=="pages") %>><%= link_to "Pages",account_pages_url(@account) %></li>
+			
+			<% if @account.network_owner? %><li style="float:right;" <%= 'class="current"' if (controller_name=="networks") %>><%= link_to "Network",account_network_url(@account) %></li><% end %>
+			<li style="float:right;" <%= 'class="current"' if (controller_name=="designs"||controller_name=="templates"||controller_name=="template_files") %>><%= link_to "Design", current_design_url(@account) %></li>
 		</ol>
 		
 		<% if permit?("(manager of account)") || permit?("admin") %>

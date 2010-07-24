@@ -63,7 +63,11 @@ ActionController::Routing::Routes.draw do |map|
     account.resource :search
     account.resource :dashboard
     
-    account.resource :network
+    account.resource :network, :member => { :checkout_article => :post } do |network|
+      network.show_article '/articles/:id', :controller => :networks, :action => :show_article, :conditions => { :method => :get }
+      network.show_members '/members', :controller => :networks, :action => :show_members, :conditions => { :method => :get }
+      network.update_members '/members', :controller => :networks, :action => :update_members, :conditions => { :method => :post }
+    end
     
     account.resources :public_articles
     account.resources :public_blogs

@@ -22,7 +22,7 @@ describe ArticlesController do
        before do
          @drafts = (1..3).collect{ |n| Factory(:draft_article, :updated_at => n.days.ago, :account => @account ) }
          @scheduled = (1..3).collect{ |n| Factory(:scheduled_article, :published_at => (Time.now + 1.day - n.minutes), :account => @account ) } 
-         @published = (1..3).collect{ Factory(:published_article, :account => @account) }
+         @published = (1..3).collect{ |n| Factory(:published_article, :published_at => (Time.now - 1.day - n.minutes), :account => @account) }
          get :index, :account_id => @account.id
        end
        

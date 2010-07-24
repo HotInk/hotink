@@ -40,6 +40,7 @@ describe Mediafile do
     photocopy.file.should_not be_nil
     photocopy.file_content_type.should == original.file_content_type
     photocopy.file_file_size.should == original.file_file_size
+    File.exists?(photocopy.file.path(:original)).should be_true
   end
 
   it "should set date when created" do

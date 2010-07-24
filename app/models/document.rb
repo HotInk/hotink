@@ -21,6 +21,11 @@ class Document < ActiveRecord::Base
     waxings.find_by_mediafile_id(mediafile.id)
   end
   
+  def caption_for(mediafile)
+    waxing = waxing_for(mediafile)
+    waxing.nil? ? nil : waxing.caption
+  end
+  
   named_scope :by_date_published, :order => "published_at DESC"
   
   # Publication statuses

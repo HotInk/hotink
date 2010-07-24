@@ -5,16 +5,14 @@ and [Campus Plus](http://www.campusplus.com) to help small publishers organize c
 a management interface for the upload and storage of articles, images, audiofiles, and print issue PDF files. It publishers
 a public XML API (with JSON support coming soon) that's used by client applications to publish or distribute archived content.
 
-Hot Ink is built using Ruby on Rails (v2.3.5) using Rails controllers for upload and management. Hot Ink also uses four small
-Sintra apps implmented as Rails metal:
+Hot Ink is built using Ruby on Rails (v2.3.5) using Rails controllers for upload and management. Hot Ink also uses three small
+Sinatra apps implemented as Rails metal:
 
 * a single sign on server that's essentially a rework of [Hancock](http://github.com/atmos/hancock/).
 * the Hot Ink API, the main public interface of the site.
 * Mailout, a [Mailchimp](http://www.mailchimp.com)-API powered mass-email application that builds dynamic messages, 
 filled with Hot Ink content using a simple but flexible template system. It also handles sending mass-emails to **lists** you manage using
 the tools provided by your Mailchimp account.
-* ArticleStream, a simple Hot Ink archive surfing application that allows users to 'checkout' content published by other accounts
-for easy republication. This is the engine behind the [CUP newswire](http://cup.ca).
 
 ## Important dependencies
 

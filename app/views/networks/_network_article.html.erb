@@ -1,0 +1,58 @@
+<li  class="<% if network_article.draft?%>draft<% elsif network_article.scheduled? %>scheduled<% elsif network_article.awaiting_attention? %>awaiting_attention<% end %> <% if @account.has_network_copy_of?(network_article) %>network_original<% end %>">
+	<div class="clearfix">
+		<div class="select">
+			<input type="checkbox" value="<%= network_article.id %>" name="network_article_ids[]"/>
+		</div>
+	
+		<div class="details">
+			<h1>&ldquo;<%= link_to network_article.title, account_network_show_article_path(:id => network_article.id)  %>&rdquo; <small><%= publication_status_for(network_article) %></small></h1>
+			<div class="mediafiles">
+				<% if mediafile = network_article.mediafiles.first %>				
+					<% if mediafile.is_a?(Image) %>
+						<a class="image_icon first large" href="<%= mediafile.file.url(:large) %>"><%= image_tag(mediafile.file.url(:thumb)) %></a>
+						<a class="image_icon first small" href="<%= mediafile.file.url(:large) %>"><%= image_tag(mediafile.file.url(:system_icon)) %></a>
+					<% elsif mediafile.is_a?(Audiofile) %>
+						<object type="application/x-shockwave-flash" data="/player_mp3.swf" width="27" height="22">
+		                    <param name="movie" value="/player_mp3.swf" />
+		                    <param name="FlashVars" value="mp3=<%= mediafile.file.url %>&amp;showslider=0&amp;width=27&height=22" />
+		                </object>    
+					<% end %>
+				<% end %>
+				<% if network_article.mediafiles.count > 1 %>
+					<% network_article.mediafiles[1..-1].each do |mediafile| %>
+						<% if mediafile.is_a?(Image) %>
+							<a class="image_icon" href="<%= mediafile.file.url(:large) %>"><%= image_tag(mediafile.file.url(:system_icon)) %></a>
+						<% elsif mediafile.is_a?(Audiofile) %>
+							<object type="application/x-shockwave-flash" data="/player_mp3.swf" width="27" height="22">
+			                    <param name="movie" value="/player_mp3.swf" />
+			                    <param name="FlashVars" value="mp3=<%= mediafile.file.url %>&amp;showslider=0&amp;width=27&height=22" />
+			                </object>    
+						<% end %>
+					<% end %>
+				<% end %>
+			</div>
+			<% if @account.has_network_copy_of?(network_article) %>
+			<p style="float: right;"><small><em>Checked out <%= @account.find_network_copy_of(network_article).checkout.created_at.to_s(:standard) %> by <%= @account.find_network_copy_of(network_article).checkout.user.name %></em></small></p>
+			<% end %>
+			<p style="float: left; margin-bottom: 0;"><%= network_article.authors_list %></p>
+		</div>
+	
+		<div class="section">
+			<p class="account color_<%= network_article.account.id % 10 %> translucent"><%= network_article.account.formal_name.blank? ? network_article.account.name : network_article.account.formal_name %></p>	
+			<p> <%= network_article.section.blank? ? "<span style=\"color: #BBB\">No section</span>" : network_article.section.name %></p>
+		</div>
+
+		<div class="tags">
+			<% unless network_article.tag_list.blank? %>
+				<p><em> <%= network_article.tag_list %></em></p>
+			<% else %>
+				<p><em><span style="color: #BBB">No tags</span> </em></p>
+			<% end %>
+		</div>
+		
+		<div class="date">
+			<p><%= h network_article.date.to_s(:standard) %></p>
+			<p class="word_count"><%= pluralize(network_article.word_count, "word") %></p>
+		</div>
+	</div>
+</li>

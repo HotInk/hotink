@@ -93,6 +93,115 @@ describe Account do
   
   describe "network" do
     it { should have_many(:network_memberships) }
+    it { should have_many(:network_members) }
+    
+    describe "membership" do
+      it "should be know whether an account is in its network" do
+        member_account = Factory(:account)
+        @account.has_network_member?(member_account).should be_false
+        
+        membership = Factory(:membership, :account => member_account, :network_owner => @account)
+        @account.has_network_member?(member_account).should be_true
+      end
+      
+      it "should return network member ids" do
+        membership1 = Factory(:membership, :network_owner => @account)
+        membership2 = Factory(:membership, :network_owner => @account)
+        
+        @account.network_member_ids.should include(membership1.account.id)
+        @account.network_member_ids.should include(membership2.account.id)
+      end
+    end
+    
+    describe "articles" do
+      it "should know if it has a network copy of a given article" do
+        article = Factory(:published_article)
+        @account.should_not have_network_copy_of(article)
+        
+        membership = Factory(:membership, :account => article.account, :network_owner => @account)
+        @account.make_network_copy(article)
+        @account.should have_network_copy_of(article)
+      end
+      
+      it "should find network copies of a given article" do
+        article = Factory(:published_article)
+        membership = Factory(:membership, :account => article.account, :network_owner => @account)
+        @account.find_network_copy_of(article).should be_nil
+        
+        article_copy = @account.make_network_copy(article)
+        @account.find_network_copy_of(article).should eql(article_copy)
+      end
+      
+      it "should know if it is a network owner" do
+        @account.should_not be_network_owner
+        
+        Factory(:membership, :network_owner => @account)
+        
+        @account.should be_network_owner
+      end
+      
+      describe "making a copy" do
+        context "as network owner" do
+          before do
+            @membership = Factory(:membership, :network_owner => @account)
+          end
+
+          it "should pick up article from network member" do
+            article = Factory(:published_article, 
+                              :title => "This is a test article",
+                              :account => @membership.account )
+
+            network_copy = @account.make_network_copy(article)
+
+            network_copy.should_not be_new_record
+            network_copy.account.should == @account
+            network_copy.section.should be_nil
+            network_copy.status.should be_nil
+            network_copy.published_at.should be_nil
+            network_copy.authors_list.should == article.authors_list
+            network_copy.mediafiles.length.should == article.mediafiles.length
+
+            network_copy.account.should == @account
+            network_copy.title.should == article.title
+          end
+          
+          it "should record user checking out, if provided" do
+            user = Factory(:user)
+            user.has_role("staff", @account)
+            user.has_role("manager", @account)
+            article = Factory(:published_article, 
+                              :title => "This is a test article",
+                              :account => @membership.account )
+
+            network_copy = @account.make_network_copy(article, user)
+            network_copy.checkout.user.should == user
+          end
+
+          it "should not pick up an out-of-network article" do
+            article = Factory(:published_article, 
+                               :title => "This is a test article")
+            network_copy = @account.make_network_copy(article)
+            network_copy.should be_nil
+          end
+
+          it "should not pick up draft article from network member" do
+            article = Factory(:draft_article, 
+                              :title => "This is a test article",
+                              :account => @membership.account )
+            network_copy = @account.make_network_copy(article)
+            network_copy.should be_nil
+          end
+
+          it "should not pick up scheduled article from network member" do
+            article = Factory(:scheduled_article, 
+                              :title => "This is a test article",
+                              :account => @membership.account )
+            network_copy = @account.make_network_copy(article)
+            network_copy.should be_nil
+          end
+        end
+      end
+    end
   end
   
 end

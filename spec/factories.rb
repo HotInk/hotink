@@ -29,11 +29,6 @@ Factory.define :blog do |b|
   b.account { Factory(:account)}
 end
 
-Factory.define :checkout do |c|
-  c.original_article { Factory(:article) }
-  c.duplicate_article { Factory(:article) }
-end
-
 Factory.define :sso_consumer do |consumer|
   consumer.sequence(:name) { |n| "Consumer #{n}" }
   consumer.sequence(:url) { |n| "http://sso#{n}.consumerapp.com/sso"}
@@ -62,5 +57,11 @@ end
 
 Factory.define :membership do |m|
   m.account { Factory(:account) }
-  m.network_owner { Fcatory(:account) }
+  m.network_owner { Factory(:account) }
+end
+
+Factory.define :checkout do |c|
+  c.account { Factory(:account) }
+  c.original_article { Factory(:article) }
+  c.duplicate_article { Factory(:article) }
 end

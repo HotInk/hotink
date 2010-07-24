@@ -6,8 +6,6 @@ describe Article do
   end
   
   it { should belong_to(:section) }  
-  it { should have_one(:checkout) }
-  it { should have_one(:pickup) }
   it { should have_many(:issues).through(:printings) }
   
   it "should return articles by section" do
@@ -63,21 +61,6 @@ describe Article do
   it "should break up a comma (with 'and') seperated string of authors' names to create authors array" do
     @article.authors_list = "Lilly, Marshall and Robin"
     @article.authors.length.should == 3
-  end
-  
-  it "should create photocopies of itself for wire distribution" do
-    original = Factory(:detailed_article_with_mediafiles)
-    new_account = Factory(:account)
-    photocopy = original.photocopy(new_account)
-    
-    photocopy.should_not be_new_record
-    photocopy.account.should == new_account
-    photocopy.section.should be_nil
-    photocopy.status.should be_nil
-    
-    photocopy.authors_list.should == original.authors_list
-    
-    photocopy.mediafiles.length.should == original.mediafiles.length
   end
   
   it "should generate liquid variables for templates" do
@@ -184,5 +167,22 @@ describe Article do
     @article.tag_list.to_s.should == "testing, one, two, three"
     @article.tag("four")
     @article.tag_list.to_s.should == "testing, one, two, three, four"
+  end
+
+  describe "network" do
+    before do
+      @article.publish!
+    end
+    
+    it { should have_many(:checkouts).dependent(:destroy) }
+    it { should have_one(:checkout).dependent(:destroy) }
+    
+    it "should know it's network original, if it has one" do
+      account = Factory(:account)
+      Factory(:membership, :network_owner => account, :account => @article.account)
+      network_copy = account.make_network_copy(@article)
+      
+      network_copy.network_original.should eql(@article)
+    end
   end
 end

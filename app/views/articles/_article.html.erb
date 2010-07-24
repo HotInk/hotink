@@ -5,7 +5,7 @@
 		</div>
 	
 		<div class="details">
-			<h1><%= link_to article.title, document_url_for_user(article, current_user)  %> <small><%= publication_status_for(article) %></small></h1>
+			<h1>&ldquo;<%= link_to article.title, document_url_for_user(article, current_user)  %>&rdquo; <small><%= publication_status_for(article) %></small></h1>
 			<div class="mediafiles">
 				<% if mediafile = article.mediafiles.first %>				
 					<% if mediafile.is_a?(Image) %>

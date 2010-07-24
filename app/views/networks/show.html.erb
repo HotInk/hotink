@@ -1,0 +1,7 @@
+<h1>All network articles</h1><p style="text-align:right;"><%= link_to "Update members list", account_network_show_members_path(@account), :class => "link yellow" %></p>
+<%= will_paginate(@articles) %>
+<ol id="network_articles" class="documents">
+	<%= render :partial => 'network_article', :collection => @articles %>
+</ol>
+<%= will_paginate(@articles) %>
+

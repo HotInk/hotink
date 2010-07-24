@@ -88,7 +88,7 @@ class Account < ActiveRecord::Base
     write_attribute(:settings, account_settings)
   end
   
-  # Human readable list of account manager
+  # Human readable list of account managers
   def managers_list
     managers = self.has_managers
      case managers.length
@@ -144,8 +144,48 @@ class Account < ActiveRecord::Base
   end
     
   # Network
+  has_many :checkouts
   has_many :network_memberships, :class_name => "Membership", :foreign_key => :network_owner_id 
+  has_many :network_members, :through => :network_memberships, :source => :account
     
+  def network_owner?
+    !network_memberships.reload.empty?
+  end
+  
+  def has_network_member?(potential_member)
+    !!network_memberships.find_by_account_id(potential_member.id)
+  end
+  
+  def network_member_ids
+    network_memberships.collect{ |m| m.account_id }
+  end
+      
+  def make_network_copy(article, user = nil)
+    if has_network_member?(article.account)&&article.published?
+      copy = article.clone
+      copy.unpublish
+      copy.update_attributes(:account => self, :section => nil)
+    
+      copy.authors = article.authors
+      copy.tags = article.tags
+      article.mediafiles.each do |m| 
+        mediafile = m.photocopy(self)
+        copy.mediafiles << mediafile 
+      end
+      checkouts.create(:original_article => article, :duplicate_article => copy, :user => user )
+      copy
+    end
+  end  
+  
+  def has_network_copy_of?(article)
+    !!find_network_copy_of(article)
+  end
+  
+  def find_network_copy_of(article)
+    checkout = checkouts.find_by_original_article_id(article.id)
+    checkout.nil? ? nil : checkout.duplicate_article
+  end
+  
   private
   
   def set_default_settings

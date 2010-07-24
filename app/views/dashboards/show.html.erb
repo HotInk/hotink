@@ -67,16 +67,6 @@
 		<p class="grid_6 alpha" style="text-align:right"><%= link_to "View all blogs &raquo", account_blogs_path(@account) %></p>
 	</div>
 <% end %>
-<hr>
-<div id="owned_articles" class="grid_6 alpha">
-	<% unless @owned_articles.blank? %>
-		<h2>Your recent uploads</h2>
-		<%= will_paginate(@owned_articles, :inner_window => 1, :outer_window => 0, :class => "pagination remote") %>
-		<ol class="articles tiny">
-			<%= render @owned_articles %>
-		</ol>
-	<% end %>
-</div>
 
 <% content_for :javascript do %>
 	<script type="text/javascript" charset="utf-8">

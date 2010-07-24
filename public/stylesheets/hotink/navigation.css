@@ -13,6 +13,7 @@
 #navigation ol#links li.current a { color: #333; }
 #navigation ol#links li a:hover { color: #333; }
 #navigation ol#links li:hover { background-color: #CEE4F3; }
+#navigation ol#links li.current:hover { background-color: #FFF; }
 
 #navigation #user_details { 
 	float: right; padding: 5px; margin-left: 5px; text-align: center; border: 1px solid #CEE4F3; background-color: #fff9e5; 
