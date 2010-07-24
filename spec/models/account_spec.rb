@@ -150,7 +150,11 @@ describe Account do
             article = Factory(:published_article, 
                               :title => "This is a test article",
                               :account => @membership.account )
-
+            article.mediafiles = (1..2).collect{ Factory(:mediafile, :account => @membership.account)}
+            article.mediafiles.each do |mediafile| 
+              article.waxing_for(mediafile).update_attribute(:caption, "This caption is for #{mediafile.file.url(:original)}.")
+            end
+            
             network_copy = @account.make_network_copy(article)
 
             network_copy.should_not be_new_record
@@ -160,7 +164,7 @@ describe Account do
             network_copy.published_at.should be_nil
             network_copy.authors_list.should == article.authors_list
             network_copy.mediafiles.length.should == article.mediafiles.length
-
+            network_copy.waxings.first.caption.should == article.waxings.first.caption
             network_copy.account.should == @account
             network_copy.title.should == article.title
           end

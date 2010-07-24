@@ -169,8 +169,9 @@ class Account < ActiveRecord::Base
       copy.authors = article.authors
       copy.tags = article.tags
       article.mediafiles.each do |m| 
-        mediafile = m.photocopy(self)
-        copy.mediafiles << mediafile 
+        mediafile_copy = m.photocopy(self)
+        copy.mediafiles << mediafile_copy 
+        copy.waxing_for(mediafile_copy).update_attribute(:caption, article.waxing_for(m).caption)
       end
       checkouts.create(:original_article => article, :duplicate_article => copy, :user => user )
       copy
