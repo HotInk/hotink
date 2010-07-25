@@ -3,6 +3,8 @@ require 'spec_helper'
 describe TemplateFilesController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
+    
     @design = Factory(:design, :account => @account)
     @current_user = Factory(:user)
     @current_user.promote_to_admin
@@ -11,7 +13,7 @@ describe TemplateFilesController do
   
   describe "GET new" do
      it "should respond to HTML" do
-       get :new, :account_id => @account.id, :design_id => @design.id
+       get :new, :design_id => @design.id
        should respond_with(:success)
        should assign_to(:design).with(@design)
        should respond_with_content_type(:html)
@@ -22,7 +24,7 @@ describe TemplateFilesController do
   describe "POST create" do
     describe "stylesheet" do
       before do
-        post :create, :account_id => @account.id, :design_id => @design.id, :template_file => { :file => File.new(RAILS_ROOT + '/spec/fixtures/test_css.css') }
+        post :create, :design_id => @design.id, :template_file => { :file => File.new(RAILS_ROOT + '/spec/fixtures/test_css.css') }
       end
       
       it { should assign_to(:template_file).with_kind_of(Stylesheet) }
@@ -31,7 +33,7 @@ describe TemplateFilesController do
     
     describe "javscript files" do
       before do
-        post :create, :account_id => @account.id, :design_id => @design.id, :template_file => { :file => File.new(RAILS_ROOT + '/spec/fixtures/test_js.js') }
+        post :create, :design_id => @design.id, :template_file => { :file => File.new(RAILS_ROOT + '/spec/fixtures/test_js.js') }
       end
       
       it { should assign_to(:template_file).with_kind_of(JavascriptFile) }
@@ -40,7 +42,7 @@ describe TemplateFilesController do
     
     describe "template file" do
       before do
-        post :create, :account_id => @account.id, :design_id => @design.id, :template_file => { :file => File.new(RAILS_ROOT + '/spec/fixtures/test-jpg.jpg') }
+        post :create, :design_id => @design.id, :template_file => { :file => File.new(RAILS_ROOT + '/spec/fixtures/test-jpg.jpg') }
       end
       
       it { should assign_to(:template_file).with_kind_of(TemplateFile) }
@@ -52,7 +54,7 @@ describe TemplateFilesController do
     context "with a template file" do
       before do
         @template_file = Factory(:template_file, :design => @design)
-        get :edit, :account_id => @account.id, :design_id => @design.id, :id => @template_file.id
+        get :edit, :design_id => @design.id, :id => @template_file.id
       end
       
       it { should set_the_flash }
@@ -62,7 +64,7 @@ describe TemplateFilesController do
     context "with a javascript file" do
       before do
         @template_file = Factory(:javascript_file, :design => @design)
-        get :edit, :account_id => @account.id, :design_id => @design.id, :id => @template_file.id
+        get :edit, :design_id => @design.id, :id => @template_file.id
       end
       
       it { should assign_to(:file_contents).with_kind_of(String) }
@@ -72,7 +74,7 @@ describe TemplateFilesController do
     context "with a stylesheet" do
       before do
         @template_file = Factory(:stylesheet, :design => @design)
-        get :edit, :account_id => @account.id, :design_id => @design.id, :id => @template_file.id
+        get :edit, :design_id => @design.id, :id => @template_file.id
       end
       
       it { should assign_to(:file_contents).with_kind_of(String) }
@@ -83,7 +85,7 @@ describe TemplateFilesController do
   describe "PUT update" do
     before do
       @template_file = Factory(:stylesheet, :design => @design)
-      put :update, :account_id => @account.id, :design_id => @design.id, :id => @template_file.id, :file_contents => "New stylesheet contents"
+      put :update, :design_id => @design.id, :id => @template_file.id, :file_contents => "New stylesheet contents"
     end
     
     it { should set_the_flash }
@@ -93,7 +95,7 @@ describe TemplateFilesController do
   describe "DELETE destroy" do
     before do
       @template_file = Factory(:stylesheet, :design => @design)
-      delete :destroy, :account_id => @account.id, :design_id => @design.id, :id => @template_file.id
+      delete :destroy, :design_id => @design.id, :id => @template_file.id
     end
     
     it { should set_the_flash }

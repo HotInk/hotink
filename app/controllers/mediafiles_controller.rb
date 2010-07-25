@@ -73,7 +73,7 @@ class MediafilesController < ApplicationController
               end
               return
             end
-        format.html { redirect_to(edit_account_mediafile_path(@account, @mediafile)) }
+        format.html { redirect_to(edit_mediafile_path(@account, @mediafile)) }
       end  
      else
        render :text => "Mediafile NOT uploaded", :status => :bad_request
@@ -88,18 +88,19 @@ class MediafilesController < ApplicationController
       end
     else
       flash[:notice] = "No mediafile uploaded"
-      redirect_to new_account_mediafile_url(@account)
+      redirect_to new_mediafile_url(@account)
     end
   end
 
   # PUT /mediafiles/1
   def update
     @mediafile = @account.mediafiles.find(params[:id])
-   	
+   	@mediafile.date = params[@mediafile.class.name.underscore.to_sym][:date]
+   	params.delete(:date)
     respond_to do |format|
       if @mediafile.update_attributes(params[@mediafile.class.name.downcase.to_sym]) 
         flash[:notice] = 'Media updated'      
-        format.html { redirect_to(account_mediafiles_path(@account))}
+        format.html { redirect_to(mediafiles_path(@account))}
         format.js
       else
         flash[:notice] = 'Error! Media NOT updated'      
@@ -116,7 +117,7 @@ class MediafilesController < ApplicationController
 
     respond_to do |format|
       flash[:notice] = 'Media trashed'
-      format.html { redirect_to(account_mediafiles_path(@account)) }
+      format.html { redirect_to(mediafiles_path(@account)) }
       format.js   { head :ok }
     end
   end

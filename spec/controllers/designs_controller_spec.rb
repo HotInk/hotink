@@ -3,6 +3,7 @@ require 'spec_helper'
 describe DesignsController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
     
     @current_user = Factory(:user)
     @current_user.promote_to_admin
@@ -12,7 +13,7 @@ describe DesignsController do
   describe "GET index" do
     before do
       @designs = (1..3).collect{ Factory(:design, :account => @account) }
-      get :index, :account_id => @account.id
+      get :index
     end
     
     it { should assign_to(:designs).with(@designs) }
@@ -24,7 +25,7 @@ describe DesignsController do
   describe "GET show" do
     before do
       @design = Factory(:design, :account => @account)
-      get :show, :account_id => @account.id, :id => @design.id
+      get :show, :id => @design.id
     end
     
     it { should assign_to(:design).with(@design) }
@@ -37,7 +38,7 @@ describe DesignsController do
       before do
         @design = Factory(:design, :account => @account)
         @account.update_attribute :current_design, @design
-        get :current_design, :account_id => @account.id
+        get :current_design
       end
       
       it { should assign_to(:design).with(@design) }
@@ -47,7 +48,7 @@ describe DesignsController do
     
     context "without current design" do
       before do
-        get :current_design, :account_id => @account.id
+        get :current_design
       end
       
       it { should_not assign_to(:design) }
@@ -59,7 +60,7 @@ describe DesignsController do
     
   describe "GET new" do
     before do
-      get :new, :account_id => @account.id
+      get :new
     end
     
     it { should assign_to(:design).with_kind_of(Design) }
@@ -70,7 +71,7 @@ describe DesignsController do
   describe "GET edit" do
     before do
       @design = Factory(:design, :account => @account)
-      get :edit, :account_id => @account.id, :id => @design.id
+      get :edit, :id => @design.id
     end
     
     it { should assign_to(:design).with(@design) }
@@ -81,7 +82,7 @@ describe DesignsController do
   describe "POST create" do
     context "with valid attributes" do
       before do
-        post :create, :account_id => @account.id, :design => { :name => "Another new design" }
+        post :create, :design => { :name => "Another new design" }
       end
     
       it "should create a design for the current account" do
@@ -94,7 +95,7 @@ describe DesignsController do
     
     context "without valid attributes" do
       before do
-        post :create, :account_id => @account.id, :design => { :name => "" }
+        post :create, :design => { :name => "" }
       end
     
       it "should not create a design for the current account" do
@@ -111,7 +112,7 @@ describe DesignsController do
       before do
         design_attributes = Factory.attributes_for(:design, :name => "Test success?")
         @design = Factory(:design, :account => @account)
-        put :update, :account_id => @account.id, :id => @design.id, :design => design_attributes
+        put :update, :id => @design.id, :design => design_attributes
       end
     
       it { should assign_to(:design).with_kind_of(Design) }
@@ -126,7 +127,7 @@ describe DesignsController do
         design_attributes = Factory.attributes_for(:design, :name => "")
         @design = Factory(:design, :account => @account)
         
-        put :update, :account_id => @account.id, :id => @design.id, :design => design_attributes
+        put :update, :id => @design.id, :design => design_attributes
       end
     
       it { should assign_to(:design).with(@design) }
@@ -138,7 +139,7 @@ describe DesignsController do
   describe "DELETE destroy" do
     before do
       @design = Factory(:design, :account => @account)
-      delete :destroy, :account_id => @account.id, :id => @design.id
+      delete :destroy, :id => @design.id
     end
     
     it "should delete the front page" do

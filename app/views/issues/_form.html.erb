@@ -1,5 +1,5 @@
 <div id="issue">
-	<% form_for([@account, @issue], :html=>{:multipart=>true}) do |f| %>
+	<% form_for(@issue, :html=>{:multipart=>true}) do |f| %>
 	<div class="column_holder clearfix">
 		<div class="details grid_7">
 	    	<div class="column_holder clearfix form">
@@ -49,7 +49,7 @@
 					window.onload = function () {
 						swfu = new SWFUpload({
 							// Backend Settings
-							upload_url: "<%= account_issue_url(@account, @issue) + "/upload_pdf"%>",
+							upload_url: "<%= issue_url(@issue) + "/upload_pdf"%>",
 							post_params: {"authenticity_token": "<%= form_authenticity_token %>", "user_credentials" : "<%= current_user.single_access_token %>" },
 
 							// File Upload Settings

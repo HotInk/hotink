@@ -1,5 +1,5 @@
 <li id="user_invitation_<%= user_invitation.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
 		<span class="email"><%= user_invitation.email %></span>
 		<span class="name">Invitation</span>
-		<%= link_to "x", account_user_invitation_url(@account, user_invitation), 'data-remote' => true, 'data-method' => :delete, :class => "kill_link" %>
+		<%= link_to "x", user_invitation_url(user_invitation), 'data-remote' => true, 'data-method' => :delete, :class => "kill_link" %>
 </li>

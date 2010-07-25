@@ -2,13 +2,13 @@
 	<h1>Attach media </h1>
 
 	<div class="search">
-		<% form_remote_tag :url=>account_mediafiles_url(@account), :method => :get do %>
+		<% form_remote_tag :url=>mediafiles_url, :method => :get do %>
 			<input type="text" id="mediafiles_search" name="search" class="text_input user" onclick="if(this.value=='Search media') clearText(this);" value="<%=h( @search_query || "Search media") %>" />
 			<%= button_link_to_submit "Go" %>
 		<% end %>
 	</div>
 
-<% form_remote_tag :url=>account_document_waxings_url(@account, @document), :after=>"page_overlay.end();", :success=>"trigger_flash('<p>Media attached</p>');", :method => :post do %>
+<% form_remote_tag :url=>document_waxings_url(@document), :after=>"page_overlay.end();", :success=>"trigger_flash('<p>Media attached</p>');", :method => :post do %>
 	<%= button_link_to_submit "Attach selected", :class=>"save large" %>
 	<%= render :partial=>'mediafiles/ajax_pagination' %>
 	<ol id="attach_mediafiles_list" class="mediafiles small selectable">

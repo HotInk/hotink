@@ -3,6 +3,7 @@ require 'spec_helper'
 describe IssuesController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
   end
   
   context "when logged in" do
@@ -13,7 +14,7 @@ describe IssuesController do
     describe "GET to index" do
       before do
         @issues = (1..3).collect{ Factory(:issue, :account => @account) }
-        get :index, :account_id => @account.id    
+        get :index  
       end
 
       it { should assign_to(:issues).with(@issues) }
@@ -23,7 +24,7 @@ describe IssuesController do
 
     describe "GET to new" do
       before do
-        get :new, :account_id => @account.id
+        get :new
       end
 
       it { should assign_to(:issue).with_kind_of(Issue) }
@@ -37,7 +38,7 @@ describe IssuesController do
 
       context "with valid attributes" do
         before do
-          put :update, :account_id => @account.id, :id => @issue.id, :issue => Factory.attributes_for(:issue)
+          put :update, :id => @issue.id, :issue => Factory.attributes_for(:issue)
         end
 
         it { should assign_to(:issue).with(@issue) }
@@ -47,7 +48,7 @@ describe IssuesController do
 
       context "with valid attributes" do
         before do
-          post :update, :account_id => @account.id, :id => @issue.id, :issue => Factory.attributes_for(:issue, :date => "Tomorrow")
+          post :update, :id => @issue.id, :issue => Factory.attributes_for(:issue, :date => "Tomorrow")
         end
 
         it { should assign_to(:issue).with(@issue) }
@@ -60,7 +61,7 @@ describe IssuesController do
     describe "GET to show" do
       before do
         @issue = Factory(:issue, :account => @account)
-        get :show, :account_id => @account.id, :id => @issue.id
+        get :show, :id => @issue.id
       end
 
       it { should assign_to(:issue).with(@issue) }
@@ -75,7 +76,7 @@ describe IssuesController do
 
       context "with HTML request" do
         before do
-          get :edit, :account_id => @account.id, :id => @issue.id
+          get :edit, :id => @issue.id
         end
 
         it { should assign_to(:issue).with(@issue) }
@@ -85,7 +86,7 @@ describe IssuesController do
 
       context "with XHR request" do
         before do
-          xhr :get, :edit, :account_id => @account.id, :id => @issue.id
+          xhr :get, :edit, :id => @issue.id
         end
 
         it { should assign_to(:issue).with(@issue) }
@@ -97,7 +98,7 @@ describe IssuesController do
     describe "DELETE to destroy" do
       before do
         @issue = Factory(:issue, :account => @account)
-        delete :destroy, :account_id => @account.id, :id => @issue.id
+        delete :destroy, :id => @issue.id
       end
 
       it { should respond_with(:redirect) }
@@ -113,7 +114,7 @@ describe IssuesController do
       @user.has_role('staff', @account)
       @issue = Factory(:issue, :account => @account)
       
-      post :upload_pdf, :account_id => @account.id, :id => @issue.id, :user_credentials => @user.single_access_token, :Filedata => fixture_file_upload('/test-pdf.pdf')
+      post :upload_pdf, :id => @issue.id, :user_credentials => @user.single_access_token, :Filedata => fixture_file_upload('/test-pdf.pdf')
     end
     
     it { should assign_to(:issue).with(@issue) }
@@ -129,7 +130,7 @@ describe IssuesController do
       @user = Factory(:user)
       @issue = Factory(:issue, :account => @account)
       
-      post :upload_pdf, :account_id => @account.id, :id => @issue.id, :user_credentials => @user.single_access_token, :Filedata => fixture_file_upload('/test-pdf.pdf')
+      post :upload_pdf, :id => @issue.id, :user_credentials => @user.single_access_token, :Filedata => fixture_file_upload('/test-pdf.pdf')
     end
     
     it { should respond_with(:unauthorized) }

@@ -3,6 +3,8 @@ require 'spec_helper'
 describe ListsController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
+    
     @current_user = Factory(:user)
     @current_user.promote_to_admin
     controller.stub!(:current_user).and_return(@current_user)
@@ -11,7 +13,7 @@ describe ListsController do
   describe "GET to index" do
     before do
       @lists = (1..3).collect{ Factory(:list, :account => @account) }
-      get :index, :account_id => @account.id
+      get :index
     end
     
     it { should assign_to(:lists).with(@list) }
@@ -24,7 +26,7 @@ describe ListsController do
     before do
       @articles = (1..3).collect{ Factory(:published_article, :account => @account) }
       
-      get :new, :account_id => @account.id
+      get :new
     end
     it { should assign_to(:list).with_kind_of(List) }
     it { should assign_to(:articles).with(@articles) }
@@ -35,7 +37,7 @@ describe ListsController do
   describe "POST to create" do
     context "with valid attributes" do
       before do
-        post :create, :account_id => @account.id,  :list => { :name => "My list" }
+        post :create,  :list => { :name => "My list" }
       end
     
       it { should respond_with(:redirect) }
@@ -49,7 +51,7 @@ describe ListsController do
     context "with invalid attributes" do
       before do
         @articles = (1..3).collect{ Factory(:published_article, :account => @account) }
-        post :create, :account_id => @account.id,  :list => { :name => "Chris's list" }
+        post :create,  :list => { :name => "Chris's list" }
       end
       
       it { should respond_with(:success) }
@@ -71,7 +73,7 @@ describe ListsController do
      context "by list's owner" do
        before do
          @list.owner = @current_user
-         get :edit, :account_id => @account.id, :id => @list.id
+         get :edit, :id => @list.id
        end
 
        it { should assign_to(:articles).with(@articles) }
@@ -82,7 +84,7 @@ describe ListsController do
      context "by administrator" do
        before do
          @current_user.promote_to_admin
-         get :edit, :account_id => @account.id, :id => @list.id
+         get :edit, :id => @list.id
        end
 
        it { should assign_to(:list).with(@list) }
@@ -91,7 +93,7 @@ describe ListsController do
      context "by user prohibited from editing article" do
        before do
          @current_user.has_no_role "admin"
-         get :edit, :account_id => @account.id, :id => @list.id
+         get :edit, :id => @list.id
        end
 
        it { should respond_with(:unauthorized) }
@@ -105,7 +107,7 @@ describe ListsController do
     
     context "with valid attributes" do
       before do
-        put :update, :account_id => @account.id, :id => @list.id, :list => { :name => "Testing update" }
+        put :update, :id => @list.id, :list => { :name => "Testing update" }
       end
     
       it { should respond_with(:redirect) }
@@ -118,7 +120,7 @@ describe ListsController do
     context "with invalid attributes" do
       before do
         @articles = (1..3).collect{ Factory(:published_article, :account => @account) }
-        put :update, :account_id => @account.id, :id => @list.id, :list => { :name => nil }
+        put :update, :id => @list.id, :list => { :name => nil }
       end
     
       it { should assign_to(:articles).with(@articles) }
@@ -131,7 +133,7 @@ describe ListsController do
     describe "with no document ids, empties list" do
       before do
         @list.documents = (1..3).collect { Factory(:document, :account => @account) }
-        put :update, :account_id => @account.id, :id => @list.id, :list => { :name => "Testing update" }
+        put :update, :id => @list.id, :list => { :name => "Testing update" }
       end
       
       it "should empty list" do
@@ -144,7 +146,7 @@ describe ListsController do
     before do
       @list = Factory(:list, :account => @account)
       @current_user.promote_to_admin
-      delete :destroy, :account_id => @account.id, :id => @list.id
+      delete :destroy, :id => @list.id
     end
     
     it { should respond_with(:redirect) }

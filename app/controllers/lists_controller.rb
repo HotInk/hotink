@@ -37,7 +37,7 @@ class ListsController < ApplicationController
       render :new
     else
       @list.update_attributes(params[:list])
-      redirect_to account_lists_url(@account)
+      redirect_to lists_url
     end
   end
   
@@ -46,7 +46,7 @@ class ListsController < ApplicationController
     
     @list.documents.clear unless params[:list][:document_ids]
     if @list.update_attributes(params[:list])
-      redirect_to account_lists_url(@account)
+      redirect_to lists_url
     else
       page = params[:page] || 1
       per_page = params[:per_page] || 8
@@ -58,6 +58,6 @@ class ListsController < ApplicationController
   def destroy
     @list = @account.lists.find(params[:id])
     @list.destroy
-    redirect_to account_lists_url(@account)
+    redirect_to lists_url
   end
 end

@@ -1,17 +1,17 @@
 <li id="waxing_<%= waxing.id %>" class="<%= waxing.mediafile.class.name.downcase %>">
-	<%= link_to "x", account_waxing_path(@account, waxing), :class=>"detach", "data-remote" => true, "data-method" => :delete, "data-confirm" => "Are you sure you want to detach this #{waxing.mediafile.class.name.downcase} from this article?", "rel" =>"nofollow" %>
+	<%= link_to "x", waxing_path(waxing), :class=>"detach", "data-remote" => true, "data-method" => :delete, "data-confirm" => "Are you sure you want to detach this #{waxing.mediafile.class.name.downcase} from this article?", "rel" =>"nofollow" %>
 	
 	<% if waxing.mediafile.is_a?(Audiofile) %>
-	<div class="clearfix" style="padding: 5px; background-color: #fff9e5; border: 1px solid #AAA; margin-bottom: 10px; font-size: 1.1em; line-height: 1.4;">
-		<object type="application/x-shockwave-flash" data="/player_mp3.swf" style="margin-bottom:10px;" width="245" height="20">
+	<div class="clearfix audiofile">
+		<object type="application/x-shockwave-flash" data="/player_mp3.swf" style="margin-bottom:10px;" width="235" height="20">
 		    <param name="movie" value="/player_mp3.swf" />
 		    <param name="bgcolor" value="#ffffff" />
-		    <param name="FlashVars" value="mp3=<%= waxing.mediafile.file.url %>&width=245" />
+		    <param name="FlashVars" value="mp3=<%= waxing.mediafile.file.url %>&width=235" />
 		</object>
 		<%= waxing.mediafile.filename %> 
 	</div>
 	<% elsif waxing.mediafile.class==Mediafile %>
-	<div class="clearfix" style="padding: 5px; background-color: #fff9e5; border: 1px solid #AAA; margin-bottom: 10px; font-size: 1.1em; line-height: 1.4;">
+	<div class="clearfix file">
 		<%= image_tag "blank_file_icon.png", :style => "float:left; border:none; margin-right: 5px; " %> <%= waxing.mediafile.filename %> 
 		<span style="font-size: 0.75em;"><%= number_to_human_size(waxing.mediafile.file_size) %></span>
 	</div>
@@ -23,7 +23,7 @@
 		<% else %>
 			<%= RDiscount.new(waxing.caption).to_html %>
 		<% end %>
-		<p class="edit_caption"><%= link_to "Edit", edit_account_waxing_path(@account, waxing), :id => "edit_waxing_<%= waxing.id", :class => "grey link small" %></p>	
+		<p class="edit_caption"><%= link_to "Edit", edit_waxing_path(waxing), :id => "edit_waxing_<%= waxing.id", :class => "grey link small" %></p>	
 	</div>
 	
 	<% if waxing.mediafile.is_a?(Image) %>

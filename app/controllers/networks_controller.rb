@@ -17,7 +17,7 @@ class NetworksController < ApplicationController
     @article = Article.find(params[:id], :conditions => { :account_id => @account.network_member_ids })
     @account.make_network_copy(@article, current_user)
     flash[:notice] = "Article copied"
-    redirect_to account_network_show_article_path(@account, @article)
+    redirect_to network_show_article_path(@article)
   end
   
   def show_members

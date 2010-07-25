@@ -30,7 +30,7 @@ class IssuesController < ApplicationController
     @issue = @account.issues.create(:date => Time.now)
     
     respond_to do |format|
-      format.html { redirect_to edit_account_issue_url(@account, @issue ) }
+      format.html { redirect_to edit_issue_url(@account, @issue ) }
     end
   end
 
@@ -52,7 +52,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       if @issue.update_attributes(params[:issue])
         flash[:notice] = 'Issue saved.'
-        format.html { redirect_to account_issues_url(@account) }
+        format.html { redirect_to issues_url(@account) }
       else
         #@issue.date = date
         format.html { render :action => "edit", :status => :bad_request }
@@ -66,7 +66,7 @@ class IssuesController < ApplicationController
     @issue.destroy
 
     respond_to do |format|
-      format.html { redirect_to(account_issues_url(@account)) }
+      format.html { redirect_to(issues_url(@account)) }
     end
   end
     

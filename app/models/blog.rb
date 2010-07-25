@@ -43,7 +43,7 @@ class Blog < ActiveRecord::Base
   def editors
     has_editors
   end
-  
+    
   def make_editor(new_editor)
     new_editor.has_role "contributor", self
     new_editor.has_role "editor", self

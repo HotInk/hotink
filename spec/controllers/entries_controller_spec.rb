@@ -3,6 +3,8 @@ require 'spec_helper'
 describe EntriesController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
+
     @blog = Factory(:blog, :account => @account)
     controller.stub!(:login_required).and_return(true)
   end
@@ -12,7 +14,7 @@ describe EntriesController do
       @user = Factory(:user)
       controller.stub!(:current_user).and_return(@user)
     
-      get :new, :account_id => @account.id, :blog_id => @blog.id
+      get :new, :blog_id => @blog.id
     end
     
     it { should assign_to(:blog).with(@blog) }    
@@ -33,7 +35,7 @@ describe EntriesController do
         @user = Factory(:user)
         @entry.owner = @user
         controller.stub!(:current_user).and_return(@user)
-        get :edit, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+        get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
       it { should assign_to(:blog).with(@blog) }    
@@ -46,7 +48,7 @@ describe EntriesController do
         @user = Factory(:user)
         @user.has_role("admin")
         controller.stub!(:current_user).and_return(@user)
-        get :edit, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+        get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
       it { should assign_to(:blog).with(@blog) }    
@@ -59,7 +61,7 @@ describe EntriesController do
         @user = Factory(:user)
         @user.has_role("manager", @account)
         controller.stub!(:current_user).and_return(@user)
-        get :edit, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+        get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
       it { should assign_to(:blog).with(@blog) }    
@@ -72,7 +74,7 @@ describe EntriesController do
         @user = Factory(:user)
         @user.has_role("editor", @blog)
         controller.stub!(:current_user).and_return(@user)
-        get :edit, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+        get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
       it { should assign_to(:blog).with(@blog) }    
@@ -85,7 +87,7 @@ describe EntriesController do
         @user = Factory(:user)
         @user.has_role("contributor", @blog)
         controller.stub!(:current_user).and_return(@user)
-        get :edit, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+        get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
       it { should respond_with(:redirect) }
@@ -93,7 +95,7 @@ describe EntriesController do
     
     context "by user prohibited from editing entry" do
       before do
-        get :edit, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+        get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
       it { should respond_with(:redirect) }
@@ -103,7 +105,7 @@ describe EntriesController do
   describe "GET to show" do
     before do
       @entry = Factory(:entry, :blog => @blog, :account => @account)
-      get :show, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+      get :show, :blog_id => @blog.id, :id => @entry.id
     end
     
     it { should respond_with(:success) }
@@ -125,7 +127,7 @@ describe EntriesController do
       context "with valid parameters" do
         context "as an HTML request" do
           before do
-            put :update, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id, :entry => { :title => "Whoa there. Title time." }
+            put :update, :blog_id => @blog.id, :id => @entry.id, :entry => { :title => "Whoa there. Title time." }
           end
 
           it { should assign_to(:blog).with(@blog) }    
@@ -139,7 +141,7 @@ describe EntriesController do
 
         context "as an XHR request" do
           before do
-            xhr :put, :update, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id, :entry => { :title => "Whoa there. Title time." }
+            xhr :put, :update, :blog_id => @blog.id, :id => @entry.id, :entry => { :title => "Whoa there. Title time." }
           end
 
           it { should assign_to(:blog).with(@blog) }    
@@ -155,7 +157,7 @@ describe EntriesController do
     
       context "with invalid parameters" do
         before do
-          put :update, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id, :entry => { :account => nil }
+          put :update, :blog_id => @blog.id, :id => @entry.id, :entry => { :account => nil }
         end
 
         it { should assign_to(:blog).with(@blog) }    
@@ -166,7 +168,7 @@ describe EntriesController do
     
       describe "publishing entry" do
         before do
-         put :update, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id, :entry => { :status => "Published" }
+         put :update, :blog_id => @blog.id, :id => @entry.id, :entry => { :status => "Published" }
         end
       
         it "should publish the entry" do
@@ -177,7 +179,7 @@ describe EntriesController do
       describe "scheduling entry" do
         before do        
           schedule = { :year => "2015", :month => "3", :day => "4", :hour => "12", :minute => "35" }
-          put :update, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id, :entry => { :status => "Published", :schedule => schedule }
+          put :update, :blog_id => @blog.id, :id => @entry.id, :entry => { :status => "Published", :schedule => schedule }
         end
       
         it "should schedule the entry" do
@@ -188,7 +190,7 @@ describe EntriesController do
       describe "unpublishing entry" do
         before do        
           @entry.publish
-          put :update, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id, :entry => { :status => "" }
+          put :update, :blog_id => @blog.id, :id => @entry.id, :entry => { :status => "" }
         end
       
         it "should unpublished the entry" do
@@ -212,7 +214,7 @@ describe EntriesController do
   
       context "with XHR request" do
         before do
-          xhr :delete, :destroy, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+          xhr :delete, :destroy, :blog_id => @blog.id, :id => @entry.id
         end
       
         it { should respond_with(:success) }
@@ -225,7 +227,7 @@ describe EntriesController do
     
       context "with HTML request" do
         before do
-          delete :destroy, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+          delete :destroy, :blog_id => @blog.id, :id => @entry.id
         end
       
         it { should respond_with(:redirect) }
@@ -237,7 +239,7 @@ describe EntriesController do
     
     context "as user unauthorized to delete entry" do
       before do
-        delete :destroy, :account_id => @account.id, :blog_id => @blog.id, :id => @entry.id
+        delete :destroy, :blog_id => @blog.id, :id => @entry.id
       end
     
       it { should respond_with(:redirect) }

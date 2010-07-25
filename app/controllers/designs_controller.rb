@@ -47,7 +47,7 @@ class DesignsController < ApplicationController
     @design = @account.designs.build(params[:design])
     if @design.save
       flash[:notice] = 'Design was successfully created.'
-      redirect_to([@account, @design])
+      redirect_to(@design)
     else
       render :action => "new"
     end
@@ -57,7 +57,7 @@ class DesignsController < ApplicationController
   def update
     @design = @account.designs.find(params[:id])
     if @design.update_attributes(params[:design])
-      redirect_to([@account, @design])
+      redirect_to(@design)
     else
       render :action => "edit"
     end
@@ -67,7 +67,7 @@ class DesignsController < ApplicationController
   def destroy
     @design = @account.designs.find(params[:id])
     @design.destroy
-    redirect_to(account_designs_url(@account))
+    redirect_to(designs_url(@account))
   end
 
 end

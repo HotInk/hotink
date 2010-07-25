@@ -1,6 +1,6 @@
 <h1>Upload a file</h1>
 <div class="grid_12 alpha">
-<% form_for [@account, @design, @template_file], :html => { :multipart => true } do |f| %>
+<% form_for [@design, @template_file], :html => { :multipart => true } do |f| %>
 	<p>Upload any supporting images or other files you'll need to support this site design</p>
 	<%= f.label(:file, "Select file:") + f.file_field(:file) %>
 	<%= f.submit "Upload" %>

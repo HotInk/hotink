@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe UsersController do
   before do
+    @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
+    
     @user = Factory(:user)
+    @user.has_role "staff", @account
     controller.stub!(:current_user).and_return(@user)
   end
   
@@ -18,11 +22,11 @@ describe UsersController do
   describe "PUT to update" do
    context "with XHR request" do
      
-     context "with valid user attributes" do
+      context "with valid user attributes" do
         before do
           xhr :put, :update, :id => @user.id, :user => { :email => "this-isa-new@add-ress.com" }
         end
-    
+  
         it { should respond_with(:ok) }
         it "should update user" do
           should assign_to(:user)
@@ -60,12 +64,11 @@ describe UsersController do
   describe "PUT to promote with XHR request" do
     before do
       @promoted_user = Factory(:user)
-      @account = Factory(:account)
       @promoted_user.has_role('staff', @account)
       
       @user.has_role('staff', @account)
       @user.has_role('manager', @account)
-      xhr :put, :promote, :id => @promoted_user.id, :account_id => @account.id
+      xhr :put, :promote, :id => @promoted_user.id
     end
     
     it { should respond_with(:success) }
@@ -80,12 +83,11 @@ describe UsersController do
     before do
       @user.has_role('admin')
       @demoted_user = Factory(:user)
-      @account = Factory(:account)
 
       @demoted_user.has_role('staff', @account)
       @demoted_user.has_role('manager', @account)
 
-      xhr :put, :demote, :account_id => @account.id,  :id => @demoted_user.id
+      xhr :put, :demote, :id => @demoted_user.id
     end
     
     it "should demote user" do
@@ -99,11 +101,9 @@ describe UsersController do
     before do
       @user.has_role('admin')
       @fired_user = Factory(:user)
-      @account = Factory(:account)
-
       @fired_user.has_role('staff', @account)
 
-      xhr :put, :letgo, :account_id => @account.id,  :id => @fired_user.id
+      xhr :put, :letgo, :id => @fired_user.id
     end
     
     it "should remove user from account" do

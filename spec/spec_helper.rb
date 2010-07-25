@@ -23,9 +23,14 @@ Spork.prefork do
   Spec::Runner.configure do |config|
     config.include OpenidMatchers
     config.include Paperclip::Shoulda::Matchers
-
+    config.include Authlogic::TestCase
+    
     config.use_transactional_fixtures = true
     config.use_instantiated_fixtures  = false
+    
+    config.before(:each) do
+      activate_authlogic
+    end
   end
   
 end

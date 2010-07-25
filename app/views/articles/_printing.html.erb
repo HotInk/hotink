@@ -8,17 +8,17 @@
 			<% @article.printings.each do |p| %>
 				<li class="clearfix">
 					<% if p.issue.volume && p.issue.number %>
-						<h3>Vol. <%= p.issue.volume %>, No. <%= p.issue.number %></h3>
+						<h3><%= "Vol. #{p.issue.volume}, No. #{p.issue.number}" %></h3>
 					<% end %>
 					<% if p.issue.date %>
-						<p class="issue_date"><%= p.issue.date.strftime("%b <span>%e, %Y</span>")%></p>
+						<p class="issue_date"><%= p.issue.date.strftime("%b <span>%e, %Y</span>") %></p>
 					<% end %>
-					<% if permit? @article.is_editable_by %><div class="kill_link"><%= link_to "x", account_article_printing_url(@account, @article, p), 'data-method' => :delete, 'data-remote' => true %></div><% end %>
+					<% if permit? @article.is_editable_by %><div class="kill_link"><%= link_to "x", article_printing_url(@article, p), 'data-method' => :delete, 'data-remote' => true %></div><% end %>
 				</li>
 			<% end %>
 		</ul>
 		<% if permit? @article.is_editable_by %>
-			<%= link_to_function "+ Add an issue", "$(this).next().show();$(this).hide();", :class=>"weblink" %>
+			<%= link_to_function "+ Add an issue", "$(this).next().show();$(this).hide();", :class=>"link yellow small" %>
 			<div id="printing_form" style="display:none;">
 				<%= select :printing, :issue_id, (@account.issues - @article.issues).collect{|i| [ i.date.to_s(:long), i.id ] } %>
 				<%= button_link_to "Add", "#", :id => "create_printing", :class=>"tiny" %> <img src="/images/loading_small_white.gif" style="display:inline;position:relative;top: 0.3em;display:none;" class="spinner"/>

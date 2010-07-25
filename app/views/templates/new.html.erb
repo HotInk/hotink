@@ -1,5 +1,5 @@
 <h1>New <%= @tplate.class.name.tableize.humanize.singularize.downcase %></h1>
-<% semantic_form_for(@tplate, :url => account_design_templates_path(@account, @design)) do |form| %>
+<% semantic_form_for(@tplate, :url => design_templates_path(@design)) do |form| %>
 	<% form.buttons :class => "grid_4", :style => "float:right;margin: 10px 10px 0 0;" do %>
 		<%= form.commit_button "Create" %>
 	<% end %>

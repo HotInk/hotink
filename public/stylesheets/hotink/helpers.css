@@ -34,11 +34,13 @@
 a.link 			{ border: 1px solid #AAA; color: white; padding: 4px 5px; font-size: 12px; 
 					-webkit-border-radius: 4px; -moz-border-radius: 4px; }
 a.link:hover 	{ background-color: #999; color: white; text-decoration: none;  }
+a.link:visited	{ color: white; }
 a.link.small		{ padding: 2px 3px 2px 3px; font-size: 11px; }
 a.blue 			{ background-color: #5886D1; }
 a.yellow 		{ background-color: #fff9e5; color: #333; }
+a.link.yellow:visited { color: #333; }
 a.yellow:hover 	{ color: white; }
-a.green 			{ background-color: #79A988; }
+a.green 		{ background-color: #79A988; }
 a.red 			{ background-color: #BC6765; }
 a.grey 			{ background-color: #B0AAB7; }
 

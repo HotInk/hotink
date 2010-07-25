@@ -3,13 +3,15 @@ require 'spec_helper'
 describe MediafilesController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
+    
     controller.stub!(:login_required).and_return(true)
   end
   
   describe "GET to index" do
     context "with no mediafiles" do
       before do
-        get :index, :account_id => @account.id
+        get :index
       end
 
       it { should respond_with(:success) }
@@ -23,7 +25,7 @@ describe MediafilesController do
         @searched_mediafiles = (1..3).collect{ Factory(:mediafile, :account => @account) }
         @other_mediafiles = (1..3).collect{ Factory(:mediafile, :account => @account) }
         Mediafile.should_receive(:search).with( "test query", :with=>{ :account_id => @account.id }, :page => 1, :per_page => 20, :order => :date, :sort_mode => :desc, :include => [:authors]).and_return(@searched_mediafiles)
-        get :index, :account_id => @account.id, :search => "test query"
+        get :index, :search => "test query"
       end
 
       it { should assign_to(:mediafiles).with(@searched_mediafiles) }
@@ -32,7 +34,7 @@ describe MediafilesController do
       
     context "with XHR request" do
       before do
-        xhr :get, :index, :account_id => @account.id
+        xhr :get, :index
       end
       
       it { should respond_with(:success) }
@@ -43,7 +45,7 @@ describe MediafilesController do
   describe "GET to show" do
     before do
       @mediafile = Factory(:mediafile, :account => @account)
-      get :show, :account_id => @account.id, :id => @mediafile.id
+      get :show, :id => @mediafile.id
     end
     
     it { should assign_to(:mediafile).with(@mediafile) }
@@ -59,7 +61,7 @@ describe MediafilesController do
     context "relative to document" do
       before do
         @article = Factory(:article, :account => @account)
-        xhr :get, :new, :account_id => @account.id, :document_id => @article.id
+        xhr :get, :new, :document_id => @article.id
       end
 
       it { should assign_to(:mediafile).with_kind_of(Mediafile) }
@@ -70,7 +72,7 @@ describe MediafilesController do
     
     context "without document" do
       before do
-        get :new, :account_id => @account.id
+        get :new
       end
       
       it { should assign_to(:mediafile).with_kind_of(Mediafile) }
@@ -83,7 +85,7 @@ describe MediafilesController do
   describe "POST to create" do
     context "with valid HTML request and a Mediafile" do
       before do
-        post :create, :account_id => @account.id, :mediafile => { :file => fixture_file_upload('/test-txt.txt') }
+        post :create, :mediafile => { :file => fixture_file_upload('/test-txt.txt') }
       end
       it { should assign_to(:mediafile).with_kind_of(Mediafile) }
       it { should respond_with(:redirect) }
@@ -91,7 +93,7 @@ describe MediafilesController do
     
     context "with invalid HTML request" do
       before do
-        post :create, :account_id => @account.id, :mediafile => { :file => "heheheheh" }
+        post :create,:mediafile => { :file => "heheheheh" }
       end
       
       it { should respond_with(:bad_request) }
@@ -102,7 +104,7 @@ describe MediafilesController do
     context "with HTML request" do
       before do
         @mediafile = Factory(:mediafile, :account => @account)
-        get :edit, :account_id => @account.id, :id => @mediafile.id
+        get :edit, :id => @mediafile.id
       end
     
       it { should assign_to(:mediafile).with(@mediafile) }
@@ -113,7 +115,7 @@ describe MediafilesController do
     context "with XHR request" do
       before do
         @mediafile = Factory(:mediafile, :account => @account)
-        xhr :get, :edit, :account_id => @account.id, :id => @mediafile.id
+        xhr :get, :edit, :id => @mediafile.id
       end
     
       it { should assign_to(:mediafile).with(@mediafile) }
@@ -127,7 +129,7 @@ describe MediafilesController do
       context "when updating mediafile" do
         before do
           @mediafile = Factory(:mediafile, :account => @account)
-          put :update, :account_id => @account.id, :id => @mediafile.id, :mediafile => { :title => "Some mediafile" }
+          put :update, :id => @mediafile.id, :mediafile => { :title => "Some mediafile" }
         end
       
         it { should assign_to(:mediafile).with(@mediafile) }
@@ -140,7 +142,7 @@ describe MediafilesController do
       context "when updating image" do
         before do
           @mediafile = Factory(:image, :account => @account)
-          put :update, :account_id => @account.id, :id => @mediafile.id, :image => { :title => "Some mediafile" }
+          put :update, :id => @mediafile.id, :image => { :title => "Some mediafile" }
         end
       
         it { should assign_to(:mediafile).with(@mediafile) }
@@ -153,7 +155,7 @@ describe MediafilesController do
       context "when updating audiofile" do
         before do
           @mediafile = Factory(:audiofile, :account => @account)
-          put :update, :account_id => @account.id, :id => @mediafile.id, :audiofile => { :title => "Some mediafile" }
+          put :update, :id => @mediafile.id, :audiofile => { :title => "Some mediafile" }
         end
       
         it { should assign_to(:mediafile).with(@mediafile) }
@@ -167,7 +169,7 @@ describe MediafilesController do
     context "with valid XHR request" do
       before do
         @mediafile = Factory(:mediafile, :account => @account)
-        xhr :put, :update, :account_id => @account.id, :id => @mediafile.id, :mediafile => { :title => "Some mediafile" }
+        xhr :put, :update, :id => @mediafile.id, :mediafile => { :title => "Some mediafile" }
       end
       
       it { should assign_to(:mediafile).with(@mediafile) }
@@ -181,7 +183,7 @@ describe MediafilesController do
     context "with invalid request" do
       before do
          @mediafile = Factory(:mediafile, :account => @account)
-         put :update, :account_id => @account.id, :id => @mediafile.id, :mediafile => { :account_id => "" }
+         put :update, :id => @mediafile.id, :mediafile => { :account_id => "" }
        end
 
        it { should assign_to(:mediafile).with(@mediafile) }
@@ -197,7 +199,7 @@ describe MediafilesController do
     
     context "with HTML request" do
       before do
-        delete :destroy, :account_id => @account.id, :id => @mediafile.id
+        delete :destroy, :id => @mediafile.id
       end
     
       it { should respond_with(:redirect) }
@@ -208,7 +210,7 @@ describe MediafilesController do
     
     context "with XHR request" do
       before do
-        xhr :delete, :destroy, :account_id => @account.id, :id => @mediafile.id
+        xhr :delete, :destroy, :id => @mediafile.id
       end
     
       it { should respond_with(:ok) }

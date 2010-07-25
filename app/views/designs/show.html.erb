@@ -1,6 +1,6 @@
 <% if @design %>
 
-<h1><%= @design.name %></h1><p><%if @design.current_design? %><span style="color: green;">This is your current design</span> <%= link_to "New design", new_account_design_path(@account), :class => "link green" %><% else %> <%= link_to "View site with this design", root_url(:design_id => @design.id), :target => :blank, :class => "link blue" %> <%end%> <%= link_to "Edit design details", edit_account_design_path(@account, @design), :class => "link yellow" %> <%= link_to "View all designs &raquo", account_designs_path(@account), :class => "link grey" %></p>
+<h1><%= @design.name %></h1><p><%if @design.current_design? %><span style="color: green;">This is your current design</span> <%= link_to "New design", new_design_path, :class => "link green" %><% else %> <%= link_to "View site with this design", root_url(:design_id => @design.id), :target => :blank, :class => "link blue" %> <%end%> <%= link_to "Edit design details", edit_design_path(@design), :class => "link yellow" %> <%= link_to "View all designs &raquo", designs_path, :class => "link grey" %></p>
 <div class="grid_12 alpha">
 	
 	<p><%= @design.description%> <small></small></p>
@@ -8,11 +8,11 @@
 <div id="templates" class="grid_12 alpha">
 	<h2>Templates</h2>
 	
-	<h3>Front page templates</h3><%= link_to 'New', new_account_design_template_path(@account, @design, :role => 'front_page'), :class => "link green" %>
+	<h3>Front page templates</h3><%= link_to 'New', new_design_template_path(@design, :role => 'front_page'), :class => "link green" %>
 	<ul id="front_page_templates">
 	<% @design.front_page_templates.each do |template| %>
 		<li class="<%= cycle 'even', 'odd' %>">
-			<%= link_to template.name, edit_account_design_template_path(@account, @design, template) %>
+			<%= link_to template.name, edit_design_template_path(@design, template) %>
 			<span class="last_updated"><%= template.created_at==template.updated_at ? "Created " : "Last updated "  %><%= template.updated_at.to_s(:standard) %></span>
 		</li>
 	<% end %>
@@ -22,23 +22,23 @@
 	<% [@design.article_template, @design.page_template, @design.category_template, @design.search_results_template, @design.issue_index_template, @design.issue_template, @design.blog_index_template, @design.blog_template, @design.entry_template].each do |template| -%>
 		<li class="<%= cycle 'even-row', 'odd-row' %>">
 			<% if template.is_a?(ArticleTemplate) %>	
-				<%= link_to "Article", edit_account_design_template_path(@account, @design, template) %>
+				<%= link_to "Article", edit_design_template_path(@design, template) %>
 			<% elsif template.is_a?(PageTemplate) %>
-				<%= link_to "Page", edit_account_design_template_path(@account, @design, template) %> 
+				<%= link_to "Page", edit_design_template_path(@design, template) %> 
 			<% elsif template.is_a?(CategoryTemplate) %>
-				<%= link_to "Category", edit_account_design_template_path(@account, @design, template) %>
+				<%= link_to "Category", edit_design_template_path(@design, template) %>
 			<% elsif template.is_a?(SearchResultsTemplate) %>
-				<%= link_to "Search results", edit_account_design_template_path(@account, @design, template) %>
+				<%= link_to "Search results", edit_design_template_path(@design, template) %>
 			<% elsif template.is_a?(IssueIndexTemplate) %>
-				<%= link_to "Issues index", edit_account_design_template_path(@account, @design, template) %>
+				<%= link_to "Issues index", edit_design_template_path(@design, template) %>
 			<% elsif template.is_a?(IssueTemplate) %>
-				<%= link_to "Issue", edit_account_design_template_path(@account, @design, template) %>
+				<%= link_to "Issue", edit_design_template_path(@design, template) %>
 			<% elsif template.is_a?(BlogIndexTemplate) %>
-				<%= link_to "Blogs index", edit_account_design_template_path(@account, @design, template) %>
+				<%= link_to "Blogs index", edit_design_template_path(@design, template) %>
 			<% elsif template.is_a?(BlogTemplate) %>
-				<%= link_to "Blog", edit_account_design_template_path(@account, @design, template) %>
+				<%= link_to "Blog", edit_design_template_path(@design, template) %>
 			<% elsif template.is_a?(EntryTemplate) %>
-				<%= link_to "Blog entry", edit_account_design_template_path(@account, @design, template) %>
+				<%= link_to "Blog entry", edit_design_template_path(@design, template) %>
 			<% end %>
 			<span class="last_updated"><%= template.created_at==template.updated_at ? "Created " : "Last updated "  %><%= template.updated_at.to_s(:standard) %></span>
 		</li>
@@ -46,13 +46,13 @@
 	</ul>
 	
 	<% if @design.partial_templates.blank? %>
-		<div class="gird_12 alpha" style="margin-bottom: 20px;"><h3>No partial templates</h3> <%= link_to 'Create', new_account_design_template_path(@account, @design, :role => 'partial'), :class => "link green" %></div>
+		<div class="gird_12 alpha" style="margin-bottom: 20px;"><h3>No partial templates</h3> <%= link_to 'Create', new_design_template_path(@design, :role => 'partial'), :class => "link green" %></div>
 	<% else %>
-		<h3>Partial templates</h3><%= link_to 'New', new_account_design_template_path(@account, @design, :role => 'partial'), :class => "link green" %>
+		<h3>Partial templates</h3><%= link_to 'New', new_design_template_path(@design, :role => 'partial'), :class => "link green" %>
 		<ul id="partial_templates">
 		<% for template in @design.partial_templates -%>
 			<li class="<%= cycle 'even', 'odd' %>">
-				<%= link_to template.name, edit_account_design_template_path(@account, @design, template) %> 
+				<%= link_to template.name, edit_design_template_path(@design, template) %> 
 				<%= link_to "x", design_template_path(@design, template), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{template.name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %> 
 				<span class="last_updated"><%= template.created_at==template.updated_at ? "Created " : "Last updated "  %><%= template.updated_at.to_s(:standard) %></span>
 			</li>
@@ -61,12 +61,12 @@
 	<% end %>
 	
 	
-	<h3>Layouts</h3><%= link_to 'New', new_account_design_template_path(@account, @design, :role => 'layout'), :class => "link green" %>
+	<h3>Layouts</h3><%= link_to 'New', new_design_template_path(@design, :role => 'layout'), :class => "link green" %>
 	<ul id="layouts">
 	<% for template in @design.layouts -%>
 		<li class="<%= cycle 'even', 'odd' %>">
-			<%= link_to template.name, edit_account_design_template_path(@account, @design, template) %>  
-			<%= link_to "x", account_design_template_path(@account, @design, template), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{template.name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %> 
+			<%= link_to template.name, edit_design_template_path(@design, template) %>  
+			<%= link_to "x", design_template_path(@design, template), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{template.name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %> 
 			<span class="last_updated"><%= template.created_at==template.updated_at ? "Created " : "Last updated "  %><%= template.updated_at.to_s(:standard) %></span>
 		</li>
 	<% end %>
@@ -76,13 +76,13 @@
 <div id="template_files" class="grid_12 alpha">
 	<h2>Supporting files</h2>
 	<% if @design.stylesheets.blank?%>
-	<div class="gird_12 alpha" style="margin-bottom: 20px;"><h3>No stylesheets</h3> <%= link_to 'Upload', new_account_design_template_file_path(@account, @design), :class => "link green" %></div>
+	<div class="gird_12 alpha" style="margin-bottom: 20px;"><h3>No stylesheets</h3> <%= link_to 'Upload', new_design_template_file_path(@design), :class => "link green" %></div>
 	<% else %>
-		<h3>Stylesheets</h3><%= link_to 'New', new_account_design_template_file_path(@account, @design), :method => :get, :class => "link green" %>
+		<h3>Stylesheets</h3><%= link_to 'New', new_design_template_file_path(@design), :method => :get, :class => "link green" %>
 		<ul id="stylesheets">
 		<% for stylesheet in @design.stylesheets %>
 			<li class="<%= cycle 'even', 'odd' %>">
-				<%= link_to stylesheet.file_name, edit_account_design_template_file_path(@account, @design, stylesheet) %>
+				<%= link_to stylesheet.file_name, edit_design_template_file_path(@design, stylesheet) %>
 				<%= link_to "x", account_design_template_file_path(@account, @design, stylesheet), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{stylesheet.file_name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %>  
 				<span class="last_updated"><%= stylesheet.created_at==stylesheet.file_updated_at ? "Created " : "Last updated "  %><%= stylesheet.file_updated_at.to_s(:standard) %></span>
 			</li>
@@ -91,14 +91,14 @@
 	<% end %>
 	
 	<% if @design.javascript_files.blank?%>
-		<div class="grid_12 alpha" style="margin-bottom: 20px;"><h3>No javascript files</h3> <%= link_to 'Upload', new_account_design_template_file_path(@account, @design), :class => "link green" %></div>
+		<div class="grid_12 alpha" style="margin-bottom: 20px;"><h3>No javascript files</h3> <%= link_to 'Upload', new_design_template_file_path(@design), :class => "link green" %></div>
 	<% else %>
-		<h3>Javscript files</h3><%= link_to 'New', new_account_design_template_file_path(@account, @design), :method => :get, :class => "link green" %>
+		<h3>Javscript files</h3><%= link_to 'New', new_design_template_file_path(@design), :method => :get, :class => "link green" %>
 		<ul id="javascript_files">
 		<% for javascript_file in @design.javascript_files %>
 			<li class="<%= cycle 'even', 'odd' %>">
-				<%= link_to javascript_file.file_name, edit_account_design_template_file_path(@account, @design, javascript_file)  %>
-				<%= link_to "x", account_design_template_file_path(@account, @design, javascript_file), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{javascript_file.file_name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %> 
+				<%= link_to javascript_file.file_name, edit_design_template_file_path(@design, javascript_file)  %>
+				<%= link_to "x", design_template_file_path(@design, javascript_file), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{javascript_file.file_name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %> 
 				<span class="last_updated"><%= javascript_file.created_at==javascript_file.file_updated_at ? "Created " : "Last updated "  %><%= javascript_file.file_updated_at.to_s(:standard) %></span>
 			</li>
 		<% end %>
@@ -106,7 +106,7 @@
 	<% end %>
 	
 	<% if @design.template_files.select{ |t| t.class == TemplateFile }.blank? %>
-		<div class="grid_12 alpha" style="margin-bottom: 20px;"><h3>No template media</h3> <%= link_to 'Upload', new_account_design_template_file_path(@account, @design), :class => "link green" %></div>
+		<div class="grid_12 alpha" style="margin-bottom: 20px;"><h3>No template media</h3> <%= link_to 'Upload', new_design_template_file_path(@design), :class => "link green" %></div>
 	<% else %>	
 		<h3>Template media</h3><%= link_to 'New', new_account_design_template_file_path(@account, @design), :method => :get, :class => "link green" %>
 		<ul id="tempalte_files">

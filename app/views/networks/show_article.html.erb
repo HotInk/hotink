@@ -1,4 +1,4 @@
-<p><%= link_to("&laquo Back", account_network_url(@account) )%></p>
+<p><%= link_to("&laquo Back", network_url )%></p>
 <div id="article" class="grid_10"> 	
 	<h1><%=h @article.title %></h1>
 
@@ -97,9 +97,9 @@
 		<div class="network_status">
 			<% if @account.has_network_copy_of?(@article) %>
 				<p><strong>This article has been checked out.</strong></p>
-				<p style="margin-bottom: 8px;" ><%= link_to "Edit your copy", edit_account_article_path(@account, @account.find_network_copy_of(@article)), :class => "link blue" %></p>
+				<p style="margin-bottom: 8px;" ><%= link_to "Edit your copy", edit_article_path(@account.find_network_copy_of(@article)), :class => "link blue" %></p>
 			<% else %>
-				<% form_tag checkout_article_account_network_path(@account, :id => @article.id) do |form| %>
+				<% form_tag checkout_article_network_path(:id => @article.id) do |form| %>
 					<div>
 						<%= button_link_to_submit "Check out this article", :class=> "save large", :confirm => 'Are you sure you want to check out this article? Press \'OK\' to check this article into the CUPwire as a draft.' %>
 					</div>

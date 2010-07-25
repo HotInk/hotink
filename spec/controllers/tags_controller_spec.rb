@@ -3,6 +3,8 @@ require 'spec_helper'
 describe TagsController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
+    
     controller.stub!(:login_required).and_return(true)
   end
   

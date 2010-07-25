@@ -1,5 +1,5 @@
 <div id="front_page_form" class="grid_12">
-	<% form_tag(account_front_page_path(@account), :method => :put) do%>	
+	<% form_tag(front_page_path, :method => :put) do%>	
 		<h1 class="grid_4 alpha">Update front page</h1>
 	
 		<div class="grid_8 omega" style="padding: 10px 0;text-align:right;">
@@ -36,7 +36,7 @@
 		<div class="preview grid_12 alpha blue">
 			<div class="clearfix">
 				<div class="preview_form">
-					<% form_tag account_front_page_preview_path(@account), :id =>"front_page_preview_form", :method => :post, :target => :blank do %>
+					<% form_tag front_page_preview_path, :id =>"front_page_preview_form", :method => :post, :target => :blank do %>
 						<label>Preview with template&nbsp;&nbsp;<%= select_tag :preview_front_page_template_id, options_from_collection_for_select(@account.current_design.front_page_templates, :id, :name)%></label> 
 						&nbsp;&nbsp;<input type="submit" value="Preview front page">
 					<% end %>

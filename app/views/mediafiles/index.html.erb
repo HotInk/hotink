@@ -1,6 +1,6 @@
 <div id="mediafiles">
 	<h1>Media </h1>
-	<%= button_link_to 'Upload media', new_account_mediafile_path(@account), :class=>"" %>
+	<%= button_link_to 'Upload media', new_mediafile_path, :class=>"" %>
 	<div class="search">
 		<form method="GET">
 			<input type="text" id="mediafiles_search" name="search" class="text_input user" onclick="if(this.value=='Search media') clearText(this);" value="<%=h( @search_query || "Search media") %>" />
@@ -14,7 +14,7 @@
 		<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
 	</div>
 	
-	<% form_remote_tag :url=>new_account_action_url(@account), :method => :get do %>
+	<% form_remote_tag :url=>new_action_url, :method => :get do %>
 	<%= hidden_field_tag "content_types[]", 'mediafile'%>
 	<%= hidden_field_tag "name", '', :id=>"mediafile_action_name"%>
 	

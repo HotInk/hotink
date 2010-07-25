@@ -3,13 +3,14 @@ require 'spec_helper'
 describe CategoriesController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
     controller.stub!(:login_required).and_return(true)
   end
   
   describe "POST to create with XHR request" do
     context "with valid category parameters" do
       before do
-        xhr :post, :create, :account_id => @account.id, :category => { :name => "Health" }
+        xhr :post, :create, :category => { :name => "Health" }
       end
       
       it { should respond_with(:success) }
@@ -22,7 +23,7 @@ describe CategoriesController do
     
     context "with invalid parameters" do
       before do
-        xhr :post, :create, :account_id => @account.id, :category => { :name => "" }
+        xhr :post, :create, :category => { :name => "" }
       end    
       it { should respond_with(:success) }
       it { should respond_with_content_type(:js) }
@@ -36,7 +37,7 @@ describe CategoriesController do
   describe "GET to edit with XHR request" do
     before do
       @category = Factory(:category, :name => "one thing", :account => @account)
-      xhr :get, :edit, :account_id => @account.id, :id => @category.id
+      xhr :get, :edit, :id => @category.id
     end
     
     it { should respond_with(:success) }
@@ -47,7 +48,7 @@ describe CategoriesController do
   describe "PUT to update with XHR request" do
     before do
       @category = Factory(:category, :name => "one thing", :account => @account)
-      xhr :put, :update, :account_id => @account.id, :id => @category.id, :category => { :name => "and another thing" }
+      xhr :put, :update, :id => @category.id, :category => { :name => "and another thing" }
     end
     
     it { should respond_with(:success) }
@@ -62,7 +63,7 @@ describe CategoriesController do
   describe "PUT to deactivate" do
     before do
       @category = Factory(:category, :account => @account, :name => "one thing")
-      xhr :put, :deactivate, :account_id => @account.id, :id => @category.id
+      xhr :put, :deactivate, :id => @category.id
     end
     
     it { should respond_with(:success) }
@@ -76,7 +77,7 @@ describe CategoriesController do
   describe "PUT to reactivate" do
     before do
       @category = Factory(:category, :account => @account, :active => false)
-      xhr :put, :reactivate, :account_id => @account.id, :id => @category.id
+      xhr :put, :reactivate, :id => @category.id
     end
     
     it { should respond_with(:success) }
@@ -90,7 +91,7 @@ describe CategoriesController do
   describe "DELETE to destroy" do
     before do
       @category = Factory(:category, :name => "one thing", :account => @account)
-      xhr :delete, :destroy, :account_id => @account.id, :id => @category.id
+      xhr :delete, :destroy, :id => @category.id
     end
     
     it { should respond_with(:success) }

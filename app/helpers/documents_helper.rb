@@ -20,15 +20,15 @@ module DocumentsHelper
   def document_url_for_user(document, user)
     if document.owner==user||user.has_role?("manager", document.account)||user.has_role?("admin")
       if document.is_a? Entry
-        edit_account_blog_entry_url(document.account, document.blog, document)
+        edit_blog_entry_url(document.blog, document)
       elsif document.is_a? Article
-        edit_account_article_url(document.account, document)
+        edit_article_url(document)
       end
     else
       if document.is_a? Entry
-        account_blog_entry_url(document.account, document.blog, document)
+        blog_entry_url(document.blog, document)
       elsif document.is_a? Article
-        account_article_url(document.account, document)
+        article_url(document)
       end
     end
   end

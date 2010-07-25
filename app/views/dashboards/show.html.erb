@@ -1,7 +1,7 @@
 <h1>Dashboard</h1>
 
 <a href="/" id="site_link" class="link blue" target="_blank">View site</a>
-<%= link_to "New article", new_account_article_path(@account), :class => "link green" %>
+<%= link_to "New article", new_article_path(@account), :class => "link green" %>
 
 <div id="current_lead_articles" class="list grid_12 alpha">
 	<div class="grid_12 alpha">
@@ -14,13 +14,13 @@
 		</div>
 		<% if @account.current_design %>
 			<p class="grid_8 omega front_page_controls" style="margin-bottom: 4px; margin-top: 7px; font-size: 110%;text-align:right;">
-				<strong>Current template:</strong> <%= link_to @current_front_page_template.name, edit_account_design_template_path(@account, @account.current_design, @current_front_page_template), :style => "text-decoration: underline;" %>
+				<strong>Current template:</strong> <%= link_to @current_front_page_template.name, edit_design_template_path(@account.current_design, @current_front_page_template), :style => "text-decoration: underline;" %>
 				&nbsp;&nbsp;
 		<% else %>
 			<p style="margin-bottom: 4px; margin-top: 7px; font-size: 110%;text-align:right;">This site is currently offline.
 		<% end %>
 			 <% if permit? "admin or manager of account" %> 
-				<%= link_to "Update front page &raquo;", edit_account_front_page_path(@account), :class=>"link yellow", :style=>"margin-bottom: 0; font-size: 90%;" %>
+				<%= link_to "Update front page &raquo;", edit_front_page_path, :class=>"link yellow", :style=>"margin-bottom: 0; font-size: 90%;" %>
 			 <% end %>
 			</p>
 	</div>
@@ -64,7 +64,7 @@
 		<ol class="blogs small">
 			<%= render @blogs[0..2] %>
 		</ol>
-		<p class="grid_6 alpha" style="text-align:right"><%= link_to "View all blogs &raquo", account_blogs_path(@account) %></p>
+		<p class="grid_6 alpha" style="text-align:right"><%= link_to "View all blogs &raquo", blogs_path %></p>
 	</div>
 <% end %>
 

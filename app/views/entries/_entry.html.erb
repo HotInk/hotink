@@ -46,6 +46,6 @@
 			<p><%= h entry.date.to_s(:standard) %></p>
 			<p class="word_count"><%= pluralize(entry.word_count, "word") %></p>
 		</div>
-		<%= link_to "x", [entry.account, entry.blog, entry], :confirm => "You are about to delete the entry: \n \n &quot;" + h(entry.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %>
+		<%= link_to "x", [entry.blog, entry], :confirm => "You are about to delete the entry: \n \n &quot;" + h(entry.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %>
 	</div>
 </li>

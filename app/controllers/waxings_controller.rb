@@ -33,9 +33,9 @@ class WaxingsController < ApplicationController
   def create
     # Set behaviour based on document type
     if @document.is_a? Article
-      redirect_path = edit_account_article_url(@account, @document)
+      redirect_path = edit_article_url(@document)
     elsif @document.is_a? Entry
-      redirect_path = edit_account_blog_entry_url(@account, @document.blog, @document)
+      redirect_path = edit_blog_entry_url(@document.blog, @document)
     end
     params[:mediafile_ids].each { |k, v| @document.waxings.create(:mediafile_id => k)  }
     respond_to do |format|

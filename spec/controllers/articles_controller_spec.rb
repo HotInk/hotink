@@ -3,13 +3,14 @@ require 'spec_helper'
 describe ArticlesController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
     controller.stub!(:login_required).and_return(true)
   end
   
   describe "GET to index" do
     context "with no articles" do
       before do
-        get :index, :account_id => @account.id
+        get :index
       end
       
       it { should respond_with(:success) }
@@ -44,7 +45,7 @@ describe ArticlesController do
       before do
         @searched_articles = [Factory(:published_article, :title => "Experimental testing", :account => @account), Factory(:published_article, :bodytext => "Experimental testing", :account => @account)]
         Article.should_receive(:search).and_return(@searched_articles)
-        get :search, :account_id => @account.id, :q => "Experimental testing"
+        get :search, :q => "Experimental testing"
       end
     
        it { should respond_with(:success) }
@@ -69,7 +70,7 @@ describe ArticlesController do
   describe "GET to show" do
     before do
       @article = Factory(:article, :account => @account)
-      get :show, :account_id => @account.id, :id => @article.id
+      get :show, :id => @article.id
     end
     
     it { should respond_with(:success) }
@@ -86,7 +87,7 @@ describe ArticlesController do
         @user = Factory(:user)
         @article.owner = @user
         controller.stub!(:current_user).and_return(@user)
-        get :edit, :account_id => @account.id, :id => @article.id
+        get :edit, :id => @article.id
       end
       
       it { should respond_with(:success) }
@@ -97,7 +98,7 @@ describe ArticlesController do
         @user = Factory(:user)
         @user.has_role("admin")
         controller.stub!(:current_user).and_return(@user)
-        get :edit, :account_id => @account.id, :id => @article.id
+        get :edit, :id => @article.id
       end
       
       it { should respond_with(:success) }
@@ -108,7 +109,7 @@ describe ArticlesController do
         @user = Factory(:user)
         @user.has_role("manager", @account)
         controller.stub!(:current_user).and_return(@user)
-        get :edit, :account_id => @account.id, :id => @article.id
+        get :edit, :id => @article.id
       end
       
       it { should respond_with(:success) }
@@ -116,7 +117,7 @@ describe ArticlesController do
     
     context "by user prohibited from editing article" do
       before do
-        get :edit, :account_id => @account.id, :id => @article.id
+        get :edit, :id => @article.id
       end
       
       it { should respond_with(:redirect) }
@@ -128,7 +129,7 @@ describe ArticlesController do
       @user = Factory(:user)
       controller.stub!(:current_user).and_return(@user)
       
-      get :new, :account_id => @account.id
+      get :new
     end
     
     it { should assign_to(:article).with_kind_of(Article) }
@@ -145,7 +146,7 @@ describe ArticlesController do
     
     context "by user prohibited from updating article" do
       before do
-        put :update, :account_id => @account.id, :id => @article.id, :article => { :title => "Whoa there. Title time." }
+        put :update, :id => @article.id, :article => { :title => "Whoa there. Title time." }
       end
       
       it { should assign_to(:article).with(@article) }
@@ -162,7 +163,7 @@ describe ArticlesController do
       context "with valid parameters" do
         context "as an HTML request" do
           before do
-            put :update, :account_id => @account.id, :id => @article.id, :article => { :title => "Whoa there. Title time." }
+            put :update, :id => @article.id, :article => { :title => "Whoa there. Title time." }
           end
 
           it { should assign_to(:article).with(@article) }
@@ -176,7 +177,7 @@ describe ArticlesController do
       
       context "with invalid parameters" do
         before do
-          put :update, :account_id => @account.id, :id => @article.id, :article => { :account => nil }
+          put :update, :id => @article.id, :article => { :account => nil }
         end
 
         it { should assign_to(:article).with(@article) }
@@ -191,7 +192,7 @@ describe ArticlesController do
         @user.has_role("manager", @account)
         controller.stub!(:current_user).and_return(@user)
         
-        put :update, :account_id => @account.id, :id => @article.id, :article => { :status => "Published" }
+        put :update, :id => @article.id, :article => { :status => "Published" }
       end
       
       it "should publish the article" do
@@ -206,7 +207,7 @@ describe ArticlesController do
         controller.stub!(:current_user).and_return(@user)
         
         schedule = { :year => "2015", :month => "3", :day => "4", :hour => "12", :minute => "35" }
-        put :update, :account_id => @account.id, :id => @article.id, :article => { :status => "Published", :schedule => schedule }
+        put :update, :id => @article.id, :article => { :status => "Published", :schedule => schedule }
       end
       
       it "should schedule the article" do
@@ -221,7 +222,7 @@ describe ArticlesController do
         controller.stub!(:current_user).and_return(@user)
         
         @article.publish
-        put :update, :account_id => @account.id, :id => @article.id, :article => { :status => "" }
+        put :update, :id => @article.id, :article => { :status => "" }
       end
       
       it "should unpublished the article" do
@@ -240,7 +241,7 @@ describe ArticlesController do
         before do
           @category1 = Factory(:category)
           @category2 = Factory(:category)
-          put :update, :account_id => @account.id, :id => @article.id, :article => { :category_ids => [@category1.id, @category2.id] }
+          put :update, :id => @article.id, :article => { :category_ids => [@category1.id, @category2.id] }
         end
       
         it "should attach categories" do
@@ -253,7 +254,7 @@ describe ArticlesController do
         before do       
           @category = Factory(:category)
           @article.categories << @category
-          put :update, :account_id => @account.id,  :id => @article.id, :article => { :category_ids => [] }
+          put :update,  :id => @article.id, :article => { :category_ids => [] }
         end
       
         it "should attach category" do
@@ -268,7 +269,7 @@ describe ArticlesController do
         @article.owner = @user
         controller.stub!(:current_user).and_return(@user)
         
-        put :update, :account_id => @account.id, :id => @article.id, :article => { :status => "Awaiting attention" }
+        put :update, :id => @article.id, :article => { :status => "Awaiting attention" }
       end
       
       it "should apply current user's sign off the article" do
@@ -283,8 +284,8 @@ describe ArticlesController do
         @article.owner = @user
         controller.stub!(:current_user).and_return(@user)
         
-        put :update, :account_id => @account.id, :id => @article.id, :article => { :status => "Awaiting attention" }
-        put :update, :account_id => @account.id, :id => @article.id, :article => { :revoke_sign_off => "true" }
+        put :update, :id => @article.id, :article => { :status => "Awaiting attention" }
+        put :update, :id => @article.id, :article => { :revoke_sign_off => "true" }
       end
       
       it "should revoke current user's sign off the article" do
@@ -303,7 +304,7 @@ describe ArticlesController do
         @user = Factory(:user)
         @user.has_role("manager", @account)
         controller.stub!(:current_user).and_return(@user)
-        delete :destroy, :account_id => @account.id, :id => @article.id
+        delete :destroy, :id => @article.id
       end
       
       it { should respond_with(:redirect) }
@@ -314,7 +315,7 @@ describe ArticlesController do
     
     context "by user prohibited from deleting article" do
       before do
-        delete :destroy, :account_id => @account.id, :id => @article.id
+        delete :destroy, :id => @article.id
       end
       
       it { should respond_with(:redirect) }

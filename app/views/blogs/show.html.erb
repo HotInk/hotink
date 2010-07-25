@@ -4,17 +4,21 @@
 		<% if @blog.image_file_name %><%= image_tag @blog.image.url(:thumb), :style => "border: 1px solid #AAA;" %><% end %>
 </div>
 <div class="grid_8 omega" style="padding-top:7px;" >
-	<% if permit? "admin or manager of account" %><%= link_to 'Delete blog', edit_account_blog_path(@account, @blog), :class => "link red", :style => "float:right;clear:right;margin-left:10px;", 'data-confirm' => "Are you REALLY sure you want to delete this blog?\n\nAll data will be lost and cannot be recovered.\n\nPress 'OK' to delete this blog or 'Cancel' to return." %> <% end %>
-	<% if permit? "admin or (manager of account) or (editor of blog)" %><%= link_to 'Edit blog info', edit_account_blog_path(@account, @blog), :class => "link blue", :style => "float:right;" %><% end %>
+	<% if permit? "admin or manager of account" %><%= link_to 'Delete blog', edit_blog_path(@blog), :class => "link red", :style => "float:right;clear:right;margin-left:10px;", 'data-confirm' => "Are you REALLY sure you want to delete this blog?\n\nAll data will be lost and cannot be recovered.\n\nPress 'OK' to delete this blog or 'Cancel' to return." %> <% end %>
+	<% if permit? "admin or (manager of account) or (editor of blog)" %><%= link_to 'Edit blog info', edit_blog_path(@blog), :class => "link blue", :style => "float:right;" %><% end %>
 	<div style="float:right;clear:right;padding:15px 0; line-height: 1.3; text-align: right;">
 		<strong>Contributors:</strong>
 		<%= @blog.contributors_list %>
-	 	<% if permit? "admin or (manager of account) or (editor of blog)" %><%= link_to 'Manage contributors', manage_contributors_account_blog_path(@account, @blog), :class => "link yellow", :style => "margin-left:10px;" %><% end %>
+	 	<% if permit? "admin or (manager of account) or (editor of blog)" %><%= link_to 'Manage contributors', manage_contributors_blog_path(@blog), :class => "link yellow", :style => "margin-left:10px;" %><% end %>
 	</div>
 </div>
-<p class="grid_12 alpha"><%= link_to 'New entry', new_account_blog_entry_path(@account, @blog), :class => "link green", :style => "float:left;margin-top:10px;" %></p>
+<p class="grid_12 alpha"><%= link_to 'New entry', new_blog_entry_path(@blog), :class => "link green", :style => "float:left;margin-top:10px;" %></p>
 <p class="grid_12 alpha"><%= @blog.description %></p>
 <%= will_paginate(@entries, :inner_window => 2, :outer_window => 1) %>
 <ol id ="blog_<%= @blog.id %>_entries" class="documents entries">
-	<%= render @entries %>
+	<% if @entries.empty? %>
+		<li><p style="padding: 15px 0 5px 15px;font-style:italic;">No entries yet.</p>
+	<% else %>
+		<%= render @entries %>
+	<% end %>
 </ol>

@@ -15,7 +15,7 @@ class Circulation < ActionMailer::Base
     from          "Hot Ink Circulation Dept <circulation@hotink.net>"  
     recipients    invite.email  
     sent_on       Time.now  
-    body          :edit_invitation_url => edit_account_user_invitation_url(account, invite)  
+    body          :edit_invitation_url => edit_user_invitation_url(invite)  
   end
   
   def account_invitation(invite)
@@ -23,7 +23,7 @@ class Circulation < ActionMailer::Base
     from          "Hot Ink Circulation Dept <circulation@hotink.net>"  
     recipients    invite.email  
     sent_on       Time.now  
-    body          :edit_invitation_url => edit_account_invitation_url(invite)  
+    body          :edit_invitation_url => edit_invitation_url(invite)  
   end
   
   def account_access_notification(account, invite)
@@ -31,6 +31,6 @@ class Circulation < ActionMailer::Base
     from          "Hot Ink Circulation Dept <circulation@hotink.net>"  
     recipients    invite.email  
     sent_on       Time.now  
-    body          :account_name => (account.formal_name || account.name), :user_name => invite.user.name, :user_email => invite.user.email, :account_url => account_articles_url(account)
+    body          :account_name => (account.formal_name || account.name), :user_name => invite.user.name, :user_email => invite.user.email, :account_url => dashboard_url
   end
 end

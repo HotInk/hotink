@@ -6,9 +6,9 @@
 	
 		<div class="edit">
 			<% if category.active %>
-				<%= button_link_to "Edit", edit_account_category_path(@account, category), 'data-remote' => true, :class=>"micro pill-l" %><%= button_link_to "Deactivate", deactivate_account_category_url(@account, category), 'data-remote' => true, 'data-method' => :put, 'data-confirm' => "Deactivating this category will keep it in the archive, but will prevent it from being displayed with your list of current sections.\n\nIf you're displaying the sections on your website dynamically, this section will no longer appear. Are you sure?", :class=>"micro pill-r" %>
+				<%= button_link_to "Edit", edit_category_path(category), 'data-remote' => true, :class=>"micro pill-l" %><%= button_link_to "Deactivate", deactivate_category_url(category), 'data-remote' => true, 'data-method' => :put, 'data-confirm' => "Deactivating this category will keep it in the archive, but will prevent it from being displayed with your list of current sections.\n\nIf you're displaying the sections on your website dynamically, this section will no longer appear. Are you sure?", :class=>"micro pill-r" %>
 			<% else %>
-				<%= button_link_to "Edit", edit_account_category_path(@account, category), 'data-remote' => true, :class=>"micro pill-l" %><%= button_link_to "Reactivate", reactivate_account_category_url(@account, category), 'data-remote' => true, 'data-method' => :put, :class=>"micro pill-r" %>
+				<%= button_link_to "Edit", edit_category_path(category), 'data-remote' => true, :class=>"micro pill-l" %><%= button_link_to "Reactivate", reactivate_category_url(category), 'data-remote' => true, 'data-method' => :put, :class=>"micro pill-r" %>
 			<% end %>
 		</div>
 

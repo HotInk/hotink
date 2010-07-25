@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       respond_to do |format|  
         format.html do
           flash[:notice] = "User updated."
-          redirect_to account_dashboard_url(@user.is_staff_for_what.first)
+          redirect_to dashboard_url
         end
         format.js
       end
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       respond_to do |format|  
         format.html do
           flash[:notice] = "Sorry, user update not valid"
-          redirect_to account_dashboard_url(@user.is_staff_for_what.first)
+          redirect_to dashboard_url
         end
         format.js { render :action => :edit }
       end

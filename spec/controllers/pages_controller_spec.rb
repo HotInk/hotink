@@ -3,6 +3,8 @@ require 'spec_helper'
 describe PagesController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
+    
     @current_user = Factory(:user)
     @current_user.promote_to_admin
     controller.stub!(:current_user).and_return(@current_user)
@@ -12,7 +14,7 @@ describe PagesController do
     before do
       @pages = (1..3).collect{ Factory(:page, :account => @account) }
       child_pages = (1..3).collect{ Factory(:page, :parent => @pages.first, :account => @account) }
-      get :index, :account_id => @account.id
+      get :index
     end
     
     it { should respond_with(:success) }
@@ -22,7 +24,7 @@ describe PagesController do
   describe "GET to new" do
     describe "for a new main page" do
       before do
-        get :new, :account_id => @account.id
+        get :new
       end
       
       it { should respond_with(:success) }
@@ -35,7 +37,7 @@ describe PagesController do
     describe "for a new child page" do
       before do
         @parent = Factory(:page, :account => @account)
-        get :new, :account_id => @account.id, :parent_id => @parent.id
+        get :new, :parent_id => @parent.id
       end
       
       it { should respond_with(:success) }
@@ -48,7 +50,7 @@ describe PagesController do
 
   describe "POST to create" do
     before do
-     post :create, :account_id => @account.id, :page => Factory.attributes_for(:page)
+     post :create, :page => Factory.attributes_for(:page)
     end
     
     it { should respond_with(:redirect) }
@@ -61,7 +63,7 @@ describe PagesController do
   describe "GET to edit" do
     before do
       @page = Factory(:page, :account => @account)
-      get :edit, :account_id => @account.id, :id => @page.id
+      get :edit, :id => @page.id
     end
     it { should respond_with(:success) }
     it { should assign_to(:page).with(@page) }
@@ -72,7 +74,7 @@ describe PagesController do
       before do
         @page = Factory(:page, :account => @account)
         @new_parent = Factory(:page, :account => @account)
-        put :update, :account_id => @account.id, :id => @page.id, :page => { :name => "new-page-name", :parent_id => @new_parent.id }
+        put :update, :id => @page.id, :page => { :name => "new-page-name", :parent_id => @new_parent.id }
       end
     
       it { should respond_with(:redirect) }
@@ -87,7 +89,7 @@ describe PagesController do
       before do
         @page = Factory(:page, :account => @account)
         @new_parent = Factory(:page, :account => @account)
-        put :update, :account_id => @account.id, :id => @page.id, :page => { :name => "bad page name", :parent_id => @new_parent.id }
+        put :update, :id => @page.id, :page => { :name => "bad page name", :parent_id => @new_parent.id }
       end
     
       it { should respond_with(:success) }
@@ -102,7 +104,7 @@ describe PagesController do
   describe "DELETE to destroy" do
     before do 
       @page = Factory(:page, :account => @account)
-      delete :destroy, :account_id => @account.id, :id => @page.id
+      delete :destroy, :id => @page.id
     end
       
     it { should respond_with(:redirect) }

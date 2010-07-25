@@ -1,4 +1,4 @@
-<% semantic_form_for [@account, @blog], :html => { :multipart => true, :class => "grid_8" } do |form| %>
+<% semantic_form_for @blog, :html => { :multipart => true, :class => "grid_8" } do |form| %>
 	<% form.inputs do %>
 		<%= form.input :title %>
 		<%= form.input :slug, :hint => "Leave this blank to have a slug auto-generated for you." %>

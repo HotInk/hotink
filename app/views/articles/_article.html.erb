@@ -50,6 +50,6 @@
 			<p><%= h article.date.to_s(:standard) %></p>
 			<p class="word_count"><%= pluralize(article.word_count, "word") %></p>
 		</div>
-		<%= link_to "x", [article.account, article], :confirm => "You are about to delete the article: \n \n &quot;" + h(article.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %>
+		<%= link_to "x", article, :confirm => "You are about to delete the article: \n \n &quot;" + h(article.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %>
 	</div>
 </li>

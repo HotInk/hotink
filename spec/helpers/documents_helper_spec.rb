@@ -14,6 +14,7 @@ describe DocumentsHelper do
   end
   
   describe "publication status" do    
+    
     def current_user
       nil # Publication status checks the current_user
     end
@@ -47,18 +48,18 @@ describe DocumentsHelper do
 		it "should return an appropriate document link for current user" do
 		  article = Factory(:article)
 		  current_user = Factory(:user) #just some user
-		  document_url_for_user(article, current_user).should == account_article_url(article.account, article)
+		  document_url_for_user(article, current_user).should == article_url(article)
 		  
 		  article.owner = current_user
-		  document_url_for_user(article, current_user).should == edit_account_article_url(article.account, article)
+		  document_url_for_user(article, current_user).should == edit_article_url(article)
 		  
 		  admin_user = Factory(:user)
 		  admin_user.has_role "admin"
-		  document_url_for_user(article, admin_user).should == edit_account_article_url(article.account, article)
+		  document_url_for_user(article, admin_user).should == edit_article_url(article)
 		  
 		  account_manager = Factory(:user)
 		  account_manager.has_role("manager", article.account)
-		  document_url_for_user(article, admin_user).should == edit_account_article_url(article.account, article)
+		  document_url_for_user(article, admin_user).should == edit_article_url(article)
 	  end
   end
 end

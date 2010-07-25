@@ -23,6 +23,15 @@ describe Mediafile do
     @mediafile.authors_list.should == "Lilly, Marshall, Robin and Barney"
   end
 
+  it "should generate appropriate authors JSON" do
+    lilly = Factory(:author, :name => "Lilly Aldrin")
+    barney = Factory(:author, :name => "Barney Stinson")
+    mediafile = Factory(:mediafile, :authors => [lilly, barney])
+    
+    mediafile.authors_json.should eql([{ "id" => lilly.id, "name" => lilly.name },{ "id" => barney.id, "name" => barney.name }].to_json)
+  end
+  
+
   it "should break up a comma (with 'and') seperated string of authors' names to create authors array" do
     @mediafile.authors_list = "Lilly, Marshall and Robin"
     @mediafile.authors.length.should == 3
@@ -44,7 +53,7 @@ describe Mediafile do
   end
 
   it "should set date when created" do
-    @mediafile.date.should be_kind_of(Date)
+    @mediafile.date.should_not be_nil
   end
   
   it "should add tags" do

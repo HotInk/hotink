@@ -1,5 +1,5 @@
 <h1>Lists</h1>
-<p><%= link_to 'New list', new_account_list_path(@account), :class => "link green" %></p>
+<p><%= link_to 'New list', new_list_path, :class => "link green" %></p>
 <%= will_paginate(@lists, :inner_window => 2, :outer_window => 1) %>
 <ol class="lists">
 	<%= render @lists %>

@@ -7,6 +7,7 @@ describe AuthorsController do
     controller.stub!(:current_user).and_return(@current_user)  
     
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
   end
   
   describe "GET to index" do
@@ -17,7 +18,7 @@ describe AuthorsController do
     
     describe "getting JSON list of all authors" do
       before do
-        get :index, :account_id => @account.id
+        get :index
       end
       
       it { should assign_to(:authors).with(@authors + @wills) }
@@ -26,7 +27,7 @@ describe AuthorsController do
     
     describe "getting a list of specific authors" do
       before do
-        get :index, :account_id => @account.id, :q => "will"
+        get :index, :q => "will"
       end
       
       it { should assign_to(:authors).with(@wills) }
@@ -35,7 +36,8 @@ describe AuthorsController do
     
     describe "only get current account authors" do
       before do
-        get :index, :account_id => Factory(:account).id
+        controller.stub!(:current_subdomain).and_return(Factory(:account).name)
+        get :index
       end
       
       it { should assign_to(:authors).with([]) }

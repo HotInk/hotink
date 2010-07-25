@@ -1,27 +1,27 @@
 <%= stylesheet_link_tag 'wmd' %>
 <%= stylesheet_link_tag 'token_input' %>
 
-<% semantic_form_for [@account, @article] do |form| %>	
+<% semantic_form_for @article do |form| %>	
 <% form.buttons :class => "grid_8" do %>
 	<li class="grid_4 alpha"><h1>Edit article</h1></li>
- 	<li class="grid_4 omega" style="float:right;text-align:right;margin-right: -10px;"><%= link_to @article.published? ? "View on site" : "Preview on site", account_public_article_url(@account, @article), :target => "_blank", :style=>"line-height: 1.2;" %>&nbsp;&nbsp;&nbsp;<%= form.submit "Save article" %></li>
+ 	<li class="grid_4 omega" style="float:right;text-align:right;margin-right: -10px;"><%= link_to @article.published? ? "View on site" : "Preview on site", public_article_url(@article), :target => "_blank", :style=>"line-height: 1.2;" %>&nbsp;&nbsp;&nbsp;<%= form.submit "Save article" %></li>
 <% end %>
 	<div class="toolbox grid_4">
 		<h4>Status</h4>
 		<div>
 			<% if @article.published? %>
 			<p id="status" class="published">
-				Published<br />
-				<small><strong><%= @article.published_at.to_s(:date) %></strong> at <strong><%= @article.published_at.to_s(:time) %></strong>
+				<span>Published</span> <strong><%= @article.published_at.to_s(:date) %></strong><br />
+				<small>at <strong><%= @article.published_at.to_s(:time) %></strong>
 				(<%= distance_of_time_in_words_to_now(@article.published_at) %> ago)</small>
 			<% elsif @article.scheduled? %>
 			<p id="status" class="scheduled">
-				Scheduled<br />
-				<small><strong><%= @article.published_at.to_s(:date) %></strong> at <strong><%= @article.published_at.to_s(:time) %></strong>
+				<span>Scheduled</span> <strong><%= @article.published_at.to_s(:date) %></strong><br />
+				<small>at <strong><%= @article.published_at.to_s(:time) %></strong>
 				(<%= distance_of_time_in_words_to_now(@article.published_at) %> from now)</small>
 			<% else %>
 			<p id="status" class="draft">
-				Draft
+				<span>Draft</span>
 			<% end %>
 			</p>
 			<div id="publish">
@@ -79,7 +79,7 @@
 			<ol id="document_mediafiles">
 				<%= render @article.waxings %>
 			</ol>
-			<a id="attach_mediafile_link" href="<%= new_account_document_mediafile_path(@account, @article) %>" title="Attach media" class="link yellow">Attach media</a>
+			<a id="attach_mediafile_link" href="<%= new_document_mediafile_path(@article) %>" title="Attach media" class="link yellow">Attach media</a>
 			<iframe name="upload_frame" style="display: none"></iframe>
 		</div>
 	</div>
@@ -118,7 +118,7 @@
 				$.ajax({ 
 					'data': { 'printing[issue_id]' : $('#printing_issue_id').val() }, 
 					'type' : 'POST', 
-					'url' : '<%= account_article_printings_url(@account, @article)%>',
+					'url' : '<%= article_printings_url(@article)%>',
 					'beforeSend' : function(){ 
 						$('#printings .spinner').show();
 					} 
@@ -131,7 +131,7 @@
 			});
 			
 			
-			$("#article_author_ids").tokenInput("<%= account_authors_path(@account, :format => :json) %>", {
+			$("#article_author_ids").tokenInput("<%= authors_path(:format => :json) %>", {
 				initialValues: <%= @article.authors_json %>,
 				canCreate: true,
 				createText: "New author",

@@ -1,6 +1,6 @@
 <li id="blog_<%= blog.id %>" class="<%= cycle('odd','even') %>">
 	<div class="left">
-		<h2><%= link_to blog.title, account_blog_path(@account, blog) %><% unless blog.active? %> <small>(Offline)</small><% end %></h2>
+		<h2><%= link_to blog.title, blog_path(blog) %><% unless blog.active? %> <small>(Offline)</small><% end %></h2>
 		<% if blog.image_file_name %><%= image_tag blog.image.url(:thumb), :style => "border: 1px solid #AAA;margin-bottom: 10px;" %><% end %>
 		<div class="details">
 			<p class="description"><%= blog.description %></p>
@@ -22,7 +22,7 @@
 		<% end %>
 		</ol>
 		<% if blog.entries.count > 4 %>
-			<p style="text-align:right; margin-bottom:0;"><%= link_to "View more &raquo", account_blog_path(@account, blog) %></p>
+			<p style="text-align:right; margin-bottom:0;"><%= link_to "View more &raquo", blog_path(@account, blog) %></p>
 		<% end %>
 	</div>
 </li>

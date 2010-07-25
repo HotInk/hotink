@@ -3,6 +3,7 @@ require 'spec_helper'
 describe ActionsController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)    
     controller.stub!(:login_required).and_return(true)
   end
   
@@ -11,7 +12,7 @@ describe ActionsController do
       @articles = (1..3).collect{ Factory(:article, :account => @account) }
       @mediafiles = (1..3).collect{ Factory(:mediafile, :account => @account) }
       
-      get :new, :account_id => @account.id, :name => "whatever_action", :content_types => ["article", "mediafile"], :mediafile_ids => @mediafiles.collect{|m| m.id }, :article_ids => @articles.collect{|a| a.id }
+      get :new, :name => "whatever_action", :content_types => ["article", "mediafile"], :mediafile_ids => @mediafiles.collect{|m| m.id }, :article_ids => @articles.collect{|a| a.id }
     end
     
     it { should respond_with(:success) }
@@ -32,7 +33,7 @@ describe ActionsController do
     describe "Delete action" do
       before do
         @mediafiles = (1..3).collect{ Factory(:mediafile, :account => @account) }
-        post :create, :account_id => @account.id, :name => "delete", :content_types => ["mediafile"], :mediafile_ids => @mediafiles.collect{|a| a.id }
+        post :create, :name => "delete", :content_types => ["mediafile"], :mediafile_ids => @mediafiles.collect{|a| a.id }
       end
       
       it { should respond_with(:redirect) }
@@ -46,7 +47,7 @@ describe ActionsController do
     describe "Publish articles action" do
       before do
         @articles = (1..3).collect{ Factory(:article, :account => @account) }
-        post :create, :account_id => @account.id, :name => "publish", :content_types => ["article"], :article_ids => @articles.collect{|a| a.id }
+        post :create, :name => "publish", :content_types => ["article"], :article_ids => @articles.collect{|a| a.id }
       end
       
       it { should respond_with(:redirect) }
@@ -60,7 +61,7 @@ describe ActionsController do
     describe "Schedule articles action" do
       before do
         @articles = (1..3).collect{ Factory(:article, :account => @account) }
-        post :create, :account_id => @account.id, :name => "schedule", :content_types => ["article"], :article_ids => @articles.collect{|a| a.id }, :schedule =>{ "month"=>"3", "minute"=>"30", "hour"=>"15", "day"=>"3", "year"=>Date.today.year+1}
+        post :create, :name => "schedule", :content_types => ["article"], :article_ids => @articles.collect{|a| a.id }, :schedule =>{ "month"=>"3", "minute"=>"30", "hour"=>"15", "day"=>"3", "year"=>Date.today.year+1}
       end
       
       it { should respond_with(:redirect) }
@@ -74,7 +75,7 @@ describe ActionsController do
     describe "Unpublish articles action" do
       before do
         @articles = (1..3).collect{ Factory(:published_article, :account => @account) }
-        post :create, :account_id => @account.id, :name => "unpublish", :content_types => ["article"], :article_ids => @articles.collect{|a| a.id }
+        post :create, :name => "unpublish", :content_types => ["article"], :article_ids => @articles.collect{|a| a.id }
       end
       
       it { should respond_with(:redirect) }
@@ -89,7 +90,7 @@ describe ActionsController do
       before do
         @issue = Factory(:issue, :account => @account)
         @articles = (1..3).collect{ Factory(:article, :account => @account) }
-        post :create, :account_id => @account.id, :name => "add_issue", :content_types => ["article"], :article_ids => @articles.collect{|a| a.id }, :add_issue => { :issue => @issue.id }
+        post :create, :name => "add_issue", :content_types => ["article"], :article_ids => @articles.collect{|a| a.id }, :add_issue => { :issue => @issue.id }
       end
       
       it { should respond_with(:redirect) }
@@ -104,7 +105,7 @@ describe ActionsController do
       before do
         @section = @account.categories.create(:name => "News")
         @articles = (1..3).collect{ Factory(:article, :account => @account) }
-        post :create, :account_id => @account.id, :name => "set_primary_section", :content_types => ["article"], :article_ids => @articles.collect{|a| a.id }, :set_primary_section => { :section_id => @section.id }
+        post :create, :name => "set_primary_section", :content_types => ["article"], :article_ids => @articles.collect{|a| a.id }, :set_primary_section => { :section_id => @section.id }
       end
       
       it { should respond_with(:redirect) }

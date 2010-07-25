@@ -60,12 +60,8 @@ class ApplicationController < ActionController::Base
   def find_account
     if @account
       @account
-    elsif params[:account_id]
-      @account = Account.find(params[:account_id])
-      Time.zone = @account.time_zone
-      @account
     else
-      @account = false
+      @account = Account.find_by_name(current_subdomain)
     end
   end
   

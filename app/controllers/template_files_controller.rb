@@ -20,7 +20,7 @@ class TemplateFilesController < ApplicationController
      end
      @template_file.file = params[:template_file][:file]
      @template_file.save
-     redirect_to [@account, @design]    
+     redirect_to @design    
    end
    
    def edit
@@ -31,7 +31,7 @@ class TemplateFilesController < ApplicationController
        @file_contents = File.read(@template_file.file.path)
      else
        flash[:notice] = "You can only edit stylesheets and javascript files. To edit another file type, follow the replace link next to the filename."
-       redirect_to [@account, @design]
+       redirect_to @design
        return
      end
    end
@@ -47,7 +47,7 @@ class TemplateFilesController < ApplicationController
 
      @template_file.save!
      flash[:notice] = 'File updated'
-     redirect_to edit_account_design_template_file_path(@account,@design)
+     redirect_to edit_design_template_file_path(@design)
    end
    
    def destroy
@@ -55,7 +55,7 @@ class TemplateFilesController < ApplicationController
      @template_file = @design.template_files.find(params[:id])
      @template_file.destroy
      flash[:notice] = "Template file removed."
-     redirect_to [@account,@design]
+     redirect_to @design
    end
   
 end

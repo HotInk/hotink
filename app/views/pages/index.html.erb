@@ -1,5 +1,9 @@
 <h1>Pages</h1>
-<p><%= link_to "New page", new_account_page_path(@account), :class => "link green" %></p>
+<p><%= link_to "New page", new_page_path, :class => "link green" %></p>
 <ol id="pages">
-	<%= render @pages %>
+	<% if @pages.empty? %>
+		<li><p style="padding: 10px 0 0 10px;font-style:italic;">No pages yet.</p>	
+	<% else %>
+		<%= render @pages %>
+	<% end %>
 </ol>

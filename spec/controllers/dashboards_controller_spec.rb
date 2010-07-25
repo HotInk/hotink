@@ -3,6 +3,8 @@ require 'spec_helper'
 describe DashboardsController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
+
     @current_user = Factory(:user)
     @current_user.promote_to_admin
     controller.stub!(:current_user).and_return(@current_user)
@@ -19,7 +21,7 @@ describe DashboardsController do
       before do
         @lead_articles = @articles[0..2]
         @account.update_attribute :lead_article_ids, @lead_articles.collect { |a| a.id }
-        get :show, :account_id => @account.id
+        get :show
       end
     
       it { should respond_with(:success) }
@@ -31,7 +33,7 @@ describe DashboardsController do
     context "without lead articles" do
       before do
         @account.update_attribute :lead_article_ids, []
-        get :show, :account_id => @account.id
+        get :show
       end
     
       it { should assign_to(:lead_articles).with([]) }
@@ -42,7 +44,7 @@ describe DashboardsController do
         @account.update_attribute :lead_article_ids, []
         @front_page_template = Factory(:front_page_template, :design => @design)
         @design.update_attribute :current_front_page_template_id, @front_page_template.id
-        get :show, :account_id => @account.id
+        get :show
       end
     
       it { should assign_to(:current_front_page_template).with(@front_page_template) }
@@ -51,7 +53,7 @@ describe DashboardsController do
     context "with recently updated lists" do
       before do
         @lists = (1..2).collect { Factory(:list, :account => @account)  }
-        get :show, :account_id => @account.id
+        get :show
       end
 
       it { should assign_to(:lists).with(@lists) }
@@ -67,7 +69,7 @@ describe DashboardsController do
           @current_user.has_role "contributor", blog
         end
         
-        get :show, :account_id => @account.id
+        get :show
       end
 
       it { should assign_to(:blogs).with(@blogs) }

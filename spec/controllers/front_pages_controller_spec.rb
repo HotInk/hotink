@@ -3,6 +3,7 @@ require 'spec_helper'
 describe FrontPagesController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
     
     @current_user = Factory(:user)
     @current_user.promote_to_admin
@@ -18,7 +19,7 @@ describe FrontPagesController do
       before do
         @lead_articles = @articles[0..2]
         @account.update_attribute :lead_article_ids, @lead_articles.collect { |a| a.id }
-        get :edit, :account_id => @account.id
+        get :edit
       end
     
       it { should respond_with(:success) }
@@ -30,7 +31,7 @@ describe FrontPagesController do
     context "without lead articles" do
       before do
         @account.lead_article_ids = []
-        get :edit, :account_id => @account.id
+        get :edit
       end
     
       it { should respond_with(:success) }
@@ -42,7 +43,7 @@ describe FrontPagesController do
   describe "PUT to update" do
     context "with a valid array of lead article IDs" do
       before do
-        put :update, :account_id => @account.id, :lead_article_ids => [1,2,5,4,3]
+        put :update, :lead_article_ids => [1,2,5,4,3]
       end
       
       it { should respond_with(:redirect) }
@@ -54,7 +55,7 @@ describe FrontPagesController do
     context "without lead article ids" do
       before do
         @account.update_attribute :lead_article_ids, [1,2,5,4,3]
-        put :update, :account_id => @account.id
+        put :update
       end
       
       it { should respond_with(:redirect) }
@@ -71,7 +72,7 @@ describe FrontPagesController do
         @template = Factory(:front_page_template, :design => @design)        
         @other_template = Factory(:front_page_template, :design => @design)
 
-        put :update, :account_id => @account.id, :current_front_page_template_id => @other_template.id
+        put :update, :current_front_page_template_id => @other_template.id
       end
 
       it { should respond_with(:redirect) }

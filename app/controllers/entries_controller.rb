@@ -10,7 +10,7 @@ class EntriesController < ApplicationController
     @entry.owner = current_user
     
     respond_to do |format|
-      format.html { redirect_to edit_account_blog_entry_url(@account, @blog, @entry) }
+      format.html { redirect_to edit_blog_entry_url(@blog, @entry) }
     end
   end
   
@@ -41,7 +41,7 @@ class EntriesController < ApplicationController
       respond_to do |format|
         if @entry.update_attributes(params[:entry])
           flash[:notice] = "Entry saved"
-          format.html { redirect_to(edit_account_blog_entry_path(@account, @blog, @entry)) }
+          format.html { redirect_to(edit_blog_entry_path(@blog, @entry)) }
           format.js
         else
           format.html { render :action => "edit", :status => :bad_request }
@@ -58,7 +58,7 @@ class EntriesController < ApplicationController
     
       flash[:notice] = "Entry trashed"
       respond_to do |format|
-        format.html { redirect_to(account_blog_url(@account, @blog)) }
+        format.html { redirect_to(blog_url(@blog)) }
         format.js
       end
     end

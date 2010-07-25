@@ -32,12 +32,12 @@ class ActionsController < ApplicationController
     respond_to do |format|
       format.html do
         if params[:content_types].first=="mediafile"
-          redirect_to account_mediafiles_url(@account)        
+          redirect_to mediafiles_url        
         elsif params[:content_types].first=="entry"
           blog = @account.blogs.find(params[:blog_id])
-          redirect_to account_blog_url(@account, blog)        
+          redirect_to blog_url(blog)        
         else
-          redirect_to account_articles_url(@account)
+          redirect_to articles_url
         end
       end
     end

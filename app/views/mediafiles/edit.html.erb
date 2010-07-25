@@ -1,122 +1,71 @@
-<div id="mediafile_form" class="form">
-	<% form_for [@account, @mediafile], :url => account_mediafile_url(@account, @mediafile) do |f| %>
-	<div id="buttons">
-		<%= button_link_to_submit "Save", :class=>"save large" %>	
-		<p id="last_saved">
-		  <% if @mediafile.updated_at %>
-		  	Last modified <%= time_ago_in_words(@mediafile.updated_at) %> ago
-		  <% else %>
-		  	Never saved
-		  <% end %>
-	</p>
-	</div>
-	<p id="top_links">	
-		<%= link_to "&#171; Back to media list", account_mediafiles_url(@account), :class=>"weblink" %>
-	</p>
-	<h1>Edit <%= @mediafile.class.name.downcase %></h1>
-	<%= f.error_messages %>
+<p><%= link_to("&laquo Back", mediafiles_url )%></p>
 
-	<div class="field_element">
-	    <%= f.label :title, "Title"%><br />
-	    <%= f.text_field :title , :class => "user" %>
-	</div>
-	<div class="column_holder clearfix">
-		<div class="third_column">
-			<%= f.label :date %><br />
-			<%= f.unobtrusive_date_text_picker :date, {:format => "M-D-Y"}, :size => "10" %>
+<%= stylesheet_link_tag 'wmd' %>
+<%= stylesheet_link_tag 'token_input' %>
+
+<% semantic_form_for @mediafile, :url => mediafile_path(@mediafile) do |form| %>	
+<div class="toolbox grid_6">
+	<h4>Media</h4>
+	<% if @mediafile.is_a? Image %>
+		<div class="image">	
+			<%= image_tag(@mediafile.file.url(:system_default))%>
 		</div>
-		<div class="two_thirds_column">
-			<%= label_tag "#{@mediafile.class.name.downcase}[authors_list]", 'Credits' %><br />
-			<div id="photocredits_form" class="clearfix tokenizer text_input" onclick="$('<%= @mediafile.class.name.downcase %>_authors_list').focus()">
-			    <span class="tokenizer_stretcher">^_^</span>
-				<span class="tab_stop">
-					<input type="text" id="hidden_input" tabindex="-1" />
-				</span>
-			    <div id="autocomplete_display" class="tokenizer_input">
-					<%= text_field_tag "#{@mediafile.class.name.downcase}[authors_list]", '' %>
-			    </div>
-			</div>
-			<div id="autocomplete_populate" class="clearfix autocomplete typeahead_list" style="z-index: 10; height: auto; overflow-y: hidden;display:none"></div>
-				<script type="text/javascript">
-				// preload images.
-			    (new Image()).src='/images/token.gif';
-			    (new Image()).src='/images/token_selected.gif';
-			    (new Image()).src='/images/token_hover.gif';
-			    (new Image()).src='/images/token_x.gif';
-
-				createNewAuthor = function( new_token_text, auto_complete ){
-					new_author_auto_complete = auto_complete;
-					new Ajax.Request( 	"<%= account_authors_url(@account, :format=>:json )%>", 
-										{	method: 'post', parameters: {"author[name]": new_token_text, "authenticity_token": "<%= form_authenticity_token %>"},
-											onSuccess: function(transport){
-															var json = transport.responseText.evalJSON(true);
-															new_author_auto_complete.addTokenToList( json.author.name, (new_author_auto_complete.options.array.push(json) - 1));
-															new_author_auto_complete.set_input_size();
-															}
-										});
-				}
-
-			    var author_list = new Autocompleter.LocalTokenizer("<%= @mediafile.class.name.downcase %>_authors_list", 'autocomplete_populate', <%= @account.authors.to_json(:only=>[:name, :id]) %>, {                                                  
-			        frequency: 0.1,
-					parent_model: "<%= @mediafile.class.name.downcase %>",
-			        search_field: "name",
-					search_model: "author",
-					search_join_model: "photocredit",
-					search_join_models: "photocredits",
-					text_field_width: 380,
-					token_delimiter: /, and | and |,/,
-					saved_token_join_json: <%= @mediafile.photocredits.to_json(:include=>:author, :only=>[:name, :id]) %>,
-					hidden_input_id: 'hidden_input',
-					onNewToken: createNewAuthor
-			    });
-			    </script>
-			</div>
-		</div><!-- .columnholder -->
-		<div id="description" class="clearfix">
-			<!-- Markdown Rich-text Input field - The functionality of this field is loaded by wmd.js later in this document -->
-	    	<%= f.label :description, "Description" %><br />
-		  	<div id="wmd-button-bar"></div>
-	    	<%= f.text_area :description, :id => 'wmd-input' %>
-	  	</div>
-	
-		<div id="media" class="clearfix">
-			<h2><%= @mediafile.class.name.capitalize %></h2>
-			<% if @mediafile.is_a?(Image)%>
-				<%= image_tag(@mediafile.file.url)%>
-			<% elsif @mediafile.is_a?(Audiofile)%>
-					<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="204" height="37" id="audiofile_<%= @mediafile.id %>_player" align="" class="clearfix">
-					 <param name=movie value="/niftyplayer.swf?file=<%= @mediafile.file.url %>&as=0">
-					 <param name="quality" value="high">
-					 <param name="bgcolor" value="#FFFFFF">
-					 <embed src="/niftyplayer.swf?file=<%= @mediafile.file.url %>&as=0" quality="high" bgcolor="#FFFFFF" width="204" height="37" name="audiofile_<%= @mediafile.id %>_player" align="center" type="application/x-shockwave-flash" swLiveConnect="true" pluginspage="http://www.macromedia.com/go/getflashplayer">
-					</embed>
-					</object>
-			<% else %>
-				<%= image_tag('/file.png') %>
-			<% end %>
+	<% elsif @mediafile.is_a? Audiofile %>
+		<div>
+			<object type="application/x-shockwave-flash" data="/player_mp3.swf" style="margin-bottom:10px;" width="245" height="20">
+			    <param name="movie" value="/player_mp3.swf" />
+			    <param name="bgcolor" value="#ffffff" />
+			    <param name="FlashVars" value="mp3=<%= @mediafile.file.url %>&width=245" />
+			</object>
+			<%= @mediafile.filename %> 
 		</div>
-	
+	<% else %>
+		<div>
+			<%= image_tag "blank_file_icon.png", :style => "float:left; border:none; margin-right: 5px; " %> <%= @mediafile.filename %> 
+			<span style="font-size: 0.75em;"><%= number_to_human_size(@mediafile.file_size) %></span>
+		</div>
 	<% end %>
-</div><!-- #mediafile_form -->
-
-<div id="tools">
-	<div class="toolbox">
-		<div class="toolbox_border"></div>
-		<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tags</h2></div>
-		<div class="toolbox_border"></div>
-		<div class="toolbox_body">
-			<script id="media_tags_form" type="text/javascript" src="<%= new_account_mediafile_tag_url(@account, @mediafile, :format=>:js ) %>"></script>
-		</div>
-		<div class="toolbox_border"></div>
-	</div><!-- /toolbox - tags -->
 </div>
+<% form.buttons :class => "grid_6" do %>
+	<li class="grid_4 alpha"><h1>Edit mediafile</h1></li>
+ 	<li class="grid_2 omega" style="float:right;text-align:right;margin-right: -10px;"><%= form.submit "Save" %></li>
+<% end %>
 
-<script type="text/javascript">
-	//Load toolbox functionality
-	$('tools').select('div.toolbox').each( function (t) { new Toolbox(t); });
-	Sortable.create('tools',{tag: 'div', handle:'toolbox_label_body'});
-	
-	load_button_fix();
-</script>
+<% form.inputs :class => "grid_6", :style => "clear:left;" do %>
+	<%= form.input :title, :as => :string %>
+	<%= form.input :author_ids, :label => "Authors", :as => :string, :input_html => { :value => "" } %>
+	<%= form.input :tag_list, :as => :string %>
+	<%= form.input :description, :input_html => { :rows => 8 } %>
+<% end %>
 
-<%= javascript_include_tag 'wmd.min' %>
+<% end %>
+<% content_for :javascript do %>
+	<%= javascript_include_tag 'jquery.tokeninput' %>
+	<%= javascript_include_tag 'jquery.wmd' %>
+	<script type="text/javascript">
+		$().ready(function() {			
+           	$("#image_description").wmd({"preview":false}); 
+
+
+			$("#image_author_ids, #audiofile_author_ids, #mediafile_author_ids").tokenInput("<%= authors_path(:format => :json) %>", {
+				initialValues: <%= @mediafile.authors_json %>,
+				canCreate: true,
+				createText: "New author",
+				hintText: "Add an author",
+		        classes: {
+		            tokenList: "token-input-list",
+		            token: "token-input-token",
+		            tokenDelete: "token-input-delete-token",
+		            selectedToken: "token-input-selected-token",
+		            highlightedToken: "token-input-highlighted-token",
+		            dropdown: "token-input-dropdown",
+		            dropdownItem: "token-input-dropdown-item",
+		            dropdownItem2: "token-input-dropdown-item2",
+		            selectedDropdownItem: "token-input-selected-dropdown-item",
+		            inputToken: "token-input-input-token"
+		        }
+		   });	
+
+		});
+	</script>
+<% end %>

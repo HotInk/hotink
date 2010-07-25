@@ -82,19 +82,19 @@ describe LinkFilters do
          it "should return link to entry with entry as first parameters" do
            entry = Factory(:entry)
            output = Liquid::Template.parse( " {{ entry | link_to_entry }} "  ).render({'entry' => EntryDrop.new(entry)}, :registers => { :design => @design })
-           output.should == " <a href=\"/blogs/#{entry.blog.slug}/entries/#{entry.id}\">#{entry.title}</a> "
+           output.should == " <a href=\"/blogs/#{entry.blog.slug}/#{entry.id}\">#{entry.title}</a> "
          end
 
          it "should return link to entry with string as first parameter and entry as second" do
            entry = Factory(:entry)
            output = Liquid::Template.parse( " {{ \"A string to link\" | link_to_entry: entry }} "  ).render({'entry' => EntryDrop.new(entry)}, :registers => { :design => @design })
-           output.should == " <a href=\"/blogs/#{entry.blog.slug}/entries/#{entry.id}\">A string to link</a> "
+           output.should == " <a href=\"/blogs/#{entry.blog.slug}/#{entry.id}\">A string to link</a> "
          end
 
          it "should return link to entry with entry as first parameter and string as second" do
            entry = Factory(:entry)
            output = Liquid::Template.parse( " {{ entry | link_to_entry:\"A string to link\" }} "  ).render({'entry' => EntryDrop.new(entry)}, :registers => { :design => @design })
-           output.should == " <a href=\"/blogs/#{entry.blog.slug}/entries/#{entry.id}\">A string to link</a> "
+           output.should == " <a href=\"/blogs/#{entry.blog.slug}/#{entry.id}\">A string to link</a> "
          end
       end
 
@@ -102,7 +102,7 @@ describe LinkFilters do
         it "should insert design id into query string when building links" do
           entry = Factory(:entry)
           output = Liquid::Template.parse( " {{ entry | link_to_entry }} "  ).render({'entry' => EntryDrop.new(entry)}, :registers => { :design => @design })
-          output.should == " <a href=\"/blogs/#{entry.blog.slug}/entries/#{entry.id}?design_id=#{@design.id}\">#{entry.title}</a> "
+          output.should == " <a href=\"/blogs/#{entry.blog.slug}/#{entry.id}?design_id=#{@design.id}\">#{entry.title}</a> "
         end
       end
    end

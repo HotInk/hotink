@@ -17,7 +17,7 @@
 		</div>
 	
 		<div class="details">
-			<h1><%=link_to h(mediafile.title), edit_account_mediafile_url(@account, mediafile), :class=>"document_link" %></h1>
+			<h1><%=link_to h(mediafile.title), edit_mediafile_url(mediafile), :class=>"document_link" %></h1>
 			<p><%= mediafile.authors_list %></p>
 		</div>
 	
@@ -33,6 +33,6 @@
 			<p><%= h mediafile.date.to_time.to_s(:date) %></p>
 		</div>
 
-		<%= link_to "x", account_mediafile_path(mediafile.account, mediafile), :confirm => "You are about to delete the mediafile: \n \n &quot;" + h(mediafile.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %>
+		<%= link_to "x", mediafile_path(mediafile), :confirm => "You are about to delete the mediafile: \n \n &quot;" + h(mediafile.title) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %>
 	</div>
 </li>

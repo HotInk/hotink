@@ -3,6 +3,7 @@ require 'spec_helper'
 describe BlogsController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
     controller.stub!(:login_required).and_return(true)
   end
   
@@ -11,7 +12,7 @@ describe BlogsController do
       @active_blogs = (1..3).collect{ Factory(:blog, :account => @account, :status => true) }
       @inactive_blogs = (1..3).collect{ Factory(:blog, :account => @account, :status => false) }  
       
-      get :index, :account_id => @account.id
+      get :index
     end
     
     it { should assign_to(:active_blogs).with(@active_blogs) }
@@ -22,7 +23,7 @@ describe BlogsController do
   
   describe "GET to new" do
     before do
-      get :new, :account_id => @account.id
+      get :new
     end
     
     it { should assign_to(:blog).with_kind_of(Blog) }
@@ -38,7 +39,7 @@ describe BlogsController do
     
     context "with valid blog attributes" do
       before do
-        post :create, :account_id => @account.id, :blog => Factory.attributes_for(:blog)
+        post :create, :blog => Factory.attributes_for(:blog)
       end
     
       it { should assign_to(:blog).with_kind_of(Blog) }
@@ -51,7 +52,7 @@ describe BlogsController do
     
     context "with invalid blog attributes" do
       before do
-        post :create, :account_id => @account.id, :blog => Factory.attributes_for(:blog, :title => "")
+        post :create, :blog => Factory.attributes_for(:blog, :title => "")
       end
     
       it { should assign_to(:blog).with_kind_of(Blog) }
@@ -67,18 +68,16 @@ describe BlogsController do
 
     context "no search query specified" do
       before do
-        @published = (1..3).collect{ Factory(:detailed_entry, :blog => @blog) }
-        @drafts = (1..3).collect{ Factory(:draft_entry, :account => @account, :blog => @blog) }
-        @scheduled = (1..3).collect{ |n| Factory(:scheduled_entry, :published_at => (Time.now + n.minutes), :account => @account, :blog => @blog) }
-        get :show, :account_id => @account.id, :id => @blog.id
+        @published = (1..3).collect{ |n| Factory(:detailed_entry, :account => @account, :published_at => (Time.now - 1.day - n.minutes), :blog => @blog) }
+        @drafts = (1..3).collect{ |n| Factory(:draft_entry, :updated_at => n.days.ago, :blog => @blog) }
+        @scheduled = (1..3).collect{ |n| Factory(:scheduled_entry, :published_at => (Time.now + 1.day - n.minutes), :account => @account, :blog => @blog) }
+        get :show, :id => @blog.id
       end
     
       it { should assign_to(:blog).with(@blog) }
       it "should assign the appropriate entries" do
         should assign_to(:entries).with_kind_of(WillPaginate::Collection)
-        assigns(:entries).to_a.should == @published
-        assigns(:drafts).to_a.should == @drafts
-        assigns(:scheduled).to_a.should == @scheduled
+        should assign_to(:entries).with(@drafts + @scheduled + @published)
       end    
       it { should respond_with(:success) }
     end    
@@ -88,7 +87,7 @@ describe BlogsController do
         @searched_entries = (1..3).collect{ Factory(:detailed_entry, :account => @account, :blog => @blog) }
         @other_entries = (1..3).collect{ Factory(:detailed_entry, :account => @account, :blog => @blog) }
         Entry.should_receive(:search).with( "test query", :with=>{ :account_id => @account.id, :blog_id => @blog.id }, :page => 1, :per_page => 20, :include => [:authors, :mediafiles]).and_return(@searched_entries)
-        get :show, :account_id => @account.id, :id => @blog.id, :search => "test query"
+        get :show, :id => @blog.id, :search => "test query"
       end
       
       it { should assign_to(:entries).with(@searched_entries) }
@@ -99,7 +98,7 @@ describe BlogsController do
   describe "GET to edit" do
     before do
       @blog = Factory(:blog, :account => @account)
-      post :edit, :account_id => @account.id, :id => @blog.id
+      post :edit, :id => @blog.id
     end
     
     it { should assign_to(:blog).with(@blog) }
@@ -110,7 +109,7 @@ describe BlogsController do
     context "with valid HTML request" do
       before do
         @blog = Factory(:blog, :account => @account)
-        put :update, :account_id => @account.id, :id => @blog.id, :blog => { :title => "Some blog this is" }
+        put :update, :id => @blog.id, :blog => { :title => "Some blog this is" }
       end
       
       it { should assign_to(:blog).with(@blog) }
@@ -123,7 +122,7 @@ describe BlogsController do
     context "with invalid request" do
       before do
          @blog = Factory(:blog, :account => @account)
-         put :update, :account_id => @account.id, :id => @blog.id, :blog => { :title => "" }
+         put :update, :id => @blog.id, :blog => { :title => "" }
        end
 
        it { should assign_to(:blog).with(@blog) }
@@ -135,7 +134,7 @@ describe BlogsController do
   describe "GET to manage_contributors" do
     before do
       @blog = Factory(:blog, :account => @account)
-      get :manage_contributors, :account_id => @account.id, :id => @blog.id
+      get :manage_contributors, :id => @blog.id
     end
     
     it { should respond_with(:success) }
@@ -147,7 +146,7 @@ describe BlogsController do
     before do
       @blog = Factory(:blog, :account => @account)
       @user = Factory(:user)
-      xhr :put, :add_contributor, :account_id => @account.id, :id => @blog.id, :user => @user.id
+      xhr :put, :add_contributor, :id => @blog.id, :user => @user.id
     end
     
     it "should make the current user a contributor" do
@@ -162,7 +161,7 @@ describe BlogsController do
       @user = Factory(:user)
       @blog.make_editor(@user)
       
-      xhr :put, :remove_contributor, :account_id => @account.id, :id => @blog.id, :user => @user.id
+      xhr :put, :remove_contributor, :id => @blog.id, :user => @user.id
     end
     
     it "should remove the user from the blog" do
@@ -177,7 +176,7 @@ describe BlogsController do
       @user = Factory(:user)
       @blog.contributors << @user
       
-      xhr :put, :promote_contributor, :account_id => @account.id, :id => @blog.id, :user => @user.id
+      xhr :put, :promote_contributor, :id => @blog.id, :user => @user.id
     end
     
     it "should make the user an editor of the blog" do
@@ -192,7 +191,7 @@ describe BlogsController do
       @user = Factory(:user)
       @blog.make_editor(@user)
       
-      xhr :put, :demote_contributor, :account_id => @account.id, :id => @blog.id, :user => @user.id
+      xhr :put, :demote_contributor, :id => @blog.id, :user => @user.id
     end
     
     it "should make editor of the blog into a contributor" do

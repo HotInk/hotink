@@ -32,7 +32,7 @@ class AccountsController < ApplicationController
     @account.accepts_role "staff", @user # Makes user a staff member of the account
     
     flash[:notice] = "Welcome to Hot Ink!"
-    redirect_to account_articles_url(@user.account) 
+    redirect_to articles_url(@user.account) 
     
     rescue ActiveRecord::RecordInvalid => invalid
       # TODO: below is a hack to fix broken transaction above (why isn't the transaction working?!)
@@ -44,14 +44,14 @@ class AccountsController < ApplicationController
       return       
   end
   
-  # Simple redirect to account articles page
+  # Simple redirect to dashboard
   def index
-    redirect_to account_dashboard_url( current_user.is_staff_for_what.first )
+    redirect_to dashboard_url
   end
 
   def show
     @account = Account.find(params[:id])    
-    redirect_to account_dashboard_url( @account )
+    redirect_to dashboard_url( @account )
   end
   
   # Loads the account management tabs

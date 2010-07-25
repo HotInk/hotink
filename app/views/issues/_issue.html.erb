@@ -1,9 +1,9 @@
 <li id="issue_<%= issue.id %>" class="issue">
 	<div class="cover">
-		<%= link_to image_tag(issue.pdf_url(:system_cover_thumb)), edit_account_issue_path(@account, issue) %>
+		<%= link_to image_tag(issue.pdf_url(:system_cover_thumb)), edit_issue_path(issue) %>
 	</div>
 	<div class="details clearfix">
 		<h4><%= issue.date.to_formatted_s(:standard)%></h4>
-		<p class="kill_link"><%= link_to "x", account_issue_url(@account, issue), :method => :delete, :confirm => "Are you sure you want to delete this issue?\n\nThe issue PDF, if attached, will also be deleted.\n\nArticles in printed in this issue will NOT be deleted, though any record of their relationship with this issue will be.\n\nPress 'OK' to delete this issue." %></p>
+		<p class="kill_link"><%= link_to "x", issue_url(issue), :method => :delete, :confirm => "Are you sure you want to delete this issue?\n\nThe issue PDF, if attached, will also be deleted.\n\nArticles in printed in this issue will NOT be deleted, though any record of their relationship with this issue will be.\n\nPress 'OK' to delete this issue." %></p>
 	</div>
 </li>

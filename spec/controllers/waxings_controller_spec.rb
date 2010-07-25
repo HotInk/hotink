@@ -9,10 +9,12 @@ describe WaxingsController do
     context "with an HTML request" do
       before do
         @account = Factory(:account)
+        controller.stub!(:current_subdomain).and_return(@account.name)
+        
         @mediafiles = (1..3).collect{ Factory(:mediafile, :account => @account) }
         @attached_mediafile = Factory(:mediafile, :account => @account)
         @article = Factory(:article, :account => @account, :mediafiles => [@attached_mediafile])
-        get :new, :account_id => @account.id, :article_id => @article.id
+        get :new, :article_id => @article.id
       end
       
       it "should build waxing" do
@@ -28,7 +30,9 @@ describe WaxingsController do
   describe "GET to edit" do
     before do
       @waxing = Factory(:waxing)
-      get :edit, :account_id => @waxing.article.account.id, :id => @waxing.id
+      controller.stub!(:current_subdomain).and_return(@waxing.article.account.name)
+
+      get :edit, :id => @waxing.id
     end
     
     it { should assign_to(:waxing).with(@waxing) }
@@ -41,8 +45,10 @@ describe WaxingsController do
       context "with an XHR request" do
         before do
           @article = Factory(:article)
+          controller.stub!(:current_subdomain).and_return(@article.account.name)
+          
           @mediafiles = (1..3).collect { Factory(:mediafile, :account => @article.account) }
-          xhr :post, :create, :account_id =>  @article.account, :document_id => @article.id, :mediafile_ids => @mediafiles.collect { |m| m.id }
+          xhr :post, :create, :document_id => @article.id, :mediafile_ids => @mediafiles.collect { |m| m.id }
         end
         
         it { should set_the_flash.to("Media attached") }
@@ -57,8 +63,10 @@ describe WaxingsController do
       context "with an HTML request" do
         before do
           @article = Factory(:article)
+          controller.stub!(:current_subdomain).and_return(@article.account.name)
+          
           @mediafiles = (1..3).collect { Factory(:mediafile, :account => @article.account) }
-          post :create, :account_id =>  @article.account, :document_id => @article.id, :mediafile_ids => @mediafiles.collect { |m| m.id }
+          post :create, :document_id => @article.id, :mediafile_ids => @mediafiles.collect { |m| m.id }
         end
         
         it { should assign_to(:document).with(@article) }
@@ -74,8 +82,10 @@ describe WaxingsController do
     describe "linking mediafiles to an entry" do
       before do
         @entry = Factory(:entry)
+        controller.stub!(:current_subdomain).and_return(@entry.account.name)
+        
         @mediafiles = (1..3).collect { Factory(:mediafile, :account => @entry.account) }
-        post :create, :account_id =>  @entry.account, :document_id => @entry.id, :mediafile_ids => @mediafiles.collect { |m| m.id }
+        post :create, :document_id => @entry.id, :mediafile_ids => @mediafiles.collect { |m| m.id }
       end
       
       it { should assign_to(:document).with(@entry) }
@@ -91,7 +101,9 @@ describe WaxingsController do
   describe "PUT to update" do
     before do
       @waxing = Factory(:waxing, :caption => "")
-      xhr :put, :update, :account_id => @waxing.document.account.id, :id => @waxing.id, :waxing => { :caption => "Wow, a caption." }
+      controller.stub!(:current_subdomain).and_return(@waxing.document.account.name)
+      
+      xhr :put, :update, :id => @waxing.id, :waxing => { :caption => "Wow, a caption." }
     end
     
     it { should respond_with(:success) }
@@ -105,7 +117,9 @@ describe WaxingsController do
   describe "DELETE to destroy with XHR request" do
     before do
       @waxing = Factory(:waxing)
-      xhr :delete, :destroy, :account_id => @waxing.document.account.id, :id => @waxing.id
+      controller.stub!(:current_subdomain).and_return(@waxing.document.account.name)
+      
+      xhr :delete, :destroy, :id => @waxing.id
     end
     
     it { should respond_with(:success) }

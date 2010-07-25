@@ -21,7 +21,7 @@ class PagesController < ApplicationController
     if @page.new_record?
       render :new
     else
-      redirect_to account_pages_url(@account)
+      redirect_to pages_url
     end
   end
   
@@ -32,7 +32,7 @@ class PagesController < ApplicationController
   def update
      @page = @account.pages.find(params[:id])
      if @page.update_attributes(params[:page])
-       redirect_to account_pages_url(@account)
+       redirect_to pages_url
      else
        render :edit
      end
@@ -41,7 +41,7 @@ class PagesController < ApplicationController
    def destroy
      @page = @account.pages.find(params[:id])
      @page.destroy
-     redirect_to account_pages_url(@account)
+     redirect_to pages_url
    end
   
 end

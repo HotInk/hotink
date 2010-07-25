@@ -47,9 +47,9 @@ module LinkFilters
       return "<!-- No entry to link to --> #{title}" unless entry.is_a?(EntryDrop)
     end
     if @context.registers[:design].current_design?
-      url = "/blogs/#{entry.blog.slug}/entries/#{entry.id}"
+      url = "/blogs/#{entry.blog.slug}/#{entry.id}"
     else
-      url = "/blogs/#{entry.blog.slug}/entries/#{entry.id}?design_id=#{@context.registers[:design].id}"
+      url = "/blogs/#{entry.blog.slug}/#{entry.id}?design_id=#{@context.registers[:design].id}"
     end
     link_to title, url  
   end

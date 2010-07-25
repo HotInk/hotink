@@ -3,6 +3,8 @@ require 'spec_helper'
 describe NetworksController do
   before do
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
+    
     @current_user = Factory(:user)
     @current_user.promote_to_admin
     controller.stub!(:current_user).and_return(@current_user)
@@ -30,7 +32,7 @@ describe NetworksController do
       before do
         @membership = Factory(:membership, :network_owner => @account)
         @article = Factory(:published_article, :account => @membership.account)
-        get :show_article, :account_id => @account.id, :id => @article.id
+        get :show_article, :id => @article.id
       end
     
       it { should respond_with(:success) }
@@ -42,7 +44,7 @@ describe NetworksController do
     before do
       @membership = Factory(:membership, :network_owner => @account)
       @article = Factory(:published_article, :account => @membership.account)
-      post :checkout_article, :account_id => @account.id, :id => @article.id
+      post :checkout_article, :id => @article.id
     end
     
     it { should respond_with(:redirect) }
@@ -55,7 +57,7 @@ describe NetworksController do
   describe "GET to show_members" do
     before do
       @accounts = (1..2).collect{ Factory(:account) }
-      get :show_members, :account_id => @account.id
+      get :show_members
     end
     
     it { should respond_with(:success) }
@@ -65,7 +67,7 @@ describe NetworksController do
   describe "POST to update_members" do
     before do
       @accounts = (1..3).collect{ Factory(:account) }
-      post :update_members, :account_id => @account.id, :member_ids => @accounts[0..1].collect{|a| a.id }
+      post :update_members, :member_ids => @accounts[0..1].collect{|a| a.id }
     end
     
     it { should respond_with(:redirect) }

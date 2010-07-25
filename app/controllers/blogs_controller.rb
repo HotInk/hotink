@@ -28,7 +28,7 @@ class BlogsController < ApplicationController
         @blog.accepts_role "editor", current_user
         
         flash[:notice] = 'New blog created'
-        format.html { redirect_to([@account, @blog]) }
+        format.html { redirect_to(@blog) }
       else
         format.html { render :action => "new", :status => :bad_request }
       end
@@ -45,11 +45,7 @@ class BlogsController < ApplicationController
       @search_query = params[:search]
       @entries = @blog.entries.search( @search_query, :page => page, :per_page => per_page, :include => [:authors, :mediafiles], :with => { :account_id => @account.id })
     else
-      @entries = @blog.entries.published.paginate( :page => page, :per_page => per_page)
-      if page.to_i == 1
-        @drafts = @blog.entries.drafts.all(:include => [:authors, :mediafiles])
-        @scheduled = @blog.entries.scheduled.find(:all, :order => "published_at asc", :include => [:authors, :mediafiles])
-      end
+      @entries = @blog.entries.paginate(:page => page, :per_page => per_page, :order => 'status, published_at desc, updated_at desc')
     end
     
     respond_to do |format|
@@ -67,7 +63,7 @@ class BlogsController < ApplicationController
     respond_to do |format|
       if @blog.update_attributes(params[:blog])
         flash[:notice] = 'Blog details updated'
-        format.html { redirect_to([@account, @blog]) }
+        format.html { redirect_to(@blog) }
       else
         format.html { render :action => "edit", :status => :bad_request }
       end
@@ -88,7 +84,7 @@ class BlogsController < ApplicationController
     @blog.add_contributor @user
     
     respond_to do |format|
-      format.html { redirect_to(manage_contributors_account_blog_url(@account, @blog)) }
+      format.html { redirect_to(manage_contributors_blog_url(@account, @blog)) }
     end
   end
   
@@ -99,7 +95,7 @@ class BlogsController < ApplicationController
     @blog.remove_contributor @user
     
     respond_to do |format|
-      format.html { redirect_to(manage_contributors_account_blog_url(@account, @blog)) }
+      format.html { redirect_to(manage_contributors_blog_url(@account, @blog)) }
     end
   end
   
@@ -110,7 +106,7 @@ class BlogsController < ApplicationController
     @blog.make_editor(@user)
     
     respond_to do |format|
-      format.html { redirect_to(manage_contributors_account_blog_url(@account, @blog)) }
+      format.html { redirect_to(manage_contributors_blog_url(@account, @blog)) }
     end
   end
   
@@ -121,7 +117,7 @@ class BlogsController < ApplicationController
     @blog.demote_editor(@user)
     
     respond_to do |format|
-      format.html { redirect_to(manage_contributors_account_blog_url(@account, @blog)) }
+      format.html { redirect_to(manage_contributors_blog_url(@account, @blog)) }
     end
   end
 end

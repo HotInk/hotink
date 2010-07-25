@@ -4,6 +4,8 @@ describe PrintingsController do
   before do
     controller.stub!(:login_required).and_return(true)
     @account = Factory(:account)
+    controller.stub!(:current_subdomain).and_return(@account.name)
+    
     @article = Factory(:article, :account => @account)
     @issue = Factory(:issue, :account => @account)
   end

@@ -5,7 +5,7 @@
 		</div>
 	
 		<div class="details">
-			<h1>&ldquo;<%= link_to network_article.title, account_network_show_article_path(:id => network_article.id)  %>&rdquo; <small><%= publication_status_for(network_article) %></small></h1>
+			<h1>&ldquo;<%= link_to network_article.title, network_show_article_path(:id => network_article.id)  %>&rdquo; <small><%= publication_status_for(network_article) %></small></h1>
 			<div class="mediafiles">
 				<% if mediafile = network_article.mediafiles.first %>				
 					<% if mediafile.is_a?(Image) %>

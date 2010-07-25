@@ -1,6 +1,6 @@
 <div id="articles" class="clearfix">
 	<h1>Search for "<%= params[:q] %>"</h1>
-	<%= button_link_to 'New article', new_account_article_path(@account), :class=>"primary" %>
+	<%= button_link_to 'New article', new_article_path, :class=>"primary" %>
 	<div class="search">
 		<form method="GET">
 			<input type="text" id="articles_search" name="q" class="text_input user" onclick="if(this.value=='Search articles') clearText(this);" value="<%=h( @search_query || "Search articles") %>" />
@@ -11,7 +11,7 @@
 		<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
 	</div>
 	
-	<% form_remote_tag :url=>new_account_action_url(@account), :method => :get do %>
+	<% form_remote_tag :url=>new_action_url, :method => :get do %>
 	<%= hidden_field_tag "content_types[]", 'article'%>
 	<%= hidden_field_tag "name", '', :id=>"article_action_name"%>
 	
@@ -49,7 +49,7 @@
 	//(for author creation in edit media overlay)
 	createNewAuthor = function( new_token_text, auto_complete ){
 		new_author_auto_complete = auto_complete;
-		new Ajax.Request( 	"<%= account_authors_url(@account, :format=>:json )%>", 
+		new Ajax.Request( 	"<%= authors_url(:format=>:json )%>", 
 							{	method: 'post', parameters: {"author[name]": new_token_text, "authenticity_token": "<%= form_authenticity_token %>"},
 								onSuccess: function(transport){
 												var json = transport.responseText.evalJSON(true);

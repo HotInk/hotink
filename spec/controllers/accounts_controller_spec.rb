@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe AccountsController do
-  
+    
   describe "GET to new" do
     context "when no accounts exists" do
       before do
@@ -162,7 +162,7 @@ describe AccountsController do
     end
   end
   
-  describe "PUT to update" do
+  describe "PUT to update" do    
     before do
       controller.stub!(:login_required).and_return(true)
       @account = Factory(:account)

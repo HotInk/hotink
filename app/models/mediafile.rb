@@ -91,6 +91,11 @@ class Mediafile < ActiveRecord::Base
     end
   end
   
+  def authors_json
+    authors.collect{ |a| { "id" => a.id, "name" => a.name } }.to_json
+  end
+  
+  
   def to_xml(options = {})
      caption = options[:caption] || self.description
      options[:indent] ||= 2
@@ -122,10 +127,6 @@ class Mediafile < ActiveRecord::Base
     copy.file = file
       
     copy.save ? copy : false
-  end
-  
-  def date
-    read_attribute(:date).to_date
   end
   
   def tag(new_tags)

@@ -41,7 +41,7 @@ class TemplatesController < ApplicationController
 
      if @tplate.save
        flash[:notice] = 'Template created'
-       redirect_to account_design_path(@account, @design)
+       redirect_to design_path(@design)
      else
        render :new
      end
@@ -59,7 +59,7 @@ class TemplatesController < ApplicationController
      @tplate = @design.templates.find(params[:id])
      @tplate.update_attributes(params[@tplate.class.name.underscore.to_sym])
      flash[:notice] = 'Template updated'
-     redirect_to account_design_url(@account, @design) 
+     redirect_to design_url(@design) 
 
    rescue Liquid::SyntaxError => e
      flash[:syntax_error] = "#{e.message}"
@@ -76,6 +76,6 @@ class TemplatesController < ApplicationController
      @tplate.destroy
 
      flash[:notice] = "Template removed"
-     redirect_to account_design_url(@account, @design)
+     redirect_to design_url(@design)
    end
 end

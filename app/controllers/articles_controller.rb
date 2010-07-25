@@ -43,7 +43,7 @@ class ArticlesController < ApplicationController
     
     respond_to do |format|
       flash[:notice] = "New article"
-      format.html { redirect_to edit_account_article_path(@account, @article) }
+      format.html { redirect_to edit_article_path(@article) }
     end
   end
 
@@ -86,7 +86,7 @@ class ArticlesController < ApplicationController
       respond_to do |format|
         if @article.update_attributes({'category_ids' => []}.merge(params[:article]))
           flash[:notice] = "Article saved"
-          format.html { redirect_to(edit_account_article_path(@account, @article)) }
+          format.html { redirect_to(edit_article_path(@article)) }
         else
           format.html { render :action => "edit", :status => :bad_request }
         end
@@ -102,7 +102,7 @@ class ArticlesController < ApplicationController
       @article.destroy
     
       flash[:notice] = "Article trashed"
-      redirect_to(account_articles_url(@account))
+      redirect_to(articles_url)
     end
   end
 end

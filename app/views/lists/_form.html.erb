@@ -1,4 +1,4 @@
-<% semantic_form_for [@account, @list], :html => { :class => @list.new_record? ? "" : "use_preview" } do |form| %>
+<% semantic_form_for @list, :html => { :class => @list.new_record? ? "" : "use_preview" } do |form| %>
 	<div class="grid_4 alpha" style="font-size: 85%;line-height: 1.1;">
 		<h1 style="margin-bottom: 20px;"><%= form.object.new_record? ? "New" : "Update" %> list</h1>
 		<p style="margin-bottom: 20px;width: 90%;">Find the articles you'd like to include on the right, and simply click and drag them to the appropriate location in the list on the left. You can add as many articles as you'd like.</p>

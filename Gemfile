@@ -8,13 +8,16 @@ gem 'settingslogic'
 gem "mime-types", :require => "mime/types"
 gem "bcrypt-ruby", :require => "bcrypt"
 gem "addressable"
+gem "subdomain-fu"
 gem 'pacecar', '1.2.0'
 gem "paperclip", "2.3.1"
 gem "acts-as-taggable-on"
 gem 'rdiscount'
+
 gem 'rack-flash'
 gem 'sinatra'
 gem 'ruby-openid', :require => 'openid'
+
 gem "formtastic"
 
 # Gems for Mailout

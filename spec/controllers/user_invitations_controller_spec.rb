@@ -3,6 +3,7 @@ require 'spec_helper'
 describe UserInvitationsController do
   before do
      @account = Factory(:account)
+     controller.stub!(:current_subdomain).and_return(@account.name)
    end
    
   describe "POST to create" do
@@ -15,7 +16,7 @@ describe UserInvitationsController do
     
     context "to a valid email address" do
       before do  
-        post :create, :account_id => @account.id, :invitation => { :email => "a-valid@email.address.com" }
+        post :create, :invitation => { :email => "a-valid@email.address.com" }
       end
 
       it { should respond_with(:success) }
@@ -30,7 +31,7 @@ describe UserInvitationsController do
     
     context "to an invalid email address" do
       before do   
-        post :create, :account_id => @account.id, :invitation => { :email => "not-a-valid-email.address.com" }
+        post :create, :invitation => { :email => "not-a-valid-email.address.com" }
       end
 
       it { should respond_with(:success) }
@@ -49,7 +50,7 @@ describe UserInvitationsController do
     
     context "with a valid invitation" do
       before do
-        get :edit, :account_id => @account.id, :id => @invite.token
+        get :edit, :id => @invite.token
       end
       
       it { should respond_with(:success) }
@@ -63,7 +64,7 @@ describe UserInvitationsController do
     context "with a redeemed invitation" do
       before do
         @invite.redeem!
-        get :edit, :account_id => @account.id, :id => @invite.token
+        get :edit, :id => @invite.token
       end
       
       it { should assign_to(:invite).with(@invite) }
@@ -73,12 +74,12 @@ describe UserInvitationsController do
 
   describe "PUT to update" do
     before do
-      @invite = Factory(:user_invitation)
+      @invite = Factory(:user_invitation, :account => @account)
     end
     
     context "with valid user parameters" do
       before do
-        put :update, :account_id => @invite.account.id, :id => @invite.token, :user => Factory.attributes_for(:user)
+        put :update, :id => @invite.token, :user => Factory.attributes_for(:user)
       end
       
       it { should respond_with(:redirect) }
@@ -96,7 +97,7 @@ describe UserInvitationsController do
       
     context "with invalid user parameters" do
       before do
-        put :update, :account_id => @invite.account.id, :id => @invite.token, :user => Factory.attributes_for(:user, :email => "")
+        put :update, :id => @invite.token, :user => Factory.attributes_for(:user, :email => "")
       end
       
       it { should render_template(:edit) }
@@ -113,7 +114,7 @@ describe UserInvitationsController do
     context "with an already redeemed invitation" do
       before do
         @invite.redeem!
-        put :update, :account_id => @invite.account.id, :id => @invite.token
+        put :update, :id => @invite.token
       end
       
       it { should respond_with(:redirect) }
