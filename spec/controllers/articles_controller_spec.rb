@@ -4,7 +4,10 @@ describe ArticlesController do
   before do
     @account = Factory(:account)
     controller.stub!(:current_subdomain).and_return(@account.name)
-    controller.stub!(:login_required).and_return(true)
+    
+    @current_user = Factory(:user)
+    @current_user.has_role("staff", @account)
+    controller.stub!(:current_user).and_return(@current_user)  
   end
   
   describe "GET to index" do
@@ -84,9 +87,8 @@ describe ArticlesController do
     
     context "by article's owner" do
       before do
-        @user = Factory(:user)
-        @article.owner = @user
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.has_role("staff", @account)
+        @article.owner = @current_user
         get :edit, :id => @article.id
       end
       
@@ -95,9 +97,7 @@ describe ArticlesController do
     
     context "by administrator" do
       before do
-        @user = Factory(:user)
-        @user.has_role("admin")
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.promote_to_admin
         get :edit, :id => @article.id
       end
       
@@ -106,9 +106,7 @@ describe ArticlesController do
     
     context "by account manager" do
       before do
-        @user = Factory(:user)
-        @user.has_role("manager", @account)
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.has_role("manager", @account)
         get :edit, :id => @article.id
       end
       
@@ -124,18 +122,24 @@ describe ArticlesController do
     end
   end
 
-  describe "GET to new" do
+  describe "GET to edit_multiple" do
     before do
-      @user = Factory(:user)
-      controller.stub!(:current_user).and_return(@user)
-      
+      @articles = (1..3).collect{ Factory(:article, :account => @account) }
+      get :edit_multiple, :article_ids => @articles.collect{|a| a.id}
+    end
+    
+    it { should assign_to(:article).with(@articles) }
+  end
+
+  describe "GET to new" do
+    before do      
       get :new
     end
     
     it { should assign_to(:article).with_kind_of(Article) }
     it { should respond_with(:redirect) }
     it "should assign the correct article owner" do
-      assigns(:article).owner.should eql(@user)
+      assigns(:article).owner.should eql(@current_user)
     end
   end
   
@@ -155,9 +159,7 @@ describe ArticlesController do
     
     context "by article's owner" do
       before do
-        @user = Factory(:user)
-        @article.owner = @user
-        controller.stub!(:current_user).and_return(@user)
+        @article.owner = @current_user
       end
       
       context "with valid parameters" do
@@ -188,9 +190,7 @@ describe ArticlesController do
     
     describe "publishing article" do
       before do
-        @user = Factory(:user)
-        @user.has_role("manager", @account)
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.has_role("manager", @account)
         
         put :update, :id => @article.id, :article => { :status => "Published" }
       end
@@ -202,9 +202,7 @@ describe ArticlesController do
     
     describe "scheduling article" do
       before do
-        @user = Factory(:user)
-        @user.has_role("manager", @account)
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.has_role("manager", @account)
         
         schedule = { :year => "2015", :month => "3", :day => "4", :hour => "12", :minute => "35" }
         put :update, :id => @article.id, :article => { :status => "Published", :schedule => schedule }
@@ -232,9 +230,7 @@ describe ArticlesController do
     
     describe "categories" do
       before do
-        @user = Factory(:user)
-        @article.owner = @user
-        controller.stub!(:current_user).and_return(@user)
+        @article.owner = @current_user
       end
       
       describe "attaching categories" do
@@ -265,15 +261,13 @@ describe ArticlesController do
     
     describe "signing off on article" do
       before do
-        @user = Factory(:user)
-        @article.owner = @user
-        controller.stub!(:current_user).and_return(@user)
+        @article.owner = @current_user
         
         put :update, :id => @article.id, :article => { :status => "Awaiting attention" }
       end
       
       it "should apply current user's sign off the article" do
-        @article.should be_signed_off_by(@user)
+        @article.should be_signed_off_by(@current_user)
         @article.reload.should be_awaiting_attention
       end
     end
@@ -294,16 +288,14 @@ describe ArticlesController do
     end
   end
 
-  describe "DELETE to destory" do
+  describe "DELETE to destroy" do
     before do
       @article = Factory(:article, :account => @account)
     end
     
     context "by account manager" do
       before do
-        @user = Factory(:user)
-        @user.has_role("manager", @account)
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.has_role("manager", @account)
         delete :destroy, :id => @article.id
       end
       

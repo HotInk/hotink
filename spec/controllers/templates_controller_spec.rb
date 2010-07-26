@@ -52,13 +52,13 @@ describe TemplatesController do
     end
     
     it "should create partial template" do
-      post :create, :design_id => @design.id, :partial_template => Factory.attributes_for(:partial_template,:design => @design)
+      post :create, :design_id => @design.id, :partial_template => Factory.attributes_for(:partial_template, :design => @design)
       should assign_to(:tplate).with_kind_of(PartialTemplate)
       should respond_with(:redirect)
     end
     
     it "should create front page template" do
-      post :create, :design_id => @design.id, :front_page_template => Factory.attributes_for(:front_page_template,:design => @design)
+      post :create, :design_id => @design.id, :front_page_template => Factory.attributes_for(:front_page_template, :design => @design)
       should assign_to(:tplate).with_kind_of(FrontPageTemplate)
       should respond_with(:redirect)
     end

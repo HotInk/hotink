@@ -93,6 +93,8 @@ class Layout < Template
 end
 
 class PartialTemplate < Template
+  validates_presence_of :name
+  
   def description
     stored_description = read_attribute(:description)
     if stored_description.blank?

@@ -1,11 +1,11 @@
-<p><%= link_to("&laquo Back", account_network_url(@account) )%></p>
+<p><%= link_to("&laquo Back", network_url )%></p>
 <h1>Network member accounts</h1>
 <div class="grid_12 alpha">
 	<p>This is where you keep track of which Hot Ink accounts belong to CUP members and which don't. Only members indicated on this page
 		will have their articles included in your network.</p>
 	<p>It's important to keep this up to date so that you don't publish a non-CUP article accidentally.</p>
 </div>
-<% form_tag account_network_update_members_path(@account) do %>
+<% form_tag network_update_members_path do %>
 	<div class="grid_12"><input type="submit" value="Save member list" style="font-size: 120%; margin-bottom: 20px; float:right;"/></div>
 	<ol id="accounts" class="grid_12">
 		<% @accounts.each do |account| %>

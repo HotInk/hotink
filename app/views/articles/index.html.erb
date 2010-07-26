@@ -2,7 +2,7 @@
 	<h1>Articles</h1>
 	<%= button_link_to 'New article', new_article_path, :class=>"primary" %>
 	<div class="search">
-		<form action="/articles/search" method="GET">
+		<form action="/admin/articles/search" method="GET">
 			<input type="text" id="articles_search" name="q" class="text_input user" onclick="if(this.value=='Search articles') clearText(this);" value="<%=h( @search_query || "Search articles") %>" />
 			<%= button_link_to_submit "Go" %>
 		</form>

@@ -58,6 +58,14 @@ class ArticlesController < ApplicationController
       end
     end
   end
+  
+  # GET /articles/edit_multiple
+  def edit_multiple
+    @article = @account.articles.find(params[:article_ids])
+    respond_to do |format|
+       format.html
+     end
+  end
 
   # PUT /articles/1
   def update

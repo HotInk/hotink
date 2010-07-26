@@ -39,6 +39,7 @@ end
 
 Factory.define :partial_template do |t|
   t.design { Factory(:design) }
+  t.sequence(:name) { |n| "Partial ##{n}" }
   t.sequence(:code) { |n| "Partial Template ##{n}" }
 end
 

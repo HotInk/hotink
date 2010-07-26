@@ -83,7 +83,7 @@
 		<% for stylesheet in @design.stylesheets %>
 			<li class="<%= cycle 'even', 'odd' %>">
 				<%= link_to stylesheet.file_name, edit_design_template_file_path(@design, stylesheet) %>
-				<%= link_to "x", account_design_template_file_path(@account, @design, stylesheet), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{stylesheet.file_name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %>  
+				<%= link_to "x", design_template_file_path(@design, stylesheet), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{stylesheet.file_name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %>  
 				<span class="last_updated"><%= stylesheet.created_at==stylesheet.file_updated_at ? "Created " : "Last updated "  %><%= stylesheet.file_updated_at.to_s(:standard) %></span>
 			</li>
 		<% end %>
@@ -108,12 +108,12 @@
 	<% if @design.template_files.select{ |t| t.class == TemplateFile }.blank? %>
 		<div class="grid_12 alpha" style="margin-bottom: 20px;"><h3>No template media</h3> <%= link_to 'Upload', new_design_template_file_path(@design), :class => "link green" %></div>
 	<% else %>	
-		<h3>Template media</h3><%= link_to 'New', new_account_design_template_file_path(@account, @design), :method => :get, :class => "link green" %>
+		<h3>Template media</h3><%= link_to 'New', new_design_template_file_path(@design), :method => :get, :class => "link green" %>
 		<ul id="tempalte_files">
 		<% for template_file in @design.template_files.select{ |t| t.class == TemplateFile } %>
 			<li class="<%= cycle 'even', 'odd' %>">
 				<%= link_to template_file.file_name, template_file.file.url %> 
-				<%= link_to "x", account_design_template_file_path(@account, @design, template_file), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{template_file.file_name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %> 
+				<%= link_to "x", design_template_file_path(@design, template_file), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{template_file.file_name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %> 
 				<span class="last_updated"><%= template_file.created_at==template_file.file_updated_at ? "Created " : "Last updated "  %><%= template_file.file_updated_at.to_s(:standard) %></span>
 			</li>
 		<% end %>

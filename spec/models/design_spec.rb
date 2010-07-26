@@ -69,6 +69,10 @@ describe FrontPageTemplate do
   it { should validate_presence_of(:name) }
 end
 
+describe PartialTemplate do
+  it { should validate_presence_of(:name) }
+end
+
 describe Layout do  
   it "should ensure code include page contents" do
     layout = Factory(:layout)
