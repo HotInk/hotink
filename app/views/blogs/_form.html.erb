@@ -11,7 +11,7 @@
 			<% end %>
 		<% end %>
 		<%= form.input :status, :hint => "Is this blog active?" %>		
-		<%= form.input :description %>
+		<%= form.input :description, :input_html => { :rows => 5 } %>
 	<% end %>
 	<%= form.buttons %>
 <% end %>

@@ -2,5 +2,9 @@
 <p><%= link_to 'New list', new_list_path, :class => "link green" %></p>
 <%= will_paginate(@lists, :inner_window => 2, :outer_window => 1) %>
 <ol class="lists">
-	<%= render @lists %>
+	<% if @lists.empty? %>
+		<li><p style="padding: 15px 0 5px 15px;font-style:italic;">No lists yet.</p>
+	<% else %>
+		<%= render @lists %>
+	<% end %>
 </ol>

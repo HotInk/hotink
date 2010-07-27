@@ -1,11 +1,11 @@
-<h1>All network articles</h1>
+<p><%= link_to("&laquo Back", network_url )%></p>
+<h1>Search for <em>&ldquo;<%= @search_query%>&rdquo;</em></h1>
 <div class="search" style="float:right; margin-left: 20px;">
 	<form action="/admin/network/search" method="GET">
 		<input type="text" id="network_search" name="q" class="text_input user" onfocus="if($(this).val()=='Search articles') $(this).val('');" onblur="if($(this).val()=='') $(this).val('Search articles');" value="<%=h( @search_query || "Search articles") %>" />
 		<%= button_link_to_submit "Go" %>
 	</form>
 </div>
-<p style="text-align:right;margin-top: 8px;"><%= link_to "Update members list", network_show_members_path, :class => "link yellow" %></p>
 <%= will_paginate(@articles) %>
 <ol id="network_articles" class="documents">
 	<%= render :partial => 'network_article', :collection => @articles %>

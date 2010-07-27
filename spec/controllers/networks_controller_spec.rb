@@ -27,6 +27,39 @@ describe NetworksController do
     end
   end
   
+
+  describe "GET to search" do
+    before do
+      @memberships = (1..3).collect{ Factory(:membership, :network_owner => @account) }
+      @articles = @memberships.collect { |membership| Factory(:published_article, :account => membership.account) }
+    end
+    
+    context "with a query" do
+      before do
+        @searched_articles = @memberships.collect { |membership| Factory(:published_article, :title => "Experimental testing", :account => @membership.account) }
+        Article.should_receive(:search).and_return(@searched_articles)
+        get :search, :q => "Experimental testing"
+      end
+    
+       it { should respond_with(:success) }
+       it { should respond_with_content_type(:html) }
+       it { should render_template(:search) }
+       it { should render_with_layout(:hotink) }
+       it { should assign_to(:search_query).with("Experimental testing") }
+       it { should assign_to(:articles).with(@searched_articles) }
+    end
+    
+    context "with no query" do
+      before do
+        get :search, :account_id => @account.id
+      end
+      
+      it { should respond_with(:success) }
+      it { should render_template(:search) }
+      it { should assign_to(:articles).with([]) }
+    end
+  end
+  
   describe "GET to show_article" do
     context "with a network article" do
       before do
