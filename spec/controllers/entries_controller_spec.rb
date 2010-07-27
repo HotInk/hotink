@@ -101,6 +101,17 @@ describe EntriesController do
       it { should respond_with(:redirect) }
     end
   end
+
+  
+  describe "GET to edit_multiple" do
+    before do
+      @entries = (1..3).collect{ Factory(:entry, :account => @account) }
+      get :edit_multiple, :update_action_name => "publish", :entry_ids => @entries.collect{|a| a.id}
+    end
+    
+    it { should assign_to(:update_action_name).with("publish") }
+    it { should assign_to(:entries).with(@entries) }
+  end
    
   describe "GET to show" do
     before do
@@ -196,6 +207,38 @@ describe EntriesController do
         it "should unpublished the entry" do
           @entry.reload.should be_draft
         end
+      end
+    end
+  end
+  
+  describe "PUT to update_multiple" do
+    context "without options" do
+      before do
+        @entries = (1..3).collect{ Factory(:entry, :account => @account) }
+        put :update_multiple, :update_action_name => "publish", :entry_ids => @entries.collect{|a| a.id}
+      end
+    
+      it { should respond_with(:redirect) }
+      it { should set_the_flash }
+      it { should assign_to(:update_action_name).with("publish") }
+      it { should assign_to(:entries).with(@entries) }
+      it "should publish each entry" do
+        @entries.each{|entry| entry.reload.should be_published }
+      end
+    end
+    
+    context "with options" do
+      before do
+        @category = Factory(:category, :account => @account)
+        @entries = (1..3).collect{ Factory(:entry, :account => @account) }
+        put :update_multiple, :update_action_name => "add_category", :options => { :category_id => @category.id }, :entry_ids => @entries.collect{|a| a.id}
+      end
+    
+      it { should respond_with(:redirect) }
+      it { should set_the_flash }
+      it { should assign_to(:entries).with(@entries) }
+      it "should add category" do
+        @entries.each{|entry| entry.categories.should include(@category) }
       end
     end
   end

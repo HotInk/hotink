@@ -19,6 +19,14 @@ class EntriesController < ApplicationController
     permit @entry.is_editable_by
   end
   
+  def edit_multiple
+    @update_action_name = params[:update_action_name]
+    @entries = @account.entries.find(params[:entry_ids])
+    respond_to do |format|
+       format.html
+     end
+  end
+  
   def show
     @entry = @blog.entries.find(params[:id])
   end
@@ -49,6 +57,20 @@ class EntriesController < ApplicationController
       end
       
     end
+  end
+  
+  def update_multiple
+    @entries = @account.entries.find(params[:entry_ids])
+    @update_action_name = params[:update_action_name]
+    @entries.each do |entry|
+      action_class = (@update_action_name + "_action").classify.constantize
+      action = action_class.new(entry, params[:options])
+      action.execute
+    end
+    
+    flash[:notice] = "Articles updated."
+    
+    redirect_to blog_url(@entries.first.blog)
   end
   
   def destroy

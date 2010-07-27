@@ -1,0 +1,6 @@
+<div class="action grid_6 prefix_2 suffix_4">
+	<h1>Set publish date</h1>
+	<p>Schedule the selected drafts to publish on:</p>
+	<p><%= select_datetime Time.now,  :time_separator => ": ", :prefix => "options[schedule]" %></p>
+	<p><%= button_link_to_submit "Schedule", :class=>"save large" %></p>
+</div>

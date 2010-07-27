@@ -1,0 +1,9 @@
+<div class="action grid_6 prefix_2 suffix_4">
+	<h1>Assign to print issue</h1>
+	<p>Indicate which issue this article was published in.</p>
+
+	<p>
+		<%= select("options", "issue_id", @account.issues.collect {|p| [ p.date.strftime("%b %e, %Y"), p.id ] }) %>
+		<%= button_link_to_submit "Add to issue", :class=>"save large" %>
+	</p>
+</div>

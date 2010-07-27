@@ -1,0 +1,5 @@
+<div class="action grid_6 prefix_2 suffix_4">
+	<h1>Set section</h1>
+	<p>Updates articles to have the selected category as primary section</p>
+	<p><%= select_tag("options[category_id]", options_for_category_select(@account.categories))%> <%= button_link_to_submit "Set", :class=>"save large" %></p>
+</div>

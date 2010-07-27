@@ -20,7 +20,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :password_resets
     admin.resources :account_invitations, :only => [:create, :edit, :update, :destroy]
     admin.resources :accounts
-    admin.resources :articles, :collection => { :search => :get, :edit_multiple => :get } do |article|
+    admin.resources :articles, :collection => { :search => :get, :edit_multiple => :get, :update_multiple => :put } do |article|
       article.resources :mediafiles
       article.resources :authors
       article.resources :tags
@@ -46,7 +46,7 @@ ActionController::Routing::Routes.draw do |map|
       document.resources :mediafiles
       document.resources :waxings
     end
-    admin.resources :entries, :only => [:new, :edit, :update, :destroy] do |entry|
+    admin.resources :entries, :only => [:new, :edit, :update, :destroy], :collection => { :edit_multiple => :get, :update_multiple => :put } do |entry|
       entry.resources :mediafiles
       entry.resources :waxings
       entry.resources :tags

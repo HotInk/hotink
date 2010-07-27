@@ -61,7 +61,8 @@ class ArticlesController < ApplicationController
   
   # GET /articles/edit_multiple
   def edit_multiple
-    @article = @account.articles.find(params[:article_ids])
+    @update_action_name = params[:update_action_name]
+    @articles = @account.articles.find(params[:article_ids])
     respond_to do |format|
        format.html
      end
@@ -101,6 +102,21 @@ class ArticlesController < ApplicationController
       end
       
     end
+  end
+  
+  # GET /articles/edit_multiple
+  def update_multiple
+    @articles = @account.articles.find(params[:article_ids])
+    @update_action_name = params[:update_action_name]
+    @articles.each do|article|
+      action_class = (@update_action_name + "_action").classify.constantize
+      action = action_class.new(article, params[:options])
+      action.execute
+    end
+    
+    flash[:notice] = "Articles updated."
+    
+    redirect_to articles_url
   end
 
   # DELETE /articles/1

@@ -1,0 +1,17 @@
+
+<% form_tag update_multiple_articles_url, :method => :put, :id => "edit_articles_form" do %>
+	
+	<%= render :partial => "actions/#{@update_action_name}" %>
+	<%= hidden_field_tag 'update_action_name', @update_action_name  %>
+	<ol class="documents">
+		<%= render @articles %>
+	</ol>
+<% end %>
+
+<% content_for :javascript do %>
+<script type="text/javascript" charset="utf-8">
+	$(function() { 
+		$('ol.documents .select input').attr('checked', 'true');
+	});
+</script>
+<% end %>

@@ -37,15 +37,21 @@ end
 
 class SetSectionAction < Action
   def execute
-    category = @record.account.categories.find(@options[:category_id])
+    if @options[:category_id].blank?
+      category = nil
+    else
+      category = @record.account.categories.find(@options[:category_id])
+    end
     @record.update_attribute(:section, category)
   end
 end
 
 class AddCategoryAction < Action
   def execute
-    category = @record.account.categories.find(@options[:category_id])
-    @record.categories << category
+    unless @options[:category_id].blank?
+      category = @record.account.categories.find(@options[:category_id])
+      @record.categories << category
+    end
   end
 end
 

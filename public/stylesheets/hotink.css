@@ -150,7 +150,7 @@ ol.documents li.scheduled .details h1>small { color: #699DE3; }
 ol.documents li.awaiting_attention { background-color: #fff9e5; }
 ol.documents li.awaiting_attention h1>small { color: #00AF2E; }
 
-ol.documents li.selected_card { background-color: #CDFBDC; }
+ol.documents li.selected { background-color: #CDFBDC; }
 ol.documents li.highlighted_card {  }
 
 /* Documents - small */
@@ -244,11 +244,14 @@ div#articles > h1, div#mediafiles > h1, div#issues > h1, div#blogs > h1 { float:
 div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs > h1 + a { margin-top: 5px; margin-left: 20px; }
 
 #actions { float: left; margin: 0 2em;  padding-bottom: 0.25em; }
+#actions a { float: left; }
 #actions button { float: left;font-size: 1em; }
-#actions .batch_actions { float: left; margin: 0 1em; position: relative;}
-#actions .batch_actions input { background: none; border: none; padding: 0.25em 0.5em; font-size: 1em; cursor: pointer;}
-#actions .batch_actions input:hover { color: #515151;}
-#actions .batch_actions .drop_down_menu { z-index: 100; }
+#actions .batch_actions { float: left; margin: 0 1em; position: relative; top: -1px; }
+#actions .batch_actions input { background: none; width: 100%; text-align: left; border: none; padding: 0.25em 0.5em; font-size: 1em; cursor: pointer;}
+#actions .batch_actions input:hover { color: white;  background-color: #3D9BDF; }
+#actions .batch_actions .drop_down_menu { z-index: 100; width: 150px; }
+
+.action h1 { margin-bottom: 10px; }
 
 .search { float: right; clear: right; }
 .search input { padding: 0.25em; font-size: 1.2em; color: #515151;}

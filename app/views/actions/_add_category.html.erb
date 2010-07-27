@@ -1,0 +1,5 @@
+<div class="action grid_6 prefix_2 suffix_4">
+	<h1>Add to category</h1>
+	<p>The selected documents will be added to the selected category.</p>
+	<p><%= select_tag("options[category_id]", options_for_category_select(@account.categories, :include_blank => false))%> <%= button_link_to_submit "Add", :class=>"save large" %></p>
+</div>

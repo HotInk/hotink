@@ -47,14 +47,29 @@ describe Action do
   end
   
   describe "Set section action" do
-    before do
-      @article = Factory(:article)
-      @category = Factory(:category, :account => @article.account)
-      SetSectionAction.new(@article, :category_id => @category.id).execute
+    context "with category" do
+      before do
+        @article = Factory(:article)
+        @category = Factory(:category, :account => @article.account)
+        SetSectionAction.new(@article, :category_id => @category.id).execute
+      end
+    
+      it "should make category into document's section" do
+        @article.section.should == @category
+      end
     end
     
-    it "should make category into document's section" do
-      @article.section.should == @category
+    context "with no category" do
+      before do
+        @article = Factory(:article)
+        @category = Factory(:category, :account => @article.account)
+        @article.categories << @category
+        SetSectionAction.new(@article, :category_id => "").execute
+      end
+    
+      it "should make category into document's section" do
+        @article.section.should be_nil
+      end
     end
   end
   

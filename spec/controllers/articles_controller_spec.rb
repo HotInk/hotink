@@ -125,10 +125,11 @@ describe ArticlesController do
   describe "GET to edit_multiple" do
     before do
       @articles = (1..3).collect{ Factory(:article, :account => @account) }
-      get :edit_multiple, :article_ids => @articles.collect{|a| a.id}
+      get :edit_multiple, :update_action_name => "publish", :article_ids => @articles.collect{|a| a.id}
     end
     
-    it { should assign_to(:article).with(@articles) }
+    it { should assign_to(:update_action_name).with("publish") }
+    it { should assign_to(:articles).with(@articles) }
   end
 
   describe "GET to new" do
@@ -284,6 +285,38 @@ describe ArticlesController do
       
       it "should revoke current user's sign off the article" do
         @article.should_not be_signed_off_by(@user)
+      end
+    end
+  end
+  
+  describe "PUT to update_multiple" do
+    context "without options" do
+      before do
+        @articles = (1..3).collect{ Factory(:article, :account => @account) }
+        put :update_multiple, :update_action_name => "publish", :article_ids => @articles.collect{|a| a.id}
+      end
+    
+      it { should respond_with(:redirect) }
+      it { should set_the_flash }
+      it { should assign_to(:update_action_name).with("publish") }
+      it { should assign_to(:articles).with(@articles) }
+      it "should publish each article" do
+        @articles.each{|article| article.reload.should be_published }
+      end
+    end
+    
+    context "with options" do
+      before do
+        @category = Factory(:category, :account => @account)
+        @articles = (1..3).collect{ Factory(:article, :account => @account) }
+        put :update_multiple, :update_action_name => "add_category", :options => { :category_id => @category.id }, :article_ids => @articles.collect{|a| a.id}
+      end
+    
+      it { should respond_with(:redirect) }
+      it { should set_the_flash }
+      it { should assign_to(:articles).with(@articles) }
+      it "should add category" do
+        @articles.each{|article| article.categories.should include(@category) }
       end
     end
   end
