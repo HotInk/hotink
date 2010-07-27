@@ -246,7 +246,7 @@ ol.mediafiles.selectable li div.select { display: block; }
 div#articles > h1, div#mediafiles > h1, div#issues > h1, div#blogs > h1 { float: left; margin-bottom: 25px; }
 div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs > h1 + a { margin-top: 5px; margin-left: 20px; }
 
-#actions { float: left; margin: 0 2em;  padding-bottom: 0.25em; }
+#actions { float: left; margin: 0 2em;  padding-bottom: 0.4em; }
 #actions a { float: left; }
 #actions button { float: left;font-size: 1em; }
 #actions .batch_actions { float: left; margin: 0 1em; position: relative; top: -1px; }
