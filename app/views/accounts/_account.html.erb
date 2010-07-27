@@ -1,6 +1,6 @@
 <li id="account_<%= account.id %>" class="<%= cycle("even-row", "odd-row") %> clearfix">
 	<div class="account clearfix">
-		<h4><%= link_to account.name, account_url(account) %></h4>
+		<h4><%= link_to account.name, admin_url(:subdomain => account.name) %></h4>
 		<p><small>
 			Since <%= account.created_at.to_s(:standard) %><br/> 
 			<strong>Managers:</strong> <%= h account.managers_list %>

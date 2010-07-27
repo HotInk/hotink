@@ -166,7 +166,7 @@ class HotinkSso < Sinatra::Base
   get '/sso/login' do
     session[:checkpoint_return_to] = nil
     ensure_authenticated
-    redirect absolute_url("/")
+    redirect absolute_url("/admin")
   end
   
   post '/sso/login' do
@@ -181,7 +181,7 @@ class HotinkSso < Sinatra::Base
     ensure_authenticated
     return_url = session_return_to
     session[:checkpoint_return_to] = nil
-    redirect return_url || absolute_url("/")
+    redirect return_url || absolute_url("/admin")
   end
   
   get '/sso/logout' do
