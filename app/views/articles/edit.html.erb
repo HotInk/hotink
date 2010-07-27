@@ -93,12 +93,23 @@
 		</div>
 	</div>
 	
+	<div class="toolbox grid_4">
+		<h4>Comments</h4>
+		<div>
+			<%= render :partial => 'comment_status' %>
+			<% if @article.comments.blank? %>
+				<span id="documents_comments_link" class="link inactive">No comments</span>
+			<% else %>
+				<a id="documents_comments_link" href="<%= comments_path(:document_id => @article.id) %>" class="link yellow" >View <%= pluralize(@article.comments.count, 'comment')%></a>
+			<% end %>
+		</div>
+	</div>
 <% end %>
 
 <div style="display: none;">
 	<div id="bodytext_preview">
 		<h1>Bodytext preview</h1>
-		<div id="toggle_preview" class="state_control"><a href="#" class="formatted selected">Formatted</a><a href="#" class="raw_html">Raw HTML</a></div>
+		<div id="toggle_preview" class="state_control"><a href="#" class="formatted selected first">Formatted</a><a href="#" class="raw_html last">Raw HTML</a></div>
 		<hr>
 		<div id="wmd-preview">
 		</div>

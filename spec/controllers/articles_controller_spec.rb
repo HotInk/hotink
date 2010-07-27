@@ -349,4 +349,44 @@ describe ArticlesController do
       end
     end
   end
+
+  describe "comment management" do
+    before do
+      @current_user.promote_to_admin
+    end
+    
+    describe "PUT to lock_comments" do
+      before do
+        @article =  Factory(:published_article, :account => @account)
+        put :lock_comments, :id => @article.id
+      end
+      
+      it "should lock comments" do
+        @article.reload.comment_status.should eql("locked")
+      end
+    end
+    
+    describe "PUT to disable_comments" do
+      before do
+        @article =  Factory(:published_article, :account => @account)
+        put :disable_comments, :id => @article.id
+      end
+      
+      it "should disable comments" do
+        @article.reload.comment_status.should eql("disabled")
+      end
+    end
+    
+    describe "PUT to enable_comments" do
+      before do
+        @article =  Factory(:published_article, :account => @account)
+        @article.lock_comments
+        put :enable_comments, :id => @article.id
+      end
+      
+      it "should enable comments" do
+        @article.reload.comment_status.should eql("enabled")
+      end
+    end
+  end
 end

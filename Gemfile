@@ -9,6 +9,7 @@ gem "mime-types", :require => "mime/types"
 gem "bcrypt-ruby", :require => "bcrypt"
 gem "addressable"
 gem "subdomain-fu"
+gem 'state_machine'
 gem 'pacecar', '1.2.0'
 gem "paperclip", "2.3.1"
 gem "acts-as-taggable-on"

@@ -382,20 +382,20 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 												 font-size: 90%;
 											}
 									
-#bodytext_preview .state_control 			{ float: right; margin-top: 3px; font-size: 80%; font-weight: normal; }
-#bodytext_preview .state_control a			{ border: 1px solid #999; float: left; padding: 8px; color: #333; border-width: 1px 0 1px 1px;
-												-moz-border-radius-topright: 0; -moz-border-radius-bottomright: 0; 
-												-moz-border-radius-topleft: 5px; -moz-border-radius-bottomleft: 5px;
-												-webkit-border-bottom-left-radius: 5px; -webkit-border-top-left-radius: 5px; 
-												-webkit-border-bottom-right-radius: 0; -webkit-border-top-right-radius: 0; }
-#bodytext_preview .state_control a + a 		{ border-width: 1px 1px 1px ;
-												-moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px; 
-												-moz-border-radius-topleft: 0; -moz-border-radius-bottomleft: 0;
-												-webkit-border-bottom-left-radius: 0; -webkit-border-top-left-radius: 0; 
-											-webkit-border-bottom-right-radius: 5px; -webkit-border-top-right-radius: 5px; }
-#bodytext_preview .state_control a.selected { background-color: #666; color: #fAfAfA; }
-#bodytext_preview .state_control a:hover 	{ text-decoration: none; background-color: #EFEFEF; }
-#bodytext_preview .state_control a.selected:hover { background-color: #666; }
+.state_control 				{ 	float: right; margin-top: 3px; font-size: 80%; font-weight: normal; }
+.state_control a			{ 	border: 1px solid #999; float: left; padding: 8px; color: #333; border-width: 1px 0 1px 1px; }
+.state_control a.first		{ 	-moz-border-radius-topright: 0; -moz-border-radius-bottomright: 0; 
+								-moz-border-radius-topleft: 5px; -moz-border-radius-bottomleft: 5px;
+								-webkit-border-bottom-left-radius: 5px; -webkit-border-top-left-radius: 5px; 
+								-webkit-border-bottom-right-radius: 0; -webkit-border-top-right-radius: 0; }
+.state_control a.last 		{ 	border-width: 1px 1px 1px ;
+								-moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px; 
+								-moz-border-radius-topleft: 0; -moz-border-radius-bottomleft: 0;
+								-webkit-border-bottom-left-radius: 0; -webkit-border-top-left-radius: 0; 
+								-webkit-border-bottom-right-radius: 5px; -webkit-border-top-right-radius: 5px; }
+.state_control a.selected { background-color: #666; color: #fAfAfA; }
+.state_control a:hover 	{ text-decoration: none; background-color: #EFEFEF; }
+.state_control a.selected:hover { background-color: #666; }
 
 #status { margin-bottom: 10px; line-height: 1.0; font-size: 19px; font-weight: normal; }
 #status.draft span { color: #EDBE00;}
@@ -422,6 +422,14 @@ ol#document_mediafiles li .file { overflow:hidden; padding: 5px; background-colo
 
 #document_categories { line-height: 1.5; font-size: 105%; }
 #document_categories input { margin-bottom: 5px; margin-right: 5px; }
+
+#comment_status_control { margin-bottom: 10px; }
+#comment_status_control p { float: right; margin: 10px 10px 0 0; font-weight: bold; color: #333; }
+#comment_status_control a.enabled.selected { background-color: #79A988; }
+#comment_status_control a.disabled.selected { background-color: #AAA; }
+#comment_status_control a.locked.selected { background-color: #BC6765; }
+#documents_comments_link { display: block; text-align: center; font-size: 105%; padding: 5px; }
+
 
 /* Attach media modal styles */
 #upload_media_container { width: 565px; min-height: 50px; margin-bottom:0px;}

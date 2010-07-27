@@ -1,0 +1,8 @@
+<div id="comment_status_control" class="clearfix">
+	<div class="state_control">
+		<a href="<%= enable_comments_article_path(@article) %>" class="first enabled<% if @article.comments_enabled? %> selected<%end%>" data-remote="true" data-method="put">Enabled</a>
+		<a href="<%= lock_comments_article_path(@article) %>" class="locked<% if @article.comments_locked? %> selected<%end%>" data-remote="true" data-method="put">Locked</a>
+		<a href="<%= disable_comments_article_path(@article) %>" class="last disabled<% if @article.comments_disabled? %> selected<%end%>" data-remote="true" data-method="put">Disabled</a>
+	</div>
+	<p>Status</p>
+</div>

@@ -17,6 +17,6 @@ Autotest.add_hook :initialize do |at|
      filename
   }
   at.add_mapping(%r{^app/tags/.*rb$}) do |f, _|
-      at.files_matching(%r%^spec/filters/.*rb$%)
+      at.files_matching(%r%^spec/tags/.*rb$%)
   end  
 end

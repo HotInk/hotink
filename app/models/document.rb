@@ -206,6 +206,23 @@ class Document < ActiveRecord::Base
     self.mediafiles ? true : false
   end
   
+  #Comments
+  has_many :comments, :dependent => :destroy
+  
+  state_machine :comment_status, :initial => :enabled , :namespace => 'comments' do
+    event :lock do
+      transition all => :locked
+    end
+
+    event :disable do
+      transition all => :disabled
+    end
+
+    event :enable do
+      transition all => :enabled
+    end
+  end
+  
   def to_xml(options = {})
      options[:indent] ||= 2
      xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])

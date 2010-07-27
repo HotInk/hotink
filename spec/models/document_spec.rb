@@ -52,7 +52,6 @@ describe Document do
     end
   end
   
-  
   describe "publication status" do
     before(:each) do
       @untouched = Factory(:article)
@@ -209,6 +208,40 @@ describe Document do
       new_user = Factory(:user)
       @article.owner = new_user
       @article.owner.should == new_user   
+    end
+  end
+
+  describe "comments" do
+    it { should have_many(:comments).dependent(:destroy) } 
+    
+    describe "comment status" do
+      describe "load default from setting" do
+        it "should enable comments if no default is specified" do
+          document = Factory(:document)
+          document.comment_status.should eql('enabled')
+        end
+
+        it "should use default, if specified"
+      end
+
+      it "should lock comments" do
+       document = Factory(:document)
+       document.lock_comments
+       document.comment_status.should eql('locked')
+     end
+
+      it "should disable comments" do
+        document = Factory(:document)
+        document.disable_comments
+        document.comment_status.should eql('disabled')
+      end
+
+      it "should enable comments" do
+        document = Factory(:document)
+        document.lock_comments
+        document.enable_comments
+        document.comment_status.should eql('enabled')
+      end
     end
   end
 end

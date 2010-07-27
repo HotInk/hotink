@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.public_blogs '/blogs', :controller => :public_blogs, :action => :index
   map.public_blog '/blogs/:id', :controller => :public_blogs, :action => :show
   map.public_blog_entry '/blogs/:blog_slug/:id', :controller => :public_entries, :action => :show
+  map.public_comments '/comments', :controller => :public_comments, :action => :create, :conditions => { :method => :post }
 
   map.front_page_preview '/front_page/preview', :controller => :public_front_pages, :action => :preview 
   
@@ -21,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :password_resets
     admin.resources :account_invitations, :only => [:create, :edit, :update, :destroy]
     admin.resources :accounts
-    admin.resources :articles, :collection => { :search => :get, :edit_multiple => :get, :update_multiple => :put } do |article|
+    admin.resources :articles, :collection => { :search => :get, :edit_multiple => :get, :update_multiple => :put }, :member => { :lock_comments => :put, :enable_comments => :put, :disable_comments => :put } do |article|
       article.resources :mediafiles
       article.resources :authors
       article.resources :tags

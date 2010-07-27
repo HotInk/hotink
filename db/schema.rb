@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100723020601) do
+ActiveRecord::Schema.define(:version => 20100727170104) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -96,6 +96,21 @@ ActiveRecord::Schema.define(:version => 20100723020601) do
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
 
+  create_table "comments", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.text     "body"
+    t.string   "website"
+    t.string   "ip_address"
+    t.integer  "flags"
+    t.integer  "account_id"
+    t.integer  "document_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["document_id"], :name => "index_comments_on_document_id"
+
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
@@ -134,6 +149,7 @@ ActiveRecord::Schema.define(:version => 20100723020601) do
     t.string   "status"
     t.datetime "published_at"
     t.integer  "blog_id"
+    t.string   "comment_status",  :default => "enabled"
   end
 
   create_table "email_templates", :force => true do |t|
@@ -196,7 +212,7 @@ ActiveRecord::Schema.define(:version => 20100723020601) do
     t.string   "title"
     t.text     "description"
     t.string   "link_alternate"
-    t.datetime "date"
+    t.date     "date"
     t.integer  "account_id"
     t.string   "type"
     t.datetime "created_at"
@@ -349,15 +365,15 @@ ActiveRecord::Schema.define(:version => 20100723020601) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                              :null => false
-    t.string   "email",                              :null => false
-    t.string   "crypted_password",                   :null => false
-    t.string   "password_salt",                      :null => false
-    t.string   "persistence_token",                  :null => false
-    t.string   "single_access_token"
-    t.string   "perishable_token"
-    t.integer  "login_count",         :default => 0, :null => false
-    t.integer  "failed_login_count",  :default => 0, :null => false
+    t.string   "login",               :default => "", :null => false
+    t.string   "email",               :default => "", :null => false
+    t.string   "crypted_password",    :default => "", :null => false
+    t.string   "password_salt",       :default => "", :null => false
+    t.string   "persistence_token",   :default => "", :null => false
+    t.string   "single_access_token", :default => "", :null => false
+    t.string   "perishable_token",    :default => "", :null => false
+    t.integer  "login_count",         :default => 0,  :null => false
+    t.integer  "failed_login_count",  :default => 0,  :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"

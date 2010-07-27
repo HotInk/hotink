@@ -123,6 +123,25 @@ class ArticlesController < ApplicationController
     redirect_to articles_url
   end
 
+  # GET /articles/1/lock_comments
+  def lock_comments
+    @article = @account.articles.find(params[:id])
+    @article.lock_comments
+  end
+  
+  # GET /articles/1/disable_comments  
+  def disable_comments
+    @article = @account.articles.find(params[:id])
+    @article.disable_comments
+  end
+  
+  # GET /articles/1/enable_comments
+  def enable_comments
+    @article = @account.articles.find(params[:id])
+    @article.enable_comments
+  end
+
+
   # DELETE /articles/1
   def destroy
     @article = @account.articles.find(params[:id])

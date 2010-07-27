@@ -9,13 +9,14 @@ describe Account do
   it { should validate_presence_of(:name).with_message(/must have a name/) }
   it { should validate_uniqueness_of(:name).with_message(/must be unique/) }
   
+  it { should have_many(:documents).dependent(:destroy) }
   it { should have_many(:articles) }
-  it { should have_many(:email_templates) }
-  it { should have_many(:blogs) }
-  it { should have_many(:lists) }
-  it { should have_many(:pages) }
-  
-  it { should have_one(:membership) }
+  it { should have_many(:email_templates).dependent(:destroy) }
+  it { should have_many(:blogs).dependent(:destroy) }
+  it { should have_many(:lists).dependent(:destroy) }
+  it { should have_many(:pages).dependent(:destroy) }
+    
+  it { should have_many(:comments).dependent(:destroy) }
   
   it "should keep track of users invited to have access to the account" do
     should have_many(:user_invitations)
@@ -92,7 +93,7 @@ describe Account do
   end
   
   describe "network" do
-    it { should have_many(:network_memberships) }
+    it { should have_many(:network_memberships).dependent(:destroy)  }
     it { should have_many(:network_members) }
     
     describe "membership" do

@@ -2,37 +2,36 @@ class Account < ActiveRecord::Base
   include Pacecar
   
   # Main data models (and STI subclasses)
-  has_many :mediafiles, :dependent => :delete_all
+  has_many :mediafiles, :dependent => :destroy
   has_many :images
   has_many :audiofiles
-  has_many :documents, :dependent => :delete_all
+  has_many :documents, :dependent => :destroy
   has_many :articles 
   has_many :entries
-  has_many :authors, :dependent => :delete_all
-  has_many :categories, :order => "position", :conditions => { :active => true }, :dependent => :delete_all
-  has_many :sections, :order => "parent_id, position", :dependent => :delete_all
-  has_many :blogs, :dependent => :delete_all
-  has_many :issues, :dependent => :delete_all, :order => "date desc"
-  has_many :email_templates
-  has_many :lists
-  has_many :pages
-  
-  has_one :membership
-  has_many :user_invitations
+  has_many :authors, :dependent => :destroy
+  has_many :categories, :order => "position", :conditions => { :active => true }, :dependent => :destroy
+  has_many :sections, :order => "parent_id, position", :dependent => :destroy
+  has_many :blogs, :dependent => :destroy
+  has_many :issues, :dependent => :destroy, :order => "date desc"
+  has_many :email_templates, :dependent => :destroy
+  has_many :lists, :dependent => :destroy
+  has_many :pages, :dependent => :destroy
+  has_many :comments, :dependent  => :destroy
+  has_many :user_invitations, :dependent => :destroy
   has_many :active_user_invitations, :class_name => 'UserInvitation', :conditions => { :redeemed => false }
   
   has_recent_records :articles
   named_scope :by_most_recently_published,lambda { {:joins => 'INNER JOIN documents ON documents.account_id=accounts.id', :group => 'accounts.id', :order => 'documents.updated_at', :conditions => ["documents.status = 'Published' AND documents.published_at <= ?", Time.now.utc]} }
   
   # Authentication
-  has_many :users, :dependent => :delete_all
+  has_many :users, :dependent => :destroy
   
   # Join models
-  has_many :authorships, :dependent => :delete_all
-  has_many :photocredits, :dependent => :delete_all
-  has_many :printings, :dependent => :delete_all
-  has_many :sortings, :dependent => :delete_all
-  has_many :waxings, :dependent => :delete_all
+  has_many :authorships, :dependent => :destroy
+  has_many :photocredits, :dependent => :destroy
+  has_many :printings, :dependent => :destroy
+  has_many :sortings, :dependent => :destroy
+  has_many :waxings, :dependent => :destroy
   
   # Special category functionality 
   has_many :main_categories, :class_name => "Category", :order => "position", :conditions => {:parent_id => nil } # An account's top-level categories
@@ -144,8 +143,8 @@ class Account < ActiveRecord::Base
   end
     
   # Network
-  has_many :checkouts
-  has_many :network_memberships, :class_name => "Membership", :foreign_key => :network_owner_id 
+  has_many :checkouts, :dependent => :destroy
+  has_many :network_memberships, :class_name => "Membership", :foreign_key => :network_owner_id, :dependent => :destroy
   has_many :network_members, :through => :network_memberships, :source => :account
     
   def network_owner?
