@@ -68,8 +68,11 @@ class EntriesController < ApplicationController
       action.execute
     end
     
-    flash[:notice] = "Articles updated."
-    
+    if @update_action_name=="delete"
+      flash[:notice] = "Entries deleted."
+    else
+      flash[:notice] = "Entries updated."
+    end    
     redirect_to blog_url(@entries.first.blog)
   end
   

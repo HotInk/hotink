@@ -40,8 +40,8 @@
 .cancel:active span { background-position:0 -395px; color: #FFF; outline:none; }
 .cancel span{ background:#E62424 url('/images/bg-button-red.gif') repeat-x 0 -4px; }
 	
-.selected span { color:#FFF; background-image: none; background-color:  #6A6A6A;/*#75AAF1;*/ }
-.selected:hover span, .selected:hover span span, .selected:focus span, .selected:focus span span { cursor:pointer; border-color:#9cf !important; color:#FFF; }
+btn.selected span { color:#FFF; background-image: none; background-color:  #6A6A6A;/*#75AAF1;*/ }
+btn.selected:hover span, btn.selected:hover span span, btn.selected:focus span, btn.selected:focus span span { cursor:pointer; border-color:#9cf !important; color:#FFF; }
 
 .publish { color: white; }
 .publish span, .publish span span { border-color:#999 !important; }

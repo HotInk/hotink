@@ -9,6 +9,28 @@ $('.pagination.remote a').live('click', function (e) {
 
 //Runs once the page is loaded
 $(function(){
+	
+	// Document page list item select
+	$('.select_all').click(function(event){
+		if ($(event.currentTarget).attr('checked')) {
+			$('ol.documents.selectable li').addClass('selected');
+			$('ol.documents.selectable .select input, .select_all').attr('checked', true);
+		} else {
+			$('ol.documents.selectable li').removeClass('selected');
+			$('ol.documents.selectable .select input, .select_all').attr('checked', false);
+		}
+	});
+	
+	$('ol.documents.selectable li').click(function(event){ 
+		if ($(event.currentTarget).hasClass('selected')) {
+			$(event.currentTarget).removeClass('selected');
+			$(event.currentTarget).find('.select input').attr('checked', false);
+		} else {
+			$(event.currentTarget).addClass('selected');
+			$(event.currentTarget).find('.select input').attr('checked', true);
+		}
+	});
+	
 	// Create draggable articles, if present
 	$('.documents.draggable li').draggable({ revert: true, containment: "#page_container" });
 	

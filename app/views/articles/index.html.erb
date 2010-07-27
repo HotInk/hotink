@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<%= render :partial=>'pagination' %>
-		<ol id="articles_list" class="documents">			
+		<ol id="articles_list" class="documents selectable">			
 			<% if (@articles.length > 0) || (@drafts && @drafts.length > 0) %>
 				<%= render @awaiting_attention if @awaiting_attention %>
 				<%= render @articles %>
@@ -44,7 +44,6 @@
 <br />
 
 <script type="text/javascript" charset="utf-8">
-
 
 </script>
 

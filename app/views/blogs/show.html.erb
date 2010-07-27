@@ -36,7 +36,7 @@
 	
 	<%= will_paginate(@entries, :inner_window => 2, :outer_window => 1) %>
 
-	<ol id ="blog_<%= @blog.id %>_entries" class="documents entries">
+	<ol id ="blog_<%= @blog.id %>_entries" class="documents entries selectable">
 		<% if @entries.empty? %>
 			<li><p style="padding: 15px 0 5px 15px;font-style:italic;">No entries yet.</p>
 		<% else %>

@@ -114,7 +114,11 @@ class ArticlesController < ApplicationController
       action.execute
     end
     
-    flash[:notice] = "Articles updated."
+    if @update_action_name=="delete"
+      flash[:notice] = "Articles deleted."
+    else
+      flash[:notice] = "Articles updated."
+    end
     
     redirect_to articles_url
   end
