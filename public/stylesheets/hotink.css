@@ -430,6 +430,19 @@ ol#document_mediafiles li .file { overflow:hidden; padding: 5px; background-colo
 #comment_status_control a.locked.selected { background-color: #BC6765; }
 #documents_comments_link { display: block; text-align: center; font-size: 105%; padding: 5px; }
 
+#comments_box 						{ width: 560px; }
+#comments_box > h2					{ float: left; margin-bottom: 5px; }
+#comments_box > p					{ float: left; margin: 22px 10px 5px 10px; }
+ol.comments							{ float: left; clear: left; width: 99%; max-height: 520px; margin-bottom: 0; overflow: auto; border: 1px solid #DEDEDE; }
+ol.comments	li						{ float: left; font-size: 85%; width: 100%; position: relative; }
+ol.comments	li + li					{ border-top: 1px dotted #CCC; }
+ol.comments	li > div				{ float: left; }
+ol.comments .details				{ width: 96%; padding: 2% 2% 1% 2%; margin-bottom: 5px; }
+ol.comments .details p				{ float: left; margin-bottom: 0; }
+ol.comments .details .delete		{ float: right; font-size: 75%; }
+ol.comments .comment 				{ width: 76%; padding: 0 2% 2% 2%; }
+ol.comments .comment .body			{ font-size: 100%; line-height: 1.2; margin-bottom: 5px; }
+ol.comments .comment .body p		{ margin-bottom: 5px; }
 
 /* Attach media modal styles */
 #upload_media_container { width: 565px; min-height: 50px; margin-bottom:0px;}

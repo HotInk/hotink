@@ -123,6 +123,14 @@ class ArticlesController < ApplicationController
     redirect_to articles_url
   end
 
+  # GET /articles/comments
+  def comments
+    @article = @account.articles.find(params[:article_id])
+    @comments = @article.comments.find(:all, :order => "created_at DESC")
+    
+    render :action => :comments, :layout => false
+  end
+
   # GET /articles/1/lock_comments
   def lock_comments
     @article = @account.articles.find(params[:id])

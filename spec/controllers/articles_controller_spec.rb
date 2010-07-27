@@ -355,6 +355,17 @@ describe ArticlesController do
       @current_user.promote_to_admin
     end
     
+    describe "GET to comments" do
+      before do
+        @article =  Factory(:published_article, :account => @account)
+        get :comments, :article_id => @article.id
+      end
+
+      it { should respond_with(:success) }
+      it { should_not render_with_layout }
+      it { should assign_to(:article).with(@article) }
+    end
+    
     describe "PUT to lock_comments" do
       before do
         @article =  Factory(:published_article, :account => @account)

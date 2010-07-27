@@ -1,0 +1,12 @@
+<li id="comment_<%= comment.id %>" class="<%= cycle('odd', 'even') %>">
+	<div class="details">
+		<p><strong><%= comment.name %></strong> <%= comment.email %></p>
+		<div class="delete">
+		</div>
+	</div>
+	<div class="comment">
+		<div class="body">
+			<%= RDiscount.new(comment.body).to_html %>
+		</div>
+	</div>
+</li>

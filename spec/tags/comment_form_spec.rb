@@ -13,7 +13,7 @@ describe CommentForm do
     output = Liquid::Template.parse(template).render({ 'article' => ArticleDrop.new(@article) }, :registers => { :form_authenticity_token => "authenticity_token" })
     output.should == %[
       <form id="comment-form" method="post" action="/comments">
-        <input type="hidden" name="comment[article_id]" value=#{@article.id} />
+        <input type="hidden" name="comment[document_id]" value=#{@article.id} />
         <input type="hidden" name="authenticity_token" value="authenticity_token" />
       </form>
     ]
@@ -28,7 +28,7 @@ describe CommentForm do
     output = Liquid::Template.parse(template).render({ 'article' => ArticleDrop.new(@article) }, :registers => { :form_authenticity_token => "authenticity_token" })
     output.should == %[
       <form id="comment-form" method="post" action="/comments">
-        <input type="hidden" name="comment[article_id]" value=#{@article.id} />
+        <input type="hidden" name="comment[document_id]" value=#{@article.id} />
         <input type="hidden" name="authenticity_token" value="authenticity_token" />
         <fieldset class="inputs">
           <style>#comment-form .inputs .email_confirm_input { display:none }</style>
@@ -64,7 +64,7 @@ describe CommentForm do
     output = Liquid::Template.parse(template).render({ 'article' => ArticleDrop.new(@article) }, :registers => { :form_authenticity_token => "authenticity_token" })
     output.should == %[
       <form id="comment-form" method="post" action="/comments">
-        <input type="hidden" name="comment[article_id]" value=#{@article.id} />
+        <input type="hidden" name="comment[document_id]" value=#{@article.id} />
         <input type="hidden" name="authenticity_token" value="authenticity_token" />
         <input type="submit" value="Submit" />
       </form>

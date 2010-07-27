@@ -17,7 +17,7 @@ class CommentForm < Liquid::Block
     }
     
     %(<form id="comment-form" method="post" action="/comments">
-        <input type="hidden" name="comment[article_id]" value=#{context[@article_name].id} />
+        <input type="hidden" name="comment[document_id]" value=#{context[@article_name].id} />
         <input type="hidden" name="authenticity_token" value="#{context.registers[:form_authenticity_token]}" />#{render_all(@nodelist, context)}</form>)
   end
   

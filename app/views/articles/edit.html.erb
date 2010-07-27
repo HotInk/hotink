@@ -100,7 +100,7 @@
 			<% if @article.comments.blank? %>
 				<span id="documents_comments_link" class="link inactive">No comments</span>
 			<% else %>
-				<a id="documents_comments_link" href="<%= comments_path(:document_id => @article.id) %>" class="link yellow" >View <%= pluralize(@article.comments.count, 'comment')%></a>
+				<a id="documents_comments_link" href="<%= article_comments_path(@article) %>" class="link yellow" >View <%= pluralize(@article.comments.count, 'comment')%></a>
 			<% end %>
 		</div>
 	</div>
@@ -136,6 +136,8 @@
 				});
 				event.preventDefault();
 			});
+			
+			$("a#documents_comments_link").fancybox({ 'centerOnScroll': true });
 			
 			$('#upload_media_form form').live('submit', function(){
 				$.fancybox.showActivity();

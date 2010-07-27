@@ -23,6 +23,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :account_invitations, :only => [:create, :edit, :update, :destroy]
     admin.resources :accounts
     admin.resources :articles, :collection => { :search => :get, :edit_multiple => :get, :update_multiple => :put }, :member => { :lock_comments => :put, :enable_comments => :put, :disable_comments => :put } do |article|
+      article.comments '/comments', :controller => :articles, :action => :comments, :conditions => { :method => :get }
       article.resources :mediafiles
       article.resources :authors
       article.resources :tags
