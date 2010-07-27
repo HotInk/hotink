@@ -36,7 +36,7 @@ describe NetworksController do
     
     context "with a query" do
       before do
-        @searched_articles = @memberships.collect { |membership| Factory(:published_article, :title => "Experimental testing", :account => @membership.account) }
+        @searched_articles = @memberships.collect { |membership| Factory(:published_article, :title => "Experimental testing", :account => membership.account) }
         Article.should_receive(:search).and_return(@searched_articles)
         get :search, :q => "Experimental testing"
       end

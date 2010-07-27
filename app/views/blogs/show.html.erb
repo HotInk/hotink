@@ -1,9 +1,10 @@
 
-<div class="grid_4 alpha">
-		<h1><%= @blog.title %></h1> 
+<div class="grid_4 alpha suffix_8">
+		<h1 style="float:left; margin-right: 15px;"><%= @blog.title %></h1> <%= link_to 'New entry', new_blog_entry_path(@blog), :class => "link green", :style => "float:left;margin-top:10px;" %>
+		
 		<% if @blog.image_file_name %><%= image_tag @blog.image.url(:thumb), :style => "border: 1px solid #AAA;" %><% end %>
 </div>
-<div class="grid_8 omega" style="padding-top:7px;" >
+<div class="prefix_4 grid_8 omega" style="padding-top:7px;" >
 	<% if permit? "admin or manager of account" %><%= link_to 'Delete blog', edit_blog_path(@blog), :class => "link red", :style => "float:right;clear:right;margin-left:10px;", 'data-confirm' => "Are you REALLY sure you want to delete this blog?\n\nAll data will be lost and cannot be recovered.\n\nPress 'OK' to delete this blog or 'Cancel' to return." %> <% end %>
 	<% if permit? "admin or (manager of account) or (editor of blog)" %><%= link_to 'Edit blog info', edit_blog_path(@blog), :class => "link blue", :style => "float:right;" %><% end %>
 	<div style="float:right;clear:right;padding:15px 0; line-height: 1.3; text-align: right;">
@@ -12,8 +13,7 @@
 	 	<% if permit? "admin or (manager of account) or (editor of blog)" %><%= link_to 'Manage contributors', manage_contributors_blog_path(@blog), :class => "link yellow", :style => "margin-left:10px;" %><% end %>
 	</div>
 </div>
-<p class="grid_12 alpha"><%= link_to 'New entry', new_blog_entry_path(@blog), :class => "link green", :style => "float:left;margin-top:10px;" %></p>
-<p class="grid_12 alpha"><%= @blog.description %></p>
+<% unless @blog.description.blank? %><p class="grid_12 alpha"><%= @blog.description %></p><% end %>
 <div class="select_all_wrap clearfix">
 	<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
 </div>
