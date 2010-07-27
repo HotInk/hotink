@@ -9,6 +9,14 @@ describe DashboardsController do
     @current_user.promote_to_admin
     controller.stub!(:current_user).and_return(@current_user)
   end
+  
+  describe "GET to dashboard redirect" do
+    before do
+      get :dashboard_redirect
+    end
+    
+    it { should respond_with(:redirect) }
+  end
                     
   describe "GET to show" do
     before do

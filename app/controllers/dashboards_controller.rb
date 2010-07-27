@@ -3,6 +3,10 @@ class DashboardsController < ApplicationController
   permit 'admin or staff of account'
   
   layout 'hotink'
+
+  def dashboard_redirect
+    redirect_to :action => :show
+  end
   
   def show
     @lead_articles = @account.lead_article_ids.nil? ? [] : @account.lead_article_ids.collect{ |id| @account.articles.find_by_id(id) }

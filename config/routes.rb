@@ -16,6 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.front_page_preview '/front_page/preview', :controller => :public_front_pages, :action => :preview 
   
   # Admin routes
+  map.admin_url '/admin', :controller => :dashboards, :action => :dashboard_redirect
   map.with_options(:path_prefix => "/admin") do |admin|
     admin.resources :password_resets
     admin.resources :account_invitations, :only => [:create, :edit, :update, :destroy]
