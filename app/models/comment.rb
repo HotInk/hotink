@@ -14,4 +14,16 @@ class Comment < ActiveRecord::Base
   
   validates_presence_of :ip_address
   validates_format_of :ip_address, :with => /\A(?:25[0-5]|(?:2[0-4]|1\d|[1-9])?\d)(?:\.(?:25[0-5]|(?:2[0-4]|1\d|[1-9])?\d)){3}\z/ 
+
+  define_index do
+    indexes name
+    indexes email
+    indexes body
+    indexes document.title
+
+    has account_id
+    
+    set_property :delta => :delayed
+  end
+
 end

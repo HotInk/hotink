@@ -51,7 +51,7 @@ describe NetworksController do
     
     context "with no query" do
       before do
-        get :search, :account_id => @account.id
+        get :search
       end
       
       it { should respond_with(:success) }

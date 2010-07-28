@@ -12,6 +12,8 @@
 			<li <%= 'class="current"' if controller_name == "mediafiles" %>><%= link_to "Media", mediafiles_url %></li>
 			<li <%= 'class="current"' if controller_name == "issues" %>><%= link_to "Issues", issues_url %></li>
 			<li <%= 'class="current"' if (controller_name=="pages") %>><%= link_to "Pages",pages_url %></li>
+			<li <%= 'class="current"' if (controller_name=="comments") %>><%= link_to "Comments", comments_path %></li>
+
 			
 			<% if @account.network_owner? %><li style="float:right;" <%= 'class="current"' if (controller_name=="networks") %>><%= link_to "Network", network_url %></li><% end %>
 			<li style="float:right;" <%= 'class="current"' if (controller_name=="designs"||controller_name=="templates"||controller_name=="template_files") %>><%= link_to "Design", current_design_url %></li>

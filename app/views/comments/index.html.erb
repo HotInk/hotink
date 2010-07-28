@@ -1,0 +1,16 @@
+<h1 style="margin-left:10px;">Comments</h1>
+<div class="search" style="float:right; margin-left: 20px; margin-right:10px;">
+	<form action="/admin/comments/search" method="GET">
+		<input type="text" name="q" class="text_input user" onfocus="if($(this).val()=='Search comments') $(this).val('');" onblur="if($(this).val()=='') $(this).val('Search comments');" value="<%=h( @search_query || "Search comments") %>" />
+		<%= button_link_to_submit "Go" %>
+	</form>
+</div>
+<div class="grid_12"><%= will_paginate(@articles) %></div>
+<ol id="all_comments" class="comments grid_12">
+	<% if @comments.blank? %>
+		<li><p style="padding: 15px 0 5px 15px;font-style:italic;">No comments yet.</p>
+	<% else %>
+		<%= render @comments %>
+	<% end %>
+</ol>
+<div class="grid_12"><%= will_paginate(@articles) %></div>

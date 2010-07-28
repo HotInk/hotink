@@ -1,0 +1,13 @@
+<p style="margin-left:10px;"><%= link_to("&laquo Back", comments_url )%></p>
+<h1 style="margin-left:10px;">Search for &ldquo;<%= @search_query %>&rdquo;</h1>
+<div class="search" style="float:right; margin-left: 20px; margin-right:10px;">
+	<form action="/admin/comments/search" method="GET">
+		<input type="text" name="q" class="text_input user" onfocus="if($(this).val()=='Search comments') $(this).val('');" onblur="if($(this).val()=='') $(this).val('Search comments');" value="<%=h( @search_query || "Search comments") %>" />
+		<%= button_link_to_submit "Go" %>
+	</form>
+</div>
+<div class="grid_12"><% unless @comments.blank? %><%= will_paginate(@comments) %><% end %></div>
+<ol id="all_comments" class="comments grid_12">
+	<%= render :partial => 'comment', :collection => @comments %>
+</ol>
+<div class="grid_12"><% unless @comments.blank? %><%= will_paginate(@comments) %><% end %></div>

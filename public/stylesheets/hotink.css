@@ -494,6 +494,9 @@ ol#document_mediafiles li .file { overflow:hidden; padding: 5px; background-colo
 .network_image_large img { border: 1px solid #AAA;  }
 .network_image_large .caption { padding: 10px 0; margin-bottom: 0px; font-family:georgia,"times new roman",times, serif; }
 
+
+
+
 /* Edit media modal styles 
 --------------------------------*/
 #edit_media_container { min-height: 50px; margin-bottom:0px; padding:0px;}
@@ -605,6 +608,15 @@ div.blue { border: solid 1px #CEE2F2; background-color: #F0F5FF; }
 .progressBarStatus { margin-top: 2px; width: 337px; font-size: 7pt;	text-align: left; white-space: nowrap;}
 
 a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; background-image: url('/images/token_x_red.gif'); margin: 3px; float: right; }
+
+/*-----------------------------------
+/*		Comment styles
+/*---------------------------------------*/
+ol#all_comments li { width: 100%; float: left; position: relative; }
+ol#all_comments .details { float: left; width: 20%; padding: 2%; margin-right: 1%; }
+ol#all_comments .details p { margin-bottom: 10px; }
+ol#all_comments .details .delete { position: absolute; top: 15px; right: 15px; }
+ol#all_comments .comment { float: left; width: 50%; margin-right: 21%; padding: 2%; }
 
 /*-----------------------------------
 /*		Blog styles

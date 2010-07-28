@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100727170104) do
+ActiveRecord::Schema.define(:version => 20100728030654) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20100727170104) do
     t.integer  "document_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "delta"
   end
 
   add_index "comments", ["document_id"], :name => "index_comments_on_document_id"
