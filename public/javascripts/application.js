@@ -31,6 +31,10 @@ $(function(){
 		}
 	});
 	
+	$("ol.documents.selectable li a").click(function(event){
+	  event.stopPropagation();
+	});
+	
 	// Create draggable articles, if present
 	$('.documents.draggable li').draggable({ revert: true, containment: "#page_container" });
 	

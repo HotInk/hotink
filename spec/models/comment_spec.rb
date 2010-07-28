@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Comment do
+  it { should belong_to(:account) }
+  it { should validate_presence_of(:account) }
   
   it { should belong_to(:document) }
   it { should validate_presence_of(:document) }

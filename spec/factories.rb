@@ -65,3 +65,11 @@ Factory.define :checkout do |c|
   c.original_article { Factory(:article) }
   c.duplicate_article { Factory(:article) }
 end
+
+Factory.define :comment do |c|
+  c.document { Factory(:document) }
+  c.sequence(:name) { |n| "Commenter ##{n}" }
+  c.sequence(:email) { |n| "commenter#{n}@commentmail.com" }
+  c.ip_address "111.1.111.11"
+  c.body "Has anybody said this yet?"
+end

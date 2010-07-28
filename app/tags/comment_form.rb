@@ -14,7 +14,7 @@ class CommentForm < Liquid::Block
     context['form'] = {
       'inputs' => inputs_helper,
       'submit_button' => submit_button_helper
-    }
+    }        
     
     %(<form id="comment-form" method="post" action="/comments">
         <input type="hidden" name="comment[document_id]" value=#{context[@article_name].id} />

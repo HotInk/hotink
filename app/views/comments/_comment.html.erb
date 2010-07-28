@@ -1,7 +1,12 @@
-<li id="comment_<%= comment.id %>" class="<%= cycle('odd', 'even') %>">
+<li id="comment_<%= comment.id %>" class="<%= cycle('odd-row', 'even-row') %>">
 	<div class="details">
-		<p><strong><%= comment.name %></strong> <%= comment.email %></p>
+		<p><strong><%= comment.name %></strong></p>
+		<p><%= comment.email %></p>
+		<p style="font-weight: 200;"><%= comment.ip_address %></p>
+		<!-- <div class="delete"></div> -->
+		<p style="color:blue;"><%= comment.created_at.to_s(:standard) %></p>
 		<div class="delete">
+			<%= link_to "Delete", comment, :class => "link red small", 'data-remote' => "true", 'data-method' => "delete", 'data-confirm' => "Are you sure you want to delete this comment?" %>
 		</div>
 	</div>
 	<div class="comment">

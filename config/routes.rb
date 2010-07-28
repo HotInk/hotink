@@ -39,6 +39,7 @@ ActionController::Routing::Routes.draw do |map|
       end
     end
     admin.resources :categories, :member => { :deactivate => :put, :reactivate => :put }
+    admin.resources :comments
     admin.current_design '/current_design', :controller => :designs, :action => :current_design
     admin.resource :dashboard
     admin.resources :designs do |design|
