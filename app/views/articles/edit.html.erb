@@ -10,25 +10,47 @@
 		<h4>Status</h4>
 		<div>
 			<% if @article.published? %>
-			<p id="status" class="published">
-				<span>Published</span> <strong><%= @article.published_at.to_s(:date) %></strong><br />
-				<small>at <strong><%= @article.published_at.to_s(:time) %></strong>
-				(<%= distance_of_time_in_words_to_now(@article.published_at) %> ago)</small>
+				<p id="status" class="published">
+					<span>Published</span> <strong><%= @article.published_at.to_s(:date) %></strong><br />
+					<small>at <strong><%= @article.published_at.to_s(:time) %></strong>
+					(<%= distance_of_time_in_words_to_now(@article.published_at) %> ago)</small>
+				</p>
 			<% elsif @article.scheduled? %>
-			<p id="status" class="scheduled">
-				<span>Scheduled</span> <strong><%= @article.published_at.to_s(:date) %></strong><br />
-				<small>at <strong><%= @article.published_at.to_s(:time) %></strong>
-				(<%= distance_of_time_in_words_to_now(@article.published_at) %> from now)</small>
+				<p id="status" class="scheduled">
+					<span>Scheduled</span> <strong><%= @article.published_at.to_s(:date) %></strong><br />
+					<small>at <strong><%= @article.published_at.to_s(:time) %></strong>
+					(<%= distance_of_time_in_words_to_now(@article.published_at) %> from now)</small>
+				</p>
+			<% elsif @article.awaiting_attention? %>	
+				<% @article.sign_offs.last.tap do |last_sign_off| %>
+					<p id="status" class="awaiting_attention">
+							<span>Signed off</span> <small>by <strong><%= last_sign_off.user.name %></strong>,
+							 	<%=last_sign_off.created_at.to_s(:date) %> at <%= last_sign_off.created_at.to_s(:time) %></small></p>
+					</p>
+					<% if @article.sign_offs.size > 1 %>
+						<p><small>Also signed off:</small></p>
+						<ul style="margin: 0 0 10px 0;">
+							<% @article.sign_offs.all(:order => 'created_at desc').each do |sign_off| %>
+								<% unless sign_off == last_sign_off %><li><small><strong style="font-weight: 600;"><%= sign_off.user.name %></strong> (<%=sign_off.created_at.to_s(:date) %> at <%= sign_off.created_at.to_s(:time) %>)</small></li><% end %>
+							<% end %>
+						</ul>
+					<% end %>
+				<% end %>
 			<% else %>
-			<p id="status" class="draft">
-				<span>Draft</span>
+				<p id="status" class="draft">
+					<span>Draft</span>
+				</p>
 			<% end %>
-			</p>
 			<div id="publish">
 				<% if @article.status == "Published" -%>
 					<%= form.submit "Unpublish", :class => "article_unpublish" %> <input type="button" value="Reschedule" class="show_schedule" />
 				<% else -%>
 					<%= form.submit "Publish", :class => "article_publish" %> <input type="button" value="Specify date" class="show_schedule" />
+				<% end %>
+				<% if @article.draft? || (@article.awaiting_attention? && !@article.signed_off_by?(current_user)) %>
+					<%= form.submit "Sign off", :class=>"article_sign_off" %>
+				<% elsif @article.awaiting_attention? && @article.signed_off_by?(current_user) %>
+					<%= form.submit "Revoke sign off", :class=>"article_revoke_sign_off" %>
 				<% end %>
 			</div>
 			<%= form.hidden_field :status %>

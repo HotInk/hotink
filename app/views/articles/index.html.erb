@@ -31,11 +31,10 @@
 		</div>
 		<%= render :partial=>'pagination' %>
 		<ol id="articles_list" class="documents selectable">			
-			<% if (@articles.length > 0) || (@drafts && @drafts.length > 0) %>
-				<%= render @awaiting_attention if @awaiting_attention %>
-				<%= render @articles %>
+			<% if @articles.blank? %>
+				<li><p style="padding: 15px 0 5px 15px;font-style:italic;">No articles yet.</p></li>
 			<% else %>
-			<li><p style="padding: 15px 0 5px 15px;font-style:italic;">No articles yet.</p>
+				<%= render @articles %>
 			<% end %>
 		</ol>
 	<% end %> 

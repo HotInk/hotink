@@ -82,14 +82,11 @@ class ArticlesController < ApplicationController
         end
       elsif params[:article][:status]=="Awaiting attention"
         @article.sign_off(current_user)
+      elsif params[:article][:status]=="Revoke sign off"
+        params[:article].delete(:status)
+        @article.revoke_sign_off(current_user)
       elsif params[:article][:status]==""
         @article.unpublish
-      end
-
-      if params[:article][:revoke_sign_off]
-        params[:article].delete(:revoke_sign_off)
-        @article.revoke_sign_off(current_user)
-        @article.save
       end
         
       respond_to do |format|

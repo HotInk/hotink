@@ -275,16 +275,15 @@ describe ArticlesController do
     
     describe "revoking signing off on article" do
       before do
-        @user = Factory(:user)
-        @article.owner = @user
-        controller.stub!(:current_user).and_return(@user)
+        @article.owner = @current_user
         
         put :update, :id => @article.id, :article => { :status => "Awaiting attention" }
-        put :update, :id => @article.id, :article => { :revoke_sign_off => "true" }
+        put :update, :id => @article.id, :article => { :status => "Revoke sign off" }
       end
       
       it "should revoke current user's sign off the article" do
-        @article.should_not be_signed_off_by(@user)
+        @article.should_not be_signed_off_by(@current_user)
+        @article.should_not be_awaiting_attention
       end
     end
   end

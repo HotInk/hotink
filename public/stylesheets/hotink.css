@@ -335,18 +335,6 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 .toolbox > ul li + li			{ margin-top: 10px; }
 .toolbox p	 					{ margin-bottom: 0; }
 
-#printings { background-color: #fff9e5; border: 1px solid #CEE4F3; border-width: 1px 0 0 0; margin-top:0.5em; padding: 10px; }
-#printings h2 { font-weight: bold; text-decoration: underline; margin: 0 0 5px 0; font-size: 1.05em; line-height: 1.4; }
-#printings ul { margin: 0.5em 0; margin-bottom: 10px; padding-left: 0em; list-style: none; }
-#printings ul li h3, #tools #printings ul li p { margin: 0; margin-bottom: 0.25em;}
-#printings ul h3 { float: left; font-weight: normal; font-size: 1.1em;}
-#printings ul .issue_date { float:left; font-size: 1.2em; color: #999; }
-#printings ul h3 + .issue_date { padding-left: 10px; }
-#printings a.weblink { padding-left: 0.5em; font-size: 0.9em; display: block; margin-bottom: 0.5em; }
-#printings .kill_link { position: relative; top: 0.125em; left: 0.5em;}
-#printings #printing_form { margin-bottom: 0.5em; margin-left: 0.5em; }
-#printings #printing_form select { width: 60%; border: 1px solid #D4D4D4; background: none;}
-
 #article_title, #entry_title 			{ font-size: 30px; }
 #article_subtitle, #entry_subtitle 		{ font-size: 22px; }
 
@@ -401,11 +389,27 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 #status.draft span { color: #EDBE00;}
 #status.scheduled span { color: #699DE3;}
 #status.published span { color: #00DD00;}
+#status.awaiting_attention span { color: #00AF2E;}
+#status ul { margin: 10px 0; }
+
 #status small { display: block; margin-top: 5px; font-weight: 200; font-size: 60%; color: #333333;}
-#status small strong { font-weight: 500; }
+#status small strong { font-weight: 600; }
 #publish { font-size: 12px; }
 #schedule { background-color: #EFEFEF; margin-top: 5px; font-size: 90%; padding: 5px; line-height: 1.5; }
 #schedule select { margin: 2px 0; }
+
+#printings { background-color: #fff9e5; border: 1px solid #CEE4F3; border-width: 1px 0 0 0; padding: 10px; }
+#printings h2 { font-weight: bold; text-decoration: underline; margin: 0 0 5px 0; font-size: 1.05em; line-height: 1.4; }
+#printings ul { margin: 0.5em 0; margin-bottom: 10px; padding-left: 0em; list-style: none; }
+#printings ul li h3, #tools #printings ul li p { margin: 0; margin-bottom: 0.25em;}
+#printings ul h3 { float: left; font-weight: normal; font-size: 1.1em;}
+#printings ul .issue_date { float:left; font-size: 1.2em; color: #999; }
+#printings ul h3 + .issue_date { padding-left: 10px; }
+#printings a.weblink { padding-left: 0.5em; font-size: 0.9em; display: block; margin-bottom: 0.5em; }
+#printings .kill_link { position: relative; top: 0.125em; left: 0.5em;}
+#printings #printing_form { margin-bottom: 0.5em; margin-left: 0.5em; }
+#printings #printing_form select { width: 60%; border: 1px solid #D4D4D4; background: none;}
+
 ol#document_mediafiles { margin:0;}
 ol#document_mediafiles li { position:relative; float: left; width: 245px; padding:10px 15px 15px 15px; background-color: #EFEFEF; margin-bottom: 5px;  -moz-border-radius: 2px; -webkit-border-radius: 2px; }
 ol#document_mediafiles li a.detach { position: absolute; top: 2px; right: 3px; font-size: 80%; color: red; text-decoration: none; line-height: 0.8;}

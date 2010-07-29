@@ -61,7 +61,14 @@ $(function(){
 	$('form .article_unpublish').click(function(){
 		$('#article_status').val('');
 	});
+	
+	$('form .article_sign_off').click(function(){
+		$('#article_status').val('Awaiting attention');
+	});
 
+	$('form .article_revoke_sign_off').click(function(){
+		$('#article_status').val('Revoke sign off');
+	});
 	$('form .entry_publish').click(function(){
 		$('#entry_status').val('Published');
 	});
