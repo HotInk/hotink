@@ -64,6 +64,10 @@ class Account < ActiveRecord::Base
     read_attribute(:settings)
   end
   
+  def display_name
+    formal_name || name
+  end
+  
   def image_settings=(new_settings)
     account_settings = read_attribute(:settings)
     account_settings["image"] = {} if settings["image"].nil?

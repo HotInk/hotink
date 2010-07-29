@@ -13,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
   map.public_blog '/blogs/:id', :controller => :public_blogs, :action => :show
   map.public_blog_entry '/blogs/:blog_slug/:id', :controller => :public_entries, :action => :show
   map.public_comments '/comments', :controller => :public_comments, :action => :create, :conditions => { :method => :post }
+  
+  map.feed '/rss', :controller => :public_feeds, :action => :show
 
   map.front_page_preview '/front_page/preview', :controller => :public_front_pages, :action => :preview 
   

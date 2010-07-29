@@ -92,6 +92,12 @@ describe Account do
     @account.current_design.should == @design
   end
   
+  it "should return formal name as display name, if provided" do
+    @account.display_name.should == @account.name
+    @account.update_attribute(:formal_name, "New formal name")
+    @account.display_name.should == @account.formal_name
+  end
+  
   describe "network" do
     it { should have_many(:network_memberships).dependent(:destroy)  }
     it { should have_many(:network_members) }

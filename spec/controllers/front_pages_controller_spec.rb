@@ -12,7 +12,7 @@ describe FrontPagesController do
   
   describe "GET to edit" do
     before do
-      @articles = (1..5).collect{ Factory(:published_article, :account => @account) }
+      @articles = (1..5).collect{ |n|  Factory(:published_article, :account => @account, :published_at => 5.days.ago - n.hours) }
     end
     
     context "with lead articles" do
