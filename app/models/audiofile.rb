@@ -23,4 +23,11 @@ class Audiofile < Mediafile
      end
   end  
   
+  def audiofile?
+    true
+  end
+  
+  def file?
+    false
+  end
 end

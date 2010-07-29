@@ -23,6 +23,14 @@ class Image < Mediafile
   
   attr_accessor :settings
   
+  def image?
+    true
+  end
+  
+  def file?
+    false
+  end
+  
   def save_dimensions 
     self.width = Paperclip::Geometry.from_file(file.to_file(:original)).width 
     self.height = Paperclip::Geometry.from_file(file.to_file(:original)).height  

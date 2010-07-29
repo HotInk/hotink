@@ -1,9 +1,10 @@
 Factory.define :mediafile do |a|
   a.account { Factory(:account) }
+  a.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-txt.txt')) }
 end
 
 Factory.define :mediafile_with_attachment, :parent => :mediafile do |m|
-  m.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-jpg.jpg')) }
+  m.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-txt.txt')) }
 end
 
 Factory.define :detailed_mediafile, :parent => :mediafile_with_attachment do |m|
@@ -22,11 +23,17 @@ Factory.define :image, :parent => :mediafile, :class => "Image" do |i|
   i.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-jpg.jpg')) }
 end 
 
-Factory.define :horizontal_image, :parent => :image do |i|
+Factory.define :horizontal_image, :parent => :image, :class => "Image" do |i|
+  i.settings { { 
+            "thumb" => ['100>', 'jpg'],  
+            "small" => ['250>', 'jpg'],
+            "medium" => ['440>', 'jpg'],
+            "large" => ['800>', 'jpg']
+  } }
   i.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-horizontal-jpg.jpg')) }
 end
 
-Factory.define :vertical_image, :parent => :image do |i|
+Factory.define :vertical_image, :parent => :image, :class => "Image" do |i|
   i.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-vertical-jpg.jpg')) }
 end
 

@@ -143,7 +143,7 @@ describe ArticleDrop do
       it "should return the article's images" do
         output = Liquid::Template.parse( ' {% for image in article.images %} {{ image.url }} {% endfor %} '  ).render('article' => ArticleDrop.new(@article_with_some_images))
 
-        urls = @article_with_some_images.images.collect{ |i|  i.url }
+        urls = @article_with_some_images.images.collect{ |i|  i.url(:original) }
         output.should == "  #{urls.join('  ')}  "    
       end
       
@@ -160,22 +160,22 @@ describe ArticleDrop do
       describe "by proportions" do
         it "should know whether the article has a vertical image" do
           article_with_vertical_image = Factory(:article, :mediafiles => [Factory(:vertical_image)])
-          output = Liquid::Template.parse( '{% if article.has_vertical_image? %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(article_with_vertical_image))
-          output.should == " YES "
+          output = Liquid::Template.parse( '{% if article.has_vertical_image? %} PASS {% else %} FAIL {% endif %}'  ).render('article' => ArticleDrop.new(article_with_vertical_image))
+          output.should == " PASS "
 
           article_without_vertical_image = Factory(:article, :mediafiles => [Factory(:horizontal_image)])
-          output = Liquid::Template.parse( '{% if article.has_vertical_image? %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(article_without_vertical_image))
-          output.should == " NO "
+          output = Liquid::Template.parse( '{% if article.has_vertical_image? %} PASS {% else %} FAIL {% endif %}'  ).render('article' => ArticleDrop.new(article_without_vertical_image))
+          output.should == " FAIL "
         end
 
         it "should know whether the article has a horizontal image" do
           article_with_horizontal_image = Factory(:article, :mediafiles => [Factory(:horizontal_image)])
-          output = Liquid::Template.parse( '{% if article.has_horizontal_image? %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(article_with_horizontal_image))
-          output.should == " YES "
+          output = Liquid::Template.parse( '{% if article.has_horizontal_image? %} PASS {% else %} FAIL {% endif %}'  ).render('article' => ArticleDrop.new(article_with_horizontal_image))
+          output.should == " PASS "
 
           article_without_horizontal_image = Factory(:article, :mediafiles => [Factory(:vertical_image)])
-          output = Liquid::Template.parse( '{% if article.has_horizontal_image? %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(article_without_horizontal_image))
-          output.should == " NO "
+          output = Liquid::Template.parse( '{% if article.has_horizontal_image? %} PASS {% else %} FAIL {% endif %}'  ).render('article' => ArticleDrop.new(article_without_horizontal_image))
+          output.should == " FAIL "
         end
 
         it "should return the first vertical image" do

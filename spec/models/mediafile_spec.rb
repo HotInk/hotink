@@ -31,7 +31,28 @@ describe Mediafile do
     mediafile.authors_json.should eql([{ "id" => lilly.id, "name" => lilly.name },{ "id" => barney.id, "name" => barney.name }].to_json)
   end
   
-
+  describe "media class identification" do
+    before do
+      @image = Factory(:image)
+      @audiofile = Factory(:audiofile)
+    end
+    
+    it "should properly identify mediafiles" do
+      @mediafile.should be_file
+      @image.should_not be_file
+    end
+    
+    it "should properly identify images" do
+      @image.should be_image
+      @audiofile.should_not be_image
+    end
+    
+    it "should properly identify audiofiles" do
+      @audiofile.should be_audiofile
+      @image.should_not be_audiofile
+    end
+  end
+    
   it "should break up a comma (with 'and') seperated string of authors' names to create authors array" do
     @mediafile.authors_list = "Lilly, Marshall and Robin"
     @mediafile.authors.length.should == 3

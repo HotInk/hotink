@@ -64,6 +64,18 @@ class Mediafile < ActiveRecord::Base
     file_file_size
   end
       
+  def image?
+    false
+  end
+  
+  def audiofile?
+    false
+  end
+  
+  def file?
+    true
+  end    
+      
   # Returns list of article's author names as a readable list, separated by commas and the word "and".
   def authors_list
      case self.authors.length
