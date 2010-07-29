@@ -31,7 +31,7 @@ $(function(){
 		}
 	});
 	
-	$("ol.documents.selectable li a").click(function(event){
+	$("ol.documents.selectable li a, ol.documents.selectable li .mediafiles").click(function(event){
 	  event.stopPropagation();
 	});
 	
