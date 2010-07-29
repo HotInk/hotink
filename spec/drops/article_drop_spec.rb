@@ -19,6 +19,41 @@ describe ArticleDrop do
     output.should == " #{@article.bodytext} "
   end
   
+  describe "section" do
+    before do
+      @article = Factory(:article)
+    end
+    
+    it "should know article's section's name" do
+      category = Factory(:category, :name => "News-ish", :account => @article.account)
+      @article.update_attribute(:section, category)
+      output = Liquid::Template.parse( ' {{ article.section }} '  ).render('article' => ArticleDrop.new(@article))
+      output.should == " News-ish "
+    end
+    
+    it "should return nothing when no name is set" do
+      output = Liquid::Template.parse( ' {{ article.section }} '  ).render('article' => ArticleDrop.new(@article))
+      output.should == "  "
+    end
+  end
+  
+  describe "categories" do
+    before do
+      @article_with_categories = Factory(:article)
+      @categories = (1..3).collect{ Factory(:category, :account => @article_with_categories.account) }
+      
+      @article_with_categories.categories << @categories
+    end
+    
+    it "should return the article's categories" do
+      output = Liquid::Template.parse( ' {% for category in article.categories %} {{ category.name }} {% endfor %} '  ).render('article' => ArticleDrop.new(@article_with_categories))
+    
+      names = @article_with_categories.categories.collect{ |a|  a.name }
+      output.should == "  #{names.join('  ')}  "
+    end
+  end
+  
+  
   describe "dates" do
     context "for published article" do
       it "should make relevant dates available in a variety of formats" do
@@ -100,27 +135,63 @@ describe ArticleDrop do
 
   describe "mediafiles" do
     describe "images" do
-        before do
-          @images = (1..3).collect{ Factory(:image) }
-          @article_with_some_images = Factory(:article, :mediafiles => ((1..3).collect{ Factory(:mediafile) } + @images))
+      before do
+        @images = (1..3).collect{ Factory(:image) }
+        @article_with_some_images = Factory(:article, :mediafiles => ((1..3).collect{ Factory(:mediafile) } + @images))
+      end
+
+      it "should return the article's images" do
+        output = Liquid::Template.parse( ' {% for image in article.images %} {{ image.url }} {% endfor %} '  ).render('article' => ArticleDrop.new(@article_with_some_images))
+
+        urls = @article_with_some_images.images.collect{ |i|  i.url }
+        output.should == "  #{urls.join('  ')}  "    
+      end
+      
+      it "should know whether the article has an attached image" do
+        template = Liquid::Template.parse( ' {% if article.has_image? %} YES {% else %} NO {% endif %} ')
+
+        output = template.render('article' => ArticleDrop.new(@article))
+        output.should eql("  NO  ")
+
+        output = template.render('article' => ArticleDrop.new(@article_with_some_images))
+        output.should eql("  YES  ")
+      end
+      
+      describe "by proportions" do
+        it "should know whether the article has a vertical image" do
+          article_with_vertical_image = Factory(:article, :mediafiles => [Factory(:vertical_image)])
+          output = Liquid::Template.parse( '{% if article.has_vertical_image? %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(article_with_vertical_image))
+          output.should == " YES "
+
+          article_without_vertical_image = Factory(:article, :mediafiles => [Factory(:horizontal_image)])
+          output = Liquid::Template.parse( '{% if article.has_vertical_image? %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(article_without_vertical_image))
+          output.should == " NO "
         end
 
-        it "should return the article's images" do
-          output = Liquid::Template.parse( ' {% for image in article.images %} {{ image.url }} {% endfor %} '  ).render('article' => ArticleDrop.new(@article_with_some_images))
+        it "should know whether the article has a horizontal image" do
+          article_with_horizontal_image = Factory(:article, :mediafiles => [Factory(:horizontal_image)])
+          output = Liquid::Template.parse( '{% if article.has_horizontal_image? %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(article_with_horizontal_image))
+          output.should == " YES "
 
-          urls = @article_with_some_images.images.collect{ |i|  i.url }
-          output.should == "  #{urls.join('  ')}  "    
+          article_without_horizontal_image = Factory(:article, :mediafiles => [Factory(:vertical_image)])
+          output = Liquid::Template.parse( '{% if article.has_horizontal_image? %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(article_without_horizontal_image))
+          output.should == " NO "
         end
-        
-        it "should know whether the article has an attached image" do
-          template = Liquid::Template.parse( ' {% if article.has_image? %} YES {% else %} NO {% endif %} ')
 
-          output = template.render('article' => ArticleDrop.new(@article))
-          output.should eql("  NO  ")
-
-          output = template.render('article' => ArticleDrop.new(@article_with_some_images))
-          output.should eql("  YES  ")
+        it "should return the first vertical image" do
+          image = Factory(:vertical_image)
+          article = Factory(:article, :mediafiles =>[Factory(:mediafile), Factory(:horizontal_image), image])
+          output = Liquid::Template.parse( ' {{ article.first_vertical_image.title }} '  ).render('article' => ArticleDrop.new(article))
+          output.should == " #{image.title} "
         end
+
+        it "should return the first horizontal image" do
+          image = Factory(:horizontal_image)
+          article = Factory(:article, :mediafiles =>[Factory(:mediafile), Factory(:vertical_image), image])
+          output = Liquid::Template.parse( ' {{ article.first_horizontal_image.title }} '  ).render('article' => ArticleDrop.new(article))
+          output.should == " #{image.title} "
+        end
+      end
     end
     
     describe "mediafile caption" do
@@ -161,13 +232,61 @@ describe ArticleDrop do
   
   describe "comments" do
     before do
-      pending "addition of comments"
-      @comments = (1..3).collect { |n| Factory(:comment, :name => "Commentor ##{n}", :created_at => n.days.ago, :article => @article) }
+      @comments = (1..3).collect { |n| Factory(:comment, :name => "Commentor ##{n}", :created_at => n.days.ago, :document => @article) }
     end
     
     it "should make comments available oldest first" do
       output = Liquid::Template.parse( ' {% for comment in article.comments %} {{ comment.name }} {% endfor %} '  ).render('article' => ArticleDrop.new(@article))
       output.should == "  #{ @comments.reverse.collect{|c| c.name }.join('  ') }  "
+    end
+    
+    it "should know its current comment count" do
+      output = Liquid::Template.parse( '  {{ article.comment_count }}  '  ).render('article' => ArticleDrop.new(@article))
+      output.should == "  3  "
+    end
+    
+    describe "comment status" do
+      describe "locked comments" do
+        it "should show as locked when set as locked" do
+          @article.lock_comments
+          
+          output = Liquid::Template.parse( '{% if article.comments_locked %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(@article))
+          output.should == " YES "
+        end
+
+        it "should show as unlocked when set as unlocked" do
+          @article.enable_comments
+          
+          output = Liquid::Template.parse( '{% if article.comments_locked %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(@article))
+          output.should == " NO "
+        end
+
+        it "should show as unlocked when not set" do
+          output = Liquid::Template.parse( '{% if article.comments_locked %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(@article))
+          output.should == " NO "
+        end
+      end
+
+      describe "disabled comments" do
+        it "should show as enabled when set as enabled" do
+          @article.enable_comments
+
+          output = Liquid::Template.parse( '{% if article.comments_enabled %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(@article))
+          output.should == " YES "
+        end
+
+        it "should show as enabled when not set" do
+          output = Liquid::Template.parse( '{% if article.comments_enabled %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(@article))
+          output.should == " YES "
+        end
+
+        it "should show as disabled when set as disabled" do
+          @article.disable_comments
+          
+          output = Liquid::Template.parse( '{% if article.comments_enabled %} YES {% else %} NO {% endif %}'  ).render('article' => ArticleDrop.new(@article))
+          output.should == " NO "
+        end
+      end
     end
   end
 end

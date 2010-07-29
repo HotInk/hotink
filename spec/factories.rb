@@ -67,6 +67,7 @@ Factory.define :checkout do |c|
 end
 
 Factory.define :comment do |c|
+  c.account { Factory(:account) }
   c.document { Factory(:document) }
   c.sequence(:name) { |n| "Commenter ##{n}" }
   c.sequence(:email) { |n| "commenter#{n}@commentmail.com" }

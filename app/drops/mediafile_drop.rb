@@ -1,5 +1,5 @@
 class MediafileDrop < Drop
-  liquid_attributes :url
+  liquid_attributes :url, :title
   
   attr_reader :caption
   

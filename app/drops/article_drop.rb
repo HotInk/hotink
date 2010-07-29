@@ -17,6 +17,14 @@ class ArticleDrop < Drop
       article.summary
     end
   end
+  
+  def section
+    if article.section.nil?
+      nil
+    else
+      article.section.name
+    end
+  end
    
   # Article date methods
    def published_at
@@ -60,6 +68,11 @@ class ArticleDrop < Drop
      end
    end
    
+   # Categories
+   def categories
+     article.categories.collect{ |category| CategoryDrop.new(category) }
+   end
+   
    # Media
    def images
      article.images.collect do |i|
@@ -74,5 +87,55 @@ class ArticleDrop < Drop
      else
        return false
      end
+   end
+   
+   def has_vertical_image?
+     if article.images.detect { |image| image.height.to_i > image.width.to_i }
+       return true
+     else
+       return false
+     end
+   end
+   
+   def first_vertical_image
+     if image = article.images.detect { |image| image.height.to_i > image.width.to_i }
+       MediafileDrop.new(image)
+     else
+       nil
+     end
+   end
+
+   def has_horizontal_image?
+     if article.images.detect { |image| image.height.to_i <= image.width.to_i }
+       return true
+     else
+       return false
+     end
+   end
+
+   def first_horizontal_image
+    if image = article.images.detect { |image| image.height.to_i <= image.width.to_i }
+      MediafileDrop.new(image)
+    else
+      nil
+    end
+   end
+   
+   # Comments
+   
+   def comments
+     article.comments.find(:all, :order => "created_at asc").collect{|comment| CommentDrop.new(comment) }
+   end
+   
+   def comment_count
+     article.comments.count
+   end
+   
+   def comments_locked
+     article.comments_locked?
+   end
+
+   def comments_enabled
+     article.comments_enabled?
    end
 end

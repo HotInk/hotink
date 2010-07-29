@@ -22,6 +22,14 @@ Factory.define :image, :parent => :mediafile, :class => "Image" do |i|
   i.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-jpg.jpg')) }
 end 
 
+Factory.define :horizontal_image, :parent => :image do |i|
+  i.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-horizontal-jpg.jpg')) }
+end
+
+Factory.define :vertical_image, :parent => :image do |i|
+  i.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-vertical-jpg.jpg')) }
+end
+
 Factory.define :audiofile, :parent => :mediafile, :class => "Audiofile" do |a|
   a.file  { File.new(File.join(RAILS_ROOT, 'spec', 'fixtures', 'test-mp3.mp3')) }
 end
