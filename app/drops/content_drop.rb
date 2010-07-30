@@ -10,18 +10,6 @@ class ContentDrop < Drop
     end 
   end
   
-  def blogs
-    account.blogs.collect{ |blog| BlogDrop.new(blog) }
-  end
-  
-  def blog
-   blogs = {}
-    account.blogs.each do |blog|
-      blogs[blog.slug] = BlogDrop.new(blog)
-    end
-    blogs
-  end
-  
   def categories
     account.categories.sections.all.collect{ |category| CategoryDrop.new(category) }
   end
@@ -32,6 +20,27 @@ class ContentDrop < Drop
       categories[category.name] = CategoryDrop.new(category)
     end
     categories
+  end
+  
+  def latest_issue
+    IssueDrop.new(account.issues.find(:first, :order => "date desc"))
+  end
+  
+  def issues
+    @context.registers[:total_entries] = account.issues.count
+    account.issues.paginate(:page => @context.registers[:page] || 1, :per_page => @context.registers[:per_page] || 5, :order => "date desc").collect{ |issue| IssueDrop.new(issue) }
+  end
+  
+  def blogs
+    account.blogs.collect{ |blog| BlogDrop.new(blog) }
+  end
+  
+  def blog
+   blogs = {}
+    account.blogs.each do |blog|
+      blogs[blog.slug] = BlogDrop.new(blog)
+    end
+    blogs
   end
   
   def lead_articles

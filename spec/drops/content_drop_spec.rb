@@ -21,6 +21,34 @@ describe ContentDrop do
     end 
   end
   
+  describe "issues" do
+    before do
+      @issues = (1..7).collect { |n|  Factory(:issue, :date => 10.weeks.ago + n.weeks, :name => "Issue ##{n}", :account => @account) }
+    end
+    
+    it "should return latest issue" do
+      output = Liquid::Template.parse(" {{ content.latest_issue.name }} ").render('content' => ContentDrop.new(@account))
+      output.should == " #{ @issues.last.name } "
+    end
+    
+    describe "issue pagination" do
+      it "should return 5 entries on first page by default" do
+        output = Liquid::Template.parse( ' {% for issue in content.issues %} {{ issue.name }} {% endfor %} {{ content.issues.total_entries }}'  ).render('content' => ContentDrop.new(@account))
+        output.should == "  #{ @issues.reverse[0...5].collect{ |i| i.name }.join('  ') }  "
+      end
+
+      it "should return page 2" do
+        output = Liquid::Template.parse( ' {% for issue in content.issues %} {{ issue.name }} {% endfor %} '  ).render({'content' => ContentDrop.new(@account)}, :registers => { :page => 2 } )
+        output.should == "  #{ @issues.reverse[5..6].collect{ |i| i.name }.join('  ') }  "
+      end
+
+      it "should return 2 entries per page" do
+        output = Liquid::Template.parse( ' {% for issue in content.issues %} {{ issue.name }} {% endfor %} '  ).render({'content' => ContentDrop.new(@account)}, :registers => { :per_page => 2 } )
+        output.should == "  #{ @issues.reverse[0...2].collect{ |i| i.name }.join('  ') }  "
+      end
+    end
+  end
+  
   describe "blogs" do
     before do
       @blogs = (1..2).collect{ |n|  Factory(:blog, :title => "Blog ##{n}", :account => @account) }
@@ -63,7 +91,7 @@ describe ContentDrop do
     end
   end
   
-  describe "list support" do    
+  describe "list support" do
     it "should return list drops as though each list's slug was an instance method" do
       list = Factory(:list, :name => "First list", :account => @account)
       
