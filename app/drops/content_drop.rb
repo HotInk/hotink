@@ -31,6 +31,15 @@ class ContentDrop < Drop
     account.issues.paginate(:page => @context.registers[:page] || 1, :per_page => @context.registers[:per_page] || 5, :order => "date desc").collect{ |issue| IssueDrop.new(issue) }
   end
   
+  def latest_article
+    ArticleDrop.new(account.articles.published.find(:first, :order => "published_at desc"))
+  end
+  
+  def articles
+    @context.registers[:total_entries] = account.articles.published.count
+    account.articles.published.paginate(:page => @context.registers[:page] || 1, :per_page => @context.registers[:per_page] || 20, :order => "published_at desc").collect{ |article| ArticleDrop.new(article) }
+  end
+  
   def blogs
     account.blogs.collect{ |blog| BlogDrop.new(blog) }
   end
