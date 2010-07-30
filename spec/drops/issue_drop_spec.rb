@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe IssueDrop do
   before do
-    @issue = Factory(:issue, :number => "12", :volume => "15", :description => "Important stuff")
+    @issue = Factory(:issue, :name => "Test issue", :number => "12", :volume => "15", :description => "Important stuff")
   end
   
   it "should make basic issue data available" do
@@ -11,8 +11,12 @@ describe IssueDrop do
     
     output = Liquid::Template.parse( ' {{ issue.number }} '  ).render('issue' => IssueDrop.new(@issue))
     output.should == " #{@issue.number} "
+    
     output = Liquid::Template.parse( ' {{ issue.volume }} '  ).render('issue' => IssueDrop.new(@issue))
     output.should == " #{@issue.volume} "
+    
+    output = Liquid::Template.parse( ' {{ issue.name }} '  ).render('issue' => IssueDrop.new(@issue))
+    output.should == " #{@issue.name} "
     
     output = Liquid::Template.parse( ' {{ issue.description }} '  ).render('issue' => IssueDrop.new(@issue))
     output.should == " #{@issue.description} "
