@@ -9,6 +9,10 @@ describe UserInvitation do
     should belong_to(:account)
     should validate_presence_of(:account)
   end
+  
+  it "should validate that it belongs to the user that created it" do
+    should validate_presence_of(:user)
+  end
 
   describe "when created" do
     before do

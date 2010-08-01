@@ -4,6 +4,9 @@ class UserInvitation < Invitation
 
   after_create :set_token, :detect_user
 
+  validates_presence_of :user
+
+
   private
 
     def detect_user

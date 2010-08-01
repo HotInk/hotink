@@ -7,7 +7,6 @@ describe Invitation do
   
   it "should belong to the user that created it" do
     should belong_to(:user)
-    should validate_presence_of(:user)
   end
   
   it "should only be created with a valid email address" do
