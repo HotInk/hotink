@@ -8,7 +8,7 @@ module CategoriesHelper
         type = category.is_a?(Section) ? "section" : "category"
         html_code = "<option value="">Parent #{type}</option>"
       when :default
-        html_code = "<option value="">None</option>"
+        html_code = %{<option value="">None</option>}
       when :none
         html_code = ""
       end
@@ -20,7 +20,7 @@ module CategoriesHelper
       parents.each do |parent|
         options = {:value => parent.id}
         options = options.merge({:selected=>"selected"}) if parent == category.parent
-        html_code += tag("option", options, true) + parent.name + "</option>" + indent_child_options_for_parent_category_select(category, parent) unless parent==category
+        html_code << tag("option", options, true) + parent.name + tag("/option", {}, true) + indent_child_options_for_parent_category_select(category, parent).html_safe unless parent==category
       end
       html_code
     end
@@ -32,7 +32,7 @@ module CategoriesHelper
   # options_for_parent_category_select instead.
   def options_for_category_select(collection={}, category = Category.new)
     
-    html_code = "<option value="">None</option>"
+    html_code = %{<option value="">None</option>}
       
     if collection.empty?
       html_code
@@ -41,7 +41,7 @@ module CategoriesHelper
       parents.each do |parent|
         options = {:value => parent.id}
         options = options.merge({:selected=>"selected"}) if parent == category
-        html_code += tag("option", options, true) + parent.name + "</option>" + indent_child_options_for_category_select(parent, category)
+        html_code << tag("option", options, true) + parent.name + tag("/option", {}, true) + indent_child_options_for_category_select(parent, category).html_safe
       end
       html_code
     end
@@ -56,7 +56,7 @@ module CategoriesHelper
     parent.children.each do |child|
       options = {:value => child.id}
       options = options.merge({:selected=>"selected"}) if child == category.parent
-      html_code += tag("option", options, true) + child_indent + child.name + "</option>" + indent_child_options_for_parent_category_select(category, child, child_indent + child_indent) unless child==category
+      html_code << tag("option", options, true) + child_indent.html_safe + child.name + tag("/option", {}, true) + indent_child_options_for_parent_category_select(category, child, child_indent + child_indent).html_safe unless child==category
     end
     html_code
   end
@@ -67,7 +67,7 @@ module CategoriesHelper
     parent.children.each do |child|
       options = {:value => child.id}
       options = options.merge({:selected=>"selected"}) if child == category
-      html_code += tag("option", options, true) + child_indent + child.name + "</option>" + indent_child_options_for_category_select(child, category, child_indent + child_indent)
+      html_code << tag("option", options, true) + child_indent.html_safe + child.name + tag("/option", {}, true) + indent_child_options_for_category_select(child, category, child_indent + child_indent).html_safe
     end
     html_code
   end

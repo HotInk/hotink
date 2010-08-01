@@ -6,7 +6,7 @@ describe CategoriesHelper do
   it "should return a list of parent category options, organized in a tree" do
     categories = (1..2).collect{ Factory(:category, :children => [Factory(:category, :children => (1..2).collect{ Factory(:category) })]) }
     
-    expected_options = "<option value=>None</option><option value=\"#{categories.first.id}\">#{categories.first.name}</option>#{indent_child_options_for_category_select(categories.first)}" 
+    expected_options = "<option value=\"\">None</option><option value=\"#{categories.first.id}\">#{categories.first.name}</option>#{indent_child_options_for_category_select(categories.first)}" 
     expected_options += "<option value=\"#{categories.second.id}\">#{categories.second.name}</option>#{indent_child_options_for_category_select(categories.second) }" 
     
     options_for_parent_category_select(categories).should == expected_options
@@ -20,14 +20,14 @@ describe CategoriesHelper do
   it "should return a list of category options, organized in a tree" do
     categories = (1..2).collect{ Factory(:category, :children => [Factory(:category, :children => (1..2).collect{ Factory(:category) })]) }
     
-    expected_options = "<option value=>None</option><option value=\"#{categories.first.id}\">#{categories.first.name}</option>#{indent_child_options_for_category_select(categories.first)}" 
+    expected_options = "<option value=\"\">None</option><option value=\"#{categories.first.id}\">#{categories.first.name}</option>#{indent_child_options_for_category_select(categories.first)}" 
     expected_options += "<option value=\"#{categories.second.id}\">#{categories.second.name}</option>#{indent_child_options_for_category_select(categories.second) }" 
     
     options_for_category_select(categories).should == expected_options
   end
   
   it "should return a blank list of category options, if appropriate" do
-    options_for_category_select([]).should == "<option value=>None</option>"
+    options_for_category_select([]).should == %{<option value="">None</option>}
   end
   
   it "should return an indented list of child categories" do
