@@ -1,6 +1,12 @@
 
 Factory.define :account do |a|
-  a.sequence(:name) { |n| "Account \##{n}" }
+  a.sequence(:name) do |n|
+    letter = "a"
+    n.times do
+      letter.next!
+    end
+    "account-#{letter}"
+  end
   a.time_zone "What time?"
 end
 

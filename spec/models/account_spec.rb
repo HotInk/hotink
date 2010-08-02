@@ -6,8 +6,20 @@ describe Account do
   end
   
   it { should validate_presence_of(:time_zone).with_message(/must indicate its preferred time zone/) }
+  
   it { should validate_presence_of(:name).with_message(/must have a name/) }
   it { should validate_uniqueness_of(:name).with_message(/must be unique/) }
+  it "should ensure name is subdomain-safe" do
+    should allow_value("testpage").for(:name)
+    should allow_value("test-page").for(:name)  
+
+    should_not allow_value("testPage").for(:name)
+    should_not allow_value("test_page").for(:name)
+    should_not allow_value("testpage1").for(:name)
+    should_not allow_value('test/page').for(:name)
+    should_not allow_value("test page").for(:name)
+    should_not allow_value("test$page").for(:name)
+  end
   
   it { should have_many(:documents).dependent(:destroy) }
   it { should have_many(:articles) }

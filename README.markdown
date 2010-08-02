@@ -10,10 +10,10 @@ Hot Ink is built using Ruby on Rails (v2.3.8) using Rails controllers for upload
 Sinatra apps implemented as Rails metal:
 
 * a single sign on server — a modified version of [Hancock](http://github.com/atmos/hancock/).
-* the Hot Ink API, the main public interface of the site.
-* Mailout, a [Mailchimp](http://www.mailchimp.com)-API powered mass-email application that builds dynamic messages, 
-filled with Hot Ink content using a simple but flexible template system. It also handles sending mass-emails to **lists** you manage using
-the tools provided by your Mailchimp account.
+* the Hot Ink API, a key public interface for each account.
+* Mailout, a [Mailchimp](http://www.mailchimp.com)-API powered mass-email application that builds dynamic messages 
+filled with Hot Ink content using a simple but flexible template system. It also handles sending mass-emails to **lists** managed using
+tools provided by Mailchimp.
 
 ## Important dependencies
 
@@ -58,7 +58,7 @@ Access the console (using `script/console`) and create an account invitation for
 	>> AccountInvitation.create(:email => "chris@hotink.net")
 	=> #<AccountInvitation id: 1, email: "chris@hotink.net", redeemed: false, user_id: nil, account_id: nil, type: "AccountInvitation", token: "5ddf1eb40cec22380f28c8941ebb51813ea042be", created_at: "2010-08-01 20:27:15", updated_at: "2010-08-01 20:27:15">
 
-Your output may not look exactly like above, but as long as the token field is set your invitation is ready to be used. In your browser,  visit you app with the path '/admin/account_invitations/YOUR_INVITATION_TOKEN/edit'. Fill out your user and account details, making note of the account name you choose.
+Your output may not look exactly like above, but as long as the token field is set your invitation is ready to be used. In your browser,  visit your app with the path '/admin/account_invitations/YOUR_INVITATION_TOKEN/edit'. Fill out your user and account details, making note of the account name you choose.
 
 Hot Ink identifies the current account using the account name as a subdomain. In order to use subdomains in production, you'll need to make a quick edit to your hosts file. You should add the following line after the first entry and save the file:
 
@@ -90,6 +90,6 @@ Hot Ink is Autotest friendly. To use it, run `bundle exec autospec`.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
-== Copyright
+## Copyright
 
 Copyright (c) 2010 Canadian University Press Media Services Ltd. See LICENSE for details.

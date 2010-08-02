@@ -41,8 +41,10 @@ class Account < ActiveRecord::Base
   acts_as_tagger
 
   validates_presence_of :time_zone, :message => "Account must indicate its preferred time zone."
+  
   validates_presence_of :name, :message => "Account must have a name"
   validates_uniqueness_of :name, :message => "Account name must be unique"
+  validates_format_of :name, :with => /^[-a-z]+$/
   
   serialize :settings
   serialize :lead_article_ids

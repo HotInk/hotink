@@ -17,6 +17,7 @@ gem 'rdiscount'
 
 gem 'rack-flash'
 gem 'sinatra'
+gem 'addressable'
 gem 'ruby-openid', :require => 'openid'
 
 gem "formtastic"
