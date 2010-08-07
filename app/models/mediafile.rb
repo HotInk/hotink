@@ -36,19 +36,8 @@ class Mediafile < ActiveRecord::Base
     set_property :delta => :delayed
   end
   
-  def title
-    title = self.read_attribute(:title)
-    if title and title.strip != ""
-      return title.strip
-    elsif filename = self.read_attribute(:file_file_name)
-      return filename
-    else
-      return "No file"
-    end
-  end
-  
-  def url(style_name = :system_default)
-    file.url(style_name)
+  def url(style_name = :system_default, use_cache_buster=true)
+    file.url style_name, use_cache_buster
   end
   
   def filename

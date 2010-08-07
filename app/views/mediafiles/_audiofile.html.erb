@@ -1,0 +1,17 @@
+<div>
+	<object type="application/x-shockwave-flash" data="/player_mp3.swf" style="margin-bottom:10px;" width="360" height="20">
+	    <param name="movie" value="/player_mp3.swf" />
+	    <param name="bgcolor" value="#ffffff" />
+	    <param name="FlashVars" value="mp3=<%= audiofile.file.url %>&width=360" />
+	</object>
+	<small><%= audiofile.filename %> - <%= number_to_human_size(audiofile.file_size) %> - <%= link_to "Download", audiofile.url(:original, false) %></small>
+	
+	<ul class="mp3_info">
+		<% unless audiofile.artist.blank? %><li><strong>Artist</strong>&nbsp;&nbsp;<%= audiofile.artist %></li><% end %>
+		<% unless audiofile.song_title.blank? %><li><strong>Song title </strong>&nbsp;&nbsp;<%= audiofile.song_title %></li><% end %>
+		<% unless audiofile.album.blank? %><li><strong>Album </strong>&nbsp;&nbsp;<%= audiofile.album %></li><% end %>
+		<% unless audiofile.release_year.blank? %><li><strong>Year </strong>&nbsp;&nbsp;<%= audiofile.release_year %></li><% end %>
+		<% unless audiofile.length.blank? %><li><strong>Length </strong>&nbsp;&nbsp;<%= audiofile.length / 60 %>:<%= (audiofile.length % 60)<10 ? "0#{audiofile.length % 60}" : audiofile.length % 60 %></li><% end %>
+		<li><strong>Url </strong>&nbsp;&nbsp;<small><input value="<%= audiofile.url(:original, false) %>" size="40"/></small></li>
+	</ul>
+</div>

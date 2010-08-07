@@ -1,0 +1,6 @@
+<div>
+	<%= image_tag "blank_file_icon.png", :style => "float:left; border:none; margin-right: 5px; " %> <%= file.filename %> 
+	<span style="font-size: 0.75em;"><%= number_to_human_size(file.file_size) %></span>
+	- 
+	<span style="font-size: 0.75em;"><%= link_to "Download", file.url(:original, false) %></span>
+</div>

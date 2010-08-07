@@ -169,12 +169,12 @@ ol.documents.small .select, 		ol.documents.tiny .select,
 ol.documents.small .tags,			ol.documents.tiny .tags	 			{ display: none; }
 ol.documents.small .details h1, 	ol.documents.tiny .details h1 		{ margin-bottom: 5px; }
 ol.documents.small .details p, 		ol.documents.tiny .details p 		{ font-size: 0.85em; }
-ol.documents.small .section, 		ol.documents.tiny .section 			{ width: 14%; font-size: 0.85em; }
+ol.documents.small .section, 		ol.documents.tiny .section 			{ width: 14%; font-size: 0.8em; }
 ol.documents.small .date, 			ol.documents.tiny .date 			{ width: 18%; font-size: 0.9em; }
 ol.documents.small .date p, 		ol.documents.tiny .date p 			{ }
 ol.documents.small .destroy_link, 	ol.documents.tiny .destroy_link 	{ display: none; }
 
-ol.documents.small .details { margin-left: 1%; width: 60%; } 
+ol.documents.small .details { margin-left: 1%; width: 57%; } 
 ol.documents.small .details h1 { font-size: 1.1em; margin-bottom: 5px; line-height: 1.2; }
 ol.documents.small .details p { font-size: 0.85em; }
 ol.documents.small .tags { display: none; }
@@ -360,8 +360,8 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 .toolbox p	 					{ margin-bottom: 0; }
 
 /* Mediafile form - Image */
-.toolbox .image									{ text-align: center; padding-bottom: 0; }
-.toolbox .image img								{ width: 100%; border: 1px solid #333; }
+.toolbox .mediafile_file .image									{ text-align: center; padding-bottom: 0; }
+.toolbox .mediafile_file .image img								{ width: 100%; border: 1px solid #333; }
 .toolbox div ul.custom_image_sizes,
 .toolbox div ul.system_image_sizes			{ margin-bottom: 10px; float: left; width: 100%; }
 
@@ -370,6 +370,11 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 
 .toolbox div ul.custom_image_sizes li input,
 .toolbox div ul.system_image_sizes li input		{ width: 200px; }
+
+/* Mediafile form - Audiofile */
+.toolbox div ul.mp3_info					{ margin: 10px 0; float: left; width: 100%; }
+.toolbox div ul.mp3_info li					{ float: left; width: 100%; margin-bottom: 3px; }
+.toolbox div ul.mp3_info li strong			{ font-weight: 600; }
 
 /* Article/Entry forms */
 #article_title, #entry_title 			{ font-size: 30px; }

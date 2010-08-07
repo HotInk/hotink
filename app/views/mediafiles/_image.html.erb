@@ -1,0 +1,37 @@
+<div class="image">	
+	<%= image_tag(image.file.url(:system_default))%>
+</div>
+<div>
+	<% image.settings = @account.image_settings %>
+	<h3>Available sizes</h3>
+	<h4>Custom</h4>
+	<ul class="custom_image_sizes">
+		<li>Thumb <small> – <%= image.width_for_style(:thumb) %>px &times; <%= image.height_for_style(:thumb) %>px – <%= link_to "View", image.url(:thumb), :id => "view_thumb", :title => "Thumb" %> – <input name="thumb_file" value="<%= @account.site_url + image.url(:thumb, false) %>" /></small></li>
+		<li>Small <small> – <%= image.width_for_style(:small) %>px &times; <%= image.height_for_style(:small) %>px – <%= link_to "View", image.url(:small), :id => "view_small", :title => "Small" %> – <input name="small_file" value="<%= @account.site_url + image.url(:small, false) %>" /></small></li>
+		<li>Medium <small> – <%= image.width_for_style(:medium) %>px &times; <%= image.height_for_style(:medium) %>px – <%= link_to "View", image.url(:medium), :id => "view_medium", :title => "Medium" %> – <input name="medium_file" value="<%= @account.site_url + image.url(:medium, false) %>" /></small></li>
+		<li>Large <small> – <%= image.width_for_style(:large) %>px &times; <%= image.height_for_style(:large) %>px – <%= link_to "View", image.url(:large), :id => "view_large", :title => "Large" %> – <input name="large_file" value="<%= @account.site_url + image.url(:large, false) %>" /></small></li>
+	</ul>
+	<h4>System</h4>
+	<ul class="system_image_sizes">
+		<li>Original <small> – <%= image.width %>px &times; <%= image.height %>px – <%= link_to "View", image.url(:original), :id => "view_original", :title => "Originally uploaded size" %> – <input name="original_file" value="<%= @account.site_url + image.file(:original, false) %>" /></small></li>
+		<li>Icon <small> – <%= image.width_for_style(:system_icon) %>px &times; <%= image.height_for_style(:system_icon) %>px – <input name="system_icon_file" value="<%= @account.site_url + image.url(:system_icon, false) %>" /></small></li>
+		<li>Thumb <small> – <%= image.width_for_style(:system_thumb) %>px &times; <%= image.height_for_style(:system_thumb) %>px – <%= link_to "View", image.url(:system_thumb), :id => "view_system_thumb", :title => "System thumb" %> – <input name="system_thumb_file" value="<%= @account.site_url + image.url(:system_thumb, false) %>" /></small></li>
+		<li>Default <small> – <%= image.width_for_style(:system_default) %>px &times; <%= image.height_for_style(:system_default) %>px – (shown) – <input name="thumb_file" value="<%= @account.site_url + image.url(:thumb, false) %>" /></small></li>
+	</ul>
+	<% content_for :javascript do %>
+		<script type="text/javascript" charset="utf-8">
+			$(function(){
+				$('#view_thumb, #view_small, #view_medium, #view_large, #view_system_thumb, #view_original').fancybox({
+					'titlePosition'		: 'inside',
+					'transitionIn'		: 'none',
+					'transitionOut'		: 'none'
+				});
+			});
+		</script>
+	<% end %>
+</div>
+
+
+
+
+
