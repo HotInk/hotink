@@ -12,10 +12,10 @@ describe Account do
   it "should ensure name is subdomain-safe" do
     should allow_value("testpage").for(:name)
     should allow_value("test-page").for(:name)  
+    should allow_value("testpage1").for(:name)
 
     should_not allow_value("testPage").for(:name)
     should_not allow_value("test_page").for(:name)
-    should_not allow_value("testpage1").for(:name)
     should_not allow_value('test/page').for(:name)
     should_not allow_value("test page").for(:name)
     should_not allow_value("test$page").for(:name)

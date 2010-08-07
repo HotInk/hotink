@@ -44,7 +44,7 @@ class Account < ActiveRecord::Base
   
   validates_presence_of :name, :message => "Account must have a name"
   validates_uniqueness_of :name, :message => "Account name must be unique"
-  validates_format_of :name, :with => /^[-a-z]+$/
+  validates_format_of :name, :with => /^[-a-z0-9]+$/
   
   serialize :settings
   serialize :lead_article_ids
