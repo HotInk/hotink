@@ -17,7 +17,7 @@
 		</div>
 	
 		<div class="details">
-			<h1><%=link_to h(mediafile.title), edit_mediafile_url(mediafile), :class=>"document_link" %></h1>
+			<h1><%=link_to h(title_for(mediafile)), edit_mediafile_url(mediafile), :class=>"document_link" %></h1>
 			<p><%= mediafile.authors_list %></p>
 		</div>
 	
