@@ -8,27 +8,44 @@ describe Mediafile do
   
   it { should belong_to(:account) }
   it { should validate_presence_of(:account).with_message(/must have an account/) }
+  
+  describe "authors" do
+    it { should have_many(:photocredits).dependent(:destroy) }
+    it { should have_many(:authors).through(:photocredits) }
+    
+    it "should generate appropriate authors JSON" do
+      lilly = Factory(:author, :name => "Lilly Aldrin")
+      barney = Factory(:author, :name => "Barney Stinson")
+      mediafile = Factory(:mediafile, :authors => [lilly, barney])
 
-  it "should create a human readable list of authors' names" do
-    @mediafile.authors = [Factory(:author, :name => "Lilly")]
-    @mediafile.authors_list.should == "Lilly"
+      mediafile.authors_json.should eql([{ "id" => lilly.id, "name" => lilly.name },{ "id" => barney.id, "name" => barney.name }].to_json)
+    end
     
-    @mediafile.authors << Factory(:author, :name => "Marshall")
-    @mediafile.authors_list.should == "Lilly and Marshall"
+    it "should create a human readable list of authors' names" do
+      mediafile = Factory(:mediafile)
+      mediafile.authors = [Factory(:author, :name => "Lilly")]
+      mediafile.authors_list.should == "Lilly"
+  
+      mediafile.authors << Factory(:author, :name => "Marshall")
+      mediafile.authors_list.should == "Lilly and Marshall"
+  
+      mediafile.authors << Factory(:author, :name => "Robin")
+      mediafile.authors_list.should == "Lilly, Marshall and Robin"
+  
+      mediafile.authors << Factory(:author, :name => "Barney")
+      mediafile.authors_list.should == "Lilly, Marshall, Robin and Barney"
+    end
     
-    @mediafile.authors << Factory(:author, :name => "Robin")
-    @mediafile.authors_list.should == "Lilly, Marshall and Robin"
-    
-    @mediafile.authors << Factory(:author, :name => "Barney")
-    @mediafile.authors_list.should == "Lilly, Marshall, Robin and Barney"
-  end
-
-  it "should generate appropriate authors JSON" do
-    lilly = Factory(:author, :name => "Lilly Aldrin")
-    barney = Factory(:author, :name => "Barney Stinson")
-    mediafile = Factory(:mediafile, :authors => [lilly, barney])
-    
-    mediafile.authors_json.should eql([{ "id" => lilly.id, "name" => lilly.name },{ "id" => barney.id, "name" => barney.name }].to_json)
+    it "should add authors from a mixed list of IDs and new author names" do
+      mediafile = Factory(:mediafile, :authors => [Factory(:author, :name => "Soon to be removed")])
+      
+      lilly = Factory(:author, :name => "Lilly Aldrin", :account => mediafile.account)
+      barney = Factory(:author, :name => "Barney Stinson", :account => mediafile.account)
+      
+      mediafile.author_ids = "#{lilly.id}, Marshall Ericson,#{barney.id}"
+      marshall = mediafile.account.authors.find_by_name("Marshall Ericson")
+      mediafile.authors.should == [lilly, marshall, barney]
+    end
   end
   
   describe "media class identification" do

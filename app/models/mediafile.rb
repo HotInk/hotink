@@ -6,14 +6,9 @@ class Mediafile < ActiveRecord::Base
   has_many :waxings, :dependent => :destroy
   has_many :articles, :through => :waxings
   
-  has_many :photocredits
-  has_many :authors, :through => :photocredits
-  
   validates_presence_of :account, :message => "must have an account"
   validates_associated :account, :message => "Account must be valid"
-  
-  accepts_nested_attributes_for :photocredits, :allow_destroy => true
-  
+    
   acts_as_taggable_on :tags
   
   has_attached_file :file,
@@ -63,6 +58,10 @@ class Mediafile < ActiveRecord::Base
   def file_size
     file_file_size
   end
+  
+  def styles
+    file.styles
+  end    
       
   def image?
     false
@@ -75,6 +74,11 @@ class Mediafile < ActiveRecord::Base
   def file?
     true
   end    
+      
+  ## Authors
+  
+  has_many :photocredits, :dependent => :destroy
+  has_many :authors, :through => :photocredits    
       
   # Returns list of article's author names as a readable list, separated by commas and the word "and".
   def authors_list
@@ -99,6 +103,19 @@ class Mediafile < ActiveRecord::Base
       list.split(/, and | and |,/).each do |name| 
         author = Author.find_or_create_by_name_and_account_id(name.strip, self.account.id)
         self.authors << author unless self.authors.member?(author) || author.nil?
+      end
+    end
+  end
+  
+  # Accepts both author names and ids, as opposed to just ids
+  def author_ids=(id_string)
+    self.authors.clear
+    ids = id_string.split(',').collect{ |s| s.strip }
+    ids.each do |id|
+      if id==id.to_i.to_s
+        self.authors << account.authors.find(id)
+      else
+        self.authors << account.authors.find_or_create_by_name(id)
       end
     end
   end

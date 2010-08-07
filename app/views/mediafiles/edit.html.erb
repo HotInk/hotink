@@ -5,10 +5,35 @@
 
 <% semantic_form_for @mediafile, :url => mediafile_path(@mediafile) do |form| %>	
 <div class="toolbox grid_6">
+	
 	<h4>Media</h4>
 	<% if @mediafile.is_a? Image %>
 		<div class="image">	
 			<%= image_tag(@mediafile.file.url(:system_default))%>
+		</div>
+		<div>
+			<% @mediafile.settings = @account.image_settings %>
+			<h3>Available sizes</h3>
+			<h4>Custom</h4>
+			<ul class="custom_image_sizes">
+				<li>Thumb <small> – <%= @mediafile.width_for_style(:thumb) %>px &times; <%= @mediafile.height_for_style(:thumb) %>px – <%= link_to "View", @mediafile.url(:thumb), :id => "view_thumb" %> – <input name="thumb_file" value="<%= @account.site_url + @mediafile.file(:thumb) %>" /></small></li>
+				<li>Small <small> – <%= @mediafile.width_for_style(:small) %>px &times; <%= @mediafile.height_for_style(:small) %>px – <%= link_to "View", @mediafile.url(:small), :id => "view_small" %> – <input name="small_file" value="<%= @account.site_url + @mediafile.file(:small) %>" /></small></li>
+				<li>Medium <small> – <%= @mediafile.width_for_style(:medium) %>px &times; <%= @mediafile.height_for_style(:medium) %>px – <%= link_to "View", @mediafile.url(:medium), :id => "view_medium" %> – <input name="medium_file" value="<%= @account.site_url + @mediafile.file(:medium) %>" /></small></li>
+				<li>Large <small> – <%= @mediafile.width_for_style(:large) %>px &times; <%= @mediafile.height_for_style(:large) %>px – <%= link_to "View", @mediafile.url(:large), :id => "view_large" %> – <input name="large_file" value="<%= @account.site_url + @mediafile.file(:large) %>" /></small></li>
+			</ul>
+			<h4>System</h4>
+			<ul class="system_image_sizes">
+				<li>Icon <small> – <%= @mediafile.width_for_style(:system_icon) %>px &times; <%= @mediafile.height_for_style(:system_icon) %>px – <input name="system_icon_file" value="<%= @account.site_url + @mediafile.file(:system_icon) %>" /></small></li>
+				<li>Thumb <small> – <%= @mediafile.width_for_style(:system_thumb) %>px &times; <%= @mediafile.height_for_style(:system_thumb) %>px – <%= link_to "View", @mediafile.url(:system_thumb), :id => "view_system_thumb" %> – <input name="system_thumb_file" value="<%= @account.site_url + @mediafile.file(:system_thumb) %>" /></small></li>
+				<li>Default <small> – <%= @mediafile.width_for_style(:system_default) %>px &times; <%= @mediafile.height_for_style(:system_default) %>px – (shown) – <input name="thumb_file" value="<%= @account.site_url + @mediafile.file(:thumb) %>" /></small></li>
+			</ul>
+			<% content_for :javascript do %>
+				<script type="text/javascript" charset="utf-8">
+					$(function(){
+						$('#view_thumb, #view_small, #view_medium, #view_large, #view_system_thumb').fancybox();
+					});
+				</script>
+			<% end %>
 		</div>
 	<% elsif @mediafile.is_a? Audiofile %>
 		<div>
@@ -25,7 +50,10 @@
 			<span style="font-size: 0.75em;"><%= number_to_human_size(@mediafile.file_size) %></span>
 		</div>
 	<% end %>
+	
 </div>
+
+
 <% form.buttons :class => "grid_6" do %>
 	<li class="grid_4 alpha"><h1>Edit mediafile</h1></li>
  	<li class="grid_2 omega" style="float:right;text-align:right;margin-right: -10px;"><%= form.submit "Save" %></li>
@@ -35,7 +63,7 @@
 	<%= form.input :title, :as => :string %>
 	<%= form.input :author_ids, :label => "Authors", :as => :string, :input_html => { :value => "" } %>
 	<%= form.input :tag_list, :as => :string %>
-	<%= form.input :description, :input_html => { :rows => 8 } %>
+	<%= form.input :description, :input_html => { :rows => 10 } %>
 <% end %>
 
 <% end %>

@@ -3,9 +3,6 @@ class Document < ActiveRecord::Base
   
   belongs_to :account
   
-  has_many :authorships, :dependent => :destroy
-  has_many :authors, :through => :authorships
-  
   has_many :printings, :dependent => :destroy
   has_many :issues, :through => :printings
   
@@ -57,7 +54,6 @@ class Document < ActiveRecord::Base
   
   accepts_nested_attributes_for :mediafiles
   accepts_nested_attributes_for :sortings, :allow_destroy => true     
-  accepts_nested_attributes_for :authorships, :allow_destroy => true
   
   validates_presence_of :account, :message => "must have an account"
   validates_associated :account, :message => "Account must be valid"
@@ -150,6 +146,21 @@ class Document < ActiveRecord::Base
     end
   end
   
+  ## Authors
+  
+  has_many :authorships, :dependent => :destroy
+  has_many :authors, :through => :authorships
+  
+  #Breaks up a human readable list of authors and creates each one and adds it to self.authors.
+  def authors_list=(list)
+    if list
+      list.split(/,|, and | and /).each do |name| 
+        author = Author.find_or_create_by_name_and_account_id(name.strip, self.account.id)
+        self.authors << author unless self.authors.member?(author) || author.nil?
+      end
+    end
+  end
+  
   # Returns list of article's author names as a readable list, separated by commas and the word "and".
   def authors_list
      case self.authors.length
@@ -171,6 +182,19 @@ class Document < ActiveRecord::Base
       return list
     end         
   end
+  
+  # Accepts both author names and ids, as opposed to just ids
+  def author_ids=(id_string)
+    self.authors.clear
+    ids = id_string.split(',').collect{ |s| s.strip }
+    ids.each do |id|
+      if id==id.to_i.to_s
+        self.authors << account.authors.find(id)
+      else
+        self.authors << account.authors.find_or_create_by_name(id)
+      end
+    end
+  end
 
   def authors_json
     authors.collect{ |a| { "id" => a.id, "name" => a.name } }.to_json
@@ -179,16 +203,7 @@ class Document < ActiveRecord::Base
   def word_count
     bodytext.nil? ? 0 : bodytext.scan(/\w+/).size
   end
-  
-  #Breaks up a human readable list of authors and creates each one and adds it to self.authors.
-  def authors_list=(list)
-    if list
-      list.split(/,|, and | and /).each do |name| 
-        author = Author.find_or_create_by_name_and_account_id(name.strip, self.account.id)
-        self.authors << author unless self.authors.member?(author) || author.nil?
-      end
-    end
-  end
+
   
   def owner
     has_owners.blank? ? nil : has_owners.first

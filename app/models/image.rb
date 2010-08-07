@@ -37,11 +37,16 @@ class Image < Mediafile
   end
   
   def height_for_style(style)
-    Paperclip::Geometry.from_file(file.to_file(style)).height
+    geometry_for(style).height.to_i
   end
   
   def width_for_style(style)
-    Paperclip::Geometry.from_file(file.to_file(style)).width
+    geometry_for(style).width.to_i
+  end
+  
+  # Returns Paperclip::Geometry instance created from a given style's file
+  def geometry_for(style)
+    Paperclip::Geometry.from_file(file.to_file(style))
   end
   
   def to_xml(options = {})

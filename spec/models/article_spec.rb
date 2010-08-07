@@ -19,20 +19,6 @@ describe Article do
     Article.in_section(section).should_not include(other_section_article)
   end
   
-  it "should create a human readable list of authors' names" do
-    @article.authors = [Factory(:author, :name => "Lilly")]
-    @article.authors_list.should == "Lilly"
-    
-    @article.authors << Factory(:author, :name => "Marshall")
-    @article.authors_list.should == "Lilly and Marshall"
-    
-    @article.authors << Factory(:author, :name => "Robin")
-    @article.authors_list.should == "Lilly, Marshall and Robin"
-    
-    @article.authors << Factory(:author, :name => "Barney")
-    @article.authors_list.should == "Lilly, Marshall, Robin and Barney"
-  end
-  
   it "should create an excerpt in none is set" do
     article = Factory(:article, :summary => "this article is summary")
     article.excerpt.should == "this article is summary"

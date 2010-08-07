@@ -5,15 +5,43 @@ describe Document do
   it { should belong_to(:account) }
   it { should validate_presence_of(:account).with_message(/must have an account/) }
   
-  it { should have_many(:authorships).dependent(:destroy) }
-  it { should have_many(:authors).through(:authorships) }
-  
-  it "should generate appropriate authors JSON" do
-    lilly = Factory(:author, :name => "Lilly Aldrin")
-    barney = Factory(:author, :name => "Barney Stinson")
-    document = Factory(:document, :authors => [lilly, barney])
+  describe "authors" do
+    it { should have_many(:authorships).dependent(:destroy) }
+    it { should have_many(:authors).through(:authorships) }
     
-    document.authors_json.should eql([{ "id" => lilly.id, "name" => lilly.name },{ "id" => barney.id, "name" => barney.name }].to_json)
+    it "should generate appropriate authors JSON" do
+      lilly = Factory(:author, :name => "Lilly Aldrin")
+      barney = Factory(:author, :name => "Barney Stinson")
+      document = Factory(:document, :authors => [lilly, barney])
+
+      document.authors_json.should eql([{ "id" => lilly.id, "name" => lilly.name },{ "id" => barney.id, "name" => barney.name }].to_json)
+    end
+    
+    it "should create a human readable list of authors' names" do
+      document = Factory(:document)
+      document.authors = [Factory(:author, :name => "Lilly")]
+      document.authors_list.should == "Lilly"
+  
+      document.authors << Factory(:author, :name => "Marshall")
+      document.authors_list.should == "Lilly and Marshall"
+  
+      document.authors << Factory(:author, :name => "Robin")
+      document.authors_list.should == "Lilly, Marshall and Robin"
+  
+      document.authors << Factory(:author, :name => "Barney")
+      document.authors_list.should == "Lilly, Marshall, Robin and Barney"
+    end
+    
+    it "should add authors from a mixed list of IDs and new author names" do
+      document = Factory(:document, :authors => [Factory(:author, :name => "Soon to be removed")])
+      
+      lilly = Factory(:author, :name => "Lilly Aldrin", :account => document.account)
+      barney = Factory(:author, :name => "Barney Stinson", :account => document.account)
+      
+      document.author_ids = "#{lilly.id}, Marshall Ericson,#{barney.id}"
+      marshall = document.account.authors.find_by_name("Marshall Ericson")
+      document.authors.should == [lilly, marshall, barney]
+    end
   end
 
   it { should have_many(:printings).dependent(:destroy) }
