@@ -98,6 +98,16 @@ describe ListsController do
 
        it { should respond_with(:unauthorized) }
      end
+     
+     context "with search query" do
+       before do
+         @current_user.promote_to_admin
+         Article.stub!(:search).and_return(@articles[0..1])
+         get :edit, :id => @list.id, :q => "Search term"
+       end
+
+       it { should assign_to(:articles).with(@articles[0..1]) }
+     end
   end
   
   describe "PUT to update" do

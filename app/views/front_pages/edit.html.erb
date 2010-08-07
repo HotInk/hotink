@@ -20,9 +20,11 @@
 				<%= link_to "+ Add slot", "#", :class=>"add_lead_article_slot link blue" %>
 				<%= link_to "– Remove slot", "#", :class=>"remove_lead_article_slot link red" %>
 		</div>
+	<% end %>
 
 		<div class="grid_6 omega">
 			<h2 style="margin:0 0 5px 0;float: left;">Articles</h2>
+			<label for="q" style="display:block; float: left; margin-left: 15px; font-size: 85%;margin-top: 2px;">Search <input id="search" type="text" name="q" size="17" style="font-size: 85%;"/></label>			
 			<div class="clearfix">
 				<%= will_paginate(@articles, :inner_window => 1, :outer_window => 0, :class => "pagination remote") %>
 			</div>
@@ -30,7 +32,6 @@
 				<%= render @articles %>
 			</ol>
 		</div>
-	<% end %>
 	
 	<% if @account.current_design %>
 		<div class="preview grid_12 alpha blue">
@@ -98,6 +99,10 @@
 				$('#lead_articles input[type="hidden"]').each(function(){
 					insert_hidden_id_element($('#front_page_preview_form'), $(this).val())
 				});
+			});
+
+			$('#search').change(function(){
+				$.ajax({ 'data': { 'q' : $('#search').val() }, 'url' : '<%= edit_front_page_url %>' });
 			});
 
 		} );

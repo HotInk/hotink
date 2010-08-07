@@ -7,7 +7,11 @@ class FrontPagesController < ApplicationController
   def edit
     page = params[:page] || 1
     per_page = params[:per_page] || 8
-    @articles = @account.articles.published_or_scheduled.paginate(:all, :page => page, :per_page => per_page, :order => 'published_at desc')
+    if params[:q]
+      @articles = @account.articles.published_or_scheduled.search(params[:q], :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
+    else
+      @articles = @account.articles.published_or_scheduled.paginate(:all, :page => page, :per_page => per_page, :order => 'published_at desc')
+    end
     logger.info "Lead articles: #{current_lead_articles.inspect}"
     @lead_articles = current_lead_articles
   end

@@ -38,6 +38,15 @@ describe FrontPagesController do
       it { should assign_to(:articles).with(@articles) }
       it { should assign_to(:lead_articles).with([]) }
     end
+    
+    context "with search query" do
+      before do
+        Article.stub!(:search).and_return(@articles[0..2])
+        get :edit, :q => "Search term"
+      end
+    
+      it { should assign_to(:articles).with(@articles[0..2]) }
+    end
   end
   
   describe "PUT to update" do

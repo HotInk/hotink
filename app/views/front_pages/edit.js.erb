@@ -1,4 +1,4 @@
-$('#articles').html('<%= escape_javascript render(@articles) %>')
+$('#articles').html('<%= escape_javascript render(:partial => "articles/article", :collection => @articles) %>')
 $('.pagination.remote').html('<%= escape_javascript will_paginate(@articles, :inner_window => 1, :outer_window => 0, :class => "pagination remote") %>')
 $(".image_icon").fancybox({
 	'titlePosition'		: 'inside',
