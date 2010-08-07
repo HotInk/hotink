@@ -356,27 +356,35 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 #article_title, #entry_title 			{ font-size: 30px; }
 #article_subtitle, #entry_subtitle 		{ font-size: 22px; }
 
+
+/* Author tokenizing */
 #article_author_ids_input ul.token-input-list, 
 #entry_author_ids_input ul.token-input-list,
 #mediafile_author_ids_input ul.token-input-list,
 #audiofile_author_ids_input ul.token-input-list,
-#image_author_ids_input ul.token-input-list 							{ clear: left; border: 1px solid #DEDEDE; background-color: #FDFDFD; 
+#image_author_ids_input ul.token-input-list,
+#waxing_mediafile_attributes_author_ids_input ul.token-input-list		{ clear: left; border: 1px solid #DEDEDE; background-color: #FDFDFD; 
 																			width: 100%; padding: 0.1em; }
+#waxing_mediafile_attributes_author_ids_input ul.token-input-list p 	{ font-size: 11px; }
+
 #article_author_ids_input .token-input-dropdown, 
 #entry_author_ids_input .token-input-dropdown,
 #mediafile_author_ids_input .token-input-dropdown,
 #audiofile_author_ids_input .token-input-dropdown,
-#image_author_ids_input .token-input-dropdown 							{ width: 100%; border: 1px solid #DEDEDE; border-top-width: 0;
+#image_author_ids_input .token-input-dropdown,
+#waxing_mediafile_attributes_author_ids_input .token-input-dropdown		{ width: 100%; border: 1px solid #DEDEDE; border-top-width: 0;
 	 																		padding: 0.1em; }
 #article_author_ids_input ul.token-input-list li.token-input-token, 
 #entry_author_ids_input ul.token-input-list li.token-input-token,
 #mediafile_author_ids_input ul.token-input-list li.token-input-token,
 #audiofile_author_ids_input ul.token-input-list li.token-input-token,
-#image_author_ids_input ul.token-input-list li.token-input-token 		{ padding: 5px; margin: 2px; }
+#image_author_ids_input ul.token-input-list li.token-input-token,
+#waxing_mediafile_attributes_author_ids_input li.token-input-token 		{ padding: 5px; margin: 2px; }
 
 #article_author_ids_input input, #entry_author_ids_input input,
 #mediafile_author_ids_input input, #audiofile_author_ids_input input,
-#image_author_ids_input input								 			{ border:none; }
+#image_author_ids_input input, 
+#waxing_mediafile_attributes_author_ids_input input						{ border:none; }
 
 #article_section_id_input					{ padding-left: 15px; }
 #article_section_id							{ font-size: 21px; background: none; border: 1px solid #AAA; width: 100%; }
@@ -436,13 +444,19 @@ ol#document_mediafiles li a.detach { position: absolute; top: 2px; right: 3px; f
 ol#document_mediafiles li a.detach:hover { text-decoration: underline; }
 ol#document_mediafiles li img { float: right; border: 1px solid #666666;}
 ol#document_mediafiles li .caption { margin-bottom: 5px; }
-ol#document_mediafiles li.image .caption { float: left; width: 50%;  }
+ol#document_mediafiles li .caption p { font-size: 0.9em; }
+ol#document_mediafiles li.image_waxing .caption { float: left; width: 50%;  }
 ol#document_mediafiles li .edit_caption { font-size: 70%; float: right; margin-top: 10px; }
-ol#document_mediafiles li.image .edit_caption { float: left; clear: left; width: 50%; }
-ol#document_mediafiles li .audiofile { overflow:hidden; padding: 5px; background-color: #fff9e5; border: 1px solid #AAA; margin-bottom: 10px; line-height: 1.4; }
+ol#document_mediafiles li.image_waxing .edit_caption { float: left; clear: left; width: 50%; }
+ol#document_mediafiles li.audiofile_waxing .player { overflow:hidden; padding: 5px; background-color: #fff9e5; border: 1px solid #AAA; margin-bottom: 10px; line-height: 1.4; }
 ol#document_mediafiles li .file { overflow:hidden; padding: 5px; background-color: #fff9e5; border: 1px solid #AAA; margin-bottom: 10px; font-size: 1.1em; line-height: 1.4; }
+ol#document_mediafiles li p.credit { margin-top: 10px; font-size: 0.8em; }
+ol#document_mediafiles li .credit strong { font-weight: 600; }
 
 #attach_mediafile_link { display: block; float: left; margin-bottom: 5px; }
+
+/* Waxing modal form */
+.waxing_modal form.formtastic fieldset > ol > li.text textarea { padding: 0; }
 
 #document_categories { line-height: 1.5; font-size: 105%; }
 #document_categories input { margin-bottom: 5px; margin-right: 5px; }

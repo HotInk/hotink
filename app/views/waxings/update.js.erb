@@ -4,9 +4,15 @@ $.fancybox.close();
 <% else %>
 	$('#waxing_<%= @waxing.id %> .caption').html('<%= escape_javascript(RDiscount.new(@waxing.caption).to_html) %>');
 <% end %>
+<% unless @waxing.mediafile.authors_list.blank? %>
+	$('#waxing_<%= @waxing.id %> .caption').append('<p class="credit"><strong>Credit</strong> <%= @waxing.mediafile.authors_list %></p>');
+<% end %>
+
 $('#waxing_<%= @waxing.id %> .caption').append('<p class="edit_caption"><%= link_to "Edit", edit_waxing_path(@waxing), :id => "edit_waxing_<%= @waxing.id", :class => "grey link small" %></p>');
 $(".edit_caption a").fancybox({
+	'scrolling'			: 'no',
 	'titlePosition'		: 'inside',
 	'transitionIn'		: 'none',
-	'transitionOut'		: 'none'
+	'transitionOut'		: 'none',
+	'width'				: '500'
 });

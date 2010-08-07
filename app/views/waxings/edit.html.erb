@@ -1,10 +1,34 @@
-<div id="waxing_<%= @waxing.id %>" style="height:160px;width:375px; padding: 10px;">
+<div id="waxing_<%= @waxing.id %>" class="waxing_modal">
 	<% semantic_form_for @waxing, :html => { "data-remote" => true } do |waxing| %>
+		<% waxing.buttons do %>
+			<%= waxing.commit_button "Save" %>
+		<% end %>
 		<% waxing.inputs do %>
 			<%= waxing.input :caption, :as => :text, :input_html => { :rows => 4, :cols => 35 } %>
+			<% waxing.semantic_fields_for :mediafile do |mediafile| %>
+				<%= mediafile.input :author_ids, :label => "Media credit", :as => :string, :input_html => { :value => "" } %>
+		    <% end %>
 		<% end %>
-		<% waxing.buttons do %>
-			<%= waxing.commit_button "Save caption" %>
-		<% end %>
+	
+		<script type="text/javascript" charset="utf-8">
+			$("#waxing_mediafile_attributes_author_ids").tokenInput("<%= authors_path(:format => :json) %>", {
+				initialValues: <%= @waxing.mediafile.authors_json %>,
+				canCreate: true,
+				createText: "New author",
+				hintText: "Add an author",
+		        classes: {
+		            tokenList: "token-input-list",
+		            token: "token-input-token",
+		            tokenDelete: "token-input-delete-token",
+		            selectedToken: "token-input-selected-token",
+		            highlightedToken: "token-input-highlighted-token",
+		            dropdown: "token-input-dropdown",
+		            dropdownItem: "token-input-dropdown-item",
+		            dropdownItem2: "token-input-dropdown-item2",
+		            selectedDropdownItem: "token-input-selected-dropdown-item",
+		            inputToken: "token-input-input-token"
+		        }
+		   });
+		</script>
 	<% end %>
 </div>
