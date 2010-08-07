@@ -25,7 +25,7 @@
 	<%= form.input :title, :as => :string %>
 	<%= form.input :author_ids, :label => "Authors", :as => :string, :input_html => { :value => "" } %>
 	<%= form.input :tag_list, :as => :string %>
-	<%= form.input :description, :input_html => { :rows => 10 } %>
+	<%= form.input :description, :input_html => { :rows => 20 } %>
 <% end %>
 
 <% end %>
@@ -36,6 +36,16 @@
 		$().ready(function() {			
            	$("#image_description, #audiofile_description, #mediafile_description").wmd({"preview":false}); 
 
+			$('#show_image_sizes_link').click(function(event){
+				$('.image .sizes').slideToggle('slow', function(){
+					if($('#show_image_sizes_link').html()=="Show sizes") {
+						$('#show_image_sizes_link').html("Hide sizes")	
+					} else {
+						$('#show_image_sizes_link').html("Show sizes")	
+					}
+				});
+				event.preventDefault();
+			});
 
 			$("#image_author_ids, #audiofile_author_ids, #mediafile_author_ids").tokenInput("<%= authors_path(:format => :json) %>", {
 				initialValues: <%= @mediafile.authors_json %>,
