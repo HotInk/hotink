@@ -43,7 +43,6 @@ class MediafilesController < ApplicationController
     @mediafile = @account.mediafiles.find(params[:id])
      respond_to do |format|
        format.html # new.html.erb
-       format.js
      end
   end
 
@@ -101,7 +100,6 @@ class MediafilesController < ApplicationController
       if @mediafile.update_attributes(params[@mediafile.class.name.downcase.to_sym]) 
         flash[:notice] = 'Media updated'      
         format.html { redirect_to(mediafiles_path)}
-        format.js
       else
         flash[:notice] = 'Error! Media NOT updated'      
         format.html { render :action => "edit", :status => :bad_request }

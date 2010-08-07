@@ -111,17 +111,6 @@ describe MediafilesController do
       it { should respond_with(:success) }
       it { should respond_with_content_type(:html) }
     end
-    
-    context "with XHR request" do
-      before do
-        @mediafile = Factory(:mediafile, :account => @account)
-        xhr :get, :edit, :id => @mediafile.id
-      end
-    
-      it { should assign_to(:mediafile).with(@mediafile) }
-      it { should respond_with(:success) }
-      it { should respond_with_content_type(:js) }
-    end
   end
   
   describe "PUT to update" do
@@ -163,20 +152,6 @@ describe MediafilesController do
         it "should update the mediafile" do
           @mediafile.reload.title.should == "Some mediafile"
         end
-      end
-    end
-    
-    context "with valid XHR request" do
-      before do
-        @mediafile = Factory(:mediafile, :account => @account)
-        xhr :put, :update, :id => @mediafile.id, :mediafile => { :title => "Some mediafile" }
-      end
-      
-      it { should assign_to(:mediafile).with(@mediafile) }
-      it { should respond_with(:success) }
-      it { should respond_with_content_type(:js) }
-      it "should update the mediafile" do
-        @mediafile.reload.title.should == "Some mediafile"
       end
     end
     
