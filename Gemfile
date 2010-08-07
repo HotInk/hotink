@@ -22,6 +22,8 @@ gem 'ruby-openid', :require => 'openid'
 
 gem "formtastic"
 
+gem "ruby-mp3info", :require => "mp3info"
+
 # Gems for Mailout
 gem 'hominid'
 gem 'liquid'
