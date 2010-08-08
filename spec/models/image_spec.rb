@@ -19,7 +19,7 @@ describe Image do
   
   it "should return geometry for each style" do
     small_width = 218
-    image = Factory(:image, :settings => { 'small' => ["#{small_width}>", 'jpg'] , 'medium' => ['458>', 'jpg'], 'thumb' => ["x40", 'jpg'], 'large' => ['800>', 'jpg'] })
+    image = Factory(:image, :settings => { 'small' => ["#{small_width}", 'jpg'] , 'medium' => ['458>', 'jpg'], 'thumb' => ["x40", 'jpg'], 'large' => ['800>', 'jpg'] })
     
     image.geometry_for(:small).width.to_i.should == small_width
   end

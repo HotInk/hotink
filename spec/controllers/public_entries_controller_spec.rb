@@ -29,13 +29,28 @@ describe PublicEntriesController do
               EntryDrop.stub!(:new).and_return(@entry_drop)
 
               @template.should_receive(:render).with({ 'entry' => @entry_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
-              get :show, :account_id => @account.id, :blog_slug => @entry.blog.slug, :id => @entry.id
+              get :show, :blog_slug => @entry.blog.slug, :id => @entry.id
             end
 
             it { should respond_with(:success) }
             it { should assign_to(:entry).with(@entry) }
             it { should assign_to(:design).with(@design) }
           end
+        end
+
+        describe "when not found" do
+          before do
+            blog = Factory(:blog, :account => @account)
+
+            template = mock('not found template')
+            @design.stub!(:not_found_template).and_return(template)
+            template.should_receive(:render)
+
+            get :show, :blog_slug => blog.slug, :id => "no-record"
+          end
+
+          it { should respond_with(:not_found) }
+          it { should assign_to(:design).with(@design) }
         end
         
         describe "unpublished entry preview" do
@@ -53,7 +68,7 @@ describe PublicEntriesController do
               EntryDrop.stub!(:new).and_return(@entry_drop)          
               @template.should_receive(:render).with({ 'entry' => @entry_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
 
-              get :show, :account_id => @account.id, :blog_slug => @entry.blog.slug, :id => @entry.id
+              get :show, :blog_slug => @entry.blog.slug, :id => @entry.id
             end
 
             it { should respond_with(:success) }
@@ -62,9 +77,11 @@ describe PublicEntriesController do
           end
 
           context "for a non-user" do
-            it "should raise a not found error" do
-              lambda{ get :show, :account_id => @account.id, :blog_slug => @entry.blog.slug, :id => @entry.id }.should raise_error(ActiveRecord::RecordNotFound)
+            before do
+              get :show, :blog_slug => @entry.blog.slug, :id => @entry.id
             end
+            
+            it { should respond_with(:not_found) }
           end
         end
         
@@ -100,16 +117,15 @@ describe PublicEntriesController do
              it { should assign_to(:design).with(@design) }
            end
         end
-      end
-      
+    end
+    
     context "without a current design" do
       before do
         @entry = Factory(:published_entry, :account => @account)
-        get :show, :account_id => @account.id, :blog_slug => @entry.blog.slug, :id => @entry.id
+        get :show, :blog_slug => @entry.blog.slug, :id => @entry.id
       end
     
       it { should respond_with(:service_unavailable) }
     end
   end
-  
 end

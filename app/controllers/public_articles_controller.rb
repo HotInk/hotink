@@ -1,5 +1,4 @@
-class PublicArticlesController < ApplicationController
-  skip_before_filter :login_required
+class PublicArticlesController < PublicController
   
   def show
     if @design = design_to_render

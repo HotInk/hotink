@@ -1,7 +1,5 @@
-class PublicSearchController < ApplicationController
-  
-  skip_before_filter :login_required
-  
+class PublicSearchController < PublicController
+    
   def show
     if @design = design_to_render
       if params[:q]

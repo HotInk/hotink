@@ -19,7 +19,9 @@
 	</ul>
 	<h3>View templates</h3>
 	<ul id="view_templates">
-	<% [@design.article_template, @design.page_template, @design.category_template, @design.search_results_template, @design.issue_index_template, @design.issue_template, @design.blog_index_template, @design.blog_template, @design.entry_template].each do |template| -%>
+	<% [@design.article_template, @design.page_template, @design.category_template, @design.search_results_template,
+		@design.issue_index_template, @design.issue_template, @design.blog_index_template, @design.blog_template, 
+		@design.entry_template, @design.not_found_template].each do |template| -%>
 		<li class="<%= cycle 'even-row', 'odd-row' %>">
 			<% if template.is_a?(ArticleTemplate) %>	
 				<%= link_to "Article", edit_design_template_path(@design, template) %>
@@ -39,6 +41,8 @@
 				<%= link_to "Blog", edit_design_template_path(@design, template) %>
 			<% elsif template.is_a?(EntryTemplate) %>
 				<%= link_to "Blog entry", edit_design_template_path(@design, template) %>
+			<% elsif template.is_a?(NotFoundTemplate) %>
+				<%= link_to "Not Found", edit_design_template_path(@design, template) %>
 			<% end %>
 			<span class="last_updated"><%= template.created_at==template.updated_at ? "Created " : "Last updated "  %><%= template.updated_at.to_s(:standard) %></span>
 		</li>

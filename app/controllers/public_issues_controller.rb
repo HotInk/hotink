@@ -1,7 +1,5 @@
-class PublicIssuesController < ApplicationController
-  
-  skip_before_filter :login_required
-  
+class PublicIssuesController < PublicController
+    
   def show
     if @design = design_to_render
      @issue = @account.issues.find(params[:id])

@@ -31,7 +31,7 @@ describe PublicBlogsController do
 
           @template.should_receive(:render).with({ 'blog' => @blog_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
 
-          get :show, :account_id => @account.id, :id => @blog.slug
+          get :show, :id => @blog.slug
         end
         
         it { should respond_with(:success) }
@@ -50,7 +50,7 @@ describe PublicBlogsController do
              @current_user.promote_to_admin
              controller.stub!(:current_user).and_return(@current_user)
              
-             get :show, :account_id => @account.id, :id => @blog.slug, :design_id => @alternate_design.id
+             get :show, :id => @blog.slug, :design_id => @alternate_design.id
            end
            
            it { should assign_to(:design).with(@alternate_design) }
@@ -59,7 +59,7 @@ describe PublicBlogsController do
         context "as unqualified user" do
            before do
              @template.should_receive(:render)
-             get :show, :account_id => @account.id, :id => @blog.slug, :design_id => @alternate_design.id
+             get :show, :id => @blog.slug, :design_id => @alternate_design.id
            end
            
            it { should assign_to(:design).with(@design) }
@@ -67,10 +67,22 @@ describe PublicBlogsController do
       end
     end
     
+    describe "when not found" do
+      before do
+        @template = mock('not found template')
+        @design.stub!(:not_found_template).and_return(@template)
+        @template.should_receive(:render)
+        get :show, :id => "no-blog-is-here"
+      end
+
+      it { should respond_with(:not_found) }
+      it { should assign_to(:design).with(@design) }
+    end
+    
     context "without a current design" do
       before do
         @account.stub!(:current_design).and_return(nil)
-        get :show, :account_id => @account.id, :id => @blog.slug
+        get :show, :id => @blog.slug
       end
     
       it { should respond_with(:service_unavailable) }
@@ -92,7 +104,7 @@ describe PublicBlogsController do
         before do
           @template.should_receive(:render)
 
-          get :index, :account_id => @account.id
+          get :index
         end
         
         it { should respond_with(:success) }
@@ -111,7 +123,7 @@ describe PublicBlogsController do
              @current_user.promote_to_admin
              controller.stub!(:current_user).and_return(@current_user)
              
-             get :index, :account_id => @account.id, :design_id => @alternate_design.id
+             get :index, :design_id => @alternate_design.id
            end
            
            it { should assign_to(:design).with(@alternate_design) }
@@ -120,7 +132,7 @@ describe PublicBlogsController do
         context "as unqualified user" do
            before do
              @template.should_receive(:render)
-             get :index, :account_id => @account.id, :design_id => @alternate_design.id
+             get :index, :design_id => @alternate_design.id
            end
            
            it { should assign_to(:design).with(@design) }
@@ -131,7 +143,7 @@ describe PublicBlogsController do
     context "without a current design" do
       before do
         @account.stub!(:current_design).and_return(nil)
-        get :index, :account_id => @account.id
+        get :index
       end
     
       it { should respond_with(:service_unavailable) }

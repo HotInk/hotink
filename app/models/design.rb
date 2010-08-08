@@ -22,6 +22,7 @@ class Design < ActiveRecord::Base
   has_one :blog_index_template
   has_one :blog_template
   has_one :entry_template
+  has_one :not_found_template
 
   has_many :front_page_templates
   belongs_to :current_front_page_template, :class_name => "FrontPageTemplate", :foreign_key => :current_front_page_template_id
@@ -44,6 +45,7 @@ class Design < ActiveRecord::Base
     self.create_blog_index_template
     self.create_blog_template
     self.create_entry_template
+    self.create_not_found_template
     
     self.front_page_templates.create(:name => 'Default front page')
   end
@@ -235,7 +237,16 @@ class EntryTemplate < ViewTemplate
   end
 end
 
-
+class NotFoundTemplate < ViewTemplate
+  def description
+    stored_description = read_attribute(:description)
+    if stored_description.blank?
+       "Renders when users attempt to visit a non-existant page."
+    else
+      stored_description
+    end
+  end
+end
 
 class TemplateFile < ActiveRecord::Base
   belongs_to :design

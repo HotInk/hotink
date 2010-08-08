@@ -61,11 +61,25 @@ describe PublicArticlesController do
           end
 
           context "for a non-user" do
-            it "should raise a not found error" do
-              lambda{ get :show, :account_id => @account.id, :id => @article.id }.should raise_error(ActiveRecord::RecordNotFound)
+            before do
+              get :show, :id => @article.id 
             end
+
+            it { should respond_with(:not_found) }
           end
         end
+      end
+    
+      describe "when not found" do
+        before do
+          @template = mock('not found template')
+          @design.stub!(:not_found_template).and_return(@template)
+          @template.should_receive(:render)
+          get :show, :id => "no-record"
+        end
+
+        it { should respond_with(:not_found) }
+        it { should assign_to(:design).with(@design) }
       end
       
       describe "viewing with alternate design" do
@@ -96,7 +110,7 @@ describe PublicArticlesController do
          end
       end
     end
-    
+      
    context "without a current design" do
       before do
         @article = Factory(:published_article, :account => @account)

@@ -54,6 +54,18 @@ describe PublicPagesController do
           end
         end
         
+        describe "when not found" do
+          before do
+            @template = mock('not found template')
+            @design.stub!(:not_found_template).and_return(@template)
+            @template.should_receive(:render)
+            get :show, :id => "no-record"
+          end
+
+          it { should respond_with(:not_found) }
+          it { should assign_to(:design).with(@design) }
+        end
+        
         describe "viewing with alternate design" do
           before do
             @alternate_design = Factory(:design, :account => @account)

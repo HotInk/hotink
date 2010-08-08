@@ -1,5 +1,4 @@
-class PublicFrontPagesController < ApplicationController
-  skip_before_filter :login_required
+class PublicFrontPagesController < PublicController
   skip_before_filter :verify_authenticity_token, :only => :preview
   
   def show

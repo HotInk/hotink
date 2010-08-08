@@ -1,6 +1,4 @@
-class PublicEntriesController < ApplicationController
-
-  skip_before_filter :login_required
+class PublicEntriesController < PublicController
   
   def show
     if @design = design_to_render

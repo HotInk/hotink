@@ -1,5 +1,4 @@
-class PublicCommentsController < ApplicationController
-  skip_before_filter :login_required
+class PublicCommentsController < PublicController
   
   def create
     @document = @account.documents.find(params[:comment][:document_id])

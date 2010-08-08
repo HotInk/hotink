@@ -25,6 +25,7 @@ describe Design do
   it { should have_one(:blog_index_template) }
   it { should have_one(:blog_template) }
   it { should have_one(:entry_template) }
+  it { should have_one(:not_found_template) }
 
   it { should have_many(:front_page_templates) }
   it { should belong_to(:current_front_page_template) }
@@ -40,6 +41,7 @@ describe Design do
     design.blog_index_template.should be_kind_of(BlogIndexTemplate)
     design.blog_template.should be_kind_of(BlogTemplate)
     design.entry_template.should be_kind_of(EntryTemplate)
+    design.not_found_template.should be_kind_of(NotFoundTemplate)
   end
   
   it "should create one front page template to get things started" do

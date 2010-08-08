@@ -1,5 +1,4 @@
-class PublicFeedsController < ApplicationController
-  skip_before_filter :login_required
+class PublicFeedsController < PublicController
   
   def show
     @feed_title = "#{@account.display_name} RSS feed"

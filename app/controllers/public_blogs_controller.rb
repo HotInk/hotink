@@ -1,10 +1,10 @@
-class PublicBlogsController < ApplicationController
-  
-  skip_before_filter :login_required
+class PublicBlogsController < PublicController
   
   def show
     if @design = design_to_render
-      @blog = @account.blogs.active.find_by_slug(params[:id])
+      @blog = @account.blogs.active.find :first, :conditions => { :slug => params[:id] }
+      raise ActiveRecord::RecordNotFound unless @blog
+      
       render :text => @design.blog_template.render({'blog' => BlogDrop.new(@blog), 'content' => ContentDrop.new(@account), 'site' => SiteDrop.new}, :registers => { :design => @design }) 
     else  
       render :text => "This site is currently offline.", :status => :service_unavailable
