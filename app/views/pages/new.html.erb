@@ -7,3 +7,11 @@
 		<%= form.input :contents %>	
 	<% end %>
 <% end %>
+
+<%= stylesheet_link_tag 'wmd' %>
+<% content_for :javascript do %>
+<%= javascript_include_tag 'jquery.wmd' %>
+<script type="text/javascript" charset="utf-8">
+	$("#page_contents").wmd({'preview':"wmd-preview"}); 
+</script>
+<% end %>

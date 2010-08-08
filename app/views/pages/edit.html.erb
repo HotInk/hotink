@@ -2,8 +2,17 @@
 <% semantic_form_for(@page) do |form| %>
 	<% form.inputs :class => "grid_12" do %>
 		<%= form.input :name, :label => (form.object.parent_url + "/"), :wrapper_html => { :class => "grid_8" } %>
-		<%= form.commit_button :class => "grid_4" %>
+		<li class="grid_2" style="text-align:right;"><%= link_to "View on site", "/pages#{@page.url}", :class => "link blue", :target => :blank %></li>
+		<%= form.commit_button :class => "grid_2" %>
 		<%= form.input :parent, :collection => (page_form_options_collection(@account)  - [@page]).collect{ |page| [page.url, page.id] }, :include_blank => "Select a parent page", :wrapper_html => { :class => "grid_12 alpha"} %>
 		<%= form.input :contents %>
 	<% end %>
+<% end %>
+
+<%= stylesheet_link_tag 'wmd' %>
+<% content_for :javascript do %>
+<%= javascript_include_tag 'jquery.wmd' %>
+<script type="text/javascript" charset="utf-8">
+	$("#page_contents").wmd({'preview':"wmd-preview"}); 
+</script>
 <% end %>
