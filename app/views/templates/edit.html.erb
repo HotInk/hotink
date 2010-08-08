@@ -1,17 +1,21 @@
-<h1>Edit <%= @tplate.class.name.tableize.humanize.singularize.downcase %></h1>
+<p class="back_link"><%= link_to '&laquo; Back to design', design_path(@design) %></p>
+<h1><%= @tplate.class.name.tableize.humanize.singularize %></h1>
 <% semantic_form_for(@tplate, :url => design_template_path(@design, @tplate), :html => { :class => "template use_preview" }) do |form| %>
 	<% form.inputs :class => "grid_12" do %>
-		<% if form.object.kind_of?(ViewTemplate) %>
+		<% if form.object.kind_of?(ViewTemplate)&&!form.object.kind_of?(FrontPageTemplate) %>
 			<%= form.input :layout, :collection => @design.layouts, :include_blank => "No layout", :wrapper_html => { :class => "grid_8 preview" } %>
+		<% elsif form.object.kind_of?(FrontPageTemplate) %>
+			<%= form.input :layout, :collection => @design.layouts, :include_blank => "No layout", :wrapper_html => { :class => "grid_8 preview" } %>
+			<%= form.input :name, :wrapper_html => { :class => "grid_8 preview" }, :input_html => { :style => "width: 90%;" } %>
 		<% else %>
 			<%= form.input :name, :wrapper_html => { :class => "grid_8 preview" }, :input_html => { :style => "width: 90%;" } %>
 		<% end %>
-		<div id="template_info_preview" class="grid_8 alpha">
+		<div id="template_info_preview" class="grid_11 alpha">
 			<% unless form.object.name.blank? %><h2><%= form.object.name %></h2><% end %>
 			<% if form.object.kind_of?(ViewTemplate) %><p><strong>Layout:</strong> <%= form.object.layout.nil? ? "No layout" : form.object.layout.name %></p><% end %>
 			<p><%= form.object.description %> <a class="hide_preview link yellow small" href="#">Edit details</a></p>
 		</div>
-		<%= form.commit_button :class => "grid_4", :label => "Save" %>
+		<%= form.commit_button :class => "grid_1", :label => "Save", :style => "position: relative; z-index: 100;" %>
 		<%= form.input :description, :input_html => { :rows => 2 }, :wrapper_html => { :class => "preview" } %>
 		<% if form.object.kind_of?(ViewTemplate) %>
 			<%= form.input :title_code, :input_html => { :rows => 1 } %>
@@ -20,11 +24,47 @@
 	<% end %>
 <% end %>
 
+<style type="text/css" media="screen">
+	#<%= @tplate.class.name.tableize.singularize.downcase %>_description_input,
+	#<%= @tplate.class.name.tableize.singularize.downcase %>_title_code_input,
+	#<%= @tplate.class.name.tableize.singularize.downcase %>_code_input { float: left; width: 100%; }
+	.CodeMirror-wrapping { float: left; width: 100%; border: 1px solid #999; margin-bottom: 10px; }
+	.CodeMirror-line-numbers {
+      width: 2.2em;
+      color: #aaa;
+      background-color: #eee;
+      text-align: right;
+      padding-right: .3em;
+      font-size: 10pt;
+      font-family: monospace;
+      padding-top: .4em;
+    }
+</style>
+
 <% content_for :javascript do %>
+	<script src="/codemirror/codemirror.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 			$('#template_info_preview .hide_preview').click(function(){
 				$('form.template').removeClass('use_preview');
 				return false;
 			});
+		
+			var editor = CodeMirror.fromTextArea('<%= @tplate.class.name.tableize.singularize.downcase %>_code', {
+		    	height: "400px",
+			    parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
+			    stylesheet: ["/codemirror/css/xmlcolors.css", "/codemirror/css/jscolors.css", "/codemirror/css/csscolors.css"],
+			    path: "/codemirror/",
+			    lineNumbers: true
+		  	});
+		
+			<% if @tplate.kind_of?(ViewTemplate) %>
+				var editor = CodeMirror.fromTextArea('<%= @tplate.class.name.tableize.singularize.downcase %>_title_code', {
+			    	height: "23px",
+				    parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
+				    stylesheet: ["/codemirror/css/xmlcolors.css", "/codemirror/css/jscolors.css", "/codemirror/css/csscolors.css"],
+				    path: "/codemirror/",
+				    lineNumbers: true
+			  	});
+			<% end %>
 	</script>
 <% end %>

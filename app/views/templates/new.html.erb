@@ -4,12 +4,63 @@
 		<%= form.commit_button "Create" %>
 	<% end %>
 	<% form.inputs :class => "grid_12" do %>
-		<% if form.object.kind_of?(ViewTemplate) %>
+		<% if form.object.kind_of?(ViewTemplate)&&!form.object.kind_of?(FrontPageTemplate) %>
 			<%= form.input :layout, :include_blank => "No layout" %>
+		<% elsif form.object.kind_of?(FrontPageTemplate) %>
+			<%= form.input :layout, :include_blank => "No layout" %>
+			<%= form.input :name %>
 		<% else %>
 			<%= form.input :name %>
 		<% end %>
 		<%= form.input :description, :input_html => { :rows => 2 } %>
+		<% if form.object.kind_of?(ViewTemplate) %>
+			<%= form.input :title_code, :input_html => { :rows => 1 } %>
+		<% end %>
 		<%= form.input :code %>
 	<% end %>
+<% end %>
+
+<style type="text/css" media="screen">
+	#<%= @tplate.class.name.tableize.singularize.downcase %>_description_input,
+	#<%= @tplate.class.name.tableize.singularize.downcase %>_title_code_input,
+	#<%= @tplate.class.name.tableize.singularize.downcase %>_code_input { float: left; width: 100%; }
+	.CodeMirror-wrapping { float: left; width: 100%; border: 1px solid #999; margin-bottom: 10px; }
+	.CodeMirror-line-numbers {
+      width: 2.2em;
+      color: #aaa;
+      background-color: #eee;
+      text-align: right;
+      padding-right: .3em;
+      font-size: 10pt;
+      font-family: monospace;
+      padding-top: .4em;
+    }
+</style>
+
+<% content_for :javascript do %>
+	<script src="/codemirror/codemirror.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+			$('#template_info_preview .hide_preview').click(function(){
+				$('form.template').removeClass('use_preview');
+				return false;
+			});
+		
+			var editor = CodeMirror.fromTextArea('<%= @tplate.class.name.tableize.singularize.downcase %>_code', {
+		    	height: "400px",
+			    parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
+			    stylesheet: ["/codemirror/css/xmlcolors.css", "/codemirror/css/jscolors.css", "/codemirror/css/csscolors.css"],
+			    path: "/codemirror/",
+			    lineNumbers: true
+		  	});
+		
+			<% if @tplate.kind_of?(ViewTemplate) %>
+				var editor = CodeMirror.fromTextArea('<%= @tplate.class.name.tableize.singularize.downcase %>_title_code', {
+			    	height: "23px",
+				    parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
+				    stylesheet: ["/codemirror/css/xmlcolors.css", "/codemirror/css/jscolors.css", "/codemirror/css/csscolors.css"],
+				    path: "/codemirror/",
+				    lineNumbers: true
+			  	});
+			<% end %>
+	</script>
 <% end %>
