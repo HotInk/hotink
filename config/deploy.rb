@@ -8,7 +8,7 @@ set :repository,  "git://github.com/HotInk/hotink.git"
 # If you aren't deploying to /u/apps/#{application} on the target
 # servers (which is the default), you can specify the actual location
 # via the :deploy_to variable:
-set :deploy_to, "/home/hotink/hotink.net"
+set :deploy_to, "/home/hotink/virtual.hotink.net"
 
 # If you aren't using Subversion to manage your source code, specify
 # your SCM below:

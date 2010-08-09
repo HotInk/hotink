@@ -96,6 +96,10 @@ describe EntriesController do
   
   describe "GET to edit_multiple" do
     before do
+      @current_user.has_role("manager", @account)
+    end
+    
+    before do
       @entries = (1..3).collect{ Factory(:entry, :account => @account) }
       get :edit_multiple, :update_action_name => "publish", :entry_ids => @entries.collect{|a| a.id}
     end
@@ -201,6 +205,10 @@ describe EntriesController do
   end
   
   describe "PUT to update_multiple" do
+    before do
+      @current_user.has_role("manager", @account)
+    end
+    
     context "without options" do
       before do
         @entries = (1..3).collect{ Factory(:entry, :account => @account) }

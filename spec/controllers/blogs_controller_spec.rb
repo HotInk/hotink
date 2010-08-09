@@ -4,7 +4,10 @@ describe BlogsController do
   before do
     @account = Factory(:account)
     controller.stub!(:current_subdomain).and_return(@account.name)
-    controller.stub!(:login_required).and_return(true)
+ 
+    @current_user = Factory(:user)
+    @current_user.has_role("staff", @account)
+    controller.stub!(:current_user).and_return(@current_user)  
   end
   
   describe "GET to index" do
@@ -23,6 +26,7 @@ describe BlogsController do
   
   describe "GET to new" do
     before do
+      @current_user.has_role("manager", @account)
       get :new
     end
     
@@ -33,8 +37,7 @@ describe BlogsController do
   
   describe "POST to create" do
     before do
-      @user = Factory(:user)
-      controller.stub!(:current_user).and_return(@user)
+      @current_user.has_role("manager", @account)
     end
     
     context "with valid blog attributes" do
@@ -44,8 +47,8 @@ describe BlogsController do
     
       it { should assign_to(:blog).with_kind_of(Blog) }
       it "should make the current user both editor and contributor" do
-        @user.should have_role('contributor', assigns(:blog))
-        @user.should have_role('editor', assigns(:blog))
+        @current_user.should have_role('contributor', assigns(:blog))
+        @current_user.should have_role('editor', assigns(:blog))
       end
       it { should respond_with(:redirect) }
     end
@@ -131,73 +134,75 @@ describe BlogsController do
     end
   end
   
-  describe "GET to manage_contributors" do
+  describe "blog contributors" do
     before do
       @blog = Factory(:blog, :account => @account)
-      get :manage_contributors, :id => @blog.id
+      @current_user.has_role("editor", @blog)
     end
     
-    it { should respond_with(:success) }
-    it { should assign_to(:blog).with(@blog) }
-    it { should respond_with_content_type(:html) }
-  end
+    describe "GET to manage_contributors" do
+      before do
+        get :manage_contributors, :id => @blog.id
+      end
+    
+      it { should respond_with(:success) }
+      it { should assign_to(:blog).with(@blog) }
+      it { should respond_with_content_type(:html) }
+    end
 
-  describe "PUT to add_contributor" do
-    before do
-      @blog = Factory(:blog, :account => @account)
-      @user = Factory(:user)
-      xhr :put, :add_contributor, :id => @blog.id, :user => @user.id
-    end
+    describe "PUT to add_contributor" do
+      before do
+        @user = Factory(:user)
+        put :add_contributor, :id => @blog.id, :user => @user.id
+      end
     
-    it "should make the current user a contributor" do
-      @blog.contributors.should include(@user)
+      it "should make the current user a contributor" do
+        @blog.contributors.should include(@user)
+      end
+      it { should respond_with(:redirect) }
     end
-    it { should respond_with(:redirect) }
-  end
   
-  describe "PUT to remove_contributor" do
-    before do
-      @blog = Factory(:blog, :account => @account)
-      @user = Factory(:user)
-      @blog.make_editor(@user)
+    describe "PUT to remove_contributor" do
+      before do
+        @user = Factory(:user)
+        @blog.make_editor(@user)
       
-      xhr :put, :remove_contributor, :id => @blog.id, :user => @user.id
-    end
+        put :remove_contributor, :id => @blog.id, :user => @user.id
+      end
     
-    it "should remove the user from the blog" do
-      @blog.contributors.should_not include(@user)
+      it "should remove the user from the blog" do
+        @blog.contributors.should_not include(@user)
+      end
+      it { should respond_with(:redirect) }
     end
-    it { should respond_with(:redirect) }
-  end
   
-  describe "PUT to promote_contributor" do
-    before do
-      @blog = Factory(:blog, :account => @account)
-      @user = Factory(:user)
-      @blog.contributors << @user
+    describe "PUT to promote_contributor" do
+      before do
+        @user = Factory(:user)
+        @blog.contributors << @user
       
-      xhr :put, :promote_contributor, :id => @blog.id, :user => @user.id
-    end
+        put :promote_contributor, :id => @blog.id, :user => @user.id
+      end
     
-    it "should make the user an editor of the blog" do
-      @blog.editors.should include(@user)
+      it "should make the user an editor of the blog" do
+        @blog.editors.should include(@user)
+      end
+      it { should respond_with(:redirect) }
     end
-    it { should respond_with(:redirect) }
-  end
   
-  describe "PUT to demote_contributor" do
-    before do
-      @blog = Factory(:blog, :account => @account)
-      @user = Factory(:user)
-      @blog.make_editor(@user)
+    describe "PUT to demote_contributor" do
+      before do
+        @user = Factory(:user)
+        @blog.make_editor(@user)
       
-      xhr :put, :demote_contributor, :id => @blog.id, :user => @user.id
-    end
+        put :demote_contributor, :id => @blog.id, :user => @user.id
+      end
     
-    it "should make editor of the blog into a contributor" do
-      @blog.editors.should_not include(@user)
-      @blog.contributors.should include(@user)
+      it "should make editor of the blog into a contributor" do
+        @blog.editors.should_not include(@user)
+        @blog.contributors.should include(@user)
+      end
+      it { should respond_with(:redirect) }
     end
-    it { should respond_with(:redirect) }
   end
 end

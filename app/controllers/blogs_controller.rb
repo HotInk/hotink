@@ -3,7 +3,9 @@ class BlogsController < ApplicationController
   layout 'hotink'
   
   permit "manager of account or admin", :only => [:new, :create]
-  permit "manager of account or admin or editor of blog", :only => [:manage_contributors, :add_contributor, :remove_contributor, :promote_contributer, :demote_contributor]
+  
+  before_filter :load_blog_from_id, :only => [:manage_contributors, :add_contributor, :remove_contributor, :promote_contributor, :demote_contributor]
+  permit "manager of account or admin or editor of blog", :only => [:manage_contributors, :add_contributor, :remove_contributor, :promote_contributor, :demote_contributor]
   
   def index
     @active_blogs = @account.blogs.active
@@ -74,7 +76,6 @@ class BlogsController < ApplicationController
   end
   
   def manage_contributors
-    @blog = @account.blogs.find(params[:id])
     respond_to do |format|
       format.html 
     end
@@ -83,7 +84,6 @@ class BlogsController < ApplicationController
   def add_contributor
     @user = User.find(params[:user])
     
-    @blog = @account.blogs.find(params[:id])
     @blog.add_contributor @user
     
     respond_to do |format|
@@ -94,7 +94,6 @@ class BlogsController < ApplicationController
   def remove_contributor
     @user = User.find(params[:user])
     
-    @blog = @account.blogs.find(params[:id])
     @blog.remove_contributor @user
     
     respond_to do |format|
@@ -105,7 +104,6 @@ class BlogsController < ApplicationController
   def promote_contributor
     @user = User.find(params[:user])
     
-    @blog = @account.blogs.find(params[:id])
     @blog.make_editor(@user)
     
     respond_to do |format|
@@ -116,11 +114,16 @@ class BlogsController < ApplicationController
   def demote_contributor
     @user = User.find(params[:user])
     
-    @blog = @account.blogs.find(params[:id])
     @blog.demote_editor(@user)
     
     respond_to do |format|
       format.html { redirect_to(manage_contributors_blog_url(@blog)) }
     end
+  end
+  
+  private
+  
+  def load_blog_from_id
+    @blog = @account.blogs.find(params[:id])
   end
 end
