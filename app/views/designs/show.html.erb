@@ -127,7 +127,7 @@
 
 <% else %>
 <h1>Design</h1>
-<p>No current design selected. Choose an existing design or <%= link_to "create a new one", new_account_design_path(@account) %>.
+<p>No current design selected. Choose an existing design or <%= link_to "create a new one", new_design_path(@account) %>.
 <ol id ="designs">
 	<%= render @account.designs.find(:all, :order => 'updated_at desc') %>
 </ol>
