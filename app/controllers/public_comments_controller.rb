@@ -8,7 +8,7 @@ class PublicCommentsController < PublicController
     if @document.is_a? Article
       redirect_to public_article_path(@document)
     elsif @document.is_a? Entry
-      redirect_to public_blog_entry_path(@document.blog, @document)
+      redirect_to public_blog_entry_path(@document.blog.slug, @document)
     end
   end
 end

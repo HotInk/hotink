@@ -91,6 +91,18 @@
 			<% end %>
 		</div>
 	</div>
+	
+	<div class="toolbox grid_4">
+		<h4>Comments</h4>
+		<div>
+			<%= render :partial => 'comment_status' %>
+			<% if @entry.comments.blank? %>
+				<span id="documents_comments_link" class="link inactive">No comments</span>
+			<% else %>
+				<a id="documents_comments_link" href="<%= blog_entry_comments_path(@blog, @entry) %>" class="link yellow" >View <%= pluralize(@entry.comments.count, 'comment')%></a>
+			<% end %>
+		</div>
+	</div>
 <% end %>
 
 <% content_for :javascript do %>
@@ -103,6 +115,8 @@
 		$('#upload_media_form form').live('submit', function(){
 			$.fancybox.showActivity();
 		});
+		
+		$("a#documents_comments_link").fancybox({ 'centerOnScroll': true });
 		
 		$("#entry_author_ids").tokenInput("<%= authors_path(:format => :json) %>", {
 			initialValues: <%= @entry.authors_json %>,

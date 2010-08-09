@@ -89,6 +89,28 @@ class EntriesController < ApplicationController
     end
   end
   
+  def comments
+    @entry = @blog.entries.find(params[:entry_id])
+    @comments = @entry.comments.find(:all, :order => "created_at DESC")
+    
+    render :action => :comments, :layout => false
+  end
+  
+  def lock_comments
+    @entry = @blog.entries.find(params[:id])
+    @entry.lock_comments
+  end
+  
+  def disable_comments
+    @entry = @blog.entries.find(params[:id])
+    @entry.disable_comments
+  end
+  
+  def enable_comments
+    @entry = @blog.entries.find(params[:id])
+    @entry.enable_comments
+  end
+  
   private
   
   def find_blog

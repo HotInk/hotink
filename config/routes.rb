@@ -34,7 +34,8 @@ ActionController::Routing::Routes.draw do |map|
     end
     admin.resources :authors
     admin.resources :blogs, :member => { :manage_contributors => :get, :add_contributor => :put, :remove_contributor => :put, :promote_contributor => :put, :demote_contributor => :put } do |blog|
-      blog.resources :entries do |entry|
+      blog.resources :entries, :member => { :lock_comments => :put, :enable_comments => :put, :disable_comments => :put } do |entry|
+        entry.comments '/comments', :controller => :entries, :action => :comments, :conditions => { :method => :get }
         entry.resources :mediafiles
         entry.resources :waxings
         entry.resources :tags

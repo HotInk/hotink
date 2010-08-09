@@ -18,4 +18,10 @@ describe CommentDrop do
     output = Liquid::Template.parse( ' {{ comment.body }} '  ).render('comment' => CommentDrop.new(@comment))
     output.should == " #{@comment.body} "
   end
+  
+  it "should make date available" do
+    output = Liquid::Template.parse( ' {{ comment.date | date: "%b %e, %G at %l:%M %P" }} '  ).render('comment' => CommentDrop.new(@comment))
+    output.should == " #{@comment.created_at.to_datetime.strftime("%b %e, %G at %l:%M %P")} "
+  end
+  
 end

@@ -1,4 +1,4 @@
-<h1 style="margin-left:10px;">Comments</h1>
+<h1 style="margin-left:10px;margin-bottom: 0;">Comments</h1>
 <div class="search" style="float:right; margin-left: 20px; margin-right:10px;">
 	<form action="/admin/comments/search" method="GET">
 		<input type="text" name="q" class="text_input user" onfocus="if($(this).val()=='Search comments') $(this).val('');" onblur="if($(this).val()=='') $(this).val('Search comments');" value="<%=h( @search_query || "Search comments") %>" />

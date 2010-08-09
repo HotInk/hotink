@@ -145,8 +145,12 @@ ol.documents li .details .mediafiles { padding: 0 5px; float: right; }
 ol.documents li .details .mediafiles .first.large { display: none; }
 ol.documents li .details .mediafiles img { margin-top: 3px; }
 ol.documents li .details img { border: 1px solid #999999; }
-ol.documents li .section, ol.documents li .tags { width: 10%; padding: 0.5%; margin-left: 1%; }
-ol.documents li .tags p { margin-bottom: 0; font-size: 0.85em; line-height: 1.2; }
+ol.documents li .section { width: 10%; padding: 0.5%; margin-left: 1%; }
+ol.documents li .tags_comments { width: 10%; margin-left: 1%; font-size: 80%; padding: 0; }
+ol.documents li .tags_comments p { margin-bottom: 0; }
+ol.documents li .tags { border: 1px solid #CCCCCC; margin-bottom: 15px; background: white; padding: 5px; }
+ol.documents li .comments { padding: 5px; }
+ol.documents li .comments p { font-size: 100%; }
 ol.documents li .section p { margin: 0; }
 ol.documents li .date { width: 9%; padding-right: 2%; margin-left: 1%; margin-top: 5px; }
 ol.documents li .date p { font-size: 120%; font-weight: normal; text-align: right; margin-bottom: 15px; }
@@ -166,7 +170,7 @@ ol.documents li.highlighted_card {  }
 
 /* Small and tiny styles */
 ol.documents.small .select, 		ol.documents.tiny .select,
-ol.documents.small .tags,			ol.documents.tiny .tags	 			{ display: none; }
+ol.documents.small .tags_comments,	ol.documents.tiny .tags_comments 	{ display: none; }
 ol.documents.small .details h1, 	ol.documents.tiny .details h1 		{ margin-bottom: 5px; }
 ol.documents.small .details p, 		ol.documents.tiny .details p 		{ font-size: 0.85em; }
 ol.documents.small .section, 		ol.documents.tiny .section 			{ width: 14%; font-size: 0.8em; }
@@ -214,7 +218,8 @@ ol.documents.listed li > div 				{ width: 93%; float: right; margin-top: -2px; }
 ol.documents.listed li .details 			{ margin: 0; }
 
 /* Entries */
-ol.documents.entries li .details { width: 68.75%; }
+ol.documents.entries li .details,
+ol.documents.entries.selectable li .details { width: 68.75%; }
 
 
 /*-------------------------------------------------
@@ -470,17 +475,19 @@ ol#document_mediafiles li .credit strong { font-weight: 600; }
 
 /* Comments modal display */
 #comments_box 						{ width: 560px; }
-#comments_box > h2					{ float: left; margin-bottom: 5px; }
-#comments_box > p					{ float: left; margin: 22px 10px 5px 10px; }
+#comments_box > h2					{ float: left; margin-bottom: 5px; margin-top: 10px; }
+#comments_box > p					{ float: left; margin: 17px 10px 5px 10px; }
 
-#comments_box ol.comments							{ float: left; clear: left; width: 99%; max-height: 520px; margin-bottom: 0; overflow: auto; border: 1px solid #DEDEDE; }
-#comments_box ol.comments	li						{ float: left; font-size: 85%; width: 100%; position: relative; }
-#comments_box ol.comments	li + li					{ border-top: 1px dotted #CCC; }
-#comments_box ol.comments	li > div				{ float: left; }
+#comments_box ol.comments						{ float: left; clear: left; width: 99%; max-height: 520px; margin-bottom: 0; overflow: auto; border: 1px solid #DEDEDE; }
+#comments_box ol.comments	li					{ float: left; width: 100%; position: relative; }
+#comments_box ol.comments	li + li				{ border-top: 1px dotted #CCC; }
+#comments_box ol.comments	li > div			{ float: left; }
+#comments_box ol.comments	li  p				{ font-size: 90%; line-height: 1.4; }
 #comments_box ol.comments .details				{ width: 96%; padding: 2% 2% 1% 2%; margin-bottom: 5px; }
-#comments_box ol.comments .details p				{ float: left; margin-bottom: 0; }
+#comments_box ol.comments .details p			{ float: left; margin-bottom: 0; }
 #comments_box ol.comments .details p+p			{ margin-left: 12px; }
-#comments_box ol.comments .details .delete		{ float: right; font-size: 75%; }
+#comments_box ol.comments .details .delete		{ float: right; font-size: 75%; margin-left: 15px; }
+#comments_box ol.comments .details .target		{ display: none; }
 #comments_box ol.comments .comment 				{ width: 76%; padding: 0 2% 2% 2%; }
 #comments_box ol.comments .comment .body			{ font-size: 100%; line-height: 1.2; margin-bottom: 5px; }
 #comments_box ol.comments .comment .body p		{ margin-bottom: 5px; }
@@ -650,11 +657,14 @@ a.progressCancel { font-size: 0; display: block;width: 10px; height: 11px; backg
 /*-----------------------------------
 /*		Comment styles
 /*---------------------------------------*/
-ol#all_comments li { width: 100%; float: left; position: relative; }
-ol#all_comments .details { float: left; width: 20%; padding: 2%; margin-right: 1%; }
+ol#all_comments { border: 1px solid #DEDEDE; margin-bottom: 20px; }
+ol#all_comments li { width: 100%; float: left; position: relative; padding: 5px 0; }
+ol#all_comments li + li	{ border-top: 1px dotted #CCC; }
+ol#all_comments li p { font-size: 90%; line-height: 1.3; }
+ol#all_comments .details { float: left; width: 20%; padding: 1.5% 1%; margin-right: 1%; }
 ol#all_comments .details p { margin-bottom: 10px; }
 ol#all_comments .details .delete { position: absolute; top: 15px; right: 15px; }
-ol#all_comments .comment { float: left; width: 50%; margin-right: 21%; padding: 2%; }
+ol#all_comments .comment { background-color: white; border: 1px dotted #CCC;  float: left; width: 50%; margin-right: 21%; padding: 1.5% 1%; margin: 0.75% 0; }
 
 /*-----------------------------------
 /*		Blog styles
@@ -762,7 +772,7 @@ form.list.use_preview #list_preview p				{ width: 70%; line-height: 1.3; }
 /*		Design and template styles
 /*---------------------------------------*/
 
-#templates { margin-bottom: 30px; }
+#templates { margin-bottom: 10px; }
 #templates h2, #template_files h2 { margin: 0 0 15px 0; }
 #templates h3, #template_files h3 { float: left; clear: left; font-size: 16px; font-weight: normal; margin: 0px 10px 5px 0;   }
 #templates h3+a, #template_files h3+a { padding: 2px 3px; font-size: 11px; position: relative; top: 3px; }
@@ -852,7 +862,7 @@ form.formtastic fieldset > ol > li p.inline-hints { color:#333; }
 
 form.formtastic h1 { margin-bottom: 0px; }
 
-form.formtastic fieldset > ol > li { display: block; }
+form.formtastic fieldset > ol > li { display: block; position: relative; }
 form.formtastic fieldset > ol > li label { width: 100%; padding-bottom: 3px; }
 
 form.formtastic fieldset > ol > li label abbr { display: none; }

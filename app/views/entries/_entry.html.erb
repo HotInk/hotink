@@ -34,13 +34,20 @@
 			<p><%= entry.authors_list %></p>
 		</div>
 	
-		<div class="tags">
-			<% unless entry.tag_list.blank? %>
-				<p><em> <%= entry.tag_list %></em></p>
-			<% else %>
-				<p><em><span style="color: #BBB">No tags</span> </em></p>
-			<% end %>
+		<div class="tags_comments">
+			<div class="tags">
+				<% unless entry.tag_list.blank? %>
+					<p><em> <%= entry.tag_list %></em></p>
+				<% else %>
+					<p><em><span style="color: #BBB">No tags</span> </em></p>
+				<% end %>
+			</div>
+		
+			<div class="comments">
+				<%unless entry.comments.empty?%><p><%= pluralize(entry.comments.count, "comment") %></p><%end%>
+			</div>
 		</div>
+
 	
 		<div class="date">
 			<p><%= h entry.date.to_s(:standard) %></p>

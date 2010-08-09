@@ -6,14 +6,14 @@ describe EntriesController do
     controller.stub!(:current_subdomain).and_return(@account.name)
 
     @blog = Factory(:blog, :account => @account)
-    controller.stub!(:login_required).and_return(true)
+
+    @current_user = Factory(:user)
+    @current_user.has_role("staff", @account)
+    controller.stub!(:current_user).and_return(@current_user)
   end
   
   describe "GET to new" do
-    before do
-      @user = Factory(:user)
-      controller.stub!(:current_user).and_return(@user)
-    
+    before do    
       get :new, :blog_id => @blog.id
     end
     
@@ -21,7 +21,7 @@ describe EntriesController do
     it { should assign_to(:entry).with_kind_of(Entry) }
     it { should respond_with(:redirect) }
     it "should assign the correct entry owner" do
-      assigns(:entry).owner.should eql(@user)
+      assigns(:entry).owner.should eql(@current_user)
     end
   end
   
@@ -32,9 +32,7 @@ describe EntriesController do
     
     context "by entry's owner" do
       before do
-        @user = Factory(:user)
-        @entry.owner = @user
-        controller.stub!(:current_user).and_return(@user)
+        @entry.owner = @current_user
         get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
@@ -45,9 +43,8 @@ describe EntriesController do
     
     context "by administrator" do
       before do
-        @user = Factory(:user)
-        @user.has_role("admin")
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.has_role("admin", @blog)
+
         get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
@@ -58,9 +55,7 @@ describe EntriesController do
 
     context "by account manager" do
       before do
-        @user = Factory(:user)
-        @user.has_role("manager", @account)
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.has_role("manager", @account)
         get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
@@ -71,9 +66,7 @@ describe EntriesController do
 
     context "by editor of blog" do
       before do
-        @user = Factory(:user)
-        @user.has_role("editor", @blog)
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.has_role("editor", @blog)
         get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
@@ -84,9 +77,8 @@ describe EntriesController do
     
     context "by blog contributor who's not owner of entry" do
       before do
-        @user = Factory(:user)
-        @user.has_role("contributor", @blog)
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.has_role("contributor", @blog)
+
         get :edit, :blog_id => @blog.id, :id => @entry.id
       end
       
@@ -101,7 +93,6 @@ describe EntriesController do
       it { should respond_with(:redirect) }
     end
   end
-
   
   describe "GET to edit_multiple" do
     before do
@@ -130,9 +121,7 @@ describe EntriesController do
     
     context "as entry's owner" do
       before do
-        @user = Factory(:user)
-        @entry.owner = @user
-        controller.stub!(:current_user).and_return(@user)
+        @entry.owner = @current_user
       end
       
       context "with valid parameters" do
@@ -250,9 +239,7 @@ describe EntriesController do
     
     context "as blog editor" do
       before do
-        @user = Factory(:user)
-        @user.has_role("editor", @blog)
-        controller.stub!(:current_user).and_return(@user)
+        @current_user.has_role("editor", @blog)
       end    
   
       context "with XHR request" do
@@ -292,4 +279,56 @@ describe EntriesController do
     end
   end
 
+  describe "comment management" do
+    before do
+      @current_user.promote_to_admin
+    end
+    
+    describe "GET to comments" do
+      before do
+        @entry = Factory(:published_entry, :blog => @blog, :account => @account)
+        get :comments, :blog_id => @blog.id, :entry_id => @entry.id
+      end
+
+      it { should respond_with(:success) }
+      it { should_not render_with_layout }
+      it { should assign_to(:entry).with(@entry) }
+    end
+    
+    describe "PUT to lock_comments" do
+      before do
+        @entry = Factory(:published_entry, :blog => @blog, :account => @account)
+        
+        put :lock_comments, :blog_id => @blog.id, :id => @entry.id
+      end
+      
+      it "should lock comments" do
+        @entry.reload.comment_status.should eql("locked")
+      end
+    end
+    
+    describe "PUT to disable_comments" do
+      before do
+        @entry = Factory(:published_entry, :blog => @blog, :account => @account)
+        put :disable_comments, :blog_id => @blog.id, :id => @entry.id
+      end
+      
+      it "should disable comments" do
+        @entry.reload.comment_status.should eql("disabled")
+      end
+    end
+    
+    describe "PUT to enable_comments" do
+      before do
+        @entry = Factory(:published_entry, :blog => @blog, :account => @account)
+        @entry.lock_comments
+        put :enable_comments, :blog_id => @blog.id, :id => @entry.id
+      end
+      
+      it "should enable comments" do
+        @entry.reload.comment_status.should eql("enabled")
+      end
+    end
+  end
+  
 end

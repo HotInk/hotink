@@ -8,7 +8,7 @@ describe Comment do
   it { should validate_presence_of(:document) }
   
   it { should ensure_length_of(:name).is_at_least(2).is_at_most(20) }
-  it { should ensure_length_of(:body).is_at_least(5).is_at_most(2000) }
+  it { should ensure_length_of(:body).is_at_least(5).is_at_most(10000) }
   
   it "should make sure email is a real email address" do
     should allow_value("chris@email.com").for(:email)
@@ -24,5 +24,17 @@ describe Comment do
     should_not allow_value("").for(:ip_address)
     should_not allow_value("chris@email").for(:ip_address)
     should_not allow_value("192.1.2").for(:ip_address)
+  end
+  
+  it "should know its bodytext word count" do
+    comment = Factory(:comment)
+    comment.body = "this short article has a grand total of ten words"
+    comment.word_count.should == 10
+
+    comment.body = ""
+    comment.word_count.should == 0
+
+    comment.body = nil
+    comment.word_count.should == 0
   end
 end

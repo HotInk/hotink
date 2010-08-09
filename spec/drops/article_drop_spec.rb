@@ -53,21 +53,20 @@ describe ArticleDrop do
     end
   end
   
-  
   describe "dates" do
     context "for published article" do
       it "should make relevant dates available in a variety of formats" do
         output = Liquid::Template.parse( ' {{ article.published_at }} '  ).render('article' => ArticleDrop.new(@article))
         output.should == " #{@article.published_at.to_s(:standard).gsub(' ', '&nbsp;')} "
   
-        output = Liquid::Template.parse( ' {{ article.published_at_detailed }} '  ).render('article' => ArticleDrop.new(@article))
-        output.should == " #{@article.published_at.to_s(:long)} "
+        output = Liquid::Template.parse( ' {{ article.published_at_detailed | date: "%b %e, %G at %l:%M %P" }} '  ).render('article' => ArticleDrop.new(@article))
+        output.should == " #{@article.published_at.to_datetime.strftime("%b %e, %G at %l:%M %P")} "
 
         output = Liquid::Template.parse( ' {{ article.updated_at }} '  ).render('article' => ArticleDrop.new(@article))
         output.should == " #{@article.updated_at.to_s(:standard).gsub(' ', '&nbsp;')} "  
     
-        output = Liquid::Template.parse( ' {{ article.updated_at_detailed }} '  ).render('article' => ArticleDrop.new(@article))
-        output.should == " #{@article.updated_at.to_s(:long)} "  
+        output = Liquid::Template.parse( ' {{ article.updated_at_detailed | date: "%b %e, %G at %l:%M %P" }} '  ).render('article' => ArticleDrop.new(@article))
+        output.should == " #{@article.updated_at.to_datetime.strftime("%b %e, %G at %l:%M %P")} "  
       end
     end
     
@@ -235,6 +234,17 @@ describe ArticleDrop do
       @comments = (1..3).collect { |n| Factory(:comment, :name => "Commentor ##{n}", :created_at => n.days.ago, :document => @article) }
     end
     
+    it "should know whether the article has any comments" do
+      template = Liquid::Template.parse( ' {% if article.has_comments? %} YES {% else %} NO {% endif %} ')
+
+      output = template.render('article' => ArticleDrop.new(@article))
+      output.should eql("  YES  ")
+      
+      @article.comments.clear
+      output = template.render('article' => ArticleDrop.new(@article))
+      output.should eql("  NO  ")
+    end
+        
     it "should make comments available oldest first" do
       output = Liquid::Template.parse( ' {% for comment in article.comments %} {{ comment.name }} {% endfor %} '  ).render('article' => ArticleDrop.new(@article))
       output.should == "  #{ @comments.reverse.collect{|c| c.name }.join('  ') }  "

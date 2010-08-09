@@ -1,0 +1,6 @@
+<div id="comments_box" class="clearfix">
+	<h2>Comments</h2> <% unless @comments.empty? %><p><%= pluralize(@comments.length, "comment") %></p><% end %>
+	<ol class="comments">
+		<%= render @comments %>
+	</ol>
+</div>

@@ -39,7 +39,7 @@ class ArticleDrop < Drop
 
    def published_at_detailed
      if article.published?
-       article.published_at.to_s(:long)
+       article.published_at.to_datetime
      elsif article.scheduled?
        "Will be available " + article.published_at.to_s(:long)
      elsif article.draft?
@@ -52,7 +52,7 @@ class ArticleDrop < Drop
    end
 
    def updated_at_detailed
-     article.updated_at.to_s(:long)
+     article.updated_at.to_datetime
    end
    
    # Authors
@@ -125,6 +125,10 @@ class ArticleDrop < Drop
    
    def comments
      article.comments.find(:all, :order => "created_at asc").collect{|comment| CommentDrop.new(comment) }
+   end
+   
+   def has_comments?
+     article.comments.count > 0
    end
    
    def comment_count

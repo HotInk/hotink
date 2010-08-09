@@ -38,12 +38,18 @@
 			<p> <%= article.section.blank? ? "<span style=\"color: #BBB\">No section</span>" : article.section.name %></p>
 		</div>
 
-		<div class="tags">
-			<% unless article.tag_list.blank? %>
-				<p><em> <%= article.tag_list %></em></p>
-			<% else %>
-				<p><em><span style="color: #BBB">No tags</span> </em></p>
-			<% end %>
+		<div class="tags_comments">
+			<div class="tags">
+				<% unless article.tag_list.blank? %>
+					<p><em> <%= article.tag_list %></em></p>
+				<% else %>
+					<p><em><span style="color: #BBB">No tags</span> </em></p>
+				<% end %>
+			</div>
+		
+			<div class="comments">
+				<%unless article.comments.empty?%><p><%= pluralize(article.comments.count, "comment") %></p><%end%>
+			</div>
 		</div>
 		
 		<div class="date">
