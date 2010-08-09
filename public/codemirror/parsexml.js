@@ -61,6 +61,17 @@ var XMLParser = Editor.Parser = (function() {
         }
         return "xml-entity";
       }
+	  else if (ch == "{") {
+		if (source.lookAhead("{", true)) {
+		  source.next();
+          setState(inLiquidOutput);
+          return "liquid-output";
+		} else if (source.lookAhead("%", true)) {
+		  source.next();
+          setState(inLiquidTag);
+          return "liquid-tag";
+		}
+	  }
       else {
         source.nextWhileMatches(/[^&<\n]/);
         return "xml-text";
@@ -94,13 +105,66 @@ var XMLParser = Editor.Parser = (function() {
     function inAttribute(quote) {
       return function(source, setState) {
         while (!source.endOfLine()) {
-          if (source.next() == quote) {
+	      var ch = source.next();
+          if (ch == quote) {
             setState(inTag);
             break;
           }
+		  else if (ch == "{") {
+			if (source.lookAhead("{", true)) {
+			  source.next();
+	          setState(inAttributeLiquidOutput(quote));
+	          return "liquid-output";
+			} else if (source.lookAhead("%", true)) {
+			  source.next();
+	          setState(inLiquidTag);
+	          return "liquid-tag";
+			}
+		  }
         }
         return "xml-attribute";
       };
+    }
+
+	function inLiquidOutput(source, setState) {
+      var maybeEnd = false;
+      while (!source.endOfLine()) {
+        var ch = source.next();
+        if (maybeEnd && ch == "}") {
+          setState(inText);
+          break;
+        }
+        maybeEnd = (ch == "}");
+      }
+      return "liquid-output";
+    }
+
+    function inAttributeLiquidOutput(quote) {
+      return function(source, setState) {
+	    var maybeEnd = false;
+        while (!source.endOfLine()) {
+		  var ch = source.next();
+		  if (maybeEnd && ch == "}") {
+			setState(inAttribute(quote));
+	        break;
+	      }
+          maybeEnd = (ch == "}");
+        }
+        return "liquid-output";
+      };
+    }
+
+	function inLiquidTag(source, setState) {
+      var maybeEnd = false;
+      while (!source.endOfLine()) {
+        var ch = source.next();
+        if (maybeEnd && ch == "}") {
+          setState(inText);
+          break;
+        }
+        maybeEnd = (ch == "%");
+      }
+      return "liquid-tag";
     }
 
     function inBlock(style, terminator) {
@@ -182,7 +246,7 @@ var XMLParser = Editor.Parser = (function() {
     function base() {
       return pass(element, base);
     }
-    var harmlessTokens = {"xml-text": true, "xml-entity": true, "xml-comment": true, "xml-processing": true};
+    var harmlessTokens = {"xml-text": true, "xml-entity": true, "xml-comment": true, "xml-processing": true, "liquid-output": true, "liquid-tag": true};
     function element(style, content) {
       if (content == "<") cont(tagname, attributes, endtag(tokenNr == 1));
       else if (content == "</") cont(closetagname, expect(">"));

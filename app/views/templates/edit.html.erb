@@ -52,7 +52,7 @@
 			var editor = CodeMirror.fromTextArea('<%= @tplate.class.name.tableize.singularize.downcase %>_code', {
 		    	height: "400px",
 			    parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
-			    stylesheet: ["/codemirror/css/xmlcolors.css", "/codemirror/css/jscolors.css", "/codemirror/css/csscolors.css"],
+			    stylesheet: ["/codemirror/css/xmlcolors.css", "/codemirror/css/jscolors.css", "/codemirror/css/csscolors.css", "/codemirror/css/customcolors.css"],
 			    path: "/codemirror/",
 			    lineNumbers: true
 		  	});
@@ -61,7 +61,7 @@
 				var editor = CodeMirror.fromTextArea('<%= @tplate.class.name.tableize.singularize.downcase %>_title_code', {
 			    	height: "23px",
 				    parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
-				    stylesheet: ["/codemirror/css/xmlcolors.css", "/codemirror/css/jscolors.css", "/codemirror/css/csscolors.css"],
+				    stylesheet: ["/codemirror/css/xmlcolors.css", "/codemirror/css/jscolors.css", "/codemirror/css/csscolors.css", "/codemirror/css/customcolors.css"],
 				    path: "/codemirror/",
 				    lineNumbers: true
 			  	});

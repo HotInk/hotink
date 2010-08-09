@@ -1,0 +1,4 @@
+span.liquid-output, span.liquid-tag, span.liquid-output.xml-error {
+	color: #333 !important;
+	font-weight: bold;
+}
