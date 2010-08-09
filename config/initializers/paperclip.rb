@@ -6,3 +6,7 @@ Paperclip.options[:swallow_stderr] = false
 Paperclip.interpolates :account do |attachment, style|
   attachment.instance.account.name
 end
+
+Paperclip.interpolates :design do |attachment, style|
+  attachment.instance.design.id
+end
