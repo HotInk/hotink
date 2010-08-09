@@ -86,7 +86,7 @@ describe BlogsController do
       before do
         @searched_entries = (1..3).collect{ Factory(:detailed_entry, :account => @account, :blog => @blog) }
         @other_entries = (1..3).collect{ Factory(:detailed_entry, :account => @account, :blog => @blog) }
-        Entry.should_receive(:search).with( "test query", :with=>{ :account_id => @account.id, :blog_id => @blog.id }, :page => 1, :per_page => 20, :include => [:authors, :mediafiles]).and_return(@searched_entries)
+        Entry.should_receive(:search).with( "test query", :with=>{ :account_id => @account.id, :blog_id => @blog.id }, :page => 1, :per_page => 20, :order => "published_at desc", :include => [:authors, :mediafiles]).and_return(@searched_entries)
         get :show, :id => @blog.id, :search => "test query"
       end
       

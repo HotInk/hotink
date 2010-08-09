@@ -21,13 +21,13 @@ class ArticlesController < ApplicationController
   
   # GET /articles/search
   def search
-    if params[:q]
+    if params[:q].blank?
+      @articles = []
+    else
       page = params[:page] || 1
       per_page = params[:per_page] || 10  
       @search_query = params[:q]
-      @articles = @account.articles.search( @search_query, :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
-    else
-      @articles = []
+      @articles = @account.articles.published_or_scheduled.search(@search_query, :page => page, :per_page => per_page, :order => "published_at desc", :include => [:authors, :mediafiles, :section])
     end
   end
 

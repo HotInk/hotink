@@ -1,5 +1,9 @@
 <h1>Blogs</h1>
-<p><%= link_to 'New blog', new_blog_path, :class => "link green" %></p>
+<p>
+  <% if permit? "(manager of account) or admin" %>
+	<%= link_to 'New blog', new_blog_path, :class => "link green" %>
+  <% end %>
+</p>
 
 <% unless @active_blogs.blank? %>
 <ol id="active_blogs" class="blogs grid_12">

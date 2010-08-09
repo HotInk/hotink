@@ -1,34 +1,45 @@
 <div id="articles" class="clearfix">
 	<h1>Search for "<%= params[:q] %>"</h1>
-	<%= button_link_to 'New article', new_article_path, :class=>"primary" %>
 	<div class="search">
 		<form method="GET">
 			<input type="text" id="articles_search" name="q" class="text_input user" onclick="if(this.value=='Search articles') clearText(this);" value="<%=h( @search_query || "Search articles") %>" />
 			<%= button_link_to_submit "Go" %>
 		</form>
 	</div>
-	<div class="select_all_wrap clearfix">
-		<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
-	</div>
-	
-	<% form_remote_tag :url=>new_action_url, :method => :get do %>
-	<%= hidden_field_tag "content_types[]", 'article'%>
-	<%= hidden_field_tag "name", '', :id=>"article_action_name"%>
-	
-		<div id="actions" class="clearfix">
-			<%= button_link_to_submit "Publish", :onclick => "$('article_action_name').value='publish';return true;", :class => "pill-l" %>
-			<%= button_link_to_submit "Schedule", :onclick => "$('article_action_name').value='schedule';return true;", :class => "pill-c" %>
-			<%= button_link_to_submit "Delete",  :onclick => "$('article_action_name').value='delete';return true;", :class => "pill-r" %>
-			<div class="batch_actions">
-				<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
-				<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
-					<%= submit_tag "Unpublish", :onclick => "$('article_action_name').value='unpublish';return true;", :class => "menubutton" %>
-					<%= submit_tag "Set primary section", :onclick => "$('article_action_name').value='set_primary_section';return true;", :class => "menubutton" %>																				
-					<%= submit_tag "Add tag", :onclick => "$('article_action_name').value='add_tag';return true;", :class => "menubutton" %>																				
-					<%= submit_tag "Attach to issue", :onclick => "$('article_action_name').value='add_issue';return true;", :class => "menubutton" %>																									
-				</div> 
-			</div>
+	<% if permit?("(manager of account)") || permit?("admin") %>
+		<div class="select_all_wrap clearfix">
+			<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
 		</div>
+	
+		<% form_tag edit_multiple_articles_url, :method => :get, :id => "edit_articles_form" do %>
+			<%= hidden_field_tag "update_action_name", '', :id=>"action_name" %>
+	
+			<div id="actions" class="clearfix">
+				<%= button_link_to "Publish", "#", :onclick => "$('#action_name').val('publish'); $('#edit_articles_form').submit();return false;", :class => "pill-l" %>
+				<%= button_link_to "Schedule", "#", :onclick => "$('#action_name').val('schedule');$('#edit_articles_form').submit();return false;", :class => "pill-c" %>
+				<%= button_link_to "Delete", "#", :onclick => "$('#action_name').val('delete');$('#edit_articles_form').submit();return false;", :class => "pill-r" %>
+			
+				<div class="batch_actions">
+					<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
+					<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
+						<%= submit_tag "Unpublish", :onclick => "$('#action_name').val('unpublish');return true;", :class => "menubutton" %>
+						<%= submit_tag "Set section", :onclick => "$('#action_name').val('set_section');return true;", :class => "menubutton" %>																				
+						<%= submit_tag "Add to category", :onclick => "$('#action_name').val('add_category');return true;", :class => "menubutton" %>																				
+						<%= submit_tag "Attach to issue", :onclick => "$('#action_name').val('add_issue');return true;", :class => "menubutton" %>																									
+					</div> 
+				</div>
+			</div>
+			<%= render :partial=>'pagination' %>
+			<ol id="articles_list" class="documents selectable">			
+				<% if (@articles.length > 0)  %>
+					<%= render :partial => "article", :collection => @articles %>
+				<% else %>
+					<li><p style="padding: 10px 0 0 10px;font-style:italic;"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p></li>
+				<% end %>
+			</ol>
+		<% end %> 
+		<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
+	<% else %>
 		<%= render :partial=>'pagination' %>
 		<ol id="articles_list" class="documents">			
 			<% if (@articles.length > 0)  %>
@@ -37,8 +48,7 @@
 				<li><p style="padding: 10px 0 0 10px;font-style:italic;"><em>No articles matching <strong>&ldquo;<%= @search_query %>&rdquo;</strong> found.</em></p></li>
 			<% end %>
 		</ol>
-	<% end %> 
-	<p class="select_all_wrap"><input id="select_all_foot" type="checkbox" class="select_all" /><label for="select_all_foot">&nbsp;Select all</label></p>
+	<% end %>
 	<div id="bottom_pagination"><%= render :partial=>'pagination' %></div>
 <br />
 

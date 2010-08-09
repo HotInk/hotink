@@ -1,6 +1,6 @@
 class DesignsController < ApplicationController
   
-  permit "admin"
+  permit "manager of account or admin"
   
   layout 'hotink'
   

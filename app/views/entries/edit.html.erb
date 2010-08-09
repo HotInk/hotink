@@ -3,8 +3,9 @@
 
 <% semantic_form_for [@blog, @entry] do |form| %>
 	<% form.buttons :class => "grid_8" do %>
-		<li class="grid_7 alpha"><h1 class="blog_title"><%= @blog.title %></h1></li>
-		<li class="grid_4 alpha" style="margin-bottom:0"><h2>Edit entry</h2></li>
+		<p style="margin-bottom: 10px;"><%= link_to("&laquo Back to blog", blog_url(@entry.blog) )%></p>
+	
+		<li class="grid_4 alpha"><h1 class="blog_title"><%= @blog.title %></h1></li>
 		<li class="grid_4 omega" style="float:right;text-align:right;margin-right: -10px;"><%= link_to @entry.published? ? "View on site" : "Preview on site", public_blog_entry_url(@entry.blog.slug, @entry), :target => "_blank", :style=>"line-height: 1.2;" %>&nbsp;&nbsp;&nbsp;<%= form.submit "Save entry" %></li>
 	<% end %>
 	

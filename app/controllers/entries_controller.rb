@@ -3,6 +3,8 @@ class EntriesController < ApplicationController
   
   before_filter :find_blog
   
+  permit "manager of account or admin or editor of blog", :only => [:edit_multiple, :update_multiple]
+  
   layout 'hotink'
   
   def new

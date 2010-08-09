@@ -1,6 +1,6 @@
 
 <div class="grid_4 alpha suffix_8">
-		<h1 style="float:left; margin-right: 15px;"><%= @blog.title %></h1> <%= link_to 'New entry', new_blog_entry_path(@blog), :class => "link green", :style => "float:left;margin-top:10px;" %>
+		<h1 style="float:left; margin-right: 15px;"><%= @blog.title %></h1> <% if permit? "admin or contributor to blog or manager of account" %><%= link_to 'New entry', new_blog_entry_path(@blog), :class => "link green", :style => "float:left;margin-top:10px;" %><% end %>
 		
 		<% if @blog.image_file_name %><%= image_tag @blog.image.url(:thumb), :style => "border: 1px solid #AAA;" %><% end %>
 </div>
@@ -14,28 +14,45 @@
 	</div>
 </div>
 <% unless @blog.description.blank? %><p class="grid_12 alpha"><%= @blog.description %></p><% end %>
-<div class="select_all_wrap clearfix">
-	<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
-</div>
-<% form_tag edit_multiple_entries_url, :method => :get, :id => "edit_articles_form" do %>
-	<%= hidden_field_tag "update_action_name", '', :id=>"action_name" %>
-	
-	<div id="actions" class="clearfix">
-		<%= button_link_to "Publish", "#", :onclick => "$('#action_name').val('publish');$('#edit_articles_form').submit();return false;", :class => "pill-l" %>
-		<%= button_link_to "Schedule", "#", :onclick => "$('#action_name').val('schedule');$('#edit_articles_form').submit();return false;", :class => "pill-c" %>
-		<%= button_link_to "Delete", "#", :onclick => "$('#action_name').val('delete');$('#edit_articles_form').submit();return false;", :class => "pill-r" %>
-		
-		<div class="batch_actions">
-			<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
-			<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
-				<%= submit_tag "Unpublish", :onclick => "$('#action_name').val('unpublish');return true;", :class => "menubutton" %>
-				<%= submit_tag "Add to category", :onclick => "$('#action_name').val('add_category');return true;", :class => "menubutton" %>																				
-			</div> 
-		</div>
-	</div>
-	
-	<%= will_paginate(@entries, :inner_window => 2, :outer_window => 1) %>
 
+  <% if permit?("manager of account or admin or editor of blog") %>
+	<div class="select_all_wrap clearfix">
+		<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
+	</div>
+
+	<% form_tag edit_multiple_entries_url, :method => :get, :id => "edit_articles_form" do %>
+		<%= hidden_field_tag "update_action_name", '', :id=>"action_name" %>
+	
+		<div id="actions" class="clearfix">
+			<%= button_link_to "Publish", "#", :onclick => "$('#action_name').val('publish');$('#edit_articles_form').submit();return false;", :class => "pill-l" %>
+			<%= button_link_to "Schedule", "#", :onclick => "$('#action_name').val('schedule');$('#edit_articles_form').submit();return false;", :class => "pill-c" %>
+			<%= button_link_to "Delete", "#", :onclick => "$('#action_name').val('delete');$('#edit_articles_form').submit();return false;", :class => "pill-r" %>
+		
+			<div class="batch_actions">
+				<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
+				<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
+					<%= submit_tag "Unpublish", :onclick => "$('#action_name').val('unpublish');return true;", :class => "menubutton" %>
+					<%= submit_tag "Add to category", :onclick => "$('#action_name').val('add_category');return true;", :class => "menubutton" %>																				
+				</div> 
+			</div>
+		</div>
+	
+		<%= will_paginate(@entries, :inner_window => 2, :outer_window => 1) %>
+
+		<ol id ="blog_<%= @blog.id %>_entries" class="documents entries selectable">
+			<% if @entries.empty? %>
+				<li><p style="padding: 15px 0 5px 15px;font-style:italic;">No entries yet.</p>
+			<% else %>
+				<%= render @entries %>
+			<% end %>
+		</ol>
+		<%= will_paginate(@entries, :inner_window => 2, :outer_window => 1) %>
+		<div class="select_all_wrap clearfix">
+			<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
+		</div>
+	<% end %>	
+  <% else %>
+	<%= will_paginate(@entries, :inner_window => 2, :outer_window => 1) %>
 	<ol id ="blog_<%= @blog.id %>_entries" class="documents entries selectable">
 		<% if @entries.empty? %>
 			<li><p style="padding: 15px 0 5px 15px;font-style:italic;">No entries yet.</p>
@@ -43,8 +60,5 @@
 			<%= render @entries %>
 		<% end %>
 	</ol>
-	
-	<div class="select_all_wrap clearfix">
-		<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
-	</div>
-<% end %>
+	<%= will_paginate(@entries, :inner_window => 2, :outer_window => 1) %>
+  <% end %>

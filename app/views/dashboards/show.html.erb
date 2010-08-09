@@ -14,15 +14,18 @@
 		</div>
 		<% if @account.current_design %>
 			<p class="grid_8 omega front_page_controls" style="margin-bottom: 4px; margin-top: 7px; font-size: 110%;text-align:right;">
-				<strong>Current template:</strong> <%= link_to @current_front_page_template.name, edit_design_template_path(@account.current_design, @current_front_page_template), :style => "text-decoration: underline;" %>
-				&nbsp;&nbsp;
+				 <% if permit? "admin or manager of account" %> 
+					<strong>Current template:</strong> <%= link_to @current_front_page_template.name, edit_design_template_path(@account.current_design, @current_front_page_template), :style => "text-decoration: underline;" %>
+					&nbsp;&nbsp;<%= link_to "Update front page &raquo;", edit_front_page_path, :class=>"link yellow", :style=>"margin-bottom: 0; font-size: 90%;" %>
+				 <% end %>
+				</p>
 		<% else %>
 			<p style="margin-bottom: 4px; margin-top: 7px; font-size: 110%;text-align:right;">This site is currently offline.
-		<% end %>
-			 <% if permit? "admin or manager of account" %> 
-				<%= link_to "Update front page &raquo;", edit_front_page_path, :class=>"link yellow", :style=>"margin-bottom: 0; font-size: 90%;" %>
-			 <% end %>
+				 <% if permit? "admin or manager of account" %> 
+					<%= link_to "Update front page &raquo;", edit_front_page_path, :class=>"link yellow", :style=>"margin-bottom: 0; font-size: 90%;" %>
+				 <% end %>
 			</p>
+		<% end %>
 	</div>
 	<div class="grid_12 alpha">
 		<% if @lead_articles.blank? %>

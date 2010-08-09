@@ -1,16 +1,18 @@
+<p style="margin-bottom: 10px;"><%= link_to("&laquo Back to blog", blog_url(@blog) )%></p>
+
 <h3 class="grid_12 alpha">Contributors for “<%= @blog.title %>”</h3>
 
 <ul id="contributors" class="grid_6 alpha suffix_6">
 	<% @blog.editors.each do |editor| %>
-		<li><%= editor.to_select_option_text %> (Editor) <% unless @blog.editors.length==1 %><%= link_to 'demote', demote_contributor_account_blog_path(@account, @blog, :user => editor), :method => :put, :style => "font-size: 80%;" %><% end %> </li>
+		<li><%= editor.to_select_option_text %> (Editor) <% unless @blog.editors.length==1 %><%= link_to 'demote', demote_contributor_blog_path(@blog, :user => editor), :method => :put, :style => "font-size: 80%;" %><% end %> </li>
 	<% end %>
 	<% (@blog.contributors - @blog.editors).each do |contributor| %>
-		<li><%= contributor.to_select_option_text %> <%= link_to 'promote', promote_contributor_account_blog_path(@account, @blog, :user => contributor), :method => :put, :style => "font-size: 80%;" %> <%= link_to 'x', remove_contributor_blog_path(@blog, :user => contributor), :method => :put, :class => "destroy_link" %></li>
+		<li><%= contributor.to_select_option_text %> <%= link_to 'promote', promote_contributor_blog_path(@blog, :user => contributor), :method => :put, :style => "font-size: 80%;" %> <%= link_to 'x', remove_contributor_blog_path(@blog, :user => contributor), :method => :put, :class => "destroy_link" %></li>
 	<% end %>
 </ul>
 
 <% unless (User.all - @blog.contributors).blank? %>
-<% form_tag add_contributor_account_blog_path(@account, @blog), :method => :put do %>
+<% form_tag add_contributor_blog_path(@blog), :method => :put do %>
 	<p>To add a contributor, select their name below.</p>
 	<%= select_tag :user, options_from_collection_for_select(@account.has_staff - @blog.contributors, :id, :to_select_option_text) %>
 	<%= submit_tag "Add" %>

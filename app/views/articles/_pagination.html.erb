@@ -1,5 +1,5 @@
-<%= will_paginate(@articles, :inner_window => 1, :outer_window => 1) %>
 <% unless @articles.empty? %>
+<%= will_paginate(@articles, :inner_window => 1, :outer_window => 1) %>
 <div id="articles_page_info" class="page_entries_info">
 	<%= page_entries_info @articles %>
 	<%= "and <strong>#{@drafts.length}</strong> #{@drafts.length==1 ? 'draft' : 'drafts'}" if @drafts && @drafts.length >= 1 %>

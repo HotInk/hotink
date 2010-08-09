@@ -2,6 +2,9 @@ class BlogsController < ApplicationController
   
   layout 'hotink'
   
+  permit "manager of account or admin", :only => [:new, :create]
+  permit "manager of account or admin or editor of blog", :only => [:manage_contributors, :add_contributor, :remove_contributor, :promote_contributer, :demote_contributor]
+  
   def index
     @active_blogs = @account.blogs.active
     @inactive_blogs = @account.blogs.inactive    
@@ -43,7 +46,7 @@ class BlogsController < ApplicationController
     
     if params[:search]
       @search_query = params[:search]
-      @entries = @blog.entries.search( @search_query, :page => page, :per_page => per_page, :include => [:authors, :mediafiles], :with => { :account_id => @account.id })
+      @entries = @blog.entries.published_or_scheduled.search( @search_query, :page => page, :per_page => per_page, :order => "published_at desc", :include => [:authors, :mediafiles], :with => { :account_id => @account.id })
     else
       @entries = @blog.entries.paginate(:page => page, :per_page => per_page, :order => 'status, published_at desc, updated_at desc')
     end
@@ -84,7 +87,7 @@ class BlogsController < ApplicationController
     @blog.add_contributor @user
     
     respond_to do |format|
-      format.html { redirect_to(manage_contributors_blog_url(@account, @blog)) }
+      format.html { redirect_to(manage_contributors_blog_url(@blog)) }
     end
   end
   
@@ -95,7 +98,7 @@ class BlogsController < ApplicationController
     @blog.remove_contributor @user
     
     respond_to do |format|
-      format.html { redirect_to(manage_contributors_blog_url(@account, @blog)) }
+      format.html { redirect_to(manage_contributors_blog_url(@blog)) }
     end
   end
   
@@ -106,7 +109,7 @@ class BlogsController < ApplicationController
     @blog.make_editor(@user)
     
     respond_to do |format|
-      format.html { redirect_to(manage_contributors_blog_url(@account, @blog)) }
+      format.html { redirect_to(manage_contributors_blog_url(@blog)) }
     end
   end
   
@@ -117,7 +120,7 @@ class BlogsController < ApplicationController
     @blog.demote_editor(@user)
     
     respond_to do |format|
-      format.html { redirect_to(manage_contributors_blog_url(@account, @blog)) }
+      format.html { redirect_to(manage_contributors_blog_url(@blog)) }
     end
   end
 end

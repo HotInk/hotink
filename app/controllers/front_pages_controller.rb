@@ -8,7 +8,7 @@ class FrontPagesController < ApplicationController
     page = params[:page] || 1
     per_page = params[:per_page] || 8
     if params[:q]
-      @articles = @account.articles.published_or_scheduled.search(params[:q], :page => page, :per_page => per_page, :include => [:authors, :mediafiles, :section])
+      @articles = @account.articles.published_or_scheduled.search(params[:q], :page => page, :per_page => per_page, :order => "published_at desc", :include => [:authors, :mediafiles, :section])
     else
       @articles = @account.articles.published_or_scheduled.paginate(:all, :page => page, :per_page => per_page, :order => 'published_at desc')
     end

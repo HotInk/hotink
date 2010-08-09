@@ -1,66 +1,107 @@
-<div id="entry">
-	<p id="top_links">	
-		<%= link_to "&#171; Back to blog", account_blog_url(@account, @blog), :class=>"weblink" %>
-	</p>
- 	
+<div id="article" class="grid_10"> 	
+	<p><%= link_to("&laquo Back", blog_url(@entry.blog) )%></p>
+
+	<p><strong><%=h @entry.blog.title %></strong></p>
+
 	<h1><%=h @entry.title %></h1>
 
 	<h2><%=h @entry.subtitle %></h2>
-	
-	<% if @entry.section %><h3><%= @entry.section.name %></h3><% end %>
-	<% unless @entry.images.blank? %>
-		<div class="media_thumbs">
-			<h3>Attached media</h3>
-			<% for image in @entry.images %>
-					<%= link_to_function "<img src=\"#{image.file.url(:system_thumb)}\" border=\"1\" />", "page_overlay.render( '<div class=\"small_top_button clearfix\"><a href=\"#\" class=\"close_window\" onclick=\"page_overlay.end();return false;\"> <img src=\"/images/window_x.png\" /> </a></div><img src=\"#{image.file.url(:large)}\" style=\"position:relative;z-index: 300;\" />' );" %>
+		
+	<div class="details grid_5">
+		<% unless @entry.images.blank? %>
+			<div class="media">
+				<h3>Attached media</h3>
+				<% if @entry.images.length > 1 %>
+					<div class="carousel">
+		                <ul>
+							<% for image in @entry.images %>		
+		                    	<li>
+									<img src="<%= image.file.url(:system_default) %>" alt="" width="<%= image.width_for_style(:system_default) * 0.9 %>" height="<%= image.height_for_style(:system_default) + 0.9 %>">
+									<a class="zoom" href="<%= "#mediafile_#{image.id.to_s}_large" %>"><%= image_tag('zoom.png', :style => "border: none;position: absolute; top: 13px; right: 13px;width: 30px;") %></a>
+									<p class="caption"><%= @article.caption_for(image)%></p>
+									<p class="caption"><small>Uploaded <%= image.created_at.to_s(:standard) %></small></p>					
+									<div style="display:none;">
+										<div id="mediafile_<%= image.id %>_large" class="network_image_large">
+											<%= image_tag(image.file.url(:large)) %>
+											<p class="caption"><%= @article.caption_for(image)%></p>
+										</div>
+									</div>
+								</li>
+							<% end %>
+		                </ul>
+		            </div>
+					<p>
+						<% count = 1 %>
+						<% for image in @entry.images %>
+							<img src="<%= image.file.url(:system_thumb) %>" border="1" class="<%= count %>"/>
+							<% count = count + 1 %>
+						<% end %>
+						<br /><small><em>Click an image to view</em></small>
+					</p>
+				<% else %>
+					<ul>
+						<% @entry.images.first.tap do |image| %>		
+	                    	<li>
+								<img src="<%= image.file.url(:system_default) %>" alt="" width="<%= image.width_for_style(:system_default) * 0.9 %>" height="<%= image.height_for_style(:system_default) + 0.9 %>">
+								<a class="zoom" href="<%= "#mediafile_#{image.id.to_s}_large" %>"><%= image_tag('zoom.png', :style => "border: none;position: absolute; top: 13px; right: 13px;width: 30px;") %></a>
+								<p class="caption"><%= @entry.caption_for(image)%></p>
+								<p class="caption"><small>Uploaded <%= image.created_at.to_s(:standard) %></small></p>					
+								<div style="display:none;">
+									<div id="mediafile_<%= image.id %>_large" class="network_image_large">
+										<%= image_tag(image.file.url(:large)) %>
+										<p class="caption"><%= @entry.caption_for(image)%></p>
+									</div>
+								</div>
+							</li>
+						<% end %>
+	                </ul>
+				<% end %>
+			</div>
+		<% end %>
+		
+		<div class="categories">
+			<% if @entry.categories.blank? %>
+				<p>Not categorized.</p>
+			<% else %>
+				<p>Categories:
+					<% if @entry.categories.count > 1 %> 
+						<% @entry.categories[1..-2].each do |category| %>
+							<%= category.name %>,
+						<% end %>
+						<%= @entry.categories.last.name %>
+					<% else %>
+						<%= @entry.categories.first.name %>
+					<% end %>
+				</p>
 			<% end %>
 		</div>
-	<% end %>
+		
+		<div class="tags">
+			<% if @entry.tag_list.blank? %>
+				<p>Not tagged.</p>
+			<% else %>
+				<p>Tags: <em><%= @entry.tag_list %></em></p>
+			<% end %>
+		</div>
+		
+	</div>
 	
-	<p class="date"><%= @entry.status=="Published" ? @entry.published_at.to_formatted_s(:long) : "Last saved " + @entry.updated_at.to_formatted_s(:long) %></p>
-	<p class="byline"><%=h @entry.authors_list%></p>
+	<% unless @entry.authors_list.blank? %><p class="byline">By <%=h @entry.authors_list %></p><% end %>
+	<p class="date"><%= @entry.status=="Published" ? @entry.published_at.strftime("%b %e, %Y") : "Last saved " + @entry.updated_at.to_formatted_s(:long) %></p>
 	
 	<%= markdown @entry.bodytext %>
 
 </div>
-<div id="tools">
-	<div class="toolbox">
-		<div class="toolbox_border"></div>
-		<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Status</h2></div>
-		<div class="toolbox_border"></div>
-		<div class="toolbox_body clearfix">
-			<%= render :partial=>'status' %>
-		</div>
-		<div class="toolbox_border"></div>
-	</div><!-- /toolbox - tools -->
 
-	<div class="toolbox">
-		<div class="toolbox_border"></div>
-		<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Categories</h2></div>
-		<div class="toolbox_border"></div>
-		<div class="toolbox_body clearfix">
-			<p>This entry is filed under:</p>
-			<ul>
-				<% @entry.categories.each	do |category| %>
-				<li><%= category.name %></li>
-				<% end %>
-			</ul>	
-		</div>
-		<div class="toolbox_border"></div>
-	</div><!-- /toolbox - tools -->
-	
-	<div class="toolbox">
-		<div class="toolbox_border"></div>
-		<div class="toolbox_label_body"><h2><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>Tags</h2></div>
-		<div class="toolbox_border"></div>
-		<div class="toolbox_body clearfix">
-			<% if @entry.tag_list.blank? %>
-				<p>This entry is not tagged.</p>
-			<% else %>
-				<p>This entry is tagged:</p>
-				<h4><%= @entry.tag_list %></h4>
-			<% end %>	
-		</div>
-		<div class="toolbox_border"></div>
-	</div><!-- /toolbox - tools -->
-</div>
+<% content_for(:javascript) do %>
+<%= javascript_include_tag 'jcarousellite_1.0.1.js' %>
+<script type="text/javascript" charset="utf-8">
+	$(function(){
+		$(".media  .carousel").jCarouselLite({
+			'btnGo': [<%= (1..@entry.images.count).collect{ |n| '".media .' + n.to_s + '"' }.join(',') %>]
+		});
+		
+		$('.media a.zoom').fancybox({"titleShow": false});	
+	});
+</script>
+<% end %>
