@@ -22,6 +22,18 @@ class ContentDrop < Drop
     categories
   end
   
+  def pages
+    account.pages.main_pages.all.collect{ |page| PageDrop.new(page) }
+  end
+  
+  def page
+    pages = {}
+    account.pages.each do |page|
+      pages[page.url] = PageDrop.new(page)
+    end
+    pages
+  end
+  
   def latest_issue
     IssueDrop.new(account.issues.find(:first, :order => "date desc"))
   end

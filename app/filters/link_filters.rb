@@ -3,6 +3,16 @@ module LinkFilters
   include ActionView::Helpers::AssetTagHelper
   include ActionView::Helpers::UrlHelper
   
+  def link_to_front_page(link_text)
+    title = link_text
+    if @context.registers[:design].current_design?
+      url = "/"
+    else
+      url = "/?design_id=#{@context.registers[:design].id}"
+    end
+    link_to title, url  
+  end
+  
   def link_to_article(arg1, arg2=nil)
     if arg1.is_a?(ArticleDrop)
       article = arg1
@@ -33,6 +43,16 @@ module LinkFilters
       url = "/blogs/#{blog.slug}"
     else
       url = "/blogs/#{blog.slug}?design_id=#{@context.registers[:design].id}"
+    end
+    link_to title, url  
+  end
+  
+  def link_to_blogs(link_text)
+    title = link_text
+    if @context.registers[:design].current_design?
+      url = "/blogs"
+    else
+      url = "/blogs?design_id=#{@context.registers[:design].id}"
     end
     link_to title, url  
   end
@@ -103,5 +123,25 @@ module LinkFilters
       url = "/issues/#{issue.id}?design_id=#{@context.registers[:design].id}"
     end
     link_to title, url  
+  end
+  
+  def link_to_issues(link_text)
+    title = link_text
+    if @context.registers[:design].current_design?
+      url = "/issues"
+    else
+      url = "/issues?design_id=#{@context.registers[:design].id}"
+    end
+    link_to title, url  
   end 
+  
+  def link_to_search(link_text)
+    title = link_text
+    if @context.registers[:design].current_design?
+      url = "/search"
+    else
+      url = "/search?design_id=#{@context.registers[:design].id}"
+    end
+    link_to title, url  
+  end
 end
