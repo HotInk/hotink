@@ -8,19 +8,19 @@ class IssueDrop < Drop
   end
   
   def large_cover_image_url
-    pdf.url(:system_cover_default)
+    issue.pdf.url(:system_cover_default)
   end
   
   def small_cover_image_url
-    pdf.url(:system_cover_thumb)
+    issue.pdf.url(:system_cover_thumb)
   end
   
   def screen_pdf_url
-    pdf.url(:screen_quality)
+    issue.pdf.url(:screen_quality)
   end
   
   def press_pdf_url
-    pdf.url(:original)
+    issue.pdf.url(:original)
   end
   
   def has_pdf?
