@@ -56,7 +56,7 @@ describe Category do
   end
   
   describe "slug" do
-    it { should validate_uniqueness_of(:slug).scoped_to(:account_id) } 
+    it { should validate_uniqueness_of(:slug).scoped_to(:account_id, :parent_id) } 
     it { should have_db_index(:slug) }
     
     it "should be a uri-friendly string" do

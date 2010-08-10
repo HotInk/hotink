@@ -58,7 +58,7 @@ class Category < ActiveRecord::Base
 
   # Slug
   attr_protected :slug
-  validates_uniqueness_of :slug, :scope => :account_id
+  validates_uniqueness_of :slug, :scope => [:account_id, :parent_id]
   validates_format_of :slug, :with => /^[-a-z0-9]+$/, :message => "should consist of letters, numbers and dashes only"
   before_validation :autoset_slug
 
