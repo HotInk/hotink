@@ -8,7 +8,7 @@ class IssueDrop < Drop
   end
   
   def large_cover_image_url
-    issue.pdf.url(:system_cover_default)
+    issue.pdf.url(:system_default)
   end
   
   def small_cover_image_url
