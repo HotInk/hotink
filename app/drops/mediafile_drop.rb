@@ -24,8 +24,16 @@ class MediafileDrop < Drop
     mediafile.image? && (mediafile.width >= mediafile.height)
   end
   
+  def is_horizontal?
+    horizontal?
+  end
+  
   def vertical?
     mediafile.image? && (mediafile.width < mediafile.height)
+  end
+  
+  def is_vertical?
+    vertical?
   end
   
   def type

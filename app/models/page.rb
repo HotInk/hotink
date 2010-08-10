@@ -4,7 +4,7 @@ class Page < ActiveRecord::Base
   validates_presence_of :account
   
   validates_presence_of :name
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :scope => [:account_id, :parent_id]
   validates_format_of :name, :with => /^[-a-zA-Z0-9\_]+$/
   
   belongs_to :parent, :class_name => "Page", :foreign_key => "parent_id" 

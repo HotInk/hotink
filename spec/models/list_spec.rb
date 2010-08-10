@@ -21,7 +21,7 @@ describe List do
 
   it "should ensure name is a string that can be converted to a method name" do
     should validate_presence_of(:name)
-    should validate_uniqueness_of(:name)
+    should validate_uniqueness_of(:name).scoped_to(:account_id)
     should allow_value('Basic articles').for(:name)
     should allow_value('Basic entry-article').for(:name)
     

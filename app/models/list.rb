@@ -7,7 +7,7 @@ class List < ActiveRecord::Base
   
   validates_presence_of :name
   validates_format_of :name, :with => /^[a-zA-Z][-a-zA-Z ]+$/i, :message => 'can only contain letters, spaces and hyphens'
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :scope => :account_id
   
   validates_presence_of :slug
   def validate

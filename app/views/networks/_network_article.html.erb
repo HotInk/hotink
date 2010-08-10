@@ -42,12 +42,14 @@
 			<p> <%= network_article.section.blank? ? "<span style=\"color: #BBB\">No section</span>" : network_article.section.name %></p>
 		</div>
 
-		<div class="tags">
-			<% unless network_article.tag_list.blank? %>
-				<p><em> <%= network_article.tag_list %></em></p>
-			<% else %>
-				<p><em><span style="color: #BBB">No tags</span> </em></p>
-			<% end %>
+		<div class="tags_comments">
+			<div class="tags">
+				<% unless network_article.tag_list.blank? %>
+					<p><em> <%= network_article.tag_list %></em></p>
+				<% else %>
+					<p><em><span style="color: #BBB">No tags</span> </em></p>
+				<% end %>
+			</div>
 		</div>
 		
 		<div class="date">

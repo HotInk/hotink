@@ -8,7 +8,7 @@ class PublicEntriesController < PublicController
       else
         @entry = @blog.entries.published.find(params[:id])
       end
-      render :text => @design.entry_template.render({'entry' => EntryDrop.new(@entry), 'content' => ContentDrop.new(@account), 'site' => SiteDrop.new}, :registers => { :design => @design }) 
+      render :text => @design.entry_template.render({'entry' => EntryDrop.new(@entry), 'content' => ContentDrop.new(@account), 'site' => SiteDrop.new(@account)}, :registers => { :design => @design }) 
     else  
       render :text => "This site is currently offline.", :status => :service_unavailable
     end

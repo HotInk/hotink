@@ -11,7 +11,7 @@ describe Page do
   it { should belong_to(:parent) }
 
   it { should validate_presence_of(:name) }
-  it { should validate_uniqueness_of(:name) }
+  it { should validate_uniqueness_of(:name).scoped_to(:account_id, :parent_id) }
   it "should ensure name is URI-safe" do
     should allow_value("testpage").for(:name)
     should allow_value("test-page").for(:name)  
