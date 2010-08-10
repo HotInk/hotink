@@ -765,6 +765,7 @@ form.list.use_preview #list_preview p				{ width: 70%; line-height: 1.3; }
 #pages ol.children { float: left; clear: left; }
 #pages ol li { float: left; clear: left; padding: 0 0 0px 0; }
 
+#page_contents_input { float: left; width: 100%; }
 #page_name_input label { float: left; width: auto; margin-right: 5px; line-height: 1.5; }
 #page_name_input input { width: 35%; }
 
