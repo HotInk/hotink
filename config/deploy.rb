@@ -83,7 +83,7 @@ namespace :bundler do
   
   task :bundle_new_release, :roles => :app do
     bundler.create_symlink
-    run "cd #{release_path} && bundle install --without test"
+    run "cd #{release_path} && /usr/ruby-enterprise/bin/bundle install --without test"
   end
 end
 
@@ -96,7 +96,7 @@ namespace :deploy do
   desc "Restarting Passenger with restart.txt"
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{current_path}/tmp/restart.txt"
-    run "cd #{current_path} && /usr/local/bin/rake thinking_sphinx:configure RAILS_ENV=production"
+    run "cd #{current_path} && /usr/ruby-enterprise/bin/rake thinking_sphinx:configure RAILS_ENV=production"
   end
   
   [:start, :stop].each do |t|

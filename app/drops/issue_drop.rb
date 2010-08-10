@@ -24,6 +24,6 @@ class IssueDrop < Drop
   end
   
   def has_pdf?
-    !!pdf_file_name
+    !!issue.pdf_file_name
   end
 end
