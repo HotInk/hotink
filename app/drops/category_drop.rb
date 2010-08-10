@@ -17,7 +17,7 @@ class CategoryDrop < Drop
   end
   
   def articles
-    category.articles.published.find(:all, :limit => 20).collect{ |a| ArticleDrop.new(a)  }
+    category.articles.published.find(:all, :order => "published_at desc", :limit => 20).collect{ |a| ArticleDrop.new(a)  }
   end
   
 end
