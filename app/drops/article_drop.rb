@@ -3,7 +3,7 @@ class ArticleDrop < Drop
   
   alias_method :article, :source # for readability
 
-  liquid_attributes :id, :title, :subtitle, :bodytext, :word_count
+  liquid_attributes :id, :title, :bodytext, :word_count
    
   
   def url
@@ -65,6 +65,14 @@ class ArticleDrop < Drop
        nil
      else
        article.authors_list
+     end
+   end
+   
+   def subtitle
+     if article.subtitle.blank?
+       nil
+     else
+       article.subtitle
      end
    end
    
