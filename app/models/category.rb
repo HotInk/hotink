@@ -59,7 +59,7 @@ class Category < ActiveRecord::Base
   # Slug
   attr_protected :slug
   validates_uniqueness_of :slug, :scope => [:account_id, :parent_id]
-  validates_format_of :slug, :with => /^[-a-z0-9]+$/, :message => "should consist of letters, numbers and dashes only"
+  validates_format_of :slug, :with => /^[êçèé-a-z0-9]+$/, :message => "should consist of letters, numbers and dashes only"
   before_validation :autoset_slug
 
   def path
@@ -102,7 +102,8 @@ class Category < ActiveRecord::Base
   def generate_slug(text)
     return unless text
     slug = text.downcase.strip
-    slug.gsub!('\'', "") #apostrophes
+    slug.gsub!('\'', "") #apostrophes, etc
+    slug.gsub!('&', "and") #ampersands, etc
     slug.gsub!(/[\W]+/, '-') #non-word characters
     slug.gsub!(/^-+|-+$/, "") #leading/trailing dashes
     slug
