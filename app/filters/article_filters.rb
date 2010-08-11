@@ -31,4 +31,17 @@ module ArticleFilters
     return drilldown
   end
 
+  private
+  
+  # Takes a category and a section, tells you if category is indirect child of section.
+  def is_indirect_child_of?(section, category)
+    return false if section.children.blank?
+    return true if section.children.detect { |sub_sec| sub_sec.id == category.parent_id } # this is the operative line. check section children for category parent
+    for sub_sec in section.children
+      return true if is_indirect_child_of?(sub_sec, category) # check subsection children for category parent
+    end
+    return false
+  end
+  
+
 end
