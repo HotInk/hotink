@@ -28,8 +28,9 @@ gem "ruby-mp3info", :require => "mp3info"
 gem 'hominid'
 gem 'liquid'
 
+gem "rspec"
+
 group :test do
-  gem "rspec"
   gem "rspec-rails"
   gem "spork"
   gem "timecop"
