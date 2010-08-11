@@ -1,5 +1,7 @@
 class CategoriesController < ApplicationController
 
+  permit "manager of account or admin"
+
   def create
     @category = @account.categories.build(params[:category])
     if @category.save

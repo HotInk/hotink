@@ -1,5 +1,7 @@
 class NetworksController < ApplicationController
   
+  permit "manager of account or admin"
+  
   layout 'hotink'
   
   def show

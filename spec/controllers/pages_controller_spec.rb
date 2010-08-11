@@ -6,7 +6,8 @@ describe PagesController do
     controller.stub!(:current_subdomain).and_return(@account.name)
     
     @current_user = Factory(:user)
-    @current_user.promote_to_admin
+    @current_user.has_role('staff', @account)    
+    @current_user.has_role('manager', @account)
     controller.stub!(:current_user).and_return(@current_user)
   end
   
