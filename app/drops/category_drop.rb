@@ -2,7 +2,7 @@ class CategoryDrop < Drop
   
   alias_method :category, :source # for readability
   
-  liquid_attributes :name, :slug, :path
+  liquid_attributes :name, :slug, :path, :parent_id
   
   def subcategories
     category.children.collect{ |child| CategoryDrop.new(child) }

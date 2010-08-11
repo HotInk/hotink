@@ -1,13 +1,33 @@
 class ArticleDrop < Drop
   include TextFilters
+  include LinkFilters
   
   alias_method :article, :source # for readability
 
   liquid_attributes :id, :title, :bodytext, :word_count
    
-  
   def url
-    "/accounts/#{article.account.id}/articles/#{article.id}"
+    "/articles/#{article.id}"
+  end
+
+  def tags
+    article.tag_list
+  end
+  
+  def tags_list
+    article.tag_list.join(', ')
+  end
+  
+  def tags_list_with_links  
+    case article.tag_list.length
+     when 0
+       return nil
+     when 1
+       return article.tag_list.first.blank? ? "" : link_to_tag(article.tag_list.first)
+     else
+      tags_list = article.tag_list.collect{ |t| link_to_tag(t) }
+      tags_list.join(', ')
+    end
   end
   
   def excerpt
@@ -66,6 +86,28 @@ class ArticleDrop < Drop
      else
        article.authors_list
      end
+   end
+   
+   # Returns list of article's author names as a readable list, separated by commas and the word "and".
+   def authors_list_with_links
+      case article.authors.length
+      when 0
+        return nil
+      when 1
+        return article.authors.first.blank? ? "" : link_to_author(article.authors.first)
+      when 2
+       #Catch cases where the second author is actually an editorial title, this is weirdly common.
+       if article.authors.second.name =~ / editor| Editor| writer| Writer|Columnist/
+         return link_to_author(article.authors.first)+ " - " + article.authors.second.name
+       else
+         return link_to_author(article.authors.first) + " and " + link_to_author(article.authors.second)
+       end
+      else
+       list = String.new
+       (0..(article.authors.length - 3)).each{ |i| list += link_to_author(article.authors[i]) + ", " }
+       list += link_to_author(article.authors[article.authors.length-2]) + " and " + link_to_author(article.authors[article.authors.length-1]) # last two authors get special formatting
+       return list
+     end         
    end
    
    def subtitle
