@@ -24,6 +24,8 @@ gem "formtastic"
 
 gem "ruby-mp3info", :require => "mp3info"
 
+gem "delayed_job"
+
 # Gems for Mailout
 gem 'hominid'
 gem 'liquid'
