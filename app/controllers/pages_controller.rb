@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   
-  permit 'admin'
+  permit 'admin or manager of account'
   
   layout "hotink"  
   

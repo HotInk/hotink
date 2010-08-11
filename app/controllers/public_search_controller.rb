@@ -3,7 +3,7 @@ class PublicSearchController < PublicController
   def show
     if @design = design_to_render
       if params[:q]
-        @hits = @account.articles.search(@search_query, :order => "published_at desc")
+        @hits = @account.articles.published.search(params[:q], :order => "published_at desc")
       else
         @hits = []
       end

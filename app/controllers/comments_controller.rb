@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
 
+  permit "admin or manager of account", :only => :destroy
+
   layout "hotink"
   
   def index

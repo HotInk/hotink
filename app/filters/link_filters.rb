@@ -144,4 +144,16 @@ module LinkFilters
     end
     link_to title, url  
   end
+  
+  def link_to_tag(tag, title=nil)
+    url = "/search?q=" + CGI.escape(tag) + "&page=1"
+    title ||= tag
+    link_to title, url
+  end
+  
+  def link_to_author(author, title=nil)
+    url = "/search?q=" + CGI.escape(author.name) + "&page=1"
+    title ||= author.name
+    link_to title, url
+  end
 end

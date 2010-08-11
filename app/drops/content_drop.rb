@@ -40,7 +40,7 @@ class ContentDrop < Drop
   
   def issues
     @context.registers[:total_entries] = account.issues.count
-    account.issues.paginate(:page => @context.registers[:page] || 1, :per_page => @context.registers[:per_page] || 5, :order => "date desc").collect{ |issue| IssueDrop.new(issue) }
+    account.issues.paginate(:page => @context.registers[:page] || 1, :per_page => @context.registers[:per_page] || 20, :order => "date desc").collect{ |issue| IssueDrop.new(issue) }
   end
   
   def latest_article

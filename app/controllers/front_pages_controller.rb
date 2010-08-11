@@ -2,7 +2,7 @@ class FrontPagesController < ApplicationController
   
   layout 'hotink'
   
-  permit "admin"
+  permit "admin or manager of account"
   
   def edit
     page = params[:page] || 1

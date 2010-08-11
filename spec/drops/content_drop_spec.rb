@@ -40,7 +40,7 @@ describe ContentDrop do
   
   describe "issues" do
     before do
-      @issues = (1..7).collect { |n|  Factory(:issue, :date => 10.weeks.ago + n.weeks, :name => "Issue ##{n}", :account => @account) }
+      @issues = (1..22).collect { |n|  Factory(:issue, :date => 10.weeks.ago + n.weeks, :name => "Issue ##{n}", :account => @account) }
     end
     
     it "should return latest issue" do
@@ -49,14 +49,14 @@ describe ContentDrop do
     end
     
     describe "issue pagination" do
-      it "should return 5 entries on first page by default" do
+      it "should return 20 entries on first page by default" do
         output = Liquid::Template.parse( ' {% for issue in content.issues %} {{ issue.name }} {% endfor %} {{ content.issues.total_entries }}'  ).render('content' => ContentDrop.new(@account))
-        output.should == "  #{ @issues.reverse[0...5].collect{ |i| i.name }.join('  ') }  "
+        output.should == "  #{ @issues.reverse[0...20].collect{ |i| i.name }.join('  ') }  "
       end
 
       it "should return page 2" do
         output = Liquid::Template.parse( ' {% for issue in content.issues %} {{ issue.name }} {% endfor %} '  ).render({'content' => ContentDrop.new(@account)}, :registers => { :page => 2 } )
-        output.should == "  #{ @issues.reverse[5..6].collect{ |i| i.name }.join('  ') }  "
+        output.should == "  #{ @issues.reverse[20..21].collect{ |i| i.name }.join('  ') }  "
       end
 
       it "should return 2 entries per page" do

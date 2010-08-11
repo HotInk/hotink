@@ -4,7 +4,11 @@ describe CategoriesController do
   before do
     @account = Factory(:account)
     controller.stub!(:current_subdomain).and_return(@account.name)
-    controller.stub!(:login_required).and_return(true)
+
+    @current_user = Factory(:user)
+    @current_user.has_role('staff', @account)    
+    @current_user.has_role('manager', @account)
+    controller.stub!(:current_user).and_return(@current_user)
   end
   
   describe "POST to create with XHR request" do
