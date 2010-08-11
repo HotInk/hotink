@@ -1,4 +1,7 @@
 module TextFilters
+  include ActionView::Helpers::DateHelper
+  include ActionView::Helpers::TextHelper
+  
    def markdown(text)
      RDiscount.new(text).to_html
    end
@@ -15,6 +18,19 @@ module TextFilters
      shortened_string += truncate_string if wordlist.length > l
 
      shortened_string
+   end
+   
+   def pluralized(count, singular, plural = nil)
+     pluralize(count.to_i, singular, plural)
+   end
+   
+   def fuzzy_time(date)
+     date = DateTime.parse(date)
+     time_ago_in_words(date).to_s + " ago"
+   end
+   
+   def word_count(text)
+     (text.split(/[^a-zA-Z]/).join(' ').size / 4.5).round
    end
 
    private
