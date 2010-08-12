@@ -25,6 +25,9 @@ gem "formtastic"
 gem "ruby-mp3info", :require => "mp3info"
 
 gem "delayed_job"
+gem "daemons"
+gem "thinking-sphinx"
+gem "ts-delayed-delta"
 
 # Gems for Mailout
 gem 'hominid'

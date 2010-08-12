@@ -135,6 +135,12 @@ describe ContentDrop do
       output = Liquid::Template.parse( ' {% for article in content.lead_articles %} {{ article.title }} {% endfor %} '  ).render('content' => ContentDrop.new(@account, :preview_lead_article_ids => preview_lead_articles.collect{ |a| a.id }))
       output.should == "  #{ preview_lead_articles.collect{ |a| a.title }.join('  ') }  "
     end
+    
+    it "should return empty array when no lead articles are set" do
+      @account.update_attribute :lead_article_ids, nil
+      output = Liquid::Template.parse( ' {% for article in content.lead_articles %} {{ article.title }} {% endfor %} '  ).render('content' => ContentDrop.new(@account))
+      output.should == "  "
+    end
   end
   
   describe "list support" do

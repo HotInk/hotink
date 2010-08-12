@@ -50,16 +50,15 @@ class Issue < ActiveRecord::Base
   end
   
   after_update do |issue|
-    process_pdf if issue.processing? # add to queue if the PDF is new
+    Delayed::Job.enqueue IssueJob.new(issue.id) if issue.processing? # add to queue if the PDF is new
   end
   
   # DelayedJob for PDF processing
-  def process_pdf
+  def perform
     self.processing = false # unlock for processing
     pdf.reprocess! # do the processing
     save
   end
-  handle_asynchronously :process_pdf
   
   # Fix the mime types on uploaded PDFs. Make sure to require the mime-types gem
   def swfupload_file=(data)
