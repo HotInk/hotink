@@ -2,7 +2,7 @@ class Category < ActiveRecord::Base
   belongs_to :account
   
   has_many :sortings, :dependent => :destroy
-  has_many :articles, :through => :sortings
+  has_many :articles, :through => :sortings, :uniq => true
   
   belongs_to :parent, :class_name => "Category", :foreign_key=>:parent_id
   has_many :children, :class_name => "Category", :foreign_key=>:parent_id, :order => "position"
