@@ -15,6 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   map.public_comments '/comments', :controller => :public_comments, :action => :create, :conditions => { :method => :post }
   
   map.feed '/rss', :controller => :public_feeds, :action => :show
+  map.feed '/feed.xml', :controller => :public_feeds, :action => :show
 
   map.front_page_preview '/front_page/preview', :controller => :public_front_pages, :action => :preview 
   

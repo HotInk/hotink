@@ -146,8 +146,8 @@ ol.documents li .details .mediafiles .first.large { display: none; }
 ol.documents li .details .mediafiles img { margin-top: 3px; }
 ol.documents li .details img { border: 1px solid #999999; }
 ol.documents li .section { width: 10%; padding: 0.5%; margin-left: 1%; }
-ol.documents li .tags_comments { width: 10%; margin-left: 1%; font-size: 80%; padding: 0; }
-ol.documents li .tags_comments p { margin-bottom: 0; }
+ol.documents li .tags_comments { width: 10%; margin-left: 1%; padding: 0; }
+ol.documents li .tags_comments p { margin-bottom: 0; font-size: 80%; }
 ol.documents li .tags { border: 1px solid #CCCCCC; margin-bottom: 15px; background: white; padding: 5px; }
 ol.documents li .comments { padding: 5px; }
 ol.documents li .comments p { font-size: 100%; }
