@@ -32,12 +32,14 @@
 				  	</div>
 			</div>	
 			
+		<% unless @issue.articles.empty? %>	
 			<div id="issue_articles">
 				<h2 style="margin-bottom:5px;">Articles</h2>
 				<ol class="documents small">
 					<%= render @issue.articles %>
 				</ol>
 			</div>
+		<% end %>
 		</div>
 		<% end %>
 		<div class="cover grid_5">
@@ -137,4 +139,3 @@
 				  };
 				
 </script>
-<%= javascript_include_tag 'wmd/wmd.js' %>

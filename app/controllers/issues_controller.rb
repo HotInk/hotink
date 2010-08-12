@@ -15,16 +15,7 @@ class IssuesController < ApplicationController
       format.html
     end
   end
-
-  # GET /issues/1
-  def show
-    @issue = @account.issues.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
-  end
-
+  
   # GET /issues/new
   def new
     @issue = @account.issues.create(:date => Time.now)
