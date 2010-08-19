@@ -95,6 +95,35 @@ describe ContentDrop do
     end
   end
   
+  describe "entries" do
+    before do
+      @drafts = (1..3).collect { |n|  Factory(:draft_entry) }
+      @entries = (1..22).collect { |n|  Factory(:published_entry, :published_at => 10.weeks.ago + n.days, :title => "Entry ##{n}", :account => @account) }
+    end
+
+    it "should return latest entry" do
+      output = Liquid::Template.parse(" {{ content.latest_entry.title }} ").render('content' => ContentDrop.new(@account))
+      output.should == " #{ @entries.last.title } "
+    end
+
+    describe "entry pagination" do
+      it "should return 20 entries on first page by default" do
+        output = Liquid::Template.parse( ' {% for entry in content.entries %} {{ entry.title }} {% endfor %} '  ).render('content' => ContentDrop.new(@account))
+        output.should == "  #{ @entries.reverse[0...20].collect{ |i| i.title }.join('  ') }  "
+      end
+
+      it "should return page 2" do
+        output = Liquid::Template.parse( ' {% for entry in content.entries %} {{ entry.title }} {% endfor %} '  ).render({'content' => ContentDrop.new(@account)}, :registers => { :page => 2 } )
+        output.should == "  #{ @entries.reverse[20..21].collect{ |i| i.title }.join('  ') }  "
+      end
+
+      it "should return 10 entries per page" do
+        output = Liquid::Template.parse( ' {% for entry in content.entries %} {{ entry.title }} {% endfor %} '  ).render({'content' => ContentDrop.new(@account)}, :registers => { :per_page => 10 } )
+        output.should == "  #{ @entries.reverse[0...10].collect{ |i| i.title }.join('  ') }  "
+      end
+    end
+  end
+  
   describe "blogs" do
     before do
       @blogs = (1..2).collect{ |n|  Factory(:blog, :title => "Blog ##{n}", :account => @account) }

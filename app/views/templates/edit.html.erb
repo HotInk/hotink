@@ -20,7 +20,7 @@
 		<% if form.object.kind_of?(ViewTemplate) %>
 			<%= form.input :title_code, :input_html => { :rows => 1 } %>
 		<% end %>
-		<%= form.input :code, :label => "Body code <span id=\"liquid_error\">#{ flash[:syntax_error] }</a>" %>
+		<%= form.input :code, :label => "Body code <span id=\"liquid_error\">#{ flash[:syntax_error] }</span>".html_safe %>
 	<% end %>
 <% end %>
 

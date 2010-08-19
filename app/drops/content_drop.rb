@@ -52,6 +52,15 @@ class ContentDrop < Drop
     account.articles.published.paginate(:page => @context.registers[:page] || 1, :per_page => @context.registers[:per_page] || 20, :order => "published_at desc").collect{ |article| ArticleDrop.new(article) }
   end
   
+  def entries
+    @context.registers[:total_entries] = account.entries.published.count
+    account.entries.published.paginate(:page => @context.registers[:page] || 1, :per_page => @context.registers[:per_page] || 20, :order => "published_at desc").collect{ |entry| EntryDrop.new(entry) }
+  end
+  
+  def latest_entry
+    EntryDrop.new(account.entries.published.find(:first, :order => "published_at desc"))
+  end
+  
   def blogs
     account.blogs.collect{ |blog| BlogDrop.new(blog) }
   end
@@ -65,7 +74,7 @@ class ContentDrop < Drop
   end
   
   def lead_articles
-    article_ids = options[:preview_lead_article_ids] || account.lead_article_ids
+    article_ids = options[:preview_lead_article_ids] || account.lead_article_ids || []
     articles = article_ids.collect{ |id| account.articles.published.find_by_id(id) }
     articles.compact.collect{ |article| ArticleDrop.new(article) }
   end

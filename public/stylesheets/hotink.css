@@ -783,6 +783,8 @@ form.list.use_preview #list_preview p				{ width: 70%; line-height: 1.3; }
 #templates .last_updated, #template_files .last_updated { float: right; font-size: 80%; padding: 0 10px; }
 #templates .destroy_link, #template_files .destroy_link { float: right;  }
 
+span .liquid_error { font-size: 85%; margin-left: 20px; color: red; }
+
 form.template #template_info_preview 							{ display:none; }
 form.template.use_preview .preview					 			{ display: none; }
 form.template.use_preview #template_info_preview 				{ display: block; font-size: 1.1em; margin-bottom: 20px; }
@@ -872,6 +874,9 @@ form.formtastic fieldset > ol > li.string input { width:100%; max-width: 100%; }
 form.formtastic fieldset > ol > li.password input { width:100%; }
 form.formtastic fieldset > ol > li.numeric input { width:100%; }
 form.formtastic fieldset > ol > li.text textarea { width:100%; }
+
+form.formtastic fieldset > ol > li.text { float:left; width: 100%; }
+
 
 form.formtastic fieldset > ol > li.text .wmd-button-bar { float:left; width: 98.55%; padding: 0px 1%; border: 1px solid #DEDEDE; background-color: #EFEFEF; border-width: 1px 1px 0 1px; }
 form.formtastic fieldset > ol > li.text .wmd-button-bar {  -moz-border-radius-topleft:3px;-moz-border-radius-topright:3px;-webkit-border-top-left-radius:3px;-webkit-border-top-right-radius:3px;}

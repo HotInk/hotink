@@ -171,6 +171,21 @@ class ArticleDrop < Drop
     end
    end
    
+   def audiofiles
+     article.audiofiles.collect do |i|
+       waxing = Waxing.find_by_document_id_and_mediafile_id(article.id, i.id) 
+       MediafileDrop.new(i, :caption => waxing.caption) 
+     end
+   end
+
+   def has_audiofile?
+     if article.audiofiles.detect{|i| i }
+       return true
+     else
+       return false
+     end
+   end
+   
    # Comments
    
    def comments

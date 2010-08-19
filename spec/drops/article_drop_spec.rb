@@ -205,6 +205,31 @@ describe ArticleDrop do
   end
   
   describe "mediafiles" do
+     describe "audiofiles" do
+        before do
+          @audiofiles = (1..3).collect{ Factory(:audiofile) }
+          @article_with_some_audiofiles = Factory(:article, :mediafiles => ((1..3).collect{ Factory(:mediafile) } + @audiofiles))
+        end
+
+        it "should return the article's audiofiles" do
+          output = Liquid::Template.parse( ' {% for audiofile in article.audiofiles %} {{ audiofile.url }} {% endfor %} '  ).render('article' => ArticleDrop.new(@article_with_some_audiofiles))
+
+          urls = @article_with_some_audiofiles.audiofiles.collect{ |i|  i.url(:original) }
+          output.should == "  #{urls.join('  ')}  "    
+        end
+
+        it "should know whether the article has an attached audiofile" do
+          template = Liquid::Template.parse( ' {% if article.has_audiofile? %} YES {% else %} NO {% endif %} ')
+
+          output = template.render('article' => ArticleDrop.new(@article))
+          output.should eql("  NO  ")
+
+          output = template.render('article' => ArticleDrop.new(@article_with_some_audiofiles))
+          output.should eql("  YES  ")
+        end
+    end
+    
+    
     describe "images" do
       before do
         @images = (1..3).collect{ Factory(:image) }

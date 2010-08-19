@@ -58,17 +58,6 @@ describe IssuesController do
       end
     end
 
-    describe "GET to show" do
-      before do
-        @issue = Factory(:issue, :account => @account)
-        get :show, :id => @issue.id
-      end
-
-      it { should assign_to(:issue).with(@issue) }
-      it { should respond_with(:success) }
-      it { should respond_with_content_type(:html) }
-    end
-
     describe "GET to edit" do
       before do
         @issue = Factory(:issue, :account => @account)

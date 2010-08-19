@@ -70,7 +70,7 @@
 		<%= form.input :author_ids, :label => "Authors", :as => :string, :input_html => { :value => "" }, :wrapper_html => { :class => "grid_6 " } %>
 		<%= form.input :section_id, :as => :select, :collection => @account.categories.sections.all, :label => "Section", :wrapper_html => { :class => "grid_2" } %>
 		<%= form.input :summary, :as => :text, :input_html => { :rows => 2 }, :label => "Excerpt" %>
-		<%= form.input :bodytext, :label => "Bodytext <a id=\"bodytext_preview_link\" href=\"#bodytext_preview\" style=\"float:right\">Preview formatting</a>" %>
+		<%= form.input :bodytext, :label => "Bodytext <a id=\"bodytext_preview_link\" href=\"#bodytext_preview\" style=\"float:right\">Preview formatting</a>".html_safe %>
 	<% end %>
 	
 	<div class="toolbox grid_4">

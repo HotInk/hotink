@@ -56,6 +56,7 @@ describe Document do
     it { should have_many(:waxings).dependent(:destroy) }
     it { should have_many(:mediafiles).through(:waxings) }
     it { should have_many(:images).through(:waxings) }
+    it { should have_many(:audiofiles).through(:waxings) }
   
     it "should find the waxing that attaches a mediafile" do
       document = Factory(:document)

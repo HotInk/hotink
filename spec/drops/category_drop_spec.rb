@@ -38,10 +38,25 @@ describe CategoryDrop do
     end
   end
   
-  it "should return the categories articles" do
-    @articles = (1..4).collect{ |n| Factory(:published_article, :title => "Article #{n}", :published_at => n.days.ago, :categories => [@category]) }
+  describe "articles" do
+    it "should know whether the category has any attached articles" do
+      category = Factory(:category)
+      category_with_some_articles = Factory(:category, :articles => (1..3).collect{ Factory(:published_article) } )
+      
+      template = Liquid::Template.parse( ' {% if category.has_articles? %} YES {% else %} NO {% endif %} ')
+
+      output = template.render('category' => CategoryDrop.new(category))
+      output.should eql("  NO  ")
+
+      output = template.render('category' => CategoryDrop.new(category_with_some_articles))
+      output.should eql("  YES  ")
+    end
+  
+    it "should return the categories articles" do
+      @articles = (1..4).collect{ |n| Factory(:published_article, :title => "Article #{n}", :published_at => n.days.ago, :categories => [@category]) }
     
-    output = Liquid::Template.parse( ' {% for article in category.articles %} {{ article.title }} {% endfor %} '  ).render('category' => CategoryDrop.new(@category))
-    output.should == "  #{ @articles.collect{ |a| a.title }.join('  ') }  "
+      output = Liquid::Template.parse( ' {% for article in category.articles %} {{ article.title }} {% endfor %} '  ).render('category' => CategoryDrop.new(@category))
+      output.should == "  #{ @articles.collect{ |a| a.title }.join('  ') }  "
+    end
   end
 end

@@ -15,9 +15,18 @@ class CategoryDrop < Drop
     end
     subcategories
   end
-  
+    
   def articles
     category.articles.published.find(:all, :order => "published_at desc", :limit => 20).collect{ |a| ArticleDrop.new(a)  }
   end
+  
+  def has_articles?
+    if category.articles.published.detect{|i| i }
+      return true
+    else
+      return false
+    end
+  end
+  
   
 end

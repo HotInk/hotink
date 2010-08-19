@@ -13,6 +13,7 @@ class Document < ActiveRecord::Base
   has_many :waxings, :dependent => :destroy
   has_many :mediafiles, :through => :waxings
   has_many :images, :through => :waxings, :source=>'mediafile', :conditions => { :type => 'Image'}
+  has_many :audiofiles, :through => :waxings, :source=>'mediafile', :conditions => { :type => 'Audiofile'}
   
   def waxing_for(mediafile)
     waxings.find_by_mediafile_id(mediafile.id)
@@ -220,6 +221,8 @@ class Document < ActiveRecord::Base
   def has_attached_media?
     self.mediafiles ? true : false
   end
+  
+  
   
   #Comments
   has_many :comments, :dependent => :destroy
