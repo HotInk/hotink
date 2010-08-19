@@ -17,8 +17,11 @@
 			<% end %>
 
 			
-			<% if permit?("(manager of account)") || permit?("admin") %>
+			<% if permit?("(manager of account) or (editor of account) or admin")%>
 				<% if @account.network_owner? %><li style="float:right;" <%= 'class="current"' if (controller_name=="networks") %>><%= link_to "Network", network_url %></li><% end %>
+			<% end %>
+		
+			<% if permit?("(manager of account) or admin")%>
 				<li style="float:right;" <%= 'class="current"' if (controller_name=="designs"||controller_name=="templates"||controller_name=="template_files") %>><%= link_to "Design", current_design_url %></li>
 			<% end %>
 		</ol>

@@ -1,6 +1,6 @@
 class NetworksController < ApplicationController
   
-  permit "manager of account or admin"
+  permit "(manager of account) or (editor of account) or admin"
   
   layout 'hotink'
   
