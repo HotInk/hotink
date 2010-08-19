@@ -33,13 +33,13 @@ above 50MB per file.
 
 ## Running Hot Ink
 
-You can set up Hot Ink, for development using the following instructions.
+You can set up Hot Ink for development using the following instructions.
 
 First, clone the respository. From the command line, run:
 
     git clone http://github.com/HotInk/hotink.git
 
-Be sure that both Rubygems and Bundler are properly installed. In the project's directory, run:
+Be sure that both Rubygems and [Bundler](http://gembundler.com) are properly installed. In the project's directory, run:
 
     bundle install
 
@@ -51,20 +51,24 @@ Then, to start the development server:
 
 	script/server
 
-If the server starts successfully, when you visit /admin you should be redirected to a log in screen. Now you're ready to set up your first Hot Ink account. Accounts are created using invitations. When an invitation is created an email is sent to the supplied address. Normally, you'll use Hot Ink's account invitation interface to handle sending invitations. But for your first account, you'll have to set things up manually.
+If the server starts successfully, when you visit /admin you should be redirected to a log in screen. 
+
+###Creating your first account
+
+If you see a log in screen, you're ready to set up your first Hot Ink account. Accounts are created using invitations. When an invitation is created an email is sent to the supplied address. Normally, you'll use Hot Ink's account invitation interface to handle sending invitations. However, for your first account, you'll have to set things up manually.
 
 Access the console (using `script/console`) and create an account invitation for yourself:
 
 	>> AccountInvitation.create(:email => "chris@hotink.net")
 	=> #<AccountInvitation id: 1, email: "chris@hotink.net", redeemed: false, user_id: nil, account_id: nil, type: "AccountInvitation", token: "5ddf1eb40cec22380f28c8941ebb51813ea042be", created_at: "2010-08-01 20:27:15", updated_at: "2010-08-01 20:27:15">
 
-Your output may not look exactly like above, but as long as the token field is set your invitation is ready to be used. In your browser,  visit your app with the path '/admin/account_invitations/YOUR_INVITATION_TOKEN/edit'. Fill out your user and account details, making note of the account name you choose.
+Your output may not look exactly like above, but as long as the token field is set your invitation is ready to be used. In your browser,  visit your app with the path '/admin/account_invitations/YOUR_INVITATION_TOKEN/edit'. In the above example, the invitation token is `5ddf1eb40cec22380f28c8941ebb51813ea042be`. Fill out your user and account details, making note of the account name you choose.
 
-Hot Ink identifies the current account using the account name as a subdomain. In order to use subdomains in production, you'll need to make a quick edit to your hosts file. You should add the following line after the first entry and save the file:
+Hot Ink identifies the current account using the account name as a subdomain. In order to use subdomains in production, you'll need to make a quick edit to your hosts file. You can likely find it in `/etc/hosts`. You should add the following line after the first entry and save the file:
 
     127.0.0.1   your-account-name.localhost
 
-Now you're able to surf to http://your-account-name.localhost/admin to log in and access your first account.
+Don't forget to replace `your-account-name` with the name you selected when accepting your invitation. Once the hosts file is updated, you will be able to surf to http://your-account-name.localhost/admin to log in and access your first account.
 
 But you aren't done yet. Lastly, you'll want to give yourself admin-level access to the system. To do that, access the console (using `script/console`), find your user and manually promote yourself to admin, like so:
 
@@ -78,6 +82,10 @@ Congratulations, you're now the administrator of a new installation of Hot Ink. 
 To run the Hot Ink RSpec test suite, configure the test database in database.yml and run `rake db:test:prepare`. Next run 'spec spec', the test suite should complete successfully.
 
 Hot Ink is Autotest friendly. To use it, run `bundle exec autospec`.
+
+##Bugs and Issues
+
+If you come across any bugs, issues or missing features, please [file an issue](http://github.com/HotInk/hotink/issues).
 
 ## Note on Patches/Pull Requests
  
