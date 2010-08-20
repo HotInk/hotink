@@ -2,7 +2,7 @@
 
 **Hot Ink** is a multi-account content management application built by [Canadian University Press](http://www.cup.ca) 
 and [Campus Plus](http://www.campusplus.com) to help small publishers organize content for online publication. It provides 
-a management interface for the upload and storage and indexing of articles, images, audiofiles, blogs, and print issue PDF files. Hot Ink supplies a full site design management system, allowing each account's stored content to be displayed to users as a complete news-publication website.
+a management interface for the upload, storage and indexing of articles, images, audiofiles, blogs, and print issue PDF files. Hot Ink supplies a full site design management system, allowing each account's stored content to be displayed to users as a complete news-publication website.
 
 It also publishes a public XML API (with JSON support coming soon) that can be used by client applications to publish or distribute archived content.
 

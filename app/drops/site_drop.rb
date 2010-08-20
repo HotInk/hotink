@@ -1,7 +1,15 @@
 class SiteDrop < Drop
   
   alias_method :account, :source # for readability
-
+  
+  def blogs_url
+    if @context.registers[:design].current_design?
+      "#{account.site_url}/blogs"
+    else
+      "#{account.site_url}/blogs?design_id=#{@context.registers[:design].id}"
+    end
+  end
+  
   def front_page_url
     if @context.registers[:design].current_design?
       "#{account.site_url}/"
@@ -10,12 +18,8 @@ class SiteDrop < Drop
     end
   end
   
-  def blogs_url
-    if @context.registers[:design].current_design?
-      "#{account.site_url}/blogs"
-    else
-      "#{account.site_url}/blogs?design_id=#{@context.registers[:design].id}"
-    end
+  def feed_url
+    "#{account.site_url}/feed.xml"
   end
   
   def issues_url

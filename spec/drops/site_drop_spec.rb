@@ -16,16 +16,21 @@ describe SiteDrop do
         @design.make_current
       end
       
-      it "should return front page url" do
-        output = Liquid::Template.parse( '  {{ site.front_page_url }}  '  ).render({'site' => SiteDrop.new(@account)}, :registers => { :design => @design })
-        output.should == "  #{@account.site_url}/  "
-      end
-    
       it "should return blogs url" do
         output = Liquid::Template.parse( '  {{ site.blogs_url }}  '  ).render({'site' => SiteDrop.new(@account)}, :registers => { :design => @design })
         output.should == "  #{@account.site_url}/blogs  "
       end
       
+      it "should return feed url" do
+        output = Liquid::Template.parse( '  {{ site.feed_url }}  '  ).render({'site' => SiteDrop.new(@account)})
+        output.should == "  #{@account.site_url}/feed.xml  "
+      end
+
+      it "should return front page url" do
+        output = Liquid::Template.parse( '  {{ site.front_page_url }}  '  ).render({'site' => SiteDrop.new(@account)}, :registers => { :design => @design })
+        output.should == "  #{@account.site_url}/  "
+      end
+
       it "should return issues url" do
         output = Liquid::Template.parse( '  {{ site.issues_url }}  '  ).render({'site' => SiteDrop.new(@account)}, :registers => { :design => @design })
         output.should == "  #{@account.site_url}/issues  "
@@ -37,15 +42,15 @@ describe SiteDrop do
       end
     end
     
-    context "when viewing alternate design" do
-      it "should return front page url" do
-        output = Liquid::Template.parse( '  {{ site.front_page_url }}  '  ).render({'site' => SiteDrop.new(@account)}, :registers => { :design => @design })
-        output.should == "  #{@account.site_url}/?design_id=#{@design.id}  "
-      end
-    
+    context "when viewing alternate design" do  
       it "should return blogs url" do
         output = Liquid::Template.parse( '  {{ site.blogs_url }}  '  ).render({'site' => SiteDrop.new(@account)}, :registers => { :design => @design })
         output.should == "  #{@account.site_url}/blogs?design_id=#{@design.id}  "
+      end
+      
+      it "should return front page url" do
+        output = Liquid::Template.parse( '  {{ site.front_page_url }}  '  ).render({'site' => SiteDrop.new(@account)}, :registers => { :design => @design })
+        output.should == "  #{@account.site_url}/?design_id=#{@design.id}  "
       end
       
       it "should return issues url" do
