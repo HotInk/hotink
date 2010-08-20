@@ -48,6 +48,14 @@ describe TemplateFilesController do
       it { should assign_to(:template_file).with_kind_of(TemplateFile) }
       it { should respond_with(:redirect) }
     end
+
+    describe "with no file" do
+      before do
+        post :create, :design_id => @design.id
+      end
+      
+      it { should respond_with(:redirect) }
+    end
   end
 
   describe "GET edit" do

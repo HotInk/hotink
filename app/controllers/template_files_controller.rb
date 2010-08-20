@@ -11,31 +11,34 @@ class TemplateFilesController < ApplicationController
   def create
      @design = @account.designs.find(params[:design_id])
 
-     @template_file = @design.template_files.build(params[:template_file])
-     case @template_file.file_name.split('.')[-1]
-     when 'js', 'htc'
-       @template_file = JavascriptFile.new(@template_file.attributes)
-     when 'css'
-       @template_file = Stylesheet.new(@template_file.attributes) 
+     if params[:template_file] && params[:template_file][:file].kind_of?(File)
+       @template_file = @design.template_files.build(params[:template_file])
+       case @template_file.file_name.split('.')[-1]
+       when 'js', 'htc'
+         @template_file = JavascriptFile.new(@template_file.attributes)
+       when 'css'
+         @template_file = Stylesheet.new(@template_file.attributes) 
+       end
+       @template_file.file = params[:template_file][:file]
+       @template_file.save
      end
-     @template_file.file = params[:template_file][:file]
-     @template_file.save
+       
      redirect_to @design    
-   end
+  end
    
-   def edit
-     @design = @account.designs.find(params[:design_id])
-     @template_file = @design.template_files.find(params[:id])
+  def edit
+   @design = @account.designs.find(params[:design_id])
+   @template_file = @design.template_files.find(params[:id])
 
-     if @template_file.is_a?(Stylesheet)||@template_file.is_a?(JavascriptFile)
-       @file_contents = File.read(@template_file.file.path)
-     else
-       flash[:notice] = "You can only edit stylesheets and javascript files. To edit another file type, follow the replace link next to the filename."
-       redirect_to @design
-       return
-     end
+   if @template_file.is_a?(Stylesheet)||@template_file.is_a?(JavascriptFile)
+     @file_contents = File.read(@template_file.file.path)
+   else
+     flash[:notice] = "You can only edit stylesheets and javascript files. To edit another file type, follow the replace link next to the filename."
+     redirect_to @design
+     return
    end
-  
+  end
+
    def update
      @design = @account.designs.find(params[:design_id])
      @template_file = @design.template_files.find(params[:id])  
