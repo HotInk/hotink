@@ -25,6 +25,12 @@ describe CategoryDrop do
     output.should == " #{@category.path } "
   end
   
+  it "should return parent category" do
+    subcategory = Factory(:category, :parent => @account)
+    output = Liquid::Template.parse( ' {{ category.parent.name }} '  ).render('category' => CategoryDrop.new(subcategory))
+    output.should == " #{@category.name } "
+  end
+  
   describe "subcategories" do
     before do
       @child1 = Factory(:category)

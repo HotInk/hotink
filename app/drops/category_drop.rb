@@ -20,6 +20,12 @@ class CategoryDrop < Drop
     subcategories
   end
     
+  def parent
+    if parent = category.parent?
+      CategoryDrop.new(categroy.parent)
+    end
+  end  
+  
   def articles
     category.articles.published.find(:all, :order => "published_at desc", :limit => 20).collect{ |a| ArticleDrop.new(a)  }
   end
