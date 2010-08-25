@@ -177,7 +177,7 @@ class Account < ActiveRecord::Base
       copy.update_attributes(:account => self, :section => nil)
     
       copy.authors = article.authors
-      copy.tags = article.tags
+      copy.tag_list = article.tag_list
       article.mediafiles.each do |m| 
         mediafile_copy = m.photocopy(self)
         copy.mediafiles << mediafile_copy 

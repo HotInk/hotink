@@ -5,7 +5,7 @@ describe Account do
     @account = Account.create!(Factory.attributes_for(:account))
   end
   
-  it { should validate_presence_of(:time_zone).with_message(/must indicate its preferred time zone/) }
+  it { should validate_presence_of(:time_zone).with_message(/must indicate preferred time zone/) }
   
   it { should validate_presence_of(:name).with_message(/must have a name/) }
   it { should validate_uniqueness_of(:name).with_message(/must be unique/) }
@@ -96,7 +96,7 @@ describe Account do
   
   it { should have_many(:designs) }
   
-  it "should keep track of whcih design is currently being shown to users" do
+  it "should keep track of which design is currently being shown to users" do
     @account.current_design.should be_nil
     @design = Factory(:design, :account => @account)
     @account.current_design = @design
@@ -133,33 +133,7 @@ describe Account do
     end
     
     describe "articles" do
-      it "should know if it has a network copy of a given article" do
-        article = Factory(:published_article)
-        @account.should_not have_network_copy_of(article)
-        
-        membership = Factory(:membership, :account => article.account, :network_owner => @account)
-        @account.make_network_copy(article)
-        @account.should have_network_copy_of(article)
-      end
-      
-      it "should find network copies of a given article" do
-        article = Factory(:published_article)
-        membership = Factory(:membership, :account => article.account, :network_owner => @account)
-        @account.find_network_copy_of(article).should be_nil
-        
-        article_copy = @account.make_network_copy(article)
-        @account.find_network_copy_of(article).should eql(article_copy)
-      end
-      
-      it "should know if it is a network owner" do
-        @account.should_not be_network_owner
-        
-        Factory(:membership, :network_owner => @account)
-        
-        @account.should be_network_owner
-      end
-      
-      describe "making a copy" do
+       describe "making a copy" do
         context "as network owner" do
           before do
             @membership = Factory(:membership, :network_owner => @account)
@@ -169,11 +143,12 @@ describe Account do
             article = Factory(:published_article, 
                               :title => "This is a test article",
                               :account => @membership.account )
+            article.tag_list = "Tag 1, Tag 2"
             article.mediafiles = (1..2).collect{ Factory(:mediafile, :account => @membership.account)}
             article.mediafiles.each do |mediafile| 
               article.waxing_for(mediafile).update_attribute(:caption, "This caption is for #{mediafile.file.url(:original)}.")
             end
-            
+
             network_copy = @account.make_network_copy(article)
 
             network_copy.should_not be_new_record
@@ -186,8 +161,9 @@ describe Account do
             network_copy.waxings.first.caption.should == article.waxings.first.caption
             network_copy.account.should == @account
             network_copy.title.should == article.title
+            network_copy.tag_list.should == article.tag_list
           end
-          
+
           it "should record user checking out, if provided" do
             user = Factory(:user)
             user.has_role("staff", @account)
@@ -224,6 +200,31 @@ describe Account do
           end
         end
       end
+      it "should know if it has a network copy of a given article" do
+        article = Factory(:published_article)
+        @account.should_not have_network_copy_of(article)
+        
+        membership = Factory(:membership, :account => article.account, :network_owner => @account)
+        @account.make_network_copy(article)
+        @account.should have_network_copy_of(article)
+      end
+      
+      it "should find network copies of a given article" do
+        article = Factory(:published_article)
+        membership = Factory(:membership, :account => article.account, :network_owner => @account)
+        @account.find_network_copy_of(article).should be_nil
+        
+        article_copy = @account.make_network_copy(article)
+        @account.find_network_copy_of(article).should eql(article_copy)
+      end
+      
+      it "should know if it is a network owner" do
+        @account.should_not be_network_owner
+        
+        Factory(:membership, :network_owner => @account)
+        
+        @account.should be_network_owner
+      end      
     end
   end
   
