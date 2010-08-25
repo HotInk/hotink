@@ -72,6 +72,8 @@ Rails::Initializer.run do |config|
     :key => '_hotink_session',
     :secret      => '22c45fa11a301f15f2b366a8f5dabc05c7a3f8bbc0e3bcb437a22527ddbfeeada8586bffa9b5bb1ab04510bea59977c5d9e5f5a234705d4d2f9db28d1cdeb8fd'
   }
+  
+  config.gem "hoptoad_notifier"
 
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
