@@ -1,6 +1,6 @@
 <h1 class="grid_12 alpha">Edit design</h1>
 <div class="grid_6 alpha">
-<% semantic_form_for([@account, @design]) do |form| %>
+<% semantic_form_for(@design) do |form| %>
 	<% form.inputs do %>
 		<%= form.input :name %>
 		<%= form.input :description, :input_html => { :rows => 5 } %>
