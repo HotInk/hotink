@@ -29,6 +29,8 @@ gem "daemons"
 gem "thinking-sphinx"
 gem "ts-delayed-delta"
 
+gem "hoptoad_notifier"
+
 # Gems for Mailout
 gem 'hominid'
 gem 'liquid'
