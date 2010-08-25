@@ -21,13 +21,13 @@ class CategoryDrop < Drop
   end
     
   def parent
-    if parent = category.parent?
-      CategoryDrop.new(categroy.parent)
+    if parent = category.parent
+      CategoryDrop.new(category.parent)
     end
   end  
   
   def articles
-    category.articles.published.find(:all, :order => "published_at desc", :limit => 20).collect{ |a| ArticleDrop.new(a)  }
+    category.articles.published.paginate(:page => @context.registers[:page] || 1, :per_page => @context.registers[:per_page] || 20, :order => "published_at desc").collect{ |a| ArticleDrop.new(a)  }
   end
   
   def has_articles?

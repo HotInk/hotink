@@ -26,7 +26,7 @@ describe CategoryDrop do
   end
   
   it "should return parent category" do
-    subcategory = Factory(:category, :parent => @account)
+    subcategory = Factory(:category, :parent => @category)
     output = Liquid::Template.parse( ' {{ category.parent.name }} '  ).render('category' => CategoryDrop.new(subcategory))
     output.should == " #{@category.name } "
   end
@@ -68,6 +68,28 @@ describe CategoryDrop do
     
       output = Liquid::Template.parse( ' {% for article in category.articles %} {{ article.title }} {% endfor %} '  ).render('category' => CategoryDrop.new(@category))
       output.should == "  #{ @articles.collect{ |a| a.title }.join('  ') }  "
+    end
+    
+    describe "article pagination" do
+      before do
+        @drafts = (1..3).collect { |n|  Factory(:draft_article, :categories => [@category]) }
+        @articles = (1..22).collect { |n|  Factory(:published_article, :categories => [@category],  :published_at => 10.weeks.ago + n.days, :title => "Article ##{n}") }
+      end
+      
+      it "should return 20 entries on first page by default" do
+        output = Liquid::Template.parse( ' {% for article in category.articles %} {{ article.title }} {% endfor %} '  ).render('category' => CategoryDrop.new(@category))
+        output.should == "  #{ @articles.reverse[0...20].collect{ |i| i.title }.join('  ') }  "
+      end
+
+      it "should return page 2" do
+        output = Liquid::Template.parse( ' {% for article in category.articles %} {{ article.title }} {% endfor %} '  ).render({'category' => CategoryDrop.new(@category)}, :registers => { :page => 2 } )
+        output.should == "  #{ @articles.reverse[20..21].collect{ |i| i.title }.join('  ') }  "
+      end
+
+      it "should return 10 entries per page" do
+        output = Liquid::Template.parse( ' {% for article in category.articles %} {{ article.title }} {% endfor %} '  ).render({'category' => CategoryDrop.new(@category)}, :registers => { :per_page => 10 } )
+        output.should == "  #{ @articles.reverse[0...10].collect{ |i| i.title }.join('  ') }  "
+      end
     end
   end
 end
