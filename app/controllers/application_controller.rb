@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
   
   # Load this account's time zone.
   def load_time_zone
-    Time.zone = @account.time_zone
+    Time.zone = @account.time_zone if @account
   end
   
   # Determines which design to render, either the current design or one passed in as <tt>params[:design_id]</tt> 
