@@ -25,7 +25,7 @@ describe PaginationFilters do
       
       context "with more than enough total entries to paginate" do
         before do
-          @context = { :design => @design, :total_entries => 21  }
+          @context = { :design => @design, :total_entries => "21"  }
           @link_text = "Next"
         end
         
@@ -90,7 +90,7 @@ describe PaginationFilters do
 
    	  context "with enough entries to paginate" do
      	  before do
-     	    @context = { :design => @design, :total_entries => 21 }
+     	    @context = { :design => @design, :total_entries => "21" }
      	    @link_text = "Previous"
      	  end
 
@@ -115,7 +115,7 @@ describe PaginationFilters do
      	
      	context "when the user requests fewer entries per page" do
         before do
-          @context = { :design => @design, :page => 2, :per_page => 5, :total_entries => 7  }
+          @context = { :design => @design, :page => "2", :per_page => "5", :total_entries => "7"  }
           @link_text = "Previous"
         end
         

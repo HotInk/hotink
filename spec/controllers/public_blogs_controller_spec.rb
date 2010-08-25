@@ -29,7 +29,7 @@ describe PublicBlogsController do
           @blog_drop = BlogDrop.new(@blog)
           BlogDrop.stub!(:new).and_return(@blog_drop)
 
-          @template.should_receive(:render).with({ 'blog' => @blog_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
+          @template.should_receive(:render)
 
           get :show, :id => @blog.slug
         end

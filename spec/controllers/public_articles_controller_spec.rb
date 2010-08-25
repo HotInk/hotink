@@ -27,8 +27,8 @@ describe PublicArticlesController do
             @article = Factory(:published_article, :account => @account)
             @article_drop = ArticleDrop.new(@article)
             ArticleDrop.stub!(:new).and_return(@article_drop)
-            @template.should_receive(:render).with({ 'article' => @article_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design, :form_authenticity_token => controller.send(:form_authenticity_token) } )
-
+            @template.should_receive(:render)
+            
             get :show, :account_id => @account.id, :id => @article.id
           end
           
@@ -50,7 +50,7 @@ describe PublicArticlesController do
 
               @article_drop = ArticleDrop.new(@article)
               ArticleDrop.stub!(:new).and_return(@article_drop)
-              @template.should_receive(:render).with({ 'article' => @article_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design, :form_authenticity_token => controller.send(:form_authenticity_token) } )
+              @template.should_receive(:render)
 
               get :show, :account_id => @account.id, :id => @article.id
             end

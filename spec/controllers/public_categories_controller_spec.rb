@@ -28,8 +28,8 @@ describe PublicCategoriesController do
             @category_drop = CategoryDrop.new(@category)
             CategoryDrop.stub!(:new).and_return(@category_drop)
 
-            @template.should_receive(:render).with({ 'category' => @category_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
-
+            @template.should_receive(:render)
+            
             get :show, :account_id => @account.id, :id => @category.slug
           end
 
@@ -43,7 +43,7 @@ describe PublicCategoriesController do
             @category = Factory(:category, :parent => Factory(:category, :account => @account), :account => @account)
             @category_drop = CategoryDrop.new(@category)
             CategoryDrop.stub!(:new).and_return(@category_drop)
-            @template.should_receive(:render).with({ 'category' => @category_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
+            @template.should_receive(:render)
 
             get :show, :account_id => @account.id, :id => "#{@category.parent.slug}/#{@category.slug}"
           end

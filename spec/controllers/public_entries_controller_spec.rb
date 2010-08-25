@@ -28,7 +28,7 @@ describe PublicEntriesController do
               @entry_drop = EntryDrop.new(@entry)
               EntryDrop.stub!(:new).and_return(@entry_drop)
 
-              @template.should_receive(:render).with({ 'entry' => @entry_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
+              @template.should_receive(:render)
               get :show, :blog_slug => @entry.blog.slug, :id => @entry.id
             end
 
@@ -66,8 +66,8 @@ describe PublicEntriesController do
 
               @entry_drop = EntryDrop.new(@entry)
               EntryDrop.stub!(:new).and_return(@entry_drop)          
-              @template.should_receive(:render).with({ 'entry' => @entry_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
-
+              @template.should_receive(:render)
+              
               get :show, :blog_slug => @entry.blog.slug, :id => @entry.id
             end
 

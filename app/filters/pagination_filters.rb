@@ -3,17 +3,17 @@ module PaginationFilters
   DEFAULT_PER_PAGE = 20
 
   def next_page_link(text="Next &raquo;")
-   page = @context.registers[:page] || DEFAULT_PAGE
-   per_page = @context.registers[:per_page] || DEFAULT_PER_PAGE
-   total_entries = @context.registers[:total_entries] || 0
+   page = (@context.registers[:page] || DEFAULT_PAGE).to_i
+   per_page = (@context.registers[:per_page] || DEFAULT_PER_PAGE).to_i
+   total_entries = (@context.registers[:total_entries] || 0).to_i
 
    build_link_tag next_page_params(page, per_page, total_entries), text
   end
   
   def previous_page_link(text="&laquo; Previous")
-    page = @context.registers[:page] || DEFAULT_PAGE
-    per_page = @context.registers[:per_page] || DEFAULT_PER_PAGE
-    total_entries = @context.registers[:total_entries] || 0
+    page = (@context.registers[:page] || DEFAULT_PAGE).to_i
+    per_page = (@context.registers[:per_page] || DEFAULT_PER_PAGE).to_i
+    total_entries = (@context.registers[:total_entries] || 0).to_i
     
 
     build_link_tag previous_page_params(page, per_page, total_entries), text

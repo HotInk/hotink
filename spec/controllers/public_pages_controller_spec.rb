@@ -28,7 +28,7 @@ describe PublicPagesController do
               @page_drop = PageDrop.new(@page)
               PageDrop.stub!(:new).and_return(@page_drop)
 
-              @template.should_receive(:render).with({ 'page' => @page_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
+              @template.should_receive(:render)
 
               get :show, :account_id => @account.id, :id => @page.name
             end
@@ -43,7 +43,7 @@ describe PublicPagesController do
               @page = Factory(:page, :parent => Factory(:page, :account => @account), :account => @account )
               @page_drop = PageDrop.new(@page)
               PageDrop.stub!(:new).and_return(@page_drop)
-              @template.should_receive(:render).with({ 'page' => @page_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
+              @template.should_receive(:render)
 
               get :show, :account_id => @account.id, :id => "#{@page.parent.name}/#{@page.name}"
             end

@@ -30,8 +30,7 @@ describe PublicIssuesController do
            @issue_drop = IssueDrop.new(@blog)
            IssueDrop.stub!(:new).and_return(@issue_drop)
 
-           @template.should_receive(:render).with({ 'issue' => @issue_drop, 'content' => @content_drop, 'site' => @site_drop }, :registers => { :design => @design } )
-
+           @template.should_receive(:render)
            get :show, :account_id => @account.id, :id => @issue.id
          end
 
