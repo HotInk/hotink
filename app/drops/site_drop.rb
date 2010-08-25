@@ -37,4 +37,12 @@ class SiteDrop < Drop
       "#{account.site_url}/search?design_id=#{@context.registers[:design].id}"
     end
   end
+  
+  def per_page
+    @context.registers[:per_page]
+  end
+  
+  def current_page
+    @context.registers[:page]
+  end
 end

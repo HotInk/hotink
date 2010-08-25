@@ -64,4 +64,16 @@ describe SiteDrop do
       end
     end
   end
+  
+  describe "pagination info" do
+    it "should return current page" do
+      output = Liquid::Template.parse( '  {{ site.current_page }}  '  ).render({'site' => SiteDrop.new(@account)}, :registers => { :design => @design, :page => 2 })
+      output.should == "  2  "
+    end
+    
+    it "should return per page" do
+      output = Liquid::Template.parse( '  {{ site.per_page }}  '  ).render({'site' => SiteDrop.new(@account)}, :registers => { :design => @design, :per_page => 10 })
+      output.should == "  10  "
+    end
+  end
 end
