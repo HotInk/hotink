@@ -9,4 +9,9 @@ describe EntryDrop do
     output = Liquid::Template.parse( ' {{ entry.blog.title }} '  ).render('entry' => EntryDrop.new(@entry))
     output.should == " #{@entry.blog.title} "
   end
+  
+  it "should return the entry's url" do
+    output = Liquid::Template.parse( ' {{ entry.url }} '  ).render('entry' => EntryDrop.new(@entry))
+    output.should == " /blogs/#{@entry.blog.slug}/#{@entry.id} "
+  end
 end

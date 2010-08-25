@@ -5,6 +5,11 @@ describe BlogDrop do
     @blog = Factory(:blog, :title => "Title", :description => "this is the **real** description.")
   end
   
+  it "should return the blog's url" do
+    output = Liquid::Template.parse( ' {{ blog.url }} '  ).render('blog' => BlogDrop.new(@blog))
+    output.should == " /blogs/#{@blog.slug} "
+  end
+  
   it "should make basic blog data available" do
     output = Liquid::Template.parse( ' {{ blog.id }} '  ).render('blog' => BlogDrop.new(@blog))
     output.should == " #{@blog.id} "

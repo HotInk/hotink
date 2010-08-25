@@ -4,4 +4,8 @@ class EntryDrop < ArticleDrop
   def blog
     BlogDrop.new(entry.blog)
   end
+  
+  def url
+    "/blogs/#{entry.blog.slug}/#{entry.id}"
+  end
 end

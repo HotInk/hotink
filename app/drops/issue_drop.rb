@@ -3,6 +3,10 @@ class IssueDrop < Drop
 
   liquid_attributes :id, :name, :date, :number, :volume, :description
 
+  def url
+    "/issues/#{issue.id}"
+  end
+
   def articles
     issue.articles.published.find(:all, :order => "published_at desc").collect{ |article| ArticleDrop.new(article) }
   end

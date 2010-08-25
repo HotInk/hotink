@@ -26,6 +26,11 @@ describe IssueDrop do
     output = Liquid::Template.parse( ' {{ issue.date | date:"%B %e %Y" }} '  ).render('issue' => IssueDrop.new(@issue))
     output.should == " #{@issue.date.to_time.strftime("%B %e %Y")} "
   end
+  
+  it "should return issue url" do
+    output = Liquid::Template.parse( ' {{ issue.url }} '  ).render('issue' => IssueDrop.new(@issue))
+    output.should == " /issues/#{@issue.id} "
+  end
 
   describe "articles" do
     it "should return this issues's published articles ordered with the most recently published first" do

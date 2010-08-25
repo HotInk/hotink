@@ -4,6 +4,10 @@ class BlogDrop < Drop
   
   alias_method :blog, :source # for readability
   
+  def url
+    "/blogs/#{blog.slug}"
+  end
+  
   def image_url
     blog.image.url(:small)
   end

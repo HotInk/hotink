@@ -5,6 +5,11 @@ describe CategoryDrop do
     @category = Factory(:category)
   end
   
+  it "should return the category's url" do
+    output = Liquid::Template.parse( ' {{ category.url }} '  ).render('category' => CategoryDrop.new(@category))
+    output.should == " /categories#{@category.path} "
+  end
+  
   it "should make name available" do
     output = Liquid::Template.parse( ' {{ category.name }} '  ).render('category' => CategoryDrop.new(@category))
     output.should == " #{@category.name } "

@@ -5,6 +5,22 @@ describe CommentDrop do
     @comment = Factory(:comment)
   end
   
+  describe "url" do
+    it "should return url for article comment" do
+      @comment.document = Factory(:published_article)
+      
+      output = Liquid::Template.parse( ' {{ comment.url }} '  ).render('comment' => CommentDrop.new(@comment))
+      output.should == " /articles/#{@comment.document.id}#comment-#{@comment.id} "
+    end
+    
+    it "should return url for blog entry comment" do
+      @comment.document = Factory(:published_entry)
+      
+      output = Liquid::Template.parse( ' {{ comment.url }} '  ).render('comment' => CommentDrop.new(@comment))
+      output.should == " /blogs/#{@comment.document.blog.slug}/#{@comment.document.id}#comment-#{@comment.id} "
+    end
+  end
+    
   it "should make basic data available" do
     output = Liquid::Template.parse( ' {{ comment.name }} '  ).render('comment' => CommentDrop.new(@comment))
     output.should == " #{@comment.name} "

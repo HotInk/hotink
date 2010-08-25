@@ -4,6 +4,10 @@ class CategoryDrop < Drop
   
   liquid_attributes :name, :slug, :path, :parent_id
   
+  def url
+    "/categories#{category.path}"
+  end
+  
   def subcategories
     category.children.collect{ |child| CategoryDrop.new(child) }
   end

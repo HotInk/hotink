@@ -7,17 +7,18 @@ describe ContentDrop do
   
   describe "categories" do
     before do
-      @categories = (1..2).collect{ Factory(:category, :account => @account) }
+      @active_categories = (1..2).collect{ Factory(:category, :account => @account) }
+      @inactive_categories = (1..2).collect{ Factory(:inactive_category, :account => @account) }
     end
     
-    it "should return categories" do
+    it "should return active categories" do
       output = Liquid::Template.parse( ' {% for category in content.categories %} {{ category.name }} {% endfor %} '  ).render('content' => ContentDrop.new(@account))
-      output.should == "  #{ @categories.collect{ |c| c.name }.join('  ') }  "
+      output.should == "  #{ @active_categories.collect{ |c| c.name }.join('  ') }  "
     end     
     
     it "should return a specific category by name" do
-      output = Liquid::Template.parse(" {{ content.category[\"#{@categories[0].name}\"].name }} ").render('content' => ContentDrop.new(@account))
-      output.should == " #{ @categories[0].name } "
+      output = Liquid::Template.parse(" {{ content.category[\"#{@active_categories[0].name}\"].name }} ").render('content' => ContentDrop.new(@account))
+      output.should == " #{ @active_categories[0].name } "
     end 
   end
   

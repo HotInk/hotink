@@ -6,4 +6,12 @@ class CommentDrop < Drop
   def date
     comment.created_at.to_datetime
   end
+  
+  def url
+    if comment.document.is_a? Entry
+      "/blogs/#{comment.document.blog.slug}/#{comment.document.id}#comment-#{comment.id}"
+    elsif comment.document.is_a? Article
+      "/articles/#{comment.document.id}#comment-#{comment.id}"
+    end
+  end
 end
