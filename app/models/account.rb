@@ -40,7 +40,7 @@ class Account < ActiveRecord::Base
   acts_as_authorizable
   acts_as_tagger
 
-  validates_presence_of :time_zone, :message => "Account must indicate its preferred time zone."
+  validates_presence_of :time_zone, :message => "must indicate preferred time zone."
   
   validates_presence_of :name, :message => "Account must have a name"
   validates_uniqueness_of :name, :message => "Account name must be unique"

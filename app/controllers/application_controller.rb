@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :login_url, :logout_url
   
   before_filter :find_account
+  before_filter :load_time_zone
   before_filter :login_required
 
 
@@ -97,6 +98,11 @@ class ApplicationController < ActionController::Base
       @blog = false
       @entry = false
     end
+  end
+  
+  # Load this account's time zone.
+  def load_time_zone
+    Time.zone = @account.time_zone
   end
   
   # Determines which design to render, either the current design or one passed in as <tt>params[:design_id]</tt> 
