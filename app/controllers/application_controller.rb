@@ -64,6 +64,7 @@ class ApplicationController < ActionController::Base
     else
       @account = Account.find_by_name(current_subdomain)
     end
+    raise ActiveRecord::RecordNotFound unless @account 
   end
   
   def find_article
