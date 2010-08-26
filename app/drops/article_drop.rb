@@ -4,7 +4,7 @@ class ArticleDrop < Drop
   
   alias_method :article, :source # for readability
 
-  liquid_attributes :id, :title, :bodytext, :word_count
+  liquid_attributes :id, :title, :bodytext, :word_count, :network_article?
    
   def url
     "/articles/#{article.id}"
@@ -183,6 +183,21 @@ class ArticleDrop < Drop
        return true
      else
        return false
+     end
+   end
+   
+   # Network
+   
+   def network_original
+     if original = article.network_original
+       original
+     end
+   end
+   
+   def network_original_url
+     if original = article.network_original
+       host = original.account.reload.site_url.blank? ? "http://#{original.account.name}.hotink.net" : original.account.site_url
+       "#{host}/articles/#{original.id}"
      end
    end
    

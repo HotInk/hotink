@@ -303,7 +303,7 @@ describe ArticleDrop do
       end
     end
   end
-  
+   
   describe "summary" do
     it "should return article summary, if present" do
       @article.summary = "This is the article summary"
@@ -394,6 +394,40 @@ describe ArticleDrop do
           output.should == " NO "
         end
       end
+    end
+  end
+
+  describe "network" do
+    before do
+      account = Factory(:account)
+      Factory(:membership, :network_owner => account, :account => @article.account)
+      @network_copy = account.make_network_copy(@article)
+    end
+    
+    it "should know if article is a network article" do
+      template = Liquid::Template.parse( ' {% if article.network_article? %} YES {% else %} NO {% endif %} ')
+
+      output = template.render('article' => ArticleDrop.new(@article))
+      output.should eql("  NO  ")
+
+      output = template.render('article' => ArticleDrop.new(@network_copy))
+      output.should eql("  YES  ")
+    end
+    
+    it "should return network original" do
+      output = Liquid::Template.parse( ' {{ article.network_original.id }} ').render('article' => ArticleDrop.new(@network_copy))
+      output.should eql(" #{@article.id} ")
+    end
+    
+    it "should return network original's url, including the domain name" do
+      output = Liquid::Template.parse( ' {{ article.network_original_url }} ').render('article' => ArticleDrop.new(@network_copy))
+      output.should eql(" http://#{@article.account.name}.hotink.net/articles/#{@article.id} ")
+            
+      @article.account.site_url = "http://testurl.com"
+      @article.account.save
+
+      output = Liquid::Template.parse(' {{ article.network_original_url }} ').render('article' => ArticleDrop.new(@network_copy))
+      output.should eql(" http://testurl.com/articles/#{@article.id} ")
     end
   end
 end

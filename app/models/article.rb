@@ -13,6 +13,10 @@ class Article < Document
     checkout.nil? ? nil : checkout.original_article
   end  
   
+  def network_article?
+    !checkout.nil?
+  end  
+  
   def to_liquid
     {'title' => title, 'subtitle' => subtitle, 'authors_list' => authors_list, 'bodytext' => bodytext, 'excerpt' => excerpt, 'id' => id.to_s}
   end

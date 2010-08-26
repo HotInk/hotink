@@ -170,5 +170,15 @@ describe Article do
       
       network_copy.network_original.should eql(@article)
     end
+    
+    it "should know if it's a network article" do
+      @article.network_article?.should be_false
+      
+      account = Factory(:account)
+      Factory(:membership, :network_owner => account, :account => @article.account)
+      network_copy = account.make_network_copy(@article)
+      
+      network_copy.network_article?.should be_true
+    end
   end
 end

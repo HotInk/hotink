@@ -11,7 +11,7 @@ class TemplateFilesController < ApplicationController
   def create
      @design = @account.designs.find(params[:design_id])
 
-     if params[:template_file] && params[:template_file][:file].kind_of?(File)
+     if params[:template_file] && params[:template_file][:file]
        @template_file = @design.template_files.build(params[:template_file])
        case @template_file.file_name.split('.')[-1]
        when 'js', 'htc'
@@ -21,7 +21,7 @@ class TemplateFilesController < ApplicationController
        end
        @template_file.file = params[:template_file][:file]
        @template_file.save
-     end
+     end     
        
      redirect_to @design    
   end
