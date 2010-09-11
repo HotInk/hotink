@@ -24,7 +24,7 @@ gem "formtastic"
 
 gem "ruby-mp3info", :require => "mp3info"
 
-gem "delayed_job"
+gem "delayed_job", "~>1.8"
 gem "daemons"
 gem "thinking-sphinx"
 gem "ts-delayed-delta"
