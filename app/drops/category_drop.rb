@@ -27,6 +27,7 @@ class CategoryDrop < Drop
   end  
   
   def articles
+    @context.registers[:total_entries] = category.articles.published.count
     category.articles.published.paginate(:page => @context.registers[:page] || 1, :per_page => @context.registers[:per_page] || 20, :order => "published_at desc").collect{ |a| ArticleDrop.new(a)  }
   end
   
