@@ -53,6 +53,21 @@ describe PublicEntriesController do
           it { should assign_to(:design).with(@design) }
         end
         
+        describe "when blog not found" do
+          before do
+            @entry = Factory(:published_entry, :account => @account)
+
+            template = mock('not found template')
+            @design.stub!(:not_found_template).and_return(template)
+            template.should_receive(:render)
+
+            get :show, :blog_slug => "aint-no-blog", :id => @entry.id
+          end
+
+          it { should respond_with(:not_found) }
+          it { should assign_to(:design).with(@design) }
+        end
+        
         describe "unpublished entry preview" do
           before do
             @entry = Factory(:entry, :account => @account)

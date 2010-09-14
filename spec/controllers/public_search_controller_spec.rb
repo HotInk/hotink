@@ -20,6 +20,7 @@ describe PublicSearchController do
       context "viewing with current design" do
         before do
           @template.should_receive(:render)
+          Article.should_receive(:search).and_return([])
           get :show, :account_id => @account.id, :q => "search test"
         end
 
@@ -37,6 +38,7 @@ describe PublicSearchController do
              @current_user = Factory(:user)
              @current_user.promote_to_admin
              controller.stub!(:current_user).and_return(@current_user)
+             Article.should_receive(:search).and_return([])
 
              get :show, :account_id => @account.id, :q => "search test", :design_id => @alternate_design.id
            end
@@ -47,7 +49,8 @@ describe PublicSearchController do
         context "as unqualified user" do
            before do
              @template.should_receive(:render)
-
+             Article.should_receive(:search).and_return([])
+             
              get :show, :account_id => @account.id, :q => "search test", :design_id => @alternate_design.id
            end
 

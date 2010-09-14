@@ -1,0 +1,120 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    actionmailer (2.3.8)
+      actionpack (= 2.3.8)
+    actionpack (2.3.8)
+      activesupport (= 2.3.8)
+      rack (~> 1.1.0)
+    activerecord (2.3.8)
+      activesupport (= 2.3.8)
+    activeresource (2.3.8)
+      activesupport (= 2.3.8)
+    activesupport (2.3.8)
+    acts-as-taggable-on (2.0.6)
+    addressable (2.2.1)
+    after_commit (1.0.8)
+      activerecord (< 3.0.0)
+    autotest (4.3.2)
+    autotest-notification (2.3.1)
+      autotest (~> 4.3)
+    bcrypt-ruby (2.1.2)
+    composite_primary_keys (2.3.5.1)
+      activerecord (>= 2.3.5)
+    daemons (1.1.0)
+    delayed_job (1.8.5)
+    factory_girl (1.3.2)
+    formtastic (1.1.0)
+      actionpack (>= 2.3.0)
+      activesupport (>= 2.3.0)
+      i18n (>= 0.4.0)
+    hominid (2.1.5)
+    hoptoad_notifier (2.3.6)
+      activesupport
+    i18n (0.4.1)
+    liquid (2.2.2)
+    mime-types (1.16)
+    mysql (2.8.1)
+    nokogiri (1.4.3.1)
+    pacecar (1.2.0)
+    paperclip (2.3.1)
+    rack (1.1.0)
+    rack-flash (0.1.1)
+      rack
+    rack-test (0.5.4)
+      rack (>= 1.0)
+    rails (2.3.8)
+      actionmailer (= 2.3.8)
+      actionpack (= 2.3.8)
+      activerecord (= 2.3.8)
+      activeresource (= 2.3.8)
+      activesupport (= 2.3.8)
+      rake (>= 0.8.3)
+    rake (0.8.7)
+    rdiscount (1.6.5)
+    riddle (1.1.0)
+    rspec (1.3.0)
+    rspec-rails (1.3.2)
+      rack (>= 1.0.0)
+      rspec (>= 1.3.0)
+    ruby-mp3info (0.6.13)
+    ruby-openid (2.1.8)
+    settingslogic (2.0.6)
+    shoulda (2.11.3)
+    sinatra (1.0)
+      rack (>= 1.0)
+    spork (0.8.4)
+    state_machine (0.9.4)
+    subdomain-fu (0.5.4)
+    thinking-sphinx (1.3.20)
+      activerecord (>= 1.15.6, < 3.0.0)
+      after_commit (>= 1.0.6)
+      riddle (>= 1.0.10)
+    timecop (0.3.5)
+    ts-delayed-delta (1.1.0)
+      delayed_job (>= 1.8.4)
+      thinking-sphinx (>= 1.3.6)
+    webrat (0.7.1)
+      nokogiri (>= 1.2.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  acts-as-taggable-on
+  addressable
+  autotest
+  autotest-notification
+  bcrypt-ruby
+  composite_primary_keys
+  daemons
+  delayed_job (~> 1.8)
+  factory_girl
+  formtastic
+  hominid (= 2.1.5)
+  hoptoad_notifier
+  liquid
+  mime-types
+  mysql
+  nokogiri
+  pacecar (= 1.2.0)
+  paperclip (= 2.3.1)
+  rack-flash
+  rails (= 2.3.8)
+  rdiscount
+  rspec
+  rspec-rails
+  ruby-mp3info
+  ruby-openid
+  settingslogic
+  shoulda
+  sinatra
+  spork
+  state_machine
+  subdomain-fu
+  thinking-sphinx
+  timecop
+  ts-delayed-delta
+  webrat

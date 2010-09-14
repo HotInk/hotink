@@ -1,6 +1,7 @@
 class AccountInvitationsController < ApplicationController
   
   skip_before_filter :login_required, :only => [:edit, :update]
+  skip_before_filter :find_account
   
   layout 'login'
   

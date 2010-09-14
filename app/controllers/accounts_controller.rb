@@ -51,7 +51,7 @@ class AccountsController < ApplicationController
 
   def show
     @account = Account.find(params[:id])    
-    redirect_to dashboard_url( @account )
+    redirect_to dashboard_url
   end
   
   # Loads the account management tabs

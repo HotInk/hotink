@@ -32,7 +32,7 @@ gem "ts-delayed-delta"
 gem "hoptoad_notifier"
 
 # Gems for Mailout
-gem 'hominid'
+gem 'hominid', '2.1.5'
 gem 'liquid'
 
 gem "rspec"

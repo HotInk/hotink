@@ -3,6 +3,9 @@ class PublicEntriesController < PublicController
   def show
     if @design = design_to_render
       @blog = @account.blogs.find(:first, :conditions => { :slug => params[:blog_slug] })
+      
+      raise ActiveRecord::RecordNotFound unless @blog
+      
       if current_user
         @entry = @blog.entries.find(params[:id])
       else
