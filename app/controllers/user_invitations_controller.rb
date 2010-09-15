@@ -19,7 +19,9 @@ class UserInvitationsController < ApplicationController
   
   def edit
     @invite = @account.user_invitations.find_by_token(params[:id])
- 
+    
+    raise ActiveRecord::RecordNotFound unless @invite
+    
     if @invite.redeemed?
       redirect_to login_url
     else
@@ -29,6 +31,9 @@ class UserInvitationsController < ApplicationController
   
   def update
      @invite = @account.user_invitations.find_by_token(params[:id])
+     
+     raise ActiveRecord::RecordNotFound unless @invite
+     
      if @invite.redeemed?
        redirect_to login_url
      else

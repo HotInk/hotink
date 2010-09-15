@@ -22,6 +22,9 @@ class AccountInvitationsController < ApplicationController
   
   def edit
     @invite = AccountInvitation.find_by_token(params[:id])
+    
+    raise ActiveRecord::RecordNotFound unless @invite
+    
     @account = Account.new
     if @invite.redeemed?
       redirect_to login_url
@@ -32,6 +35,9 @@ class AccountInvitationsController < ApplicationController
   
   def update
     @invite = AccountInvitation.find_by_token(params[:id])
+    
+    raise ActiveRecord::RecordNotFound unless @invite
+    
     if @invite.redeemed?
       redirect_to login_url
     else
