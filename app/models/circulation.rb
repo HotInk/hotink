@@ -15,7 +15,7 @@ class Circulation < ActionMailer::Base
     from          "Hot Ink Circulation Dept <circulation@hotink.net>"  
     recipients    invite.email  
     sent_on       Time.now  
-    body          :edit_invitation_url => edit_user_invitation_url(invite)  
+    body          :edit_invitation_url => edit_user_invitation_url(invite, :subdomain => account.name), :admin_url => admin_url(:subdomain => account.name)  
   end
   
   def account_invitation(invite)
