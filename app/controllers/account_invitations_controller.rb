@@ -46,7 +46,7 @@ class AccountInvitationsController < ApplicationController
         @user.has_role('staff', @account)
         @user.has_role('manager', @account)
         flash[:notice] = "Your account has been created! Please login to confirm your user credentials."
-        redirect_to account_url(@account)
+        redirect_to admin_url(:subdomain => @account.name)
       rescue ActiveRecord::RecordInvalid
         unless @user.new_record?
           @user.destroy
