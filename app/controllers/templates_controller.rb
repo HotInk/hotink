@@ -39,14 +39,12 @@ class TemplatesController < ApplicationController
        @tplate = @design.front_page_templates.build(params[:front_page_template])
      end
 
-     if @tplate.save
-       flash[:notice] = 'Template created'
-       redirect_to design_path(@design)
-     else
-       render :new
-     end
+     @tplate.save!
      
-   rescue Liquid::SyntaxError => e
+     flash[:notice] = 'Template created'
+     redirect_to design_path(@design)
+     
+   rescue Liquid::SyntaxError, ActiveRecord::RecordInvalid => e
      flash[:syntax_error] = "#{e.message}"
      render :action => "new"
    end
@@ -57,11 +55,11 @@ class TemplatesController < ApplicationController
      @design = @account.designs.find(params[:design_id])
          
      @tplate = @design.templates.find(params[:id])
-     @tplate.update_attributes(params[@tplate.class.name.underscore.to_sym])
+     @tplate.update_attributes!(params[@tplate.class.name.underscore.to_sym])
      flash[:notice] = 'Template updated'
      redirect_to design_url(@design) 
 
-   rescue Liquid::SyntaxError => e
+   rescue Liquid::SyntaxError, ActiveRecord::RecordInvalid => e
      flash[:syntax_error] = "#{e.message}"
      @tplate.code = params[@tplate.class.name.underscore.to_sym][:code]
      render :action => "edit"

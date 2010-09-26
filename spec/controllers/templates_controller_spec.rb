@@ -68,6 +68,12 @@ describe TemplatesController do
        should render_template(:new)
        should set_the_flash
     end
+    
+    it "should raise error for invalid template" do
+      post :create, :design_id => @design.id, :layout => Factory.attributes_for(:layout, :code => "Missing something")
+      should render_template(:new)
+      should set_the_flash
+    end
   end
   
   describe "PUT update" do
@@ -83,6 +89,13 @@ describe TemplatesController do
        put :update, :design_id => @design.id, :id => template.id, :article_template => { :code => "Bad code {% " }
        should render_template(:edit)
        should set_the_flash
+     end
+     
+     it "should raise error for invalid template" do
+       template = Factory(:layout, :design => @design)
+       put :update, :design_id => @design.id, :id => template.id, :layout => { :code => "Missing something" }
+       should set_the_flash
+       should render_template(:edit)
      end
    end
 
