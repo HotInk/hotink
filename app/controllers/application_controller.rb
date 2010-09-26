@@ -119,6 +119,10 @@ class ApplicationController < ActionController::Base
     unless current_user && authorized?
       store_location
       
+      if current_user && current_user.is_staff_for_what.first
+        redirect_to "http://#{current_user.is_staff_for_what.first.name}.hotink.net/admin" and return
+      end
+      
       respond_to do |format|
         format.xml  { head :unauthorized  }
         format.html do
