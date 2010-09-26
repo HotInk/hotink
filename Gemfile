@@ -35,6 +35,8 @@ gem "hoptoad_notifier"
 gem 'hominid', '2.1.5'
 gem 'liquid'
 
+gem 'daemons' # for delayed job runner
+
 gem "rspec"
 
 group :test do
