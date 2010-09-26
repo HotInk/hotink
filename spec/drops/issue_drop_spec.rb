@@ -44,4 +44,16 @@ describe IssueDrop do
       output.should == "  #{ articles.reverse.collect{ |a| a.title }.join('  ') }  "
     end
   end
+  
+  describe "categories" do
+    it "should return all the categories used in this issue" do
+      categories = (1..3).collect do |n|
+        category = Factory(:category, :account => @issue.account)
+        @issue.articles << Factory(:published_article, :categories => [category])
+        category
+      end
+      output = Liquid::Template.parse( ' {% for category in issue.categories %} {{ category.name }} {% endfor %} '  ).render('issue' => IssueDrop.new(@issue))
+      output.should == "  #{ categories.collect{ |c| c.name }.join('  ') }  "
+    end
+  end
 end

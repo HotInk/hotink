@@ -11,6 +11,14 @@ class IssueDrop < Drop
     issue.articles.published.find(:all, :order => "published_at desc").collect{ |article| ArticleDrop.new(article) }
   end
   
+  def categories
+    categories = []
+    issue.account.categories.each do |category|
+      categories << category if issue.articles.published.detect{|article| article.categories.include?(category) }
+    end
+    categories.collect{|category| CategoryDrop.new(category) }
+  end
+  
   def large_cover_image_url
     issue.pdf.url(:system_default)
   end
