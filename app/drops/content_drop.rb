@@ -62,7 +62,7 @@ class ContentDrop < Drop
   end
   
   def blogs
-    account.blogs.collect{ |blog| BlogDrop.new(blog) }
+    account.blogs.active.collect{ |blog| BlogDrop.new(blog) }
   end
   
   def blog

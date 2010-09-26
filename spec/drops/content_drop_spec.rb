@@ -127,7 +127,8 @@ describe ContentDrop do
   
   describe "blogs" do
     before do
-      @blogs = (1..2).collect{ |n|  Factory(:blog, :title => "Blog ##{n}", :account => @account) }
+      @blogs = (1..2).collect{ |n|  Factory(:blog, :title => "Active Blog ##{n}", :account => @account, :status => true) }
+      @inactive_blogs = (1..2).collect { Factory(:blog, :account => @account, :status => false) }
     end
 
     it "should return blogs" do
