@@ -176,7 +176,9 @@ class Account < ActiveRecord::Base
       copy.unpublish
       copy.update_attributes(:account => self, :section => nil)
     
-      copy.authors = article.authors
+      article.authors.each do |author|
+        copy.authors << authors.find_or_create_by_name(author.name)
+      end
       copy.tag_list = article.tag_list
       article.mediafiles.each do |m| 
         mediafile_copy = m.photocopy(self)

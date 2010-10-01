@@ -149,7 +149,7 @@ describe Account do
               article.waxing_for(mediafile).update_attribute(:caption, "This caption is for #{mediafile.file.url(:original)}.")
             end
 
-            network_copy = @account.make_network_copy(article)
+            network_copy = @membership.network_owner.make_network_copy(article)
 
             network_copy.should_not be_new_record
             network_copy.account.should == @account
@@ -162,6 +162,33 @@ describe Account do
             network_copy.account.should == @account
             network_copy.title.should == article.title
             network_copy.tag_list.should == article.tag_list
+          end
+
+          describe "authors" do
+            it "should pick up article authors from network member" do
+              authors = (1..3).collect{ Factory(:author, :account => @membership.account) }
+              article = Factory(:published_article, 
+                                :authors =>  authors,
+                                :account => @membership.account )
+                              
+              network_copy = @membership.network_owner.make_network_copy(article)
+              
+              network_copy.authors.should_not eql(authors)
+              network_copy.authors.each_with_index { |author, i| author.name.should eql(authors[i].name)   }
+            end
+            
+            it "should not create duplicates, if authors with those names already exist" do
+              source_authors = (1..3).collect{ Factory(:author, :account => @membership.account) }
+              network_authors = source_authors.collect{ |author| Factory(:author, :name => author.name, :account => @membership.network_owner) }
+              article = Factory(:published_article, 
+                                :authors =>  source_authors,
+                                :account => @membership.account )
+
+              network_copy = @membership.network_owner.make_network_copy(article)
+              
+              network_copy.authors.should_not eql(source_authors)
+              network_copy.authors.should eql(network_authors)
+            end
           end
 
           it "should record user checking out, if provided" do
