@@ -14,6 +14,7 @@ gem 'pacecar', '1.2.0'
 gem "paperclip", "2.3.1"
 gem "acts-as-taggable-on"
 gem 'rdiscount'
+gem "validates_timeliness"
 
 gem 'rack-flash'
 gem 'sinatra'
