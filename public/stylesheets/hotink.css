@@ -833,9 +833,13 @@ ol#network_articles p.account { padding: 2px 3px; height: 16px; overflow: hidden
 
 #footer_push { height: 30px; /* #footer_push must be the same height as #footer */  }
 #footer { width: 99%; height: 30px; padding-right: 1%;background-color: #222; text-align: right; border-right: 1px solid #DDD;}
-#footer p { margin: 0.7em 0; float: right;}
-
-
+#footer p {
+  margin: 0.7em 0;
+  float: right;
+  font-size: 1em;
+  color: #fff9e5;
+  font-weight: normal;
+}
 
 /* State control - Pill style state button */
 .state_control 				{ 	float: right; margin-top: 3px; font-size: 80%; font-weight: normal; }
