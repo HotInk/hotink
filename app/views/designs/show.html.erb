@@ -1,3 +1,4 @@
+<% content_for :title, "Design" %>
 <% if @design %>
 
 <h1><%= @design.name %></h1><p><%if @design.current_design? %><span style="color: green;">This is your current design</span> <%= link_to "New design", new_design_path, :class => "link green" %><% else %> <%= link_to "View site with this design", root_url(:design_id => @design.id), :target => :blank, :class => "link blue" %> <%end%> <%= link_to "Edit design details", edit_design_path(@design), :class => "link yellow" %> <%= link_to "View all designs &raquo", designs_path, :class => "link grey" %></p>

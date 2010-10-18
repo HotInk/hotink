@@ -1,4 +1,4 @@
-
+<% content_for :title, @blog.title %>
 <div class="grid_4 alpha suffix_8">
 		<h1 style="float:left; margin-right: 15px;"><%= @blog.title %></h1> <% if permit? "admin or contributor to blog or manager of account" %><%= link_to 'New entry', new_blog_entry_path(@blog), :class => "link green", :style => "float:left;margin-top:10px;" %><% end %>
 		

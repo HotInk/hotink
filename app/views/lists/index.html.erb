@@ -1,3 +1,4 @@
+<% content_for :title, "Lists" %>
 <h1>Lists</h1>
 <% if permit?("(manager of account)") || permit?("admin") %>
 	<p><%= link_to 'New list', new_list_path, :class => "link green" %></p>
