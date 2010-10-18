@@ -1,3 +1,11 @@
+// If console isn't defined, make dummy functions so non-Webkit browsers don't blow up if someone leaves a console.log around.
+if (typeof console == "undefined") {
+  console = new Object();
+  console.log = function() {};
+  console.info = function() {};
+  console.error = function() {};
+}
+
 $('ol#document_mediafiles .detach').live('ajax:success', function() { $(this).parent().fadeOut(); });	
 
 // Remote pagination
@@ -6,20 +14,48 @@ $('.pagination.remote a').live('click', function (e) {
     e.preventDefault();
 });
 
+function selectAll() {
+  $('ol.documents.selectable li').addClass('selected');
+  $('ol.documents.selectable .select input, .select_all').attr('checked', true);
+}
+
+function deselectAll() {
+  $('ol.documents.selectable li').removeClass('selected');
+  $('ol.documents.selectable .select input, .select_all').attr('checked', false);
+}
 
 //Runs once the page is loaded
 $(function(){
-	
-	// Document page list item select
-	$('.select_all').click(function(event){
-		if ($(event.currentTarget).attr('checked')) {
-			$('ol.documents.selectable li').addClass('selected');
-			$('ol.documents.selectable .select input, .select_all').attr('checked', true);
-		} else {
-			$('ol.documents.selectable li').removeClass('selected');
-			$('ol.documents.selectable .select input, .select_all').attr('checked', false);
-		}
-	});
+
+  // Select all button (with "Select all" text) handling
+  $("#article_select_all_button").click(function(event){
+    // This is incredibly ugly, but I have no idea how to work around it. Even with event.preventDefault, checkboxes seem to report their toggled state momentarily, hence the reversed handling. Works in Chrome + Firefox as of 10/10/18.
+    // Without this code, if they click on the actual checkbox in the button, nothing happens.
+    if (event.target.type == "checkbox") {
+      if (event.target.checked) {
+        selectAll();
+      } else {
+        deselectAll();
+      }
+    }
+    else {
+      if ($("#article_select_all_button").find(".select_all")[0].checked) {
+        deselectAll();
+      } else {
+        selectAll();
+      }
+    }
+  });
+  
+  $('.select_all').click(function(event){
+	  if ($(event.currentTarget).attr('checked')) {
+		  $('ol.documents.selectable li').addClass('selected');
+		  $('ol.documents.selectable .select input, .select_all').attr('checked', true);
+	  } else {
+		  $('ol.documents.selectable li').removeClass('selected');
+		  $('ol.documents.selectable .select input, .select_all').attr('checked', false);
+	  }
+  });
 	
 	$('ol.documents.selectable li').click(function(event){ 
 		if ($(event.currentTarget).hasClass('selected')) {

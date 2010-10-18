@@ -1,37 +1,49 @@
 <div id="articles" class="clearfix">
-	<h1>Articles</h1>
-	<%= button_link_to 'New article', new_article_path, :class=>"primary" %>
-	<div class="search">
-		<form action="/admin/articles/search" method="GET">
-			<input type="text" id="articles_search" name="q" class="text_input user" onfocus="if($(this).val()=='Search articles') $(this).val('');" onblur="if($(this).val()=='') $(this).val('Search articles');" value="<%=h( @search_query || "Search articles") %>" />
-			<%= button_link_to_submit "Go" %>
-		</form>
-	</div>
+  <div id="articles_actions_1">
+    <h1>Articles</h1>
+
+    <div id="actions" class="">
+      <a class="btn" id="article_select_all_button">
+        <span>
+          <span>
+            <input id="select_all_head" type="checkbox" class="select_all"/>
+            Select all
+          </span>
+        </span>
+      </a>
+
+      <%= button_link_to "Publish", "#", :onclick => "$('#action_name').val('publish'); $('#edit_articles_form').submit();return false;", :class => "pill-l" %>
+      <%= button_link_to "Schedule", "#", :onclick => "$('#action_name').val('schedule');$('#edit_articles_form').submit();return false;", :class => "pill-c" %>
+      <%= button_link_to "Delete", "#", :onclick => "$('#action_name').val('delete');$('#edit_articles_form').submit();return false;", :class => "pill-c", :id => "article_delete_button" %>
+
+      <div class="batch_actions">
+        <%= button_link_to_function "More actions…", "$(this).next().toggle()", :id => "more_actions_button", :class => "pill-r" %>
+        <div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
+          <%= submit_tag "Unpublish", :onclick => "$('#action_name').val('unpublish');return true;", :class => "menubutton" %>
+          <%= submit_tag "Set section", :onclick => "$('#action_name').val('set_section');return true;", :class => "menubutton" %>																				
+          <%= submit_tag "Add to category", :onclick => "$('#action_name').val('add_category');return true;", :class => "menubutton" %>																				
+          <%= submit_tag "Attach to issue", :onclick => "$('#action_name').val('add_issue');return true;", :class => "menubutton" %>																									
+        </div> 
+      </div>
+
+      <%= button_link_to 'New article', new_article_path, :class=>"primary", :id => "article_new_article_button" %>
+    </div>
+    <div class="search">
+      <form action="/admin/articles/search" method="GET">
+        <input type="text" id="articles_search" name="q" class="text_input user" onfocus="if($(this).val()=='Search articles') $(this).val('');" onblur="if($(this).val()=='') $(this).val('Search articles');" value="<%=h( @search_query || "Search articles") %>" />
+        <%= button_link_to_submit "Go" %>
+      </form>
+    </div>
+  </div>
 
   <% if permit?("(manager of account)") || permit?("admin") %>
-		<div class="select_all_wrap clearfix">
-			<input id="select_all_head" type="checkbox" class="select_all"/> <label for="select_all_head">&nbsp;Select all</label>
-		</div>
+    
 
 		<% form_tag edit_multiple_articles_url, :method => :get, :id => "edit_articles_form" do %>
 			<%= hidden_field_tag "update_action_name", '', :id=>"action_name" %>
 	
-			<div id="actions" class="clearfix">
-				<%= button_link_to "Publish", "#", :onclick => "$('#action_name').val('publish'); $('#edit_articles_form').submit();return false;", :class => "pill-l" %>
-				<%= button_link_to "Schedule", "#", :onclick => "$('#action_name').val('schedule');$('#edit_articles_form').submit();return false;", :class => "pill-c" %>
-				<%= button_link_to "Delete", "#", :onclick => "$('#action_name').val('delete');$('#edit_articles_form').submit();return false;", :class => "pill-r" %>
 			
-				<div class="batch_actions">
-					<%= button_link_to_function "More actions", "$(this).next().toggle()" %>
-					<div class="drop_down_menu" style="border: 1px solid #DEDEDE; background-color: white; position: absolute; top: 1.75em; display:none;">
-						<%= submit_tag "Unpublish", :onclick => "$('#action_name').val('unpublish');return true;", :class => "menubutton" %>
-						<%= submit_tag "Set section", :onclick => "$('#action_name').val('set_section');return true;", :class => "menubutton" %>																				
-						<%= submit_tag "Add to category", :onclick => "$('#action_name').val('add_category');return true;", :class => "menubutton" %>																				
-						<%= submit_tag "Attach to issue", :onclick => "$('#action_name').val('add_issue');return true;", :class => "menubutton" %>																									
-					</div> 
-				</div>
-			</div>
-			<%= render :partial=>'pagination' %>
+<!--			<%= render :partial=>'pagination' %>-->
 			<ol id="articles_list" class="documents selectable">			
 				<% if @articles.blank? %>
 					<li><p style="padding: 15px 0 5px 15px;font-style:italic;">No articles yet.</p></li>

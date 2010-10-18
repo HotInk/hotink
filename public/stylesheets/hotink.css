@@ -276,12 +276,23 @@ ol.mediafiles.selectable li div.select { display: block; }
 /* Hot Ink index page styles
 --------------------------------*/
 div#articles > h1, div#mediafiles > h1, div#issues > h1, div#blogs > h1 { float: left; margin-bottom: 25px; }
+div#articles h1 {
+  float: left;
+}
+a#article_new_article_button, a#article_select_all_button, button#more_actions_button {
+  padding-right: 5px;
+}
+
 div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs > h1 + a { margin-top: 5px; margin-left: 20px; }
 
-#actions { float: left; margin: 0 2em;  padding-bottom: 0.4em; }
+#actions {
+  float: left;
+  margin: 5px 20px;
+  padding-bottom: 0.4em;
+}
 #actions a { float: left; }
 #actions button { float: left;font-size: 1em; }
-#actions .batch_actions { float: left; margin: 0 1em; position: relative; top: -1px; }
+#actions .batch_actions { float: left; position: relative; }
 #actions .batch_actions input { background: none; width: 100%; text-align: left; border: none; padding: 0.25em 0.5em; font-size: 1em; cursor: pointer;}
 #actions .batch_actions input:hover { color: white;  background-color: #3D9BDF; }
 #actions .batch_actions .drop_down_menu { z-index: 100; width: 150px; }
@@ -293,6 +304,10 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 .search button { font-size: 1em; }
 
 .select_all_wrap { float: left; clear: left; padding-left: 0.3em; }
+#select_all_head {
+  cursor: pointer;
+  margin: 0;
+}
 
 .page_entries_info { display:inline; float: right; font-size: 0.9em; margin-right: 1em; font-style: italic; position: relative; top: 0.35em;  }
 .pagination { display: inline; color: #AAA; float: right; clear: right; position: relative; top: 0.25em; margin-bottom: 8px; }

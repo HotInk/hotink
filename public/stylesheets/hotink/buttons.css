@@ -1,6 +1,8 @@
 /* Start of custom button CSS
 ---------------------------------------- */
-.btn { display:inline-block !important; background:none; margin:0; padding:3px 0; border-width:0; overflow:visible; font:100%/1.2; text-decoration:none; color:#333; }
+.btn { display:inline-block !important; background:none; margin:0; padding:3px 0; border-width:0; overflow:visible; font:100%/1.2; text-decoration:none; color:#333;
+font-family: "lucida grande", verdana, arial, helvetica, sans-serif;
+ }
 * html button.btn { padding-bottom:1px; }
 .btn span { background:#ddd url('/images/bg-button.gif') repeat-x 0 0; margin:0; padding:3px 0; border-left:1px solid #bbb; border-right:1px solid #aaa; }
 * html .btn span {  padding-top:0; }
@@ -11,10 +13,10 @@
  
 /* pill classes only needed if using pill style buttons ( LEFT | CENTER | RIGHT ) */
 .pill-l span { border-right-width:0; }
-.pill-l span span { border-right:1px solid #bbb; }
-.pill-c span { border-right-style:none; border-left-color:#fff; }
+.pill-l span span { border-right:2px solid #bbb; }
+.pill-c span { border-right-style: solid; border-left-color:#fff; margin-left: -1px; }
 .pill-c span span { border-right:1px solid #bbb; }
-.pill-r span { border-left-color:#fff; }
+.pill-r span { border-left: 1px solid #bbb; margin-left: -1px; }
 
 /* tab classes only needed if using tab style buttons ( TOP | BOTTOM ) */
 .tab-t { padding: 1px 0px; }
