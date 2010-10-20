@@ -44,9 +44,9 @@
 			<% end %>
 			<div id="publish">
 				<% if @article.status == "Published" -%>
-					<%= form.submit "Unpublish", :class => "article_unpublish" %> <input type="button" value="Reschedule" class="show_schedule" />
+					<%= form.submit "Unpublish", :class => "article_unpublish", :confirm => "Are you sure you want to unpublish this article?" %> <input type="button" value="Reschedule" class="show_schedule" />
 				<% else -%>
-					<%= form.submit "Publish", :class => "article_publish" %> <input type="button" value="Specify date" class="show_schedule" />
+					<%= form.submit "Publish", :class => "article_publish", :confirm => "Are you sure you want to publish this article?" %> <input type="button" value="Specify date" class="show_schedule" />
 				<% end %>
 				<% if @article.draft? || (@article.awaiting_attention? && !@article.signed_off_by?(current_user)) %>
 					<%= form.submit "Sign off", :class=>"article_sign_off" %>
