@@ -87,7 +87,7 @@ li.awaiting_attention h1>small { color: #00AF2E; }
 
 /*-------------------------------------------------
 
-  Deashboard styles
+  Dashboard styles
 
 -------------------------------------------------*/
 
@@ -120,6 +120,20 @@ li.awaiting_attention h1>small { color: #00AF2E; }
 #front_page_form .preview  h2			{ margin:0; }
 #front_page_form .preview .preview_form { float:right; }
 
+
+li.ui-draggable:hover {
+  cursor: move !important;
+  cursor: -moz-grab !important;
+  cursor: -webkit-grab !important;
+  cursor: grab !important;
+}
+
+li.ui-draggable-dragging:hover {
+  cursor: move !important;
+  cursor: -moz-grabbing !important;
+  cursor: -webkit-grabbing !important;
+  cursor: grabbing !important;
+}
 
 /*-------------------------------------------------
 
