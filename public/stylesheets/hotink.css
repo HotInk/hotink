@@ -498,6 +498,10 @@ ol#document_mediafiles li .credit strong { font-weight: 600; }
 /* Waxing modal form */
 .waxing_modal form.formtastic fieldset > ol > li.text textarea { padding: 0; }
 
+#waxing_caption {
+  z-index: 100;
+}
+
 #document_categories { line-height: 1.5; font-size: 105%; }
 #document_categories input { margin-bottom: 5px; margin-right: 5px; }
 

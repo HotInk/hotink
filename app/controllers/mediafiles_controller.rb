@@ -66,8 +66,16 @@ class MediafilesController < ApplicationController
               @article = @document # articles/article_mediafile partial expects @article
               @waxing = @account.waxings.create(:document_id => @document.id, :mediafile_id=> @mediafile.id);
               responds_to_parent do
-          			render :update do |page|
-          				page << "$.fancybox.close();$('#document_mediafiles').html('#{ escape_javascript render(@document.waxings) }')"
+                render :update do |page|
+                  page << "$.fancybox.close();
+                           $('#document_mediafiles').html('#{ escape_javascript render(@document.waxings) } '); 
+                           $('.edit_caption a').fancybox({
+                             'scrolling'			: 'no',
+                             'titlePosition'		: 'inside',
+                             'transitionIn'		: 'none',
+                             'transitionOut'		: 'none',
+                             'width'				: '500'
+                           });"
           			end
               end
               return
