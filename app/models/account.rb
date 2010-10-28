@@ -199,6 +199,10 @@ class Account < ActiveRecord::Base
     checkout.nil? ? nil : checkout.duplicate_article
   end
   
+  def site_url
+    read_attribute("site_url") || ""
+  end
+  
   private
   
   def set_default_settings
