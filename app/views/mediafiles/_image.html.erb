@@ -3,26 +3,75 @@
 	<p style="margin:10px 0;float:left; width: 100%;"><span style="float:left; margin-top: 5px;"><%= image.filename %>&nbsp;&nbsp;<%= number_to_human_size(image.file_size) %></span> <%= link_to "Show sizes", "#", :id => "show_image_sizes_link", :class => "link grey", :style => "float:right;" %></p>
 	<div class="sizes" style="display:none;">
 		<% image.settings = @account.image_settings %>
-		<h3>Available sizes</h3>
-		<h4>Custom</h4>
-		<ul class="custom_image_sizes">
-			<li>Thumb <small> – <%= image.width_for_style(:thumb) %>px &times; <%= image.height_for_style(:thumb) %>px – <%= link_to "View", image.url(:thumb), :id => "view_thumb", :title => "Thumb" %> – <input name="thumb_file" value="<%= @account.site_url + image.url(:thumb, false) %>" /></small></li>
-			<li>Small <small> – <%= image.width_for_style(:small) %>px &times; <%= image.height_for_style(:small) %>px – <%= link_to "View", image.url(:small), :id => "view_small", :title => "Small" %> – <input name="small_file" value="<%= @account.site_url + image.url(:small, false) %>" /></small></li>
-			<li>Medium <small> – <%= image.width_for_style(:medium) %>px &times; <%= image.height_for_style(:medium) %>px – <%= link_to "View", image.url(:medium), :id => "view_medium", :title => "Medium" %> – <input name="medium_file" value="<%= @account.site_url + image.url(:medium, false) %>" /></small></li>
-			<li>Large <small> – <%= image.width_for_style(:large) %>px &times; <%= image.height_for_style(:large) %>px – <%= link_to "View", image.url(:large), :id => "view_large", :title => "Large" %> – <input name="large_file" value="<%= @account.site_url + image.url(:large, false) %>" /></small></li>
-		</ul>
-		<h4>System</h4>
-		<ul class="system_image_sizes">
-			<li>Original <small> – <%= image.width %>px &times; <%= image.height %>px – <%= link_to "View", image.url(:original), :id => "view_original", :title => "Originally uploaded size" %> – <input name="original_file" value="<%= @account.site_url + image.file(:original, false) %>" /></small></li>
-			<li>Icon <small> – <%= image.width_for_style(:system_icon) %>px &times; <%= image.height_for_style(:system_icon) %>px – <input name="system_icon_file" value="<%= @account.site_url + image.url(:system_icon, false) %>" /></small></li>
-			<li>Thumb <small> – <%= image.width_for_style(:system_thumb) %>px &times; <%= image.height_for_style(:system_thumb) %>px – <%= link_to "View", image.url(:system_thumb), :id => "view_system_thumb", :title => "System thumb" %> – <input name="system_thumb_file" value="<%= @account.site_url + image.url(:system_thumb, false) %>" /></small></li>
-			<li>Default <small> – <%= image.width_for_style(:system_default) %>px &times; <%= image.height_for_style(:system_default) %>px – (shown) – <input name="thumb_file" value="<%= @account.site_url + image.url(:thumb, false) %>" /></small></li>
-		</ul>
+		<div id="image_sizes_title_container" style="width:100%; float:left;">
+		    <h3 style="float:left; display:inline;">Available sizes</h3>
+		    <span style="font-style: italic; line-height: 20px;">&nbsp;(right-click to copy image locations)</span>
+		</div>
+		<div id="image_sizes_container" style="width:100%; float:left;">
+		<div id="custom_image_sizes_container">
+		    <h4>Custom</h4>
+		    <ul class="custom_image_sizes">
+			    <li>
+			        <a href="<%= image.url(:thumb) %>" id="view_thumb", title="Thumb">
+			            Thumb
+			            <small> – <%= image.width_for_style(:thumb) %>px &times; <%= image.height_for_style(:thumb) %>px</small>
+			        </a>
+			    </li>
+			    <li>
+			        <a href="<%= image.url(:small) %>" id="view_small", title="Small">
+			            Small
+			            <small> – <%= image.width_for_style(:small) %>px &times; <%= image.height_for_style(:small) %>px</small>
+			        </a>
+			    </li>
+			    <li>
+			        <a href="<%= image.url(:medium) %>" id="view_medium", title="Medium">
+			            Medium
+			            <small> – <%= image.width_for_style(:medium) %>px &times; <%= image.height_for_style(:medium) %>px</small>
+			        </a>
+		        </li>
+			    <li>
+			        <a href="<%= image.url(:large) %>" id="view_large", title="Large">
+			            Large
+			            <small> – <%= image.width_for_style(:large) %>px &times; <%= image.height_for_style(:large) %>px</small>
+			        </a>
+			    </li>
+		    </ul>
+		</div>
+
+        <div id="system_image_sizes_container">
+		    <h4>System</h4>
+		    <ul class="system_image_sizes">
+			    <li>
+			        <a href="<%= image.url(:original) %>" id="view_original", title="Original">
+			            Original
+			            <small> – <%= image.width %>px &times; <%= image.height %>px</small>
+			        </a>
+			    </li>
+			    <li>
+			        <a href="<%= image.url(:system_icon) %>" id="view_system_icon", title="Icon">
+			            Icon
+			            <small> – <%= image.width_for_style(:system_icon) %>px &times; <%= image.height_for_style(:system_icon) %>px</small>
+			        </a>
+			    </li>
+			    <li>
+			        <a href="<%= image.url(:system_thumb) %>" id="view_system_thumb", title="Thumbnail">
+			            Thumbnail
+			            <small> – <%= image.width_for_style(:system_thumb) %>px &times; <%= image.height_for_style(:system_thumb) %>px</small>
+			        </a>
+			    </li>
+			    <li>
+			        <a href="<%= image.url(:system_default) %>" id="view_system_default", title="Default">
+			            Default
+			            <small> – <%= image.width_for_style(:system_default) %>px &times; <%= image.height_for_style(:system_default) %>px</small></li>
+			        </a>
+		    </ul>
+		</div>
+		</div>
 	</div>
 	<% content_for :javascript do %>
 		<script type="text/javascript" charset="utf-8">
 			$(function(){
-				$('#view_thumb, #view_small, #view_medium, #view_large, #view_system_thumb, #view_original').fancybox({
+				$('#view_thumb, #view_small, #view_medium, #view_large, #view_original, #view_system_icon, #view_system_thumb, #view_system_default').fancybox({
 					'titlePosition'		: 'inside',
 					'transitionIn'		: 'none',
 					'transitionOut'		: 'none'

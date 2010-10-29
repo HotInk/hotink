@@ -387,6 +387,11 @@ div#articles > h1 + a, div#mediafiles > h1 + a, div#issues > h1 + a, div#blogs >
 .toolbox div ul.custom_image_sizes li input,
 .toolbox div ul.system_image_sizes li input		{ width: 200px; }
 
+div#custom_image_sizes_container, div#system_image_sizes_container {
+    width:210px;
+    float:left;
+}
+
 /* Mediafile form - Audiofile */
 .toolbox div ul.mp3_info					{ margin: 10px 0; float: left; width: 100%; }
 .toolbox div ul.mp3_info li					{ float: left; width: 100%; margin-bottom: 3px; }
