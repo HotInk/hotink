@@ -17,25 +17,6 @@ class Mediafile < ActiveRecord::Base
   
   before_create :set_date
   
-  define_index do
-    indexes title, :sortable => :true
-    indexes file_file_name, :as => :file_name
-    indexes file_content_type, :as => :content_type, :sortable => :true
-    indexes file_file_size, :as => :file_size, :sortable => :true
-    indexes description
-    indexes authors.name, :as => :credits
-    indexes tags.name, :as => :tags
-    indexes date, :sortable => :true
-
-    has created_at
-    has account_id
-    has type
-
-    where "status = 'published'"
-    
-    set_property :delta => :delayed
-  end
-  
   def url(style_name = :system_default, use_cache_buster=true)
     file.url style_name, use_cache_buster
   end
@@ -153,6 +134,25 @@ class Mediafile < ActiveRecord::Base
     else
       self.tag_list = self.tag_list.to_s + ", #{new_tags}"
     end
+  end
+  
+  define_index do
+    indexes title, :sortable => :true
+    indexes file_file_name, :as => :file_name
+    indexes file_content_type, :as => :content_type, :sortable => :true
+    indexes file_file_size, :as => :file_size, :sortable => :true
+    indexes description
+    indexes authors.name, :as => :credits
+    indexes tags.name, :as => :tags
+    indexes date, :sortable => :true
+
+    has created_at
+    has account_id
+    has type
+
+    where "status = 'published'"
+    
+    set_property :delta => :delayed
   end
   
   private

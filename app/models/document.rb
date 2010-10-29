@@ -59,25 +59,6 @@ class Document < ActiveRecord::Base
   validates_presence_of :account, :message => "must have an account"
   validates_associated :account, :message => "Account must be valid"
 
-  define_index do
-    indexes title, :sortable => :true
-    indexes subtitle
-    indexes bodytext
-    indexes authors.name, :as => :authors_names
-    indexes waxings.caption, :as => :captions
-    indexes tags.name, :as => :tags
-    indexes published_at, :sortable => :true
-
-    has created_at
-    has account_id
-    has blog_id
-    has type
-
-    where "status = 'published'"
-    
-    set_property :delta => :delayed
-  end
-
   def self.per_page
       10
   end
@@ -302,6 +283,25 @@ class Document < ActiveRecord::Base
        end
                      
      end
+  end
+  
+  define_index do
+    indexes title, :sortable => :true
+    indexes subtitle
+    indexes bodytext
+    indexes authors.name, :as => :authors_names
+    indexes waxings.caption, :as => :captions
+    indexes tags.name, :as => :tags
+    indexes published_at, :sortable => :true
+
+    has created_at
+    has account_id
+    has blog_id
+    has type
+
+    where "status = 'published'"
+    
+    set_property :delta => :delayed
   end
   
   
