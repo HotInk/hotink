@@ -1,8 +1,10 @@
 <% content_for :title, "Lists" %>
 <h1>Lists</h1>
-<% if permit?("(manager of account)") || permit?("admin") %>
-	<p><%= link_to 'New list', new_list_path, :class => "link green" %></p>
-<% end %>
+<div id="actions" class="">
+  <% if permit?("(manager of account)") || permit?("admin") %>
+    <p><%= button_link_to 'New list', new_list_path, :class => "primary" %></p>
+  <% end %>
+</div>
 <%= will_paginate(@lists, :inner_window => 2, :outer_window => 1) %>
 <ol class="lists">
 	<% if @lists.empty? %>

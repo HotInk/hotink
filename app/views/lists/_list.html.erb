@@ -1,6 +1,9 @@
 <li id="list_<%= list.id %>" class="clearfix">
-	<h3><%= list.name %></h3> <% if permit?("(manager of account)") || permit?("admin") %><%= link_to "Update", edit_list_path(list), :class => "link yellow" %><% end %> <span class="updated_at">Updated <%= time_ago_in_words(list.updated_at) %> ago</span>
-	<% if permit? "admin or manager of account" %><%= link_to "x", list, :confirm => "You are about to delete the list: \n \n &quot;" + h(list.name) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %><% end %>
+	<h3><%= link_to list.name, edit_list_path(list), :class => "" %></h3>
+	<span class="updated_at">Updated <%= time_ago_in_words(list.updated_at) %> ago</span>
+	<% if permit? "admin or manager of account" %>
+	  <%= link_to "x", list, :confirm => "You are about to delete the list: \n \n &quot;" + h(list.name) + "&quot;\n \n Click 'OK' to delete or 'Cancel' to return to the page.", :method => :delete, :class=>"destroy_link" %>
+	<% end %>
 	<ol class="documents tiny listed">
 		<%= render list.documents %>
 	</ol>
