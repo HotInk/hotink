@@ -1,6 +1,8 @@
 <% content_for :title, "Pages" %>
 <h1>Pages</h1>
-<p><%= link_to "New page", new_page_path, :class => "link green" %></p>
+<div id="actions" class="">
+  <%= button_link_to "New page", new_page_path, :class => "primary" %>
+</div>
 <ol id="pages">
 	<% if @pages.empty? %>
 		<li><p style="padding: 10px 0 0 10px;font-style:italic;">No pages yet.</p>	
