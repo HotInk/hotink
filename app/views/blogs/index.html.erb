@@ -1,10 +1,10 @@
 <% content_for :title, "Blogs" %>
 <h1>Blogs</h1>
-<p>
+<div id="actions" class="">
   <% if permit? "(manager of account) or admin" %>
-	<%= link_to 'New blog', new_blog_path, :class => "link green" %>
+	<%= button_link_to 'New blog', new_blog_path, :class => "primary" %>
   <% end %>
-</p>
+</div>
 
 <% unless @active_blogs.blank? %>
 <ol id="active_blogs" class="blogs grid_12">
