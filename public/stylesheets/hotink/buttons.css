@@ -1,7 +1,21 @@
 /* Start of custom button CSS
 ---------------------------------------- */
-.btn { display:inline-block !important; background:none; margin:0; padding:3px 0; border-width:0; overflow:visible; font:100%/1.2; text-decoration:none; color:#333;
-font-family: "lucida grande", verdana, arial, helvetica, sans-serif;
+.btn {
+  display:inline-block !important;
+  background:none;
+  margin:0;
+  padding:3px 0;
+  border-width:0;
+  overflow:visible;
+  font:100%/1.2;
+  text-decoration:none;
+  color:#333;
+  font-family: "lucida grande", verdana, arial, helvetica, sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
  }
 * html button.btn { padding-bottom:1px; }
 .btn span { background:#ddd url('/images/bg-button.gif') repeat-x 0 0; margin:0; padding:3px 0; border-left:1px solid #bbb; border-right:1px solid #aaa; }
