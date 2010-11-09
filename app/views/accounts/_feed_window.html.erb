@@ -1,0 +1,12 @@
+<% form_for(@account, :html => { 'data-remote' => true }) do |f| %>
+	<h2>RSS feed</h2>
+	<p>An <strong>RSS feed</strong> is a machine-readable publication format.</p>
+	<p>RSS is used by many web services and a small but significant number of dedicated online-news consumers.</p>
+	<p>Learn more about RSS by reading its <%= link_to "Wikipedia entry", "http://en.wikipedia.org/wiki/RSS", :class => "weblink", :target => "_blank" %>.</p>
+	<p><strong>Public articles feed</strong>: <%= link_to feed_url, feed_url, :class => "weblink", :target => "_blank" %></p>
+	<hr />
+	<%= button_link_to_submit "Save changes", :class=>"save large" %>
+	<h3>Feed settings</h3>
+	<p>Publish the latest <%= select_tag "account[feed_settings][limit]", options_for_select([75, 50, 25], @account.feed_settings.limit), :style => "width:15%;font-size:90%;" %> articles.</p>
+	<p>Include <%= select_tag "account[feed_settings][full_text]", options_for_select([["full text", true], ["short excerpt (not recommended)", false]], @account.feed_settings.full_text), :style => "width:19%;font-size:90%;" %> of (and link to) each article.</p>
+<% end %>

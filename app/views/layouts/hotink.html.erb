@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="<%= feed_url(:protocol => "feed://") %>">
   <% if yield(:title) %>
     <title><%= yield(:title) %> - Hot Ink</title>
   <% else %>

@@ -6,9 +6,10 @@
 	<div id="account_settings">
 		<ul>
 			<li><a href="#general-window">General</a></li>
-			<li><a href="#users-window">Users</a></li>
-			<li><a href="#images-window">Images</a></li>
 			<li><a href="#categories-window">Categories</a></li> 
+			<li><a href="#images-window">Images</a></li>
+			<li><a href="#feed-window">RSS Feed</a></li> 
+			<li><a href="#users-window">Users</a></li>
 			<% if permit? "admin" %>
 				<li><a href="#accounts-window">Accounts</a></li>
 			<% end %>
@@ -69,8 +70,8 @@
 			<% end %>	
 		</div>
 		
-		<div id="users-window">
-			<%= render :partial => "users_window" %>
+		<div id="categories-window">
+			<%= render :partial => 'categories_window' 	%>
 		</div>
 		
 		<div id="images-window">
@@ -103,9 +104,14 @@
 		    <% end %>
 		</div>
 		
-		<div id="categories-window">
-			<%= render :partial => 'categories_window' 	%>
+		<div id="feed-window">
+			<%= render :partial => "feed_window" %>
 		</div>
+		
+		<div id="users-window">
+			<%= render :partial => "users_window" %>
+		</div>
+		
 		<% if permit? "admin" %>
 		<div id="accounts-window" class="index">
 			<%= render :partial => 'accounts_window' %>

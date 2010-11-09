@@ -63,6 +63,8 @@
 #account #new_category_form select { height: 25px; font-size: 15px; margin-bottom: 0.5em; background: none; width: 97%; background-color: #F9F9F9; padding: 2px 0; color: #333; border: 1px solid #DEDEDE; }
 #account #new_category_form .column_holder>div { margin-bottom: 0.25em;  }
 
+#account #feed-window p { font-size: 1.1em; margin-bottom: 10px; }
+#account #feed-window h3 { text-decoration: underline; }
 
 /*-----------------------------------
 /*		User details form styles
