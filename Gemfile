@@ -38,10 +38,10 @@ gem 'liquid'
 
 gem 'daemons' # for delayed job runner
 
-gem "rspec"
+gem "rspec", "~> 1.3"
 
 group :test do
-  gem "rspec-rails"
+  gem "rspec-rails", "~> 1.3"
   gem "spork"
   gem "timecop"
   gem "factory_girl"
