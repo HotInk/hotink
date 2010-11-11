@@ -11,8 +11,7 @@
 		<div class="grid_4 alpha">
 			<h2>Current front page</h2> 
 			<div class="visibility_controls">
-				<a href="#" class="hide link grey">Hide</a>
-				<a href="#" class="show link grey">Show</a>
+			  <%= button_link_to "Hide", "#", :id => "toggle_button" %>
 			</div>
 		</div>
 		<% if @account.current_design %>
@@ -76,15 +75,17 @@
 
 <% content_for :javascript do %>
 	<script type="text/javascript" charset="utf-8">
-		$('#current_lead_articles .visibility_controls .show').live('click', function(){
-			$('#current_lead_articles').removeClass('hidden', 350);
+		$('#current_lead_articles .visibility_controls #toggle_button').click( function(){
+		  if ($("#current_lead_articles").hasClass("hidden")) {
+		    $('#current_lead_articles').removeClass('hidden', 350);
+		    $('#current_lead_articles .visibility_controls #toggle_button span span')[0].innerHTML = "Hide";
+		  } else {
+		    $('#current_lead_articles').addClass('hidden', 350);
+		    $('#current_lead_articles .visibility_controls #toggle_button span span')[0].innerHTML = "Show";
+		  }
 			return false;
 		});
 		
-		$('#current_lead_articles .visibility_controls .hide').live('click', function(){		
-			$('#current_lead_articles').addClass('hidden', 350);
-			return false;
-		});
 	</script>
 <% end %>
 

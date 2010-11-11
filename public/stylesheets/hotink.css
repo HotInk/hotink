@@ -102,7 +102,7 @@ li.awaiting_attention h1>small { color: #00AF2E; }
 #current_lead_articles 											{ display: block; background-color: #F3F3F3; padding: 10px 1%; margin-bottom: 20px; border: 1px solid #AAA; }
 #current_lead_articles h3										{ margin: 0 0 5px 0; font-size: 110%; }
 
-#current_lead_articles .visibility_controls						{ float: left; padding: 5px 0 5px 15px; }
+#current_lead_articles .visibility_controls						{ float: left; padding-left: 5px; }
 #current_lead_articles .visibility_controls	.show 				{ display:none; }
 #current_lead_articles.hidden .visibility_controls	.show 		{ display: inline; }
 #current_lead_articles.hidden .visibility_controls	.hide 		{ display:none; }
