@@ -23,7 +23,7 @@ xml.rss("version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/",  "
           if article.authors_list
             xml << "<p><strong>#{article.authors_list}</strong></p>"
           end
-          xml << markdown(article.bodytext)
+          xml << markdown(@account.feed_settings.full_text ? article.bodytext : truncate_words(article.bodytext))
           xml << "]]>"
         end
       end

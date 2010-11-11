@@ -6,6 +6,13 @@ Autotest.add_hook :initialize do |at|
       at.files_matching(%r%^spec/drops/.*rb$%)
   end
   
+	at.add_mapping(%r%^spec/metal/.*rb$%) { |filename, _|
+    filename
+  }
+  at.add_mapping(%r{^app/metal/.*rb$}) do |f, _|
+      at.files_matching(%r%^spec/metal/.*rb$%)
+  end
+
   at.add_mapping(%r%^spec/filters/.*rb$%) { |filename, _|
      filename
   }

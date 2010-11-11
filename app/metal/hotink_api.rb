@@ -10,13 +10,26 @@ class HotinkApi < Sinatra::Base
       domains = uri.host.split(".")
       domains.first
     end
+    
+    def respond_with(results, format)
+      case format
+      when "xml"  
+        content_type "text/xml"
+        results.to_xml
+      when "json"
+        content_type "application/json"
+        results.to_json
+      else
+        halt 404, "Not available in the format requested."
+      end
+    end
   end
   
   def load_account(name)
     @account = Account.find_by_name(name)
   end
  
-  get "/articles.xml" do
+  get "/articles.:format" do
     load_account(subdomain)
     page = params[:page] || 1
     per_page = params[:per_page] || 20
@@ -35,46 +48,42 @@ class HotinkApi < Sinatra::Base
     else
       @articles = @account.articles.published.by_date_published.paginate(:page => page, :per_page => per_page)
     end
-  
-    content_type "text/xml"
-    @articles.to_xml    
+    
+    respond_with @articles, params[:format]
   end
 
-  get "/articles/:id.xml" do
+  get "/articles/:id.:format" do
     load_account(subdomain)
     begin
       @article = @account.articles.published.find(params[:id])
     rescue ActiveRecord::RecordNotFound => e
-      halt 404, "Record not found or unavailable."
+      halt 404, "Article not found or unavailable."
     end
 
-    content_type "text/xml"
-    @article.to_xml
+    respond_with @article, params[:format]
   end
 
-  get "/issues.xml" do
+  get "/issues.:format" do
     load_account(subdomain)
     page = params[:page] || 1
     per_page = params[:per_page] || 15
   
     @issues = @account.issues.processed.paginate(:page => page, :per_page => per_page, :order => "date DESC")
   
-    content_type "text/xml"
-    @issues.to_xml
+    respond_with @issues, params[:format]
   end
 
-  get "/issues/:id.xml" do
+  get "/issues/:id.:format" do
     load_account(subdomain)
     begin
       @issue = @account.issues.processed.find(params[:id])
     rescue ActiveRecord::RecordNotFound => e
       halt 404, "Record not found or unavailable."
     end
-    content_type "text/xml"
-    @issue.to_xml
+    respond_with @issue, params[:format]
   end
 
-  get "/issues/:id/articles.xml" do
+  get "/issues/:id/articles.:format" do
     load_account(subdomain)
 
     begin
@@ -95,20 +104,18 @@ class HotinkApi < Sinatra::Base
       @articles = @issue.articles.published.by_date_published.all
     end
   
-    content_type "text/xml"
-    @articles.to_xml
+    respond_with @articles, params[:format]
   end
 
-  get "/categories.xml" do
+  get "/categories.:format" do
     load_account(subdomain)
   
     @sections = @account.categories.active.sections.all
   
-    content_type "text/xml"
-    @sections.to_xml
+    respond_with @sections, params[:format]
   end
 
-  get "/categories/:id.xml" do
+  get "/categories/:id.:format" do
     load_account(subdomain)
     begin
       @section = @account.categories.active.find(params[:id])
@@ -116,45 +123,43 @@ class HotinkApi < Sinatra::Base
       @section = @account.categories.active.find_by_name(params[:id])
       halt 404, "Record not found or unavailable." unless @section
     end
-    content_type "text/xml"
-    @section.to_xml
+    respond_with @section, params[:format]
   end
 
-  get "/blogs.xml" do
+  get "/blogs.:format" do
     load_account(subdomain)
   
     @blogs = @account.blogs.active
   
-    content_type "text/xml"
-    @blogs.to_xml
+    respond_with @blogs, params[:format]
   end
 
-  get "/blogs/:id.xml" do
+  get "/blogs/:id.:format" do
     load_account(subdomain)
     begin
       @blog = @account.blogs.find(params[:id])
     rescue ActiveRecord::RecordNotFound => e
       halt 404, "Record not found or unavailable."
     end
-    content_type "text/xml"
-    @blog.to_xml
+    respond_with @blog, params[:format]
   end
 
-  get "/entries.xml" do
+  get "/entries.:format" do
     load_account(subdomain)
     page = params[:page] || 1
     per_page = params[:per_page] || 20
   
-    content_type "text/xml"
     if params[:blog_id]
       @blog = @account.blogs.find(params[:blog_id])
-      @blog.entries.published.by_date_published.paginate(:page => page, :per_page => per_page, :order => "published_at DESC").to_xml
+      results = @blog.entries.published.by_date_published.paginate(:page => page, :per_page => per_page, :order => "published_at DESC")
+      respond_with results, params[:format]
     else
-      @account.entries.published.by_date_published.paginate(:page => page, :per_page => per_page, :order => "published_at DESC").to_xml
+      results = @account.entries.published.by_date_published.paginate(:page => page, :per_page => per_page, :order => "published_at DESC")
+      respond_with results, params[:format]
     end
   end
 
-  get "/entries/:id.xml" do
+  get "/entries/:id.:format" do
     load_account(subdomain)
     begin
       @entry = @account.entries.published.find(params[:id])
@@ -162,11 +167,10 @@ class HotinkApi < Sinatra::Base
       halt 404, "Record not found or unavailable."
     end
 
-    content_type "text/xml"
-    @entry.to_xml
+    respond_with @entry, params[:format]
   end
 
-  get "/query.xml" do
+  get "/query.:format" do
     load_account(subdomain)
   
     @results = []
@@ -183,8 +187,36 @@ class HotinkApi < Sinatra::Base
       end
     end
 
-    content_type "text/xml"
-    @results.to_xml
+    respond_with @results, params[:format]
   end
-
+  
+  get "/lead_articles.:format" do
+    load_account(subdomain)
+    
+    @lead_articles = @account.lead_article_ids.nil? ? [] : @account.lead_article_ids.collect{ |id| @account.articles.find_by_id(id) }.compact
+    
+    case params[:format]
+    when "xml"
+      content_type "text/xml"
+      if @lead_articles.empty?
+        Builder::XmlMarkup.new.articles
+      else
+        @lead_articles.to_xml
+      end
+    when "json"
+      content_type "application/json"
+      Yajl::Encoder.encode(@lead_articles)
+    else
+      halt 404, "Not available in the format requested."
+    end
+  end
+  
+  get "/:list_slug.:format" do
+    load_account(subdomain)
+    
+    @list = @account.lists.find_by_slug(params[:list_slug])
+    halt 404, "No resource found" unless @list
+    
+    respond_with @list, params[:format]
+  end
 end

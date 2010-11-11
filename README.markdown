@@ -64,7 +64,7 @@ Access the console (using `script/console`) and create an account invitation for
 
 Your output may not look exactly like above, but as long as the token field is set your invitation is ready to be used. In your browser,  visit your app with the path '/admin/account_invitations/YOUR_INVITATION_TOKEN/edit'. In the above example, the invitation token is `5ddf1eb40cec22380f28c8941ebb51813ea042be`. Fill out your user and account details, making note of the account name you choose.
 
-Hot Ink identifies the current account using the account name as a subdomain. In order to use subdomains in production, you'll need to make a quick edit to your hosts file. You can likely find it in `/etc/hosts`. You should add the following line after the first entry and save the file:
+Hot Ink identifies the current account using the account name as a subdomain. In order to use subdomains in development, you'll need to make a quick edit to your hosts file. You can likely find it in `/etc/hosts`. You should add the following line after the first entry and save the file:
 
     127.0.0.1   your-account-name.localhost
 

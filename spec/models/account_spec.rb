@@ -56,6 +56,23 @@ describe Account do
     @account.settings["image"]["thumb"].should ==  ["100x190>", "jpg"]
   end
   
+  describe "#feed_settings=" do  
+    it "should store feed settings in settings hash" do
+      @account.feed_settings = {"limit" => 100, "full_text" => false}
+      @account.settings["feed"]["limit"].should ==  100
+      @account.settings["feed"]["full_text"].should ==  false
+    end
+  end
+  
+  describe "#feed_settings" do
+    it "should make feed settings available as a simple struct" do
+      @account.settings["feed"] = {"limit" => "100", "full_text" => "false"}
+      
+      @account.feed_settings.limit.should == 100
+      @account.feed_settings.full_text.should be_false
+    end
+  end
+  
   describe "role management" do
     before do
       @user = Factory(:user)

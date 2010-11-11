@@ -70,6 +70,21 @@ class Account < ActiveRecord::Base
     formal_name || name
   end
   
+  FeedSettings = Struct.new("FeedSettings", :limit, :full_text)
+  
+  def feed_settings
+    feed_settings = read_attribute(:settings)["feed"] || {}
+    full_text = feed_settings["full_text"]=="true" ? true : false
+    FeedSettings.new(feed_settings["limit"].to_i, full_text)
+  end
+  
+  def feed_settings=(new_settings)
+    account_settings = read_attribute(:settings)
+    account_settings["feed"] = {} if settings["feed"].nil?
+    account_settings["feed"].merge!(new_settings)
+    write_attribute(:settings, account_settings)
+  end
+  
   def image_settings
     account_settings = read_attribute(:settings)
     account_settings["image"].nil? ? {} : account_settings["image"]
