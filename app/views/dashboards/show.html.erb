@@ -1,8 +1,10 @@
 <% content_for :title, "Dashboard" %>
 <h1>Dashboard</h1>
 
-<a href="/" id="site_link" class="link blue" target="_blank">View site</a>
-<%= link_to "New article", new_article_path, :class => "link green" %>
+<div id="actions">
+<%= button_link_to "View site", "/", :target => "_blank", :id => "dashboard_view_site_button" %>
+<%= button_link_to "New article", new_article_path, :class => "primary" %>
+</div>
 
 <div id="current_lead_articles" class="list grid_12 alpha">
 	<div class="grid_12 alpha">

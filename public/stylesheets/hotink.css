@@ -95,6 +95,10 @@ li.awaiting_attention h1>small { color: #00AF2E; }
 .dashboards h2 													{ float: left; text-decoration:underline; font-size: 1.3em; margin-bottom: 15px; margin-top: 0; }
 .dashboards #user_blogs > h2									{ margin-bottom: 0px; }
 
+#dashboard_view_site_button {
+  padding-right: 5px;
+}
+
 #current_lead_articles 											{ display: block; background-color: #F3F3F3; padding: 10px 1%; margin-bottom: 20px; border: 1px solid #AAA; }
 #current_lead_articles h3										{ margin: 0 0 5px 0; font-size: 110%; }
 
@@ -712,7 +716,7 @@ ol#all_comments .comment { background-color: white; border: 1px dotted #CCC;  fl
 /*		Blog styles
 /*---------------------------------------*/
 
-body.blogs h1, body.lists h1, body.pages h1 {
+body.blogs h1, body.lists h1, body.pages, body.dashboards h1 {
     float: left;
     margin-right: 0px !important; /* Force away margin while buttons in #page_containers are being transitioned to new style */
 }
