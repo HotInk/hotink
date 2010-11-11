@@ -1,7 +1,7 @@
 <% content_for :title, "Media files" %>
 <div id="mediafiles">
 	<h1>Media </h1>
-	<%= button_link_to 'Upload media', new_mediafile_path, :class=>"" %>
+	<%= button_link_to 'Upload media', new_mediafile_path, :class=>"primary" %>
 	<div class="search">
 		<form method="GET">
 			<input type="text" id="mediafiles_search" name="search" class="text_input user" onclick="if(this.value=='Search media') clearText(this);" value="<%=h( @search_query || "Search media") %>" />
