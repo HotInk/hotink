@@ -15,6 +15,7 @@ gem "paperclip", "2.3.1"
 gem "acts-as-taggable-on"
 gem 'rdiscount'
 gem "validates_timeliness", "~>2.3"
+gem 'yajl-ruby', :require => 'yajl'
 
 gem 'rack-flash'
 gem 'sinatra'
