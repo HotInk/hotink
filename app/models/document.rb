@@ -222,67 +222,93 @@ class Document < ActiveRecord::Base
     end
   end
   
+  def to_json(options={})
+    mediafiles_hash = mediafiles.collect do |mediafile|
+       { :title => mediafile.title,
+         :caption => caption_for(mediafile),
+         :type => mediafile.class.name,
+         :authors_list => mediafile.authors_list,
+         :url => mediafile.file.url,
+         :content_type => mediafile.file_content_type  }
+     end
+    
+    Yajl::Encoder.encode({
+       :id => id,
+       :type => self.class.name,
+       
+       :title => title,
+       :subtitle => subtitle,
+       :authors_list => authors_list,
+       :summary => summary,
+       :bodytext => bodytext,
+       
+       :mediafiles => mediafiles_hash,
+       
+       :updated_at => updated_at.to_formatted_s(:long),
+       :published_at => published? ? published_at.to_formatted_s(:long) :  nil
+     })
+  end
+  
   def to_xml(options = {})
-     options[:indent] ||= 2
-     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
-     xml.instruct! unless options[:skip_instruct]
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
      
-     xml.article do
-       xml.tag!( :id, self.id, :type => "integer")
-       xml.tag!( :published_at, self.published_at ? self.published_at.to_formatted_s(:long) : "" )
-       xml.tag!( :updated_at, self.updated_at.to_formatted_s(:long) )
-       xml.tag!( :title, self.title )
-       xml.tag!( :subtitle, self.subtitle )
-       xml.tag!( :authors_list, self.authors_list )
-       xml.tag!( :summary, self.summary )
-       xml.tag!( :bodytext, self.bodytext )
-       xml.tag!( :word_count, self.word_count )
-       
-       self.section.nil? ? xml.section("") : xml.section(self.section.name)
-       xml.tag!( :tag_list, self.tag_list )
-       
-       xml.tag!( :account_id, self.account.id, :type => "integer")
-       xml.tag!( :account_name, self.account.formal_name.blank? ? self.account.name.capitalize : self.account.formal_name )
-       xml.<< self.account.to_xml(:skip_instruct => true)
+    xml.article do
+      xml.tag!( :id, self.id, :type => "integer")
+      xml.tag!( :published_at, self.published_at ? self.published_at.to_formatted_s(:long) : "" )
+      xml.tag!( :updated_at, self.updated_at.to_formatted_s(:long) )
+      xml.tag!( :title, self.title )
+      xml.tag!( :subtitle, self.subtitle )
+      xml.tag!( :authors_list, self.authors_list )
+      xml.tag!( :summary, self.summary )
+      xml.tag!( :bodytext, self.bodytext )
+      xml.tag!( :word_count, self.word_count )
 
-       # to get the mediafiles' caption, we need to loop over the waxings 
-       xml.mediafiles :type => "array" do
-         self.waxings.each do |waxing|
-           xml.<< waxing.mediafile.to_xml(:skip_instruct => true, :caption => waxing.caption)
-         end
+      self.section.nil? ? xml.section("") : xml.section(self.section.name)
+      xml.tag!( :tag_list, self.tag_list )
+
+      xml.tag!( :account_id, self.account.id, :type => "integer")
+      xml.tag!( :account_name, self.account.formal_name.blank? ? self.account.name.capitalize : self.account.formal_name )
+      xml.<< self.account.to_xml(:skip_instruct => true)
+
+      xml.authors :type => "array" do
+       self.authors.each do |author|
+         xml.<< author.to_xml(:skip_instruct => true)
        end
-       
-       xml.categories :type => "array" do
-         self.categories.each do |category|
-           xml.<< category.to_xml(:skip_instruct => true)
-         end
+      end
+      
+      # to get the mediafiles' caption, we need to loop over the waxings 
+      xml.mediafiles :type => "array" do
+       self.waxings.each do |waxing|
+         xml.<< waxing.mediafile.to_xml(:skip_instruct => true, :caption => waxing.caption)
        end
-       
-       xml.tags :type => "array" do
-         self.tags.each do |tag|
-           xml.<< tag.to_xml(:skip_instruct => true)
-         end
-       end       
-       
-       xml.authors :type => "array" do
-         self.authors.each do |author|
-           xml.<< author.to_xml(:skip_instruct => true)
-         end
+      end
+
+      xml.categories :type => "array" do
+       self.categories.each do |category|
+         xml.<< category.to_xml(:skip_instruct => true)
        end
-       
+      end
+
+      xml.tags :type => "array" do
+       self.tags.each do |tag|
+         xml.<< tag.to_xml(:skip_instruct => true)
+       end
+      end
+
       if self.is_a?(Entry) && self.blog
         xml.blogs :type => "array" do
           xml.<< self.blog.to_xml(:skip_instruct => true)
         end
       end
-       
-       xml.issues :type => "array" do
-         self.issues.each do |issue|
-           xml.<< issue.to_xml(:skip_instruct => true)
-         end
+
+      xml.issues :type => "array" do
+       self.issues.each do |issue|
+         xml.<< issue.to_xml(:skip_instruct => true)
        end
-                     
-     end
+      end          
+    end
   end
   
   define_index do

@@ -181,4 +181,22 @@ describe Article do
       network_copy.network_article?.should be_true
     end
   end
+  
+  describe "#to_json" do
+    it "should return json representation of document type" do
+      article = Factory(:article)
+      article_json = Yajl::Parser.parse article.to_json
+      article_json["type"].should == "Article"
+    end
+    
+    it "should include publication time" do
+      draft_article = Factory(:draft_article)
+      draft_article_json = Yajl::Parser.parse draft_article.to_json
+      draft_article_json["published_at"].should == nil
+      
+      published_article = Factory(:published_article)
+      published_article_json = Yajl::Parser.parse published_article.to_json
+      published_article_json["published_at"].should == published_article.published_at.to_formatted_s(:long)
+    end
+  end
 end

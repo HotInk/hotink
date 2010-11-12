@@ -6,12 +6,7 @@ describe Entry do
   end
   
   it { should belong_to(:blog) }
-  #it "should belong to blog" do
-    #blog = Factory(:blog, :account => @account)
-   # entry = Factory(:entry, :blog => blog, :account => @account)
-    #entry.blog.should eql(blog)
-  #end
-  
+
   describe "permissions" do  
     it "should know who has permission to make changes, based on its publication status" do
       draft = Factory(:entry, :account => @account)
@@ -30,6 +25,14 @@ describe Entry do
     it "should know which user roles are empowered to publish, schedule or unpublish" do
       entry = Factory(:entry)
       entry.is_publishable_by.should eql("(owner of entry) or (manager of account) or (editor of blog) or admin")
+    end
+  end
+  
+  describe "#to_json" do
+    it "should return json representation of document type" do
+      entry = Factory(:entry)
+      entry_json = Yajl::Parser.parse entry.to_json
+      entry_json["type"].should == "Entry"
     end
   end
 end
