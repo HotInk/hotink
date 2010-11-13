@@ -22,7 +22,7 @@ gem 'sinatra'
 gem 'addressable'
 gem 'ruby-openid', :require => 'openid'
 
-gem "formtastic"
+gem "formtastic", "1.1.0"
 
 gem "ruby-mp3info", :require => "mp3info"
 
