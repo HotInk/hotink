@@ -240,7 +240,7 @@ class Document < ActiveRecord::Base
        :subtitle => subtitle,
        :authors_list => authors_list,
        :summary => summary,
-       :bodytext => bodytext,
+       :bodytext => bodytext ? RDiscount.new(bodytext).to_html : "",
        
        :mediafiles => mediafiles_hash,
        

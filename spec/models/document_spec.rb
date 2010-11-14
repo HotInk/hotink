@@ -290,7 +290,7 @@ describe Document do
       document_json["subtitle"].should == document.subtitle
       document_json["authors_list"].should == document.authors_list
       document_json["summary"].should == document.summary
-      document_json["bodytext"].should == document.bodytext
+      document_json["bodytext"].should == RDiscount.new(document.bodytext).to_html
       document_json["updated_at"].should == document.updated_at.to_formatted_s(:long) 
     end
     
