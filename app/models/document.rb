@@ -224,12 +224,27 @@ class Document < ActiveRecord::Base
   
   def to_json(options={})
     mediafiles_hash = mediafiles.collect do |mediafile|
-       { :title => mediafile.title,
-         :caption => caption_for(mediafile),
-         :type => mediafile.class.name,
-         :authors_list => mediafile.authors_list,
-         :url => mediafile.file.url,
-         :content_type => mediafile.file_content_type  }
+       mediafile_hash = { :title => mediafile.title,
+                          :caption => caption_for(mediafile),
+                          :type => mediafile.class.name,
+                          :authors_list => mediafile.authors_list,
+                          :url => mediafile.file.url,
+                          :content_type => mediafile.file_content_type  }
+         
+       if mediafile.kind_of? Image
+         mediafile_hash.merge!({ 
+           :url => {  "original" => mediafile.file.url(:original),
+                       "thumb" => mediafile.file.url(:thumb),
+                       "small" => mediafile.file.url(:small),
+                       "medium" => mediafile.file.url(:medium),
+                       "large" => mediafile.file.url(:large),
+                       "system_default" => mediafile.file.url(:system_default),
+                       "system_thumb" => mediafile.file.url(:system_thumb),
+                       "system_icon" => mediafile.file.url(:system_icon) }
+         })
+       end
+       
+       mediafile_hash
      end
     
     Yajl::Encoder.encode({
