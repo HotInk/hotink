@@ -11,14 +11,18 @@ class HotinkApi < Sinatra::Base
       domains.first
     end
     
-    def respond_with(results, format)
+    def respond_with(results, format, callback=nil)
       case format
       when "xml"  
         content_type "text/xml"
         results.to_xml
       when "json"
         content_type "application/json"
-        results.to_json
+        if callback
+          "#{callback}(#{results.to_json})"
+        else
+          results.to_json
+        end
       else
         halt 404, "Not available in the format requested."
       end
@@ -49,7 +53,7 @@ class HotinkApi < Sinatra::Base
       @articles = @account.articles.published.by_date_published.paginate(:page => page, :per_page => per_page)
     end
     
-    respond_with @articles, params[:format]
+    respond_with @articles, params[:format], params[:callback]
   end
 
   get "/articles/:id.:format" do
@@ -60,7 +64,7 @@ class HotinkApi < Sinatra::Base
       halt 404, "Article not found or unavailable."
     end
 
-    respond_with @article, params[:format]
+    respond_with @article, params[:format], params[:callback]
   end
 
   get "/issues.:format" do
@@ -70,7 +74,7 @@ class HotinkApi < Sinatra::Base
   
     @issues = @account.issues.processed.paginate(:page => page, :per_page => per_page, :order => "date DESC")
   
-    respond_with @issues, params[:format]
+    respond_with @issues, params[:format], params[:callback]
   end
 
   get "/issues/:id.:format" do
@@ -80,7 +84,7 @@ class HotinkApi < Sinatra::Base
     rescue ActiveRecord::RecordNotFound => e
       halt 404, "Record not found or unavailable."
     end
-    respond_with @issue, params[:format]
+    respond_with @issue, params[:format], params[:callback]
   end
 
   get "/issues/:id/articles.:format" do
@@ -104,7 +108,7 @@ class HotinkApi < Sinatra::Base
       @articles = @issue.articles.published.by_date_published.all
     end
   
-    respond_with @articles, params[:format]
+    respond_with @articles, params[:format], params[:callback]
   end
 
   get "/categories.:format" do
@@ -112,7 +116,7 @@ class HotinkApi < Sinatra::Base
   
     @sections = @account.categories.active.sections.all
   
-    respond_with @sections, params[:format]
+    respond_with @sections, params[:format], params[:callback]
   end
 
   get "/categories/:id.:format" do
@@ -123,7 +127,7 @@ class HotinkApi < Sinatra::Base
       @section = @account.categories.active.find_by_name(params[:id])
       halt 404, "Record not found or unavailable." unless @section
     end
-    respond_with @section, params[:format]
+    respond_with @section, params[:format], params[:callback]
   end
 
   get "/blogs.:format" do
@@ -131,7 +135,7 @@ class HotinkApi < Sinatra::Base
   
     @blogs = @account.blogs.active
   
-    respond_with @blogs, params[:format]
+    respond_with @blogs, params[:format], params[:callback]
   end
 
   get "/blogs/:id.:format" do
@@ -141,7 +145,7 @@ class HotinkApi < Sinatra::Base
     rescue ActiveRecord::RecordNotFound => e
       halt 404, "Record not found or unavailable."
     end
-    respond_with @blog, params[:format]
+    respond_with @blog, params[:format], params[:callback]
   end
 
   get "/entries.:format" do
@@ -152,10 +156,10 @@ class HotinkApi < Sinatra::Base
     if params[:blog_id]
       @blog = @account.blogs.find(params[:blog_id])
       results = @blog.entries.published.by_date_published.paginate(:page => page, :per_page => per_page, :order => "published_at DESC")
-      respond_with results, params[:format]
+      respond_with results, params[:format], params[:callback]
     else
       results = @account.entries.published.by_date_published.paginate(:page => page, :per_page => per_page, :order => "published_at DESC")
-      respond_with results, params[:format]
+      respond_with results, params[:format], params[:callback]
     end
   end
 
@@ -167,7 +171,7 @@ class HotinkApi < Sinatra::Base
       halt 404, "Record not found or unavailable."
     end
 
-    respond_with @entry, params[:format]
+    respond_with @entry, params[:format], params[:callback]
   end
 
   get "/query.:format" do
@@ -187,7 +191,7 @@ class HotinkApi < Sinatra::Base
       end
     end
 
-    respond_with @results, params[:format]
+    respond_with @results, params[:format], params[:callback]
   end
   
   get "/lead_articles.:format" do
@@ -205,7 +209,11 @@ class HotinkApi < Sinatra::Base
       end
     when "json"
       content_type "application/json"
-      Yajl::Encoder.encode(@lead_articles)
+      if callback = params[:callback]
+        "#{callback}(#{Yajl::Encoder.encode(@lead_articles)})"
+      else
+        Yajl::Encoder.encode(@lead_articles)
+      end
     else
       halt 404, "Not available in the format requested."
     end
@@ -217,6 +225,6 @@ class HotinkApi < Sinatra::Base
     @list = @account.lists.find_by_slug(params[:list_slug])
     halt 404, "No resource found" unless @list
     
-    respond_with @list, params[:format]
+    respond_with @list, params[:format], params[:callback]
   end
 end

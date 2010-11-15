@@ -31,6 +31,24 @@ class List < ActiveRecord::Base
     touch
   end
   
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+     
+    xml.list do
+      xml.tag!( :id, id, :type => "integer")
+      xml.tag!( :name, name)
+      xml.tag!( :updated_at, updated_at.to_formatted_s(:long))
+      
+      xml.items :type => "array" do
+       self.documents.each do |document|
+         xml.<< document.to_xml(:skip_instruct => true)
+       end
+      end
+    end
+  end
+
   private
   
   def generate_slug

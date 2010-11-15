@@ -610,5 +610,25 @@ describe HotinkApi do
       end
     end
   end
+  
+  describe "jsonp" do
+    it "should support jsonp on all json end points" do
+      callback = "jsonpcallbackfunction"
+      article = Factory(:detailed_article, :account => @account)
+ 
+      get "/articles/#{article.to_param}.json?callback=#{callback}"
+
+      last_response.should be_ok
+      last_response.body.should == "#{callback}(" + article.to_json + ")"
+      
+      list = Factory :list, :name => "First list", :account => @account
+      list.documents = (1..3).collect { Factory(:published_article, :account => @account) }
+      
+      get "/first_list.json?callback=#{callback}"
+      
+      last_response.should be_ok
+      last_response.body.should == "#{callback}(" + list.to_json + ")"
+    end
+  end
 
 end

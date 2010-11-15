@@ -4,7 +4,7 @@
 and [Campus Plus](http://www.campusplus.com) to help small publishers organize content for online publication. It provides 
 a management interface for the upload, storage and indexing of articles, images, audiofiles, blogs, and print issue PDF files. Hot Ink supplies a full site design management system, allowing each account's stored content to be displayed to users as a complete news-publication website.
 
-It also publishes a public XML API (with JSON support coming soon) that can be used by client applications to publish or distribute archived content.
+It also publishes a public XML and JSON API that can be used by client applications to publish or distribute archived content.
 
 Hot Ink is built using Ruby on Rails (v2.3.8) using Rails controllers for upload and management. Hot Ink also uses three small
 Sinatra apps implemented as Rails metal:

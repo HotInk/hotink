@@ -273,4 +273,65 @@ describe Document do
       end
     end
   end
+
+  describe "#to_json" do
+    it "should return json representation of document" do
+      document = Factory  :document,
+                          :title => "a title",
+                          :subtitle => "a subtitle",
+                          :authors => (1..2).collect { Factory(:author) },
+                          :summary => "a summary",
+                          :bodytext => "some bodytext"
+                          #:tag_list => "one tag, two tag"
+      document_json = Yajl::Parser.parse document.to_json
+      
+      document_json["id"].should == document.id
+      document_json["title"].should == document.title
+      document_json["subtitle"].should == document.subtitle
+      document_json["authors_list"].should == document.authors_list
+      document_json["summary"].should == document.summary
+      document_json["bodytext"].should == RDiscount.new(document.bodytext).to_html
+      document_json["updated_at"].should == document.updated_at.to_formatted_s(:long) 
+    end
+    
+    it "should include mediafiles" do
+      mediafiles = (1..2).collect { Factory(:mediafile) }
+      mediafiles += (1..2).collect { Factory(:image) }
+      mediafiles += (1..2).collect { Factory(:audiofile) }
+      
+      document = Factory  :document,
+                          :mediafiles => mediafiles
+      document_json = Yajl::Parser.parse document.to_json
+      
+      mediafiles_array = mediafiles.collect do |mediafile|
+        Waxing.create :caption => "Some test you got here", 
+                      :document => document, 
+                      :mediafile => mediafile,
+                      :account => document.account
+                      
+        mediafile_hash = {  "title" => mediafile.title,
+                            "caption" => document.caption_for(mediafile),
+                            "type" => mediafile.class.name,
+                            "authors_list" => mediafile.authors_list,
+                            "url" => mediafile.file.url,
+                            "content_type" => mediafile.file_content_type }
+                            
+        if mediafile.kind_of? Image
+          mediafile_hash.merge!({ 
+            "url" => {  "original" => mediafile.file.url(:original),
+                        "thumb" => mediafile.file.url(:thumb),
+                        "small" => mediafile.file.url(:small),
+                        "medium" => mediafile.file.url(:medium),
+                        "large" => mediafile.file.url(:large),
+                        "system_default" => mediafile.file.url(:system_default),
+                        "system_thumb" => mediafile.file.url(:system_thumb),
+                        "system_icon" => mediafile.file.url(:system_icon) }
+          })
+        end
+        mediafile_hash
+      end
+      
+      document_json["mediafiles"].should == mediafiles_array
+    end
+  end
 end
