@@ -33,3 +33,4 @@ test:
   username: root
   password:
   socket: /tmp/mysql.sock
+
