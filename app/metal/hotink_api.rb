@@ -33,6 +33,38 @@ class HotinkApi < Sinatra::Base
     @account = Account.find_by_name(name)
   end
  
+  get "/search.:format" do
+    load_account(subdomain)
+    
+    if params[:q]
+      @hits = @account.articles.published.search(params[:q], :order => "published_at desc")
+    else
+      @hits = []
+    end
+    
+    case params[:format]
+    when "xml"
+      content_type "text/xml"
+      if @hits.empty?
+        Builder::XmlMarkup.new.search_results
+      else
+        Builder::XmlMarkup.new.search_results do |xml|
+          @hits.each { |result| xml << result.to_xml }
+        end
+      end
+    when "json"
+      content_type "application/json"
+      results_hash = @hits.collect { |c| c.to_hash }
+      if callback = params[:callback]
+        "#{callback}(#{Yajl::Encoder.encode(results_hash)})"
+      else
+        Yajl::Encoder.encode(results_hash)
+      end
+    else
+      halt 404, "Not available in the format requested."
+    end
+  end
+ 
   get "/articles.:format" do
     load_account(subdomain)
     page = params[:page] || 1
@@ -159,7 +191,7 @@ class HotinkApi < Sinatra::Base
     rescue ActiveRecord::RecordNotFound => e
       halt 404, "Record not found or unavailable."
     end
-    respond_with  @section.articles.paginate(:page => 1, :per_page => 20),
+    respond_with  @section.articles.published.by_date_published.paginate(:page => 1, :per_page => 20),
                   params[:format], params[:callback]
   end
 

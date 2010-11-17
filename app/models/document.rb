@@ -223,31 +223,11 @@ class Document < ActiveRecord::Base
   end
   
   def to_json(options={})
-    mediafiles_hash = mediafiles.collect do |mediafile|
-       mediafile_hash = { :title => mediafile.title,
-                          :caption => caption_for(mediafile),
-                          :type => mediafile.class.name,
-                          :authors_list => mediafile.authors_list,
-                          :url => mediafile.file.url,
-                          :content_type => mediafile.file_content_type  }
-         
-       if mediafile.kind_of? Image
-         mediafile_hash.merge!({ 
-           :url => {  "original" => mediafile.file.url(:original),
-                       "thumb" => mediafile.file.url(:thumb),
-                       "small" => mediafile.file.url(:small),
-                       "medium" => mediafile.file.url(:medium),
-                       "large" => mediafile.file.url(:large),
-                       "system_default" => mediafile.file.url(:system_default),
-                       "system_thumb" => mediafile.file.url(:system_thumb),
-                       "system_icon" => mediafile.file.url(:system_icon) }
-         })
-       end
-       
-       mediafile_hash
-     end
-    
-    Yajl::Encoder.encode({
+    Yajl::Encoder.encode to_hash
+  end
+  
+  def to_hash
+    {
        :id => id,
        :type => self.class.name,
        
@@ -261,7 +241,7 @@ class Document < ActiveRecord::Base
        
        :updated_at => updated_at.to_formatted_s(:long),
        :published_at => published? ? published_at.to_formatted_s(:long) :  nil
-     })
+     }
   end
   
   def to_xml(options = {})
@@ -345,5 +325,32 @@ class Document < ActiveRecord::Base
     set_property :delta => :delayed
   end
   
+  private
+  
+  def mediafiles_hash
+     mediafiles.collect do |mediafile|
+       mediafile_hash = { :title => mediafile.title,
+                          :caption => caption_for(mediafile),
+                          :type => mediafile.class.name,
+                          :authors_list => mediafile.authors_list,
+                          :url => mediafile.file.url,
+                          :content_type => mediafile.file_content_type  }
+         
+       if mediafile.kind_of? Image
+         mediafile_hash.merge!({ 
+           :url => {  "original" => mediafile.file.url(:original),
+                       "thumb" => mediafile.file.url(:thumb),
+                       "small" => mediafile.file.url(:small),
+                       "medium" => mediafile.file.url(:medium),
+                       "large" => mediafile.file.url(:large),
+                       "system_default" => mediafile.file.url(:system_default),
+                       "system_thumb" => mediafile.file.url(:system_thumb),
+                       "system_icon" => mediafile.file.url(:system_icon) }
+         })
+       end
+       
+       mediafile_hash
+     end
+  end
   
 end

@@ -679,6 +679,56 @@ describe HotinkApi do
     end
   end
   
+  describe "search" do
+    describe "GET to /search" do
+     context "with a query" do
+        before do
+          @articles = (1..2).collect do |n|
+            Factory :detailed_article, 
+                    :published_at => n.hours.ago, 
+                    :account => @account
+          end
+          Article.stub!(:search).and_return(@articles)
+        end
+      
+        it "should return an XML array of only published, matching articles" do
+          get "/search.xml?q=chicago"
+          
+          articles = @account.articles.published.
+                              search( "chicago", 
+                                      :order => "published_at desc",
+                                      :limit => 20)
+          pagination_options = { :page => 1, :per_page => 20 }
+          
+          last_response.should be_ok
+          last_response.headers['Content-Type'].should == "text/xml;charset=utf-8"
+          last_response.body.should == Builder::XmlMarkup.new.search_results do |xml|
+             articles.each { |article| xml <<  article.to_xml }
+          end
+        end
+        
+        it "should return an JSON array of only published, matching articles" do
+          get "/search.json?q=chicago"
+
+          pagination_options = { :page => 1, :per_page => 20 }
+          last_response.should be_ok
+          last_response.headers['Content-Type'].should == "application/json;charset=utf-8"
+          Yajl::Parser.parse(last_response.body).should be_an(Array)                               
+        end
+      end
+      
+      context "without a query" do
+        it "should return an empty xml array" do
+          get "/search.xml"
+
+          last_response.should be_ok
+          last_response.headers['Content-Type'].should == "text/xml;charset=utf-8"
+          last_response.body.should == Builder::XmlMarkup.new.search_results
+        end
+      end
+     end
+  end
+  
   describe "jsonp" do
     it "should support jsonp on all json end points" do
       callback = "jsonpcallbackfunction"
