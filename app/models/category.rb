@@ -63,6 +63,7 @@ class Category < ActiveRecord::Base
   def to_hash
      { :id => id,
        :name => name,
+       :slug => slug,
        :type => "Category",
        :subcategories => subcategories.collect { |s| s.to_hash } }
   end
