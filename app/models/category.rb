@@ -55,6 +55,17 @@ class Category < ActiveRecord::Base
        end
      end
   end
+  
+  def to_json
+    Yajl::Encoder.encode to_hash
+  end
+  
+  def to_hash
+     { :id => id,
+       :name => name,
+       :type => "Category",
+       :subcategories => subcategories.collect { |s| s.to_hash } }
+  end
 
   # Slug
   attr_protected :slug

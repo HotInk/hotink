@@ -74,4 +74,23 @@ describe Category do
       category.slug.should eql("exciting-this-categorys-exciting")
     end
   end
+  
+  describe "#to_json" do
+    it "should return json representation of category" do
+      category = Factory  :category,
+                          :name => "a title"
+
+      category_json = Yajl::Parser.parse category.to_json
+      category_json["id"].should == category.id
+      category_json["type"].should == "Category"
+      category_json["name"].should == category.name
+    end
+    
+    it "should include subcategories" do
+      category = Factory(:category)
+      subcategories = (1..3).collect { Factory(:category, :parent => category) }
+      category_json = Yajl::Parser.parse category.to_json
+      category_json["subcategories"].should be_an(Array)
+    end
+  end
 end

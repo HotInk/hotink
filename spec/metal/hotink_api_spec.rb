@@ -72,7 +72,9 @@ describe HotinkApi do
     
     describe "GET to /articles" do
       before do
-        @recently_published_articles = (1..2).collect{ |n| Factory(:detailed_article, :published_at => n.hours.ago, :account => @account) }
+        @recently_published_articles = (1..2).collect do |n|
+          Factory(:detailed_article, :published_at => n.hours.ago, :account => @account)
+        end
         @just_published_article = Factory(:detailed_article, :account => @account)
         draft = Factory(:draft_article, :account => @account)
         scheduled = Factory(:scheduled_article, :account => @account)
@@ -80,18 +82,25 @@ describe HotinkApi do
       
       it "should return an XML array of only published articles" do
         get "/articles.xml"
-
+        pagination_options = { :page => 1, :per_page => 20 }
         last_response.should be_ok
         last_response.headers['Content-Type'].should == "text/xml;charset=utf-8"
-        last_response.body.should == @account.articles.published.by_date_published(:desc).paginate(:page => 1, :per_page => 20).to_xml
+        last_response.body.should == @account.articles.published.
+                                              by_date_published(:desc).
+                                              paginate(pagination_options).
+                                              to_xml
       end
 
       it "should return an JSON array of only published articles" do
         get "/articles.json"
+        pagination_options = { :page => 1, :per_page => 20 }
 
         last_response.should be_ok
         last_response.headers['Content-Type'].should == "application/json;charset=utf-8"
-        last_response.body.should == @account.articles.published.by_date_published(:desc).paginate(:page => 1, :per_page => 20).to_json
+        last_response.body.should == @account.articles.published.
+                                              by_date_published(:desc).
+                                              paginate(pagination_options).
+                                              to_json
       end
       
       describe "pagination" do
@@ -209,7 +218,9 @@ describe HotinkApi do
 
         last_response.should be_ok
         last_response.headers['Content-Type'].should == "application/json;charset=utf-8"
-        last_response.body.should == @categories.to_json
+        response_array = Yajl::Parser.parse(last_response.body)
+        response_array.should be_an(Array) 
+        response_array.first["type"].should == "Category"
       end
     end
 
@@ -229,6 +240,14 @@ describe HotinkApi do
         
         it "should find category in json format" do
           get "/categories/#{@category.id}.json"
+
+          last_response.should be_ok
+          last_response.headers['Content-Type'].should == "application/json;charset=utf-8"
+          last_response.body.should == @category.to_json
+        end
+        
+        it "should find category by slug" do
+          get "/categories/#{@category.slug}.json"
 
           last_response.should be_ok
           last_response.headers['Content-Type'].should == "application/json;charset=utf-8"
@@ -255,6 +274,55 @@ describe HotinkApi do
           last_response.should be_ok
           last_response.headers['Content-Type'].should == "application/json;charset=utf-8"
           last_response.body.should == @category.to_json
+        end
+      end
+      
+      
+    end
+  
+    describe "GET to /categories/:id/articles.xml" do
+      describe "requesting a category's articles by category id" do
+        before do
+          @category = Factory(:category, :account => @account)
+          @articles = (1..3).collect do |n|
+            Factory :published_article,
+                    :published_at => n.hours.ago,
+                    :section => @category,
+                    :account => @account
+          end
+        end
+        
+        it "should find category's articles in xml format" do
+          get "/categories/#{@category.id}/articles.xml"
+          
+          last_response.should be_ok
+          last_response.headers['Content-Type'].should == "text/xml;charset=utf-8"
+          last_response.body.should == @category.articles.published.
+                                                 by_date_published(:desc).
+                                                 paginate(:page => 1, :per_page => 20).
+                                                 to_xml
+        end
+        
+        it "should find category's articles in json format" do
+          get "/categories/#{@category.id}/articles.json"
+
+          last_response.should be_ok
+          last_response.headers['Content-Type'].should == "application/json;charset=utf-8"
+          last_response.body.should == @category.articles.published.
+                                                 by_date_published(:desc).
+                                                 paginate(:page => 1, :per_page => 20).
+                                                 to_json
+        end
+        
+        it "should find category's articles by slug" do
+          get "/categories/#{@category.slug}/articles.json"
+
+          last_response.should be_ok
+          last_response.headers['Content-Type'].should == "application/json;charset=utf-8"
+          last_response.body.should == @category.articles.published.
+                                                 by_date_published(:desc).
+                                                 paginate(:page => 1, :per_page => 20).
+                                                 to_json
         end
       end
     end

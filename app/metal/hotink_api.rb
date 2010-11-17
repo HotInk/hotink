@@ -114,20 +114,53 @@ class HotinkApi < Sinatra::Base
   get "/categories.:format" do
     load_account(subdomain)
   
-    @sections = @account.categories.active.sections.all
-  
-    respond_with @sections, params[:format], params[:callback]
+    @categories = @account.categories.active.sections.all
+
+    case params[:format]
+    when "xml"
+      content_type "text/xml"
+      if @categories.empty?
+        Builder::XmlMarkup.new.categories
+      else
+        @categories.to_xml
+      end
+    when "json"
+      content_type "application/json"
+      categories_hash = @categories.collect { |c| c.to_hash }
+      if callback = params[:callback]
+        "#{callback}(#{Yajl::Encoder.encode(categories_hash)})"
+      else
+        Yajl::Encoder.encode(categories_hash)
+      end
+    else
+      halt 404, "Not available in the format requested."
+    end
   end
 
   get "/categories/:id.:format" do
     load_account(subdomain)
     begin
-      @section = @account.categories.active.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => e
       @section = @account.categories.active.find_by_name(params[:id])
-      halt 404, "Record not found or unavailable." unless @section
+      @section ||= @account.categories.active.find_by_slug(params[:id])
+      @section ||= @account.categories.active.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      halt 404, "Record not found or unavailable."
     end
+    
     respond_with @section, params[:format], params[:callback]
+  end
+
+  get "/categories/:id/articles.:format" do
+    load_account(subdomain)
+    begin
+      @section = @account.categories.active.find_by_name(params[:id])
+      @section ||= @account.categories.active.find_by_slug(params[:id])
+      @section ||= @account.categories.active.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      halt 404, "Record not found or unavailable."
+    end
+    respond_with  @section.articles.paginate(:page => 1, :per_page => 20),
+                  params[:format], params[:callback]
   end
 
   get "/blogs.:format" do
