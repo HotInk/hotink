@@ -12,7 +12,7 @@ html, body { height: 100%; }
 body { background-color: #FFF; color: #1A1A1A; margin: 0 auto; text-algin: center;}
 body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
 div#page_wrapper { min-height: 100%; height: auto !important; height: 100%; margin-bottom: -30px; /* the bottom margin is the negative value of the footer's height */}
-div#page_container { background-color: #FFF; margin: 0 auto; max-width: 74em; padding: 1.5em 1.5em 1em 1.5em; text-align: left; -webkit-border-radius: 5px; -moz-border-radius: 5px; }
+div#page_container { background-color: #FFF; margin: 0 auto; max-width: 74em; padding: 1.5em 1.5em 1em 1.5em; text-align: left;  }
 h1 { font-size: 2em; }
 h2 { font-size: 1.5em; margin: 0.83em 0;}
 h3 { font-size: 1.17em; margin: 1em 0; }
@@ -885,7 +885,7 @@ ol#network_articles p.account { padding: 2px 3px; height: 16px; overflow: hidden
 /*---------------------------------------*/
 
 #footer_push { height: 30px; /* #footer_push must be the same height as #footer */  }
-#footer { width: 99%; height: 30px; padding-right: 1%;background-color: #333; text-align: right; border-right: 1px solid #DDD;}
+#footer { width: 99%; height: 30px; padding-right: 1%;background-color: #222; text-align: right; border-right: 1px solid #DDD;}
 #footer p {
   margin: 0.7em 0;
   float: right;

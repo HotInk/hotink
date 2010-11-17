@@ -1,9 +1,9 @@
 <div id="navigation" class="clearfix">
 	<div class="container_12" class="clearfix">
-		
 		<div id="logo" class="grid_2 alpha"><%= image_tag '/images/logo_tiny.png' %></div>
-		<div id="user_details"><p><%= link_to current_user.login, edit_user_path(current_user, :format => :html), :class=>"weblink", :id => "edit_current_user_link" %>  <%= button_link_to "Log out", logout_url, :method=>:get, :class=>"small", :id=>"user_logout_button" %></p></div>
-	  
+		
+		<div id="user_details"><p>Logged in as: <%= link_to current_user.login, edit_user_path(current_user, :format => :html), :class=>"weblink", :id => "edit_current_user_link" %>  <%= button_link_to "Logout", logout_url, :method=>:get, :class=>"micro", :id=>"user_logout_button" %></p></div>
+	
 		<ol id="links" class="grid_12">
 			<li <%= 'class="current"' if controller_name == "dashboards" %>><%= link_to "Dashboard", dashboard_url %></li>
 			<li <%= 'class="current"' if controller_name == "articles" %>><%= link_to "Articles", articles_url %></li>
@@ -18,17 +18,18 @@
 
 			
 			<% if permit?("(manager of account) or (editor of account) or admin")%>
-				<% if @account.network_owner? %><li <%= 'class="current"' if (controller_name=="networks") %>><%= link_to "Network", network_url %></li><% end %>
+				<% if @account.network_owner? %><li style="float:right;" <%= 'class="current"' if (controller_name=="networks") %>><%= link_to "Network", network_url %></li><% end %>
 			<% end %>
 		
 			<% if permit?("(manager of account) or admin")%>
-				<li <%= 'class="current"' if (controller_name=="designs"||controller_name=="templates"||controller_name=="template_files") %>><%= link_to "Design", current_design_url %></li>
+				<li style="float:right;" <%= 'class="current"' if (controller_name=="designs"||controller_name=="templates"||controller_name=="template_files") %>><%= link_to "Design", current_design_url %></li>
 			<% end %>
 		</ol>
 		
 		<% if permit?("(manager of account)") || permit?("admin") %>
 			<div id="account_details">
-				<img src="/loading_small_222.gif" style="float:left;margin-right:0.5em;margin-top:0.25em;display:none;" class="spinner"/> 
+				<img src="/loading_small_222.gif" style="float:left;margin-right:0.5em;margin-top:0.25em;display:none;" class="spinner"/>
+				<%= button_link_to "Manage account", edit_account_url(@account), :class=>"tiny modal" %> 
 			</div>
 		<% end %>
 		<div id="flash"><%= render_flash(flash[:notice]) %> </div>
