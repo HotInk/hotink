@@ -48,8 +48,9 @@ class Article < Document
     end
   end
   
-  def to_json
-    Yajl::Encoder.encode to_hash.merge({ "section" => section.try(:name) })
+  def to_hash
+    document_hash = super
+    document_hash.merge :section => section.try(:name)
   end
   
   def revoke_sign_off(user)
