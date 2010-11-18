@@ -48,6 +48,10 @@ class Article < Document
     end
   end
   
+  def to_json
+    Yajl::Encoder.encode to_hash.merge({ "section" => section.try(:name) })
+  end
+  
   def revoke_sign_off(user)
     if awaiting_attention? && signed_off_by?(user)
       self.sign_offs.find_by_user_id(user.id).destroy

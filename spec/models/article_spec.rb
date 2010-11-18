@@ -189,6 +189,13 @@ describe Article do
       article_json["type"].should == "Article"
     end
     
+    it "should include article's section" do
+      section = Factory(:category)
+      article = Factory(:article, :section => section)
+      article_json = Yajl::Parser.parse article.to_json
+      article_json["section"].should == section.name
+    end
+    
     it "should include publication time" do
       draft_article = Factory(:draft_article)
       draft_article_json = Yajl::Parser.parse draft_article.to_json
