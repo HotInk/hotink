@@ -239,8 +239,8 @@ class Document < ActiveRecord::Base
        
        :mediafiles => mediafiles_hash,
        
-       :updated_at => updated_at.to_formatted_s(:long),
-       :published_at => published? ? published_at.to_formatted_s(:long) :  nil
+       :updated_at => updated_at.to_datetime.strftime("%b. %e, %Y %l:%m%P"),
+       :published_at => published? ? published_at.to_datetime.strftime("%b. %e, %Y %l:%m%P") :  nil
      }
   end
   
