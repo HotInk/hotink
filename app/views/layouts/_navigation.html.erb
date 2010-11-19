@@ -2,8 +2,15 @@
 	<div class="container_12" class="clearfix">
 		
 		<div id="logo" class="grid_2 alpha"><%= image_tag '/images/logo_tiny.png' %></div>
-		<div id="user_details"><p><%= link_to current_user.login, edit_user_path(current_user, :format => :html), :class=>"weblink", :id => "edit_current_user_link" %>  <%= button_link_to "Log out", logout_url, :method=>:get, :class=>"small", :id=>"user_logout_button" %></p></div>
-	  
+    <div id="user_details"><p>
+      <ul>
+        <li><%= current_user.login %>&#9660;</li>
+        <li class="first_hidden"><%= button_link_to "Manage account", edit_user_path(current_user, :format => :html), :class=>"tiny modal", :id => "edit_current_user_link" %></li>
+        <li><%= button_link_to "Manage site", edit_account_url(@account), :class=>"tiny modal" %></li>
+        <li><%= button_link_to "Log out", logout_url, :method=>:get, :class=>"tiny", :id=>"user_logout_button" %></li>
+      </ul>  
+    </p></div>
+	    
 		<ol id="links" class="grid_12">
 			<li <%= 'class="current"' if controller_name == "dashboards" %>><%= link_to "Dashboard", dashboard_url %></li>
 			<li <%= 'class="current"' if controller_name == "articles" %>><%= link_to "Articles", articles_url %></li>
@@ -28,7 +35,8 @@
 		
 		<% if permit?("(manager of account)") || permit?("admin") %>
 			<div id="account_details">
-				<img src="/loading_small_222.gif" style="float:left;margin-right:0.5em;margin-top:0.25em;display:none;" class="spinner"/> 
+				<img src="/loading_small_222.gif" style="float:left;margin-right:0.5em;margin-top:0.25em;display:none;" class="spinner"/>
+         
 			</div>
 		<% end %>
 		<div id="flash"><%= render_flash(flash[:notice]) %> </div>

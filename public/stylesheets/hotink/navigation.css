@@ -9,10 +9,10 @@
 		-moz-border-radius-topleft: 4px; -moz-border-radius-topright: 4px;
 		-webkit-transition-property: border, background-color;
 		-webkit-transition-duration: 0.2s;
-		-webkit-transition-timing-funciton: linear;
+		-webkit-transition-timing-funciton: ease-in-out;
 		-moz-transition-property: border, background-color;
 		-moz-transition-duration: 0.2s;
-		-moz-transition-timing-funciton: linear;
+		-moz-transition-timing-funciton: ease-in-out;
 }
 #navigation ol#links li a { color: #000; }
 #navigation ol#links li.current { background-color: #FFF; color: #515151; margin-bottom: 0px; padding-bottom: 3px; border-bottom-width: 1px; border-bottom-color: #FFF; }
@@ -23,9 +23,53 @@
 
 #navigation #user_details { 
 	float: right; padding: 2px; padding-right: 0px; margin-right: -2px margin-left: 5px; text-align: center; border: 1px solid #CCC; background-color: #F3F3F3; 
-	-webkit-border-radius: 2px; -moz-border-radius: 2px;
+	-webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px;
+  height: 16px;
+  -webkit-transition-property: height, box-shadow; -moz-transition-property: height, box-shadow; -o-transition-property: height, box-shadow; -ms-transition-property: height, box-shadow; transition-property: height, box-shadow;
+  -webkit-transition-duration: 0.3s; -moz-transition-duration: 0.3s;
+	-webkit-transition-timing-funciton: ease-in-out; -moz-transition-timing-funciton: ease-in-out;
+  overflow: hidden;
+  position: absolute;
+  right: 5px;
+  z-index: 100;
 }
 #navigation #user_details p { display: inline-block; font-size: 0.85em; margin-bottom: 0; }
+#navigation #user_details a { text-decoration: none; }
+#navigation #user_details  {
+  padding-bottom: 0px;
+  height: 18px;
+}
+#navigation #user_details li {
+  width: 100%;
+}
+#navigation #user_details li.first_hidden {
+  padding-top: 5px !important;
+}
+/* Begin horrible CSS trickery to make buttons display full-width without breaking. Forgive me father for I have sinned. */
+  #navigation #user_details li a {
+    width: 100%;
+    padding: 0px;
+    margin-bottom: -3px;
+    margin-left: -10px;
+    padding-right: 4px;
+    padding-left: 3px;
+  }
+  #navigation #user_details li a > span {
+    float: left;
+    width: inherit;
+    
+  }
+  #navigation #user_details li a > span > span {
+    float: left;
+    width: inherit;
+    margin-top: -3px;
+    margin-bottom: -3px;
+  }
+/* End */
+#navigation #user_details:hover {
+  height: 71px;
+  -webkit-box-shadow: 0px 0px 10px #000; -moz-box-shadow: 0px 0px 10px #000; -o-box-shadow: 0px 0px 10px #000; -ms-box-shadow: 0px 0px 10px #000; box-shadow: 0px 0px 10px #000;
+}
 
 #navigation #account_details{ float: right; font-size: 1.0em; padding: 5px; }
 
