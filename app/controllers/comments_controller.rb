@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
       page = params[:page] || 1
       per_page = params[:per_page] || 10  
       @search_query = params[:q]
-      @comments = Comment.search(@search_query, :page => page, :per_page => per_page)
+      @comments = @account.comments.search(@search_query, :page => page, :per_page => per_page)
     else
       @comments = []
     end
