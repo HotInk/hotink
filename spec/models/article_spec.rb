@@ -53,6 +53,17 @@ describe Article do
     article = Factory(:detailed_article)
     article.to_liquid.should == {'title' => article.title, 'subtitle' => article.subtitle, 'authors_list' => article.authors_list, 'bodytext' => article.bodytext, 'excerpt' => article.excerpt, 'id' => article.id.to_s }
   end
+  
+  it "should remove itself from lead articles, if deleted" do
+    account = @article.account
+    first_lead = Factory(:published_article, :account => account)
+    second_lead = Factory(:published_article, :account => account)
+    account.update_attribute :lead_article_ids, [first_lead.id.to_s, second_lead.id.to_s]
+    
+    first_lead.destroy
+    
+    account.lead_article_ids.should eql([second_lead.id.to_s])
+  end
 
   describe "permissions" do
     it "should know who has permission to edit/update, based on its publication status" do
@@ -203,7 +214,7 @@ describe Article do
       
       published_article = Factory(:published_article)
       published_article_json = Yajl::Parser.parse published_article.to_json
-      published_article_json["published_at"].should == published_article.published_at.to_formatted_s(:long)
+      published_article_json["published_at"].should == published_article.published_at.to_datetime.strftime("%b. %e, %Y %l:%m%P")
     end
   end
 end

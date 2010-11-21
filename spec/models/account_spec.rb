@@ -110,15 +110,17 @@ describe Account do
       @user.has_role?('staff', @account).should be_false
     end
   end
-  
-  it { should have_many(:designs) }
-  
-  it "should keep track of which design is currently being shown to users" do
-    @account.current_design.should be_nil
-    @design = Factory(:design, :account => @account)
-    @account.current_design = @design
 
-    @account.current_design.should == @design
+  describe "designs" do
+    it { should have_many(:designs) }
+  
+    it "should keep track of which design is currently being shown to users" do
+      @account.current_design.should be_nil
+      @design = Factory(:design, :account => @account)
+      @account.current_design = @design
+
+      @account.current_design.should == @design
+    end
   end
   
   it "should return formal name as display name, if provided" do

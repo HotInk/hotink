@@ -18,7 +18,12 @@ class Article < Document
   end  
   
   def to_liquid
-    {'title' => title, 'subtitle' => subtitle, 'authors_list' => authors_list, 'bodytext' => bodytext, 'excerpt' => excerpt, 'id' => id.to_s}
+    { 'title' => title, 
+      'subtitle' => subtitle, 
+      'authors_list' => authors_list, 
+      'bodytext' => bodytext, 
+      'excerpt' => excerpt, 
+      'id' => id.to_s }
   end
   
   def excerpt
@@ -88,6 +93,18 @@ class Article < Document
       self.tag_list = new_tags
     else
       self.tag_list = self.tag_list.to_s + ", #{new_tags}"
+    end
+  end
+  
+  before_destroy :remove_from_lead_articles
+  
+  private
+  
+  def remove_from_lead_articles
+    if account.lead_article_ids.include?(id.to_s)
+      new_lead_article_ids = account.lead_article_ids.dup
+      new_lead_article_ids.delete(id.to_s)
+      account.update_attribute :lead_article_ids, new_lead_article_ids
     end
   end
 end
