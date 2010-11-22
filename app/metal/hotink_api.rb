@@ -185,7 +185,10 @@ class HotinkApi < Sinatra::Base
   get "/categories/:id/articles.:format" do
     load_account(subdomain)
     begin
-      @section = @account.categories.active.find_by_name(params[:id])
+      @section = @account.categories.active.sections.find_by_name(params[:id])
+      @section ||= @account.categories.active.sections.find_by_slug(params[:id])
+      @section ||= @account.categories.active.sections.find(params[:id])
+      @section ||= @account.categories.active.find_by_name(params[:id])
       @section ||= @account.categories.active.find_by_slug(params[:id])
       @section ||= @account.categories.active.find(params[:id])
     rescue ActiveRecord::RecordNotFound => e
