@@ -17,7 +17,6 @@ describe Design do
   it { should have_many(:javascript_files) }
   
   it { should have_one(:article_template) }
-  it { should have_one(:page_template) }  
   it { should have_one(:category_template) }
   it { should have_one(:search_results_template) }
   it { should have_one(:issue_index_template) }
@@ -27,13 +26,13 @@ describe Design do
   it { should have_one(:entry_template) }
   it { should have_one(:not_found_template) }
 
+  it { should have_many(:page_templates) }  
   it { should have_many(:front_page_templates) }
   it { should belong_to(:current_front_page_template) }
   
   it "should create view templates on create" do
     design =  Factory(:design)
     design.article_template.should be_kind_of(ArticleTemplate)
-    design.page_template.should be_kind_of(PageTemplate)
     design.category_template.should be_kind_of(CategoryTemplate)
     design.search_results_template.should be_kind_of(SearchResultsTemplate)
     design.issue_index_template.should be_kind_of(IssueIndexTemplate)
@@ -48,6 +47,12 @@ describe Design do
     design =  Factory(:design)
     design.front_page_templates.first.should be_kind_of(FrontPageTemplate)
     design.front_page_templates.first.name.should eql('Default front page')
+  end
+  
+  it "should create one page template to get things started" do
+    design =  Factory(:design)
+    design.page_templates.first.should be_kind_of(PageTemplate)
+    design.page_templates.first.name.should eql('Default page template')
   end
   
   it "should know if it is the current design" do

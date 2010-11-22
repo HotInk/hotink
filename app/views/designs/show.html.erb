@@ -20,14 +20,12 @@
 	</ul>
 	<h3>View templates</h3>
 	<ul id="view_templates">
-	<% [@design.article_template, @design.page_template, @design.category_template, @design.search_results_template,
+	<% [@design.article_template, @design.category_template, @design.search_results_template,
 		@design.issue_index_template, @design.issue_template, @design.blog_index_template, @design.blog_template, 
 		@design.entry_template, @design.not_found_template].each do |template| -%>
 		<li class="<%= cycle 'even-row', 'odd-row' %>">
 			<% if template.is_a?(ArticleTemplate) %>	
 				<%= link_to "Article", edit_design_template_path(@design, template) %>
-			<% elsif template.is_a?(PageTemplate) %>
-				<%= link_to "Page", edit_design_template_path(@design, template) %> 
 			<% elsif template.is_a?(CategoryTemplate) %>
 				<%= link_to "Category", edit_design_template_path(@design, template) %>
 			<% elsif template.is_a?(SearchResultsTemplate) %>
@@ -49,9 +47,24 @@
 		</li>
 	<% end %>
 	</ul>
+
+	<% if @design.page_templates.blank? %>
+		<div class="grid_12 alpha" style="margin-bottom: 20px;"><h3>No page templates</h3> <%= link_to 'Create', new_design_template_path(@design, :role => 'page'), :class => "link green" %></div>
+	<% else %>
+		<h3>Page templates</h3><%= link_to 'New', new_design_template_path(@design, :role => 'page'), :class => "link green" %>
+		<ul id="page_templates">
+		<% for template in @design.page_templates -%>
+			<li class="<%= cycle 'even', 'odd' %>">
+				<%= link_to template.name, edit_design_template_path(@design, template) %> 
+				<%= link_to "x", design_template_path(@design, template), :method => :delete, :confirm => "Are you sure you want to delete\n\n#{template.name}\n\nfrom this design? Once deleted it can't be recovered.", :class=>"destroy_link" %> 
+				<span class="last_updated"><%= template.created_at==template.updated_at ? "Created " : "Last updated "  %><%= template.updated_at.to_s(:standard) %></span>
+			</li>
+		<% end %>
+		</ul>
+	<% end %>
 	
 	<% if @design.partial_templates.blank? %>
-		<div class="gird_12 alpha" style="margin-bottom: 20px;"><h3>No partial templates</h3> <%= link_to 'Create', new_design_template_path(@design, :role => 'partial'), :class => "link green" %></div>
+		<div class="grid_12 alpha" style="margin-bottom: 20px;"><h3>No partial templates</h3> <%= link_to 'Create', new_design_template_path(@design, :role => 'partial'), :class => "link green" %></div>
 	<% else %>
 		<h3>Partial templates</h3><%= link_to 'New', new_design_template_path(@design, :role => 'partial'), :class => "link green" %>
 		<ul id="partial_templates">
@@ -64,7 +77,6 @@
 		<% end %>
 		</ul>
 	<% end %>
-	
 	
 	<h3>Layouts</h3><%= link_to 'New', new_design_template_path(@design, :role => 'layout'), :class => "link green" %>
 	<ul id="layouts">
@@ -81,7 +93,7 @@
 <div id="template_files" class="grid_12 alpha">
 	<h2>Supporting files</h2>
 	<% if @design.stylesheets.blank?%>
-	<div class="gird_12 alpha" style="margin-bottom: 20px;"><h3>No stylesheets</h3> <%= link_to 'Upload', new_design_template_file_path(@design), :class => "link green" %></div>
+	<div class="grid_12 alpha" style="margin-bottom: 20px;"><h3>No stylesheets</h3> <%= link_to 'Upload', new_design_template_file_path(@design), :class => "link green" %></div>
 	<% else %>
 		<h3>Stylesheets</h3><%= link_to 'New', new_design_template_file_path(@design), :method => :get, :class => "link green" %>
 		<ul id="stylesheets">

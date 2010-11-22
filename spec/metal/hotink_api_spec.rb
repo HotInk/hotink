@@ -223,7 +223,7 @@ describe HotinkApi do
         response_array.first["type"].should == "Category"
       end
     end
-
+    
     describe "GET to /categories/:id.xml" do
       describe "requesting a category by id" do
         before do

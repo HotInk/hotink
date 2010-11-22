@@ -101,7 +101,7 @@ class Article < Document
   private
   
   def remove_from_lead_articles
-    if account.lead_article_ids.include?(id.to_s)
+    if account.lead_article_ids && account.lead_article_ids.include?(id.to_s)
       new_lead_article_ids = account.lead_article_ids.dup
       new_lead_article_ids.delete(id.to_s)
       account.update_attribute :lead_article_ids, new_lead_article_ids

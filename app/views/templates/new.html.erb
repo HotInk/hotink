@@ -5,9 +5,9 @@
 		<%= form.commit_button "Create" %>
 	<% end %>
 	<% form.inputs :class => "grid_12" do %>
-		<% if form.object.kind_of?(ViewTemplate)&&!form.object.kind_of?(FrontPageTemplate) %>
+		<% if form.object.kind_of?(ViewTemplate) && !form.object.kind_of?(FrontPageTemplate) && !form.object.kind_of?(PageTemplate) %>
 			<%= form.input :layout, :include_blank => "No layout" %>
-		<% elsif form.object.kind_of?(FrontPageTemplate) %>
+		<% elsif form.object.kind_of?(FrontPageTemplate) || form.object.kind_of?(PageTemplate) %>
 			<%= form.input :layout, :include_blank => "No layout" %>
 			<%= form.input :name %>
 		<% else %>

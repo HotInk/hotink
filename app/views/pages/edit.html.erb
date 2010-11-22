@@ -5,7 +5,8 @@
 		<%= form.input :name, :label => (form.object.parent_url + "/"), :wrapper_html => { :class => "grid_8" } %>
 		<li class="grid_2" style="text-align:right;"><%= link_to "View on site", "/pages#{@page.url}", :class => "link blue", :target => :blank %></li>
 		<%= form.commit_button :class => "grid_2" %>
-		<%= form.input :parent, :collection => (page_form_options_collection(@account)  - [@page]).collect{ |page| [page.url, page.id] }, :include_blank => "Select a parent page", :wrapper_html => { :class => "grid_12 alpha"} %>
+		<%= form.input :parent, :collection => (page_form_options_collection(@account)  - [@page]).collect{ |page| [page.url, page.id] }, :include_blank => "Select a parent page", :wrapper_html => { :class => "grid_3 alpha", :style => "clear:left;"} %>
+		<%= form.input :template, :collection => @account.designs.all.collect { |d| d.page_templates }.flatten, :group_by => :design, :include_blank => "No template", :wrapper_html => { :class => "grid_9 alpha"} %>
 		<%= form.input :contents %>
 	<% end %>
 <% end %>

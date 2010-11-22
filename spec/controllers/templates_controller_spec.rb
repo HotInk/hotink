@@ -29,6 +29,13 @@ describe TemplatesController do
       should render_template(:new)
     end
     
+    it "should build page template" do
+      get :new, :design_id => @design.id, :role => 'page'
+      should assign_to(:tplate).with_kind_of(PageTemplate)
+      should render_template(:new)
+      should render_with_layout(:hotink)
+    end
+    
     it "should build front page template" do
       get :new, :design_id => @design.id, :role => 'front_page'
       should assign_to(:tplate).with_kind_of(FrontPageTemplate)
@@ -54,6 +61,12 @@ describe TemplatesController do
     it "should create partial template" do
       post :create, :design_id => @design.id, :partial_template => Factory.attributes_for(:partial_template, :design => @design)
       should assign_to(:tplate).with_kind_of(PartialTemplate)
+      should respond_with(:redirect)
+    end
+    
+    it "should create page template" do
+      post :create, :design_id => @design.id, :page_template => Factory.attributes_for(:page_template, :design => @design)
+      should assign_to(:tplate).with_kind_of(PageTemplate)
       should respond_with(:redirect)
     end
     

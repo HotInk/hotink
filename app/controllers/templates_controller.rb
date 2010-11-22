@@ -17,6 +17,8 @@ class TemplatesController < ApplicationController
       @tplate = @design.partial_templates.build
     when 'front_page'
       @tplate = @design.front_page_templates.build
+    when 'page'
+      @tplate = @design.page_templates.build
     end
   end
   
@@ -37,6 +39,8 @@ class TemplatesController < ApplicationController
         @tplate = @design.partial_templates.build(params[:partial_template])
      elsif params[:front_page_template]
        @tplate = @design.front_page_templates.build(params[:front_page_template])
+     elsif params[:page_template]
+        @tplate = @design.page_templates.build(params[:page_template])
      end
 
      @tplate.save!

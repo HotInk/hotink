@@ -8,13 +8,13 @@ class Design < ActiveRecord::Base
   has_many :view_templates
   has_many :layouts
   has_many :partial_templates
+  has_many :page_templates
   
   has_many :template_files
   has_many :stylesheets
   has_many :javascript_files
   
   has_one :article_template
-  has_one :page_template
   has_one :category_template
   has_one :search_results_template
   has_one :issue_index_template
@@ -37,7 +37,6 @@ class Design < ActiveRecord::Base
   
   def create_view_templates
     self.create_article_template
-    self.create_page_template
     self.create_category_template
     self.create_search_results_template
     self.create_issue_index_template
@@ -47,6 +46,7 @@ class Design < ActiveRecord::Base
     self.create_entry_template
     self.create_not_found_template
     
+    self.page_templates.create(:name => 'Default page template')
     self.front_page_templates.create(:name => 'Default front page')
   end
   
