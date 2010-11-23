@@ -6,6 +6,7 @@ doc/app
 log/*.log
 log/*.pid
 doc/app
+doc/README_FOR_APP
 tmp/*
 public/sounds
 public/images
