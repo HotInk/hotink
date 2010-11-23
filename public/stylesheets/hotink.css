@@ -848,7 +848,7 @@ ol#designs p { padding: 7px 10px 0 10px; }
 
 ol#network_articles li.network_original { background-color: #FEDBE4; }
 
-ol#network_articles p.account { padding: 2px 3px; height: 16px; overflow: hidden; margin-bottom: 5px; font-weight: 400; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+ol#network_articles p.account { padding: 2px 3px; overflow: hidden; margin-bottom: 5px; font-weight: 400; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 .color_0 { background-color: #7991FF; color: white; }
 .color_1 { background-color: #FF7C41; color: white; }
 .color_2 { background-color: #2A6328; color: white; }
