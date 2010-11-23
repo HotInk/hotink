@@ -10,7 +10,7 @@
 /* Main style */
 html, body { height: 100%; }
 body { background-color: #FFF; color: #1A1A1A; margin: 0 auto; text-algin: center;}
-body, p, ol, ul, td { font-family: "lucida grande", verdana, arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
+body, p, ol, ul, td { font-family: "Helvetica Neue", arial, helvetica, sans-serif; font-size: 13.34px; line-height: 1.2; }
 div#page_wrapper { min-height: 100%; height: auto !important; height: 100%; margin-bottom: -30px; /* the bottom margin is the negative value of the footer's height */}
 div#page_container { background-color: #FFF; margin: 0 auto; max-width: 74em; padding: 1.5em 1.5em 1em 1.5em; text-align: left;  }
 h1 { font-size: 2em; }
@@ -404,7 +404,7 @@ div#custom_image_sizes_container, div#system_image_sizes_container {
 /* Article/Entry forms */
 #article_title, #entry_title 			{ font-size: 30px; }
 #article_subtitle, #entry_subtitle 		{ font-size: 22px; }
-
+#article_bodytext, #entry_bodytext		{ font-size: 1.3em; padding: 5px 1px 5px 1px; font-weight: 200; }
 
 /* Author tokenizing */
 #article_author_ids_input ul.token-input-list, 
@@ -440,8 +440,6 @@ div#custom_image_sizes_container, div#system_image_sizes_container {
 #article_section_id_input					{ padding-left: 15px; }
 #article_section_id							{ font-size: 21px; background: none; border: 1px solid #AAA; width: 100%; }
 
-#article_bodytext							{ padding-top: 5px; padding-bottom: 5px; }
-
 #bodytext_preview_link 						{ font-size: 90%; color: grey;}
 
 /* Article/Entry bodytext preview modal */
@@ -468,6 +466,8 @@ div#custom_image_sizes_container, div#system_image_sizes_container {
 #status.published span { color: #00DD00;}
 #status.awaiting_attention span { color: #00AF2E;}
 #status ul { margin: 10px 0; }
+#network_status { line-height: 1.35; padding: 0 10px 10px 10px; }
+#network_status strong { font-weight: bold; }
 
 #status small { display: block; margin-top: 5px; font-weight: 200; font-size: 60%; color: #333333;}
 #status small strong { font-weight: 600; }
@@ -752,23 +752,6 @@ ol.blogs.small ol.articles li .date p + p			{ display: none; }
 
 #contributors { font-size: 1.4em; }
 #contributors li { margin-bottom: 10px; }
-
-#entry_form { width: 68%; float:left; }
-#entry_form h1 strong { color: #444; font-weight: normal;}
-#entry_form h3 { font-weight: normal; font-size: 1.5em; margin: 0.25em 0;}
-#entry_form #entry_title { margin-bottom: 0.5em; font-size: 1.9em; height: 1.2em; padding: 0.1em;}
-#entry_form #entry_subtitle { margin-bottom: 0.75em; font-size: 1.4em; height: 1.2em; padding: 0.2em; width: 99.75%;}
-#entry_form #entry_date { font-size: 14px; height: 1.2em; margin: 0.125em 0; padding: 0.125em 0; background-color: #F9F9F9;}
-#entry_form #entry_section_id { height: 1.6em; max-width: 22em; font-size: 14px; margin: 0.25em 0; background-color: #F9F9F9; }
-#entry_form small { color: #999; font-style: italic; }
-#entry_form #entry_bodytext { width:99%; border: 1px solid #999; background-color: #F9F9F9; height: 400px; padding: 5px; font-family:georgia,"times new roman",times, serif; color:#333; font-size: 15px; line-height: 21px; }
-#entry_form #entry_summary { width:99%; height: 85px;  background-color: #F9F9F9; border-color: #999; padding: 0.5em; line-height: 1.4; color: #333;}
-#entry_form #authorships_form { background-color: #F9F9F9; }
-#entry_form #entry_authors_list{ border:3px solid #F9F9F9!important;border-left:none;display:block;margin:0px 3px -4px -2px;background-color: #F9F9F9;padding:0px!important;color: #515151;}
-/*IE6-/Win only*/
-/*\*/ * html .tokenizer_input_borderless #article_authors_list { border:3px solid black;margin: -3px 3px -4px 14px:padding-left:10px; } /**/
-#entry_form #autocomplete_populate{ width: 450px;}
-#entry_form #author_list { margin-bottom: 1.5em; line-height: 1.6; }
 
 /*-----------------------------------
 /*		Lists styles

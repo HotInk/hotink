@@ -49,7 +49,7 @@
 		<%= form.input :subtitle, :as => :string %>
 		<%= form.input :author_ids, :label => "Authors", :as => :string, :input_html => { :value => "" } %>
 		<%= form.input :summary, :as => :text, :input_html => { :rows => 2 }, :label => "Excerpt" %>
-		<%= form.input :bodytext, :label => "Bodytext <a id=\"bodytext_preview_link\" href=\"#bodytext_preview\" style=\"float:right\">Preview formatting</a>" %>
+		<%= form.input :bodytext, :label => "Bodytext <a id=\"bodytext_preview_link\" href=\"#bodytext_preview\" style=\"float:right\">Preview formatting</a>".html_safe %>
 	<% end %>
 	
 	<div class="toolbox grid_4">

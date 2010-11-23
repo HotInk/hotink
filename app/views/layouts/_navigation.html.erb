@@ -1,6 +1,6 @@
 <div id="navigation" class="clearfix">
 	<div class="container_12" class="clearfix">
-		<div id="logo" class="grid_2 alpha"><%= image_tag '/images/logo_tiny.png' %></div>
+		<div id="logo" class="grid_2 alpha"><%= link_to image_tag('/images/logo_tiny.png'), dashboard_url %></div>
 		
 		<div id="user_details"><p>Logged in as: <%= link_to current_user.login, edit_user_path(current_user, :format => :html), :class=>"weblink", :id => "edit_current_user_link" %>  <%= button_link_to "Logout", logout_url, :method=>:get, :class=>"micro", :id=>"user_logout_button" %></p></div>
 	
