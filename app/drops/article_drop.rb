@@ -194,10 +194,22 @@ class ArticleDrop < Drop
      end
    end
    
+   def network_original_account_name
+     if original = article.network_original
+       original.account.formal_name
+     end
+   end
+   
    def network_original_url
      if original = article.network_original
        host = original.account.reload.site_url.blank? ? "http://#{original.account.name}.hotink.net" : original.account.site_url
        "#{host}/articles/#{original.id}"
+     end
+   end
+   
+   def network_original_account_url
+     if article.network_original && !article.network_original.account.site_url.blank?
+       article.network_original.account.site_url
      end
    end
    

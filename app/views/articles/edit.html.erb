@@ -62,6 +62,13 @@
 			</div>
 		</div>
 		
+		<% if @article.network_article? && @article.network_original.published? %>
+			<div id="network_status">
+				<p>This is a <u>network article</u>. It was originally published by <strong><%= @article.checkout.original_account.display_name %></strong>
+				on <strong><%= @article.network_original.published_at.to_formatted_s(:standard) %></strong>.</p>
+			</div>
+		<% end %>
+		
 		<%= render :partial => 'printing' %>
 	</div>
 	

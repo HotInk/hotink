@@ -31,6 +31,9 @@
 					<% end %>
 				<% end %>
 			</div>
+			<% if article.network_article? %>
+			<p style="float: right;"><small>Originally published by <strong><%= article.checkout.original_account.display_name %></strong></small></p>
+			<% end %>
 			<p><%= article.authors_list %></p>
 		</div>
 	

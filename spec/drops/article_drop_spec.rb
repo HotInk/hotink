@@ -429,5 +429,19 @@ describe ArticleDrop do
       output = Liquid::Template.parse(' {{ article.network_original_url }} ').render('article' => ArticleDrop.new(@network_copy))
       output.should eql(" http://testurl.com/articles/#{@article.id} ")
     end
+    
+    it "should return network original's account name" do
+      @article.account.update_attribute :formal_name, "The Internet Gazette"
+      
+      output = Liquid::Template.parse(' {{ article.network_original_account_name }} ').render('article' => ArticleDrop.new(@network_copy))
+      output.should eql(" The Internet Gazette ")
+    end
+    
+    it "should return networh original's account site url" do
+      @article.account.update_attribute :site_url, "http://someurl.com"
+      
+      output = Liquid::Template.parse(' {{ article.network_original_account_url }} ').render('article' => ArticleDrop.new(@network_copy))
+      output.should eql(" http://someurl.com ")
+    end
   end
 end

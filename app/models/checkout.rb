@@ -8,4 +8,8 @@ class Checkout < ActiveRecord::Base
   
   validates_presence_of :original_article
   validates_presence_of :duplicate_article
+  
+  def original_account
+    original_article.account
+  end
 end
