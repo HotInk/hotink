@@ -1,10 +1,15 @@
-#navigation { background-color: #333; /* border-bottom: 1px solid #CEE4F3; */ padding-top: 4px; }
+#navigation { background-color: #333; /* border-bottom: 1px solid #CEE4F3; */ padding-top: 4px;  }
+#navigation_container { width: 960px; margin-left: auto; margin-right: auto; }
+#main_navigation_container { position: relative; float: left; width: 960px; height: 26px;}
 
 #navigation > div { height: 26px; position: relative; }
 
-#navigation ol#links  { margin: 0; color: #1A1A1A; font-size: 14px; font-weight: 200; list-style: none; position: absolute; bottom: 0; left: 0; padding-left: 125px; width: 700px; }
+#navigation ol#links  {
+
+  margin: 0px; color: #1A1A1A; font-size: 14px; font-weight: 200; list-style: none; width: 700px; float: left; height: 20px; bottom: 0px; left: 130px; position: absolute; padding: 0px; border: none;
+}
 #navigation ol#links li { 
-		float: left; margin: 0 5px 0px 0; padding: 1px 4px 3px 4px; background-color: #F3F3F3; border: 0px solid #CCC; border-bottom-color: #333; border-bottom-width: 1px;
+		float: left; margin: 0px 5px 0px 0px; padding: 1px 4px 2px 4px; background-color: #F3F3F3; border: 0px solid #CCC; border-bottom-color: #333; border-bottom-width: 1px;
 	 	-webkit-border-top-left-radius: 4px; -webkit-border-top-right-radius: 4px;
 		-moz-border-radius-topleft: 4px; -moz-border-radius-topright: 4px;
 		-webkit-transition-property: border, background-color;
@@ -13,16 +18,21 @@
 		-moz-transition-property: border, background-color;
 		-moz-transition-duration: 0.2s;
 		-moz-transition-timing-funciton: ease-in-out;
+		height: 16px;
 }
 #navigation ol#links li a { color: #000; }
-#navigation ol#links li.current { background-color: #FFF; color: #515151; margin-bottom: 0px; padding-bottom: 3px; border-bottom-width: 1px; border-bottom-color: #FFF; }
+#navigation ol#links li.current { background-color: #FFF; color: #515151; border-bottom-color: #FFF; }
 #navigation ol#links li.current a { color: #333; }
 #navigation ol#links li a:hover { color: #333; }
 #navigation ol#links li:hover { background-color: #FFF; border-bottom-color: #FFF; }
 #navigation ol#links li.current:hover { background-color: #FFF; }
 
+#navigation #logo {
+  float: left;
+}
+
 #navigation #user_details { 
-	float: right; padding: 2px; padding-right: 0px; margin-right: -2px margin-left: 5px; text-align: center; border: 1px solid #CCC; background-color: #F3F3F3; 
+	padding: 2px; padding-right: 0px; margin-right: -2px margin-left: 5px; text-align: center; border: 1px solid #CCC; background-color: #F3F3F3; 
 	-webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px;
   height: 16px;
   -webkit-transition-property: height, box-shadow; -moz-transition-property: height, box-shadow; -o-transition-property: height, box-shadow; -ms-transition-property: height, box-shadow; transition-property: height, box-shadow;
@@ -30,7 +40,8 @@
 	-webkit-transition-timing-funciton: ease-in-out; -moz-transition-timing-funciton: ease-in-out;
   overflow: hidden;
   position: absolute;
-  right: 5px;
+  right: 0px;
+  top: 0px;
   z-index: 100;
 }
 #navigation #user_details p { display: inline-block; font-size: 0.85em; margin-bottom: 0; }
@@ -73,6 +84,29 @@
 
 #navigation #account_details{ float: right; font-size: 1.0em; padding: 5px; }
 
-#navigation #flash { padding: 5px; font-weight: 200; color: #F9F9F9; float: right; }
+#navigation #flash_background {
+  padding-bottom: 42px; float: left; width: 100%;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 0.3s;
+	-webkit-transition-timing-funciton: ease-in-out;
+	-moz-transition-property: opacity;
+  -moz-transition-duration: 0.3s;
+	-moz-transition-timing-funciton: ease-in-out;
+	-webkit-border-top-left-radius: 4px; -webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px; -moz-border-radius-topright: 4px;
+	background-image: none;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F00000), to(#333));
+	background-image: -moz-linear-gradient(top, #F00000, #333);
+	opacity: 0;
+	position: absolute;
+	top: 0px;
+	z-index: 0;
+	cursor: pointer;
+}
+#navigation #flash_background:hover {
+  cursor: pointer;
+  opacity: 1; 
+}
+#navigation #flash p { margin-bottom: 0px; text-align: center; color: #FFF !important; opacity: 1 !imporant; z-index: 20 !important; position: relative; cursor: pointer; padding-top: 2px; }
 
 #navigation .btn { margin-bottom: 0em; }
