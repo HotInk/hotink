@@ -78,8 +78,9 @@
   }
 /* End */
 #navigation #user_details:hover {
-  height: 71px;
+  height: 74px;
   -webkit-box-shadow: 0px 0px 10px #000; -moz-box-shadow: 0px 0px 10px #000; -o-box-shadow: 0px 0px 10px #000; -ms-box-shadow: 0px 0px 10px #000; box-shadow: 0px 0px 10px #000;
+  -webkit-box-sizing: border-box;
 }
 
 #navigation #account_details{ float: right; font-size: 1.0em; padding: 5px; }

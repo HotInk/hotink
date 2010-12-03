@@ -24,14 +24,14 @@
 		<% end %>
 		<div id="main_navigation_container">
 		  <div id="logo" class="alpha"><%= image_tag '/images/logo_tiny.png' %></div>
-      <div id="user_details"><p>
+      <div id="user_details">
         <ul>
           <li><%= current_user.login %>&#9660;</li>
           <li class="first_hidden"><%= button_link_to "Manage account", edit_user_path(current_user, :format => :html), :class=>"tiny modal", :id => "edit_current_user_link" %></li>
           <li><%= button_link_to "Manage site", edit_account_url(@account), :class=>"tiny modal" %></li>
           <li><%= button_link_to "Log out", logout_url, :method=>:get, :class=>"tiny", :id=>"user_logout_button" %></li>
         </ul>  
-      </p></div>
+      </div>
 	      
 		  <ol id="links">
 			  <li <%= 'class="current"' if controller_name == "dashboards" %>><%= link_to "Dashboard", dashboard_url %></li>
