@@ -716,7 +716,7 @@ ol#all_comments .comment { background-color: white; border: 1px dotted #CCC;  fl
 /*		Blog styles
 /*---------------------------------------*/
 
-body.blogs h1, body.lists h1, body.pages, body.dashboards h1 {
+body.blogs h1, body.lists h1, body.pages h1, body.dashboards h1 {
     float: left;
     margin-right: 0px !important; /* Force away margin while buttons in #page_containers are being transitioned to new style */
 }
